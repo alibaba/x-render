@@ -1,0 +1,117 @@
+{
+  "propsSchema": {
+    "type": "object",
+    "properties": {
+      "inputDemo": {
+        "title": "前后缀",
+        "type": "string",
+        "pattern": "^[A-Za-z0-9]+$",
+        "message": {
+          "pattern": "请输入正确格式"
+        }
+      },
+      "numberDemo": {
+        "title": "数字",
+        "description": "数字输入框",
+        "type": "number",
+        "min": 10,
+        "max": 100,
+        "step": 10
+      },
+      "dateRange": {
+        "title": "日期范围",
+        "type": "range",
+        "format": "dateTime",
+        "ui:options": {
+          "placeholder": ["开始", "结束"]
+        }
+      },
+      "customizedWidgets": {
+        "title": "自定义组件",
+        "type": "object",
+        "properties": {
+          "asyncSelect": {
+            "title": "异步加载的下拉框",
+            "type": "string",
+            "ui:widget": "asyncSelect",
+            "ui:options": {
+              "placeholder": "搜索淘宝商品"
+            }
+          }
+        }
+      },
+      "complexArray": {
+        "title": "复杂结构数组",
+        "description": "数组item中含有数组等",
+        "type": "array",
+        "ui:options": {
+          "foldable": true
+        },
+        "items": {
+          "type": "object",
+          "properties": {
+            "age": {
+              "title": "填写年龄",
+              "type": "string",
+              "ui:hidden": "movieType=='a'||movieType=='c'"
+            },
+            "movieType": {
+              "title": "短片类型",
+              "type": "string",
+              "enum": ["a", "b", "c"],
+              "enumNames": ["教育", "恐怖", "故事"]
+            },
+            "movieList": {
+              "title": "电影列表",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "movieName": {
+                    "title": "电影名",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "when": {
+              "title": "何时观看",
+              "description": "多选",
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "enum": ["A", "B", "C", "D"],
+              "enumNames": ["早上", "中午", "下午", "晚上"]
+            }
+          },
+          "required": ["age"]
+        }
+      }
+    }
+  },
+  "uiSchema": {
+    "inputDemo": {
+      "ui:width": "50%",
+      "ui:options": {
+        "addonBefore": "画布长度",
+        "addonAfter": "px"
+      }
+    },
+    "numberDemo": {
+      "ui:width": "50%",
+      "ui:widget": "slider"
+    }
+  },
+  "formData": {
+    "inputDemo": "750",
+    "textareaDemo": "FormRender\nHello World!",
+    "complexArray": [
+      {
+        "age": "",
+        "movieType": "b",
+        "movieList": []
+      }
+    ]
+  }
+}
