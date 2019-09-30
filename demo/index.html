@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FormRender Demo</title><% (htmlWebpackPlugin.options.resources.css || []).forEach(function(path) { %>
+  <link rel="stylesheet" href="//unpkg.alipay.com/<%=path%>.css" /><% }) %>
+</head>
+<body>
+  <div id="__render_content_"></div><% (htmlWebpackPlugin.options.resources.js || []).forEach(function(path) { %>
+  <script src="//unpkg.alipay.com/<%=path%>.js"></script><% }) %>
+</body>
+</html>

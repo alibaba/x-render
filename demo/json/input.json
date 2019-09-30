@@ -1,0 +1,92 @@
+{
+  "propsSchema": {
+    "type": "object",
+    "properties": {
+      "string": {
+        "title": "字符串",
+        "description": "带清空x按钮",
+        "type": "string",
+        "default": "hello world",
+        "ui:options": {
+          "allowClear": true
+        },
+        "ui:width": "50%"
+      },
+      "string2": {
+        "title": "复杂校验",
+        "description": "pattern和message的用法",
+        "type": "string",
+        "pattern": "^[A-Za-z0-9]+$",
+        "message": {
+          "pattern": "请输入数字或英文字母"
+        },
+        "ui:options": {
+          "placeholder": "请输入数字或英文"
+        },
+        "ui:width": "50%"
+      },
+      "string3": {
+        "title": "长度控制",
+        "description": "长度在5-15个字之间",
+        "type": "string",
+        "minLength": 5,
+        "maxLength": 15,
+        "ui:width": "50%"
+      },
+      "string4": {
+        "title": "前置/后置标签",
+        "type": "string",
+        "ui:options": {
+          "addonBefore": "长度",
+          "addonAfter": "px"
+        },
+        "ui:width": "50%"
+      },
+      "string5": {
+        "title": "前后缀",
+        "type": "string",
+        "pattern": "^[0-9]+$",
+        "message": {
+          "pattern": "请输入数字"
+        },
+        "ui:options": {
+          "prefix": "￥",
+          "suffix": "RMB"
+        },
+        "ui:width": "50%"
+      },
+      "string6": {
+        "title": "置灰的输入框",
+        "type": "string",
+        "ui:disabled": true,
+        "default": "hello world",
+        "ui:width": "50%"
+      },
+      "string7": {
+        "title": "文本框",
+        "description": "固定高度",
+        "type": "string",
+        "format": "textarea",
+        "ui:options": {
+          "row": 4
+        }
+      },
+      "string8": {
+        "title": "文本框",
+        "description": "自动高度",
+        "type": "string",
+        "format": "textarea",
+        "ui:options": {
+          "autosize": {
+            "minRows": 3,
+            "maxRows": 5
+          },
+          "placeholder": "根据内容缩放"
+        }
+      }
+    },
+    "required": ["string4", "string5"]
+  },
+  "uiSchema": {},
+  "formData": {}
+}

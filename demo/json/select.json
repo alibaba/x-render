@@ -1,0 +1,29 @@
+{
+  "propsSchema": {
+    "type": "object",
+    "properties": {
+      "select": {
+        "title": "带搜索的单选框",
+        "type": "string",
+        "enum": ["a", "b", "c"],
+        "enumNames": ["jack", "steve", "david"],
+        "ui:options": {
+          "filterOption": true,
+          "showSearch": true,
+          "optionFilterProp": "children"
+        }
+      },
+      "multiSelect": {
+        "title": "标签模式",
+        "description": "除了可选的标签，还可输入自定义的标签",
+        "type": "array",
+        "enum": ["旅行达人", "工作狂", "老司机", "小资"],
+        "ui:widget": "select",
+        "ui:options": {
+          "mode": "tags"
+        }
+      }
+    },
+    "required": []
+  }
+}
