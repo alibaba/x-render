@@ -13,7 +13,7 @@
 - <a href="xxx" target="_blank">Form Render Demo</a>
 - <a href="xxx" target="_blank">升级日志</a>
 
-<a href="xxx" target="_blank"><img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*EpFjSo5XJqkAAAAAAAAAAABjARQnAQ" width="700"/></a>
+<a href="xxx" target="_blank"><img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*EpFjSo5XJqkAAAAAAAAAAABjARQnAQ?raw=true" width="700"/></a>
 
 ## Features
 
