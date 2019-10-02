@@ -4,7 +4,7 @@ Thumbs.db
 .dist/
 lib/
 dist/
-docs/dist
+!docs/dist
 node_modules/
 npm-debug.log
 .idea/
