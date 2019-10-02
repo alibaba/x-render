@@ -52,6 +52,7 @@
         coverpage: 'docs/_coverpage.md',
         loadSidebar: 'docs/_sidebar.md',
         loadNavbar: 'docs/_navbar.md',
+        basePath: location.port === '3000' ? '/' : '/form-render/',
         nameLink: {
           '/': '#/'
         }
@@ -60,9 +61,6 @@
     <script>
       if (typeof navigator.serviceWorker !== 'undefined') {
         navigator.serviceWorker.register('./docs/dist/sw.js');
-      }
-      if (window.location.host === 'groups.alidemo.cn') {
-        window.location.replace('https://alibaba.github.io/form-render');
       }
     </script>
     <script src="//h5.m.taobao.com/trip/fp-form-render/docsify.min.js
