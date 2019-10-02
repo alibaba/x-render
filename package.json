@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "通过标准 JSON Schema 生成可视化 From 表单，常用于搭建表单配置，支持 Antd 和  Fusion 体系、一排N、横纵排、无限嵌套、自定义正则校验、自定义样式组件等能力",
   "repository": {
     "type": "git",

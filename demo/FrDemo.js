@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FormRender from '@ali/form-render/lib/antd';
+import FormRender from 'form-render/lib/antd';
 import SCHEMA from './schema.json';
 import 'antd/dist/antd.css';
 

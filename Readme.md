@@ -9,7 +9,7 @@
 
 ## Topics
 
-- <a href="/" target="_blank">文档官网</a>
+- <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
 - <a href="/CHANGELOG.md" target="_blank">升级日志</a>
 
 <img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="700"/>
@@ -31,23 +31,23 @@ Form Render 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置
 ## Installation
 
 ```sh
-tnpm i @ali/form-render -S
+npm i form-render -S
 ```
 
 ## Usage
 
-详细使用可见 [开始开始](xxx)
+详细使用可见 [开始开始](https://alibaba.github.io/form-render/#/README)
 
 ```react
 import React from 'react';
 
 // antd 是这样使用(使用3.x版本)
 import 'antd/dist/antd.css';
-import FormRender from '@ali/form-render/lib/antd.js';
+import FormRender from 'form-render/lib/antd.js';
 
 // fusion 这样使用(使用开源版本)
 //import '@alifd/next/dist/next.min.css';
-//import FormRender from '@ali/form-render/lib/fusion';
+//import FormRender from 'form-render/lib/fusion';
 
 // propsSchema 是配置 Form Render 的必备参数，使用标准的 JSON Schema 来描述表单结构
 const propSchema = {
