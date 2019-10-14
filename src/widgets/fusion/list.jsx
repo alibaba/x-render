@@ -88,75 +88,83 @@ class ListItem extends React.Component {
 
 const SortableItem = SortableElement(ListItem);
 
-const FieldList = ({ p, foldList = [], toggleFoldItem }) => {
-  const handleAddClick = () => {
+class FieldList extends React.Component {
+  componentDidMount() {
+    // 如果为空数组，至少显示一个item
+    const { p } = this.props;
+    if (Array.isArray(p.value) && p.value.length === 0) {
+      this.handleAddClick();
+    }
+  }
+
+  handleAddClick = () => {
+    const { p, addUnfoldItem } = this.props;
     const value = [...p.value];
     value.push(p.newItem);
     p.onChange(p.name, value);
+    addUnfoldItem();
   };
 
-  const baseList = p.value || [];
-  // 如果为空数组，至少显示一个item
-  if (baseList.length === 0) {
-    baseList.push(p.newItem);
+  render() {
+    const { p, foldList = [], toggleFoldItem } = this.props;
+    const list = p.value || [];
+    return (
+      <ul className="pl0 ma0">
+        {list.map((_, name) => (
+          <SortableItem
+            key={`item-${name}`}
+            index={name}
+            name={name}
+            p={p}
+            fold={foldList[name]}
+            toggleFoldItem={toggleFoldItem}
+            item={p.getSubField({
+              name,
+              value: p.value[name],
+              onChange(key, val) {
+                const value = [...p.value];
+                value[key] = val;
+                p.onChange(p.name, value);
+              },
+            })}
+          />
+        ))}
+        <div className="tr">
+          <Button className="" onClick={this.handleAddClick}>
+            <Icon type="add" />
+            新增
+          </Button>
+          {p.extraButtons &&
+            p.extraButtons.length > 0 &&
+            p.extraButtons.map(item => (
+              <Button
+                className="ml2"
+                onClick={() => {
+                  if (item.callback === 'clearAll') {
+                    p.onChange(p.name, []);
+                    return;
+                  }
+                  if (item.callback === 'copyLast') {
+                    const value = [...p.value];
+                    const lastIndex = value.length - 1;
+                    value.push(lastIndex > -1 ? value[lastIndex] : p.newItem);
+                    p.onChange(p.name, value);
+                    return;
+                  }
+                  if (typeof window[item.callback] === 'function') {
+                    window[item.callback].call(); // eslint-disable-line
+                  }
+                }}
+              >
+                <Icon type={item.icon} />
+                {item.text}
+              </Button>
+            ))}
+        </div>
+      </ul>
+    );
   }
-
-  return (
-    <ul className="pl0 ma0">
-      {baseList.map((_, name) => (
-        <SortableItem
-          key={`item-${name}`}
-          index={name}
-          name={name}
-          p={p}
-          fold={foldList[name]}
-          toggleFoldItem={toggleFoldItem}
-          item={p.getSubField({
-            name,
-            value: p.value[name],
-            onChange(key, val) {
-              const value = [...p.value];
-              value[key] = val;
-              p.onChange(p.name, value);
-            },
-          })}
-        />
-      ))}
-      <div className="tr">
-        <Button className="" onClick={handleAddClick}>
-          <Icon type="add" />
-          新增
-        </Button>
-        {p.extraButtons &&
-          p.extraButtons.length > 0 &&
-          p.extraButtons.map(item => (
-            <Button
-              className="ml2"
-              onClick={() => {
-                if (item.callback === 'clearAll') {
-                  p.onChange(p.name, []);
-                  return;
-                }
-                if (item.callback === 'copyLast') {
-                  const value = [...p.value];
-                  const lastIndex = value.length - 1;
-                  value.push(lastIndex > -1 ? value[lastIndex] : p.newItem);
-                  p.onChange(p.name, value);
-                  return;
-                }
-                if (typeof window[item.callback] === 'function') {
-                  window[item.callback].call(); // eslint-disable-line
-                }
-              }}
-            >
-              <Icon type={item.icon} />
-              {item.text}
-            </Button>
-          ))}
-      </div>
-    </ul>
-  );
-};
+}
 
 const SortableList = SortableContainer(FieldList);
 
@@ -170,6 +178,10 @@ export default class extends React.Component {
     const len = this.props.value.length || 0;
     this.state = { foldList: new Array(len).fill(false) || [] };
   }
+
+  // 新添加的item默认是展开的
+  addUnfoldItem = () =>
+    this.setState({ foldList: [...this.state.foldList, 0] });
 
   toggleFoldItem = index => {
     const { foldList = [] } = this.state;
@@ -192,6 +204,7 @@ export default class extends React.Component {
         p={this.props}
         foldList={foldList}
         toggleFoldItem={this.toggleFoldItem}
+        addUnfoldItem={this.addUnfoldItem}
         distance={6}
         useDragHandle
         helperClass="sort-help-class"
