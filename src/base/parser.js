@@ -78,6 +78,9 @@ function getBasicProps(settings, materials) {
     fields,
   };
   // 假如有表达式来决定显示的场景，才传入dependShow,formData
+  if (hidden) {
+    basicProps = { ...basicProps, formData };
+  }
   if (dependShow) {
     basicProps = { ...basicProps, dependShow, formData };
   }

@@ -16,14 +16,14 @@ export const asField = ({ FieldUI, Widget }) => {
     width,
     ...others
   }) => {
-    const { schema, displayType, rootValue } = others;
+    const { schema, displayType, rootValue, formData, dependShow } = others;
     // 对于需要隐藏的场景
     // "ui:hidden": true 的情况，隐藏
-    if (isHidden({ hidden, rootValue })) {
+    if (hidden && isHidden({ hidden, rootValue, formData })) {
       return null;
     }
     // 不建议使用ui:dependShow, 一般一律使用ui:hidden。ui:dependShow可以做复杂、跨结构的校验
-    if (isDependShow(others)) {
+    if (isDependShow({ formData, dependShow })) {
       return null;
     }
     const isComplex =
