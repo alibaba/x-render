@@ -6,7 +6,7 @@ import FusionComp from '../src/fusion';
 import 'antd/dist/antd.css';
 import '../atom.css';
 import CODE from '!!raw-loader!./FrDemo';
-import DefaultSchema from './json/basic.json';
+import DefaultSchema from './json/simplest.json';
 import { Tabs } from 'antd';
 import AsyncSelect from './customized/AsyncSelect';
 import CodeBlock from './Monaco';

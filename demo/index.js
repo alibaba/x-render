@@ -65,16 +65,17 @@ class Root extends Component {
               <div className="w-50">
                 <Radio.Group
                   name="schemaName"
-                  defaultValue="basic"
+                  defaultValue="simplest"
                   className="flex flex-wrap"
                   onChange={this.onSchemaChange}
                 >
+                  <FRadio value="simplest">最简样例</FRadio>
                   <FRadio value="basic">基础控件</FRadio>
                   <FRadio value="input">个性输入框</FRadio>
                   <FRadio value="select">个性选择框</FRadio>
                   <FRadio value="date">日期format</FRadio>
                   <FRadio value="new-feature">新功能</FRadio>
-                  <FRadio value="demo">例子</FRadio>
+                  <FRadio value="demo">完整例子</FRadio>
                 </Radio.Group>
               </div>
               <div className="w-50 flex items-center justify-center">

@@ -65,13 +65,22 @@
 - `ui:disabled`: 可控制 input、number、date、checkbox、radio、select、switch 对于组件的 disabled 属性(变灰不可点击)
 - `ui:readonly`：可控制 input、number 组件中的 readonly 属性(不可编辑，但不变灰)
 - `ui:hidden`：可控制所有基础组件是否显示，可使用 true/false 或表达式，例如：
-- `ui:className`：添加组件 root 元素的 className（和 fr-field 这个 className 在同级），用于自定义单独组件的样式
 
 ```json
 "age": {
   "ui:hidden": false
 }
 // 或
+"agree": {
+  "title": "是否同意",
+  "type": "boolean"
+},
+"personType": {
+  "title": "类型",
+  "type": "number",
+  "enum": [1, 2, 3]
+}
+...
 "age": {
   "ui:hidden": "agree==false && personType!=2"
 }
@@ -80,6 +89,23 @@
 如果使用如上表达式， age 元素将在 agree 元素的值为 false 且 personType 元素不等于 2 时隐藏。
 注：目前`ui:hidden`支持`==`，`!=`，`>`和`<`四种运算符和`&&`（且），`||`（或）两种关系符，使用的判断字段（表达式左侧）必须是组件的同级字段。
 
+虽然不推荐，但针对关联组件不在同级的情况，可以使用约定的 `formData` 关键字寻值：
+
+```json
+// 例如 formData 的结构为：
+"formData": {
+  "x": {
+    "y": "abc"
+  },
+  ...
+}
+// 注意表达式约定以 "formData." 开头
+"xxxx": {
+  "ui:hidden": "formData.x.y!='abc'"
+}
+```
+
+- `ui:className`：添加组件 root 元素的 className（和 fr-field 这个 className 在同级），用于自定义单独组件的样式
 - `ui:width`：单个基础组件的长度，建议使用百分比例如`"ui:width":"50%"`。
 
 ### Options
