@@ -96,10 +96,10 @@ const SortableItem = SortableElement(ListItem);
 class FieldList extends React.Component {
   componentDidMount() {
     // 如果为空数组，至少显示一个item
-    const { p } = this.props;
-    if (Array.isArray(p.value) && p.value.length === 0) {
-      this.handleAddClick();
-    }
+    // const { p } = this.props;
+    // if (Array.isArray(p.value) && p.value.length === 0) {
+    //   this.handleAddClick();
+    // }
   }
 
   handleAddClick = () => {
