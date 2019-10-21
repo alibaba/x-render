@@ -5,6 +5,7 @@
 
 import isLength from 'validator/lib/isLength';
 import { isHidden } from './isHidden';
+import { hasRepeat } from './utils';
 
 const isEmptyObject = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -26,16 +27,17 @@ export const getValidateText = (obj = {}) => {
 
   const {
     type,
-    minLength,
-    maxLength,
-    minimum,
-    maximum,
-    minItems,
-    maxItems,
     pattern,
     message,
     format,
     'ui:widget': widget,
+    minLength, // string
+    maxLength, // string
+    minimum, // number
+    maximum, // number
+    minItems, // list
+    maxItems, // list
+    uniqueItems, // list
   } = schema;
   let finalValue = value || defaultValue;
   // fix: number = 0 返回空字符串
@@ -104,6 +106,23 @@ export const getValidateText = (obj = {}) => {
       finalValue.length < minItems
     ) {
       return (message && message.minItems) || `组数不能小于 ${minItems}`;
+    }
+
+    if (uniqueItems && Array.isArray(finalValue) && finalValue.length > 1) {
+      if (typeof uniqueItems === 'boolean') {
+        if (hasRepeat(finalValue)) {
+          return '存在重复元素';
+        }
+      }
+      if (typeof uniqueItems === 'string') {
+        const nameList = finalValue.map(item => item[uniqueItems]);
+        const isRepeat = nameList.find(
+          (x, index) => nameList.indexOf(x) !== index
+        );
+        if (isRepeat) {
+          return '存在重复的 ' + uniqueItems + ' 值';
+        }
+      }
     }
   }
 

@@ -103,6 +103,24 @@ string 类对应的控件非常多：
 - 列表：
   - `minItems`：最少数组项为几项
   - `maxItems`：最多数组项为几项
+  - `uniqueItems`：用于判断数组的元素是否有重复。`uniqueItems` 的值支持 boolean 和 string 两种类型
+
+```js
+// 1. 判断列表元素是否有重复
+"uniqueItems": true
+// 校验结果： 不通过。存在重复元素
+[
+  { "id": 1, "type": "topic" },
+  { "id": 1, "type": "topic" }
+]
+// 2. 判断列表元素的某个特定属性是否有重复，例如 id
+"uniqueItems": "id"
+// 校验结果：不通过。存在重复的 id 值
+[
+  { "id": 3, "type": "vote" },
+  { "id": 3, "type": "topic" }
+]
+```
 
 ```json
 {
@@ -110,6 +128,7 @@ string 类对应的控件非常多：
   "type": "array",
   "minItems": 1,
   "maxItems": 3,
+  "uniqueItems": true,
   "items": {
     "type": "object",
     "properties": {
