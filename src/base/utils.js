@@ -34,6 +34,13 @@ export function isDeepEqual(param1, param2) {
   return true;
 }
 
+export function hasRepeat(list) {
+  return list.find(
+    (x, i, self) =>
+      i !== self.findIndex(y => JSON.stringify(x) === JSON.stringify(y))
+  );
+}
+
 // 合并propsSchema和UISchema。由于两者的逻辑相关性，合并为一个大schema能简化内部处理
 export function combineSchema(propsSchema, uiSchema) {
   const propList = getChildren(propsSchema);

@@ -120,7 +120,7 @@ export const DefaultFieldUI = ({
         labelClass += ' fr-label-object bb b--black-20 pb2 mt2 mb3'; // fr-label-object 无默认style，只是占位用于使用者样式覆盖
       }
       if (!isRoot) {
-        fieldClass += ' fr-field-object mb0'; // object的margin bottom由内部元素撑起
+        fieldClass += ' fr-field-object'; // object的margin bottom由内部元素撑起
         if (title) {
           contentClass += ' ml3'; // 缩进
         }
