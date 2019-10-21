@@ -12,6 +12,10 @@
   margin-bottom: 24px;
 }
 
+.fr-field-object {
+  margin-bottom: 0;
+}
+
 .fr-label {
   color: #333;
   font-size: 14px;
