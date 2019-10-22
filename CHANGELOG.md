@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.1.5
+
+- [+] array type 支持使用 `uniqueItems` 字段校验列表中元素是否重复。`uniqueItems` 接受 boolean 和 string 类的值
+- [!] fix 了 array 类样式展示空白过多的问题
+
 ### 0.1.4
 
 - [!] 建议用户使用 default 赋予列表 item 值，不再强制显示一个元素
