@@ -8,7 +8,7 @@ import CODE from '!!raw-loader!./FrDemo';
 import DefaultSchema from './json/simplest.json';
 import { Tabs } from 'antd';
 import AsyncSelect from './customized/AsyncSelect';
-import CodeBlock from './Monaco';
+import CodeBlock from './monaco';
 const { TabPane } = Tabs;
 
 // help functions
