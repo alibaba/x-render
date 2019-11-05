@@ -37,16 +37,13 @@
   "dependencies": {
     "@alifd/next": "^1.13.4",
     "antd": "^3.22.2",
-    "json-parse-better-errors": "^1.0.2",
     "moment": "^2.22.2",
-    "monaco-editor": "^0.17.1",
     "pope": "^2.0.2",
     "prop-types": "^15.x",
     "rc-color-picker": "^1.2.6",
     "react": "^16.x",
     "react-dom": "^16.x",
     "react-sortable-hoc": "^1.6.1",
-    "string-template": "^1.0.0",
     "validator": "^10.7.1"
   },
   "peerDependencies": {
@@ -55,6 +52,8 @@
     "babel-polyfill": "^6.13.0"
   },
   "devDependencies": {
+    "json-parse-better-errors": "^1.0.2",
+    "monaco-editor": "^0.17.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",

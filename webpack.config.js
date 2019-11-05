@@ -6,11 +6,9 @@ const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 module.exports = {
   mode: 'development',
   context: resolve(__dirname, 'demo'),
-  entry: {
-    index: './index.js',
-  },
+  entry: './index.js',
   output: {
-    filename: '[name].js',
+    filename: '[name].bundle.js',
     path: resolve(__dirname, 'docs/demo'),
   },
   module: {
@@ -36,7 +34,7 @@ module.exports = {
   plugins: [
     new MonacoWebpackPlugin({
       languages: ['json'],
-      features: ['snippets']
+      features: ['snippets','suggest']
     }),
     new HtmlWebpackPlugin({
       resources: {
@@ -86,5 +84,8 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      'monaco-editor': 'monaco-editor/esm/vs/editor/editor.api'
+    }
   },
 };

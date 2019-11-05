@@ -1,5 +1,5 @@
 import React from 'react';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import * as monaco from 'monaco-editor';
 import { suggestions } from './snippets';
 import theme from 'monaco-themes/themes/Night Owl.json';
 
