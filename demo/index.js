@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import GithubCorner from 'react-github-corner';
 import Demo from './main';
 import { Radio, Select, Switch, Collapse } from 'antd';
+
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const { Panel } = Collapse;
@@ -12,6 +13,7 @@ const themeList = [
   { label: 'fusion主题', value: 'fusion' },
 ];
 const FRadio = props => <Radio {...props} style={{ marginBottom: 12 }} />;
+
 class Root extends Component {
   state = {
     schemaName: 'default',
@@ -61,19 +63,20 @@ class Root extends Component {
         />
         <Collapse defaultActiveKey={['1']} onChange={() => {}}>
           <Panel header={<div className="b f3">FormRender</div>} key="1">
-            <div className="w-100 flex">
+            <div className="w-100 flex items-center">
               <div className="w-50">
                 <Radio.Group
                   name="schemaName"
                   defaultValue="simplest"
                   className="flex flex-wrap"
+                  style={{ height: 20 }}
                   onChange={this.onSchemaChange}
                 >
                   <FRadio value="simplest">最简样例</FRadio>
                   <FRadio value="basic">基础控件</FRadio>
                   <FRadio value="input">个性输入框</FRadio>
                   <FRadio value="select">个性选择框</FRadio>
-                  <FRadio value="date">日期format</FRadio>
+                  <FRadio value="date">日期</FRadio>
                   <FRadio value="new-feature">新功能</FRadio>
                   <FRadio value="demo">完整例子</FRadio>
                 </Radio.Group>

@@ -1,20 +1,16 @@
 const { resolve } = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const prefixer = require('postcss-prefix-selector');
-// const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   context: resolve(__dirname, 'demo'),
   entry: {
-    main: './index.js',
-    'editor.worker': 'monaco-editor/esm/vs/editor/editor.worker.js',
-    'json.worker': 'monaco-editor/esm/vs/language/json/json.worker',
-    'ts.worker': 'monaco-editor/esm/vs/language/typescript/ts.worker',
+    index: './index.js',
   },
   output: {
-    globalObject: 'self',
-    filename: '[name].bundle.js',
+    filename: '[name].js',
     path: resolve(__dirname, 'docs/demo'),
   },
   module: {
@@ -37,8 +33,11 @@ module.exports = {
       },
     ],
   },
-  devtool: 'inline-source-map',
   plugins: [
+    new MonacoWebpackPlugin({
+      languages: ['json'],
+      features: ['snippets']
+    }),
     new HtmlWebpackPlugin({
       resources: {
         js: [
@@ -52,6 +51,22 @@ module.exports = {
       },
       template: resolve(__dirname, 'demo/index.html'),
     }),
+    new UglifyJsPlugin({
+      cache: true,
+      parallel: true,
+      sourceMap: false,
+      extractComments: false,
+      uglifyOptions: {
+        compress: {
+          unused: true,
+          drop_debugger: true
+        },
+        warnings: false,
+        output: {
+          comments: false
+        }
+      }
+    })
   ],
   externals: {
     react: 'var window.React',
