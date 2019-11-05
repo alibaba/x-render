@@ -3,15 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" type="image/png" />
-  <title>FormRender Demo</title>
-  <link rel="stylesheet" href="//unpkg.alipay.com/@alifd/next@1.x/dist/next.css" />
+  <title>FormRender Demo</title><% (htmlWebpackPlugin.options.resources.css || []).forEach(function(path) { %>
+  <link rel="stylesheet" href="//unpkg.alipay.com/<%=path%>.css" /><% }) %>
 </head>
 <body>
-<div id="__render_content_"></div>
-<script src="//unpkg.alipay.com/react@16.x/umd/react.production.min.js"></script>
-<script src="//unpkg.alipay.com/react-dom@16.x/umd/react-dom.production.min.js"></script>
-<script src="//unpkg.alipay.com/prop-types@15.x/prop-types.js"></script>
-<script src="//unpkg.alipay.com/moment@2.24.0/moment.js"></script>
-<script src="//unpkg.alipay.com/@alifd/next@1.x/dist/next.js"></script>
-<script type="text/javascript" src="./dist/main.bundle.js"></script></body>
+  <div id="__render_content_"></div><% (htmlWebpackPlugin.options.resources.js || []).forEach(function(path) { %>
+  <script src="//unpkg.alipay.com/<%=path%>.js"></script><% }) %>
+</body>
 </html>
