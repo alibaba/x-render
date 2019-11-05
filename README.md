@@ -45,11 +45,9 @@ npm i form-render -S
 import React from 'react';
 
 // antd 是这样使用(使用3.x版本)
-import 'antd/dist/antd.css';
 import FormRender from 'form-render/lib/antd.js';
 
 // fusion 这样使用(使用开源版本)
-//import '@alifd/next/dist/next.min.css';
 //import FormRender from 'form-render/lib/fusion';
 
 // propsSchema 是配置 Form Render 的必备参数，使用标准的 JSON Schema 来描述表单结构

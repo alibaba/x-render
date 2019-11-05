@@ -3,7 +3,6 @@ import deepEqual from 'deep-equal';
 import parseJson from 'json-parse-better-errors';
 import AntdComp from '../src/antd';
 import FusionComp from '../src/fusion';
-import 'antd/dist/antd.css';
 import '../atom.css';
 import CODE from '!!raw-loader!./FrDemo';
 import DefaultSchema from './json/simplest.json';

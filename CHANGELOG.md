@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.2.0
+- [!] 优化打包构建脚本，减少包大小
+- [+] 放出对应的 demo 效果
+- [!] 使用时候不需要再引入antd 或者 fusion的css
+
 ### 0.1.5
 
 - [+] array type 支持使用 `uniqueItems` 字段校验列表中元素是否重复。`uniqueItems` 接受 boolean 和 string 类的值

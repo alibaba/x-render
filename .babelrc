@@ -1,6 +1,19 @@
 {
-  "presets": ["env", "react", "stage-0"],
+  "presets": [
+    "env",
+    "react",
+    "stage-0"
+  ],
   "plugins": [
+    [
+      "import",
+      {
+        "libraryName": "antd",
+        "libraryDirectory": "lib",
+        "style": "css"
+      },
+      "ant"
+    ],
     "transform-decorators-legacy"
   ]
 }
