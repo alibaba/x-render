@@ -1,4 +1,4 @@
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.main';
+import * as monaco from 'monaco-editor';
 
 const Snippet = monaco.languages.CompletionItemKind.Snippet;
 const insertTextRules =

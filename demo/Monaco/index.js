@@ -1,36 +1,23 @@
 import React from 'react';
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.main';
+import * as monaco from 'monaco-editor';
 import { suggestions } from './snippets';
-import theme from 'monaco-themes/themes/Solarized-light.json';
+import theme from 'monaco-themes/themes/Night Owl.json';
+
 export default class MonacoEditor extends React.Component {
   componentDidMount() {
     const { value, onValueChange = () => {}, ...options } = this.props;
-    // const model = monaco.editor.createModel(value, language, path);
-    self.MonacoEnvironment = {
-      getWorkerUrl: function(moduleId, label) {
-        if (label === 'json') {
-          return './json.worker.bundle.js';
-        }
-        if (label === 'typescript' || label === 'javascript') {
-          return './ts.worker.bundle.js';
-        }
-        return './editor.worker.bundle.js';
-      },
-    };
-
     monaco.languages.registerCompletionItemProvider('json', {
-      provideCompletionItems: (model, position, context, token) => {
+      provideCompletionItems: () => {
         return { suggestions };
       },
     });
 
-    monaco.editor.defineTheme('solarized-light', theme);
-    // monaco.editor.setTheme('solarized-light');
+    monaco.editor.defineTheme('form-render', theme);
     this._editor = monaco.editor.create(this._node, {
       value,
       language: 'json',
-      fontSize: '14px',
-      theme: 'solarized-light',
+      fontSize: '18px',
+      theme: 'form-render',
       minimap: {
         enabled: false,
       },
@@ -61,13 +48,13 @@ export default class MonacoEditor extends React.Component {
       );
     }
   }
+
   componentWillUnmount() {
-    console.log('dunmont');
     this._editor && this._editor.dispose();
     this._subscription && this._subscription.dispose();
   }
 
   render() {
-    return <div style={{ height: 600 }} ref={c => (this._node = c)} />;
+    return <div style={{ height: 600, marginTop: -15 }} ref={c => (this._node = c)} />;
   }
 }
