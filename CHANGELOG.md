@@ -2,8 +2,8 @@
 
 ### 0.2.0
 - [!] 优化打包构建脚本，减少包大小
-- [+] 放出对应的 demo 效果
-- [!] 使用时候不需要再引入 antd 或者 fusion的css
+- [+] 放出对应的 [Demo 效果](https://alibaba.github.io/form-render/docs/demo/index.html)
+- [!] 使用时候不需要再引入 antd 或者 fusion 的 css
 
 ### 0.1.5
 
