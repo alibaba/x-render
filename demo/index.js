@@ -81,7 +81,7 @@ class Root extends Component {
                   <FRadio value="demo">完整例子</FRadio>
                 </Radio.Group>
               </div>
-              <div className="w-50 flex items-center justify-center">
+              <div className="w-50 flex items-center justify-end z-999">
                 <RadioGroup
                   options={themeList}
                   value={this.state.theme}
