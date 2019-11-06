@@ -1,72 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Form Render</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta
-      name="description"
-      content="通过标准 JSON Schema 生成可视化 From 表单，常用于搭建表单配置，支持 Antd 和  Fusion 体系、一排N、无限嵌套、自定义正则校验、自定义样式组件等能力"
-    />
-    <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-    />
-    <link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" type="image/png" />
-    <link rel="stylesheet" href="//h5.m.taobao.com/trip/fp-form-render/vue.css" />
-    <style>
-      .community-img {
-        height: 0;
-        display: block;
-        overflow: hidden;
-        box-shadow: 0 0 0 0, 0 6px 12px rgba(0, 0, 0, 0.5);
-        margin: 0 auto;
-        position: fixed;
-        top: 36px;
-        right: 16px;
-        z-index: 101;
-        transition: 0.4s all ease-in-out;
-        transform: scale(0) perspective(600px) rotateX(45deg);
-      }
-      .community-img.active {
-        right: 10px;
-        height: 340px;
-        top: 76px;
-        transform: none;
-      }
-      .show_community {
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script>
-      window.$docsify = {
-        requestHeaders: {
-          'cache-control': 'no-cache'
-        },
-        name: 'Form Render',
-        repo: 'http://github.com/alibaba/form-render',
-        themeColor: '#F6C14F',
-        icon: 'https://img.alicdn.com/tfs/TB1el3MJMDqK1RjSZSyXXaxEVXa-400-400.png',
-        search: 'auto',
-        auto2top: true,
-        coverpage: 'docs/_coverpage.md',
-        loadSidebar: 'docs/_sidebar.md',
-        loadNavbar: 'docs/_navbar.md',
-        basePath: location.port === '3000' ? '/' : '/form-render/',
-        nameLink: {
-          '/': '#/'
-        }
-      };
-    </script>
-    <script>
-      if (typeof navigator.serviceWorker !== 'undefined') {
-        navigator.serviceWorker.register('./docs/dist/sw.js');
-      }
-    </script>
-    <script src="//h5.m.taobao.com/trip/fp-form-render/docsify.min.js
+<head>
+  <meta charset="UTF-8" />
+  <title>Form Render</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta
+    name="description"
+    content="通过标准 JSON Schema 生成可视化 From 表单，常用于搭建表单配置，支持 Antd 和  Fusion 体系、一排N、无限嵌套、自定义正则校验、自定义样式组件等能力"
+  />
+  <meta
+    name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+  />
+  <link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" type="image/png" />
+  <link rel="stylesheet" href="//h5.m.taobao.com/trip/fp-form-render/vue.css" />
+  <style>
+    .community-img {
+      height: 0;
+      display: block;
+      overflow: hidden;
+      box-shadow: 0 0 0 0, 0 6px 12px rgba(0, 0, 0, 0.5);
+      margin: 0 auto;
+      position: fixed;
+      top: 36px;
+      right: 16px;
+      z-index: 101;
+      transition: 0.4s all ease-in-out;
+      transform: scale(0) perspective(600px) rotateX(45deg);
+    }
+
+    .community-img.active {
+      right: 10px;
+      height: 340px;
+      top: 76px;
+      transform: none;
+    }
+
+    .show_community {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+  window.$docsify = {
+    requestHeaders: {
+      'cache-control': 'no-cache'
+    },
+    name: 'Form Render',
+    repo: 'http://github.com/alibaba/form-render',
+    themeColor: '#F6C14F',
+    icon: 'https://img.alicdn.com/tfs/TB1el3MJMDqK1RjSZSyXXaxEVXa-400-400.png',
+    search: 'auto',
+    auto2top: true,
+    coverpage: 'docs/_coverpage.md',
+    loadSidebar: 'docs/_sidebar.md',
+    loadNavbar: 'docs/_navbar.md',
+    basePath: location.port === '3000' ? '/' : '/form-render/',
+    nameLink: {
+      '/': '#/'
+    },
+    plugins: [
+      function(hook, vm) {
+        hook.beforeEach(function(html) {
+          var url = 'https://github.com/alibaba/form-render/blob/master/' + vm.route.file;
+          var github = "<div  data-tooltip-title=\"Star it if you like\" data-tooltip-position=\"top\" class=\"tool-tip\"><iframe src=\"https://ghbtns.com/github-btn.html?user=alibaba&amp;repo=form-render&amp;type=watch&amp;count=true\" allowtransparency=\"true\" frameborder=\"0\" scrolling=\"0\" width=\"110\" height=\"20\" style='margin:0 10px -6px;border-width:0'></iframe></div>";
+
+          var editHtml = '<a href=' + url + ' data-tooltip-title=\"Correct this doc\" data-tooltip-position=\"top\" class=\"tool-tip\" target=\"_blank\"><img class=\"emoji\" src=\"https://img.alicdn.com/tfs/TB1ica2lcLJ8KJjy0FnXXcFDpXa-128-128.png\" alt=\"Edit\"></a>';
+          return "<div style='position:absolute;top:50px;right: 0'>"
+            + editHtml
+            + github
+            + "</div>"
+            + '\n\n'
+            + html
+            + '\n----\n'
+            + '**Please feel free to use and contribute to the development.**'
+        })
+      }],
+  };
+</script>
+<script>
+  if (typeof navigator.serviceWorker !== 'undefined') {
+    navigator.serviceWorker.register('./docs/dist/sw.js');
+  }
+</script>
+<script src="//h5.m.taobao.com/trip/fp-form-render/docsify.min.js
 "></script>
-  </body>
+</body>
 </html>
