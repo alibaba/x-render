@@ -4,13 +4,18 @@
 
 [![npm](https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/form-render?_blank)
 [![GitHub last commit](https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/commits/dev)
+[![NPM downloads](https://img.shields.io/npm/dm/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
+[![NPM all downloads](https://img.shields.io/npm/dt/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
+[![CNPM all downloads](http://npm.taobao.org/badge/d/form-render.svg?style=flat-square)](https://npm.taobao.org/package/form-render)
+[![GitHub last commit](https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/commits/dev)
+[![Package Quality](http://npm.packagequality.com/shield/form-render.svg?style=flat-square)](http://packagequality.com/#?package=form-render)
 [![GitHub closed issues](https://img.shields.io/github/issues-closed/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/issues?utf8=%E2%9C%93&q=)
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
-
 
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
 
 ## Topics
+
 - <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Demo 探索</a>
 - <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
 - <a href="/CHANGELOG.md" target="_blank">升级日志</a>
@@ -27,7 +32,7 @@
 
 ## 思路
 
-Form Render 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置，并支持渲染原生的 HTML 表单，通过 UiSchema 来配置 Widget 组件，在此基础上处理好上层 Antd 或 Fusion 组件 Widget 和 Input Format 的对应关系，最后还可以做到无缝接入其他组件体系的好处
+FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置，并支持渲染原生的 HTML 表单，通过 UiSchema 来配置 Widget 组件，在此基础上处理好上层 Antd 或 Fusion 组件 Widget 和 Input Format 的对应关系，最后还可以做到无缝接入其他组件体系的好处
 
 <img src="https://img.alicdn.com/tfs/TB1AoJUKNTpK1RjSZR0XXbEwXXa-1466-858.png" width="500"/>
 
@@ -50,7 +55,7 @@ import FormRender from 'form-render/lib/antd.js';
 // fusion 这样使用(使用开源版本)
 //import FormRender from 'form-render/lib/fusion';
 
-// propsSchema 是配置 Form Render 的必备参数，使用标准的 JSON Schema 来描述表单结构
+// propsSchema 是配置 FormRender 的必备参数，使用标准的 JSON Schema 来描述表单结构
 const propSchema = {
   type: 'object',
   properties: {
@@ -71,7 +76,7 @@ const propSchema = {
   ]
 };
 
-//通过uiSchema可以增强 Form Render 展示的丰富性，比如说日历视图
+//通过uiSchema可以增强 FormRender 展示的丰富性，比如说日历视图
 const uiSchema = {
   dateDemo: {
     'ui:widget': 'date'
@@ -156,7 +161,26 @@ ReactDOM.render(<Playground />, mountNode);
 | **`showValidate`** | `Boolean` |   `N`    |  `true`  |                是否展示校验                 |
 | **`validateText`** | `String`  |   `N`    |   `N`    |                  校验文字                   |
 
+## 调试
+
+```shell
+> git clone https://github.com/alibaba/form-render.git
+> npm i
+> npm run start
+```
+
+## 支持
+
+- 在你的公司或个人项目中使用 FormRender
+- 如果你觉得 FormRender 还不错，可以通过 Star 来表示你的喜欢
+- 加入钉钉聊天群帮忙解答使用问题
+  <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="180">
+
+## 贡献
+
+想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 pull request 前记得阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
+
 ## 协议
 
-* 遵循 MIT 协议
-* 请自由地享受和参与开源
+- 遵循 MIT 协议
+- 请自由地享受和参与开源
