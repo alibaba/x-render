@@ -39,6 +39,17 @@
     .show_community {
       cursor: pointer;
     }
+
+    .tool-tip-warp {
+      position: absolute;
+      top: 50px;
+      right: 0
+    }
+    @media screen and (max-width: 480px) {
+      .tool-tip-warp {
+        display: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -68,7 +79,7 @@
           var github = "<div  data-tooltip-title=\"Star it if you like\" data-tooltip-position=\"top\" class=\"tool-tip\"><iframe src=\"https://ghbtns.com/github-btn.html?user=alibaba&amp;repo=form-render&amp;type=watch&amp;count=true\" allowtransparency=\"true\" frameborder=\"0\" scrolling=\"0\" width=\"110\" height=\"20\" style='margin:0 10px -6px;border-width:0'></iframe></div>";
 
           var editHtml = '<a href=' + url + ' data-tooltip-title=\"Correct this doc\" data-tooltip-position=\"top\" class=\"tool-tip\" target=\"_blank\"><img class=\"emoji\" src=\"https://img.alicdn.com/tfs/TB1ica2lcLJ8KJjy0FnXXcFDpXa-128-128.png\" alt=\"Edit\"></a>';
-          return "<div style='position:absolute;top:50px;right: 0'>"
+          return "<div class=\"tool-tip-warp\">"
             + editHtml
             + github
             + "</div>"
