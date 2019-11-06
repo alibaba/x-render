@@ -8,6 +8,7 @@
   - [自定义组件](docs/widget)
   - [表达式依赖决定显示表单](docs/depend)
 - **也许需要**
+  - [为什么造轮子](docs/why)
   - [常见问题](docs/question)
 - [**欢迎贡献代码**](CONTRIBUTING)
 - [**升级日志**](CHANGELOG)
