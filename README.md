@@ -174,7 +174,7 @@ ReactDOM.render(<Playground />, mountNode);
 - 如果你觉得 FormRender 还不错，可以通过 Star 来表示你的喜欢
 - 加入钉钉聊天群帮忙解答使用问题
 
-  <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="180">
+  <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="240">
 
 ## 贡献
 
