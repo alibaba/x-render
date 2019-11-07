@@ -57,7 +57,7 @@ class Root extends Component {
     return (
       <div className="vh-100 overflow-auto flex flex-column">
         <GithubCorner
-          href="https://alibaba.github.io/form-render/"
+          href="https://github.com/alibaba/form-render"
           bannerColor="#F6C14F"
           className="absolute top-0 right-0 z-999"
         />
