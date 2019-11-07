@@ -47,6 +47,7 @@ module.exports = {
         ],
         css: ['@alifd/next@1.x/dist/next'],
       },
+      excludeChunks:['main'],
       template: resolve(__dirname, 'demo/index.html'),
     }),
     new UglifyJsPlugin({

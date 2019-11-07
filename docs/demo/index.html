@@ -5,13 +5,34 @@
   <link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" type="image/png" />
   <title>FormRender Demo</title>
   <link rel="stylesheet" href="//unpkg.com/@alifd/next@1.x/dist/next.css" />
+  
 </head>
 <body>
-  <div id="__render_content_"></div>
-  <script src="//unpkg.com/react@16.x/umd/react.production.min.js"></script>
-  <script src="//unpkg.com/react-dom@16.x/umd/react-dom.production.min.js"></script>
-  <script src="//unpkg.com/prop-types@15.x/prop-types.js"></script>
-  <script src="//unpkg.com/moment@2.24.0/moment.js"></script>
-  <script src="//unpkg.com/@alifd/next@1.x/dist/next.js"></script>
-<script type="text/javascript" src="main.bundle.js"></script></body>
+<div id="__render_content_"></div>
+
+<script src="//unpkg.com/react@16.x/umd/react.production.min.js"></script>
+
+<script src="//unpkg.com/react-dom@16.x/umd/react-dom.production.min.js"></script>
+
+<script src="//unpkg.com/prop-types@15.x/prop-types.js"></script>
+
+<script src="//unpkg.com/moment@2.24.0/moment.js"></script>
+
+<script src="//unpkg.com/@alifd/next@1.x/dist/next.js"></script>
+
+<script>
+  function loadScript(url) {
+    var script = document.createElement('script');
+    script.src = url;
+    var firstScript = document.getElementsByTagName('script')[0];
+    firstScript.parentNode.insertBefore(script, firstScript);
+  }
+
+  if (window.location.port === '9000') {
+    loadScript('main.bundle.js')
+  } else {
+    loadScript('//unpkg.com/form-render/docs/demo/main.bundle.js')
+  }
+</script>
+</body>
 </html>
