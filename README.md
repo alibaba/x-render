@@ -12,7 +12,7 @@
 
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
 
-## Topics
+## 了解 
 
 - <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
 - <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Demo 探索</a>
@@ -21,7 +21,7 @@
 
 <img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="700"/>
 
-## Features
+## 优势
 
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
 - 使用 JSON Schema 标准协议描述表单配置，并搭配丰富类型且可扩展的组件
@@ -29,26 +29,20 @@
 - 已在内部不少场景使用，可简单使用同时支持复杂场景使用
 - 使用上有详细文档，维护上有专人支持
 
-## 思路
-
-FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置，并支持渲染原生的 HTML 表单，通过 UiSchema 来配置 Widget 组件，在此基础上处理好上层 Antd 或 Fusion 组件 Widget 和 Input Format 的对应关系，最后还可以做到无缝接入其他组件体系的好处
-
-<img src="https://img.alicdn.com/tfs/TB1AoJUKNTpK1RjSZR0XXbEwXXa-1466-858.png" width="500"/>
-
-## Installation
+## 安装
 
 ```sh
 npm i form-render -S
 ```
 
-## Usage
+## 快速使用
 
 详细使用可见 [开始开始](https://alibaba.github.io/form-render/#/README)
 
 ```react
 import React from 'react';
 
-// antd 是这样使用(使用3.x版本)
+// ant design 是这样使用(使用3.x版本)
 import FormRender from 'form-render/lib/antd.js';
 
 // fusion 这样使用(使用开源版本)
@@ -133,7 +127,7 @@ ReactDOM.render(<Playground />, mountNode);
 
 \*设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
 
-### Rare API
+### 不常用 API
 
 | Prop               |    Type     | Required | Default  |                    Description                    |
 | ------------------ | :---------: | :------: | :------: | :-----------------------------------------------: |
@@ -144,21 +138,13 @@ ReactDOM.render(<Playground />, mountNode);
 | **`mapping`**      |  `Object`   |   `N`    |   `{}`   |              用于修改默认组件映射表               |
 | **`FieldUI`**      | `Component` |   `N`    | 内置组件 |     用于自定义整个元素的样式（标签、结构等）      |
 
-注：样式覆盖基本能满足简单的样式修改需求，普通用户慎用`FieldUI`
 
-`FieldUI` 的 `props`:
+## 原理
 
-| Prop               |   Type    | Required | Default  |                 Description                 |
-| ------------------ | :-------: | :------: | :------: | :-----------------------------------------: |
-| **`className`**    | `String`  |   `N`    |   `N`    |     使用`ui:options`里设置的`className`     |
-| **`displayType`**  | `String`  |   `N`    | `column` | 设置表单横向排列或者纵向排序`column`/ `row` |
-| **`isComplex`**    | `Boolean` |   `N`    |   `N`    |       是否是复杂结构：对象和对象数组        |
-| **`isRequired`**   | `Boolean` |   `N`    |   `N`    |                是否是必填项                 |
-| **`schema`**       | `Object`  |   `Y`    |   `N`    |             组件对应的子 schema             |
-| **`showLabel`**    | `Boolean` |   `N`    |  `true`  |               是否展示 label                |
-| **`showDescIcon`** | `Boolean` |   `N`    | `false`  |  是否将文字形式说明显示成描述 tooltip 形式  |
-| **`showValidate`** | `Boolean` |   `N`    |  `true`  |                是否展示校验                 |
-| **`validateText`** | `String`  |   `N`    |   `N`    |                  校验文字                   |
+FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置，并支持渲染原生的 HTML 表单，通过 UiSchema 来配置 Widget 组件，在此基础上处理好上层 Ant Design 或 Fusion 组件 Widget 和 Input Format 的对应关系，最后还可以做到无缝接入其他组件体系的好处
+
+<img src="https://img.alicdn.com/tfs/TB1AoJUKNTpK1RjSZR0XXbEwXXa-1466-858.png" width="500"/>
+
 
 ## 调试
 
@@ -178,7 +164,7 @@ ReactDOM.render(<Playground />, mountNode);
 
 ## 贡献
 
-想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 pull request 前记得阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
+想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)
 
 ## 协议
 
