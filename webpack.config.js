@@ -1,4 +1,5 @@
 const { resolve } = require('path');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
@@ -36,6 +37,7 @@ module.exports = {
       languages: ['json'],
       features: ['snippets','suggest']
     }),
+    new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
     new HtmlWebpackPlugin({
       resources: {
         js: [
