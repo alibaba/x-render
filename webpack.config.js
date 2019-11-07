@@ -39,13 +39,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       resources: {
         js: [
-          'react@16.x/umd/react.production.min',
-          'react-dom@16.x/umd/react-dom.production.min',
-          'prop-types@15.x/prop-types',
-          'moment@2.24.0/moment',
-          '@alifd/next@1.x/dist/next'
+          'react@16.x/umd/react.production.min.js',
+          'react-dom@16.x/umd/react-dom.production.min.js',
+          'prop-types@15.x/prop-types.min.js',
+          'moment@2.24.0/min/moment.min.js',
+          '@alifd/next@1.x/dist/next.min.js'
         ],
-        css: ['@alifd/next@1.x/dist/next'],
+        css: ['@alifd/next@1.x/dist/next.min.css'],
       },
       excludeChunks:['main'],
       template: resolve(__dirname, 'demo/index.html'),
