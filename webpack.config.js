@@ -43,7 +43,7 @@ module.exports = {
           'react-dom@16.x/umd/react-dom.production.min',
           'prop-types@15.x/prop-types',
           'moment@2.24.0/moment',
-          '@alifd/next@1.x/dist/next',
+          '@alifd/next@1.x/dist/next'
         ],
         css: ['@alifd/next@1.x/dist/next'],
       },

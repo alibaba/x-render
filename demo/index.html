@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" type="image/png" />
   <title>FormRender Demo</title><% (htmlWebpackPlugin.options.resources.css || []).forEach(function(path) { %>
-  <link rel="stylesheet" href="//unpkg.alipay.com/<%=path%>.css" /><% }) %>
+  <link rel="stylesheet" href="//unpkg.com/<%=path%>.css" /><% }) %>
 </head>
 <body>
   <div id="__render_content_"></div><% (htmlWebpackPlugin.options.resources.js || []).forEach(function(path) { %>
-  <script src="//unpkg.alipay.com/<%=path%>.js"></script><% }) %>
+  <script src="//unpkg.com/<%=path%>.js"></script><% }) %>
 </body>
 </html>
