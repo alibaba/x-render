@@ -1,6 +1,10 @@
-<img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" width="146px">
+<p align="center">
+  <a href="https://alibaba.github.io/form-render/">
+    <img width="146" src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
+  </a>
+</p>
 
-# FormRender
+<h1 align="center">FormRender</h1>
 
 [![npm](https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/form-render?_blank)
 [![GitHub last commit](https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/commits/dev)
@@ -27,7 +31,7 @@
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
 - 使用 JSON Schema 标准协议描述表单配置，并搭配丰富类型且可扩展的组件
 - 支持 1 排 N、横纵排、支持对象无限嵌套、自定义正则校验、自定义样式组件、列表拖拽等特性
-- 已在内部不少场景使用，可简单使用同时支持复杂场景使用
+- 已在飞猪、亚博科技、安全智能、淘宝、新零售行业工作台、人工智能实验室、天猫等多BU多场景使用，可支持复杂场景使用，可简单使用同时支持复杂场景使用
 - 使用上有详细文档，维护上有专人支持
 
 ## 安装
