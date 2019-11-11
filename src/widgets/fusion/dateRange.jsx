@@ -40,7 +40,6 @@ export default function date(p) {
       {...p.options}
       showTime={format === 'dateTime'}
       {...defaultObj}
-      format={dateFormat}
       disabled={p.disabled}
       onChange={handleChange}
     />
