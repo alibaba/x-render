@@ -43,7 +43,7 @@ npm i form-render -S
 import React from 'react';
 
 // ant design 是这样使用(使用3.x版本)
-import FormRender from 'form-render/lib/antd.js';
+import FormRender from 'form-render/lib/antd';
 
 // fusion 这样使用(使用开源版本)
 //import FormRender from 'form-render/lib/fusion';
