@@ -25,11 +25,11 @@ export default function date(p) {
   }
 
   const handleChange = value => {
-    if (Array.isArray(value) && value[0] && value[1]) {
-      const result = [
-        moment(value[0]).format(dateFormat),
-        moment(value[1]).format(dateFormat),
-      ];
+    if (Array.isArray(value)) {
+      const result = value.map(
+        // null 的时候返回空字符串
+        item => (item || '') && moment(item).format(dateFormat)
+      );
       p.onChange(p.name, result);
     }
   };
@@ -40,7 +40,6 @@ export default function date(p) {
       {...p.options}
       showTime={format === 'dateTime'}
       {...defaultObj}
-      format={dateFormat}
       disabled={p.disabled}
       onChange={handleChange}
     />

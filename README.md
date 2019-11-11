@@ -17,6 +17,7 @@
 - <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
 - <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Demo 探索</a>
 - <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5?fontsize=14" target="_blank">Code Sandbox</a>
+- <a href="https://alibaba.github.io/form-render/#/docs/proptypes" target="_blank">Proptypes to Json Schema</a>
 - <a href="/CHANGELOG.md" target="_blank">Changelog</a>
 
 <img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="700"/>
@@ -43,7 +44,7 @@ npm i form-render -S
 import React from 'react';
 
 // ant design 是这样使用(使用3.x版本)
-import FormRender from 'form-render/lib/antd.js';
+import FormRender from 'form-render/lib/antd';
 
 // fusion 这样使用(使用开源版本)
 //import FormRender from 'form-render/lib/fusion';

@@ -1,4 +1,9 @@
 # Change Log
+
+### 0.2.3
+- [+] 新增 Proptypes to Json Schema 工具
+- [!] 解决 Fusion 下时间选择系列问题
+
 ### 0.2.1
 - [!] 官方 demo 提速，文档梳理到稍微好用
 
