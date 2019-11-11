@@ -26,7 +26,7 @@ export default function date(p) {
   const placeholderObj = p.description ? { placeholder: p.description } : {};
 
   const onChange = value => {
-    p.onChange(p.name, moment(value, dateFormat).format(dateFormat));
+    p.onChange(p.name, moment(value || '', dateFormat).format(dateFormat));
   };
 
   if (format === 'time') {
