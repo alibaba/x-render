@@ -1,4 +1,4 @@
-# proptypes-to-json-schema   &nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/proptypes-to-json-schema.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/proptypes-to-json-schema?_blank)
+# Proptypes to Json Schema   &nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/proptypes-to-json-schema.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/proptypes-to-json-schema?_blank)
 
 > Github：<a href="https://github.com/tw93/proptypes-to-json-schema" target="_blank">proptypes-to-json-schema</a>
 

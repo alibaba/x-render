@@ -38,8 +38,6 @@ npm i form-render -S
 
 ## 快速使用
 
-详细使用可见 [开始开始](https://alibaba.github.io/form-render/#/README)
-
 ```react
 import React from 'react';
 
