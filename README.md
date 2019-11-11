@@ -5,7 +5,7 @@
 </p>
 
 <h1 align="center">FormRender</h1>
-
+<div align="center">
 [![npm](https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/form-render?_blank)
 [![GitHub last commit](https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/commits/dev)
 [![NPM downloads](https://img.shields.io/npm/dm/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
@@ -15,6 +15,8 @@
 ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
 
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
+
+</div>
 
 ## 了解 
 
