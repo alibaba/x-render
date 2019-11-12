@@ -17,19 +17,17 @@
 ## 了解 
 
 - <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
-- <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Demo 探索</a>
-- <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5?fontsize=14" target="_blank">Code Sandbox</a>
+- <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Demo 探索</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5?fontsize=14" target="_blank">Code Sandbox</a>
+- <a href="https://alibaba.github.io/form-render/#/docs/used" target="_blank">常见场景</a>
 - <a href="https://alibaba.github.io/form-render/#/docs/proptypes" target="_blank">Proptypes to Json Schema</a>
-- <a href="/CHANGELOG.md" target="_blank">Changelog</a>
-
-<img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="700"/>
 
 ## 优势
-
+ <img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="700"/>
+ 
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
 - 使用 JSON Schema 标准协议描述表单配置，并搭配丰富类型且可扩展的组件
 - 支持 1 排 N、横纵排、支持对象无限嵌套、自定义正则校验、自定义样式组件、列表拖拽等特性
-- 已在飞猪、亚博科技、安全智能、淘宝、新零售行业工作台、人工智能实验室、天猫等多BU多场景使用，可支持复杂场景使用，可简单使用同时支持复杂场景使用
+- 已在淘宝、天猫、飞猪、亚博科技、安全智能、新零售行业工作台、人工智能实验室、安全智能部门等多 BU 多场景使用，可支持复杂场景使用，可简单使用同时支持复杂场景使用
 - 使用上有详细文档，维护上有专人支持
 
 ## 安装
@@ -41,43 +39,34 @@ npm i form-render -S
 ## 快速使用
 
 ```react
-import React from 'react';
+import React from "react";
+import ReactDOM from "react-dom";
+// 使用 Ant Design 体系
+import FormRender from "form-render/lib/antd";
 
-// ant design 是这样使用(使用3.x版本)
-import FormRender from 'form-render/lib/antd';
+// 使用 Fusion Design 体系
+// import "@alifd/next/dist/next.min.css";
+// import FormRender from "form-render/lib/fusion";
 
-// fusion 这样使用(使用开源版本)
-//import FormRender from 'form-render/lib/fusion';
-
-// propsSchema 是配置 FormRender 的必备参数，使用标准的 JSON Schema 来描述表单结构
+// propsSchema 使用标准的 JSON Schema 来描述表单结构
 const propSchema = {
-  type: 'object',
+  type: "object",
   properties: {
-    stringDemo: {
-      title: '字符串',
-      description: '英文或数字组合',
-      type: 'string',
-      pattern: '^[A-Za-z0-9]+$'
-    },
     dateDemo: {
-      title: '时间',
-      format: 'dateTime',
-      type: 'string'
-    },
-  },
-  required: [
-    'stringDemo'
-  ]
-};
-
-//通过uiSchema可以增强 FormRender 展示的丰富性，比如说日历视图
-const uiSchema = {
-  dateDemo: {
-    'ui:widget': 'date'
+      title: "时间",
+      type: "string"
+    }
   }
 };
 
-class Playground extends React.Component {
+// uiSchema 可以增强展示类型的丰富性，如时间组件
+const uiSchema = {
+  dateDemo: {
+    "ui:widget": "date"
+  }
+};
+
+class App extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -90,18 +79,17 @@ class Playground extends React.Component {
     this.setState({
       formData: value
     });
-  }
+  };
 
   // 数据格式校验回调
   onValidate = list => {
     console.log(list);
-  }
+  };
 
   render() {
     const { formData } = this.state;
     return (
       <FormRender
-        name="表单配置"
         propsSchema={propSchema}
         uiSchema={uiSchema}
         formData={formData}
@@ -111,7 +99,9 @@ class Playground extends React.Component {
     );
   }
 }
-ReactDOM.render(<Playground />, mountNode);
+
+const rootElement = document.getElementById("root");
+ReactDOM.render(<App />, rootElement);
 ```
 
 ### API
@@ -157,7 +147,7 @@ FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置�
 
 ## 支持
 
-- 在你的公司或个人项目中使用 FormRender
+- 在公司或个人项目中使用 FormRender，关注 <a href="/CHANGELOG.md" target="_blank">Changelog</a>
 - 如果你觉得 FormRender 还不错，可以通过 Star 来表示你的喜欢
 - 加入钉钉聊天群帮忙解答使用问题
 

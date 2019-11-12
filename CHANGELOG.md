@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.2.4
+- [!] 文档 Demo 展示效果优化
+- [+] Fusion 体系支持按需加载
+
 ### 0.2.3
 - [+] 新增 Proptypes to Json Schema 工具
 - [!] 解决 Fusion 下时间选择系列问题

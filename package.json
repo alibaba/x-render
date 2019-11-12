@@ -1,7 +1,7 @@
 {
   "name": "form-render",
-  "version": "0.2.3",
-  "description": "通过标准 JSON Schema 生成可视化 From 表单，常用于搭建表单库快速配置，支持 Ant Design 和  Fusion 体系、一排N、横纵排、无限嵌套、自定义正则校验、自定义样式组件等能力",
+  "version": "0.2.4",
+  "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "repository": {
     "type": "git",
     "url": "git@github.com:alibaba/form-render.git"
@@ -12,7 +12,7 @@
     "React",
     "Json Schema",
     "Ant Design",
-    "Fusion"
+    "Fusion Design"
   ],
   "contributors": [
     {
