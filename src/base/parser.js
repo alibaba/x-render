@@ -71,8 +71,8 @@ function getBasicProps(settings, materials) {
     options, // 所有特定组件规则，addable等规则TODO
     hidden,
     required: required.indexOf(name) !== -1,
-    disabled: !!disabled,
-    readonly: !!readonly,
+    disabled: disabled,
+    readonly: readonly,
     width,
     widgets,
     fields,
