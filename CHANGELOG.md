@@ -1,17 +1,26 @@
 # Change Log
 
+### 0.2.5
+
+- [+] 当 schema 为 js 对象时，支持`ui:disabled`、`ui:readonly`、`ui:hidden`和`ui:options`的值为函数表达式。用法为 `"ui:disabled": (value, rootValue, formData) => value === "a"`
+- [+] 列表组件添加了 `hideDelete` 属性（`ui:options`），详见文档的 UISchema 部分
+
 ### 0.2.4
+
 - [!] 文档 Demo 展示效果优化
 - [+] Fusion 体系支持按需加载
 
 ### 0.2.3
+
 - [+] 新增 Proptypes to Json Schema 工具
 - [!] 解决 Fusion 下时间选择系列问题
 
 ### 0.2.1
+
 - [!] 官方 demo 提速，文档梳理到稍微好用
 
 ### 0.2.0
+
 - [!] 优化打包构建脚本，减少包大小
 - [+] 放出对应的 [Demo 效果](https://alibaba.github.io/form-render/docs/demo/index.html)
 - [!] 使用时候不需要再引入 antd 或者 fusion 的 css
