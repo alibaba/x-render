@@ -5,7 +5,7 @@ import { isHidden, isDependShow } from './isHidden';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
-  const FieldContainer = ({
+  let FieldContainer = ({
     className,
     column,
     showValidate,
@@ -14,9 +14,33 @@ export const asField = ({ FieldUI, Widget }) => {
     props,
     showDescIcon,
     width,
+    disabled,
+    readonly,
+    options,
     ...others
   }) => {
-    const { schema, displayType, rootValue, formData, dependShow } = others;
+    const {
+      schema,
+      displayType,
+      value,
+      rootValue,
+      formData,
+      dependShow,
+    } = others;
+    // 部分属性支持函数表达式
+    if (typeof hidden === 'function') {
+      hidden = hidden(value, rootValue, formData);
+    }
+    if (typeof disabled === 'function') {
+      disabled = disabled(value, rootValue, formData);
+    }
+    if (typeof readonly === 'function') {
+      readonly = readonly(value, rootValue, formData);
+    }
+    if (typeof options === 'function') {
+      options = options(value, rootValue, formData);
+    }
+    const _others = { ...others, disabled, readonly, options };
     // 对于需要隐藏的场景
     // "ui:hidden": true 的情况，隐藏
     if (hidden && isHidden({ hidden, rootValue, formData })) {
@@ -30,7 +54,7 @@ export const asField = ({ FieldUI, Widget }) => {
       schema.type === 'object' ||
       (schema.type === 'array' && schema.enum === undefined);
 
-    const validateText = getValidateText(others);
+    const validateText = getValidateText(_others);
 
     // 必填*，label，描述，竖排时的校验语，只要存在一个，label就不为空
     const showLabel =
@@ -68,7 +92,7 @@ export const asField = ({ FieldUI, Widget }) => {
     // console.log(schema, others);
     return (
       <FieldUI {...fieldProps}>
-        <Widget {...others} />
+        <Widget {..._others} />
       </FieldUI>
     );
   };

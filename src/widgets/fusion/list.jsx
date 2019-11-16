@@ -48,7 +48,8 @@ class ListItem extends React.Component {
   render() {
     const { item, p = {}, name, fold } = this.props;
     const descProps = { ...p, index: name };
-    const canFold = p.options && p.options.foldable;
+    const { options = {} } = p;
+    const { foldable: canFold, hideDelete } = options;
     // 只有当items为object时才做收起（fold）处理
     const isObj = p.schema.items && p.schema.items.type == 'object';
     let setClass =
@@ -69,7 +70,7 @@ class ListItem extends React.Component {
           />
         )}
         <DragHandle />
-        {!(canFold && fold) && (
+        {!((canFold && fold) || hideDelete) && (
           <Button
             className="self-end"
             onClick={() => {
