@@ -1,6 +1,6 @@
 # 如何贡献代码
 
-欢迎给 Form Render 提优化建议，或者修复已有 Bug，共促其发展
+欢迎给 FormRender 提优化建议，或者修复已有 Bug，共促其发展
 
 ## Branch 管理
 

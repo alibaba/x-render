@@ -6,7 +6,7 @@
 2. 我们团队使用 xxx ui，与 antd/fusion 不搭，希望能适配一套 xxx ui 组件的 form-render（欢迎 Pull Request）
 3. 我需要在表单内部写一个 excel 上传按钮（完全定制化的需求）
 
-注：如果是新增一个常用组件，建议给 Form Render 维护的同学来提 Pull Request，这样可以更好扩展其生态
+注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态
 
 ## 如何使用
 
