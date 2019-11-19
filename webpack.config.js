@@ -24,6 +24,19 @@ module.exports = {
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
       {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              javascriptEnabled: true,
+            },
+          },
+        ],
+      },
+      {
         test: /\.css$/,
         use: [
           'style-loader',
@@ -35,7 +48,7 @@ module.exports = {
   plugins: [
     new MonacoWebpackPlugin({
       languages: ['json'],
-      features: ['snippets','suggest']
+      features: ['snippets', 'suggest']
     }),
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
     new HtmlWebpackPlugin({
@@ -49,7 +62,7 @@ module.exports = {
         ],
         css: ['@alifd/next@1.x/dist/next.min.css'],
       },
-      excludeChunks:['main'],
+      excludeChunks: ['main'],
       template: resolve(__dirname, 'demo/index.html'),
     }),
     new UglifyJsPlugin({
