@@ -156,6 +156,10 @@ FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置�
 
 想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)
 
+感谢给 FormRender 贡献代码的你们！
+
+<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false"/></a>
+
 ## 协议
 
 - 遵循 MIT 协议
