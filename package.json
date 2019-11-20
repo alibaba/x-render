@@ -35,14 +35,10 @@
     "prettier": "prettier --write \"{demo,src}/**/*.{js,jsx,css,md}\""
   },
   "dependencies": {
-    "@alifd/next": "^1.13.4",
-    "antd": "^3.22.2",
     "moment": "^2.22.2",
     "pope": "^2.0.2",
     "prop-types": "^15.x",
     "rc-color-picker": "^1.2.6",
-    "react": "^16.x",
-    "react-dom": "^16.x",
     "react-sortable-hoc": "^1.6.1",
     "validator": "^10.7.1"
   },
@@ -77,6 +73,8 @@
     "html-webpack-plugin": "^3.2.0",
     "json-loader": "^0.5.7",
     "json-parse-better-errors": "^1.0.2",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
     "mocha": "^5.2.0",
     "monaco-editor": "^0.17.1",
     "monaco-editor-webpack-plugin": "^1.7.0",
@@ -87,6 +85,8 @@
     "prettier": "^1.18.2",
     "prismjs": "^1.17.1",
     "raw-loader": "^3.1.0",
+    "react": "^16.x",
+    "react-dom": "^16.x",
     "react-github-corner": "^2.3.0",
     "react-simple-code-editor": "^0.9.14",
     "sass-loader": "^7.0.3",
@@ -95,6 +95,8 @@
     "webpack": "^4.12.0",
     "webpack-bundle-analyzer": "^3.6.0",
     "webpack-cli": "^3.0.8",
-    "webpack-dev-server": "^3.1.4"
+    "webpack-dev-server": "^3.1.4",
+    "@alifd/next": "^1.13.4",
+    "antd": "^3.22.2"
   }
 }
