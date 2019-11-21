@@ -13,7 +13,7 @@
 
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
 
-## 了解 
+## 了解
 
 - <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
 - <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5?fontsize=14" target="_blank">Code Sandbox</a>
@@ -21,6 +21,7 @@
 - <a href="https://alibaba.github.io/form-render/#/docs/proptypes" target="_blank">Proptypes to Json Schema</a>
 
 ## 优势
+
  <img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="700"/>
  
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
@@ -115,7 +116,9 @@ ReactDOM.render(<App />, rootElement);
 | **`onValidate`**  | `Function` |   `N`    | `()=>{}` |              表单输入校验回调               |
 | **`displayType`** |  `String`  |   `N`    | `column` | 设置表单横向排列或者纵向排序`column`/ `row` |
 
-\*设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
+**注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好  
+**注 2：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）  
+**注 3：** FormRender 默认布局会占满它的父级元素，建议用一个`div`包裹 FormRender 用于表单布局样式调整
 
 ### 不常用 API
 
@@ -128,13 +131,11 @@ ReactDOM.render(<App />, rootElement);
 | **`mapping`**      |  `Object`   |   `N`    |   `{}`   |              用于修改默认组件映射表               |
 | **`FieldUI`**      | `Component` |   `N`    | 内置组件 |     用于自定义整个元素的样式（标签、结构等）      |
 
-
 ## 原理
 
 FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置，并支持渲染原生的 HTML 表单，通过 UiSchema 来配置 Widget 组件，在此基础上处理好上层 Ant Design 或 Fusion 组件 Widget 和 Input Format 的对应关系，最后还可以做到无缝接入其他组件体系的好处
 
 <img src="https://img.alicdn.com/tfs/TB1AoJUKNTpK1RjSZR0XXbEwXXa-1466-858.png" width="500"/>
-
 
 ## 调试
 

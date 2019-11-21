@@ -1,5 +1,13 @@
 # Change Log
 
+### 0.2.6
+
+- [+] 重磅：schema 里大部分属性现在都支持函数表达式，方便表单组件间的关联（详见文档 UISchema、PropsSchema 部分）
+- [+] Demo 大幅更新
+- [!] 依赖组件库的抽离，避免了重复下载 antd/fusion
+- [!] antd 组件按需加载使用 less 文件
+- [!] 修复了 ui:options/format 被 format 属性覆盖的问题[@ColinChen2](https://github.com/ColinChen2)
+
 ### 0.2.5
 
 - [+] 当 schema 为 js 对象时，支持`ui:disabled`、`ui:readonly`、`ui:hidden`和`ui:options`的值为函数表达式。用法为 `"ui:disabled": (value, rootValue, formData) => value === "a"`
