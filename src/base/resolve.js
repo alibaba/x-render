@@ -17,8 +17,9 @@ function getDefaultValue({ default: def, enum: enums = [], type }) {
   if (type === 'array' && enums.length > 0) {
     return [];
   }
+  // 如果enum是表达式，不处理
   // 如果设置枚举值，其次从枚举值中获取
-  if (typeof enums[0] !== 'undefined') {
+  if (Array.isArray(enums) && enums[0] && typeof enums[0] !== 'undefined') {
     return enums[0];
   }
   // 最后使用对应基础类型的默认值

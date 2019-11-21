@@ -3,6 +3,14 @@ import PropTypes from 'prop-types';
 import { getValidateText } from './validate';
 import { isHidden, isDependShow } from './isHidden';
 
+// 解析字符串值
+const parseString = (string, value, rootValue, formData) =>
+  Function(`"use strict";
+    const value = ${JSON.stringify(value)};
+    const rootValue = ${JSON.stringify(rootValue)};
+    const formData = ${JSON.stringify(formData)};
+    return (${string})`)();
+
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
   let FieldContainer = ({
@@ -17,50 +25,75 @@ export const asField = ({ FieldUI, Widget }) => {
     disabled,
     readonly,
     options,
-    ...others
+    schema,
+    ...rest
   }) => {
     const {
-      schema,
       displayType,
       value,
-      rootValue,
-      formData,
+      rootValue = {},
+      formData = {},
       dependShow,
-    } = others;
-    // 部分属性支持函数表达式
-    if (typeof hidden === 'function') {
-      hidden = hidden(value, rootValue, formData);
-    }
-    if (typeof disabled === 'function') {
-      disabled = disabled(value, rootValue, formData);
-    }
-    if (typeof readonly === 'function') {
-      readonly = readonly(value, rootValue, formData);
-    }
-    if (typeof options === 'function') {
-      options = options(value, rootValue, formData);
-    }
-    const _others = { ...others, disabled, readonly, options };
-    // 对于需要隐藏的场景
-    // "ui:hidden": true 的情况，隐藏
+    } = rest;
+    // every key of schema, disabled, readonly, options, hidden, support for function expression
+    const convertValue = item => {
+      if (typeof item === 'function') {
+        return item(value, rootValue, formData);
+      } else if (typeof item === 'string' && item.substring(0, 1) === '@') {
+        const _item = item.substring(1);
+        try {
+          return parseString(_item, value, rootValue, formData);
+        } catch (error) {
+          console.error(error.message);
+          console.error(`happen at ${item}`);
+          return item;
+        }
+      }
+      return item;
+    };
+
+    hidden = convertValue(hidden);
+    disabled = convertValue(disabled);
+    readonly = convertValue(readonly);
+    options = convertValue(options);
+    // iterate over schema, and convert every key
+    let _schema = { ...schema };
+    Object.keys(schema).forEach(key => {
+      _schema[key] = convertValue(schema[key]);
+    });
+
+    // "ui:hidden": true, hide formItem
+    // after "convertValue" being stable, this api will be discarded
     if (hidden && isHidden({ hidden, rootValue, formData })) {
       return null;
     }
+
+    // 传入组件的值
+    const _rest = {
+      ...rest,
+      schema: _schema,
+      disabled,
+      readonly,
+      options,
+      formData: formData || {},
+      rootValue: rootValue || {},
+    };
+
     // 不建议使用ui:dependShow, 一般一律使用ui:hidden。ui:dependShow可以做复杂、跨结构的校验
     if (isDependShow({ formData, dependShow })) {
       return null;
     }
     const isComplex =
-      schema.type === 'object' ||
-      (schema.type === 'array' && schema.enum === undefined);
+      _schema.type === 'object' ||
+      (_schema.type === 'array' && _schema.enum === undefined);
 
-    const validateText = getValidateText(_others);
+    const validateText = getValidateText(_rest);
 
     // 必填*，label，描述，竖排时的校验语，只要存在一个，label就不为空
     const showLabel =
-      schema.title ||
-      others.description ||
-      others.required ||
+      _schema.title ||
+      rest.description ||
+      rest.required ||
       (displayType !== 'row' && showValidate && validateText);
 
     let columnStyle = {};
@@ -81,18 +114,17 @@ export const asField = ({ FieldUI, Widget }) => {
       columnStyle,
       displayType,
       isComplex,
-      isRequired: others.required,
+      isRequired: rest.required,
       isRoot,
-      schema,
+      schema: _schema,
       showDescIcon,
       showLabel,
       showValidate,
       validateText,
     };
-    // console.log(schema, others);
     return (
       <FieldUI {...fieldProps}>
-        <Widget {..._others} />
+        <Widget {..._rest} />
       </FieldUI>
     );
   };

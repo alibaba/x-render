@@ -153,7 +153,7 @@ export const dealTypeValidate = (key, value, schema = {}) => {
 
 const keyHidden = (schema, val) => {
   let hidden = schema && schema['ui:hidden'];
-  if (typeof hidden === 'string') {
+  if (typeof hidden === 'string' && hidden.substring(0, 1) !== '@') {
     hidden = isHidden({ hidden, rootValue: val });
   }
   return hidden;
