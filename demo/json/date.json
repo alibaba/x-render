@@ -10,7 +10,10 @@
       "date2": {
         "title": "日期选择",
         "type": "string",
-        "format": "date"
+        "format": "date",
+        "ui:options": {
+          "format": "YY/MM/DD"
+        }
       },
       "date3": {
         "title": "日期选择",

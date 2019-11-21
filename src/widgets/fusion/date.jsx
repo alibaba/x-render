@@ -44,10 +44,10 @@ export default function date(p) {
     <DatePicker
       style={{ width: '100%' }}
       {...placeholderObj}
-      {...p.options}
-      disabled={p.disabled}
       showTime={format === 'dateTime'}
+      {...p.options}
       {...defaultObj}
+      disabled={p.disabled}
       onChange={onChange}
     />
   );
