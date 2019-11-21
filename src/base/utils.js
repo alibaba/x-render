@@ -114,3 +114,7 @@ function getChildren(schema) {
 
 // 合并多个schema
 export function combine() {}
+
+// 代替eval的函数
+export const parseString = string =>
+  Function('"use strict";return (' + string + ')')();
