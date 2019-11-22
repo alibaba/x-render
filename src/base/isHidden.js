@@ -4,6 +4,7 @@
  */
 
 import { pope } from 'pope';
+import { parseString } from './utils';
 
 export function isDependShow({ formData, dependShow } = {}) {
   if (formData && dependShow) {
@@ -47,10 +48,6 @@ export function isHidden({ hidden, rootValue, formData } = {}) {
   }
   return hidden;
 }
-
-// 代替eval的函数
-const parseString = string =>
-  Function('"use strict";return (' + string + ')')();
 
 // data = {a: b: {c: 1}}  getExpressionValue(data, 'a.b.c')
 const getExpressionValue = (formData, expression) => {

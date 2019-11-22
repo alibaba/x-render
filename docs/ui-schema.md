@@ -128,34 +128,6 @@
 | foldable   | boolean | 列表（array） | `{ foldable: true }`用于长列表的收起和展开 |
 | hideDelete | boolean | 列表（array） |    `{ hideDelete: true }`隐藏“删除”按钮    |
 
-### 部分属性支持函数表达式
-
-当使用 js 对象作为 schema 时，属性的值可以传函数，这加大了开发的自由度。目前支持的属性是`ui:disabled`、`ui:readonly`、`ui:hidden`和`ui:options`。入参按顺序依次为
-
-| option    |      类型      |
-| --------- | :------------: |
-| value     |    组件的值    |
-| rootValue |   父组件的值   |
-| formData  | 整个 form 的值 |
-
-使用方式如下
-
-```js
-{
-  propsSchema: {
-    type: "object",
-    properties: {
-      select: {
-        title: "单选",
-        type: "string",
-        enum: ["a", "b", "c"],
-        "ui:disabled": (value, rootValue, formData) => value === "a"
-      }
-    }
-  }
-}
-```
-
 ### 如何编写 uiSchema 设置
 
 ```json

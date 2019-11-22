@@ -2,7 +2,7 @@
 
 ### 1. 我引入了组件，但发现无论如何都显示不出来？
 
-- 首先去 <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Demo 探索</a> 中去将对于的参数填入进去，看是否可以正常出现
+- 首先去 <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Playground</a> 中去将对于的参数填入进去，看是否可以正常出现
 - 假如可以，检查一下 onChange 回调里面是否对 formData 进行了 setState，没有的话，可能由于初始化问题没有显示，加上即可
 
 ### 2. 我的 FormRender 可以正常渲染，但是貌似 antd 的样式都没有生效？
