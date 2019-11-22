@@ -32,7 +32,8 @@
     "dist": "webpack --mode=production",
     "lint": "eslint 'src/**/*.@(js|jsx)'",
     "test": "mocha --compilers js:babel-core/register --recursive test/",
-    "prettier": "prettier --write \"{demo,src}/**/*.{js,jsx,css,md}\""
+    "prettier": "prettier --write \"{demo,src}/**/*.{js,jsx,css,md}\"",
+    "publish:next": "npm publish --tag next"
   },
   "dependencies": {
     "moment": "^2.22.2",
