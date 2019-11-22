@@ -41,8 +41,8 @@
     "rc-color-picker": "^1.2.6",
     "react-sortable-hoc": "^1.6.1",
     "validator": "^10.7.1",
-    "antd": "3.x",
-    "@alifd/next": "1.x"
+    "antd": "^3.x",
+    "@alifd/next": "^1.x"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
