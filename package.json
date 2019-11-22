@@ -40,7 +40,9 @@
     "prop-types": "^15.x",
     "rc-color-picker": "^1.2.6",
     "react-sortable-hoc": "^1.6.1",
-    "validator": "^10.7.1"
+    "validator": "^10.7.1",
+    "antd": "3.x",
+    "@alifd/next": "1.x"
   },
   "peerDependencies": {
     "react": "^15.0.0 || ^16.0.0",
@@ -48,8 +50,6 @@
     "babel-polyfill": "^6.13.0"
   },
   "devDependencies": {
-    "@alifd/next": "^1.18.16",
-    "antd": "^3.25.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-eslint": "^8.2.3",
