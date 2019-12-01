@@ -21,7 +21,7 @@ export default function number(p) {
   };
 
   return (
-    <div className="flex w-100 items-center justify-between">
+    <div className="fr-slider">
       <Range
         style={{ flexGrow: 1, marginRight: 12 }}
         {...setting}
