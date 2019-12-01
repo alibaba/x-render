@@ -1,6 +1,6 @@
-import getField from './get-field';
+import getField from './getField';
 import resolve from './resolve';
-import subFieldGenerator from './sub-field-generator';
+import subFieldGenerator from './subFieldGenerator';
 
 // 对于数组或对象类型，获取其子集schema
 function getSubSchemas(schema = {}) {
