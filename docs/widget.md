@@ -1,6 +1,6 @@
 # 自定义组件
 
-当 form-render 提供的组件无法 100%满足用户需求时，可以考虑自己写一个。自定义组件功能使 form-render 佣有无限的扩展性。可能的应用场景如下：
+当 form-render 提供的组件无法 100%满足用户需求时，可以考虑自己写一个。自定义组件功能使 form-render 拥有很好扩展性，可能的应用场景如下：
 
 1. 我需要写一个异步加载的搜索输入框（普适性不高/难以用 schema 描述的组件）
 2. 我们团队使用 xxx ui，与 antd/fusion 不搭，希望能适配一套 xxx ui 组件的 form-render（欢迎 Pull Request）
@@ -9,6 +9,8 @@
 注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态
 
 ## 如何使用
+
+- 可以支持参考此[codeSandbox 案例](https://codesandbox.io/s/form-renderjichudemo-f55oy)
 
 ### 写自定义组件
 
