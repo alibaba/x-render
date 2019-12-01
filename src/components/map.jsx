@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function map(p) {
   return (
-    <div className="flex flex-wrap fr-map">
+    <div className="fr-map">
       {Object.keys(p.value).map(name =>
         p.getSubField({
           name,
