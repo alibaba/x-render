@@ -10,7 +10,7 @@
 
 ## 如何使用
 
-- 可以支持参考此[codeSandbox 案例](https://codesandbox.io/s/form-renderjichudemo-f55oy)
+- 整体代码参考此 [CodeSandbox 案例](https://codesandbox.io/s/form-renderjichudemo-f55oy)
 
 ### 写自定义组件
 
