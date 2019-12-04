@@ -51,8 +51,8 @@ module.exports = {
     new HtmlWebpackPlugin({
       resources: {
         js: [
-          'react@16.12.0/umd/react.development.js',
-          'react-dom@16.12.0/umd/react-dom.development.js',
+          'react@16.x/umd/react.development.js',
+          'react-dom@16.x/umd/react-dom.development.js',
           'prop-types@15.x/prop-types.min.js',
           'moment@2.24.0/min/moment.min.js',
           '@alifd/next@1.x/dist/next.min.js',
