@@ -1,7 +1,7 @@
 const { resolve } = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
@@ -38,27 +38,24 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          'style-loader',
-          'css-loader'
-        ],
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
   plugins: [
     new MonacoWebpackPlugin({
       languages: ['json'],
-      features: ['snippets', 'suggest']
+      features: ['snippets', 'suggest'],
     }),
     new webpack.optimize.LimitChunkCountPlugin({ maxChunks: 1 }),
     new HtmlWebpackPlugin({
       resources: {
         js: [
-          'react@16.x/umd/react.production.min.js',
-          'react-dom@16.x/umd/react-dom.production.min.js',
+          'react@16.x/umd/react.development.js',
+          'react-dom@16.x/umd/react-dom.development.js',
           'prop-types@15.x/prop-types.min.js',
           'moment@2.24.0/min/moment.min.js',
-          '@alifd/next@1.x/dist/next.min.js'
+          '@alifd/next@1.x/dist/next.min.js',
         ],
         css: ['@alifd/next@1.x/dist/next.min.css'],
       },
@@ -73,14 +70,14 @@ module.exports = {
       uglifyOptions: {
         compress: {
           unused: true,
-          drop_debugger: true
+          drop_debugger: true,
         },
         warnings: false,
         output: {
-          comments: false
-        }
-      }
-    })
+          comments: false,
+        },
+      },
+    }),
   ],
   externals: {
     react: 'var window.React',
@@ -101,7 +98,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      'monaco-editor': 'monaco-editor/esm/vs/editor/editor.api'
-    }
+      'monaco-editor': 'monaco-editor/esm/vs/editor/editor.api',
+    },
   },
 };
