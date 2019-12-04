@@ -63,7 +63,14 @@
 ### 控制表单项的 UI 展示（共通配置）
 
 - `ui:disabled`: 可控制 input、number、date、checkbox、radio、select、switch 对于组件的 disabled 属性(变灰不可点击)
-- `ui:readonly`：可控制 input、number 组件中的 readonly 属性(不可编辑，但不变灰)
+- `ui:readonly`：可控制 input、number 组件中的 readonly 属性(不可编辑，但不变灰)，列表也支持`readonly`，效果是列表的控件都会隐藏，导致列表不能增、删和拖拽，进入“只读”模式。但注意列表内的内容还是允许修改的，所以特别要注意如果列表套列表的场景，内部的列表也要 "ui:readonly": true
+
+```js
+"someList": {
+  "ui:readonly": true
+}
+```
+
 - `ui:hidden`：可控制所有基础组件是否显示，可使用 true/false 或表达式，例如：
 
 ```json
