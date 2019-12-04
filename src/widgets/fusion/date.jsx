@@ -19,7 +19,7 @@ export default function date(p) {
   let defaultObj = {};
   if (p.value) {
     defaultObj = {
-      defaultValue: moment(p.value, dateFormat),
+      value: moment(p.value, dateFormat),
     };
   }
 
