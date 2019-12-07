@@ -7,7 +7,7 @@ import React from 'react';
 import moment from 'moment';
 import { getFormat } from '../base/utils';
 
-export default ({ p, onChange }) => RangeComponent => {
+export default (p, onChange) => RangeComponent => {
   return class extends React.Component {
     render() {
       const { format = 'dateTime' } = p.schema;

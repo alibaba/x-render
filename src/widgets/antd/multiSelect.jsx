@@ -1,29 +1,12 @@
-import React from 'react';
-import { Select } from 'antd';
+/**
+ * Updated by Tw93 on 2019-12-07.
+ * 多选组件
+ */
 
-const { Option } = Select;
+import React from 'react';
+import rangeHoc from '../../components/rangeHoc';
 
 export default function multiSelect(p) {
-  const onChange = value => p.onChange(p.name, value);
-  return (
-    <Select
-      style={{ width: '100%' }}
-      {...p.options}
-      mode="multiple"
-      disabled={p.disabled}
-      value={p.value}
-      onChange={onChange}
-    >
-      {(p.schema.enum || []).map((val, index) => (
-        <Option value={val} key={index}>
-          <span
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: p.schema.enumNames ? p.schema.enumNames[index] : val,
-            }}
-          />
-        </Option>
-      ))}
-    </Select>
-  );
+  const FormMulti = rangeHoc(p)(Select);
+  return <FormMulti />;
 }

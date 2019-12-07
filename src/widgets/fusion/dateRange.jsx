@@ -18,6 +18,6 @@ export default function dateRange(p) {
       p.onChange(p.name, result);
     }
   };
-  const FormRange = rangeHoc({ p, onChange })(RangePicker);
+  const FormRange = rangeHoc(p, onChange)(RangePicker);
   return <FormRange />;
 }
