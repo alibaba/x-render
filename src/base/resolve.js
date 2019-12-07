@@ -9,21 +9,7 @@ function clone(data) {
 
 // 获取当前字段默认值
 function getDefaultValue({ default: def, enum: enums = [], type }) {
-  // 如果设置默认值，优先从默认值中获取
-  if (typeof def !== 'undefined') {
-    return def;
-  }
-  // array且enum的情况，为多选框，默认值[]
-  if (type === 'array' && enums.length > 0) {
-    return [];
-  }
-  // 如果enum是表达式，不处理
-  // 如果设置枚举值，其次从枚举值中获取
-  if (Array.isArray(enums) && enums[0] && typeof enums[0] !== 'undefined') {
-    return enums[0];
-  }
-  // 最后使用对应基础类型的默认值
-  return {
+  const defaultValue = {
     array: [],
     boolean: false,
     integer: '',
@@ -32,7 +18,45 @@ function getDefaultValue({ default: def, enum: enums = [], type }) {
     object: {},
     string: '',
     range: null,
-  }[type];
+  };
+
+  const isFunction = func => {
+    if (typeof func === 'function') {
+      return true;
+    }
+    if (typeof func === 'string' && func.substring(0, 1) === '@') {
+      return true;
+    }
+    return false;
+  };
+
+  if (isFunction(def)) {
+    return defaultValue[type];
+  }
+  if (isFunction(enums)) {
+    if (type === 'array') {
+      return [];
+    }
+    if (type === 'string' || type === 'number') {
+      return '';
+    }
+  }
+
+  // 如果设置默认值，优先从默认值中获取
+  if (typeof def !== 'undefined') {
+    return def;
+  }
+  // array且enum的情况，为多选框，默认值[]
+  if (type === 'array' && enums.length) {
+    return [];
+  }
+  // 如果enum是表达式，不处理
+  // 如果设置枚举值，其次从枚举值中获取
+  if (Array.isArray(enums) && enums[0] && typeof enums[0] !== 'undefined') {
+    return enums[0];
+  }
+  // 最后使用对应基础类型的默认值
+  return defaultValue[type];
 }
 
 function resolve(schema, data, options = {}) {
@@ -44,6 +68,7 @@ function resolve(schema, data, options = {}) {
     // 数组子集
     items,
     // 必选值，对象的子集
+    default: def,
     required = [],
   } = schema;
   const {
@@ -66,6 +91,9 @@ function resolve(schema, data, options = {}) {
     return ret;
   }
   if (type === 'array') {
+    if (def) {
+      return value;
+    }
     const subs = [].concat(items || []);
     const ret = [];
     value.forEach &&

@@ -36,7 +36,7 @@ const listItemHoc = ButtonComponent =>
     render() {
       const { item, p = {}, name, fold } = this.props;
       const descProps = { ...p, index: name };
-      const { options = {} } = p;
+      const { options = {}, readonly } = p;
       const { foldable: canFold, hideDelete } = options;
       // 只有当items为object时才做收起（fold）处理
       const isObj = p.schema.items && p.schema.items.type == 'object';
@@ -57,8 +57,8 @@ const listItemHoc = ButtonComponent =>
               style={{ position: 'absolute', top: 12, right: 36 }}
             />
           )}
-          <DragHandle />
-          {!((canFold && fold) || hideDelete) && (
+          {!readonly && <DragHandle />}
+          {!((canFold && fold) || hideDelete || readonly) && (
             <ButtonComponent
               className="self-end"
               type="dashed"
@@ -90,6 +90,7 @@ const fieldListHoc = ButtonComponent => {
 
     render() {
       const { p, foldList = [], toggleFoldItem } = this.props;
+      const { readonly } = p;
       const list = p.value || [];
       return (
         <ul className="pl0 ma0">
@@ -112,37 +113,41 @@ const fieldListHoc = ButtonComponent => {
               })}
             />
           ))}
-          <div className="tr">
-            <ButtonComponent icon="file-add" onClick={this.handleAddClick}>
-              新增
-            </ButtonComponent>
-            {p.extrafrButtons &&
-              p.extrafrButtons.length > 0 &&
-              p.extrafrButtons.map(item => (
-                <ButtonComponent
-                  className="ml2"
-                  icon={item.icon}
-                  onClick={() => {
-                    if (item.callback === 'clearAll') {
-                      p.onChange(p.name, []);
-                      return;
-                    }
-                    if (item.callback === 'copyLast') {
-                      const value = [...p.value];
-                      const lastIndex = value.length - 1;
-                      value.push(lastIndex > -1 ? value[lastIndex] : p.newItem);
-                      p.onChange(p.name, value);
-                      return;
-                    }
-                    if (typeof window[item.callback] === 'function') {
-                      window[item.callback].call(); // eslint-disable-line
-                    }
-                  }}
-                >
-                  {item.text}
-                </ButtonComponent>
-              ))}
-          </div>
+          {!readonly && (
+            <div className="tr">
+              <ButtonComponent icon="file-add" onClick={this.handleAddClick}>
+                新增
+              </ButtonComponent>
+              {p.extrafrButtons &&
+                p.extrafrButtons.length > 0 &&
+                p.extrafrButtons.map(item => (
+                  <ButtonComponent
+                    className="ml2"
+                    icon={item.icon}
+                    onClick={() => {
+                      if (item.callback === 'clearAll') {
+                        p.onChange(p.name, []);
+                        return;
+                      }
+                      if (item.callback === 'copyLast') {
+                        const value = [...p.value];
+                        const lastIndex = value.length - 1;
+                        value.push(
+                          lastIndex > -1 ? value[lastIndex] : p.newItem
+                        );
+                        p.onChange(p.name, value);
+                        return;
+                      }
+                      if (typeof window[item.callback] === 'function') {
+                        window[item.callback].call(); // eslint-disable-line
+                      }
+                    }}
+                  >
+                    {item.text}
+                  </ButtonComponent>
+                ))}
+            </div>
+          )}
         </ul>
       );
     }
