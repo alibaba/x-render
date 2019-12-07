@@ -131,6 +131,24 @@ ReactDOM.render(<App />, rootElement);
 | **`mapping`**      |  `Object`   |   `N`    |   `{}`   |              用于修改默认组件映射表               |
 | **`FieldUI`**      | `Component` |   `N`    | 内置组件 |     用于自定义整个元素的样式（标签、结构等）      |
 
+## 支持 Ant Design 自定义主题不被覆盖
+- 安装 webpack 插件
+    ```bash
+    npm install webpack-plugin-fr-theme  --save-dev
+    ```
+- 配置 webpack.config.js 文件
+    ```
+    const WebpackPluginFrTheme = require('webpack-plugin-fr-theme');
+  
+    {
+        ...
+        plugins: [
+          new WebpackPluginFrTheme(),
+        ],
+        ...
+    }
+    ```
+
 ## 原理
 
 FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置，并支持渲染原生的 HTML 表单，通过 UiSchema 来配置 Widget 组件，在此基础上处理好上层 Ant Design 或 Fusion 组件 Widget 和 Input Format 的对应关系，最后还可以做到无缝接入其他组件体系的好处
