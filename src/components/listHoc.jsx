@@ -1,14 +1,19 @@
+/**
+ * Created by Tw93 on 2019-12-01.
+ * 抽离高阶列表组件
+ */
+
 import React from 'react';
 import {
   SortableContainer,
-  sortableHandle,
+  SortableHandle,
   SortableElement,
   arrayMove,
 } from 'react-sortable-hoc';
 import FoldIcon from './foldIcon';
 import DescriptionList, { getDescription } from './descriptionList';
 
-const DragHandle = sortableHandle(() => (
+const DragHandle = SortableHandle(() => (
   <span className="fr-move-icon">:::</span>
 ));
 

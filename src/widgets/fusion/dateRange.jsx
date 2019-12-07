@@ -1,30 +1,15 @@
 import React from 'react';
 import { DatePicker } from '@alifd/next';
 import moment from 'moment';
+import rangeHoc from '../../components/rangeHoc';
+import { getFormat } from '../../base/utils';
 const { RangePicker } = DatePicker;
 
-export default function date(p) {
+export default function dateRange(p) {
   const { format = 'dateTime' } = p.schema;
-  let dateFormat;
-  switch (format) {
-    case 'date':
-      dateFormat = 'YYYY-MM-DD';
-      break;
-    default:
-      // dateTime
-      dateFormat = 'YYYY-MM-DD HH:mm:ss';
-  }
-  let defaultObj = {};
-  if (p.value && Array.isArray(p.value) && p.value[0] && p.value[1]) {
-    defaultObj = {
-      defaultValue: [
-        moment(p.value[0], dateFormat),
-        moment(p.value[1], dateFormat),
-      ],
-    };
-  }
+  const dateFormat = getFormat(format);
 
-  const handleChange = value => {
+  const onChange = value => {
     if (Array.isArray(value)) {
       const result = value.map(
         // null 的时候返回空字符串
@@ -33,15 +18,6 @@ export default function date(p) {
       p.onChange(p.name, result);
     }
   };
-
-  return (
-    <RangePicker
-      style={{ width: '100%' }}
-      {...p.options}
-      showTime={format === 'dateTime'}
-      {...defaultObj}
-      disabled={p.disabled}
-      onChange={handleChange}
-    />
-  );
+  const FormRange = rangeHoc({ p, onChange })(RangePicker);
+  return <FormRange />;
 }

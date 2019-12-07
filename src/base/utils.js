@@ -118,3 +118,19 @@ export function combine() {}
 // 代替eval的函数
 export const parseString = string =>
   Function('"use strict";return (' + string + ')')();
+
+export function getFormat(format) {
+  let dateFormat;
+  switch (format) {
+    case 'date':
+      dateFormat = 'YYYY-MM-DD';
+      break;
+    case 'time':
+      dateFormat = 'HH:mm:ss';
+      break;
+    default:
+      // dateTime
+      dateFormat = 'YYYY-MM-DD HH:mm:ss';
+  }
+  return dateFormat;
+}
