@@ -6,14 +6,14 @@
 import React from 'react';
 
 export default p => MultiComponent => {
+  const { Option } = MultiComponent;
+  const onChange = value => p.onChange(p.name, value);
   return class extends React.Component {
     render() {
-      const { Option } = MultiComponent;
-      const onChange = value => p.onChange(p.name, value);
       return (
         <MultiComponent
-          style={{ width: '100%' }}
           {...p.options}
+          style={{ width: '100%' }}
           mode="multiple"
           disabled={p.disabled}
           value={p.value}

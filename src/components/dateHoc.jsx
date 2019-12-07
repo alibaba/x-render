@@ -7,7 +7,7 @@ import React from 'react';
 import moment from 'moment';
 import { getFormat } from '../base/utils';
 
-export default ({ p, onChange }) => DateComponent => {
+export default (p, onChange) => DateComponent => {
   return class extends React.Component {
     render() {
       const { format = 'dateTime' } = p.schema;

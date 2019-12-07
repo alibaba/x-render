@@ -22,7 +22,7 @@ export default p => NumberComponent => {
         obj = { ...obj, step };
       }
 
-      const handleChange = value => {
+      const onChange = value => {
         p.onChange(p.name, value);
       };
 
@@ -34,7 +34,7 @@ export default p => NumberComponent => {
           value={p.value}
           disabled={p.disabled}
           readOnly={p.readonly}
-          onChange={handleChange}
+          onChange={onChange}
         />
       );
     }

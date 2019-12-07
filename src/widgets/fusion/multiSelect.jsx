@@ -5,9 +5,9 @@
 
 import React from 'react';
 import { Select } from '@alifd/next';
-import rangeHoc from '../../components/rangeHoc';
+import multiSelectHoc from '../../components/multiSelectHoc';
 
 export default function multiSelect(p) {
-  const FormMulti = rangeHoc(p)(Select);
+  const FormMulti = multiSelectHoc(p)(Select);
   return <FormMulti />;
 }
