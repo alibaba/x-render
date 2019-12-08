@@ -9,10 +9,10 @@ export default function ta(p) {
   return (
     <TextArea
       {...p.options}
+      {...options}
       disabled={p.disabled}
       value={p.value}
       readOnly={p.readonly}
-      {...options}
       onChange={onChange}
     />
   );

@@ -1,54 +1,16 @@
 import React from 'react';
 import { DatePicker, TimePicker } from '@alifd/next';
 import moment from 'moment';
+import dateHoc from '../../components/dateHoc';
+import { getFormat } from '../../base/utils';
 
 export default function date(p) {
   const { format = 'dateTime' } = p.schema;
-  let dateFormat;
-  switch (format) {
-    case 'date':
-      dateFormat = 'YYYY-MM-DD';
-      break;
-    case 'time':
-      dateFormat = 'HH:mm:ss';
-      break;
-    default:
-      // dateTime
-      dateFormat = 'YYYY-MM-DD HH:mm:ss';
-  }
-  let defaultObj = {};
-  if (p.value) {
-    defaultObj = {
-      value: moment(p.value, dateFormat),
-    };
-  }
-
-  const placeholderObj = p.description ? { placeholder: p.description } : {};
-
+  const dateFormat = getFormat(format);
   const onChange = value => {
     p.onChange(p.name, moment(value || '', dateFormat).format(dateFormat));
   };
-
-  if (format === 'time') {
-    return (
-      <TimePicker
-        style={{ width: '100%' }}
-        {...p.options}
-        disabled={p.disabled}
-        {...defaultObj}
-        onChange={onChange}
-      />
-    );
-  }
-  return (
-    <DatePicker
-      style={{ width: '100%' }}
-      {...placeholderObj}
-      showTime={format === 'dateTime'}
-      {...p.options}
-      {...defaultObj}
-      disabled={p.disabled}
-      onChange={onChange}
-    />
-  );
+  const DateComponent = format === 'time' ? TimePicker : DatePicker;
+  const FormDate = dateHoc(p, onChange)(DateComponent);
+  return <FormDate />;
 }

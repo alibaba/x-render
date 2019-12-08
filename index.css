@@ -69,7 +69,17 @@
   padding-bottom: 12px;
 }
 
-.mover:hover {
+.fr-move-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding-top: 2px;
+  padding-right: 10px;
+  font-size: 24px;
+  font-weight: 500;
+}
+
+.fr-move-icon:hover {
   cursor: move;
 }
 
@@ -150,7 +160,7 @@
   margin-top: -4px;
 }
 
-.sort-help-class {
+.fr-sort-help-class {
   background: #fff;
 }
 
@@ -236,4 +246,15 @@
 .fr-tooltip-toggle:hover::after {
   opacity: 1;
   transition: all 0.75s ease;
+}
+
+.fr-slider {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.fr-map {
+  display: flex;
+  flex-wrap: wrap;
 }

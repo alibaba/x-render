@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isDeepEqual, combineSchema } from './base/utils';
-import { asField, DefaultFieldUI } from './base/as-field';
+import { asField, DefaultFieldUI } from './base/asField';
 import parse from './base/parser';
 import resolve from './base/resolve';
 import { getValidateList } from './base/validate';
