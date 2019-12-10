@@ -74,8 +74,8 @@ function resolve(schema, data, options = {}) {
     return ret;
   }
   if (type === 'array') {
-    if (def) {
-      return value;
+    if (def && Array.isArray(def)) {
+      return def;
     }
     const subs = [].concat(items || []);
     const ret = [];
