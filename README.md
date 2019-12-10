@@ -115,6 +115,7 @@ ReactDOM.render(<App />, rootElement);
 | **`onChange`**    | `Function` |   `Y`    | `()=>{}` |              数据更改回调函数               |
 | **`onValidate`**  | `Function` |   `N`    | `()=>{}` |              表单输入校验回调               |
 | **`displayType`** |  `String`  |   `N`    | `column` | 设置表单横向排列或者纵向排序`column`/ `row` |
+| **`readOnly`**    | `Boolean`  |   `N`    | `false`  |             预览模式/可编辑模式             |
 
 **注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好  
 **注 2：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）  
@@ -132,22 +133,24 @@ ReactDOM.render(<App />, rootElement);
 | **`FieldUI`**      | `Component` |   `N`    | 内置组件 |     用于自定义整个元素的样式（标签、结构等）      |
 
 ## 支持 Ant Design 自定义主题不被覆盖
+
 - 安装 webpack 插件
-    ```bash
-    npm install webpack-plugin-fr-theme  --save-dev
-    ```
+  ```bash
+  npm install webpack-plugin-fr-theme  --save-dev
+  ```
 - 配置 webpack.config.js 文件
-    ```
-    const WebpackPluginFrTheme = require('webpack-plugin-fr-theme');
-  
-    {
-        ...
-        plugins: [
-          new WebpackPluginFrTheme(),
-        ],
-        ...
-    }
-    ```
+
+  ```js
+  const WebpackPluginFrTheme = require('webpack-plugin-fr-theme');
+
+  {
+      ...
+      plugins: [
+        new WebpackPluginFrTheme(),
+      ],
+      ...
+  }
+  ```
 
 ## 原理
 
