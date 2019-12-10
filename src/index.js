@@ -45,6 +45,7 @@ class FormRender extends React.Component {
     displayType: PropTypes.string,
     onChange: PropTypes.func,
     onValidate: PropTypes.func,
+    readOnly: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -61,6 +62,7 @@ class FormRender extends React.Component {
     displayType: 'column',
     onChange: () => {},
     onValidate: () => {},
+    readOnly: false,
   };
 
   constructor() {
@@ -109,6 +111,7 @@ class FormRender extends React.Component {
       displayType,
       onChange,
       onValidate,
+      readOnly,
     } = this.props;
 
     const generated = {};
@@ -140,6 +143,7 @@ class FormRender extends React.Component {
             showDescIcon,
             showValidate,
             displayType,
+            readOnly,
             formData,
           },
           {

@@ -10,6 +10,15 @@ export default p => SelectComponent => {
   const onChange = value => p.onChange(p.name, value);
   return class extends React.Component {
     render() {
+      const { enum: enums, enumNames } = p.schema || {};
+      if (p.readonly) {
+        let displayText = p.value;
+        if (enumNames) {
+          const idx = enums.indexOf(p.value);
+          displayText = enumNames[idx];
+        }
+        return <span>{displayText}</span>;
+      }
       return (
         <SelectComponent
           style={{ width: '100%' }}
@@ -18,8 +27,8 @@ export default p => SelectComponent => {
           value={p.value}
           onChange={onChange}
         >
-          {(p.schema.enum || []).map((val, index) => {
-            let option = p.schema.enumNames ? p.schema.enumNames[index] : val;
+          {(enums || []).map((val, index) => {
+            let option = enumNames ? enumNames[index] : val;
             const isHtml = typeof option === 'string' && option[0] === '<';
             if (isHtml) {
               option = <span dangerouslySetInnerHTML={{ __html: option }} />;

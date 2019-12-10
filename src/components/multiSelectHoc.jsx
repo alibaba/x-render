@@ -10,21 +10,32 @@ export default p => MultiComponent => {
   const onChange = value => p.onChange(p.name, value);
   return class extends React.Component {
     render() {
+      const { enum: enums, enumNames } = p.schema || {};
+      const _value = p.value && Array.isArray(p.value) ? p.value : [];
+      if (p.readonly) {
+        let displayText = _value.join(',');
+        if (enumNames) {
+          const idxs = _value.map(v => enums.indexOf(v));
+          const nameList = enumNames.filter((e, i) => idxs.indexOf(i) > -1);
+          displayText = nameList.join(',');
+        }
+        return <span>{displayText}</span>;
+      }
       return (
         <MultiComponent
           {...p.options}
           style={{ width: '100%' }}
           mode="multiple"
           disabled={p.disabled}
-          value={p.value}
+          value={_value}
           onChange={onChange}
         >
-          {(p.schema.enum || []).map((val, index) => (
+          {(enums || []).map((val, index) => (
             <Option value={val} key={index}>
               <span
                 // eslint-disable-next-line react/no-danger
                 dangerouslySetInnerHTML={{
-                  __html: p.schema.enumNames ? p.schema.enumNames[index] : val,
+                  __html: enumNames ? enumNames[index] : val,
                 }}
               />
             </Option>

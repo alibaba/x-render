@@ -44,6 +44,7 @@ function getBasicProps(settings, materials) {
     showDescIcon,
     showValidate,
     formData,
+    readOnly, // 添加全局控制只读模式
   } = settings;
   // 目前做了处理的`uiSchema`参数
   const {
@@ -72,7 +73,7 @@ function getBasicProps(settings, materials) {
     hidden,
     required: required.indexOf(name) !== -1,
     disabled: disabled,
-    readonly: readonly,
+    readonly: readOnly || readonly, // 前者全局的，后者单个ui的
     width,
     widgets,
     fields,
@@ -101,6 +102,7 @@ function getBasicProps(settings, materials) {
           column,
           showDescIcon,
           displayType,
+          readOnly,
           formData,
         },
         materials

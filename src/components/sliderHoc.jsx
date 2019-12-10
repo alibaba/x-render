@@ -5,7 +5,7 @@
 
 import React from 'react';
 
-export default p => (SliderComponent, RangeComponent) => {
+export default p => (SliderComponent, NumberComponent) => {
   return class extends React.Component {
     render() {
       const { max, min, step } = p.schema;
@@ -33,16 +33,22 @@ export default p => (SliderComponent, RangeComponent) => {
             {...setting}
             onChange={onChange}
             value={typeof p.value === 'number' ? p.value : min || 0}
+            disabled={p.disabled || p.readonly}
           />
-          <RangeComponent
-            {...p.options}
-            {...setting}
-            style={{ width: '35%' }}
-            value={p.value}
-            disabled={p.disabled}
-            readOnly={p.readonly}
-            onChange={onChange}
-          />
+          {p.readonly ? (
+            <span style={{ width: '35%' }}>
+              {p.value === (undefined || '') ? '-' : p.value}
+            </span>
+          ) : (
+            <NumberComponent
+              {...p.options}
+              {...setting}
+              style={{ width: '35%' }}
+              value={p.value}
+              disabled={p.disabled}
+              onChange={onChange}
+            />
+          )}
         </div>
       );
     }

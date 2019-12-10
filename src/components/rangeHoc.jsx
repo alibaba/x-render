@@ -10,6 +10,15 @@ import { getFormat } from '../base/utils';
 export default (p, onChange) => RangeComponent => {
   return class extends React.Component {
     render() {
+      // 只读模式
+      if (p.readonly) {
+        if (Array.isArray(p.value)) {
+          const from = p.value[0] || '';
+          const to = p.value[1] || '';
+          return <span>{`${from} ~ ${to}`}</span>;
+        }
+        return <span>-</span>;
+      }
       const { format = 'dateTime' } = p.schema;
       const dateFormat = getFormat(format);
       let defaultObj = {};

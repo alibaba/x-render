@@ -32,6 +32,9 @@ export default (p, onChange) => DateComponent => {
         disabled: p.disabled,
         onChange,
       };
+      if (p.readonly) {
+        return <span>{p.value || '-'}</span>;
+      }
       return <DateComponent {...datePrams} />;
     }
   };
