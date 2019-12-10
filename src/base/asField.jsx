@@ -2,14 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getValidateText } from './validate';
 import { isHidden, isDependShow } from './isHidden';
-
-// 解析字符串值
-const parseString = (string, value, rootValue, formData) =>
-  Function(`"use strict";
-    const value = ${JSON.stringify(value)};
-    const rootValue = ${JSON.stringify(rootValue)};
-    const formData = ${JSON.stringify(formData)};
-    return (${string})`)();
+import { evaluateString } from './utils';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
@@ -35,14 +28,14 @@ export const asField = ({ FieldUI, Widget }) => {
       formData = {},
       dependShow,
     } = rest;
-    // every key of schema, disabled, readonly, options, hidden, support for function expression
+    // most key of schema, disabled, readonly, options, hidden, support for function expression
     const convertValue = item => {
       if (typeof item === 'function') {
         return item(value, rootValue, formData);
       } else if (typeof item === 'string' && item.substring(0, 1) === '@') {
         const _item = item.substring(1);
         try {
-          return parseString(_item, value, rootValue, formData);
+          return evaluateString(_item, formData, rootValue);
         } catch (error) {
           console.error(error.message);
           console.error(`happen at ${item}`);
@@ -59,7 +52,22 @@ export const asField = ({ FieldUI, Widget }) => {
     // iterate over schema, and convert every key
     let _schema = { ...schema };
     Object.keys(schema).forEach(key => {
-      _schema[key] = convertValue(schema[key]);
+      const availableKey = [
+        'title',
+        'description',
+        'format',
+        'pattern',
+        'message',
+        'min',
+        'max',
+        'step',
+        'enum',
+        'enumNames',
+      ];
+      // TODO: need to cover more
+      if (availableKey.indexOf(key) > -1) {
+        _schema[key] = convertValue(schema[key]);
+      }
     });
 
     // "ui:hidden": true, hide formItem

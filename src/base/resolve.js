@@ -1,11 +1,4 @@
-// 克隆对象
-function clone(data) {
-  try {
-    return JSON.parse(JSON.stringify(data));
-  } catch (e) {
-    return data;
-  }
-}
+import { clone, isFunction } from './utils';
 
 // 获取当前字段默认值
 function getDefaultValue({ default: def, enum: enums = [], type }) {
@@ -18,16 +11,6 @@ function getDefaultValue({ default: def, enum: enums = [], type }) {
     object: {},
     string: '',
     range: null,
-  };
-
-  const isFunction = func => {
-    if (typeof func === 'function') {
-      return true;
-    }
-    if (typeof func === 'string' && func.substring(0, 1) === '@') {
-      return true;
-    }
-    return false;
   };
 
   if (isFunction(def)) {
