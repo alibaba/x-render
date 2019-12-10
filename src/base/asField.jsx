@@ -31,7 +31,7 @@ export const asField = ({ FieldUI, Widget }) => {
     // most key of schema, disabled, readonly, options, hidden, support for function expression
     const convertValue = item => {
       if (typeof item === 'function') {
-        return item(value, rootValue, formData);
+        return item(formData, rootValue);
       } else if (typeof item === 'string' && item.substring(0, 1) === '@') {
         const _item = item.substring(1);
         try {
