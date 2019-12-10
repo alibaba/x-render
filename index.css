@@ -44,6 +44,7 @@
 
 .fr-label-row {
   width: 104px;
+  flex-direction: row-reverse;
 }
 
 .fr-field-row .fr-content {
