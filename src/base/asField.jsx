@@ -224,7 +224,9 @@ export const DefaultFieldUI = ({
       {showLabel && (
         <label className={labelClass} title={title}>
           {isRequired && <span className="fr-label-required"> *</span>}
-          <span className={isComplex ? 'b' : ''}>{title}</span>
+          <span className={`fr-label-title ${isComplex ? 'b' : ''}`}>
+            {title}
+          </span>
           {description &&
             (showDescIcon ? (
               <span className="fr-tooltip-toggle" aria-label={description}>
