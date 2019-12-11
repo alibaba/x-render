@@ -13,15 +13,6 @@ export default p => MultiComponent => {
       const style = p.invalid ? { borderColor: '#f5222d' } : {};
       const { enum: enums, enumNames } = p.schema || {};
       const _value = p.value && Array.isArray(p.value) ? p.value : [];
-      // if (p.readonly) {
-      //   let displayText = _value.join(',');
-      //   if (enumNames) {
-      //     const idxs = _value.map(v => enums.indexOf(v));
-      //     const nameList = enumNames.filter((e, i) => idxs.indexOf(i) > -1);
-      //     displayText = nameList.join(',');
-      //   }
-      //   return <span>{displayText}</span>;
-      // }
       return (
         <MultiComponent
           {...p.options}

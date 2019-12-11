@@ -1,4 +1,8 @@
-// -------------------- 常用
+/**
+ * Created by Tw93 on 2018-09-26.
+ * 常见功能函数
+ */
+
 // 克隆对象
 export function clone(data) {
   try {
@@ -16,10 +20,8 @@ export function isLooselyNumber(num) {
   }
   return false;
 }
-/**
- * Created by Tw93 on 2018-09-26.
- * 深度对比
- */
+
+// 深度对比
 export function isDeepEqual(param1, param2) {
   if (param1 === undefined && param2 === undefined) return true;
   else if (param1 === undefined || param2 === undefined) return false;
