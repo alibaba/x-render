@@ -17,12 +17,14 @@ const previewNode = (format, value) => {
   );
 };
 export default function input(p) {
-  const { options = {} } = p;
+  const { options = {}, invalid } = p;
+  const style = invalid ? { borderColor: '#f5222d' } : {};
   const { addonBefore, addonAfter, ...rest } = options;
   const { format = 'text' } = p.schema;
   const handleChange = value => p.onChange(p.name, value);
   return (
     <Input
+      style={style}
       {...rest}
       value={p.value}
       disabled={p.disabled}

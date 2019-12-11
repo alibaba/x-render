@@ -10,6 +10,7 @@ export default p => SelectComponent => {
   const onChange = value => p.onChange(p.name, value);
   return class extends React.Component {
     render() {
+      const style = p.invalid ? { borderColor: '#f5222d' } : {};
       const { enum: enums, enumNames } = p.schema || {};
       // if (p.readonly) {
       //   let displayText = p.value;
@@ -21,7 +22,7 @@ export default p => SelectComponent => {
       // }
       return (
         <SelectComponent
-          style={{ width: '100%' }}
+          style={{ width: '100%', ...style }}
           {...p.options}
           disabled={p.disabled || p.readonly}
           value={p.value}

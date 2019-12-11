@@ -8,6 +8,7 @@ import React from 'react';
 export default p => NumberComponent => {
   return class extends React.Component {
     render() {
+      const style = p.invalid ? { borderColor: '#f5222d' } : {};
       const { max, min, step } = p.schema;
       let obj = {};
       if (max || max === 0) {
@@ -29,7 +30,7 @@ export default p => NumberComponent => {
       return (
         <NumberComponent
           {...obj}
-          style={{ width: '100%' }}
+          style={{ width: '100%', ...style }}
           disabled={p.disabled}
           readOnly={p.readonly}
           {...p.options}

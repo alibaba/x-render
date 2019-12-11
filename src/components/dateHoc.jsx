@@ -10,6 +10,7 @@ import { getFormat } from '../base/utils';
 export default (p, onChange) => DateComponent => {
   return class extends React.Component {
     render() {
+      const style = p.invalid ? { borderColor: '#f5222d' } : {};
       const { format = 'dateTime' } = p.schema;
       const dateFormat = getFormat(format);
       let defaultObj = {};
@@ -23,16 +24,16 @@ export default (p, onChange) => DateComponent => {
         ? { placeholder: p.description }
         : {};
 
-      const datePrams = {
+      const dateParams = {
         ...placeholderObj,
         ...p.options,
         ...defaultObj,
-        style: { width: '100%' },
+        style: { width: '100%', ...style },
         showTime: format === 'dateTime',
         disabled: p.disabled || p.readonly,
         onChange,
       };
-      return <DateComponent {...datePrams} />;
+      return <DateComponent {...dateParams} />;
     }
   };
 };

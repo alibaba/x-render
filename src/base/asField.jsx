@@ -128,7 +128,7 @@ export const asField = ({ FieldUI, Widget }) => {
     };
     return (
       <FieldUI {...fieldProps}>
-        <Widget {..._rest} />
+        <Widget {..._rest} invalid={showValidate && validateText} />
       </FieldUI>
     );
   };

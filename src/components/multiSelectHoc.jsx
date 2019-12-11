@@ -10,6 +10,7 @@ export default p => MultiComponent => {
   const onChange = value => p.onChange(p.name, value);
   return class extends React.Component {
     render() {
+      const style = p.invalid ? { borderColor: '#f5222d' } : {};
       const { enum: enums, enumNames } = p.schema || {};
       const _value = p.value && Array.isArray(p.value) ? p.value : [];
       // if (p.readonly) {
@@ -24,7 +25,7 @@ export default p => MultiComponent => {
       return (
         <MultiComponent
           {...p.options}
-          style={{ width: '100%' }}
+          style={{ width: '100%', ...style }}
           mode="multiple"
           disabled={p.disabled || p.readonly}
           value={_value}

@@ -18,12 +18,14 @@ const previewNode = (format, value) => {
 };
 
 export default function input(p) {
-  const { options = {} } = p;
+  const { options = {}, invalid } = p;
+  const style = invalid ? { borderColor: '#f5222d' } : {};
   const { format = 'text' } = p.schema;
   const type = format === 'image' ? 'text' : format;
   const handleChange = e => p.onChange(p.name, e.target.value);
   return (
     <Input
+      style={style}
       {...options}
       value={p.value}
       type={type}

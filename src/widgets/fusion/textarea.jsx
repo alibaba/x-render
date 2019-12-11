@@ -4,11 +4,12 @@ import { Input } from '@alifd/next';
 const { TextArea } = Input;
 
 export default function ta(p) {
-  const { options } = p;
+  const { options, invalid } = p;
+  const style = invalid ? { borderColor: '#f5222d' } : {};
   const onChange = value => p.onChange(p.name, value);
   return (
     <TextArea
-      {...p.options}
+      style={style}
       {...options}
       disabled={p.disabled}
       value={p.value}

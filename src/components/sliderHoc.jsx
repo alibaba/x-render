@@ -8,6 +8,7 @@ import React from 'react';
 export default p => (SliderComponent, NumberComponent) => {
   return class extends React.Component {
     render() {
+      const style = p.invalid ? { borderColor: '#f5222d' } : {};
       const { max, min, step } = p.schema;
       let setting = {};
       if (max || max === 0) {
@@ -43,7 +44,7 @@ export default p => (SliderComponent, NumberComponent) => {
             <NumberComponent
               {...p.options}
               {...setting}
-              style={{ width: '35%' }}
+              style={{ width: '35%', ...style }}
               value={p.value}
               disabled={p.disabled}
               onChange={onChange}
