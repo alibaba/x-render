@@ -7,6 +7,15 @@ export function clone(data) {
     return data;
   }
 }
+
+// '3' => true, 3 => true, undefined => false
+export function isLooselyNumber(num) {
+  if (typeof num === 'number') return true;
+  if (typeof num === 'string') {
+    return !Number.isNaN(Number(num));
+  }
+  return false;
+}
 /**
  * Created by Tw93 on 2018-09-26.
  * 深度对比

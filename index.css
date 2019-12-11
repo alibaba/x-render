@@ -18,6 +18,7 @@
 
 .fr-label {
   display: block;
+  min-width: 80px;
 }
 
 .fr-label-title {
@@ -55,7 +56,6 @@
 /* Row */
 
 .fr-label-row {
-  width: 104px;
   text-align: right;
 }
 

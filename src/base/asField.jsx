@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getValidateText } from './validate';
 import { isHidden, isDependShow } from './isHidden';
-import { evaluateString } from './utils';
+import { evaluateString, isLooselyNumber } from './utils';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
@@ -15,6 +15,7 @@ export const asField = ({ FieldUI, Widget }) => {
     props,
     showDescIcon,
     width,
+    labelWidth,
     disabled,
     readonly,
     options,
@@ -123,6 +124,7 @@ export const asField = ({ FieldUI, Widget }) => {
       showLabel,
       showValidate,
       validateText,
+      labelWidth,
     };
     return (
       <FieldUI {...fieldProps}>
@@ -164,6 +166,7 @@ export const DefaultFieldUI = ({
   showLabel, // 是否展示label
   showValidate, // 是否展示校验
   validateText, // 校验文字
+  labelWidth, // label的长度
 }) => {
   const { title } = schema;
   // field 整体 label 标签 content 内容
@@ -206,17 +209,23 @@ export const DefaultFieldUI = ({
   // 横排时
   if (displayType === 'row' && !isComplex && type !== 'boolean') {
     fieldClass += ' flex items-center';
-    labelClass += ' flex-shrink-0 fr-label-row mr2';
+    labelClass += ' flex-shrink-0 fr-label-row';
     labelClass = labelClass.replace('mb2', 'mb0');
     contentClass += ' flex-grow-1 relative';
   }
+
+  const _labelWidth = isLooselyNumber(labelWidth) ? Number(labelWidth) : 3; // 默认是 25% 的长度
+
   return (
     <div
       className={className ? `${className} ${fieldClass}` : fieldClass}
       style={columnStyle}
     >
       {showLabel && (
-        <div className={labelClass}>
+        <div
+          className={labelClass}
+          style={{ width: `${(100 / 12) * _labelWidth}%` }}
+        >
           <label className="fr-label-title" title={title}>
             {isRequired && <span className="fr-label-required"> *</span>}
             <span className={`${isComplex ? 'b' : ''}`}>{title}</span>
