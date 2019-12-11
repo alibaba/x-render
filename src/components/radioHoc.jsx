@@ -10,16 +10,12 @@ export default (p, onChange) => RadioComponent => {
   return class extends React.Component {
     render() {
       const { enum: enums, enumNames } = p.schema || {};
-      if (p.readonly) {
-        let displayText = p.value;
-        if (enumNames) {
-          const idx = enums.indexOf(p.value);
-          displayText = enumNames[idx];
-        }
-        return <span>{displayText}</span>;
-      }
       return (
-        <RadioGroup disabled={p.disabled} value={p.value} onChange={onChange}>
+        <RadioGroup
+          disabled={p.disabled || p.readonly}
+          value={p.value}
+          onChange={onChange}
+        >
           {(enums || [true, false]).map((val, index) => (
             <RadioComponent value={val} key={index}>
               <span

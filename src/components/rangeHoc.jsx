@@ -11,14 +11,14 @@ export default (p, onChange) => RangeComponent => {
   return class extends React.Component {
     render() {
       // 只读模式
-      if (p.readonly) {
-        if (Array.isArray(p.value)) {
-          const from = p.value[0] || '';
-          const to = p.value[1] || '';
-          return <span>{`${from} ~ ${to}`}</span>;
-        }
-        return <span>-</span>;
-      }
+      // if (p.readonly) {
+      //   if (Array.isArray(p.value)) {
+      //     const from = p.value[0] || '';
+      //     const to = p.value[1] || '';
+      //     return <span>{`${from} ~ ${to}`}</span>;
+      //   }
+      //   return <span>-</span>;
+      // }
       const { format = 'dateTime' } = p.schema;
       const dateFormat = getFormat(format);
       let defaultObj = {};
@@ -35,7 +35,7 @@ export default (p, onChange) => RangeComponent => {
         ...defaultObj,
         style: { width: '100%' },
         showTime: format === 'dateTime',
-        disabled: p.disabled,
+        disabled: p.disabled || p.readonly,
         onChange,
       };
       return <RangeComponent {...datePrams} />;

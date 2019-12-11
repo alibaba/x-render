@@ -8,10 +8,6 @@ import React from 'react';
 export default p => NumberComponent => {
   return class extends React.Component {
     render() {
-      if (p.readonly) {
-        return <span>{p.value === (undefined || '') ? '-' : p.value}</span>;
-      }
-
       const { max, min, step } = p.schema;
       let obj = {};
       if (max || max === 0) {
@@ -32,11 +28,12 @@ export default p => NumberComponent => {
 
       return (
         <NumberComponent
-          {...p.options}
           {...obj}
           style={{ width: '100%' }}
-          value={p.value}
           disabled={p.disabled}
+          readOnly={p.readonly}
+          {...p.options}
+          value={p.value}
           onChange={onChange}
         />
       );

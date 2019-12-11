@@ -11,19 +11,19 @@ export default p => SelectComponent => {
   return class extends React.Component {
     render() {
       const { enum: enums, enumNames } = p.schema || {};
-      if (p.readonly) {
-        let displayText = p.value;
-        if (enumNames) {
-          const idx = enums.indexOf(p.value);
-          displayText = enumNames[idx];
-        }
-        return <span>{displayText}</span>;
-      }
+      // if (p.readonly) {
+      //   let displayText = p.value;
+      //   if (enumNames) {
+      //     const idx = enums.indexOf(p.value);
+      //     displayText = enumNames[idx];
+      //   }
+      //   return <span>{displayText}</span>;
+      // }
       return (
         <SelectComponent
           style={{ width: '100%' }}
           {...p.options}
-          disabled={p.disabled}
+          disabled={p.disabled || p.readonly}
           value={p.value}
           onChange={onChange}
         >

@@ -29,12 +29,9 @@ export default (p, onChange) => DateComponent => {
         ...defaultObj,
         style: { width: '100%' },
         showTime: format === 'dateTime',
-        disabled: p.disabled,
+        disabled: p.disabled || p.readonly,
         onChange,
       };
-      if (p.readonly) {
-        return <span>{p.value || '-'}</span>;
-      }
       return <DateComponent {...datePrams} />;
     }
   };

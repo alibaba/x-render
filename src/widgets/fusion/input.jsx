@@ -21,14 +21,12 @@ export default function input(p) {
   const { addonBefore, addonAfter, ...rest } = options;
   const { format = 'text' } = p.schema;
   const handleChange = value => p.onChange(p.name, value);
-  if (p.readonly) {
-    return <span>{p.value}</span>;
-  }
   return (
     <Input
       {...rest}
       value={p.value}
       disabled={p.disabled}
+      readOnly={p.readonly}
       addonTextBefore={addonBefore ? addonBefore : ''}
       addonTextAfter={addonAfter ? addonAfter : previewNode(format, p.value)}
       onChange={handleChange}

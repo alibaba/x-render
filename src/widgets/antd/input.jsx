@@ -22,15 +22,13 @@ export default function input(p) {
   const { format = 'text' } = p.schema;
   const type = format === 'image' ? 'text' : format;
   const handleChange = e => p.onChange(p.name, e.target.value);
-  if (p.readonly) {
-    return <span>{p.value}</span>;
-  }
   return (
     <Input
       {...options}
       value={p.value}
       type={type}
       disabled={p.disabled}
+      readOnly={p.readonly}
       addonAfter={
         options.addonAfter ? options.addonAfter : previewNode(format, p.value)
       }
