@@ -27,6 +27,8 @@
  .b--solid { border-style: solid; }
  .b--none { border-style: none; }
 
+ .b--black-20 { border-color: rgba( 0, 0, 0, .2 ); }
+
  .bw0 { border-width: 0; }
  .bw1 { border-width: .125rem; }
  .bw2 { border-width: .25rem; }
