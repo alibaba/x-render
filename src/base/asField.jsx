@@ -200,7 +200,6 @@ export const DefaultFieldUI = ({
         }
       }
       fieldClass += ' flex flex-row-reverse justify-end';
-      contentClass += ' flex justify-end pr2';
       break;
     default:
       if (displayType === 'row') {
@@ -215,11 +214,16 @@ export const DefaultFieldUI = ({
     contentClass += ' flex-grow-1 relative';
   }
 
+  // 横排的checkbox
+  if (displayType === 'row' && type === 'boolean') {
+    contentClass += ' flex justify-end pr2';
+  }
+
   let _labelWidth = isLooselyNumber(labelWidth) ? Number(labelWidth) : 3; // 默认是 25% 的长度
-  if (isComplex) {
-    _labelWidth = 12;
-  } else if (type === 'boolean') {
+  if (type === 'boolean') {
     _labelWidth = 12 - _labelWidth;
+  } else if (isComplex || displayType === 'column') {
+    _labelWidth = 12;
   }
 
   return (
@@ -259,7 +263,7 @@ export const DefaultFieldUI = ({
       <div
         className={contentClass}
         style={
-          type === 'boolean'
+          type === 'boolean' && displayType === 'row'
             ? {
                 width: `${(100 / 12) * (12 - _labelWidth)}%`,
               }

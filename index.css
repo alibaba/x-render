@@ -46,6 +46,11 @@
   content: '';
 }
 
+.fr-label-object .fr-label-title {
+  font-size: 16px;
+  color: #222;
+}
+
 .fr-desc {
   color: #888;
 }
