@@ -21,13 +21,7 @@ export const asField = ({ FieldUI, Widget }) => {
     schema,
     ...rest
   }) => {
-    const {
-      displayType,
-      value,
-      rootValue = {},
-      formData = {},
-      dependShow,
-    } = rest;
+    const { displayType, rootValue = {}, formData = {}, dependShow } = rest;
     // most key of schema, disabled, readonly, options, hidden, support for function expression
     const convertValue = item => {
       if (typeof item === 'function') {
@@ -175,7 +169,7 @@ export const DefaultFieldUI = ({
   // field 整体 label 标签 content 内容
   const { type, enum: _enum, description = '' } = schema;
   let fieldClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''}`;
-  let labelClass = 'fr-label flex mb2';
+  let labelClass = 'fr-label mb2';
   let contentClass = 'fr-content';
 
   switch (type) {
@@ -222,27 +216,27 @@ export const DefaultFieldUI = ({
       style={columnStyle}
     >
       {showLabel && (
-        <label className={labelClass} title={title}>
-          {isRequired && <span className="fr-label-required"> *</span>}
-          <span className={`fr-label-title ${isComplex ? 'b' : ''}`}>
-            {title}
-          </span>
-          {description &&
-            (showDescIcon ? (
-              <span className="fr-tooltip-toggle" aria-label={description}>
-                <i className="fr-tooltip-icon" />
-                <div className="fr-tooltip-container">
-                  <i className="fr-tooltip-triangle" />
-                  {description}
-                </div>
-              </span>
-            ) : (
-              <span className="fr-desc ml2">(&nbsp;{description}&nbsp;)</span>
-            ))}
-          {displayType !== 'row' && showValidate && validateText && (
-            <span className="fr-validate">{validateText}</span>
-          )}
-        </label>
+        <div className={labelClass}>
+          <label className="fr-label-title" title={title}>
+            {isRequired && <span className="fr-label-required"> *</span>}
+            <span className={`${isComplex ? 'b' : ''}`}>{title}</span>
+            {description &&
+              (showDescIcon ? (
+                <span className="fr-tooltip-toggle" aria-label={description}>
+                  <i className="fr-tooltip-icon" />
+                  <div className="fr-tooltip-container">
+                    <i className="fr-tooltip-triangle" />
+                    {description}
+                  </div>
+                </span>
+              ) : (
+                <span className="fr-desc ml2">(&nbsp;{description}&nbsp;)</span>
+              ))}
+            {displayType !== 'row' && showValidate && validateText && (
+              <span className="fr-validate">{validateText}</span>
+            )}
+          </label>
+        </div>
       )}
       <div className={contentClass}>
         <div className={`flex ${isComplex ? 'flex-column' : 'items-center'}`}>

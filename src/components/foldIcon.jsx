@@ -12,8 +12,8 @@ const FoldIcon = ({
     style={style}
     className={fold ? 'fold-icon' : 'fold-icon fold-icon-active'}
     viewBox="0 0 1024 1024"
-    width={width || 24}
-    height={height || 24}
+    width={width || 18}
+    height={height || 18}
     {...rest}
   >
     <path
