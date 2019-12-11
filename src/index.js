@@ -25,9 +25,24 @@ function renderField(schema, fields, events) {
 }
 
 // 在顶层将 propsSchema 和 uiSchema 合并，便于后续处理。 也可直接传入合并的 schema
-const Wrapper = ({ schema, propsSchema = {}, uiSchema = {}, ...rest }) => {
+const Wrapper = ({
+  schema,
+  propsSchema = {},
+  uiSchema = {},
+  readOnly,
+  showValidate,
+  ...rest
+}) => {
   const _schema = schema ? schema : combineSchema(propsSchema, uiSchema);
-  return <FormRender {...rest} schema={_schema} />;
+
+  return (
+    <FormRender
+      readOnly={readOnly}
+      showValidate={!readOnly && showValidate} // 预览模式下不展示校验
+      {...rest}
+      schema={_schema}
+    />
+  );
 };
 
 class FormRender extends React.Component {
@@ -82,9 +97,7 @@ class FormRender extends React.Component {
       !isDeepEqual(nextProps.schema, schema) ||
       !isDeepEqual(Object.keys(nextProps.formData), Object.keys(formData))
     ) {
-      setTimeout(() => {
-        this.needUpdateForm();
-      }, 0);
+      setTimeout(this.needUpdateForm, 0);
     }
   }
 

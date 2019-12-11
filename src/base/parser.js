@@ -43,8 +43,8 @@ function getBasicProps(settings, materials) {
     displayType,
     showDescIcon,
     showValidate,
-    formData,
     readOnly, // 添加全局控制只读模式
+    formData,
   } = settings;
   // 目前做了处理的`uiSchema`参数
   const {
@@ -100,8 +100,9 @@ function getBasicProps(settings, materials) {
         {
           ...subSchema,
           column,
-          showDescIcon,
           displayType,
+          showDescIcon,
+          showValidate,
           readOnly,
           formData,
         },
