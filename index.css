@@ -3,7 +3,7 @@
  */
 
 .fr-set {
-  padding: 18px;
+  padding: 12px 14px 12px 12px;
   margin-bottom: 12px;
   border-radius: 4px;
 }
@@ -39,7 +39,7 @@
   content: ':';
   position: relative;
   top: -0.5px;
-  margin: 0 8px 0 2px;
+  margin: 0 10px 0 2px;
 }
 
 .fr-label-title.isBool::after {
