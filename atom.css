@@ -224,6 +224,11 @@
  .w-two-thirds { width: calc( 100% / 1.5 ); }
  .w-auto { width: auto; }
 
+.tl { text-align: left; }
+.tr { text-align: right; }
+.tc { text-align: center; }
+.tj { text-align: justify; }
+
  .overflow-visible { overflow: visible; }
  .overflow-hidden { overflow: hidden; }
  .overflow-scroll { overflow: scroll; }
