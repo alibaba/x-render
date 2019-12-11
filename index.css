@@ -42,6 +42,10 @@
   margin: 0 8px 0 2px;
 }
 
+.fr-label-title.isBool::after {
+  content: '';
+}
+
 .fr-desc {
   color: #888;
 }

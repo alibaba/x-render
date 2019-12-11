@@ -200,6 +200,7 @@ export const DefaultFieldUI = ({
         }
       }
       fieldClass += ' flex flex-row-reverse justify-end';
+      contentClass += ' flex justify-end pr2';
       break;
     default:
       if (displayType === 'row') {
@@ -214,7 +215,12 @@ export const DefaultFieldUI = ({
     contentClass += ' flex-grow-1 relative';
   }
 
-  const _labelWidth = isLooselyNumber(labelWidth) ? Number(labelWidth) : 3; // 默认是 25% 的长度
+  let _labelWidth = isLooselyNumber(labelWidth) ? Number(labelWidth) : 3; // 默认是 25% 的长度
+  if (isComplex) {
+    _labelWidth = 12;
+  } else if (type === 'boolean') {
+    _labelWidth = 12 - _labelWidth;
+  }
 
   return (
     <div
@@ -226,7 +232,10 @@ export const DefaultFieldUI = ({
           className={labelClass}
           style={{ width: `${(100 / 12) * _labelWidth}%` }}
         >
-          <label className="fr-label-title" title={title}>
+          <label
+            className={`fr-label-title ${type === 'boolean' ? 'isBool' : ''}`} // boolean不带冒号
+            title={title}
+          >
             {isRequired && <span className="fr-label-required"> *</span>}
             <span className={`${isComplex ? 'b' : ''}`}>{title}</span>
             {description &&
@@ -247,7 +256,16 @@ export const DefaultFieldUI = ({
           </label>
         </div>
       )}
-      <div className={contentClass}>
+      <div
+        className={contentClass}
+        style={
+          type === 'boolean'
+            ? {
+                width: `${(100 / 12) * (12 - _labelWidth)}%`,
+              }
+            : {}
+        }
+      >
         <div className={`flex ${isComplex ? 'flex-column' : 'items-center'}`}>
           {children}
         </div>
