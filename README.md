@@ -4,7 +4,7 @@
 
 # FormRender
 
-[![npm](https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/form-render?_blank)
+[![Financial Contributors on Open Collective](https://opencollective.com/form-render/all/badge.svg?label=financial+contributors)](https://opencollective.com/form-render) [![npm](https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/form-render?_blank)
 [![GitHub last commit](https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/commits/dev)
 [![NPM downloads](https://img.shields.io/npm/dm/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
 [![NPM all downloads](https://img.shields.io/npm/dt/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
@@ -165,3 +165,33 @@ FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置�
 
 - 遵循 MIT 协议
 - 请自由地享受和参与开源
+
+## Contributors
+
+### Code Contributors
+
+This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false" /></a>
+
+### Financial Contributors
+
+Become a financial contributor and help us sustain our community. [[Contribute](https://opencollective.com/form-render/contribute)]
+
+#### Individuals
+
+<a href="https://opencollective.com/form-render"><img src="https://opencollective.com/form-render/individuals.svg?width=890"></a>
+
+#### Organizations
+
+Support this project with your organization. Your logo will show up here with a link to your website. [[Contribute](https://opencollective.com/form-render/contribute)]
+
+<a href="https://opencollective.com/form-render/organization/0/website"><img src="https://opencollective.com/form-render/organization/0/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/1/website"><img src="https://opencollective.com/form-render/organization/1/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/2/website"><img src="https://opencollective.com/form-render/organization/2/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/3/website"><img src="https://opencollective.com/form-render/organization/3/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/4/website"><img src="https://opencollective.com/form-render/organization/4/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/5/website"><img src="https://opencollective.com/form-render/organization/5/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/6/website"><img src="https://opencollective.com/form-render/organization/6/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/7/website"><img src="https://opencollective.com/form-render/organization/7/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/8/website"><img src="https://opencollective.com/form-render/organization/8/avatar.svg"></a>
+<a href="https://opencollective.com/form-render/organization/9/website"><img src="https://opencollective.com/form-render/organization/9/avatar.svg"></a>
