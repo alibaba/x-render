@@ -95,8 +95,10 @@ const fieldListHoc = ButtonComponent => {
 
     render() {
       const { p, foldList = [], toggleFoldItem } = this.props;
-      const { readonly } = p;
+      const { readonly, schema = {} } = p;
+      const { maxItems } = schema;
       const list = p.value || [];
+      const canAdd = maxItems ? maxItems > list.length : true; // 当到达最大个数，新增按钮消失
       return (
         <ul className="pl0 ma0">
           {list.map((_, name) => (
@@ -120,9 +122,11 @@ const fieldListHoc = ButtonComponent => {
           ))}
           {!readonly && (
             <div className="tr">
-              <ButtonComponent icon="file-add" onClick={this.handleAddClick}>
-                新增
-              </ButtonComponent>
+              {canAdd && (
+                <ButtonComponent icon="file-add" onClick={this.handleAddClick}>
+                  新增
+                </ButtonComponent>
+              )}
               {p.extrafrButtons &&
                 p.extrafrButtons.length > 0 &&
                 p.extrafrButtons.map(item => (
