@@ -178,7 +178,7 @@ export const DefaultFieldUI = ({
   switch (type) {
     case 'object':
       if (title) {
-        labelClass += ' fr-label-object bb b--black-20 pb2 mt2 mb3'; // fr-label-object 无默认style，只是占位用于使用者样式覆盖
+        labelClass += ' fr-label-object bb b--black-20 pb1 mt2 mb3 tracked'; // fr-label-object 无默认style，只是占位用于使用者样式覆盖
       }
       if (!isRoot) {
         fieldClass += ' fr-field-object'; // object的margin bottom由内部元素撑起
@@ -219,11 +219,12 @@ export const DefaultFieldUI = ({
     contentClass += ' flex justify-end pr2';
   }
 
-  let _labelWidth = isLooselyNumber(labelWidth) ? Number(labelWidth) : 3; // 默认是 25% 的长度
+  const _labelWidth = isLooselyNumber(labelWidth) ? Number(labelWidth) : 120; // 默认是 25% 的长度
+  let labelStyle = { width: _labelWidth };
   if (type === 'boolean') {
-    _labelWidth = 12 - _labelWidth;
+    labelStyle = { flexGrow: 1 };
   } else if (isComplex || displayType === 'column') {
-    _labelWidth = 12;
+    labelStyle = { flexGrow: 1 };
   }
 
   return (
@@ -232,16 +233,21 @@ export const DefaultFieldUI = ({
       style={columnStyle}
     >
       {showLabel && (
-        <div
-          className={labelClass}
-          style={{ width: `${(100 / 12) * _labelWidth}%` }}
-        >
+        <div className={labelClass} style={labelStyle}>
           <label
-            className={`fr-label-title ${type === 'boolean' ? 'isBool' : ''}`} // boolean不带冒号
+            className={`fr-label-title ${
+              type === 'boolean' || displayType === 'column' ? 'no-colon' : ''
+            }`} // boolean不带冒号
             title={title}
           >
             {isRequired && <span className="fr-label-required"> *</span>}
-            <span className={`${isComplex ? 'b' : ''}`}>{title}</span>
+            <span
+              className={`${isComplex ? 'b' : ''} ${
+                displayType === 'column' ? 'flex-none' : ''
+              }`}
+            >
+              {title}
+            </span>
             {description &&
               (showDescIcon ? (
                 <span className="fr-tooltip-toggle" aria-label={description}>
@@ -263,11 +269,11 @@ export const DefaultFieldUI = ({
       <div
         className={contentClass}
         style={
-          type === 'boolean' && displayType === 'row'
-            ? {
-                width: `${(100 / 12) * (12 - _labelWidth)}%`,
-              }
-            : {}
+          type === 'boolean'
+            ? displayType === 'row'
+              ? { width: _labelWidth }
+              : {}
+            : { flexGrow: 1 }
         }
       >
         <div className={`flex ${isComplex ? 'flex-column' : 'items-center'}`}>

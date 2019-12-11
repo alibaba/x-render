@@ -65,7 +65,7 @@ class Demo extends React.Component {
           onChange={this.onChange}
           displayType="row"
           showDescIcon
-          labelWidth={3}
+          labelWidth={120}
           readOnly={this.state.readOnly}
           onValidate={this.onValidate}
         />
