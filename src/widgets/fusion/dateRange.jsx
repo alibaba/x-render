@@ -1,4 +1,3 @@
-import React from 'react';
 import { DatePicker } from '@alifd/next';
 import moment from 'moment';
 import rangeHoc from '../../components/rangeHoc';
@@ -18,6 +17,5 @@ export default function dateRange(p) {
       p.onChange(p.name, result);
     }
   };
-  const FormRange = rangeHoc(p, onChange)(RangePicker);
-  return <FormRange />;
+  return rangeHoc(p, onChange, RangePicker);
 }

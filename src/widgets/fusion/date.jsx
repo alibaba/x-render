@@ -1,4 +1,8 @@
-import React from 'react';
+/**
+ * Updated by fateriddle on 2019-12-12.
+ * 日期组件
+ */
+
 import { DatePicker, TimePicker } from '@alifd/next';
 import moment from 'moment';
 import dateHoc from '../../components/dateHoc';
@@ -11,6 +15,5 @@ export default function date(p) {
     p.onChange(p.name, moment(value || '', dateFormat).format(dateFormat));
   };
   const DateComponent = format === 'time' ? TimePicker : DatePicker;
-  const FormDate = dateHoc(p, onChange)(DateComponent);
-  return <FormDate />;
+  return dateHoc(p, onChange, DateComponent);
 }
