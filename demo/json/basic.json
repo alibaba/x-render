@@ -41,10 +41,10 @@
         "properties": {
           "number1": {
             "title": "数字输入框",
-            "description": "5 - 20",
+            "description": "1 - 1000",
             "type": "number",
-            "min": 5,
-            "max": 20
+            "min": 1,
+            "max": 1000
           },
           "number2": {
             "title": "带滑动条",

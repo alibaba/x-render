@@ -1,25 +1,12 @@
-import React from 'react';
-import { Radio } from 'antd';
+/**
+ * Updated by Tw93 on 2019-12-07.
+ * 单选组件
+ */
 
-const RadioGroup = Radio.Group;
+import { Radio } from 'antd';
+import radioHoc from '../../components/radioHoc';
 
 export default function radio(p) {
-  return (
-    <RadioGroup
-      disabled={p.disabled}
-      value={p.value}
-      onChange={e => p.onChange(p.name, e.target.value)}
-    >
-      {(p.schema.enum || [true, false]).map((val, index) => (
-        <Radio value={val} key={index}>
-          <span
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: p.schema.enumNames ? p.schema.enumNames[index] : val,
-            }}
-          />
-        </Radio>
-      ))}
-    </RadioGroup>
-  );
+  const onChange = e => p.onChange(p.name, e.target.value);
+  return radioHoc(p, onChange, Radio);
 }

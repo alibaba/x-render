@@ -5,7 +5,10 @@ import 'rc-color-picker/assets/index.css';
 
 export default function color(p) {
   const { format } = p.schema;
-  const onPickerChange = e => p.onChange(p.name, e.color);
+  const onPickerChange = e => {
+    if (p.disabled || p.readonly) return;
+    p.onChange(p.name, e.color);
+  };
   const onInputChange = value => {
     // const isHex = value.match(/^(#{0,1})([0-9A-F]{6})$/i);
     p.onChange(p.name, value);
@@ -21,7 +24,16 @@ export default function color(p) {
           onChange={onPickerChange}
         />
       }
-      <Input placeholder="#ffffff" value={p.value} onChange={onInputChange} />
+      {p.readonly ? (
+        <span>{p.value || '#ffffff'}</span>
+      ) : (
+        <Input
+          placeholder="#ffffff"
+          disabled={p.disabled}
+          value={p.value}
+          onChange={onInputChange}
+        />
+      )}
     </div>
   );
 }

@@ -1,43 +1,9 @@
-import React from 'react';
+/**
+ * Updated by Tw93 on 2019-12-07.
+ * 滑动组件
+ */
+
 import { NumberPicker, Range } from '@alifd/next';
+import sliderHoc from '../../components/sliderHoc';
 
-export default function number(p) {
-  const { max, min, step } = p.schema;
-  let setting = {};
-  if (max || max === 0) {
-    setting = { max };
-  }
-
-  if (min || min === 0) {
-    setting = { ...setting, min };
-  }
-
-  if (step) {
-    setting = { ...setting, step };
-  }
-
-  const handleChange = value => {
-    p.onChange(p.name, value);
-  };
-
-  return (
-    <div className="flex w-100 items-center justify-between">
-      <Range
-        style={{ flexGrow: 1, marginRight: 12 }}
-        {...setting}
-        defaultValue={min || 20}
-        onChange={handleChange}
-        value={typeof p.value === 'number' ? p.value : min || 0}
-      />
-      <NumberPicker
-        style={{ width: '35%' }}
-        {...p.options}
-        {...setting}
-        disabled={p.disabled}
-        readOnly={p.readonly}
-        value={p.value}
-        onChange={handleChange}
-      />
-    </div>
-  );
-}
+export default sliderHoc(Range, NumberPicker);

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { isDeepEqual, combineSchema } from './base/utils';
-import { asField, DefaultFieldUI } from './base/as-field';
+import { asField, DefaultFieldUI } from './base/asField';
 import parse from './base/parser';
 import resolve from './base/resolve';
 import { getValidateList } from './base/validate';
@@ -25,9 +25,24 @@ function renderField(schema, fields, events) {
 }
 
 // 在顶层将 propsSchema 和 uiSchema 合并，便于后续处理。 也可直接传入合并的 schema
-const Wrapper = ({ schema, propsSchema = {}, uiSchema = {}, ...rest }) => {
+const Wrapper = ({
+  schema,
+  propsSchema = {},
+  uiSchema = {},
+  readOnly,
+  showValidate,
+  ...rest
+}) => {
   const _schema = schema ? schema : combineSchema(propsSchema, uiSchema);
-  return <FormRender {...rest} schema={_schema} />;
+
+  return (
+    <FormRender
+      readOnly={readOnly}
+      showValidate={!readOnly && showValidate} // 预览模式下不展示校验
+      {...rest}
+      schema={_schema}
+    />
+  );
 };
 
 class FormRender extends React.Component {
@@ -45,6 +60,8 @@ class FormRender extends React.Component {
     displayType: PropTypes.string,
     onChange: PropTypes.func,
     onValidate: PropTypes.func,
+    readOnly: PropTypes.bool,
+    labelWidth: PropTypes.number,
   };
 
   static defaultProps = {
@@ -61,6 +78,8 @@ class FormRender extends React.Component {
     displayType: 'column',
     onChange: () => {},
     onValidate: () => {},
+    readOnly: false,
+    labelWidth: 120,
   };
 
   constructor() {
@@ -80,9 +99,7 @@ class FormRender extends React.Component {
       !isDeepEqual(nextProps.schema, schema) ||
       !isDeepEqual(Object.keys(nextProps.formData), Object.keys(formData))
     ) {
-      setTimeout(() => {
-        this.needUpdateForm();
-      }, 0);
+      setTimeout(this.needUpdateForm, 0);
     }
   }
 
@@ -109,6 +126,8 @@ class FormRender extends React.Component {
       displayType,
       onChange,
       onValidate,
+      readOnly,
+      labelWidth,
     } = this.props;
 
     const generated = {};
@@ -140,6 +159,8 @@ class FormRender extends React.Component {
             showDescIcon,
             showValidate,
             displayType,
+            readOnly,
+            labelWidth,
             formData,
           },
           {

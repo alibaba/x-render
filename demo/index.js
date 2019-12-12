@@ -21,6 +21,7 @@ class Root extends Component {
     column: 1,
     displayType: 'column',
     showDescIcon: false,
+    readOnly: false,
   };
 
   onThemeChange = e => {
@@ -48,12 +49,14 @@ class Root extends Component {
     });
   };
 
+  onReadOnlyChange = value => this.setState({ readOnly: value });
+
   onSchemaChange = e => {
     this.setState({ schemaName: e.target.value });
   };
 
   render() {
-    const { showDescIcon } = this.state;
+    const { showDescIcon, readOnly } = this.state;
     return (
       <div className="vh-100 overflow-auto flex flex-column">
         <GithubCorner
@@ -110,6 +113,13 @@ class Root extends Component {
                   onChange={this.onShowDescChange}
                   unCheckedChildren="开描述"
                   checked={showDescIcon}
+                />
+                <Switch
+                  className="mr2"
+                  checkedChildren="编辑模式"
+                  onChange={this.onReadOnlyChange}
+                  unCheckedChildren="只读模式"
+                  checked={readOnly}
                 />
               </div>
             </div>

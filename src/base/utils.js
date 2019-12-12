@@ -1,8 +1,27 @@
 /**
  * Created by Tw93 on 2018-09-26.
- * 深度对比
+ * 常见功能函数
  */
 
+// 克隆对象
+export function clone(data) {
+  try {
+    return JSON.parse(JSON.stringify(data));
+  } catch (e) {
+    return data;
+  }
+}
+
+// '3' => true, 3 => true, undefined => false
+export function isLooselyNumber(num) {
+  if (typeof num === 'number') return true;
+  if (typeof num === 'string') {
+    return !Number.isNaN(Number(num));
+  }
+  return false;
+}
+
+// 深度对比
 export function isDeepEqual(param1, param2) {
   if (param1 === undefined && param2 === undefined) return true;
   else if (param1 === undefined || param2 === undefined) return false;
@@ -34,12 +53,31 @@ export function isDeepEqual(param1, param2) {
   return true;
 }
 
+// 时间组件
+export function getFormat(format) {
+  let dateFormat;
+  switch (format) {
+    case 'date':
+      dateFormat = 'YYYY-MM-DD';
+      break;
+    case 'time':
+      dateFormat = 'HH:mm:ss';
+      break;
+    default:
+      // dateTime
+      dateFormat = 'YYYY-MM-DD HH:mm:ss';
+  }
+  return dateFormat;
+}
+
 export function hasRepeat(list) {
   return list.find(
     (x, i, self) =>
       i !== self.findIndex(y => JSON.stringify(x) === JSON.stringify(y))
   );
 }
+
+// ----------------- schema 相关
 
 // 合并propsSchema和UISchema。由于两者的逻辑相关性，合并为一个大schema能简化内部处理
 export function combineSchema(propsSchema, uiSchema) {
@@ -112,9 +150,28 @@ function getChildren(schema) {
   }));
 }
 
-// 合并多个schema
+// 合并多个schema树，比如一个schema的树节点是另一个schema
 export function combine() {}
 
 // 代替eval的函数
 export const parseString = string =>
   Function('"use strict";return (' + string + ')')();
+
+// 解析函数字符串值
+export const evaluateString = (string, formData, rootValue) =>
+  Function(`"use strict";
+    const rootValue = ${JSON.stringify(rootValue)};
+    const formData = ${JSON.stringify(formData)};
+    return (${string})`)();
+
+// 判断schema的值是是否是“函数”
+// JSON无法使用函数值的参数，所以使用@起始的字符串作为解析标记
+export function isFunction(func) {
+  if (typeof func === 'function') {
+    return true;
+  }
+  if (typeof func === 'string' && func.substring(0, 1) === '@') {
+    return true;
+  }
+  return false;
+}

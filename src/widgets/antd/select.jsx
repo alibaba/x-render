@@ -1,30 +1,9 @@
-import React from 'react';
+/**
+ * Updated by Tw93 on 2019-12-07.
+ * 选择组件
+ */
+
 import { Select } from 'antd';
+import selectHoc from '../../components/selectHoc';
 
-const { Option } = Select;
-
-export default function select(p) {
-  const onChange = value => p.onChange(p.name, value);
-  return (
-    <Select
-      style={{ width: '100%' }}
-      {...p.options}
-      disabled={p.disabled}
-      value={p.value}
-      onChange={onChange}
-    >
-      {(p.schema.enum || []).map((val, index) => {
-        let option = p.schema.enumNames ? p.schema.enumNames[index] : val;
-        const isHtml = typeof option === 'string' && option[0] === '<';
-        if (isHtml) {
-          option = <span dangerouslySetInnerHTML={{ __html: option }} />;
-        }
-        return (
-          <Option value={val} key={index}>
-            {option}
-          </Option>
-        );
-      })}
-    </Select>
-  );
-}
+export default selectHoc(Select);

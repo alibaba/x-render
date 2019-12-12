@@ -1,25 +1,11 @@
-import React from 'react';
+/**
+ * Updated by Tw93 on 2019-12-07.
+ * 单选组件
+ */
 import { Radio } from '@alifd/next';
-
-const RadioGroup = Radio.Group;
+import radioHoc from '../../components/radioHoc';
 
 export default function radio(p) {
-  return (
-    <RadioGroup
-      disabled={p.disabled}
-      value={p.value}
-      onChange={v => p.onChange(p.name, v)}
-    >
-      {(p.schema.enum || [true, false]).map((val, index) => (
-        <Radio value={val} key={index}>
-          <span
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: p.schema.enumNames ? p.schema.enumNames[index] : val,
-            }}
-          />
-        </Radio>
-      ))}
-    </RadioGroup>
-  );
+  const onChange = v => p.onChange(p.name, v);
+  return radioHoc(p, onChange, Radio);
 }

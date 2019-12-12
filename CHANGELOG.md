@@ -1,5 +1,29 @@
 # Change Log
 
+### 0.4.2
+
+- [!] 优化 checkbox 等 boolean 类组件的摆位
+- [!] 优化横向模式下校验的展示
+- [!] 优化标签展示
+
+### 0.4.1
+
+- [!] fix 了内部 HOC 组件未引入 propTypes 的问题
+
+### 0.4.0
+
+注: 在 0.3 版本 form-render 给出了函数解析式的解法，用于解决组件间的联动，当时给了 value/rootValue/formData 三个参数，但考虑到 value 参数是不会被用到的（自己关联自己？），且放在第一参数位置，不合理。所以本次版本升级去掉了 value 参数。如果在 0.3 版本中已经使用函数的同学注意版本差异修改一下参数位置即可。新的用法见文档“如何联动”
+
+- [!] 修改了函数表达式的入参，从 (value, rootValue, formData) 变为 (formData, rootValue)
+- [+] 新增 labelWidth 参数，用于指明 label 的长度（px），默认 120，标签已遵照普通表单标准右对齐
+- [+] JSON 格式下也可使用“@”开头的字符串方式支持函数表达式，具体见文档“如何联动”
+- [+] 添加了 `readOnly` 的顶层 props，用于支持预览模式（纯文本，无法修改）
+- [+] 完善了 `ui:readonly` 和很多组件的交互，现在所有组件都支持 readonly 模式
+- [+] 添加了 readOnly 的文档说明和 live demo 开关
+- [+] 列表组件支持默认值（default）
+- [!] 列表组件如果设置了 maxItem, 当元素到达最大数量，添加按钮会自动消失。[#34](https://github.com/alibaba/form-render/issues/34)
+- [!] 表单的 title 后面添加了“:”，规范表单的展示
+
 ### 0.3.2
 
 - [!] 列表支持`ui:readonly`进入只读模式，不允许对列表进行增、删和拖拽操作

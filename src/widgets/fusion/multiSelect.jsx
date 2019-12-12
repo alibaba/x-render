@@ -1,29 +1,9 @@
-import React from 'react';
+/**
+ * Updated by Tw93 on 2019-12-07.
+ * 多选组件
+ */
+
 import { Select } from '@alifd/next';
+import multiSelectHoc from '../../components/multiSelectHoc';
 
-const { Option } = Select;
-
-export default function select(p) {
-  const onChange = value => p.onChange(p.name, value);
-  return (
-    <Select
-      style={{ width: '100%' }}
-      {...p.options}
-      mode="multiple"
-      disabled={p.disabled}
-      value={p.value}
-      onChange={onChange}
-    >
-      {(p.schema.enum || []).map((val, index) => (
-        <Option value={val} key={index}>
-          <span
-            // eslint-disable-next-line react/no-danger
-            dangerouslySetInnerHTML={{
-              __html: p.schema.enumNames ? p.schema.enumNames[index] : val,
-            }}
-          />
-        </Option>
-      ))}
-    </Select>
-  );
-}
+export default multiSelectHoc(Select);
