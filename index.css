@@ -28,7 +28,7 @@
 }
 
 .fr-label-required {
-  margin: 3px 4px 0 0;
+  margin: 1px 4px 0 0;
   color: #f5222d;
   font-size: 14px;
   font-family: SimSun, sans-serif;
@@ -106,7 +106,7 @@
   padding-top: 2px;
   padding-right: 10px;
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 300;
 }
 
 .fr-move-icon:hover {

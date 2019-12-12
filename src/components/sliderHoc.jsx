@@ -35,14 +35,14 @@ export default (SliderComponent, NumberComponent) => p => {
         disabled={p.disabled || p.readonly}
       />
       {p.readonly ? (
-        <span style={{ width: '35%' }}>
+        <span style={{ width: '90px' }}>
           {p.value === (undefined || '') ? '-' : p.value}
         </span>
       ) : (
         <NumberComponent
           {...p.options}
           {...setting}
-          style={{ width: '35%', ...style }}
+          style={{ width: '90px', ...style }}
           value={p.value}
           disabled={p.disabled}
           onChange={onChange}
