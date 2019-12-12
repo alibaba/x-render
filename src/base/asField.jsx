@@ -280,7 +280,11 @@ export const DefaultFieldUI = ({
           {children}
         </div>
         {displayType === 'row' && showValidate && validateText && (
-          <span className="fr-validate absolute">{validateText}</span>
+          <span
+            className={`fr-validate ${isComplex ? 'relative' : 'absolute'}`}
+          >
+            {validateText}
+          </span>
         )}
       </div>
     </div>
