@@ -178,7 +178,7 @@ export const DefaultFieldUI = ({
   switch (type) {
     case 'object':
       if (title) {
-        labelClass += ' fr-label-object bb b--black-20 pb1 mt2 mb3 tracked'; // fr-label-object 无默认style，只是占位用于使用者样式覆盖
+        labelClass += ' fr-label-object bb b--black-20 pb1 mt2 mb3'; // fr-label-object 无默认style，只是占位用于使用者样式覆盖
       }
       if (!isRoot) {
         fieldClass += ' fr-field-object'; // object的margin bottom由内部元素撑起
@@ -195,9 +195,7 @@ export const DefaultFieldUI = ({
     case 'boolean':
       if (title) {
         labelClass += ' ml2';
-        if (displayType === 'row') {
-          labelClass = labelClass.replace('mb2', 'mb0');
-        }
+        labelClass = labelClass.replace('mb2', 'mb0');
       }
       fieldClass += ' flex flex-row-reverse justify-end';
       break;
@@ -271,7 +269,7 @@ export const DefaultFieldUI = ({
         style={
           type === 'boolean'
             ? displayType === 'row'
-              ? { width: _labelWidth }
+              ? { marginLeft: _labelWidth }
               : {}
             : { flexGrow: 1 }
         }
@@ -281,7 +279,9 @@ export const DefaultFieldUI = ({
         </div>
         {displayType === 'row' && showValidate && validateText && (
           <span
-            className={`fr-validate ${isComplex ? 'relative' : 'absolute'}`}
+            className={`fr-validate fr-validate-row ${
+              isComplex ? 'relative' : 'absolute'
+            }`}
           >
             {validateText}
           </span>
