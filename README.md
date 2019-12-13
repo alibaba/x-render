@@ -106,17 +106,17 @@ ReactDOM.render(<App />, rootElement);
 
 ### API
 
-| Prop              |    Type    | Required | Default  |                             Description                             |
-| ----------------- | :--------: | :------: | :------: | :-----------------------------------------------------------------: |
-| **`name`**        |  `String`  |   `Y`    | `$form`  |                             表单的名称                              |
-| **`propsSchema`** |  `Object`  |   `Y`    |   `{}`   |                          表单属性配置 json                          |
-| **`uiSchema`**    |  `Object`  |   `N`    |   `{}`   |                          表单 UI 配置 json                          |
-| **`formData`**    |  `Object`  |   `N`    |   `{}`   |                              配置数据                               |
-| **`onChange`**    | `Function` |   `Y`    | `()=>{}` |                          数据更改回调函数                           |
-| **`onValidate`**  | `Function` |   `N`    | `()=>{}` |                          表单输入校验回调                           |
-| **`displayType`** |  `String`  |   `N`    | `column` |             设置表单横向排列或者纵向排序`column`/ `row`             |
-| **`readOnly`**    | `Boolean`  |   `N`    | `false`  |                         预览模式/可编辑模式                         |
-| **`labelWidth`**  |  `Number`  |   `N`    |   `3`    | label 的长度，可使用 1 到 12 的数字，默认 3 代表全长的 25% （3/12） |
+| Prop              |    Type    | Required | Default  |                   Description                   |
+| ----------------- | :--------: | :------: | :------: | :---------------------------------------------: |
+| **`name`**        |  `String`  |   `Y`    | `$form`  |                   表单的名称                    |
+| **`propsSchema`** |  `Object`  |   `Y`    |   `{}`   |                表单属性配置 json                |
+| **`uiSchema`**    |  `Object`  |   `N`    |   `{}`   |                表单 UI 配置 json                |
+| **`formData`**    |  `Object`  |   `N`    |   `{}`   |                    配置数据                     |
+| **`onChange`**    | `Function` |   `Y`    | `()=>{}` |                数据更改回调函数                 |
+| **`onValidate`**  | `Function` |   `N`    | `()=>{}` |                表单输入校验回调                 |
+| **`displayType`** |  `String`  |   `N`    | `column` |   设置表单横向排列或者纵向排序`column`/ `row`   |
+| **`readOnly`**    | `Boolean`  |   `N`    | `false`  |               预览模式/可编辑模式               |
+| **`labelWidth`**  |  `Number`  |   `N`    |  `120`   | label 的长度，指明 label 的长度（px），默认 120 |
 
 **注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好  
 **注 2：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）  

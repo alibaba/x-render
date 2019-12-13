@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.4.3
+
+- [!] 修复了一个文件名的内部 bug
+
 ### 0.4.2
 
 - [!] 优化 checkbox 等 boolean 类组件的摆位
