@@ -5,7 +5,7 @@
 
 import isLength from 'validator/lib/isLength';
 import { isHidden } from './isHidden';
-import { hasRepeat } from './utils';
+import { hasRepeat, isFunction } from './utils';
 
 const isEmptyObject = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -151,9 +151,10 @@ export const dealTypeValidate = (key, value, schema = {}) => {
   return checkList;
 };
 
+// for backward compatibility
 const keyHidden = (schema, val) => {
   let hidden = schema && schema['ui:hidden'];
-  if (typeof hidden === 'string' && hidden.substring(0, 1) !== '@') {
+  if (typeof hidden === 'string' && isFunction(hidden) === false) {
     hidden = isHidden({ hidden, rootValue: val });
   }
   return hidden;
