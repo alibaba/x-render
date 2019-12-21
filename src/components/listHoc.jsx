@@ -93,9 +93,18 @@ const fieldListHoc = ButtonComponent => {
       p.onChange(p.name, value);
       addUnfoldItem();
     };
+    // buttons is a list, each item looks like:
+    // {
+    //   "text": "删除全部",
+    //   "icon": "delete",
+    //   "callback": "clearAll"
+    // }
 
     render() {
       const { p, foldList = [], toggleFoldItem } = this.props;
+      const { options, extraButtons } = p || {};
+      // prefer ui:options/buttons to ui:extraButtons, but keep both for backwards compatibility
+      const buttons = options.buttons || extraButtons || [];
       const { readonly, schema = {} } = p;
       const { maxItems } = schema;
       const list = p.value || [];
@@ -128,12 +137,13 @@ const fieldListHoc = ButtonComponent => {
                   新增
                 </ButtonComponent>
               )}
-              {p.extrafrButtons &&
-                p.extrafrButtons.length > 0 &&
-                p.extrafrButtons.map(item => (
+              {buttons &&
+                buttons.length > 0 &&
+                buttons.map((item, i) => (
                   <ButtonComponent
                     className="ml2"
                     icon={item.icon}
+                    key={i.toString()}
                     onClick={() => {
                       if (item.callback === 'clearAll') {
                         p.onChange(p.name, []);
@@ -149,7 +159,9 @@ const fieldListHoc = ButtonComponent => {
                         return;
                       }
                       if (typeof window[item.callback] === 'function') {
-                        window[item.callback].call(); // eslint-disable-line
+                        const value = [...p.value];
+                        const onChange = value => p.onChange(p.name, value);
+                        window[item.callback](value, onChange); // eslint-disable-line
                       }
                     }}
                   >
