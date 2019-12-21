@@ -29,8 +29,7 @@ export default NumberComponent => p => {
     <NumberComponent
       {...obj}
       style={{ width: '100%', ...style }}
-      disabled={p.disabled}
-      readOnly={p.readonly}
+      disabled={p.disabled || p.readonly}
       {...p.options}
       value={p.value}
       onChange={onChange}
