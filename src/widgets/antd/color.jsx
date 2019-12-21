@@ -22,7 +22,6 @@ export default function color(p) {
           animation="slide-up"
           color={p.value ? p.value : '#ffffff'}
           onChange={onPickerChange}
-          disabled={true}
         />
       }
       {p.readonly ? (
