@@ -11,9 +11,8 @@ export default function ta(p) {
     <TextArea
       style={style}
       {...options}
-      disabled={p.disabled}
+      disabled={p.disabled || p.readonly}
       value={p.value}
-      readOnly={p.readonly}
       onChange={onChange}
     />
   );

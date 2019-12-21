@@ -27,8 +27,7 @@ export default function input(p) {
       style={style}
       {...rest}
       value={p.value}
-      disabled={p.disabled}
-      readOnly={p.readonly}
+      disabled={p.disabled || p.readonly}
       addonTextBefore={addonBefore ? addonBefore : ''}
       addonTextAfter={addonAfter ? addonAfter : previewNode(format, p.value)}
       onChange={handleChange}
