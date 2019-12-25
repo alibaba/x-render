@@ -19,6 +19,8 @@
 - <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5?fontsize=14" target="_blank">Code Sandbox</a>
 - <a href="https://alibaba.github.io/form-render/#/docs/used" target="_blank">常见场景</a>
 - <a href="https://alibaba.github.io/form-render/#/docs/proptypes" target="_blank">Proptypes to Json Schema</a>
+- <a href="https://github.com/alibaba/form-render/blob/master/CHANGELOG.md" target="_blank">更新日志</a>
+- <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
 ## 优势
 
@@ -56,7 +58,7 @@ const propsSchema = {
     string: {
       title: '字符串',
       type: 'string',
-      'ui:width': '50%', // uiSchema 可以合并到 propsSchema 中
+      'ui:width': '50%', // uiSchema 可以合并到 propsSchema 中（推荐写法，书写便捷）
     },
     select: {
       title: '单选',
@@ -66,10 +68,10 @@ const propsSchema = {
   },
 };
 
-// 也可以选择单独使用 uiSchema 字段分开定义每个字段的 ui 属性
+// 也可以选择单独使用 uiSchema 字段分开定义所有的 ui 属性，适用于遵循 json schema 的团队无缝接入
 const uiSchema = {
   select: {
-    'ui:width': '50%',
+    'ui:disabled': true,
   },
 };
 
@@ -106,17 +108,17 @@ ReactDOM.render(<Demo />, rootElement);
 
 ### API
 
-| Prop              |    Type    | Required | Default  |                   Description                   |
-| ----------------- | :--------: | :------: | :------: | :---------------------------------------------: |
-| **`name`**        |  `String`  |   `Y`    | `$form`  |                   表单的名称                    |
-| **`propsSchema`** |  `Object`  |   `Y`    |   `{}`   |                表单属性配置 json                |
-| **`uiSchema`**    |  `Object`  |   `N`    |   `{}`   |                表单 UI 配置 json                |
-| **`formData`**    |  `Object`  |   `N`    |   `{}`   |                    配置数据                     |
-| **`onChange`**    | `Function` |   `Y`    | `()=>{}` |                数据更改回调函数                 |
-| **`onValidate`**  | `Function` |   `N`    | `()=>{}` |                表单输入校验回调                 |
-| **`displayType`** |  `String`  |   `N`    | `column` |   设置表单横向排列或者纵向排序`column`/ `row`   |
-| **`readOnly`**    | `Boolean`  |   `N`    | `false`  |               预览模式/可编辑模式               |
-| **`labelWidth`**  |  `Number`  |   `N`    |  `120`   | label 的长度，指明 label 的长度（px），默认 120 |
+| Prop              |    Type    | Required |  Default   |                   Description                   |
+| ----------------- | :--------: | :------: | :--------: | :---------------------------------------------: |
+| **`name`**        |  `String`  |   `Y`    |  `$form`   |                   表单的名称                    |
+| **`propsSchema`** |  `Object`  |   `Y`    |    `{}`    |                表单属性配置 json                |
+| **`uiSchema`**    |  `Object`  |   `N`    |    `{}`    |                表单 UI 配置 json                |
+| **`formData`**    |  `Object`  |   `N`    |    `{}`    |                    配置数据                     |
+| **`onChange`**    | `Function` |   `Y`    | `() => {}` |                数据更改回调函数                 |
+| **`onValidate`**  | `Function` |   `N`    | `() => {}` |                表单输入校验回调                 |
+| **`displayType`** |  `String`  |   `N`    |  `column`  |   设置表单横向排列或者纵向排序`column`/ `row`   |
+| **`readOnly`**    | `Boolean`  |   `N`    |  `false`   |               预览模式/可编辑模式               |
+| **`labelWidth`**  |  `Number`  |   `N`    |   `120`    | label 的长度，指明 label 的长度（px），默认 120 |
 
 **注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好  
 **注 2：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）  
@@ -135,7 +137,7 @@ ReactDOM.render(<Demo />, rootElement);
 ## 快速书写 schema
 
 快速准确书写 schema 一直是使用者的痛点。为此我们准备了 schema 书写利器： `form-render snippets`（vscode 插件），在 vscode 商店输入 ‘formrender’ 搜索：
-![](https://img.alicdn.com/tfs/TB1VIfBqWL7gK0jSZFBXXXZZpXa-1976-1464.png)
+<img src="https://img.alicdn.com/tfs/TB1VIfBqWL7gK0jSZFBXXXZZpXa-1976-1464.png" width="500" />
 
 ## 支持 TypeScript
 
@@ -174,10 +176,6 @@ FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置�
 > npm i
 > npm start
 ```
-
-## 后期规划
-
-详见仓库 [projects](https://github.com/alibaba/form-render/projects/2)
 
 ## 支持
 
