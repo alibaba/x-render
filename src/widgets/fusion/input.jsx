@@ -18,7 +18,9 @@ const previewNode = (format, value) => {
 };
 export default function input(p) {
   const { options = {}, invalid } = p;
-  const style = invalid ? { borderColor: '#f5222d' } : {};
+  const style = invalid
+    ? { borderColor: '#f5222d', width: '100%' }
+    : { width: '100%' };
   const { addonBefore, addonAfter, ...rest } = options;
   const { format = 'text' } = p.schema;
   const handleChange = value => p.onChange(p.name, value);
@@ -27,8 +29,7 @@ export default function input(p) {
       style={style}
       {...rest}
       value={p.value}
-      disabled={p.disabled}
-      readOnly={p.readonly}
+      disabled={p.disabled || p.readonly}
       addonTextBefore={addonBefore ? addonBefore : ''}
       addonTextAfter={addonAfter ? addonAfter : previewNode(format, p.value)}
       onChange={handleChange}

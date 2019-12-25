@@ -29,8 +29,7 @@ export default function input(p) {
       {...options}
       value={p.value}
       type={type}
-      disabled={p.disabled}
-      readOnly={p.readonly}
+      disabled={p.disabled || p.readonly}
       addonAfter={
         options.addonAfter ? options.addonAfter : previewNode(format, p.value)
       }

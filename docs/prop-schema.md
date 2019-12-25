@@ -46,10 +46,66 @@
 - `format`：用来描述输入框的格式，支持 image、dateTime、date、time
 - `pattern`：自定义正则校验，用于校验 string 或 number 数据是否合格，详细使用可见 <a href="https://alibaba.github.io/form-render/#/docs/pattern" target="_blank">pattern 自定义正则校验</a>
 - `message` 校验提示自定义文案，与 pattern 共同使用
+- `default` 默认值，对象类型不能使用 default，其他类型包括 array 都可以使用 default：
+
+```json
+"list": {
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "x": {
+        "type": "string",
+      }
+    }
+  },
+  "default": [{ "x": "a" }, { "x": "b" }]
+}
+```
 
 #### String
 
-string 类对应的控件非常多：
+string 类对应的控件非常多, 使用 `format` 字段指定使用组件：
+
+```json
+// 默认 input
+"input": {
+  "title": "简单输入框",
+  "type": "string",
+}
+// textarea
+"textarea": {
+  "title": "简单文本编辑框",
+  "type": "string",
+  "format": "textarea"
+}
+// 颜色组件
+"color": {
+  "title": "颜色选择",
+  "type": "string",
+  "format": "color"
+}
+// 日期组件
+"date": {
+  "title": "日期选择",
+  "type": "string",
+  "format": "date" // "dateTime"
+}
+// 时间组件
+"time": {
+  "title": "时间选择",
+  "type": "string",
+  "format": "time"
+}
+// 图片链接组件
+"image": {
+  "title": "图片展示",
+  "type": "string",
+  "format": "image"
+}
+```
+
+注意的字段：
 
 - 输入框：input、textarea
 
@@ -72,13 +128,14 @@ string 类对应的控件非常多：
 
 #### Number
 
-- `minimum`：数字最小值
-- `maximum`：数字最大值
+- `min`：数字最小值
+- `max`：数字最大值
+- `step`：允许递增的区间
 
 #### Object
 
 - `properties`：描述 object 的结构，必要属性
-- `required`：描述对象下哪些项必填，非必要属性。使用方法传入需要限制的 name 即可
+- `required`：描述对象下哪些项必填，非必要属性。为数组结构，每项是对应必填组件的 name
 
 ```json
 {
@@ -144,7 +201,7 @@ string 类对应的控件非常多：
 - 多选框
 
   - `enum`：参考单选
-  - `enumNames`：参考单选
+  - `enumNames`：参考单选, 只写 enum 不写 enumNames 时，会默认使用 enum 作为 enumNames
 
 ```json
 {

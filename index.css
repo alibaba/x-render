@@ -25,6 +25,7 @@
   color: #333;
   font-size: 14px;
   min-height: 22px; /* ""的标签页占位 */
+  line-height: 22px;
 }
 
 .fr-label-required {

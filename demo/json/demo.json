@@ -119,16 +119,16 @@
         "items": {
           "type": "object",
           "properties": {
+            "num": {
+              "title": "数字参数",
+              "description": "number类型",
+              "type": "number"
+            },
             "name": {
               "title": "字符名称",
               "description": "string类型",
               "type": "string",
               "pattern": "^[A-Za-z0-9]+$"
-            },
-            "num": {
-              "title": "数字参数",
-              "description": "number类型",
-              "type": "number"
             }
           }
         }
@@ -165,13 +165,28 @@
       "ui:widget": "upload",
       "ui:action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
     },
+    "objDemo": {
+      "background": {
+        "ui:hidden": "{{rootValue.isLike === false}}",
+        "ui:widget": "color"
+      },
+      "wayToTravel": {
+        "ui:widget": "radio"
+      },
+      "canDrive": {
+        "ui:hidden": "{{rootValue.wayToTravel !== 'self'}}"
+      }
+    },
+    "multiSelectDemo": {
+      "ui:widget": "multiSelect"
+    },
     "arrDemo": {
       "ui:options": {
         "foldable": true
       },
       "items": {
         "name": {
-          "ui:hidden": "num==3"
+          "ui:disabled": "{{rootValue.num === 3}}"
         }
       },
       "ui:extraButtons": [
@@ -181,21 +196,6 @@
           "callback": "copyLast"
         }
       ]
-    },
-    "objDemo": {
-      "background": {
-        "ui:dependShow": "'{{objDemo.isLike}}' == 'true'",
-        "ui:widget": "color"
-      },
-      "wayToTravel": {
-        "ui:widget": "radio"
-      },
-      "canDrive": {
-        "ui:hidden": "wayToTravel!='self'"
-      }
-    },
-    "multiSelectDemo": {
-      "ui:widget": "multiSelect"
     }
   },
   "formData": {

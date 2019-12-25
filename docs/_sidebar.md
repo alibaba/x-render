@@ -1,5 +1,6 @@
 - **基础使用**
   - [快速开始](README)
+  - [如何在 TypeScript 项目中使用](docs/typescript)
   - [propSchema 配置](docs/prop-schema)
   - [uiSchema 配置](docs/ui-schema)
   - [pattern 自定义正则校验](docs/pattern)

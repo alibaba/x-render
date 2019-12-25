@@ -5,7 +5,7 @@
 
 import isLength from 'validator/lib/isLength';
 import { isHidden } from './isHidden';
-import { hasRepeat } from './utils';
+import { hasRepeat, isFunction } from './utils';
 
 const isEmptyObject = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -67,13 +67,13 @@ export const getValidateText = (obj = {}) => {
     ) {
       return (message && message.minLength) || `长度不能小于 ${minLength}`;
     }
-    // 由于有人填写red，rgba(0,123,65,0.3)等值，所以暂时不做验证
-    // if (format === 'color' || widget === 'color') {
-    //   const isHex = finalValue.match(/^(#{0,1})([0-9A-F]{6})$/i);
-    //   if (!isHex) {
-    //     return '请填写正确hex值';
-    //   }
-    // }
+    // 由于有人填写red，rgba(0,123,65,0.3)等值，所以暂时不做严格验证
+    if (format === 'color' || widget === 'color') {
+      const seemsLikeHex = finalValue.match(/^([0-9A-F]{6})$/i);
+      if (seemsLikeHex) {
+        return '颜色hex值请以#开头，例如#fff123';
+      }
+    }
   }
 
   // 数字相关校验
@@ -151,9 +151,10 @@ export const dealTypeValidate = (key, value, schema = {}) => {
   return checkList;
 };
 
+// for backward compatibility
 const keyHidden = (schema, val) => {
   let hidden = schema && schema['ui:hidden'];
-  if (typeof hidden === 'string' && hidden.substring(0, 1) !== '@') {
+  if (typeof hidden === 'string' && isFunction(hidden) === false) {
     hidden = isHidden({ hidden, rootValue: val });
   }
   return hidden;

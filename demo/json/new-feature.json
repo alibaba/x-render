@@ -52,8 +52,8 @@
           "properties": {
             "age": {
               "title": "填写年龄",
-              "type": "string",
-              "ui:hidden": "movieType=='a'||movieType=='c'"
+              "type": "number",
+              "ui:hidden": "{{rootValue.movieType === 'a' || rootValue.movieType === 'c'}}"
             },
             "movieType": {
               "title": "短片类型",

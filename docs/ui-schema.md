@@ -71,7 +71,7 @@
 }
 ```
 
-- `ui:hidden`：可控制所有基础组件是否显示，可使用 true/false 或表达式，例如：
+- `ui:hidden`：可控制所有基础组件是否显示，可使用 true/false 或函数表达式，例如：
 
 ```json
 "age": {
@@ -82,35 +82,23 @@
   "title": "是否同意",
   "type": "boolean"
 },
-"personType": {
-  "title": "类型",
-  "type": "number",
-  "enum": [1, 2, 3]
-}
-...
-"age": {
-  "ui:hidden": "agree==false && personType!=2"
-}
-```
-
-如果使用如上表达式， age 元素将在 agree 元素的值为 false 且 personType 元素不等于 2 时隐藏。
-注：目前`ui:hidden`支持`==`，`!=`，`>`和`<`四种运算符和`&&`（且），`||`（或）两种关系符，使用的判断字段（表达式左侧）必须是组件的同级字段。
-
-虽然不推荐，但针对关联组件不在同级的情况，可以使用约定的 `formData` 关键字寻值：
-
-```json
-// 例如 formData 的结构为：
-"formData": {
-  "x": {
-    "y": "abc"
-  },
-  ...
-}
-// 注意表达式约定以 "formData." 开头
-"xxxx": {
-  "ui:hidden": "formData.x.y!='abc'"
+"someObj": {
+  "title": "对象",
+  "type": "object",
+  "properties": {
+    "personType": {
+      "title": "类型",
+      "type": "number",
+      "enum": [1, 2, 3]
+    },
+    "age": {
+      "ui:hidden": "{{formData.agree==false && rootValue.personType!=2}}"
+    }
+  }
 }
 ```
+
+如果使用如上函数表达式，age 组件将在 agree 组件的值为 false 且 personType 组件不等于 2 时隐藏。其中`formData`指向整个表单值，`rootValue`指向对应组件的父级元素值。函数表达式的详细写法见[如何联动](docs/function)
 
 - `ui:className`：添加组件 root 元素的 className（和 fr-field 这个 className 在同级），用于自定义单独组件的样式
 - `ui:width`：单个基础组件的长度，建议使用百分比例如`"ui:width":"50%"`。
@@ -134,30 +122,19 @@
 | ---------- | :-----: | :-----------: | :----------------------------------------: |
 | foldable   | boolean | 列表（array） | `{ foldable: true }`用于长列表的收起和展开 |
 | hideDelete | boolean | 列表（array） |    `{ hideDelete: true }`隐藏“删除”按钮    |
+| buttons    |  array  | 列表（array） |                    下详                    |
 
-### 如何编写 uiSchema 设置
+列表默认展示“新增”按钮。`buttons` 用于添加更多列表操作按钮
+写法如：
 
 ```json
-{
-  "disabledDemo": {
-    "ui:disabled": true
-  },
-  "dateDemo": {
-    "ui:widget": "date"
-  },
-  "objDemo": {
-    // 覆盖object里面的元素对应的组件
-    "background": {
-      "ui:widget": "color"
-    }
-  },
-  "arrDemo": {
-    // 数组列表除了默认的新增按钮外，自定义的按钮组（每个按钮点击时会执行对应的callback，使用前请先咨询@侑夕）
-    "ui:extraButtons": [
+"arrDemo": {
+  "ui:options": {
+    "buttons": [
       {
         "text": "Excel导入",
         "icon": "copy",
-        "callback": "onCallback1"
+        "callback": "someCallback"
       },
       {
         "text": "删除全部",
@@ -170,6 +147,59 @@
         "callback": "copyLast"
       }
     ]
+  }
+}
+```
+
+1. 其中`clearAll` 和 `copyLast` 是内置函数, 前者用于清空数组，后者用于复制最后一个元素
+2. `callback` 也可使用自定义的名称 `someCallback`, 此时 form-render 会到 window.someCallback 上寻找回调函数，此回调函数可接受两个参数 `value` 和 `onChange`。
+
+```js
+// value: 整个数组的值，onChange: 传入改变后的数组值，触发state更新
+window.someCallback = (value, onChange) => {
+  onChange([]);
+};
+```
+
+如上的 someCallback 会清空整个列表。
+
+### 如何编写 uiSchema 设置
+
+```json
+{
+  "disabledDemo": {
+    "ui:disabled": true
+  },
+  "dateDemo": {
+    "ui:widget": "date" // 效果和 format: "date" 一致
+  },
+  "objDemo": {
+    // 覆盖object里面的元素对应的组件
+    "background": {
+      "ui:widget": "color"
+    }
+  },
+  "arrDemo": {
+    // 数组列表除了默认的新增按钮外，自定义的按钮组（每个按钮点击时会执行对应的callback，使用前请先咨询@侑夕）
+    "ui:options": {
+      "buttons": [
+        {
+          "text": "Excel导入",
+          "icon": "copy",
+          "callback": "someCallback"
+        },
+        {
+          "text": "删除全部",
+          "icon": "delete",
+          "callback": "clearAll"
+        },
+        {
+          "text": "复制上个",
+          "icon": "copy",
+          "callback": "copyLast"
+        }
+      ]
+    }
   }
 }
 ```

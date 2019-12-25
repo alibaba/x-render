@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getValidateText } from './validate';
 import { isHidden, isDependShow } from './isHidden';
-import { evaluateString, isLooselyNumber } from './utils';
+import { evaluateString, isLooselyNumber, isFunction } from './utils';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
@@ -27,8 +27,8 @@ export const asField = ({ FieldUI, Widget }) => {
     const convertValue = item => {
       if (typeof item === 'function') {
         return item(formData, rootValue);
-      } else if (typeof item === 'string' && item.substring(0, 1) === '@') {
-        const _item = item.substring(1);
+      } else if (typeof item === 'string' && isFunction(item) !== false) {
+        const _item = isFunction(item);
         try {
           return evaluateString(_item, formData, rootValue);
         } catch (error) {
@@ -197,6 +197,7 @@ export const DefaultFieldUI = ({
         labelClass += ' ml2';
         labelClass = labelClass.replace('mb2', 'mb0');
       }
+      contentClass += ' flex items-center'; // checkbox高度短，需要居中对齐
       fieldClass += ' flex flex-row-reverse justify-end';
       break;
     default:

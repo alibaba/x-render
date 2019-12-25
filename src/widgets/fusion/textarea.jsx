@@ -5,15 +5,16 @@ const { TextArea } = Input;
 
 export default function ta(p) {
   const { options, invalid } = p;
-  const style = invalid ? { borderColor: '#f5222d' } : {};
+  const style = invalid
+    ? { borderColor: '#f5222d', width: '100%' }
+    : { width: '100%' };
   const onChange = value => p.onChange(p.name, value);
   return (
     <TextArea
       style={style}
       {...options}
-      disabled={p.disabled}
+      disabled={p.disabled || p.readonly}
       value={p.value}
-      readOnly={p.readonly}
       onChange={onChange}
     />
   );

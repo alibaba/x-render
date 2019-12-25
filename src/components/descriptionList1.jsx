@@ -1,5 +1,6 @@
 import React from 'react';
 import { isHidden } from '../base/isHidden';
+import { isFunction } from '../base/utils';
 
 const getEnumValue = (value, enums, enumNames) => {
   if (Array.isArray(enums) && Array.isArray(enumNames)) {
@@ -52,7 +53,7 @@ export const getDescription = ({ schema = {}, value = [], index }) => {
   const descList = titles.map((t, idx) => {
     let hidden = t && t['ui:hidden'];
     // ui:hidden为判断式时解析 TODO: 解析在外部集中做
-    if (typeof hidden === 'string' && hidden.substring(0, 1) !== '@') {
+    if (typeof hidden === 'string' && isFunction(hidden) === false) {
       hidden = isHidden({ hidden, rootValue: description });
     }
     if (hidden) return;
