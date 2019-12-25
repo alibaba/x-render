@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import GithubCorner from 'react-github-corner';
 import Demo from './main';
-import { Radio, Select, Switch, Collapse } from 'antd';
+import { Radio, Select, Switch, Collapse, Slider } from 'antd';
 
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
@@ -12,8 +12,6 @@ const themeList = [
   { label: 'antd主题', value: 'antd' },
   { label: 'fusion主题', value: 'fusion' },
 ];
-const FRadio = props => <Radio {...props} style={{ marginBottom: 12 }} />;
-
 class Root extends Component {
   state = {
     schemaName: 'default',
@@ -22,18 +20,15 @@ class Root extends Component {
     displayType: 'column',
     showDescIcon: false,
     readOnly: false,
+    labelWidth: 120,
   };
 
   onThemeChange = e => {
-    this.setState({
-      theme: e.target.value,
-    });
+    this.setState({ theme: e.target.value });
   };
 
   onColumnNumberChange = value => {
-    this.setState({
-      column: value,
-    });
+    this.setState({ column: value });
   };
 
   onDisplayChange = value => {
@@ -44,9 +39,7 @@ class Root extends Component {
   };
 
   onShowDescChange = value => {
-    this.setState({
-      showDescIcon: value,
-    });
+    this.setState({ showDescIcon: value });
   };
 
   onReadOnlyChange = value => this.setState({ readOnly: value });
@@ -55,8 +48,12 @@ class Root extends Component {
     this.setState({ schemaName: e.target.value });
   };
 
+  onLabelWidthChange = value => {
+    this.setState({ labelWidth: value });
+  };
+
   render() {
-    const { showDescIcon, readOnly } = this.state;
+    const { showDescIcon, readOnly, labelWidth } = this.state;
     return (
       <div className="vh-100 overflow-auto flex flex-column">
         <GithubCorner
@@ -66,32 +63,29 @@ class Root extends Component {
         />
         <Collapse defaultActiveKey={['1']} onChange={() => {}}>
           <Panel header={<div className="b f3">FormRender</div>} key="1">
-            <div className="w-100 flex items-center">
-              <div className="w-50">
-                <Radio.Group
-                  name="schemaName"
-                  defaultValue="simplest"
-                  className="flex flex-wrap"
-                  style={{ height: 20 }}
-                  onChange={this.onSchemaChange}
-                >
-                  <FRadio value="simplest">最简样例</FRadio>
-                  <FRadio value="basic">基础控件</FRadio>
-                  <FRadio value="input">个性输入框</FRadio>
-                  <FRadio value="select">个性选择框</FRadio>
-                  <FRadio value="date">日期</FRadio>
-                  <FRadio value="new-feature">新功能</FRadio>
-                  <FRadio value="demo">完整例子</FRadio>
-                </Radio.Group>
-              </div>
-              <div className="w-50 flex items-center justify-end z-999">
+            <div className="w-100 flex">
+              <Radio.Group
+                name="schemaName"
+                defaultValue="simplest"
+                className="w-50 flex items-center flex-wrap z-999"
+                onChange={this.onSchemaChange}
+              >
+                <Radio value="simplest">最简样例</Radio>
+                <Radio value="basic">基础控件</Radio>
+                <Radio value="input">个性输入框</Radio>
+                <Radio value="select">个性选择框</Radio>
+                <Radio value="date">日期</Radio>
+                <Radio value="new-feature">新功能</Radio>
+                <Radio value="demo">完整例子</Radio>
+              </Radio.Group>
+              <div className="w-50 flex items-center flex-wrap z-999">
                 <RadioGroup
                   options={themeList}
                   value={this.state.theme}
                   onChange={this.onThemeChange}
                 />
                 <Select
-                  style={{ marginRight: 12 }}
+                  style={{ marginRight: 8 }}
                   onChange={this.onColumnNumberChange}
                   defaultValue="1"
                 >
@@ -100,7 +94,7 @@ class Root extends Component {
                   <Option value="3">一行三列</Option>
                 </Select>
                 <Select
-                  style={{ marginRight: 12 }}
+                  style={{ marginRight: 8 }}
                   onChange={this.onDisplayChange}
                   defaultValue="column"
                 >
@@ -108,18 +102,26 @@ class Root extends Component {
                   <Option value="row">左右排列</Option>
                 </Select>
                 <Switch
-                  className="mr2"
+                  style={{ marginRight: 8 }}
                   checkedChildren="关描述"
                   onChange={this.onShowDescChange}
                   unCheckedChildren="开描述"
                   checked={showDescIcon}
                 />
                 <Switch
-                  className="mr2"
-                  checkedChildren="编辑模式"
+                  style={{ marginRight: 8 }}
+                  checkedChildren="编辑"
                   onChange={this.onReadOnlyChange}
-                  unCheckedChildren="只读模式"
+                  unCheckedChildren="只读"
                   checked={readOnly}
+                />
+                <div style={{ width: 42 }}>标签：</div>
+                <Slider
+                  style={{ width: 80 }}
+                  max={200}
+                  min={20}
+                  value={labelWidth}
+                  onChange={this.onLabelWidthChange}
                 />
               </div>
             </div>

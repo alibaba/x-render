@@ -70,9 +70,8 @@ class Demo extends React.Component {
   };
 
   render() {
-    const { theme, column, displayType, showDescIcon, readOnly } = this.props;
+    const { theme, ...formProps } = this.props;
     const { schemaStr } = this.state;
-    const formProps = { column, displayType, showDescIcon, readOnly };
     const FormRender = theme === 'antd' ? AntdComp : FusionComp;
     let schema = {};
     try {
