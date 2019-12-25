@@ -161,7 +161,7 @@ const fieldListHoc = ButtonComponent => {
                       if (typeof window[item.callback] === 'function') {
                         const value = [...p.value];
                         const onChange = value => p.onChange(p.name, value);
-                        window[item.callback](value, onChange); // eslint-disable-line
+                        window[item.callback](value, onChange, p.newItem); // eslint-disable-line
                       }
                     }}
                   >
