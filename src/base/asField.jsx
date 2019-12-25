@@ -197,6 +197,7 @@ export const DefaultFieldUI = ({
         labelClass += ' ml2';
         labelClass = labelClass.replace('mb2', 'mb0');
       }
+      contentClass += ' flex items-center'; // checkbox高度短，需要居中对齐
       fieldClass += ' flex flex-row-reverse justify-end';
       break;
     default:
