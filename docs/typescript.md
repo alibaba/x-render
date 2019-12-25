@@ -18,23 +18,24 @@ Could not find a declaration file for module 'form-render/lib/antd'. '/Users/nas
     5 | const App: React.FC = () => {
 ```
 
-原因是 form-render 是 js 的组件，并没有写 typescript 的声明文件。目前在项目中成功使用 form-render 需要做以下几步：
+因为 form-render 是以 JavaScript 书写，缺少 typescript 的声明文件。
+目前在 ts 项目中使用 form-render 只需自己创建一个 `index.d.ts`，具体如下：
 
-1. 创建一个 `types` 目录，专门用来管理自己写的声明文件，将 `form-render` 的声明文件放到 `types/form-render/index.d.ts` 中。
+1. 创建一个 `types` 目录，用来存放所有声明文件。可将 `form-render` 的声明文件放到 `types/form-render/index.d.ts` 中。
 
-2. 目录结构如下：
+目录结构如下：
 
-   ```
-   /path/to/project
-   ├── src
-   |  └── index.ts
-   ├── types
-   |  └── form-render
-   |     └── index.d.ts
-   └── tsconfig.json
-   ```
+```
+/path/to/project
+├── src
+|  └── index.ts
+├── types
+|  └── form-render
+|     └── index.d.ts
+└── tsconfig.json
+```
 
-3. `tsconfig.json` 中需要 `include` types 文件夹
+2. 注意在 `tsconfig.json` 中需要 `include` types 文件夹
 
    ```json
    {
@@ -45,7 +46,7 @@ Could not find a declaration file for module 'form-render/lib/antd'. '/Users/nas
    }
    ```
 
-4. `form-render/index.d.ts` 文件如下书写, 注意使用 fusion 的同学 module 名称变为`'form-render/lib/fusion'`
+3. `form-render/index.d.ts` 文件如下书写。注意使用 fusion 的同学 module 名称变为`'form-render/lib/fusion'`
 
    ```js
    declare module 'form-render/lib/antd' {
@@ -75,4 +76,4 @@ Could not find a declaration file for module 'form-render/lib/antd'. '/Users/nas
 
    如此就大功告成啦！笔者在 codesandbox 建了一个[完整的样例](https://codesandbox.io/s/zaitypescriptxiashiyongform-render-f309f)，供大家参考。
 
-   注：在下个版本 form-render 会完全支持 typescript，无需任何操作。敬请期待！
+   注：form-render 会在后续完全支持 typescript 用户，无需更多操作。敬请期待！

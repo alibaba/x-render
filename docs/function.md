@@ -38,7 +38,7 @@
 }
 ```
 
-如果 schema 需要通过服务端传递，不得不使用 JSON 形式呢？这样就无法使用函数解析式作为属性的值了，此时，form-render 提供了以`@`起始的字段作为替代品：
+如果 schema 需要通过服务端传递，不得不使用 JSON 形式呢？这样就无法使用函数解析式作为属性的值了，此时，form-render 提供了以`{{}}`包含的字段表达函数：
 
 ```js
 {
@@ -49,18 +49,20 @@
         title: "单选",
         type: "string",
         enum: () => ["a", "b", "c"],
-        "ui:disabled": "@rootValue.input1.length > 5"
+        "ui:disabled": "{{rootValue.input1.length > 5}}"
       },
       input1: {
         title: "输入框",
         type: "string",
-        "ui:hidden": "@formData.select === 'b'"
+        "ui:hidden": "{{formData.select === 'b'}}"
       }
     }
   }
 }
 ```
 
-我们可以看到，form-render 会以首字母`@`作为提示符，将之后的字符串作为函数解析并返回，且这段字符串可包含 `formData` 和 `rootValue`
+form-render 以`{{}}`作为提示符，将其包含的字符串作为函数解析并返回运算结果。与函数相同，这段字符串可调用 `formData` 和 `rootValue` 两个参数。
 
-更复杂和定制化的表单需求建议使用自定义组件。form-render 的设计理念非常推崇组件的即插即用，详见“自定义组件” 章节
+注：在上一个版本我们使用`@`作为函数表达式的提示符，现在仍然兼容，但往后推荐用`{{}}`。主要原因是 1. `{{}}`作为表达式提示符在广大模板引擎里已经是默认，2. `@`可能真实会被用于字符串输入内容，产生误解析。
+
+更复杂和定制化的表单需求建议使用自定义组件。form-render 的设计理念非常推崇组件的即插即用，详见[自定义组件](docs/widget)章节。

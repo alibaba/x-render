@@ -1,5 +1,18 @@
 # Change Log
 
+### 0.4.4
+
+- [+] 添加了 typescript 如何使用 form-render 的说明文档
+- [+] 为了属性的规范化，列表组件添加了`"ui:options"`/`"buttons"` 属性, buttons 的 callback 可调用参数 value 和 onChange，便于直接操作当前数组，详见文档
+- [!] json 里书写函数表达式现在推荐使用 `"{{...}}"` 的方式，同时继续兼容 `"@..."`
+- [!] 大幅更新了文档，添加了 TypeScript 的支持方案，form-render 后期规划，同时更新了初始 demo 的搭建代码
+- [!] 只读模式下，UI 统一使用 disabled 的状态展示
+- [!] 解决了有时`"ui:extraButtons"`不能正常展示的 bug
+- [!] 颜色组件现在会校验 hex 值，并提示用户添加“#”（不再允许输入六位 hex 值但不输入#）
+- [!] `propsSchema` 的文档补全了所有组件的常用字段
+- [!] 在线 demo 添加了标签宽度控制（“左右排列”时有效）
+  <img src="https://img.alicdn.com/tfs/TB1h1ZGrQT2gK0jSZFkXXcIQFXa-816-476.jpg" width="400" />
+
 ### 0.4.3
 
 - [!] 修复了一个文件名在 macOS 大小写不敏感造成的 bug

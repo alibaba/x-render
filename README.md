@@ -33,75 +33,75 @@
 ## 安装
 
 ```sh
-npm i form-render -S
+npm i form-render
+# or
+yarn add form-render
 ```
 
 ## 快速使用
 
-```react
-import React from "react";
-import ReactDOM from "react-dom";
+```js
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
 // 使用 Ant Design 体系
-import FormRender from "form-render/lib/antd";
+import FormRender from 'form-render/lib/antd';
 
 // 使用 Fusion Design 体系
 // import "@alifd/next/dist/next.min.css";
 // import FormRender from "form-render/lib/fusion";
 
-// propsSchema 使用标准的 JSON Schema 来描述表单结构
-const propSchema = {
-  type: "object",
+const propsSchema = {
+  type: 'object',
   properties: {
-    dateDemo: {
-      title: "时间",
-      type: "string"
-    }
-  }
+    string: {
+      title: '字符串',
+      type: 'string',
+      'ui:width': '50%', // uiSchema 可以合并到 propsSchema 中
+    },
+    select: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b', 'c'],
+    },
+  },
 };
 
-// uiSchema 可以增强展示类型的丰富性，如时间组件
+// 也可以选择单独使用 uiSchema 字段分开定义每个字段的 ui 属性
 const uiSchema = {
-  dateDemo: {
-    "ui:widget": "date"
-  }
+  select: {
+    'ui:width': '50%',
+  },
 };
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      formData: {}
-    };
-  }
+function Demo() {
+  const [formData, setData] = useState({});
+  const [valid, setValid] = useState([]);
 
-  // 数据变化回调
-  onChange = value => {
-    this.setState({
-      formData: value
-    });
+  const onSubmit = () => {
+    // valid 是校验判断的数组，valid 长度为 0 代表校验全部通过
+    if (valid.length > 0) {
+      alert(`校验未通过字段：${valid.toString()}`);
+    } else {
+      alert(JSON.stringify(formData, null, 2));
+    }
   };
 
-  // 数据格式校验回调
-  onValidate = list => {
-    console.log(list);
-  };
-
-  render() {
-    const { formData } = this.state;
-    return (
+  return (
+    <div style={{ padding: 60 }}>
       <FormRender
-        propsSchema={propSchema}
+        propsSchema={propsSchema}
         uiSchema={uiSchema}
         formData={formData}
-        onChange={this.onChange}
-        onValidate={this.onValidate}
+        onChange={setData}
+        onValidate={setValid}
       />
-    );
-  }
+      <button onClick={onSubmit}>提交</button>
+    </div>
+  );
 }
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(<App />, rootElement);
+const rootElement = document.getElementById('root');
+ReactDOM.render(<Demo />, rootElement);
 ```
 
 ### API
@@ -124,14 +124,22 @@ ReactDOM.render(<App />, rootElement);
 
 ### 不常用 API
 
-| Prop               |    Type     | Required | Default  |                    Description                    |
-| ------------------ | :---------: | :------: | :------: | :-----------------------------------------------: |
-| **`column`**       |  `Number`   |   `1`    |   `N`    | 整体布局 1 排 N，局部的 1 排 N 一般使用`ui:width` |
-| **`showValidate`** |  `Boolean`  |   `N`    |  `true`  |                 是否展示校验信息                  |
-| **`showDescIcon`** |  `Boolean`  |   `N`    | `false`  |     是否将文字形式说明显示成描述 tooltip 形式     |
-| **`widgets`**      |  `Object`   |   `N`    |   `{}`   |                    自定义组件                     |
-| **`mapping`**      |  `Object`   |   `N`    |   `{}`   |              用于修改默认组件映射表               |
-| **`FieldUI`**      | `Component` |   `N`    | 内置组件 |     用于自定义整个元素的样式（标签、结构等）      |
+| Prop               |   Type    | Required | Default |                    Description                    |
+| ------------------ | :-------: | :------: | :-----: | :-----------------------------------------------: |
+| **`column`**       | `Number`  |   `1`    |   `N`   | 整体布局 1 排 N，局部的 1 排 N 一般使用`ui:width` |
+| **`showValidate`** | `Boolean` |   `N`    | `true`  |                 是否展示校验信息                  |
+| **`showDescIcon`** | `Boolean` |   `N`    | `false` |     是否将文字形式说明显示成描述 tooltip 形式     |
+| **`widgets`**      | `Object`  |   `N`    |  `{}`   |                    自定义组件                     |
+| **`mapping`**      | `Object`  |   `N`    |  `{}`   |              用于修改默认组件映射表               |
+
+## 快速书写 schema
+
+快速准确书写 schema 一直是使用者的痛点。为此我们准备了 schema 书写利器： `form-render snippets`（vscode 插件），在 vscode 商店输入 ‘formrender’ 搜索：
+![](https://img.alicdn.com/tfs/TB1VIfBqWL7gK0jSZFBXXXZZpXa-1976-1464.png)
+
+## 支持 TypeScript
+
+详见[如何在 TypeScript 项目中使用](docs/typescript)
 
 ## 支持 Ant Design 自定义主题不被覆盖
 
@@ -164,8 +172,12 @@ FormRender 底层引擎用原生 JS 来实现，通过解析 JSON Schema 配置�
 ```shell
 > git clone https://github.com/alibaba/form-render.git
 > npm i
-> npm run start
+> npm start
 ```
+
+## 后期规划
+
+详见仓库 [projects](https://github.com/alibaba/form-render/projects/2)
 
 ## 支持
 
