@@ -5,7 +5,9 @@ const { TextArea } = Input;
 
 export default function ta(p) {
   const { options, invalid } = p;
-  const style = invalid ? { borderColor: '#f5222d' } : {};
+  const style = invalid
+    ? { borderColor: '#f5222d', width: '100%' }
+    : { width: '100%' };
   const onChange = value => p.onChange(p.name, value);
   return (
     <TextArea
