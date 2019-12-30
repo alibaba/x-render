@@ -13,7 +13,9 @@
 - [!] 颜色组件现在会校验 hex 值，并提示用户添加“#”（不再允许输入六位 hex 值但不输入#）（[#48](https://github.com/alibaba/form-render/issues/48)）
 - [!] `propsSchema` 的文档补全了所有组件的常用字段
 - [!] 在线 demo 添加了标签宽度控制（“左右排列”时有效）
+
   <img src="https://img.alicdn.com/tfs/TB1h1ZGrQT2gK0jSZFkXXcIQFXa-816-476.jpg" width="400" />
+
 - [!] fusion 主题下标题、输入框的样式修复
 
 ### 0.4.3
