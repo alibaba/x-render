@@ -137,6 +137,7 @@ ReactDOM.render(<Demo />, rootElement);
 ## 快速书写 schema
 
 快速准确书写 schema 一直是使用者的痛点。为此我们准备了 schema 书写利器： `form-render snippets`（vscode 插件），在 vscode 商店输入 ‘formrender’ 搜索：
+
 <img src="https://img.alicdn.com/tfs/TB1VIfBqWL7gK0jSZFBXXXZZpXa-1976-1464.png" width="500" />
 
 ## 支持 TypeScript
