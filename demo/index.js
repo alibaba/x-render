@@ -20,7 +20,7 @@ class Root extends Component {
     displayType: 'column',
     showDescIcon: false,
     readOnly: false,
-    labelWidth: 120,
+    labelWidth: 110,
   };
 
   onThemeChange = e => {
