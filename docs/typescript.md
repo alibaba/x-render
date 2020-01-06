@@ -21,32 +21,21 @@ Could not find a declaration file for module 'form-render/lib/antd'. '/Users/nas
 因为 form-render 是以 JavaScript 书写，缺少 typescript 的声明文件。
 目前在 ts 项目中使用 form-render 只需自己创建一个 `index.d.ts`，具体如下：
 
-1. 创建一个 `types` 目录，用来存放所有声明文件。可将 `form-render` 的声明文件放到 `types/form-render/index.d.ts` 中。
+1. 在 `src` 中创建一个 `types` 目录，用来存放所有声明文件 `index.d.ts`。
 
 目录结构如下：
 
 ```
 /path/to/project
 ├── src
-|  └── index.ts
-├── types
-|  └── form-render
-|     └── index.d.ts
+|  ├── index.ts
+|  └── types
+|        └── index.d.ts
+|
 └── tsconfig.json
 ```
 
-2. 注意在 `tsconfig.json` 中需要 `include` types 文件夹
-
-   ```json
-   {
-       "compilerOptions": {
-   				...
-       },
-       "include": ["src", "types"]
-   }
-   ```
-
-3. `form-render/index.d.ts` 文件如下书写。注意使用 fusion 的同学 module 名称变为`'form-render/lib/fusion'`
+2. `index.d.ts` 文件如下书写。注意使用 fusion 的同学 module 名称变为`'form-render/lib/fusion'`
 
    ```js
    declare module 'form-render/lib/antd' {

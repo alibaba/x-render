@@ -63,7 +63,7 @@ fs.writeFileSync(path.join(__dirname, 'schema.json'), JSON.stringify(apiInfo, nu
 
 <table><tr><td>React 输入</td><td>标准Json schema 输出</td><td>带 Ui 配置的 schema 输出</td></tr><tr><td><img src="https://img.alicdn.com/tfs/TB1jVQFtuuSBuNjy1XcXXcYjFXa-1004-1310.png" width="420"></td><td><img src="https://gw.alicdn.com/tfs/TB14I0Rzx1YBuNjy1zcXXbNcXXa-862-1538.png" width="310"></td><td><img src="https://gw.alicdn.com/tfs/TB1r9QFwXmWBuNjSspdXXbugXXa-898-1460.png" width="340"></td></tr></table>
 
-可以参考 [Demo](http://github.com/tw93/proptypes-to-json-schema/tree/master/demo) 中的使用
+可以参考 [Demo](http://github.com/form-render/proptypes-to-json-schema/tree/master/demo) 中的使用
 
 ## Changelog
 

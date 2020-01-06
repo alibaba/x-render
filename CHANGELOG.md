@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.4.5
+
+- [+] 添加了“复杂联动”的相关例子
+
 ### 0.4.4
 
 - [+] 发布了 schema 书写利器 `form-render snippets`（vscode 插件），在 vscode 商店中搜索“formrender”
