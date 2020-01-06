@@ -9,7 +9,7 @@ module.exports = {
     antd: './antd.js',
     fusion: './fusion.js',
   },
-  devtool: 'inline-source-map',
+  devtool: 'source-map', // smaller bundle size: https://webpack.js.org/configuration/devtool/
   output: {
     filename: '[name].js',
     path: resolve(__dirname, 'dist'),
