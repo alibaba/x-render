@@ -53,6 +53,7 @@ function resolve(schema, data, options = {}) {
     // 必选值，对象的子集
     default: def,
     required = [],
+    'ui:widget': widget,
   } = schema;
   const {
     // 按照required规则做数据补全
@@ -62,6 +63,13 @@ function resolve(schema, data, options = {}) {
   const value =
     typeof data === 'undefined' ? getDefaultValue(schema) : clone(data);
   if (type === 'object') {
+    // 如果自定义组件
+    if (widget) {
+      if (def && typeof def === 'object') {
+        return def;
+      }
+      return value;
+    }
     const subs = properties || {};
     const ret = {};
     Object.keys(subs).forEach(name => {
@@ -74,6 +82,8 @@ function resolve(schema, data, options = {}) {
     return ret;
   }
   if (type === 'array') {
+    // 如果自定义组件
+    if (widget) return value;
     if (def && Array.isArray(def)) {
       return def;
     }
