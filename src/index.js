@@ -79,7 +79,7 @@ class FormRender extends React.Component {
     onChange: () => {},
     onValidate: () => {},
     readOnly: false,
-    labelWidth: 120,
+    labelWidth: 110,
   };
 
   constructor() {

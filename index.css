@@ -60,7 +60,7 @@
 }
 
 .fr-validate {
-  margin: 3px 0 0 12px;
+  margin-left: 12px;
   font-size: 12px;
   word-break: break-all;
   color: #f5222d;
@@ -69,7 +69,7 @@
 /* Row */
 
 .fr-validate-row {
-  margin-left: 0;
+  margin: 3px 0 0 0;
 }
 
 .fr-label-row {

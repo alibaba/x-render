@@ -1,5 +1,11 @@
 # Change Log
 
+### 0.4.5
+
+- [+] 添加了“复杂联动”的相关 Demo 例子
+- [+] 现在 labelWidth 允许输入 “20%”，“2.5rem” 等
+- [!] 修复了一个类型为对象的自定义组件初始值始终为空的问题
+
 ### 0.4.4
 
 - [+] 发布了 schema 书写利器 `form-render snippets`（vscode 插件），在 vscode 商店中搜索“formrender”

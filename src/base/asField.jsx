@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { getValidateText } from './validate';
 import { isHidden, isDependShow } from './isHidden';
-import { evaluateString, isLooselyNumber, isFunction } from './utils';
+import {
+  evaluateString,
+  isLooselyNumber,
+  isCssLength,
+  isFunction,
+} from './utils';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
@@ -218,7 +223,11 @@ export const DefaultFieldUI = ({
     contentClass += ' flex justify-end pr2';
   }
 
-  const _labelWidth = isLooselyNumber(labelWidth) ? Number(labelWidth) : 120; // 默认是 25% 的长度
+  const _labelWidth = isLooselyNumber(labelWidth)
+    ? Number(labelWidth)
+    : isCssLength(labelWidth)
+    ? labelWidth
+    : 110; // 默认是 110px 的长度
   let labelStyle = { width: _labelWidth };
   if (type === 'boolean') {
     labelStyle = { flexGrow: 1 };

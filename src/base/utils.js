@@ -21,6 +21,11 @@ export function isLooselyNumber(num) {
   return false;
 }
 
+export function isCssLength(str) {
+  if (typeof str !== 'string') return false;
+  return str.match(/^([0-9])*(%|px|rem|em)$/i);
+}
+
 // 深度对比
 export function isDeepEqual(param1, param2) {
   if (param1 === undefined && param2 === undefined) return true;
@@ -181,4 +186,19 @@ export function isFunction(func) {
     return func.substring(2, func.length - 2);
   }
   return false;
+}
+
+// 判断schema中是否有属性值是函数表达式
+export function isFunctionSchema(schema) {
+  return Object.keys(schema).some(key => {
+    if (typeof schema[key] === 'function') {
+      return true;
+    } else if (typeof schema[key] === 'string') {
+      return isFunction(schema[key]);
+    } else if (typeof schema[key] === 'object') {
+      return isFunctionSchema(schema[key]);
+    } else {
+      return false;
+    }
+  });
 }
