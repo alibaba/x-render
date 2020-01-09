@@ -202,6 +202,3 @@ export function isFunctionSchema(schema) {
     }
   });
 }
-
-// 解析schema
-export function parseFunctionSchema(schema, formData) {}
