@@ -48,9 +48,14 @@ const listItemHoc = ButtonComponent =>
       let { hideDelete } = options;
 
       // 判断 hideDelete 是不是函数，是的话将计算后的值赋回
-      let functionString = isFunction(hideDelete);
-      if (functionString) {
-        hideDelete = evaluateString(functionString, formData, rootValue);
+      let _isFunction = isFunction(hideDelete);
+      if (_isFunction) {
+        // isFunction 返回为 true 则说明只可能为 string | Function
+        if (typeof _isFunction === 'string') {
+          hideDelete = evaluateString(_isFunction, formData, rootValue);
+        } else {
+          hideDelete = _isFunction();
+        }
       }
 
       // 只有当items为object时才做收起（fold）处理
