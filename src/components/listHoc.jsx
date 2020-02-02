@@ -53,7 +53,7 @@ const listItemHoc = ButtonComponent =>
         // isFunction 返回为 true 则说明只可能为 string | Function
         if (typeof _isFunction === 'string') {
           hideDelete = evaluateString(_isFunction, formData, rootValue);
-        } else {
+        } else if (typeof _isFunction === 'function') {
           hideDelete = _isFunction(formData, rootValue);
         }
       }
