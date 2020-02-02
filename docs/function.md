@@ -6,7 +6,7 @@
 
 当使用 js 对象作为 schema 时，属性的值可以传函数，这加大了开发的自由度。schema 里大部分的属性都支持使用函数表达式，
 
-1. 支持的属性中比较常用的是，`ui:options`,`ui:disabled`,`ui:hidden`和`enum`。当然 2 中没有提及的属性都支持。
+1. 支持的属性中比较常用的是，`ui:options`,`ui:disabled`,`ui:hidden`,`enum`和 `array` 中的 `hideDelete`。当然 2 中没有提及的属性都支持。
 2. 注意，部分属性不支持函数表达式，主要原因是这些属性关系到表单的值的初始化（所以如果再对表单的值依赖会有问题）。这些属性是`type`,`items`,`properties`,`required`,`default`和`ui:widget`。幸运的是这些属性本来也很少会有联动的需求。请勿赋值这些字段函数表达式，否则轻则报错，重则静默出错。
 3. 函数表达式接收一下三个参数：
 
