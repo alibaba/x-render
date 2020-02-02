@@ -121,7 +121,7 @@
 | option     |        类型         |   可用组件    |                    说明                    |
 | ---------- | :-----------------: | :-----------: | :----------------------------------------: |
 | foldable   |       boolean       | 列表（array） | `{ foldable: true }`用于长列表的收起和展开 |
-| hideDelete | boolean \| Function | 列表（array） |   `{ hideDelete: true }`隐藏“删除”按钮,    |
+| hideDelete | boolean \| Function | 列表（array） |    `{ hideDelete: true }`隐藏“删除”按钮    |
 | buttons    |        array        | 列表（array） |                    下详                    |
 
 列表默认展示“新增”按钮。`buttons` 用于添加更多列表操作按钮
