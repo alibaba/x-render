@@ -54,7 +54,7 @@ const listItemHoc = ButtonComponent =>
         if (typeof _isFunction === 'string') {
           hideDelete = evaluateString(_isFunction, formData, rootValue);
         } else {
-          hideDelete = _isFunction();
+          hideDelete = _isFunction(formData, rootValue);
         }
       }
 
