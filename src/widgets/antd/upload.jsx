@@ -1,5 +1,6 @@
 import React from 'react';
-import { Icon, Upload, message, Button } from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import { Upload, message, Button } from 'antd';
 
 export default function input(p) {
   const props = {
@@ -25,7 +26,7 @@ export default function input(p) {
     <div className="fr-upload-mod">
       <Upload {...props} className="fr-upload-file">
         <Button>
-          <Icon type="upload" /> 上传
+          <UploadOutlined /> 上传
         </Button>
       </Upload>
       {p.value && (
