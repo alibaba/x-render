@@ -118,11 +118,11 @@
 
 基本上所有`antd`文档中组件的 props 都可以使用 `ui:options` 的方式来直接使用。除此之外我们还提供了一些特别 options：
 
-| option     |  类型   |   可用组件    |                    说明                    |
-| ---------- | :-----: | :-----------: | :----------------------------------------: |
-| foldable   | boolean | 列表（array） | `{ foldable: true }`用于长列表的收起和展开 |
-| hideDelete | boolean | 列表（array） |    `{ hideDelete: true }`隐藏“删除”按钮    |
-| buttons    |  array  | 列表（array） |                    下详                    |
+| option     |                    类型                     |   可用组件    |                    说明                    |
+| ---------- | :-----------------------------------------: | :-----------: | :----------------------------------------: |
+| foldable   |                   boolean                   | 列表（array） | `{ foldable: true }`用于长列表的收起和展开 |
+| hideDelete | boolean \| (formData, rootValue) => boolean | 列表（array） |    `{ hideDelete: true }`隐藏“删除”按钮    |
+| buttons    |                    array                    | 列表（array） |                    下详                    |
 
 列表默认展示“新增”按钮。`buttons` 用于添加更多列表操作按钮
 写法如：

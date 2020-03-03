@@ -11,8 +11,9 @@ import {
   SortableElement,
   arrayMove,
 } from 'react-sortable-hoc';
+import { isFunction, evaluateString } from '../base/utils';
 import FoldIcon from './foldIcon';
-import DescriptionList, { getDescription } from './descriptionList1';
+import DescriptionList, { getDescription } from './descriptionList';
 
 const DragHandle = SortableHandle(() => (
   <span className="fr-move-icon">:::</span>
@@ -42,8 +43,21 @@ const listItemHoc = ButtonComponent =>
     render() {
       const { item, p = {}, name, fold } = this.props;
       const descProps = { ...p, index: name };
-      const { options = {}, readonly } = p;
-      const { foldable: canFold, hideDelete } = options;
+      const { options = {}, readonly, formData, value: rootValue } = p;
+      const { foldable: canFold } = options;
+      let { hideDelete } = options;
+
+      // 判断 hideDelete 是不是函数，是的话将计算后的值赋回
+      let _isFunction = isFunction(hideDelete);
+      if (_isFunction) {
+        // isFunction 返回为 true 则说明只可能为 string | Function
+        if (typeof _isFunction === 'string') {
+          hideDelete = evaluateString(_isFunction, formData, rootValue);
+        } else if (typeof _isFunction === 'function') {
+          hideDelete = _isFunction(formData, rootValue);
+        }
+      }
+
       // 只有当items为object时才做收起（fold）处理
       const isObj = p.schema.items && p.schema.items.type == 'object';
       let setClass =
