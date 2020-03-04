@@ -4,7 +4,7 @@
 
 - [+] 【breaking change】antd 升级到 v4，同时 React 的支持也同步到 16.12.0 以上。使用方请注意（[#60](https://github.com/alibaba/form-render/issues/60)）
 - [+] 添加了`onMount`的 props，用于定制首次加载逻辑（[#62](https://github.com/alibaba/form-render/issues/62)）
-- [+] 文档添加 mapping 参数的说明，示例如何将自定义组件设为默认选择
+- [+] 文档“自定义组件”添加了 mapping 参数的说明，示例和说明如何将自定义组件设为默认选择。[自定义组件文档](https://alibaba.github.io/form-render/#/docs/widget)
 - [!] 修复了 fusion 时间组件点击 clear 时出现“invalid date”的 bug（[#61](https://github.com/alibaba/form-render/issues/61)）
 
 ### 0.4.5

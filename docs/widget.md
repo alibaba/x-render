@@ -86,3 +86,69 @@ import MyCheckbox from './path/to/MyCheckbox'
   }
 },
 ```
+
+## mapping 的使用：如何让自定义组件作为默认？
+
+比如你不喜欢 form-render（简称 FR） 的 input 组件，希望自己写一个，然后每次使用如下的 schema 时，FR 都默认渲染自定义组件，这该如何实现呢？
+
+```json
+{
+  "title": "简单输入框",
+  "type": "string"
+}
+```
+
+为了回答这个问题，你可能会提出另一个问题，FR 是如何决定一个 schema 的默认渲染组件是哪个的呢？
+在 FR 内部会有一个映射表 mapping，FR 读取 schema 后根据其特征（type/format 等）在 mapping 中寻找所对应的组件，并进行渲染。
+
+```js
+export const mapping = {
+  default: 'input',
+  string: 'input',
+  array: 'list',
+  boolean: 'checkbox',
+  integer: 'number',
+  number: 'number',
+  object: 'map',
+  'string:upload': 'upload',
+  'string:date': 'date',
+  'string:dateTime': 'date',
+  'string:time': 'date',
+  'string:textarea': 'textarea',
+  'string:color': 'color',
+  'string:image': 'input',
+  'range:date': 'dateRange',
+  'range:dateTime': 'dateRange',
+  '*?enum': 'select',
+  'array?enum': 'checkboxes',
+  '*?readonly': 'text',
+};
+```
+
+所以想要让自定义组件作为默认渲染组件，只需要覆盖 mapping 即可, 如下的代码可使 `MyCustomComponent` 组件作为日期选择的默认展示：
+
+```json
+// schema
+{
+  "string": {
+    "title": "现在默认使用自定义组件了",
+    "type": "string",
+    "format": "date"
+  }
+}
+```
+
+```js
+import MyCustomComponent from './MyCustomComponent';
+...
+<FormRender
+  {...SCHEMA}
+  formData={formData}
+  onChange={setData}
+  onValidate={onValidate}
+  widgets={{ myDatePicker: MyCustomComponent }}
+  mapping={{ 'string:date': 'myDatePicker' }}
+/>
+```
+
+codesandbox 的 demo：[自定义组件覆盖默认](https://codesandbox.io/s/zidingyizujianfugaimoren-z0i9r)
