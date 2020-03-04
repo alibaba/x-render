@@ -93,7 +93,7 @@ class FormRender extends React.Component {
     this.needUpdateForm(true);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { schema, formData } = this.props;
     // 遇到有更新 schema 情况，假如项数增多了，发现增多项不会更新
     if (
