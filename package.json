@@ -37,6 +37,8 @@
   },
   "dependencies": {
     "@alifd/next": "^1.x",
+    "@ant-design/compatible": "^1.0.1",
+    "@ant-design/icons": "^4.0.2",
     "antd": "^4.0.0",
     "moment": "^2.24.0",
     "pope": "^2.0.2",
