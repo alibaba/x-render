@@ -13,7 +13,7 @@ import {
 } from 'react-sortable-hoc';
 import { isFunction, evaluateString } from '../base/utils';
 import FoldIcon from './foldIcon';
-import DescriptionList, { getDescription } from './descriptionList';
+import DescriptionList, { getDescription } from './descList';
 
 const DragHandle = SortableHandle(() => (
   <span className="fr-move-icon">:::</span>
