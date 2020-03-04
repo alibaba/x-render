@@ -59,6 +59,7 @@ class FormRender extends React.Component {
     showValidate: PropTypes.bool,
     displayType: PropTypes.string,
     onChange: PropTypes.func,
+    onMount: PropTypes.func,
     onValidate: PropTypes.func,
     readOnly: PropTypes.bool,
     labelWidth: PropTypes.number,
@@ -89,10 +90,10 @@ class FormRender extends React.Component {
   }
 
   componentDidMount() {
-    this.needUpdateForm();
+    this.needUpdateForm(true);
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     const { schema, formData } = this.props;
     // 遇到有更新 schema 情况，假如项数增多了，发现增多项不会更新
     if (
@@ -103,10 +104,11 @@ class FormRender extends React.Component {
     }
   }
 
-  needUpdateForm = () => {
-    const { schema, formData, onChange, onValidate } = this.props;
+  // 如果 onMount props存在且入参useOnMount = true，使用onMount代替onChange，用于首次加载的特别逻辑
+  needUpdateForm = (useOnMount = false) => {
+    const { schema, formData, onChange, onMount, onValidate } = this.props;
     const data = resolve(schema, formData);
-    onChange(data);
+    useOnMount && onMount ? onMount(data) : onChange(data);
     onValidate(getValidateList(data, schema));
   };
 

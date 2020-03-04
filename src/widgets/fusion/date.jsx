@@ -12,7 +12,8 @@ export default function date(p) {
   const { format = 'dateTime' } = p.schema;
   const dateFormat = getFormat(format);
   const onChange = value => {
-    p.onChange(p.name, moment(value || '', dateFormat).format(dateFormat));
+    let timeValue = value ? moment(value).format(dateFormat) : '';
+    p.onChange(p.name, timeValue);
   };
   const DateComponent = format === 'time' ? TimePicker : DatePicker;
   return dateHoc(p, onChange, DateComponent);

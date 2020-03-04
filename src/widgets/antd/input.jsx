@@ -1,5 +1,6 @@
 import React from 'react';
-import { Input, Icon, Popover } from 'antd';
+import { PictureOutlined } from '@ant-design/icons';
+import { Input, Popover } from 'antd';
 import previewContent from '../../components/previewContent';
 
 const previewNode = (format, value) => {
@@ -12,7 +13,7 @@ const previewNode = (format, value) => {
       className="fr-preview"
       placement="bottom"
     >
-      <Icon type="picture" />
+      <PictureOutlined />
     </Popover>
   );
 };

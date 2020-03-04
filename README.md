@@ -108,17 +108,18 @@ ReactDOM.render(<Demo />, rootElement);
 
 ### API
 
-| Prop               |       Type        | Required |  Default   |                              Description                              |
-| ------------------ | :---------------: | :------: | :--------: | :-------------------------------------------------------------------: |
-| **`propsSchema`**  |     `Object`      |    ✓     |    `{}`    |                           表单属性配置 json                           |
-| **`uiSchema`**     |     `Object`      |          |    `{}`    |              表单 UI 配置 json（可以合并到 propsSchema）              |
-| **`formData`**     |     `Object`      |          |    `{}`    |                               配置数据                                |
-| **`onChange`**     |    `Function`     |    ✓     | `() => {}` |                           数据更改回调函数                            |
-| **`onValidate`**   |    `Function`     |          | `() => {}` |                           表单输入校验回调                            |
-| **`displayType`**  |     `String`      |          |  `column`  |              设置表单横向排列或者纵向排序`column`/ `row`              |
-| **`showDescIcon`** |     `Boolean`     |          |  `false`   |    描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`    |
-| **`readOnly`**     |     `Boolean`     |          |  `false`   |                          预览模式/可编辑模式                          |
-| **`labelWidth`**   | `Number`/`String` |          |   `110`    | label 的长度，默认 110。如为数字则单位是 px，也可以使用'20%'/'2rem'等 |
+| Prop             |     Type      | Required | Default  |                              Description                              |
+| ---------------- | :-----------: | :------: | :------: | :-------------------------------------------------------------------: |
+| **propsSchema**  |    Object     |    ✓     |    {}    |                           表单属性配置 json                           |
+| **uiSchema**     |    Object     |          |    {}    |              表单 UI 配置 json（可以合并到 propsSchema）              |
+| **formData**     |    Object     |          |    {}    |                               配置数据                                |
+| **onChange**     |   Function    |    ✓     | () => {} |                           数据更改回调函数                            |
+| **onValidate**   |   Function    |          | () => {} |                           表单输入校验回调                            |
+| **displayType**  |    String     |          |  column  |              设置表单横向排列或者纵向排序`column`/`row`               |
+| **showDescIcon** |    Boolean    |          |  false   |    描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`    |
+| **readOnly**     |    Boolean    |          |  false   |                          预览模式/可编辑模式                          |
+| **labelWidth**   | Number/String |          |   110    | label 的长度，默认 110。如为数字则单位是 px，也可以使用'20%'/'2rem'等 |
+| **widgets**      |    Object     |          |    {}    |                              自定义组件                               |
 
 **注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好  
 **注 2：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）  
@@ -126,13 +127,13 @@ ReactDOM.render(<Demo />, rootElement);
 
 ### 不常用 API
 
-| Prop               |   Type    | Required | Default |                    Description                    |
-| ------------------ | :-------: | :------: | :-----: | :-----------------------------------------------: |
-| **`column`**       | `Number`  |          |   `1`   | 整体布局 1 排 N，局部的 1 排 N 一般使用`ui:width` |
-| **`widgets`**      | `Object`  |          |  `{}`   |                    自定义组件                     |
-| **`name`**         | `String`  |          | `$form` |                    表单的名称                     |
-| **`showValidate`** | `Boolean` |          | `true`  |                 是否展示校验信息                  |
-| **`mapping`**      | `Object`  |          |  `{}`   |              用于修改默认组件映射表               |
+| Prop               |   Type    |  使用度  |  Default  |                                    Description                                     |
+| ------------------ | :-------: | :------: | :-------: | :--------------------------------------------------------------------------------: |
+| **`mapping`**      | `Object`  | 还算常用 | undefined |      用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)      |
+| **`column`**       | `Number`  | 还算常用 |     1     |               **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                |
+| **`name`**         | `String`  | 基本不用 |  \$form   |                                     表单的名称                                     |
+| **`showValidate`** | `Boolean` | 基本不用 |   true    |                                  是否展示校验信息                                  |
+| **onMount**        | Function  | 基本不用 | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
 
 ## 快速书写 schema
 

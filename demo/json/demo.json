@@ -182,7 +182,8 @@
     },
     "arrDemo": {
       "ui:options": {
-        "foldable": true
+        "foldable": true,
+        "hideDelete": "{{rootValue.length === 1}}"
       },
       "items": {
         "name": {
