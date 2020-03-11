@@ -74,7 +74,7 @@ const listItemHoc = ButtonComponent =>
             <FoldIcon
               fold={fold}
               onClick={this.toggleFold}
-              style={{ position: 'absolute', top: 14, right: 36 }}
+              style={{ position: 'absolute', top: 10, right: 32 }}
             />
           )}
           {!readonly && <DragHandle />}
