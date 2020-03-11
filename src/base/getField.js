@@ -30,13 +30,15 @@ export default function getField(
   // Field能否被重定义
   let fieldCanRedefine = false;
   let Field;
+  // ui:widget 是字符串，从generated中查，不是的话，就是本事
+  const _widget = typeof widget === 'string' ? generated[widget] : widget;
   if (field && !Field) {
     Field = typeof field === 'string' ? customized[field] : field;
   }
-  if (!Field && widget) {
-    Field = typeof widget === 'string' ? generated[widget] : widget;
+  if (!Field && _widget) {
+    Field = _widget;
   }
-  if (!Field && !widget) {
+  if (!Field && !_widget) {
     Field = generated[getWidgetName(schema, mapping)];
     fieldCanRedefine = !!Field;
   }
