@@ -58,6 +58,7 @@ function getBasicProps(settings, materials) {
     'ui:extraButtons': extraButtons = [],
     'ui:dependShow': dependShow,
     'ui:action': action,
+    'ui:labelWidth': _labelWidth,
   } = schema;
   const { required = [] } = $parent;
   const { generated: widgets, customized: fields } = materials;
@@ -75,7 +76,7 @@ function getBasicProps(settings, materials) {
     required: required.indexOf(name) !== -1,
     disabled: disabled,
     readonly: readOnly || readonly, // 前者全局的，后者单个ui的
-    labelWidth,
+    labelWidth: _labelWidth || labelWidth,
     width,
     widgets,
     fields,
@@ -106,7 +107,7 @@ function getBasicProps(settings, materials) {
           showDescIcon,
           showValidate,
           readOnly,
-          labelWidth,
+          labelWidth: _labelWidth || labelWidth,
           formData,
         },
         materials
