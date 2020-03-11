@@ -2,28 +2,65 @@
   "propsSchema": {
     "type": "object",
     "properties": {
-      "inputDemo": {
-        "title": "前后缀",
-        "type": "string",
-        "pattern": "^[A-Za-z0-9]+$",
-        "message": {
-          "pattern": "请输入正确格式"
+      "labelDemo": {
+        "title": "标签长度自定义",
+        "description": "在object上定义labelWidth会影响所有子元素",
+        "type": "object",
+        "ui:labelWidth": 200,
+        "properties": {
+          "inputName": {
+            "title": "简单输入框",
+            "type": "string"
+          },
+          "dateName": {
+            "title": "时间选择",
+            "type": "string",
+            "format": "date"
+          },
+          "colorName": {
+            "title": "颜色选择",
+            "type": "string",
+            "format": "color",
+            "ui:labelWidth": 80
+          }
         }
       },
-      "numberDemo": {
-        "title": "数字",
-        "description": "数字输入框",
-        "type": "number",
-        "min": 10,
-        "max": 100,
-        "step": 10
-      },
-      "dateRange": {
-        "title": "日期范围",
-        "type": "range",
-        "format": "dateTime",
-        "ui:options": {
-          "placeholder": ["开始", "结束"]
+      "objectName": {
+        "title": "对象",
+        "description": "这是一个对象类型",
+        "type": "object",
+        "properties": {
+          "inputDemo": {
+            "title": "前后缀",
+            "type": "string",
+            "pattern": "^[A-Za-z0-9]+$",
+            "message": {
+              "pattern": "请输入正确格式"
+            },
+            "ui:width": "50%",
+            "ui:options": {
+              "addonBefore": "画布长度",
+              "addonAfter": "px"
+            }
+          },
+          "numberDemo": {
+            "title": "数字",
+            "description": "数字输入框",
+            "type": "number",
+            "min": 10,
+            "max": 100,
+            "step": 10,
+            "ui:width": "50%",
+            "ui:widget": "slider"
+          },
+          "dateRange": {
+            "title": "日期范围",
+            "type": "range",
+            "format": "dateTime",
+            "ui:options": {
+              "placeholder": ["开始", "结束"]
+            }
+          }
         }
       },
       "customizedWidgets": {
@@ -33,6 +70,7 @@
           "asyncSelect": {
             "title": "异步加载的下拉框",
             "type": "string",
+            "ui:labelWidth": 130,
             "ui:widget": "asyncSelect",
             "ui:options": {
               "placeholder": "搜索淘宝商品"
@@ -88,19 +126,6 @@
           "required": ["age"]
         }
       }
-    }
-  },
-  "uiSchema": {
-    "inputDemo": {
-      "ui:width": "50%",
-      "ui:options": {
-        "addonBefore": "画布长度",
-        "addonAfter": "px"
-      }
-    },
-    "numberDemo": {
-      "ui:width": "50%",
-      "ui:widget": "slider"
     }
   },
   "formData": {

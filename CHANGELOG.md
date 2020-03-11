@@ -1,5 +1,11 @@
 # Change Log
 
+### 0.5.1
+
+- [+] 新增 `ui:labelWidth` 属性，考虑到同个 FR 渲染的不同表单、或表单的不同区块的标签展示长度可能会不同，添加此个性化设置。所有字段都可以使用，效果向下继承，类似于 css 的就近覆盖规律。在线 demo 的“新功能”里有效果展示
+- [!] 当`ui:widget`字段写错时，兜底使用默认的 ui 渲染而不是 crash
+- [!] 优化了列表收缩时的样式，同时布尔值类能正确展示
+
 ### 0.5.0
 
 - [+] 【breaking change】antd 升级到 v4，同时 React 的支持也同步到 16.12.0 以上。使用方请注意！（[#60](https://github.com/alibaba/form-render/issues/60)）
