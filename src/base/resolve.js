@@ -84,7 +84,7 @@ function resolve(schema, data, options = {}) {
   if (type === 'array') {
     // 如果自定义组件
     if (widget) return value;
-    if (def && Array.isArray(def)) {
+    if (def && Array.isArray(def) && !value) {
       return def;
     }
     const subs = [].concat(items || []);
