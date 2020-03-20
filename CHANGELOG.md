@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.5.2
+
+- [+] fusion 的 datePicker 组件添加 "ui:options": { "type": "month"} (month/year/week) 配置来使用 MonthPicker / YearPicker / WeekPicker。Antd 组件下，可参考官方文档的 picker 属性。 "ui:options": { "picker": "month"} [70](https://github.com/alibaba/form-render/issues/70)
+- [!] 修复了列表的 default 值有时会覆盖 formData 的 bug [71](https://github.com/alibaba/form-render/issues/71)
+
 ### 0.5.1
 
 - [+] 新增 `ui:labelWidth` 属性，考虑到同个 FR 渲染的不同表单、或表单的不同区块的标签展示长度可能会不同，添加此个性化设置。所有字段都可以使用，效果向下继承，类似于 css 的就近覆盖规律。在线 demo 的“新功能”里有效果展示
