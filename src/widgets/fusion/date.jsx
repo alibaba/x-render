@@ -7,14 +7,36 @@ import { DatePicker, TimePicker } from '@alifd/next';
 import moment from 'moment';
 import dateHoc from '../../components/dateHoc';
 import { getFormat } from '../../base/utils';
+const { MonthPicker, YearPicker, WeekPicker } = DatePicker;
 
 export default function date(p) {
   const { format = 'dateTime' } = p.schema;
+  const { picker } = p.options;
   const dateFormat = getFormat(format);
   const onChange = value => {
     let timeValue = value ? moment(value).format(dateFormat) : '';
     p.onChange(p.name, timeValue);
   };
-  const DateComponent = format === 'time' ? TimePicker : DatePicker;
+
+  let DateComponent = DatePicker;
+  if (format === 'time') {
+    DateComponent = TimePicker;
+  } else {
+    switch (picker) {
+      case 'month':
+        DateComponent = MonthPicker;
+        break;
+      case 'week':
+        DateComponent = WeekPicker;
+        break;
+      case 'year':
+        DateComponent = YearPicker;
+        break;
+      default:
+        DateComponent = DatePicker;
+        break;
+    }
+  }
+
   return dateHoc(p, onChange, DateComponent);
 }

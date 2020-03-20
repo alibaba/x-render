@@ -25,9 +25,13 @@ export default (p, onChange, DateComponent) => {
     ...p.options,
     ...defaultObj,
     style: { width: '100%', ...style },
-    showTime: format === 'dateTime',
     disabled: p.disabled || p.readonly,
     onChange,
   };
+
+  if (format === 'dateTime') {
+    dateParams.showTime = true;
+  }
+
   return <DateComponent {...dateParams} />;
 };
