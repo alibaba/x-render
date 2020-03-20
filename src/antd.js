@@ -7,7 +7,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormRender from './index';
 import { ConfigProvider } from 'antd';
-import zhCN from 'antd/es/locale-provider/zh_CN';
+import zhCN from 'antd/lib/locale/zh_CN';
 import { mapping, widgets } from './widgets/antd';
 
 export default class AntdForm extends React.PureComponent {
