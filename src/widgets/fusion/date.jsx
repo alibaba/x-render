@@ -11,7 +11,7 @@ const { MonthPicker, YearPicker, WeekPicker } = DatePicker;
 
 export default function date(p) {
   const { format = 'dateTime' } = p.schema;
-  const { type } = p.options;
+  const { picker } = p.options;
   const dateFormat = getFormat(format);
   const onChange = value => {
     let timeValue = value ? moment(value).format(dateFormat) : '';
@@ -22,7 +22,7 @@ export default function date(p) {
   if (format === 'time') {
     DateComponent = TimePicker;
   } else {
-    switch (type) {
+    switch (picker) {
       case 'month':
         DateComponent = MonthPicker;
         break;

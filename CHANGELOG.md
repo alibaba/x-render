@@ -2,7 +2,7 @@
 
 ### 0.5.2
 
-- [+] fusion 的 datePicker 组件添加 "ui:options": { "type": "month"} (month/year/week) 配置来使用 MonthPicker / YearPicker / WeekPicker。Antd 组件下，可参考官方文档的 picker 属性。 "ui:options": { "picker": "month"} [70](https://github.com/alibaba/form-render/issues/70)
+- [+] fusion 的 datePicker 组件添加 "ui:options": { "picker": "month"} (month/year/week) 配置来使用 MonthPicker / YearPicker / WeekPicker，确保和 Antd 一致（Antd 组件在之前就支持了）。[70](https://github.com/alibaba/form-render/issues/70)
 - [!] 修复了列表的 default 值有时会覆盖 formData 的 bug [71](https://github.com/alibaba/form-render/issues/71)
 
 ### 0.5.1
