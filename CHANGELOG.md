@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.5.3
+
+- [+] 列表新增 `ui:options` 字段 `itemButtons`, 用于添加每个 item 的操作按钮（默认是一个删除按钮）。具体使用方式参见文档 ui-schema。
+- [!] 增加了列表的收缩按钮的点击面积
+
 ### 0.5.2
 
 - [+] fusion 的 datePicker 组件添加 "ui:options": { "picker": "month"} (month/year/week) 配置来使用 MonthPicker / YearPicker / WeekPicker，确保和 Antd 一致（Antd 组件在之前就支持了）。([70](https://github.com/alibaba/form-render/issues/70))
