@@ -63,6 +63,7 @@ class FormRender extends React.Component {
     onValidate: PropTypes.func,
     readOnly: PropTypes.bool,
     labelWidth: PropTypes.number,
+    useLogger: PropTypes.bool,
   };
 
   static defaultProps = {
@@ -81,6 +82,7 @@ class FormRender extends React.Component {
     onValidate: () => {},
     readOnly: false,
     labelWidth: 110,
+    useLogger: false,
   };
 
   constructor() {
@@ -130,6 +132,7 @@ class FormRender extends React.Component {
       onValidate,
       readOnly,
       labelWidth,
+      useLogger,
     } = this.props;
 
     const generated = {};
@@ -163,6 +166,7 @@ class FormRender extends React.Component {
             displayType,
             readOnly,
             labelWidth,
+            useLogger,
             formData,
           },
           {

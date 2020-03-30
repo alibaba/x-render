@@ -45,6 +45,7 @@ function getBasicProps(settings, materials) {
     showValidate,
     readOnly, // 添加全局控制只读模式
     labelWidth,
+    useLogger,
     formData,
   } = settings;
   // 目前做了处理的`uiSchema`参数
@@ -77,6 +78,7 @@ function getBasicProps(settings, materials) {
     disabled: disabled,
     readonly: readOnly || readonly, // 前者全局的，后者单个ui的
     labelWidth: _labelWidth || labelWidth,
+    useLogger,
     width,
     widgets,
     fields,
@@ -108,6 +110,7 @@ function getBasicProps(settings, materials) {
           showValidate,
           readOnly,
           labelWidth: _labelWidth || labelWidth,
+          useLogger,
           formData,
         },
         materials

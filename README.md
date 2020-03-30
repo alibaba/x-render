@@ -127,13 +127,18 @@ ReactDOM.render(<Demo />, rootElement);
 
 ### 不常用 API
 
-| Prop               |   Type    |  使用度  |  Default  |                                    Description                                     |
-| ------------------ | :-------: | :------: | :-------: | :--------------------------------------------------------------------------------: |
-| **`mapping`**      | `Object`  | 还算常用 | undefined |      用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)      |
-| **`column`**       | `Number`  | 还算常用 |     1     |               **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                |
-| **`name`**         | `String`  | 基本不用 |  \$form   |                                     表单的名称                                     |
-| **`showValidate`** | `Boolean` | 基本不用 |   true    |                                  是否展示校验信息                                  |
-| **onMount**        | Function  | 基本不用 | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
+| Prop               |   Type    |   usage   |  Default  |                                    Description                                     |
+| ------------------ | :-------: | :-------: | :-------: | :--------------------------------------------------------------------------------: |
+| **`mapping`**      | `Object`  | sometimes | undefined |      用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)      |
+| **`column`**       | `Number`  | sometimes |     1     |               **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                |
+| **`useLogger`**    | `Boolean` |   debug   |   false   |      当 useLogger 为 true 时，会在 console 展示所有的 formData 变化 （注 4）       |
+| **`name`**         | `String`  | very rare |  \$form   |                                     表单的名称                                     |
+| **`showValidate`** | `Boolean` | very rare |   true    |                                  是否展示校验信息                                  |
+| **onMount**        | Function  | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
+
+**注 4：** `useLogger={true}` 时，每当用户填写表单时，在 console 里的展示类似如下：
+<img src="https://img.alicdn.com/tfs/TB11rt_AbY1gK0jSZTEXXXDQVXa-1336-468.jpg" width="500" />
+自下向上一层层展示用户触发的 formData 变化，便于开发者快速定位问题。
 
 ## 快速书写 schema
 

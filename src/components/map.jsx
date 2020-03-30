@@ -16,6 +16,20 @@ export default function map(p) {
             if (objValue) {
               value = objValue;
             }
+            if (p.useLogger) {
+              console.group(p.name);
+              console.log(
+                `%c${key}:`,
+                'color: #47B04B; font-weight: 700;',
+                val
+              );
+              console.log(
+                `%c${p.name}:`,
+                'color: #00A7F7; font-weight: 700;',
+                value
+              );
+              console.groupEnd();
+            }
             p.onChange(p.name, value);
           },
           rootValue: p.value,
