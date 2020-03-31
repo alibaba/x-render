@@ -4,7 +4,7 @@ import GithubCorner from 'react-github-corner';
 import Demo from './main';
 import { Radio, Select, Switch, Collapse, Slider } from 'antd';
 
-window.copyme = (list, index) => {
+window.copyMe = (list, index) => {
   const item = list[index];
   list.splice(index, 0, item);
   return list;
