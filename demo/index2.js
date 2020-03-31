@@ -70,6 +70,7 @@ class Demo extends React.Component {
           labelWidth={120}
           readOnly={this.state.readOnly}
           onValidate={this.onValidate}
+          useLogger={true}
         />
       </div>
     );
