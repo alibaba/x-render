@@ -96,7 +96,6 @@ export const asField = ({ FieldUI, Widget }) => {
       (_schema.type === 'array' && _schema.enum === undefined);
 
     const validateText = getValidateText(_rest);
-
     // 必填*，label，描述，竖排时的校验语，只要存在一个，label就不为空
     const showLabel =
       _schema.title ||
@@ -203,7 +202,7 @@ export const DefaultFieldUI = ({
         labelClass = labelClass.replace('mb2', 'mb0');
       }
       contentClass += ' flex items-center'; // checkbox高度短，需要居中对齐
-      fieldClass += ' flex flex-row-reverse justify-end';
+      fieldClass += ' flex items-center flex-row-reverse justify-end';
       break;
     default:
       if (displayType === 'row') {

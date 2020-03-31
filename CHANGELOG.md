@@ -6,7 +6,10 @@
   <img src="https://img.alicdn.com/tfs/TB11rt_AbY1gK0jSZTEXXXDQVXa-1336-468.jpg" width="500" />
   自下向上一层层展示用户触发的 formData 变化，便于开发者快速定位问题。
 - [+] 列表新增 `ui:options` 字段 `itemButtons`, 用于添加每个 item 的操作按钮（默认是一个删除按钮）。具体使用方式参见文档 ui-schema。
-- [!] 增加了列表的收缩按钮的点击面积
+- [!] 扩大了列表的收缩按钮的点击面积
+- [!] 修复了 checkbox 在多列展示下文字和框没有对齐的样式 bug
+- [!] 修复了手动传空值给时间组件不引起渲染展示变化的 bug
+- [!]
 
 ### 0.5.2
 

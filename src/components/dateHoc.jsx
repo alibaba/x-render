@@ -13,9 +13,9 @@ export default (p, onChange, DateComponent) => {
   const dateFormat = getFormat(format);
   let defaultObj = {};
   if (p.value) {
-    defaultObj = {
-      value: moment(p.value, dateFormat),
-    };
+    defaultObj.value = moment(p.value, dateFormat);
+  } else {
+    defaultObj.value = '';
   }
 
   const placeholderObj = p.description ? { placeholder: p.description } : {};
