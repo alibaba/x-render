@@ -116,7 +116,6 @@ class Demo extends React.Component {
                 onChange={this.handleDataChange}
                 onValidate={this.handleValidate}
                 widgets={{ asyncSelect: AsyncSelect }}
-                useLogger
               />
             )}
           </div>
