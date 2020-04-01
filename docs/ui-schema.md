@@ -132,12 +132,13 @@
 1. **基本上所有`antd`/ `fusion`文档中组件的 props 都可以使用 `ui:options` 的方式来直接使用。**
 2. form-render 也内置了几个的常用的`ui:options`:
 
-| option     |                    类型                    |   可用组件    |                                      说明                                       |
-| ---------- | :----------------------------------------: | :-----------: | :-----------------------------------------------------------------------------: |
-| foldable   |                  boolean                   | 列表（array） |                   `{ foldable: true }`用于长列表的收起和展开                    |
-| hideDelete | boolean / (formData, rootValue) => boolean | 列表（array） | `{ hideDelete: true }`隐藏“删除”按钮。若要隐藏增删改查，使用`ui:readonly`: true |
-| buttons    |                   array                    | 列表（array） |                                  下详 （注 2）                                  |
-| picker     |           "week"/"month"/"year"            | 日期（date）  |               使用 WeekPicker、MonthPicker 和 YearPicker （注 1）               |
+| option      |                    类型                    |   可用组件    |                                      说明                                       |
+| ----------- | :----------------------------------------: | :-----------: | :-----------------------------------------------------------------------------: |
+| foldable    |                  boolean                   | 列表（array） |                   `{ foldable: true }`用于长列表的收起和展开                    |
+| hideDelete  | boolean / (formData, rootValue) => boolean | 列表（array） | `{ hideDelete: true }`隐藏“删除”按钮。若要隐藏增删改查，使用`ui:readonly`: true |
+| buttons     |                   array                    | 列表（array） |                                  下详 （注 2）                                  |
+| itemButtons |                   array                    | 列表（array） |                                  下详 （注 3）                                  |
+| picker      |           "week"/"month"/"year"            | 日期（date）  |               使用 WeekPicker、MonthPicker 和 YearPicker （注 1）               |
 
 **注 1：** picker 的简单用法如下：
 
@@ -191,6 +192,33 @@ window.someCallback = (value, onChange) => {
 ```
 
 如上的 someCallback 会清空整个列表。
+
+**注 3：** 列表的 item 默认展示“删除”按钮。`itemButtons` 用于添加更多对单个 item 的操作按钮，写法类似：
+
+```json
+"arrDemo": {
+  "ui:options": {
+    "itemButtons": [
+      {
+        "text": "复制",
+        "icon": "copy",
+        "callback": "copyMe"
+      }
+    ]
+  }
+}
+```
+
+然后在 window 上挂上方法 copyMe。callback 的参数和返回的结构为 `(list, idex) => newList`，其中 list 是列表的值，index 是此 item 对应数组的 index。例如你想复制本项，可以如上方式写 schema，并如下方式写`copyMe`函数：
+
+```js
+// 复制此项
+window.copyMe = (list, index) => {
+  const item = list[index];
+  list.splice(index, 0, item);
+  return list;
+};
+```
 
 ### 如何编写 uiSchema 设置
 

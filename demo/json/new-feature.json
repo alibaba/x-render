@@ -2,6 +2,29 @@
   "propsSchema": {
     "type": "object",
     "properties": {
+      "customItemButtons": {
+        "title": "数组item自定义button",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "a": {
+              "title": "简单输入框",
+              "type": "string"
+            }
+          }
+        },
+        "default": [{ "a": "happy" }],
+        "ui:options": {
+          "itemButtons": [
+            {
+              "text": "复制",
+              "icon": "copy",
+              "callback": "copyMe"
+            }
+          ]
+        }
+      },
       "labelDemo": {
         "title": "标签长度自定义",
         "description": "在object上定义labelWidth会影响所有子元素",

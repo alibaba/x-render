@@ -45,7 +45,7 @@ const listItemHoc = ButtonComponent =>
       const descProps = { ...p, index: name };
       const { options = {}, readonly, formData, value: rootValue } = p;
       const { foldable: canFold } = options;
-      let { hideDelete } = options;
+      let { hideDelete, itemButtons } = options;
 
       // 判断 hideDelete 是不是函数，是的话将计算后的值赋回
       let _isFunction = isFunction(hideDelete);
@@ -79,18 +79,40 @@ const listItemHoc = ButtonComponent =>
           )}
           {!readonly && <DragHandle />}
           {!((canFold && fold) || hideDelete || readonly) && (
-            <ButtonComponent
-              className="self-end"
-              type="dashed"
-              icon="delete"
-              onClick={() => {
-                const value = [...p.value];
-                value.splice(name, 1);
-                p.onChange(p.name, value);
-              }}
-            >
-              删除
-            </ButtonComponent>
+            <div className="self-end flex">
+              <ButtonComponent
+                type="dashed"
+                icon="delete"
+                onClick={() => {
+                  const value = [...p.value];
+                  value.splice(name, 1);
+                  p.onChange(p.name, value);
+                }}
+              >
+                删除
+              </ButtonComponent>
+              {itemButtons &&
+                itemButtons.length > 0 &&
+                itemButtons.map((btn, idx) => {
+                  return (
+                    <ButtonComponent
+                      key={idx.toString()}
+                      className="ml2"
+                      type="dashed"
+                      icon={btn.icon}
+                      onClick={() => {
+                        const value = [...p.value];
+                        if (typeof window[btn.callback] === 'function') {
+                          const result = window[btn.callback](value, name); // eslint-disable-line
+                          p.onChange(p.name, result);
+                        }
+                      }}
+                    >
+                      {btn.text || ''}
+                    </ButtonComponent>
+                  );
+                })}
+            </div>
           )}
         </li>
       );

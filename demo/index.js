@@ -4,6 +4,12 @@ import GithubCorner from 'react-github-corner';
 import Demo from './main';
 import { Radio, Select, Switch, Collapse, Slider } from 'antd';
 
+window.copyMe = (list, index) => {
+  const item = list[index];
+  list.splice(index, 0, item);
+  return list;
+};
+
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 const { Panel } = Collapse;
