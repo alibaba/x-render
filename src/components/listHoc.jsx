@@ -74,7 +74,7 @@ const listItemHoc = ButtonComponent =>
             <FoldIcon
               fold={fold}
               onClick={this.toggleFold}
-              style={{ position: 'absolute', top: 10, right: 32 }}
+              style={{ position: 'absolute', top: 12, right: 32 }}
             />
           )}
           {!readonly && <DragHandle />}
@@ -169,7 +169,7 @@ const fieldListHoc = ButtonComponent => {
           {!readonly && (
             <div className="tr">
               {canAdd && (
-                <ButtonComponent icon="file-add" onClick={this.handleAddClick}>
+                <ButtonComponent icon="add" onClick={this.handleAddClick}>
                   新增
                 </ButtonComponent>
               )}

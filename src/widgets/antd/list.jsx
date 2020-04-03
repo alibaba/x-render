@@ -5,29 +5,32 @@
 
 import React from 'react';
 import listHoc from '../../components/listHoc';
-import { Icon } from '@ant-design/compatible';
-import { PlusCircleOutlined, DeleteOutlined } from '@ant-design/icons';
+import * as Icons from '@ant-design/icons';
 
 import { Button } from 'antd';
 
 function FrButton({ icon, children, ...rest }) {
-  let IconComponent;
+  let iconName;
   switch (icon) {
-    case 'file-add':
-      IconComponent = <PlusCircleOutlined />;
+    case 'add':
+      iconName = 'PlusCircleOutlined';
       break;
     case 'delete':
-      IconComponent = <DeleteOutlined />;
+      iconName = 'DeleteOutlined';
       break;
     default:
-      IconComponent = typeof icon === 'string' ? <Icon type={icon} /> : icon;
+      iconName = icon;
       break;
   }
-  return (
-    <Button {...rest} icon={IconComponent}>
-      {children}
-    </Button>
-  );
+  const IconComponent = Icons[iconName];
+  if (IconComponent) {
+    return (
+      <Button {...rest} icon={<IconComponent />}>
+        {children}
+      </Button>
+    );
+  }
+  return <Button {...rest}>{children}</Button>;
 }
 
 export default listHoc(FrButton);

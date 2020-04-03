@@ -2,12 +2,9 @@ import React from 'react';
 import { Button, Icon } from '@alifd/next';
 import listHoc from '../../components/listHoc';
 
-function FrButton({ icon, children, ...rest }) {
+function FrButton({ icon, children, type, ...rest }) {
   let iconName;
   switch (icon) {
-    case 'file-add':
-      iconName = 'add';
-      break;
     case 'delete':
       iconName = 'ashbin';
       break;
@@ -15,8 +12,11 @@ function FrButton({ icon, children, ...rest }) {
       iconName = icon;
       break;
   }
+
+  const restProps = type === 'dashed' ? rest : { ...rest, type }; // fusion不支持dashed，antd支持，这边强兼容一下
+
   return (
-    <Button {...rest}>
+    <Button {...restProps}>
       {iconName ? <Icon type={iconName} /> : null}
       {children}
     </Button>
