@@ -172,9 +172,16 @@ export const DefaultFieldUI = ({
   validateText, // 校验文字
   labelWidth, // label的长度
 }) => {
-  const { title } = schema;
   // field 整体 label 标签 content 内容
-  const { type, enum: _enum, description = '' } = schema;
+  const {
+    title,
+    type,
+    enum: _enum,
+    description = '',
+    'ui:widget': widget,
+  } = schema;
+  const isCheckbox = type === 'boolean' && widget !== 'switch';
+
   let fieldClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''}`;
   let labelClass = 'fr-label mb2';
   let contentClass = 'fr-content';
@@ -197,12 +204,14 @@ export const DefaultFieldUI = ({
       }
       break;
     case 'boolean':
-      if (title) {
-        labelClass += ' ml2';
-        labelClass = labelClass.replace('mb2', 'mb0');
+      if (isCheckbox) {
+        if (title) {
+          labelClass += ' ml2';
+          labelClass = labelClass.replace('mb2', 'mb0');
+        }
+        contentClass += ' flex items-center'; // checkbox高度短，需要居中对齐
+        fieldClass += ' flex items-center flex-row-reverse justify-end';
       }
-      contentClass += ' flex items-center'; // checkbox高度短，需要居中对齐
-      fieldClass += ' flex items-center flex-row-reverse justify-end';
       break;
     default:
       if (displayType === 'row') {
@@ -210,7 +219,7 @@ export const DefaultFieldUI = ({
       }
   }
   // 横排时
-  if (displayType === 'row' && !isComplex && type !== 'boolean') {
+  if (displayType === 'row' && !isComplex && !isCheckbox) {
     fieldClass += ' flex items-center';
     labelClass += ' flex-shrink-0 fr-label-row';
     labelClass = labelClass.replace('mb2', 'mb0');
@@ -218,7 +227,7 @@ export const DefaultFieldUI = ({
   }
 
   // 横排的checkbox
-  if (displayType === 'row' && type === 'boolean') {
+  if (displayType === 'row' && isCheckbox) {
     contentClass += ' flex justify-end pr2';
   }
 
@@ -228,7 +237,7 @@ export const DefaultFieldUI = ({
     ? labelWidth
     : 110; // 默认是 110px 的长度
   let labelStyle = { width: _labelWidth };
-  if (type === 'boolean') {
+  if (isCheckbox) {
     labelStyle = { flexGrow: 1 };
   } else if (isComplex || displayType === 'column') {
     labelStyle = { flexGrow: 1 };
@@ -243,7 +252,7 @@ export const DefaultFieldUI = ({
         <div className={labelClass} style={labelStyle}>
           <label
             className={`fr-label-title ${
-              type === 'boolean' || displayType === 'column' ? 'no-colon' : ''
+              isCheckbox || displayType === 'column' ? 'no-colon' : ''
             }`} // boolean不带冒号
             title={title}
           >
@@ -276,7 +285,7 @@ export const DefaultFieldUI = ({
       <div
         className={contentClass}
         style={
-          type === 'boolean'
+          isCheckbox
             ? displayType === 'row'
               ? { marginLeft: _labelWidth }
               : {}
