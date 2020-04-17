@@ -132,13 +132,14 @@
 1. **基本上所有`antd`/ `fusion`文档中组件的 props 都可以使用 `ui:options` 的方式来直接使用。**
 2. form-render 也内置了几个的常用的`ui:options`:
 
-| option      |                    类型                    |   可用组件    |                                      说明                                       |
-| ----------- | :----------------------------------------: | :-----------: | :-----------------------------------------------------------------------------: |
-| foldable    |                  boolean                   | 列表（array） |                   `{ foldable: true }`用于长列表的收起和展开                    |
-| hideDelete  | boolean / (formData, rootValue) => boolean | 列表（array） | `{ hideDelete: true }`隐藏“删除”按钮。若要隐藏增删改查，使用`ui:readonly`: true |
-| buttons     |                   array                    | 列表（array） |                                  下详 （注 2）                                  |
-| itemButtons |                   array                    | 列表（array） |                                  下详 （注 3）                                  |
-| picker      |           "week"/"month"/"year"            | 日期（date）  |               使用 WeekPicker、MonthPicker 和 YearPicker （注 1）               |
+| option      |                    类型                    |   可用组件    |                                    说明                                     |
+| ----------- | :----------------------------------------: | :-----------: | :-------------------------------------------------------------------------: |
+| foldable    |                  boolean                   | 列表（array） |                 `{ foldable: true }`用于长列表的收起和展开                  |
+| hideDelete  | boolean / (formData, rootValue) => boolean | 列表（array） | `{ hideDelete: true }`隐藏“删除”按钮。隐藏全部操作，使用`ui:readonly`: true |
+| hideIndex   |                  boolean                   | 列表（array） |                         是否隐藏列表 item 的序号标                          |
+| buttons     |                   array                    | 列表（array） |                                下详 （注 2）                                |
+| itemButtons |                   array                    | 列表（array） |                                下详 （注 3）                                |
+| picker      |           "week"/"month"/"year"            | 日期（date）  |             使用 WeekPicker、MonthPicker 和 YearPicker （注 1）             |
 
 **注 1：** picker 的简单用法如下：
 

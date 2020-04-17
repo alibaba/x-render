@@ -1,5 +1,16 @@
 # Change Log
 
+### 0.5.4
+
+- [+] 很多同学反馈列表展示需要一个序号。新版默认会添加序号，并可以使用`hideIndex`属性关闭恢复到旧的无序号展示（[84](https://github.com/alibaba/form-render/issues/84)）
+- [!] 折叠的列表的展示更加优雅
+  <img src="https://img.alicdn.com/tfs/TB1INDcCxD1gK0jSZFKXXcJrVXa-1466-866.png" width="500" />
+- [!][breaking] 使用 antd 的 UI 时，列表 schema 的`ui:buttons`和`ui:itemButtons`属性里使用的 icon 的名称一律统一到 antd v4 的 icon 名称。详见[antd 文档-icon](https://ant.design/components/icon/)。旧用户如果有添加自定义按钮，那么图标的字段需要修改成新版名称，否则图标不会展示（并不影响使用）。这个决定出于两个原因：1. 新用户使用 icon 时不应该去翻找旧版 antd 的文档；2. antd 升级 4 后向前的兼容并不理想。
+- [!] schema 的 type 写错时，确保页面仍能展示并给出报错
+  <img src="https://img.alicdn.com/tfs/TB1anq2CpT7gK0jSZFpXXaTkpXa-1916-214.png" width="500" />
+- [!] switch 组件 label 展示恢复到左侧，与 checkbox 类区分。
+  <img src="https://img.alicdn.com/tfs/TB1xXndCxv1gK0jSZFFXXb0sXXa-518-158.png" width="200" />
+
 ### 0.5.3
 
 - [+] 新增了 `useLogger` 的全局 props。`useLogger={true}` 时，每当用户填写表单时，在 console 里的展示类似如下：

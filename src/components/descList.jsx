@@ -29,7 +29,7 @@ const DescriptionList = ({ schema = {}, value = [], index }) => {
         return item.title ? (
           <li
             className="overflow-hidden truncate"
-            style={{ width: '33%' }}
+            style={{ width: '33%', paddingRight: 8 }}
             key={i}
           >
             <span className="fw5">{item.title}: </span>

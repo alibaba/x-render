@@ -11,15 +11,25 @@
             "a": {
               "title": "简单输入框",
               "type": "string"
+            },
+            "b": {
+              "title": "是否判断",
+              "type": "boolean"
+            },
+            "c": {
+              "title": "开关",
+              "type": "boolean",
+              "ui:widget": "switch"
             }
           }
         },
-        "default": [{ "a": "happy" }],
+        "default": [{ "a": "happy", "b": false, "c": false }, {}],
         "ui:options": {
+          "foldable": true,
           "itemButtons": [
             {
               "text": "复制",
-              "icon": "copy",
+              "icon": "UpCircleOutlined",
               "callback": "copyMe"
             }
           ]
@@ -106,7 +116,8 @@
         "description": "数组item中含有数组等",
         "type": "array",
         "ui:options": {
-          "foldable": true
+          "foldable": true,
+          "hideIndex": true
         },
         "items": {
           "type": "object",
