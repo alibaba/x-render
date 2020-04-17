@@ -27,9 +27,13 @@ const DescriptionList = ({ schema = {}, value = [], index }) => {
     <ul className="flex overflow-hidden" style={{ paddingRight: 45 }}>
       {list.map((item, i) => {
         return item.title ? (
-          <li className="flex-auto mr2 overflow-hidden" key={i}>
+          <li
+            className="overflow-hidden truncate"
+            style={{ width: '33%' }}
+            key={i}
+          >
             <span className="fw5">{item.title}: </span>
-            <span>{item.text}</span>
+            <span className="truncate">{item.text}</span>
           </li>
         ) : null;
       })}

@@ -29,6 +29,7 @@
 
  .b--black-10 { border-color: rgba( 0, 0, 0, .1 ); }
  .b--black-20 { border-color: rgba( 0, 0, 0, .2 ); }
+ .b--black-30 { border-color: rgba( 0, 0, 0, .3 ); }
 
  .bw0 { border-width: 0; }
  .bw1 { border-width: .125rem; }
@@ -378,3 +379,6 @@
  .debug-white * { outline: 1px solid white; }
  .debug-black * { outline: 1px solid black; }
  .debug-grid { background: transparent url( data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAICAYAAADED76LAAAAFElEQVR4AWPAC97/9x0eCsAEPgwAVLshdpENIxcAAAAASUVORK5CYII= ) repeat top left; }
+
+ .truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+ .bg-white { background-color: #fff; }
