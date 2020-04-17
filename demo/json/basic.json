@@ -58,11 +58,11 @@
         "type": "object",
         "properties": {
           "radio": {
-            "title": "表单类使用radio",
+            "title": "是否通过",
             "type": "boolean"
           },
           "switch": {
-            "title": "控件类使用switch",
+            "title": "开关控制",
             "type": "boolean",
             "ui:widget": "switch"
           }
