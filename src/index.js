@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import { usePrevious } from './hooks';
 import PropTypes from 'prop-types';
 import { isDeepEqual, combineSchema } from './base/utils';
@@ -9,8 +9,8 @@ import { getValidateList } from './base/validate';
 import '../atom.css';
 import '../index.css';
 
-function renderField(schema, fields, events) {
-  const { Field, props } = parse(schema, fields);
+function renderField(settings, fields, events) {
+  const { Field, props } = parse(settings, fields);
   if (!Field) {
     return null;
   }
@@ -18,9 +18,9 @@ function renderField(schema, fields, events) {
     <Field
       isRoot
       {...props}
-      value={schema.data}
+      value={settings.data}
       {...events}
-      formData={schema.formData}
+      formData={settings.formData}
     />
   );
 }
@@ -70,9 +70,9 @@ function FormRender({
   const generatedFields = useRef({});
   const previousSchema = usePrevious(schema);
 
+  const data = useMemo(() => resolve(schema, formData), [schema, formData]);
+
   useEffect(() => {
-    const data = resolve(schema, formData);
-    // console.log('useEffect', data, formData, schema);
     if (onMount) {
       onMount(data);
     } else {
@@ -89,7 +89,6 @@ function FormRender({
 
   // 如果 onMount props存在且入参useOnMount = true，使用onMount代替onChange，用于首次加载的特别逻辑
   const needUpdateForm = () => {
-    const data = resolve(schema, formData);
     onChange(data);
     onValidate(getValidateList(data, schema));
   };
@@ -117,7 +116,7 @@ function FormRender({
       {renderField(
         {
           schema,
-          data: formData,
+          data,
           name,
           column,
           showDescIcon,
@@ -126,7 +125,7 @@ function FormRender({
           readOnly,
           labelWidth,
           useLogger,
-          formData,
+          formData: data,
         },
         {
           // 根据 Widget 生成的 Field
