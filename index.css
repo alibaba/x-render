@@ -52,6 +52,11 @@
   color: #222;
 }
 
+.fr-label-array .fr-label-title {
+  font-size: 16px;
+  color: #222;
+}
+
 .fr-desc {
   margin-top: 3px;
   font-size: 12px;

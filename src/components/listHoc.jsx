@@ -44,7 +44,7 @@ const listItemHoc = ButtonComponent =>
       const { item, p = {}, name, fold } = this.props;
       const descProps = { ...p, index: name };
       const { options = {}, readonly, formData, value: rootValue } = p;
-      const { foldable: canFold } = options;
+      const { foldable: canFold, hideIndex } = options;
       let { hideDelete, itemButtons } = options;
 
       // 判断 hideDelete 是不是函数，是的话将计算后的值赋回
@@ -69,12 +69,29 @@ const listItemHoc = ButtonComponent =>
       }
       return (
         <li className={setClass}>
+          {hideIndex ? null : (
+            <div
+              className="absolute top-0 left-0 bg-blue"
+              style={{
+                paddingLeft: 4,
+                paddingRight: 6,
+                borderBottomRightRadius: 8,
+                borderTopLeftRadius: 3,
+                backgroundColor: 'rgba(0, 0, 0, .36)',
+                fontSize: 8,
+                color: '#fff',
+              }}
+            >
+              {name + 1}
+            </div>
+          )}
+
           {canFold && fold && isObj ? <DescriptionList {...descProps} /> : item}
           {canFold && (
             <FoldIcon
               fold={fold}
               onClick={this.toggleFold}
-              style={{ position: 'absolute', top: 10, right: 32 }}
+              style={{ position: 'absolute', top: 12, right: 32 }}
             />
           )}
           {!readonly && <DragHandle />}
@@ -144,6 +161,10 @@ const fieldListHoc = ButtonComponent => {
       const { readonly, schema = {} } = p;
       const { maxItems } = schema;
       const list = p.value || [];
+      if (!Array.isArray(list)) {
+        console.error(`"${p.name}"这个字段相关的schema书写错误，请检查！`);
+        return null;
+      }
       const canAdd = maxItems ? maxItems > list.length : true; // 当到达最大个数，新增按钮消失
       return (
         <ul className="pl0 ma0">
@@ -169,7 +190,7 @@ const fieldListHoc = ButtonComponent => {
           {!readonly && (
             <div className="tr">
               {canAdd && (
-                <ButtonComponent icon="file-add" onClick={this.handleAddClick}>
+                <ButtonComponent icon="add" onClick={this.handleAddClick}>
                   新增
                 </ButtonComponent>
               )}
