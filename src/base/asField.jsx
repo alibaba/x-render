@@ -200,7 +200,7 @@ export const DefaultFieldUI = ({
       break;
     case 'array':
       if (title && !_enum) {
-        labelClass += ' mt2 mb3';
+        labelClass += ' fr-label-array mt2 mb3';
       }
       break;
     case 'boolean':
