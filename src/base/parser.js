@@ -48,6 +48,9 @@ function getBasicProps(settings, materials) {
     useLogger,
     formData,
   } = settings;
+  // 写错的时候
+  if (!schema) return {};
+
   // 目前做了处理的`uiSchema`参数
   const {
     'ui:className': className,
@@ -162,6 +165,7 @@ function getBasicProps(settings, materials) {
  *  }
  */
 const parse = (settings = {}, materials) => {
+  console.log(settings);
   const { schema = {} } = settings;
   return {
     Field: getField(schema, materials).Field,
