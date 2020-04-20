@@ -30,7 +30,7 @@ export default function getField(
   // Field能否被重定义
   let fieldCanRedefine = false;
   let Field;
-  // ui:widget 是字符串，从generated中查，不是的话，就是本事
+  // ui:widget 是字符串，从generated中查，不是的话，就是本身
   const _widget = typeof widget === 'string' ? generated[widget] : widget;
   if (field && !Field) {
     Field = typeof field === 'string' ? customized[field] : field;
