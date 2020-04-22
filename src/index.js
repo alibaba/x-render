@@ -69,6 +69,7 @@ function FormRender({
   const originWidgets = useRef();
   const generatedFields = useRef({});
   const previousSchema = usePrevious(schema);
+  const previousData = usePrevious(formData);
 
   const data = useMemo(() => resolve(schema, formData), [schema, formData]);
 
@@ -83,13 +84,17 @@ function FormRender({
 
   useEffect(() => {
     if (!isDeepEqual(previousSchema, schema)) {
-      needUpdateForm();
+      onChange(data);
     }
   }, [schema]);
 
-  // 如果 onMount props存在且入参useOnMount = true，使用onMount代替onChange，用于首次加载的特别逻辑
-  const needUpdateForm = () => {
-    onChange(data);
+  useEffect(() => {
+    if (!isDeepEqual(previousData, formData)) {
+      updateValidation();
+    }
+  }, [formData]);
+
+  const updateValidation = () => {
     onValidate(getValidateList(data, schema));
   };
 
