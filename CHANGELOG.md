@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.5.5
+
+- [!] 修复使用`ui:options`设置自定义 format 时实际 formData 未格式的问题（[87](https://github.com/alibaba/form-render/issues/87)）
+- [!] 修复外部更新 formData 时校验信息未更新的问题（[82](https://github.com/alibaba/form-render/issues/82)）
+
 ### 0.5.4
 
 - [+] 很多同学反馈列表展示需要一个序号。新版默认会添加序号，并可以使用`hideIndex`属性关闭恢复到旧的无序号展示（[84](https://github.com/alibaba/form-render/issues/84)）
