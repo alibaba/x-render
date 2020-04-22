@@ -10,9 +10,12 @@ import { getFormat } from '../../base/utils';
 const { MonthPicker, YearPicker, WeekPicker } = DatePicker;
 
 export default function date(p) {
-  const { format = 'dateTime' } = p.schema;
-  const { picker } = p.options;
+  let { format = 'dateTime' } = p.schema;
+  if (p.options.format) {
+    format = p.options.format;
+  }
   const dateFormat = getFormat(format);
+  const { picker } = p.options;
   const onChange = value => {
     let timeValue = value ? moment(value).format(dateFormat) : '';
     p.onChange(p.name, timeValue);
