@@ -68,9 +68,14 @@ export function getFormat(format) {
     case 'time':
       dateFormat = 'HH:mm:ss';
       break;
-    default:
-      // dateTime
+    case 'dateTime':
       dateFormat = 'YYYY-MM-DD HH:mm:ss';
+      break;
+    default:
+      dateFormat = 'YYYY-MM-DD';
+      if (format && typeof format === 'string') {
+        dateFormat = format;
+      }
   }
   return dateFormat;
 }

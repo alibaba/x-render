@@ -165,7 +165,6 @@ function getBasicProps(settings, materials) {
  *  }
  */
 const parse = (settings = {}, materials) => {
-  console.log(settings);
   const { schema = {} } = settings;
   return {
     Field: getField(schema, materials).Field,

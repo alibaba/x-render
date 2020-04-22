@@ -9,7 +9,10 @@ import { getFormat } from '../base/utils';
 
 export default (p, onChange, DateComponent) => {
   const style = p.invalid ? { borderColor: '#f5222d' } : {};
-  const { format = 'dateTime' } = p.schema;
+  let { format = 'dateTime' } = p.schema;
+  if (p.options.format) {
+    format = p.options.format;
+  }
   const dateFormat = getFormat(format);
   let defaultObj = {};
   if (p.value) {
