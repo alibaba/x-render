@@ -27,7 +27,7 @@
 
 <img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
 
-<img src="https://gw.alipayobjects.com/zos/demos_resources/110nnj/fr-workflow.gif" alt="schema编辑器" width='750px' />
+<img src="https://gw.alipayobjects.com/zos/demos_resources/ow8u14/fr-flow-short.gif" alt="schema编辑器" width='750px' />
 
 - 如上图，使用 [**shema 编辑器**](https://form-render.github.io/schema-generator/)可实现低上手成本、快速搭建
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
