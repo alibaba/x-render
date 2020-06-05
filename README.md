@@ -16,6 +16,7 @@
 ## 了解
 
 - <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
+- <a href="https://form-render.github.io/schema-generator/" target="_blank">schema 编辑器</a>
 - <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5?fontsize=14" target="_blank">Code Sandbox</a>
 - <a href="https://alibaba.github.io/form-render/#/docs/used" target="_blank">常见场景</a>
 - <a href="https://alibaba.github.io/form-render/#/docs/proptypes" target="_blank">Proptypes to Json Schema</a>
@@ -24,8 +25,11 @@
 
 ## 优势
 
- <img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="700"/>
- 
+<img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
+
+<img src="https://gw.alipayobjects.com/zos/demos_resources/110nnj/fr-workflow.gif" alt="schema编辑器" width='750px' />
+
+- 如上图，使用 [**shema 编辑器**](https://form-render.github.io/schema-generator/)可实现低上手成本、快速搭建
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
 - 使用 JSON Schema 标准协议描述表单配置，并搭配丰富类型且可扩展的组件
 - 支持 1 排 N、横纵排、支持对象无限嵌套、自定义正则校验、自定义样式组件、列表拖拽等特性

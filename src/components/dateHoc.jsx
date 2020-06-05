@@ -32,6 +32,7 @@ export default (p, onChange, DateComponent) => {
     onChange,
   };
 
+  // TODO: format是在options里自定义的情况，是否要判断一下要不要showTime
   if (format === 'dateTime') {
     dateParams.showTime = true;
   }
