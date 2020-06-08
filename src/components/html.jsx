@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function html({ value, schema, onChange, ...rest }) {
+export default function html({ value, schema, ...rest }) {
   let __html = '';
   try {
     __html = value ? value : schema.default;

@@ -59,19 +59,9 @@ function resolve(schema, data, options = {}) {
     // 按照required规则做数据补全
     checkRequired = false,
   } = options;
-  // 当前值
-  let value = getDefaultValue(schema);
 
-  try {
-    // 使用clone(data) 但确保key顺序正确
-    if (typeof data !== 'undefined') {
-      Object.keys(value).forEach(key => {
-        value[key] = clone(data)[key];
-      });
-    }
-  } catch (error) {
-    value = clone(data); // clone(data) 有时候业务方传的data的key的顺序是错的，导致了渲染顺序错误，所以这个只是兜底
-  }
+  const value =
+    typeof data === 'undefined' ? getDefaultValue(schema) : clone(data);
 
   if (type === 'object') {
     // 如果自定义组件

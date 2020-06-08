@@ -2,7 +2,8 @@
 
 ### 0.5.6
 
-- [+] 添加 html 元素渲染的支持，使用 `default` 或 `formData` 属性传入 html 的字符串（可以是纯字符串，作为 div 渲染）
+- [+] 添加 html 元素渲染的支持，使用 `default` 或 `formData` 属性传入 html 的字符串（可以是纯字符串，作为 div 渲染），见在线 demo（新功能）
+  <img src="https://img.alicdn.com/tfs/TB18ug4XTM11u4jSZPxXXahcXXa-571-190.jpg" width="500px" />
 - [!] object/array 的`disabled`属性现在回传递到所有的子元素（方便区块的表单置灰）
 - [!] 修复从外部传入 `formData` 顺序与 schema 不同时，表单会按照 formData 的顺序渲染。现在能始终按照 schema 顺序渲染
 - [!] 修复 onChange 在首次渲染时会触发两次的问题
