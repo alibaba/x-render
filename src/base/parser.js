@@ -47,6 +47,8 @@ function getBasicProps(settings, materials) {
     labelWidth,
     useLogger,
     formData,
+    // 父传子
+    disabled,
   } = settings;
   // 写错的时候
   if (!schema) return {};
@@ -56,7 +58,7 @@ function getBasicProps(settings, materials) {
     'ui:className': className,
     'ui:options': options = {},
     'ui:hidden': hidden,
-    'ui:disabled': disabled,
+    'ui:disabled': _disabled,
     'ui:width': width,
     'ui:readonly': readonly,
     'ui:extraButtons': extraButtons = [],
@@ -78,7 +80,7 @@ function getBasicProps(settings, materials) {
     options, // 所有特定组件规则，addable等规则TODO
     hidden,
     required: required.indexOf(name) !== -1,
-    disabled: disabled,
+    disabled: _disabled || disabled,
     readonly: readOnly || readonly, // 前者全局的，后者单个ui的
     labelWidth: _labelWidth || labelWidth,
     useLogger,
@@ -115,6 +117,7 @@ function getBasicProps(settings, materials) {
           labelWidth: _labelWidth || labelWidth,
           useLogger,
           formData,
+          disabled: _disabled || disabled,
         },
         materials
       ),
