@@ -107,12 +107,12 @@ export const asField = ({ FieldUI, Widget }) => {
     if (!isComplex && width) {
       columnStyle = {
         width,
-        paddingRight: '24px',
+        paddingRight: '12px',
       };
     } else if (!isComplex && column > 1) {
       columnStyle = {
         width: `calc(100% /${column})`,
-        paddingRight: '24px',
+        paddingRight: '12px',
       };
     }
 

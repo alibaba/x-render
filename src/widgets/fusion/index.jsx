@@ -14,6 +14,7 @@ import slider from './slider';
 import switch1 from './switch';
 import textarea from './textarea';
 import upload from './upload';
+import html from './html';
 
 export const widgets = {
   checkbox,
@@ -32,6 +33,7 @@ export const widgets = {
   switch: switch1,
   textarea,
   upload,
+  html,
 };
 
 // 默认映射关系
@@ -43,6 +45,7 @@ export const mapping = {
   integer: 'number',
   number: 'number',
   object: 'map',
+  html: 'html',
   'string:upload': 'upload',
   'string:date': 'date',
   'string:dateTime': 'date',

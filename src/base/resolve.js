@@ -59,9 +59,10 @@ function resolve(schema, data, options = {}) {
     // 按照required规则做数据补全
     checkRequired = false,
   } = options;
-  // 当前值
+
   const value =
     typeof data === 'undefined' ? getDefaultValue(schema) : clone(data);
+
   if (type === 'object') {
     // 如果自定义组件
     if (widget) {
@@ -82,11 +83,13 @@ function resolve(schema, data, options = {}) {
     return ret;
   }
   if (type === 'array') {
-    // 如果自定义组件
-    if (widget) return value;
+    // 如果没有value且default有值，用default
     if (def && Array.isArray(def) && !value) {
       return def;
     }
+    // 如果自定义组件
+    if (widget) return value;
+
     const subs = [].concat(items || []);
     const ret = [];
     value.forEach &&
