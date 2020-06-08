@@ -93,11 +93,13 @@ function resolve(schema, data, options = {}) {
     return ret;
   }
   if (type === 'array') {
-    // 如果自定义组件
-    if (widget) return value;
+    // 如果没有value且default有值，用default
     if (def && Array.isArray(def) && !value) {
       return def;
     }
+    // 如果自定义组件
+    if (widget) return value;
+
     const subs = [].concat(items || []);
     const ret = [];
     value.forEach &&
