@@ -230,6 +230,42 @@ string 类对应的控件非常多, 使用 `format` 字段指定使用组件：
 }
 ```
 
+### html
+
+只要注明`type: "html"`, FR 支持 html 元素的渲染，最常用的是纯文本, 如下例：
+
+```json
+"html": {
+  "title": "html元素的使用",
+  "type": "object",
+  "properties": {
+    "html1": {
+      "title": "纯字符串",
+      "type": "html",
+      "default": "hello world"
+    },
+    "html2": {
+      "title": "使用formData",
+      "type": "html",
+      "default": "hello world"
+    },
+    "input": {
+      "title": "放在尾部",
+      "type": "string",
+      "ui:width": "70%"
+    },
+    "html3": {
+      "type": "html",
+      "default": "<a>注意事项</a>",
+      "ui:width": "30%"
+    }
+  }
+}
+```
+
+渲染结果如下：
+<img src="https://img.alicdn.com/tfs/TB18ug4XTM11u4jSZPxXXahcXXa-571-190.jpg" width="500px" />
+
 ### 一个很全的结构
 
 ```json
