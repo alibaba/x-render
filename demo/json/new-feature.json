@@ -2,6 +2,22 @@
   "propsSchema": {
     "type": "object",
     "properties": {
+      "html": {
+        "title": "html元素的使用",
+        "type": "object",
+        "properties": {
+          "html1": {
+            "title": "纯字符串",
+            "type": "html",
+            "default": "hello world"
+          },
+          "html2": {
+            "title": "使用formData",
+            "type": "html",
+            "default": "hello world"
+          }
+        }
+      },
       "customItemButtons": {
         "title": "数组item自定义button",
         "type": "array",
@@ -163,8 +179,9 @@
     }
   },
   "formData": {
-    "inputDemo": "750",
-    "textareaDemo": "FormRender\nHello World!",
+    "html": {
+      "html2": "hello from formData!"
+    },
     "complexArray": [
       {
         "age": "",
