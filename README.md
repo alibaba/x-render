@@ -27,7 +27,7 @@
 
 ## 优势
 
-<table><tr><td><img src="https://gw.alipayobjects.com/zos/k/c3nn8g/fr-flow-short-par1.gif?raw=true" width="750px"/></td><td><img src="https://gw.alipayobjects.com/zos/demos_resources/5ay8d5/fr-flow-short-par2.gif?raw=true" width='750px' /></td></tr></table>
+<table><tr><td><img src="https://gw.alicdn.com/tfs/TB1f5TAJND1gK0jSZFsXXbldVXa-2152-1162.gif?raw=true" width="750px"/></td><td><img src="https://gw.alipayobjects.com/zos/demos_resources/5ay8d5/fr-flow-short-par2.gif?raw=true" width='750px' /></td></tr></table>
 
 - 如上图，使用 [Schema 编辑器](https://form-render.github.io/schema-generator/) 快速生成可实现低上手成本、快速搭建
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
@@ -191,9 +191,9 @@ ReactDOM.render(<Demo />, rootElement);
 
 想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)
 
-感谢给 FormRender 贡献代码的你们，以及 JetBrains 提供开源支持！
+感谢给 FormRender 贡献代码的你们，以及 JetBrains 提供 Free 使用！
 
-<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false"/></a><a href="https://www.jetbrains.com/?from=form-render"><img src="https://img.alicdn.com/tfs/TB1gPDDJKL2gK0jSZFmXXc7iXXa-2000-2168.png" width=80/></a>
+<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false"/></a><a href="https://www.jetbrains.com/?from=form-render"><img src="https://img.alicdn.com/tfs/TB1gPDDJKL2gK0jSZFmXXc7iXXa-2000-2168.png" width=100/></a>
 
 ## 协议
 
