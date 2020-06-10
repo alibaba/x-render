@@ -13,7 +13,7 @@
 
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
 
-## 了解<
+## 了解
 - <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
 - <a href="https://form-render.github.io/schema-generator/" target="_blank">schema 编辑器</a>
 - <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5?fontsize=14" target="_blank">Code Sandbox</a>
@@ -193,7 +193,7 @@ ReactDOM.render(<Demo />, rootElement);
 
 感谢给 FormRender 贡献代码的你们，以及 JetBrains 提供开源支持！
 
-<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false"/></a> <a href="https://www.jetbrains.com/?from=form-render"><img src="https://img.alicdn.com/tfs/TB1gPDDJKL2gK0jSZFmXXc7iXXa-2000-2168.png" width=80/></a>
+<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false"/></a><a href="https://www.jetbrains.com/?from=form-render"><img src="https://img.alicdn.com/tfs/TB1gPDDJKL2gK0jSZFmXXc7iXXa-2000-2168.png" width=80/></a>
 
 ## 协议
 
