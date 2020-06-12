@@ -83,13 +83,13 @@ function FormRender({
   }, []);
 
   useEffect(() => {
-    if (previousSchema !== undefined && !isDeepEqual(previousSchema, schema)) {
+    if (!isDeepEqual(previousSchema, schema)) {
       onChange(data);
     }
   }, [schema]);
 
   useEffect(() => {
-    if (previousData !== undefined && !isDeepEqual(previousData, formData)) {
+    if (!isDeepEqual(previousData, formData)) {
       updateValidation();
     }
   }, [formData]);
