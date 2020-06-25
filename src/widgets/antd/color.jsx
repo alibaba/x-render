@@ -23,6 +23,7 @@ export default function color(p) {
         <ColorPicker
           type={format}
           animation="slide-up"
+          color={p.value || defaultColor}
           onClose={onPickerChange}
         />
       }

@@ -4,6 +4,7 @@
  */
 
 import isLength from 'validator/lib/isLength';
+import Color from 'color';
 import { isHidden } from './isHidden';
 import { hasRepeat, isFunction } from './utils';
 
@@ -67,11 +68,11 @@ export const getValidateText = (obj = {}) => {
     ) {
       return (message && message.minLength) || `长度不能小于 ${minLength}`;
     }
-    // 由于有人填写red，rgba(0,123,65,0.3)等值，所以暂时不做严格验证
     if (format === 'color' || widget === 'color') {
-      const seemsLikeHex = finalValue.match(/^([0-9A-F]{6})$/i);
-      if (seemsLikeHex) {
-        return '颜色hex值请以#开头，例如#fff123';
+      try {
+        Color(finalValue);
+      } catch (e) {
+        return `颜色不合法`;
       }
     }
   }
