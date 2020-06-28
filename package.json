@@ -39,6 +39,7 @@
     "@alifd/next": "^1.x",
     "@ant-design/icons": "^4.0.2",
     "antd": "^4.0.0",
+    "color": "^3.1.2",
     "moment": "^2.24.0",
     "pope": "^2.0.2",
     "prop-types": "^15.x",
