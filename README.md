@@ -138,7 +138,8 @@ ReactDOM.render(<Demo />, rootElement);
 | **`useLogger`**    | `Boolean` |   debug   |   false   |      当 useLogger 为 true 时，会在 console 展示所有的 formData 变化 （注 4）       |
 | **`name`**         | `String`  | very rare |  \$form   |                                     表单的名称                                     |
 | **`showValidate`** | `Boolean` | very rare |   true    |                                  是否展示校验信息                                  |
-| **onMount**        | Function  | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
+| **`onMount`**        | `Function`  | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
+| **`configProvider`**| `Object`  | very rare | {} | 提供支持配置Ant Design ConfigProvider, 详情 [Ant Design](https://ant.design/components/config-provider/#API) (只生效于 AntD)|
 
 **注 4：** `useLogger={true}` 时，每当用户填写表单时，在 console 里的展示类似如下：
 
