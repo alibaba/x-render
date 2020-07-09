@@ -14,6 +14,7 @@
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
 
 ## 了解
+
 - <a href="https://alibaba.github.io/form-render/" target="_blank">文档官网</a>
 - <a href="https://form-render.github.io/schema-generator/" target="_blank">schema 编辑器</a>
 - <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5?fontsize=14" target="_blank">Code Sandbox</a>
@@ -23,6 +24,7 @@
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
 ## 效果
+
 <img src="https://gw.alipayobjects.com/mdn/feizhu_pla/afts/img/A*wyH4Rq-EqwQAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
 
 ## 优势
@@ -126,19 +128,21 @@ ReactDOM.render(<Demo />, rootElement);
 | **widgets**      |    Object     |          |    {}    |                               自定义组件                               |
 
 **注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
+
 **注 2：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）
+
 **注 3：** FormRender 默认布局会占满它的父级元素，建议用一个`div`包裹 FormRender 用于表单布局样式调整
 
 ### 不常用 API
 
-| Prop               |   Type    |   usage   |  Default  |                                    Description                                     |
-| ------------------ | :-------: | :-------: | :-------: | :--------------------------------------------------------------------------------: |
-| **`mapping`**      | `Object`  | sometimes | undefined |      用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)      |
-| **`column`**       | `Number`  | sometimes |     1     |               **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                |
-| **`useLogger`**    | `Boolean` |   debug   |   false   |      当 useLogger 为 true 时，会在 console 展示所有的 formData 变化 （注 4）       |
-| **`name`**         | `String`  | very rare |  \$form   |                                     表单的名称                                     |
-| **`showValidate`** | `Boolean` | very rare |   true    |                                  是否展示校验信息                                  |
-| **onMount**        | Function  | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
+| Prop             |   Type   |   usage   |  Default  |                                    Description                                     |
+| ---------------- | :------: | :-------: | :-------: | :--------------------------------------------------------------------------------: |
+| **mapping**      |  Object  | sometimes | undefined |      用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)      |
+| **column**       |  Number  | sometimes |     1     |               **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                |
+| **useLogger**    | Boolean  |   debug   |   false   |      当 useLogger 为 true 时，会在 console 展示所有的 formData 变化 （注 4）       |
+| **name**         |  String  | very rare |  \$form   |                                     表单的名称                                     |
+| **showValidate** | Boolean  | very rare |   true    |                                  是否展示校验信息                                  |
+| **onMount**      | Function | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
 
 **注 4：** `useLogger={true}` 时，每当用户填写表单时，在 console 里的展示类似如下：
 
@@ -153,6 +157,7 @@ ReactDOM.render(<Demo />, rootElement);
 - 支持 TypeScript：详见[如何在 TypeScript 项目中使用](docs/typescript)
 
 - **支持 Ant Design 自定义主题不被覆盖**
+
   - 安装 webpack 插件
     ```bash
     npm install webpack-plugin-fr-theme  --save-dev
