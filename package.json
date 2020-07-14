@@ -9,6 +9,7 @@
     "docs:build": "dumi build",
     "predeploy": "npm run docs:build",
     "deploy": "gh-pages -d docs-dist",
+    "beta": "npm publish --tag beta",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
