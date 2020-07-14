@@ -9,6 +9,7 @@
 
 # production
 /dist
+/lib
 /docs-dist
 # misc
 .idea

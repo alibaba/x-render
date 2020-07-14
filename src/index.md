@@ -8,8 +8,7 @@ Demo:
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import FormRender from 'form-render/dist/antd';
-import 'antd/dist/antd.css';
+import FormRender from 'form-render/lib/antd';
 // import FormRender from '../src/fusion';
 // import '@alifd/next/dist/next.min.css';
 import SCHEMA from './json/basic.json';
@@ -37,7 +36,7 @@ const Demo = () => {
 
   const { propsSchema, uiSchema } = SCHEMA;
   return (
-    <div className="pa6">
+    <div className="">
       <button onClick={toggle}>toggle</button>
       <button onClick={submit}>click</button>
       <FormRender
