@@ -3,15 +3,24 @@ import path from 'path';
 
 export default defineConfig({
   title: 'form-render',
-  favicon:
-    'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
-  logo:
-    'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
+  favicon: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
+  logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   outputPath: 'docs-dist',
   mode: 'site',
   alias: { 'form-render/dist': path.resolve(__dirname, 'dist') },
   base: '/form-render/',
   publicPath: '/form-render/',
   exportStatic: {},
+  extraBabelPlugins: [
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'es',
+        style: 'css',
+        // camel2DashComponentName: false,
+      },
+    ],
+  ],
   // more config: https://d.umijs.org/config
 });
