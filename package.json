@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "1.0.0",
+  "version": "0.6.0-beta.0",
   "scripts": {
     "start": "dumi dev",
     "build": "father-build",
