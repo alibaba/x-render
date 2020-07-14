@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" type="image/png" />
+    <title>FormRender Playground</title>
+    <% (htmlWebpackPlugin.options.resources.css || []).forEach(function(path) { %>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/<%=path%>" />
+    <% }) %>
+  </head>
+  <body>
+    <div id="__render_content_"></div>
+    <% (htmlWebpackPlugin.options.resources.js || []).forEach(function(path) { %>
+    <script src="//cdn.jsdelivr.net/npm/<%=path%>"></script>
+    <% }) %>
+    <script>
+      function loadScript(url) {
+        var script = document.createElement('script');
+        script.src = url;
+        var firstScript = document.getElementsByTagName('script')[0];
+        firstScript.parentNode.insertBefore(script, firstScript);
+      }
+
+      if (window.location.port === '9000') {
+        loadScript('main.bundle.js');
+      } else {
+        loadScript('//cdn.jsdelivr.net/npm/form-render/docs/demo/main.bundle.js');
+      }
+    </script>
+  </body>
+</html>

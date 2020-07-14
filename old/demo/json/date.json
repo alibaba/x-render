@@ -1,0 +1,31 @@
+{
+  "propsSchema": {
+    "type": "object",
+    "properties": {
+      "date1": {
+        "title": "时间选择",
+        "type": "string",
+        "format": "time"
+      },
+      "date2": {
+        "title": "日期选择",
+        "type": "string",
+        "format": "date",
+        "ui:options": {
+          "format": "YY/MM/DD"
+        }
+      },
+      "date3": {
+        "title": "日期选择",
+        "description": "精确到秒",
+        "type": "string",
+        "format": "dateTime"
+      },
+      "data4": {
+        "title": "日期范围",
+        "type": "range",
+        "format": "date"
+      }
+    }
+  }
+}

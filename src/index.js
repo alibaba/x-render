@@ -6,8 +6,8 @@ import { asField, DefaultFieldUI } from './base/asField';
 import parse from './base/parser';
 import resolve from './base/resolve';
 import { getValidateList } from './base/validate';
-import '../atom.css';
-import '../index.css';
+import './atom.css';
+import './index.css';
 
 function renderField(settings, fields, events) {
   const { Field, props } = parse(settings, fields);
@@ -145,7 +145,7 @@ function FormRender({
             onChange(val);
             onValidate(getValidateList(val, schema));
           },
-        }
+        },
       )}
     </div>
   );

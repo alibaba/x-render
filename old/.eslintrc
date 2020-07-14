@@ -1,0 +1,40 @@
+{
+  "extends": [
+    "plugin:prettier/recommended"
+  ],
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "parser": "babel-eslint",
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "comma-dangle": 0,
+    "no-plusplus": 0,
+    "react/no-array-index-key": 0,
+    "no-template-curly-in-string": 1,
+    "react/jsx-filename-extension": [
+      1,
+      {
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }
+    ],
+    "import/no-extraneous-dependencies": 0,
+    "react/prop-types": 0,
+    "react/forbid-prop-types": 0
+  }
+}

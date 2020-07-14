@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<link>
+<meta charset="UTF-8" />
+<title>FormRender</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta
+  name="description"
+  content="通过标准 JSON Schema 生成可视化 From 表单，常用于搭建表单配置，支持 Antd 和  Fusion 体系、一排N、无限嵌套、自定义正则校验、自定义样式组件等能力"
+/>
+<meta
+  name="viewport"
+  content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+/>
+<link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" type="image/png" />
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/form-render/docs/dist/vue.css" />
+</head>
+<body>
+<div id="app">Loading</div>
+<script>
+  window.$docsify = {
+    name: 'FormRender',
+    repo: '//github.com/alibaba/form-render',
+    themeColor: '#E32E33',
+    search: 'auto',
+    auto2top: true,
+    ga: 'UA-57207999-3',
+    coverpage: 'docs/_coverpage.md',
+    loadSidebar: 'docs/_sidebar.md',
+    loadNavbar: 'docs/_navbar.md',
+    basePath: location.port === '3000' ? '/' : '/form-render/',
+    nameLink: {
+      '/': '#/'
+    },
+    plugins: [
+      function(hook, vm) {
+        hook.beforeEach(function(html) {
+          var url = 'https://github.com/alibaba/form-render/blob/master/' + vm.route.file;
+          var github = "<div  data-tooltip-title=\"Star it if you like\" data-tooltip-position=\"top\" class=\"tool-tip\"><iframe src=\"https://ghbtns.com/github-btn.html?user=alibaba&amp;repo=form-render&amp;type=watch&amp;count=true\" allowtransparency=\"true\" frameborder=\"0\" scrolling=\"0\" width=\"110\" height=\"20\" style='margin:0 10px -6px;border-width:0'></iframe></div>";
+
+          var editHtml = '<a href=' + url + ' data-tooltip-title=\"Correct this doc\" data-tooltip-position=\"top\" class=\"tool-tip\" target=\"_blank\"><img class=\"emoji\" src=\"https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/tW8Q2D.png\" alt=\"Edit\"></a>';
+          return "<div class=\"tool-tip-warp\">"
+            + editHtml
+            + github
+            + "</div>"
+            + '\n\n'
+            + html
+            + '\n----\n'
+            + '**Please feel free to use and contribute to the development.**'
+        })
+      }],
+  };
+</script>
+<script>
+  if (typeof navigator.serviceWorker !== 'undefined') {
+    navigator.serviceWorker.register('./docs/dist/sw.js');
+  }
+</script>
+<script src="//cdn.jsdelivr.net/npm/form-render/docs/dist/docsify.min.js"></script>
+</body>
+</html>
