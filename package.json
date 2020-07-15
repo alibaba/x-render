@@ -12,7 +12,8 @@
     "beta": "npm publish --tag beta",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:coverage": "umi-test --coverage",
+    "size": "ANALYZE=1 dumi build"
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
@@ -42,8 +43,8 @@
     "validator": "^10.7.1"
   },
   "peerDependencies": {
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
   },
   "devDependencies": {
     "@umijs/preset-react": "1.x",
