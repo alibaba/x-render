@@ -117,7 +117,7 @@ function FormRender({
   });
 
   return (
-    <div className={className}>
+    <div className={`${className} fr-wrapper`}>
       {renderField(
         {
           schema,
