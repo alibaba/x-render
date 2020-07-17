@@ -1,12 +1,3 @@
----
-nav:
-  title: Components
-  path: /components
----
-
-Demo:
-
-```jsx
 import React, { useState, useEffect } from 'react';
 import FormRender from 'form-render/lib/antd';
 // import FormRender from '../src/fusion';
@@ -55,4 +46,3 @@ const Demo = () => {
 };
 
 export default Demo;
-```
