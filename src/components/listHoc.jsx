@@ -188,7 +188,7 @@ const fieldListHoc = ButtonComponent => {
             />
           ))}
           {!readonly && (
-            <div className="tr">
+            <div className="tr mb2">
               {canAdd && (
                 <ButtonComponent icon="add" onClick={this.handleAddClick}>
                   新增

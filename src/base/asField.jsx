@@ -91,9 +91,14 @@ export const asField = ({ FieldUI, Widget }) => {
     if (isDependShow({ formData, dependShow })) {
       return null;
     }
-    const isComplex =
+
+    let isComplex =
       _schema.type === 'object' ||
       (_schema.type === 'array' && _schema.enum === undefined);
+    const isModal = options && (options.modal || options.drawer);
+    if (isModal) {
+      isComplex = false;
+    }
 
     const validateText = getValidateText(_rest);
     // 必填*，label，描述，竖排时的校验语，只要存在一个，label就不为空
@@ -179,15 +184,18 @@ export const DefaultFieldUI = ({
     enum: _enum,
     description = '',
     'ui:widget': widget,
+    'ui:options': options,
   } = schema;
   const isCheckbox = type === 'boolean' && widget !== 'switch';
-
+  const isModal = options && (options.modal || options.drawer);
   let fieldClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''}`;
   let labelClass = 'fr-label mb2';
   let contentClass = 'fr-content';
-
   switch (type) {
     case 'object':
+      if (isModal) {
+        break;
+      }
       if (title) {
         labelClass += ' fr-label-object bb b--black-20 pb1 mt2 mb3'; // fr-label-object 无默认style，只是占位用于使用者样式覆盖
       }
@@ -199,6 +207,9 @@ export const DefaultFieldUI = ({
       }
       break;
     case 'array':
+      if (isModal) {
+        break;
+      }
       if (title && !_enum) {
         labelClass += ' fr-label-array mt2 mb3';
       }
