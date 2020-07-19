@@ -1,10 +1,16 @@
 import React from 'react';
 
 export default function map(p) {
+  let className = 'fr-map ';
+  const { options = {} } = p || {};
+  const isModal = options.modal || options.drawer;
+  try {
+    className += isModal ? 'fr-wrapper' : ''; // 因为modal跳出fr的dom层级了，需要重新加个顶层的className
+  } catch (error) {}
   return (
-    <div className="fr-map">
-      {Object.keys(p.value).map(name =>
-        p.getSubField({
+    <div className={className}>
+      {Object.keys(p.value).map(name => {
+        return p.getSubField({
           name,
           value: p.value[name],
           onChange(key, val, objValue) {
@@ -33,8 +39,8 @@ export default function map(p) {
             p.onChange(p.name, value);
           },
           rootValue: p.value,
-        })
-      )}
+        });
+      })}
     </div>
   );
 }
