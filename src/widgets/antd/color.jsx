@@ -1,16 +1,23 @@
 import React from 'react';
 import ColorPicker from 'rc-color-picker';
+import Color from 'color';
 import { Input } from 'antd';
 import 'rc-color-picker/assets/index.css';
 
 export default function color(p) {
   const { format } = p.schema;
+  const defaultColor = '#ffffff';
   const onPickerChange = e => {
     if (p.disabled || p.readonly) return;
-    p.onChange(p.name, e.color);
+    let { color, alpha } = e;
+    if (alpha !== 100) {
+      color = Color(color)
+        .alpha(alpha / 100)
+        .string();
+    }
+    p.onChange(p.name, color);
   };
   const onInputChange = e => {
-    // const isHex = value.match(/^(#{0,1})([0-9A-F]{6})$/i);
     p.onChange(p.name, e.target.value);
   };
 
@@ -20,15 +27,15 @@ export default function color(p) {
         <ColorPicker
           type={format}
           animation="slide-up"
-          color={p.value ? p.value : '#ffffff'}
-          onChange={onPickerChange}
+          color={p.value || defaultColor}
+          onClose={onPickerChange}
         />
       }
       {p.readonly ? (
-        <span>{p.value || '#ffffff'}</span>
+        <span>{p.value || defaultColor}</span>
       ) : (
         <Input
-          placeholder="#ffffff"
+          placeholder={defaultColor}
           disabled={p.disabled}
           value={p.value}
           onChange={onInputChange}

@@ -71,6 +71,10 @@
   color: #f5222d;
 }
 
+.fr-field.fr-field-complex {
+  margin-bottom: 0;
+}
+
 /* Row */
 
 .fr-validate-row {

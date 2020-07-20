@@ -207,3 +207,10 @@ export function isFunctionSchema(schema) {
     }
   });
 }
+
+function stringContains(str, text) {
+  return str.indexOf(text) > -1;
+}
+
+export const isObj = a =>
+  stringContains(Object.prototype.toString.call(a), 'Object');
