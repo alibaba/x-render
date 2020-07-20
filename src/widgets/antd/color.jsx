@@ -9,8 +9,12 @@ export default function color(p) {
   const defaultColor = '#ffffff';
   const onPickerChange = e => {
     if (p.disabled || p.readonly) return;
-    let {color, alpha} = e
-    if (alpha !== 100) color = Color(color).alpha(alpha / 100).string();
+    let { color, alpha } = e;
+    if (alpha !== 100) {
+      color = Color(color)
+        .alpha(alpha / 100)
+        .string();
+    }
     p.onChange(p.name, color);
   };
   const onInputChange = e => {
