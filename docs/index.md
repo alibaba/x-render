@@ -3,7 +3,9 @@ hero:
   title: form-render
   desc: form-render site example
   actions:
-    - text: Getting Started
+    - text: 在线Demo
+      link: /_demos/index
+    - text: 开始使用
       link: /components
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
@@ -20,4 +22,4 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
 
 ## Hello form-render!
 
-<code src='./demo/index.jsx' />
+<code src='./demo/index.jsx' className='hidden' />

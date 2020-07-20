@@ -371,3 +371,4 @@
 
 .fr-wrapper .truncate { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .fr-wrapper .bg-white { background-color: #fff; }
+.fr-wrapper .pointer:hover { cursor: pointer; }

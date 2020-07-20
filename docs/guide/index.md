@@ -6,5 +6,4 @@ nav:
 
 Demo:
 
-```jsx
-```
+<code src='../demo/index.jsx' />
