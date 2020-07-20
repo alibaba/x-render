@@ -24,10 +24,11 @@ export default class AntdForm extends React.PureComponent {
     const {
       mapping: customizedMapping,
       widgets: customizedWidgets,
+      configProvider = {},
       ...props
     } = this.props;
     return (
-      <ConfigProvider locale={zhCN}>
+      <ConfigProvider {...configProvider} locale={zhCN}>
         <FormRender
           {...props}
           mapping={{

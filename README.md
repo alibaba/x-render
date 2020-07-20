@@ -135,14 +135,15 @@ ReactDOM.render(<Demo />, rootElement);
 
 ### 不常用 API
 
-| Prop             |   Type   |   usage   |  Default  |                                    Description                                     |
-| ---------------- | :------: | :-------: | :-------: | :--------------------------------------------------------------------------------: |
-| **mapping**      |  Object  | sometimes | undefined |      用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)      |
-| **column**       |  Number  | sometimes |     1     |               **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                |
-| **useLogger**    | Boolean  |   debug   |   false   |      当 useLogger 为 true 时，会在 console 展示所有的 formData 变化 （注 4）       |
-| **name**         |  String  | very rare |  \$form   |                                     表单的名称                                     |
-| **showValidate** | Boolean  | very rare |   true    |                                  是否展示校验信息                                  |
-| **onMount**      | Function | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
+| Prop                 |    Type    |   usage   |  Default  |                                                          Description                                                          |
+| -------------------- | :--------: | :-------: | :-------: | :---------------------------------------------------------------------------------------------------------------------------: |
+| **`mapping`**        |  `Object`  | sometimes | undefined |                           用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)                            |
+| **`column`**         |  `Number`  | sometimes |     1     |                                     **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                                     |
+| **`useLogger`**      | `Boolean`  |   debug   |   false   |                            当 useLogger 为 true 时，会在 console 展示所有的 formData 变化 （注 4）                            |
+| **`name`**           |  `String`  | very rare |  \$form   |                                                          表单的名称                                                           |
+| **`showValidate`**   | `Boolean`  | very rare |   true    |                                                       是否展示校验信息                                                        |
+| **`onMount`**        | `Function` | very rare | undefined |                      onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为                       |
+| **`configProvider`** |  `Object`  | very rare |    {}     | 提供支持配置 Ant Design ConfigProvider, 详情 [Ant Design](https://ant.design/components/config-provider/#API) (只生效于 AntD) |
 
 **注 4：** `useLogger={true}` 时，每当用户填写表单时，在 console 里的展示类似如下：
 
