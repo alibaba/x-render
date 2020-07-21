@@ -12,7 +12,7 @@ const MapWithModal = props => {
     const { text } = config;
     return (
       <div>
-        <a className="pointer" onClick={toggle}>
+        <a className="pointer link" onClick={toggle}>
           {text && typeof text === 'string' ? '+ ' + text : '+ 配置'}
         </a>
         <Modal
@@ -21,7 +21,13 @@ const MapWithModal = props => {
           onClose={toggle}
           footer={false}
           {...config}
-          style={{ maxWidth: 800, width: '80%', ...config.style }}
+          style={{
+            maxWidth: 800,
+            width: '80%',
+            maxHeight: '80%',
+            overflow: 'auto',
+            ...config.style,
+          }}
         >
           <Map {...props} />
         </Modal>
@@ -33,7 +39,7 @@ const MapWithModal = props => {
     const { text } = config;
     return (
       <div>
-        <a className="pointer" onClick={toggle}>
+        <a className="pointer link" onClick={toggle}>
           {text && typeof text === 'string' ? '+ ' + text : '+ 配置'}
         </a>
         <Drawer
