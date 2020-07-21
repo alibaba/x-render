@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import FormRender from '../src/antd';
-// import FormRender from '../src/fusion';
-// import '@alifd/next/dist/next.min.css';
-import SCHEMA from './json/basic.json';
+// import FormRender from '../src/antd';
+import FormRender from '../src/fusion';
+import '@alifd/next/dist/next.min.css';
+import SCHEMA from './json/new-feature.json';
+
+window.someCallback = (...params) => {
+  console.log(params);
+};
 
 const Demo = () => {
   const [formData, setFormData] = useState(() => SCHEMA.formData);
   const [valid, setValid] = useState([]);
   const [readOnly, setReadOnly] = useState(false);
 
-  useEffect(() => {
-    setTimeout(() => setFormData({ AllString: { input: 'abv' } }), 2000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(() => setFormData({ AllString: { input: 'abv' } }), 2000);
+  // }, []);
 
   const onValidate = _valid => {
     console.log('没有通过的校验:', _valid);
