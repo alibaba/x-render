@@ -28,6 +28,13 @@
             "title": "list + modal",
             "type": "array",
             "ui:options": {
+              "buttons": [
+                {
+                  "text": "Excel导入",
+                  "icon": "copy",
+                  "callback": "someCallback"
+                }
+              ],
               "modal": {
                 "text": "配置完全参考antd/fusion文档",
                 "mask": false,
