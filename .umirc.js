@@ -16,8 +16,8 @@ export default defineConfig({
       'import',
       {
         libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: 'css',
+        libraryDirectory: 'lib',
+        style: true,
         // camel2DashComponentName: false,
       },
     ],
