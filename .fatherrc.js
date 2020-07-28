@@ -9,4 +9,14 @@ export default {
       include: 'node_modules/**',
     }),
   ],
+  extraBabelPlugins: [
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'lib',
+        style: 'css',
+      },
+    ],
+  ],
 };
