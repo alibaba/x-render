@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import GithubCorner from 'react-github-corner';
 import Demo from './main';
 import { Radio, Select, Switch, Collapse, Slider } from 'antd';
+import './index.css';
 
 window.copyMe = (list, index) => {
   const item = list[index];

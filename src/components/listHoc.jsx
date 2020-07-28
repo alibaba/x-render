@@ -40,6 +40,13 @@ const listItemHoc = ButtonComponent =>
       this.props.toggleFoldItem(this.props.name);
     };
 
+    handleDelete = () => {
+      const { p = {}, name } = this.props;
+      const value = [...p.value];
+      value.splice(name, 1);
+      p.onChange(p.name, value);
+    };
+
     render() {
       const { item, p = {}, name, fold } = this.props;
       const descProps = { ...p, index: name };
@@ -100,11 +107,7 @@ const listItemHoc = ButtonComponent =>
               <ButtonComponent
                 type="dashed"
                 icon="delete"
-                onClick={() => {
-                  const value = [...p.value];
-                  value.splice(name, 1);
-                  p.onChange(p.name, value);
-                }}
+                onClick={this.handleDelete}
               >
                 删除
               </ButtonComponent>
@@ -218,7 +221,12 @@ const fieldListHoc = ButtonComponent => {
                       if (typeof window[item.callback] === 'function') {
                         const value = [...p.value];
                         const onChange = value => p.onChange(p.name, value);
-                        window[item.callback](value, onChange, p.newItem); // eslint-disable-line
+                        window[item.callback](
+                          value,
+                          onChange,
+                          schema,
+                          p.newItem
+                        ); // eslint-disable-line
                       }
                     }}
                   >

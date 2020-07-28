@@ -1,6 +1,29 @@
 {
   "name": "form-render",
-  "version": "0.6.0-beta.2",
+  "version": "0.6.1",
+  "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/form-render.git"
+  },
+  "keywords": [
+    "FormRender",
+    "Render",
+    "React",
+    "Json Schema",
+    "Ant Design",
+    "Fusion Design"
+  ],
+  "contributors": [
+    {
+      "name": "Tw93",
+      "email": "tw93@qq.com"
+    },
+    {
+      "name": "mankaiviky",
+      "email": "mankaiviky@163.com"
+    }
+  ],
   "scripts": {
     "start": "dumi dev",
     "build": "father-build",

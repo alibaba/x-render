@@ -27,7 +27,8 @@ function FrButton({ icon, children, type, ...rest }) {
 const List = listHoc(FrButton);
 
 const ListWithModal = props => {
-  const { options, schema } = props || {};
+  const { options, schema, value } = props || {};
+  const arrLength = (value && value.length) || 0;
   const [show, setShow] = useState(false);
   const toggle = () => setShow(o => !o);
   if (options && options.modal) {
@@ -35,16 +36,25 @@ const ListWithModal = props => {
     const { text } = config;
     return (
       <div>
-        <a className="pointer" onClick={toggle}>
+        <a className="pointer link" onClick={toggle}>
           {text && typeof text === 'string' ? '+ ' + text : '+ 配置'}
         </a>
+        <span style={{ fontSize: 14 }}>（{arrLength}条数据）</span>
         <Modal
+          className="fr-wrapper"
           title={(schema && schema.title) || '子配置'}
           visible={show}
           onClose={toggle}
-          footer={false}
+          footerActions={['ok']}
+          onOk={toggle}
+          height="80%"
           {...config}
-          style={{ maxWidth: 800, width: '80%', ...config.style }}
+          style={{
+            maxWidth: 800,
+            width: '80%',
+            overflow: 'auto',
+            ...config.style,
+          }}
         >
           <div className="fr-wrapper">
             <List {...props} />
@@ -58,7 +68,7 @@ const ListWithModal = props => {
     const { text } = config;
     return (
       <div>
-        <a className="pointer" onClick={toggle}>
+        <a className="pointer link" onClick={toggle}>
           {text && typeof text === 'string' ? '+ ' + text : '+ 配置'}
         </a>
         <Drawer
