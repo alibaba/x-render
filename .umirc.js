@@ -18,8 +18,16 @@ export default defineConfig({
         libraryName: 'antd',
         libraryDirectory: 'lib',
         style: 'css',
-        // camel2DashComponentName: false,
       },
+      'antd',
+    ],
+    [
+      'import',
+      {
+        libraryName: '@alifd/next',
+        libraryDirectory: 'lib',
+      },
+      '@alifd/next',
     ],
   ],
   // more config: https://d.umijs.org/config

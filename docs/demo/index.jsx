@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FormRender from 'form-render/lib/antd';
-// import FormRender from '../src/fusion';
+// import FormRender from 'form-render/lib/fusion';
 // import '@alifd/next/dist/next.min.css';
 import SCHEMA from './json/new-feature.json';
 import './index.css';

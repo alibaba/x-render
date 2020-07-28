@@ -17,6 +17,15 @@ export default {
         libraryDirectory: 'lib',
         style: 'css',
       },
+      'antd',
+    ],
+    [
+      'import',
+      {
+        libraryName: '@alifd/next',
+        libraryDirectory: 'lib',
+      },
+      '@alifd/next',
     ],
   ],
 };
