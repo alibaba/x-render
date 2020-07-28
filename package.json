@@ -38,9 +38,8 @@
     "test:coverage": "umi-test --coverage",
     "size": "ANALYZE=1 dumi build"
   },
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
