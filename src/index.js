@@ -34,7 +34,8 @@ const Wrapper = ({
   showValidate,
   ...rest
 }) => {
-  const _schema = schema ? schema : combineSchema(propsSchema, uiSchema);
+  const jsonSchema = schema || propsSchema; // 兼容schema字段和propsSchema字段
+  const _schema = combineSchema(jsonSchema, uiSchema);
 
   return (
     <FormRender
@@ -145,7 +146,7 @@ function FormRender({
             onChange(val);
             onValidate(getValidateList(val, schema));
           },
-        },
+        }
       )}
     </div>
   );
