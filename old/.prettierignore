@@ -1,7 +1,0 @@
-*.bundle.js
-*.min.js
-dist
-docs/dist
-lib
-node_modules
-atom.css

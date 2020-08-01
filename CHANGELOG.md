@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.6.2
+
+- [!] fusion 侧再也不需用户手动引入 css。~~`import "@alifd/next/dist/next.min.css";`~~
+
 ### 0.6.1
 
 - [!] ui:button 的 callback 的入参从（value, onChange, newItem）变为 （value, onChange, schema, newItem）

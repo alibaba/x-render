@@ -1,12 +1,15 @@
 ---
+title: Form Render
 hero:
-  title: form-render
-  desc: form-render site example
+  title: FormRender
+  desc: 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
   actions:
-    - text: 在线Demo
+    - text: playground
       link: /_demos/index
+    - text: 表单设计器
+      link: https://form-render.github.io/schema-generator/
     - text: 开始使用
-      link: /components
+      link: /guide
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
     title: Feature 1
@@ -20,6 +23,6 @@ features:
 footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
 ---
 
-## Hello form-render!
+## hello
 
-<code src='./demo/index.jsx' className='hidden' />
+<code src='./playground/index.jsx' className='hidden' />

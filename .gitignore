@@ -21,3 +21,6 @@
 .umi-production
 .umi-test
 .env.local
+
+# custom
+old-doc
