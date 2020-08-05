@@ -1,8 +1,5 @@
 ---
 order: 1
-group:
-  order: 1
-  title: form-render 的理念
 toc: menu
 ---
 
@@ -52,14 +49,14 @@ const schema = {
   },
 };
 
-const Demo1 = () => {
+const Demo = () => {
   const [formData, setFormData] = useState({});
   return (
     <FormRender schema={schema} formData={formData} onChange={setFormData} />
   );
 };
 
-export default Demo1;
+export default Demo;
 ```
 
 ### 可控组件

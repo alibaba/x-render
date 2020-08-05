@@ -1,3 +1,13 @@
+---
+order: 2
+group:
+  title: 其他
+nav:
+  order: 1
+  title: 教程
+toc: false
+---
+
 # 使用场景
 
 ##### 1. 规范化表单视图的快速生成：写好对应的参数配置，快速生成一个标准表单，省去了使用类 Ant Design 表单的麻烦地方

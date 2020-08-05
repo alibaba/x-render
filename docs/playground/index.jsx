@@ -61,14 +61,24 @@ class Root extends Component {
   render() {
     const { showDescIcon, readOnly, labelWidth } = this.state;
     return (
-      <div className="vh-100 overflow-auto flex flex-column">
+      <div className="vh-100 overflow-auto flex flex-column relative">
         {/* <GithubCorner
           href="https://github.com/alibaba/form-render"
           bannerColor="#F6C14F"
           className="absolute top-0 right-0 z-999"
         /> */}
+        <a href="/" className="f6 absolute top-1 right-1 z-999">
+          回主页
+        </a>
         <Collapse defaultActiveKey={['1']} onChange={() => {}}>
-          <Panel header={<div className="b f3">FormRender</div>} key="1">
+          <Panel
+            header={
+              <div className="flex justify-between items-center">
+                <div className="b f3">FormRender</div>
+              </div>
+            }
+            key="1"
+          >
             <div className="w-100 flex">
               <Radio.Group
                 name="schemaName"

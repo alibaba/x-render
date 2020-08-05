@@ -1,3 +1,12 @@
+---
+order: 3
+group:
+  title: 其他
+nav:
+  order: 1
+  title: 教程
+---
+
 # Proptypes to Json Schema &nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/proptypes-to-json-schema.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/proptypes-to-json-schema?_blank)
 
 > Github：<a href="https://github.com/tw93/proptypes-to-json-schema" target="_blank">proptypes-to-json-schema</a>
