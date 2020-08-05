@@ -163,16 +163,32 @@ function getChildren(schema) {
 // 合并多个schema树，比如一个schema的树节点是另一个schema
 export function combine() {}
 
+export const isValidVariableName = param => /^[a-zA-Z]+$/g.test(param);
+
+// Remove all window valid api
+// For safety jest-* variable will throw error
+export function safeEval(code) {
+  let safeContextStr = '';
+  if (typeof window !== 'undefined') {
+    const windowContextAttr = Object.getOwnPropertyNames(window).filter(
+      isValidVariableName
+    );
+    for (let i = 0, len = windowContextAttr.length; i < len; i++) {
+      safeContextStr += `var ${windowContextAttr[i]} = undefined;`;
+    }
+  }
+  return Function(`${safeContextStr} "use strict";  ${code}`)();
+}
 // 代替eval的函数
-export const parseString = string =>
-  Function('"use strict";return (' + string + ')')();
+export const parseString = string => safeEval(`return (${string})`);
 
 // 解析函数字符串值
 export const evaluateString = (string, formData, rootValue) =>
-  Function(`"use strict";
-    const rootValue = ${JSON.stringify(rootValue)};
-    const formData = ${JSON.stringify(formData)};
-    return (${string})`)();
+  safeEval(`
+  const rootValue =${JSON.stringify(rootValue)};
+  const formData = ${JSON.stringify(formData)};
+  return (${string})
+  `);
 
 // 判断schema的值是是否是“函数”
 // JSON无法使用函数值的参数，所以使用"{{...}}"来标记为函数，也可使用@标记，不推荐。
