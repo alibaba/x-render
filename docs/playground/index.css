@@ -2,6 +2,10 @@
   display: none;
 }
 
+.npm__react-simple-code-editor__textarea {
+  outline: none;
+}
+
 .b {
   font-weight: bold;
 }
@@ -41,6 +45,12 @@
 }
 .pt5 {
   padding-top: 4rem;
+}
+.pl2 {
+  padding-left: 0.5rem;
+}
+.pb2 {
+  padding-bottom: 0.5rem;
 }
 .overflow-auto {
   overflow: auto;

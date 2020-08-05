@@ -1,6 +1,5 @@
 {
-  "name": "FpDemo",
-  "propsSchema": {
+  "schema": {
     "type": "object",
     "properties": {
       "inputDemo": {

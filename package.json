@@ -83,10 +83,9 @@
     "fr-generator": "^0.3.3",
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",
-    "monaco-editor": "^0.20.0",
-    "monaco-editor-webpack-plugin": "^1.9.0",
-    "monaco-themes": "^0.3.3",
     "prettier": "^1.19.1",
+    "prismjs": "^1.20.0",
+    "react-simple-code-editor": "^0.11.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "yorkie": "^2.0.0"
   }

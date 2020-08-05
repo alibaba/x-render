@@ -1,5 +1,5 @@
 {
-  "propsSchema": {
+  "schema": {
     "type": "object",
     "properties": {
       "AllString": {
@@ -125,7 +125,6 @@
     },
     "required": []
   },
-  "uiSchema": {},
   "formData": {
     "AllString": {
       "image": "http://placekitten.com/200/300"

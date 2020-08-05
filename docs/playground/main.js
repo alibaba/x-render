@@ -77,10 +77,10 @@ class Demo extends React.Component {
     } catch (error) {
       console.log(error);
     }
-    const { propsSchema = {}, uiSchema = {}, formData = {} } = schema;
+    const { formData = {} } = schema;
     return (
       <div className="flex-auto flex">
-        <div className="w-50 h-100 flex flex-column">
+        <div className="w-50 h-100 pl2 flex flex-column">
           <Tabs
             defaultActiveKey="1"
             onChange={() => {}}
@@ -88,10 +88,7 @@ class Demo extends React.Component {
             style={{ overflow: 'auto' }}
           >
             <TabPane tab="Schema" key="1">
-              <CodeBlock
-                value={schemaStr}
-                onValueChange={this.handleCodeChange}
-              />
+              <CodeBlock value={schemaStr} onChange={this.handleCodeChange} />
             </TabPane>
             <TabPane tab="Data" key="2">
               <CodeBlock value={schema2str(formData)} readOnly />
@@ -99,14 +96,16 @@ class Demo extends React.Component {
           </Tabs>
         </div>
         <div className="w-50 h-100 flex flex-column pa2">
-          <div className="h-100 overflow-auto pa3 pt4 flex-auto">
+          <div
+            className="h-100 overflow-auto pa3 pt4 flex-auto"
+            style={{ borderLeft: '1px solid #ddd' }}
+          >
             {this.state.error ? (
               <div>{this.state.error}</div>
             ) : (
               <FormRender
                 {...formProps}
-                propsSchema={propsSchema}
-                uiSchema={uiSchema}
+                {...schema}
                 formData={formData}
                 onChange={this.handleDataChange}
                 onValidate={this.handleValidate}

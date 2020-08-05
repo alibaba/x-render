@@ -1,5 +1,5 @@
 {
-  "propsSchema": {
+  "schema": {
     "type": "object",
     "properties": {
       "string": {
@@ -87,6 +87,5 @@
     },
     "required": ["string4", "string5"]
   },
-  "uiSchema": {},
   "formData": {}
 }
