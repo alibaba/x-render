@@ -58,13 +58,13 @@ import FormRender from 'form-render/lib/antd';
 // import "@alifd/next/dist/next.min.css";
 // import FormRender from "form-render/lib/fusion";
 
-const propsSchema = {
+const schema = {
   type: 'object',
   properties: {
     string: {
       title: '字符串',
       type: 'string',
-      'ui:width': '50%', // uiSchema 可以合并到 propsSchema 中（推荐写法，书写便捷）
+      'ui:width': '50%', // uiSchema 可以合并到 schema 中（推荐写法，书写便捷）
     },
     select: {
       title: '单选',
@@ -97,7 +97,7 @@ function Demo() {
   return (
     <div style={{ padding: 60 }}>
       <FormRender
-        propsSchema={propsSchema}
+        schema={schema}
         uiSchema={uiSchema}
         formData={formData}
         onChange={setData}
@@ -116,8 +116,8 @@ ReactDOM.render(<Demo />, rootElement);
 
 | Prop             |     Type      | Required | Default  |                              Description                               |
 | ---------------- | :-----------: | :------: | :------: | :--------------------------------------------------------------------: |
-| **propsSchema**  |    Object     |    ✓     |    {}    |                           表单属性配置 json                            |
-| **uiSchema**     |    Object     |          |    {}    |              表单 UI 配置 json（可以合并到 propsSchema）               |
+| **schema**       |    Object     |    ✓     |    {}    |                           表单属性配置 json                            |
+| **uiSchema**     |    Object     |          |    {}    |                 表单 UI 配置 json（可以合并到 schema）                 |
 | **formData**     |    Object     |          |    {}    |                                配置数据                                |
 | **onChange**     |   Function    |    ✓     | () => {} |                            数据更改回调函数                            |
 | **onValidate**   |   Function    |          | () => {} |                            表单输入校验回调                            |

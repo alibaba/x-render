@@ -2,20 +2,83 @@
 order: 2
 group:
   title: 高级功能
+toc: false
 ---
 
 # 自定义组件
 
 当 form-render 提供的组件无法 100%满足用户需求时，可以考虑自己写一个。自定义组件功能使 form-render 拥有很好扩展性，可能的应用场景如下：
 
-1. 我需要写一个异步加载的搜索输入框（普适性不高/难以用 schema 描述的组件）
-2. 我们团队使用 xxx ui，与 antd/fusion 不搭，希望能适配一套 xxx ui 组件的 form-render（欢迎 Pull Request）
-3. 我需要在表单内部写一个 excel 上传按钮（完全定制化的需求）
+- 我需要写一个异步加载的搜索输入框（普适性不高/难以用 schema 描述的组件）
+- 我们团队使用 xxx ui，与 antd/fusion 不搭，希望能适配一套 xxx ui 组件的 form-render（欢迎 Pull Request）
+- 我需要在表单内部写一个 excel 上传按钮（完全定制化的需求）
 
 注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态
 
 ## 如何使用
 
+```jsx
+import React, { useState } from 'react';
+import { Input, Button } from 'antd';
+import FormRender from 'form-render/lib/antd';
+
+const schema = {
+  type: 'object',
+  properties: {
+    string: {
+      title: '网址',
+      type: 'string',
+      'ui:widget': 'siteInput',
+    },
+    select: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b', 'c'],
+      enumNames: ['选项1', '选项2', '选项3'],
+      'ui:widget': 'radio',
+    },
+  },
+};
+
+const SiteInput = ({ value, onChange, name }) => {
+  return (
+    <Input
+      addonBefore="http://"
+      addonAfter=".com"
+      value={value}
+      onChange={e => onChange(name, e.target.value)}
+    />
+  );
+};
+
+const Demo = () => {
+  const [formData, setFormData] = useState({});
+  const handleSubmit = () => {
+    alert(JSON.stringify(formData, null, 2));
+  };
+  return (
+    <div>
+      <FormRender
+        schema={schema}
+        formData={formData}
+        onChange={setFormData}
+        widgets={{
+          siteInput: SiteInput,
+        }}
+      />
+      <Button type="primary" onClick={handleSubmit}>
+        提交
+      </Button>
+    </div>
+  );
+};
+
+export default Demo;
+```
+
+- 如上例，可以使用内置的自定义组件，如`radio`、`checkboxes`。也可以真正写一个定制的组件并通过`widgets`这个 props 注册
+- 使用方法都是在 schema 中的对应元素里使用`ui:widget`字段指明使用的自定义组件
+- **注意**自定义组件的 `onChange`，接收的入参是`(name, value)`
 - 整体代码参考此 [CodeSandbox 案例](https://codesandbox.io/s/form-renderjichudemo-f55oy)
 
 ### 写自定义组件
@@ -40,24 +103,6 @@ group:
 
 简单的说，通过`title`、`description`、`default`、`ui:hidden`、`ui:disable` 和 `ui:readonly`等 schema 字段定义的值在`this.props`中可直接获得，剩下的字段也可以在`schema`（注意这个是组件对应的子 schema）中获得，比如`schema.type`。更多细节的入参，建议不要新添特殊字段，而统一放在`ui:options`这个对象中传递。
 
-例如一个简单的 checkbox 自定义组件
-
-```js
-// MyCheckbox.js
-import React from 'react';
-import Checkbox from '../Checkbox';
-
-export default function Checkbox({ name, value, onChange, options }) {
-  return (
-    <Checkbox
-      {...options}
-      onChange={e => onChange(name, e.target.checked)}
-      checked={value}
-    />
-  );
-}
-```
-
 ### 使用自定义组件
 
 自定义组件的使用方式非常简单。只需在顶层通过`widgets` props 注入即可：
@@ -66,8 +111,7 @@ export default function Checkbox({ name, value, onChange, options }) {
 import MyCheckbox from './path/to/MyCheckbox'
 ...
 <FormRender
-  propsSchema={propsSchema}
-  uiSchema={uiSchema}
+  schema={schema}
   formData={formData}
   onChange={this.onChange}
   onValidate={this.onValidate}
@@ -79,18 +123,15 @@ import MyCheckbox from './path/to/MyCheckbox'
 然后即可在 schema 中通过`ui:widget`参数使用：
 
 ```json
-// propsSchema
+// schema
 "myWidget": {
   "title": "自定义checkbox",
-  "type": "boolean"
-},
-// uiSchema
-"myWidget": {
+  "type": "boolean",
   "ui:widget": "myBox",
   "ui:options": {
     "defaultChecked": true
   }
-},
+}
 ```
 
 ## mapping 的使用：如何让自定义组件作为默认？

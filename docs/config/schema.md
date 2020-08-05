@@ -6,22 +6,22 @@ nav:
 toc: menu
 ---
 
-# propsSchema
+# Schema
 
 ### 概述
 
-- `propsSchema` 是 FormRender 的必填 props，用于描述表单的基本信息、结构和校验。
-- `propsSchema`遵从和使用了`JSON Schema`的约定规范。已经接入`JSON Schema`标准的团队可以几乎无缝接入`form-render`。`JSON Schema`是一个约定了可用的结构和字段的特殊 json，作为国际标准，主要应用于校验 JSON 数据
-- 在少数写法抉择上`propsSchema`并未完全遵守`JSON Schema`，目前主要两个区别：
+- `schema` 是 FormRender 的必填 props，用于描述表单的基本信息、结构和校验。
+- `schema`遵从和使用了`JSON Schema`的约定规范。已经接入`JSON Schema`标准的团队可以几乎无缝接入`form-render`。`JSON Schema`是一个约定了可用的结构和字段的特殊 json，作为国际标准，主要应用于校验 JSON 数据
+- 在少数写法抉择上`schema`并未完全遵守`JSON Schema`，目前主要两个区别：
 
   - 引入了新类型`range`
   - 使用字段 `enumNames`，用于描述下拉单选的选项文案（enumNames 曾经是 JSON Schema 的 draft 提案，但最后被否绝了）
-  - 这是权衡各类用户使用便利性的结果。毕竟`JSON Schema`是为了校验数据而生的，与表单的场景的侧重点是不尽相同的。当然`propsSchema`规范坚守的原则是对于使用`JSON Schema`标准的用户做到 schema 不改一字快速接入
+  - 这是权衡各类用户使用便利性的结果。毕竟`JSON Schema`是为了校验数据而生的，与表单的场景的侧重点是不尽相同的。当然`schema`规范坚守的原则是对于使用`JSON Schema`标准的用户做到不改一字快速接入
 
 - 通过 `JSON Schema` 里的字段可以描述表单的标题、描述、类型、必须项、自定义正则校验等信息。想深入了解的同学，<a href="https://json-schema.org/understanding-json-schema/" target="_blank">Understanding JSON Schema</a>是笔者认为最好的学习文档，同时也可去 <a href="https://alibaba.github.io/form-render/docs/demo/index.html" target="_blank">FormRender Playground</a> 折腾
 - 虽然这里我们只以 json 格式为例，但 javascript object 作为入参完全可以
 
-一个基础的 propsSchema 如下：
+一个基础的 schema 如下：
 
 ```json
 {
@@ -35,7 +35,7 @@ toc: menu
 }
 ```
 
-描述了一个 object 结构，其第一个属性为数字类型。最外层约定为 object 结构，所有 propsSchema 都需要如是写。
+描述了一个 object 结构，其第一个属性为数字类型。最外层约定为 object 结构，所有 schema 都需要如是写。
 
 ### 通用参数
 

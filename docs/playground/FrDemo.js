@@ -16,11 +16,9 @@ class Demo extends React.Component {
 
   render() {
     const { formData } = this.state;
-    const { propsSchema, uiSchema } = SCHEMA;
     return (
       <FormRender
-        propsSchema={propsSchema}
-        uiSchema={uiSchema}
+        {...SCHEMA}
         formData={formData}
         onChange={this.onChange}
         onValidate={this.onValidate}

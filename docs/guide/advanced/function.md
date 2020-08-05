@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 2
 group:
   title: 高级功能
 ---
@@ -21,54 +21,82 @@ group:
 | formData  | 整个 form 的值 （最常用，当两个关联组件距离较远时，可以从顶层的 formData 里获取） |
 | rootValue |        父组件的值 （比较常用，上一级的值，方便从中能获取所有兄弟组件的值）        |
 
-使用方式如下
+### 使用方式
 
-```js
-{
-  propsSchema: {
-    type: "object",
-    properties: {
-      select: {
-        title: "单选",
-        type: "string",
-        enum: () => ["a", "b", "c"],
-        "ui:disabled": (formData, rootValue) => rootValue.input1.length > 5
-      },
-      input1: {
-        title: "输入框",
-        type: "string",
-        "ui:hidden": (formData, rootValue) => formData.select === "b"
-      }
-    }
-  }
-}
+1. 直接写函数
+
+```jsx
+import React, { useState } from 'react';
+import FormRender from 'form-render/lib/antd';
+
+const schema = {
+  type: 'object',
+  properties: {
+    select: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b'],
+      enumNames: () => ['显示输入框', '隐藏输入框'],
+      'ui:disabled': (formData, rootValue) => rootValue.input1.length > 5,
+      'ui:widget': 'radio',
+    },
+    input1: {
+      title: '输入框',
+      description: '尝试输入超过5个字符',
+      type: 'string',
+      'ui:hidden': (formData, rootValue) => formData.select === 'b',
+    },
+  },
+};
+
+const Demo1 = () => {
+  const [formData, setFormData] = useState({});
+  return (
+    <FormRender schema={schema} formData={formData} onChange={setFormData} />
+  );
+};
+
+export default Demo1;
 ```
 
-如果 schema 需要通过服务端传递，不得不使用 JSON 形式呢？这样就无法使用函数解析式作为属性的值了，此时，form-render 提供了以`{{}}`包含的字段表达函数：
+2. 写模板字符串
 
-```js
-{
-  propsSchema: {
-    type: "object",
-    properties: {
-      select: {
-        title: "单选",
-        type: "string",
-        enum: () => ["a", "b", "c"],
-        "ui:disabled": "{{rootValue.input1.length > 5}}"
-      },
-      input1: {
-        title: "输入框",
-        type: "string",
-        "ui:hidden": "{{formData.select === 'b'}}"
-      }
-    }
-  }
-}
+```jsx
+import React, { useState } from 'react';
+import FormRender from 'form-render/lib/antd';
+
+const schema = {
+  type: 'object',
+  properties: {
+    select: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b'],
+      enumNames: '{{["显示输入框", "隐藏输入框"]}}',
+      'ui:disabled': '{{rootValue.input1.length > 5}}',
+      'ui:widget': 'radio',
+    },
+    input1: {
+      title: '输入框',
+      description: '尝试输入超过5个字符',
+      type: 'string',
+      'ui:hidden': '{{formData.select === "b"}}',
+    },
+  },
+};
+
+const Demo1 = () => {
+  const [formData, setFormData] = useState({});
+  return (
+    <FormRender schema={schema} formData={formData} onChange={setFormData} />
+  );
+};
+
+export default Demo1;
 ```
 
-form-render 以`{{}}`作为提示符，将其包含的字符串作为函数解析并返回运算结果。与函数相同，这段字符串可调用 `formData` 和 `rootValue` 两个参数。
+如果 schema 需要通过服务端传递的 JSON 数据，就无法使用函数解析式作为字段的值了，所以 form-render 提供了以`{{}}`包含的字段表达函数。与函数相同，这段字符串可直接调用 `formData` 和 `rootValue` 这两个参数。
 
-注：在上一个版本我们使用`@`作为函数表达式的提示符，现在仍然兼容，但往后推荐用`{{}}`。主要原因是 1. `{{}}`作为表达式提示符在广大模板引擎里已经是默认，2. `@`可能真实会被用于字符串输入内容，产生误解析。
+### 最后
 
-更复杂和定制化的表单需求建议使用自定义组件。form-render 的设计理念非常推崇组件的即插即用，详见[自定义组件](docs/widget)章节。
+更复杂和定制化的表单需求建议使用自定义组件。form-render 的设计理念非常推崇组件的即插即用，详见[自定义组件](/guide/advanced/widget)章节。

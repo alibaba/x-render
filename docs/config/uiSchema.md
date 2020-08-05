@@ -18,11 +18,11 @@ toc: menu
 ### 使用规范
 
 - uiSchema 里所有的字段都以 `ui:` 开始，如 `ui:widget`。
-- 为了满足各用户的使用偏好，uiSchema 可以单独书写，也可以完全归并到 propsSchema，例如：
+- 为了满足各用户的使用偏好，uiSchema 可以单独书写，也可以完全归并到 schema，例如：
 
 ```json
 {
-  "propsSchema": {
+  "schema": {
     "type": "object",
     "properties": {
       "string": {
@@ -43,7 +43,7 @@ toc: menu
 
 ```json
 {
-  "propsSchema": {
+  "schema": {
     "type": "object",
     "properties": {
       "string": {
@@ -56,9 +56,9 @@ toc: menu
 }
 ```
 
-事实上 form-render 内部处理 schema 时第一件事就是将 propsSchema 和 uiSchema 合并，所以上述两种 schema 的渲染效果是一致的。前者适用于遵循 json schema 的团队无缝接入，后者在书写上更为高效。
+事实上 form-render 内部处理协议时第一件事就是将 schema 和 uiSchema 合并，所以上述两种协议的渲染效果是一致的。前者适用于遵循 json schema 的团队无缝接入，后者在书写上更为高效，推荐大多数用户使用。
 
-### 覆盖 propSchema 中表单项对应的默认 UI Widget
+### 覆盖 schema 中表单项对应的默认 UI Widget
 
 | 类型   |            type            | 默认 widget | 其他支持 widget(备注) |
 | ------ | :------------------------: | :---------: | :-------------------: |
@@ -119,12 +119,12 @@ toc: menu
 }
 ```
 
-如果使用如上函数表达式，age 组件将在 agree 组件的值为 false 且 personType 组件不等于 2 时隐藏。其中`formData`指向整个表单值，`rootValue`指向对应组件的父级元素值。函数表达式的详细写法见[如何联动](docs/function)
+如果使用如上函数表达式，age 组件将在 agree 组件的值为 false 且 personType 组件不等于 2 时隐藏。其中`formData`指向整个表单值，`rootValue`指向对应组件的父级元素值。函数表达式的详细写法见[如何联动](/guide/advanced/function)
 
 - `ui:className`：添加组件 root 元素的 className（和 fr-field 这个 className 在同级），用于自定义单独组件的样式
 - `ui:width`：单个基础组件的长度，建议使用百分比例如`"ui:width":"50%"`。
 
-### 特定表单元素的 UI 配置（一律使用`ui:options`）
+### ui:options 配置
 
 `ui:options` 里存放特定元素的特定配置。例如`textarea`的`rows`
 
@@ -229,7 +229,7 @@ window.copyMe = (list, index) => {
 };
 ```
 
-### 如何编写 uiSchema 设置
+### 一个样例
 
 ```json
 {

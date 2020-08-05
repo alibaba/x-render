@@ -1,18 +1,15 @@
 ---
 order: 2
-group:
-  title: form-render 的理念
-  order: 1
 ---
 
 # 为什么造轮子
 
-#### 为什么也用 JSON Schema
+### 为什么也用 JSON Schema
 
 - 因为这是现有的一个标准规范，可以用它来描述 JSON 属性结构，所以其实现阶段来描述表单结构信息几乎都是这个，是一种关系表示协议，很像我们平时用 JSON 来表示我们的接口数据一样，后续有计划利用 JSON Schema 做其他场景的渲染引擎
 - FormRender 更多的是内部的 filed 处理和类型嵌套、无限遍历、支持跨组件体系这一块才是比较麻烦地方
 
-#### 不用 react-jsonschema-form 的原因？
+### 不用 react-jsonschema-form 的原因？
 
 1. UI 选择：它以 Bootstrap 这一套来做的 UI，目前阿里这边大部分中后台依托于 fusion 或者 antd ，定制 antd 样式开始我也以为很好弄，其实是很麻烦的，Bootstrap 引入其实必要性不大，而且 Mozilla 官方 issue 表示只会考虑这个
 
@@ -20,7 +17,7 @@ group:
 
 3. 体验提升方面：有些场景比如图片预览/上传、列表拖拽排序、正则校验、嵌套展示方面这边场景很需要，但...
 
-#### 出于什么点来做的 FormRender ？
+### 出于什么点来做的 FormRender ？
 
 1. 当时还尝试了不少方案，几乎都试了一个遍，包括阿里内部的一些解决方案，都比较难达到现有的效果和满足 JSON Schema 规范协议
 

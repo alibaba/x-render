@@ -16,21 +16,19 @@ const Demo = ({ schema = {} }) => {
     setValid(_valid);
   };
 
-  const toggle = () => setReadOnly(o => !o);
+  // const toggle = () => setReadOnly(o => !o);
 
-  const submit = () => {
-    console.log(valid);
-    console.log(formData);
-  };
+  // const submit = () => {
+  //   console.log(valid);
+  //   console.log(formData);
+  // };
 
-  const { propsSchema, uiSchema } = schema;
   return (
     <div style={{ maxWidth: 800 }}>
       {/* <button onClick={toggle}>readOnly</button> */}
       {/* <button onClick={submit}>click</button> */}
       <FormRender
-        propsSchema={propsSchema}
-        uiSchema={uiSchema}
+        {...schema}
         formData={formData}
         onChange={setFormData}
         displayType="row"

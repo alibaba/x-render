@@ -1,35 +1,16 @@
 ---
 order: 1
+group:
+  order: 1
+  title: form-render 的理念
 toc: menu
 ---
+
+<code src='./reset.jsx' className='hidden' />
 
 # 理念
 
 做 form 设计和渲染的库和解法非常多，因为这里确实很痛。大家都想找一个省去重复劳动的解决方案，同时大家又都怀着千人千面的现实需求，这其实是一个“被诅咒的问题”：要便于使用就要减少配置量，要自由定制就要增加配置量。这样的问题硬解是解不来的，我们在不断的对接各种业务平台、不断的摸索中通过取舍、限制和牺牲，换来一个即便于使用，也支持定制的方案，一个我们自己愿意使用的方案：
-
-```jsx
-import React from 'react';
-import { Select } from 'antd';
-const { Option } = Select;
-
-const Demo = () => {
-  function handleChange(value) {
-    console.log(`selected ${value}`);
-  }
-  return (
-    <Select defaultValue="lucy" style={{ width: 120 }} onChange={handleChange}>
-      <Option value="jack">Jack</Option>
-      <Option value="lucy">Lucy</Option>
-      <Option value="disabled" disabled>
-        Disabled
-      </Option>
-      <Option value="Yiminghe">yiminghe</Option>
-    </Select>
-  );
-};
-
-export default Demo;
-```
 
 ### 极简 api
 
@@ -73,7 +54,9 @@ const schema = {
 
 const Demo1 = () => {
   const [formData, setFormData] = useState({});
-  return <FormRender schema={schema} formData={formData} onChange={() => {}} />;
+  return (
+    <FormRender schema={schema} formData={formData} onChange={setFormData} />
+  );
 };
 
 export default Demo1;
@@ -145,14 +128,14 @@ const Demo2 = () => {
 export default Demo2;
 ```
 
-### 协议（schema）设计
+### 规范协议
 
 协议设计上我们的理念是
 
 - 不去自创一套，在现有的基础上扩展
 - 扩展的规则简单，让用户易于记住
 
-很多第一次的用户会问，为啥协议（schema）设计得这么复杂呢（其实还好吧）？
+很多第一次的用户会问，为啥协议（schema）设计得这么复杂呢？
 
 ```json
 {
@@ -194,11 +177,11 @@ export default Demo2;
 ];
 ```
 
-在 schema 的设计上，我们寻求的是一个合适的现有标准作为载体在其上适度扩展，而不是自己起一套新标准。所以最后选择了[JSON schema](https://json-schema.org/understanding-json-schema/)这个国际标准。我们的设计如下：
+在 schema 的设计上，我们寻求一个合适的现有标准作为载体在其上适度扩展，尽量不自己起一套新标准。所以最后选择了[JSON schema](https://json-schema.org/understanding-json-schema/)这个国际公认标准，并在此基础上添加几条简单约定，满足表单 UI 更丰富表达：
 
-1. JSON schema 基本上是 form-render 的 schema 的一个子集
-2. 所有有别于 JSON schema 的扩展的字段，都用 `ui:` 开头
-3. 所有表单元素都有的 ui 属性各给一个独立字段，例如`ui:disabled`
-4. 特定表单元素用的到的 ui 属性统一存放在 `ui:options`
+1. `JSON schema` 是 form-render 的 schema 的一个子集，可以无缝接入
+2. 有别于 JSON schema 的扩展的字段，都用 `ui:` 开头
+3. 所有表单元素都有的 ui 属性各给一个独立字段，例如`ui:disabled`、`ui:hidden`
+4. 只有某些表单元素用的到的 ui 属性统一存放在 `ui:options`，详见[uiSchema 配置](/config/ui-schema)
 
 随着[form-render 表单设计器](https://form-render.github.io/schema-generator/)的接入，协议层对于用户已经可看做实现细节，通过表单设计器，大伙可以轻松搭建表单，生成对应 schema

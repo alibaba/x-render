@@ -1,4 +1,11 @@
-# 如何在 TypeScript 中使用 form-render
+---
+order: 3
+nav:
+  order: 1
+  title: 教程
+---
+
+# 在 TypeScript 中使用
 
 在 typescript 中使用直接引入 from-render，会报以下错误：
 
@@ -41,9 +48,10 @@ Could not find a declaration file for module 'form-render/lib/antd'. '/Users/nas
    declare module 'form-render/lib/antd' {
      import React from 'react';
      export interface FRProps {
-       propsSchema: object;
+       schema: object;
        formData: object;
        onChange(data?: object): void;
+       onMount(data?: object): void;
        name?: string;
        column?: number;
        uiSchema?: object;

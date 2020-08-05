@@ -9,7 +9,7 @@ hero:
     - text: 表单设计器
       link: https://form-render.github.io/schema-generator/
     - text: 开始使用
-      link: /guide
+      link: /guide/getting-started
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
     title: Feature 1

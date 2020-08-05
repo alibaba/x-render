@@ -5,7 +5,7 @@ const insertTextRules =
   monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet;
 
 export const initialValue = `{
-  "propsSchema": {
+  "schema": {
     "type": "object",
     "properties": {
       
@@ -24,7 +24,7 @@ export const suggestions = [
   {
     label: 'fr-init',
     insertText: `{
-  "propsSchema": {
+  "schema": {
     "type": "object",
     "properties": {
       $0

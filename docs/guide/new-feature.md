@@ -1,5 +1,5 @@
 ---
-title: 新功能
+title: 新功能展示
 order: 2
 nav:
   order: 1
