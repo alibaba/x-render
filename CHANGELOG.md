@@ -1,5 +1,12 @@
 # Change Log
 
+### 0.7.2
+
+- [+] input/textarea 有 maxLength 属性时，展示字数长度的提示 ([#127](https://github.com/alibaba/form-render/issues/127))
+- [+] `"ui:options"/buttons` 支持 组件库的 button props 扩展。在按钮较多场景时，用户希望有重点的弱化或者强化部分按钮 ([#122](https://github.com/alibaba/form-render/issues/122))
+- [!] 校验失败的文字框的 box-shadow 展示正确淡红色（而不是以前的浅蓝）
+- [!] 当多选 checkbox 折行时，保持展示对齐（antd/fusion）([#125](https://github.com/alibaba/form-render/issues/125))
+
 ### 0.7.0
 
 - [!] 文档大幅度翻新，构建发布流切换到 dumi、father
@@ -29,6 +36,8 @@
       "modal": true
     }
   }
+  ```
+
 ```
 
 - [+] 添加 color 组件对 opacity 的支持
@@ -206,3 +215,4 @@
 ### 0.1.0
 
 - [+] 对外开源的第一个版本
+```

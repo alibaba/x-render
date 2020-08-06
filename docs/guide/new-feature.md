@@ -9,7 +9,18 @@ toc: menu
 
 # 新功能
 
-## maxLength
+<!-- ```jsx
+import React from 'react';
+import FR from '../demo/FR2/index.jsx';
+import json from '../demo/new-feature/test.json';
+
+export default () => <FR schema={json} />;
+``` -->
+
+## 0.7.2
+
+1. `maxLength` 展示字数提示
+2. `"ui:options"/ buttons` 支持所有 antd/fusion 的 button 的 props
 
 ```jsx
 import React from 'react';
