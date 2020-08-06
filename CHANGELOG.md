@@ -22,13 +22,13 @@
 - [!] 解决 css 覆盖问题
 - [+] 复杂结构支持单独放置在弹层（modal/drawer）中，目前支持 type 为 object 和 list，配置方式是在 schema 中添加
 
-```json
-{
-  ...
-  "ui:options": {
-    "modal": true
+  ```json
+  {
+    ...
+    "ui:options": {
+      "modal": true
+    }
   }
-}
 ```
 
 - [+] 添加 color 组件对 opacity 的支持
@@ -37,7 +37,9 @@
 ### 0.5.6
 
 - [+] 添加 html 元素渲染的支持，使用 `default` 或 `formData` 属性传入 html 的字符串（可以是纯字符串，作为 div 渲染），见在线 demo（新功能）
+
   <img src="https://img.alicdn.com/tfs/TB18ug4XTM11u4jSZPxXXahcXXa-571-190.jpg" width="500px" />
+
 - [!] object/array 的`disabled`属性现在回传递到所有的子元素（方便区块的表单置灰）
 - [!] 修复从外部传入 `formData` 顺序与 schema 不同时，表单会按照 formData 的顺序渲染。现在能始终按照 schema 顺序渲染
 - [!] 修复 onChange 在首次渲染时会触发两次的问题
@@ -52,18 +54,26 @@
 - [+] 很多同学反馈列表展示需要一个序号。新版默认会添加序号，并可以使用`hideIndex`属性关闭恢复到旧的无序号展示（[84](https://github.com/alibaba/form-render/issues/84)）
 - [!] 解决了异步传入数据时，表单刷新无效的 bug
 - [!] 折叠的列表的展示更加优雅
+
   <img src="https://img.alicdn.com/tfs/TB1INDcCxD1gK0jSZFKXXcJrVXa-1466-866.png" width="500" />
+
 - [!][breaking] 使用 antd 的 UI 时，列表 schema 的`ui:buttons`和`ui:itemButtons`属性里使用的 icon 的名称一律统一到 antd v4 的 icon 名称。详见[antd 文档-icon](https://ant.design/components/icon/)。旧用户如果有添加自定义按钮，那么图标的字段需要修改成新版名称，否则图标不会展示（并不影响使用）。这个决定出于两个原因：1. 新用户使用 icon 时不应该去翻找旧版 antd 的文档；2. antd 升级 4 后向前的兼容并不理想。
 - [!] schema 的 type 写错时，确保页面仍能展示并给出报错
+
   <img src="https://img.alicdn.com/tfs/TB1anq2CpT7gK0jSZFpXXaTkpXa-1916-214.png" width="500" />
+
 - [!] switch 组件 label 展示恢复到左侧，与 checkbox 类区分。
+
   <img src="https://img.alicdn.com/tfs/TB1xXndCxv1gK0jSZFFXXb0sXXa-518-158.png" width="200" />
 
 ### 0.5.3
 
 - [+] 新增了 `useLogger` 的全局 props。`useLogger={true}` 时，每当用户填写表单时，在 console 里的展示类似如下：
+
   <img src="https://img.alicdn.com/tfs/TB11rt_AbY1gK0jSZTEXXXDQVXa-1336-468.jpg" width="500" />
+
   自下向上一层层展示用户触发的 formData 变化，便于开发者快速定位问题。
+
 - [+] 列表新增 `ui:options` 字段 `itemButtons`, 用于添加每个 item 的操作按钮（默认是一个删除按钮）。具体使用方式参见文档 ui-schema。
 - [!] 扩大了列表的收缩按钮的点击面积
 - [!] 修复了 checkbox 在多列展示下文字和框没有对齐的样式 bug
@@ -97,7 +107,9 @@
 ### 0.4.4
 
 - [+] 发布了 schema 书写利器 `form-render snippets`（vscode 插件），在 vscode 商店中搜索“formrender”
+
   <img src="https://img.alicdn.com/tfs/TB1VIfBqWL7gK0jSZFBXXXZZpXa-1976-1464.png" width="400" />
+
 - [+] 添加了 typescript 如何使用 form-render 的说明文档 ([#46](https://github.com/alibaba/form-render/issues/46)/[#44](https://github.com/alibaba/form-render/issues/44))
 - [+] 为了属性的规范化，列表组件添加了`"ui:options"`/`"buttons"` 属性, buttons 的 callback 可调用参数 value 和 onChange，便于直接操作当前数组，详见文档
 - [!] json 里书写函数表达式现在推荐使用 `"{{...}}"` 的方式，同时继续兼容 `"@..."`
