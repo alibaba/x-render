@@ -3,8 +3,6 @@ order: 1
 toc: menu
 ---
 
-<code src='./reset.jsx' className='hidden' />
-
 # 理念
 
 做 form 设计和渲染的库和解法非常多，因为这里确实很痛。大家都想找一个省去重复劳动的解决方案，同时大家又都怀着千人千面的现实需求，这其实是一个“被诅咒的问题”：要便于使用就要减少配置量，要自由定制就要增加配置量。这样的问题硬解是解不来的，我们在不断的对接各种业务平台、不断的摸索中通过取舍、限制和牺牲，换来一个即便于使用，也支持定制的方案，一个我们自己愿意使用的方案：
@@ -182,3 +180,5 @@ export default Demo2;
 4. 只有某些表单元素用的到的 ui 属性统一存放在 `ui:options`，详见[uiSchema 配置](/config/ui-schema)
 
 随着[form-render 表单设计器](https://form-render.github.io/schema-generator/)的接入，协议层对于用户已经可看做实现细节，通过表单设计器，大伙可以轻松搭建表单，生成对应 schema
+
+<code src='./reset.jsx' className='hidden' />

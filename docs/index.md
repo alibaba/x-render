@@ -21,8 +21,6 @@ features:
 footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
 ---
 
-<code src='./playground/index.jsx' className='hidden' />
-
 ## 安装
 
 ```shell
@@ -80,3 +78,5 @@ export default Demo;
 请访问 [github](https://github.com/alibaba/form-render) 或加入讨论群：
 
 <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="240">
+
+<code src='./playground/index.jsx' className='hidden' />
