@@ -1,0 +1,284 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "modal": {
+        "title": "弹层隐藏部分配置",
+        "description": "目前支持modal/drawer",
+        "type": "object",
+        "properties": {
+          "obj1": {
+            "title": "object + modal",
+            "type": "object",
+            "ui:options": {
+              "modal": true
+            },
+            "properties": {
+              "input1": {
+                "title": "输入框1",
+                "type": "string"
+              },
+              "input2": {
+                "title": "输入框2",
+                "type": "string"
+              }
+            }
+          },
+          "list1": {
+            "title": "list + modal",
+            "type": "array",
+            "ui:options": {
+              "modal": {
+                "text": "配置完全参考antd/fusion文档",
+                "mask": false,
+                "width": 400
+              }
+            },
+            "items": {
+              "type": "object",
+              "properties": {
+                "input1": {
+                  "title": "输入框1",
+                  "type": "string"
+                },
+                "input2": {
+                  "title": "输入框2",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "list3": {
+            "title": "list套list",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "input1": {
+                  "title": "简单输入框",
+                  "type": "string"
+                },
+                "list4": {
+                  "title": "数组",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "input1": {
+                        "title": "输入框1",
+                        "type": "string"
+                      },
+                      "input2": {
+                        "title": "输入框2",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "ui:options": {
+                    "drawer": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "html": {
+        "title": "html元素的使用",
+        "type": "object",
+        "properties": {
+          "html1": {
+            "title": "纯字符串",
+            "type": "html",
+            "default": "hello world"
+          },
+          "html2": {
+            "title": "使用formData",
+            "type": "html",
+            "default": "hello world"
+          },
+          "input": {
+            "title": "放在尾部",
+            "type": "string",
+            "ui:width": "70%"
+          },
+          "html3": {
+            "type": "html",
+            "default": "<a>注意事项</a>",
+            "ui:width": "30%"
+          }
+        }
+      },
+      "customItemButtons": {
+        "title": "数组item自定义button",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "a": {
+              "title": "简单输入框",
+              "type": "string"
+            },
+            "b": {
+              "title": "是否判断",
+              "type": "boolean"
+            },
+            "c": {
+              "title": "开关",
+              "type": "boolean",
+              "ui:widget": "switch"
+            }
+          }
+        },
+        "default": [{ "a": "happy", "b": false, "c": false }, {}],
+        "ui:options": {
+          "foldable": true,
+          "itemButtons": [
+            {
+              "text": "复制",
+              "icon": "UpCircleOutlined",
+              "callback": "copyMe"
+            }
+          ]
+        }
+      },
+      "labelDemo": {
+        "title": "标签长度自定义",
+        "description": "在object上定义labelWidth会影响所有子元素",
+        "type": "object",
+        "ui:labelWidth": 200,
+        "properties": {
+          "inputName": {
+            "title": "简单输入框",
+            "type": "string"
+          },
+          "dateName": {
+            "title": "时间选择",
+            "type": "string",
+            "format": "date"
+          },
+          "colorName": {
+            "title": "颜色选择",
+            "type": "string",
+            "format": "color",
+            "ui:labelWidth": 80
+          }
+        }
+      },
+      "objectName": {
+        "title": "对象",
+        "description": "这是一个对象类型",
+        "type": "object",
+        "properties": {
+          "inputDemo": {
+            "title": "前后缀",
+            "type": "string",
+            "pattern": "^[A-Za-z0-9]+$",
+            "message": {
+              "pattern": "请输入正确格式"
+            },
+            "ui:width": "50%",
+            "ui:options": {
+              "addonBefore": "画布长度",
+              "addonAfter": "px"
+            }
+          },
+          "numberDemo": {
+            "title": "数字",
+            "description": "数字输入框",
+            "type": "number",
+            "min": 10,
+            "max": 100,
+            "step": 10,
+            "ui:width": "50%",
+            "ui:widget": "slider"
+          },
+          "dateRange": {
+            "title": "日期范围",
+            "type": "range",
+            "format": "dateTime",
+            "ui:options": {
+              "placeholder": ["开始", "结束"]
+            }
+          }
+        }
+      },
+      "customizedWidgets": {
+        "title": "自定义组件",
+        "type": "object",
+        "properties": {
+          "asyncSelect": {
+            "title": "异步加载的下拉框",
+            "type": "string",
+            "ui:labelWidth": 130,
+            "ui:widget": "asyncSelect",
+            "ui:options": {
+              "placeholder": "搜索淘宝商品"
+            }
+          }
+        }
+      },
+      "complexArray": {
+        "title": "复杂结构数组",
+        "description": "数组item中含有数组等",
+        "type": "array",
+        "ui:options": {
+          "foldable": true,
+          "hideIndex": true
+        },
+        "items": {
+          "type": "object",
+          "properties": {
+            "age": {
+              "title": "填写年龄",
+              "type": "number",
+              "ui:hidden": "{{rootValue.movieType === 'a' || rootValue.movieType === 'c'}}"
+            },
+            "movieType": {
+              "title": "短片类型",
+              "type": "string",
+              "enum": ["a", "b", "c"],
+              "enumNames": ["教育", "恐怖", "故事"]
+            },
+            "movieList": {
+              "title": "电影列表",
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "movieName": {
+                    "title": "电影名",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "when": {
+              "title": "何时观看",
+              "description": "多选",
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "enum": ["A", "B", "C", "D"],
+              "enumNames": ["早上", "中午", "下午", "晚上"]
+            }
+          },
+          "required": ["age"]
+        }
+      }
+    }
+  },
+  "formData": {
+    "html": {
+      "html2": "hello from <span style='color: red'>formData</span>!"
+    },
+    "complexArray": [
+      {
+        "age": "",
+        "movieType": "b",
+        "movieList": []
+      }
+    ]
+  }
+}

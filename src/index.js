@@ -6,8 +6,8 @@ import { asField, DefaultFieldUI } from './base/asField';
 import parse from './base/parser';
 import resolve from './base/resolve';
 import { getValidateList } from './base/validate';
-import '../atom.css';
-import '../index.css';
+import './atom.css';
+import './index.css';
 
 function renderField(settings, fields, events) {
   const { Field, props } = parse(settings, fields);
@@ -34,7 +34,8 @@ const Wrapper = ({
   showValidate,
   ...rest
 }) => {
-  const _schema = schema ? schema : combineSchema(propsSchema, uiSchema);
+  const jsonSchema = schema || propsSchema; // 兼容schema字段和propsSchema字段
+  const _schema = combineSchema(jsonSchema, uiSchema);
 
   return (
     <FormRender

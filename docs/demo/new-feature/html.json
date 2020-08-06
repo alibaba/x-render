@@ -1,0 +1,38 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "html": {
+        "title": "html元素的使用",
+        "type": "object",
+        "properties": {
+          "html1": {
+            "title": "纯字符串",
+            "type": "html",
+            "default": "hello world"
+          },
+          "html2": {
+            "title": "使用formData",
+            "type": "html",
+            "default": "hello world"
+          },
+          "input": {
+            "title": "放在尾部",
+            "type": "string",
+            "ui:width": "70%"
+          },
+          "html3": {
+            "type": "html",
+            "default": "<a>注意事项</a>",
+            "ui:width": "30%"
+          }
+        }
+      }
+    }
+  },
+  "formData": {
+    "html": {
+      "html2": "hello from <span style='color: red'>formData</span>!"
+    }
+  }
+}

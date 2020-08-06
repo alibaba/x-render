@@ -1,5 +1,14 @@
+---
+order: 1
+title: 开始使用
+nav:
+  order: 1
+  title: 教程
+toc: menu
+---
+
 <a href="https://alibaba.github.io/form-render/">
-    <img width="146" src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
+  <img width="146" src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
 </a>
 
 # FormRender
@@ -16,8 +25,9 @@
 ## 了解
 
 - <a href="/guide/design/what">设计理念</a>
-- <a href="https://form-render.github.io/schema-generator/" target="_blank">schema 编辑器</a>
+- <a href="https://form-render.github.io/schema-generator/" target="_blank">Schema 编辑器</a>
 - <a href="/_demos/index" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
+- <a href="/guide/others/faq">Typescript 支持</a>
 - <a href="/guide/others/used-by">常见场景</a>
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
@@ -140,7 +150,7 @@ export default Demo;
 
 - vscode 插件：快速准确书写 schema 一直是使用者的痛点，为此我们准备了 schema 书写利器： `form-render snippets`（vscode 插件），在 vscode 商店输入 ‘formrender’
 
-- 支持 TypeScript：详见[如何在 TypeScript 项目中使用](docs/typescript)
+- 支持 TypeScript：详见[如何在 TypeScript 项目中使用](/guide/others/faq)
 
 - **支持 Ant Design 自定义主题不被覆盖**
 
@@ -177,16 +187,3 @@ export default Demo;
 - 加入钉钉聊天群帮忙解答使用问题
 
   <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="240">
-
-## 贡献
-
-想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)
-
-感谢给 FormRender 贡献代码的你们，以及 JetBrains 提供 Free 使用！
-
-<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false"/></a><a href="https://www.jetbrains.com/?from=form-render"><img src="https://img.alicdn.com/tfs/TB1gPDDJKL2gK0jSZFmXXc7iXXa-2000-2168.png" width="100px" /></a>
-
-## 协议
-
-- 遵循 MIT 协议
-- 请自由地享受和参与开源

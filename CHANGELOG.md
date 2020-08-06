@@ -1,9 +1,36 @@
 # Change Log
 
+### 0.7.0
+
+- [!] 文档大幅度翻新，构建发布流切换到 dumi、father
+- [!] 使用 schema 字段替换 propsSchema 字段，因为后者太长且意义不明（目前保持兼容）
+
+### 0.6.2
+
+- [!] fusion 侧再也不需用户手动引入 css。~~`import "@alifd/next/dist/next.min.css";`~~
+
+### 0.6.1
+
+- [!] ui:button 的 callback 的入参从（value, onChange, newItem）变为 （value, onChange, schema, newItem）
+- [!] modal/drawer list 类数据，在配置按钮旁显示（xx 条数据）
+- [!] modal 添加确定按钮，给使用者一个配置成功的感受
+- [!] 修复了 fusion 下 modal 的 2 个展示瑕疵
+- [!] 在“新功能”添加新的 modal 样例
+
 ### 0.6.0
 
-- [+] 解决 css 覆盖问题
-- [+] 复杂结构支持单独放置在弹层（modal）
+- [!] 解决 css 覆盖问题
+- [+] 复杂结构支持单独放置在弹层（modal/drawer）中，目前支持 type 为 object 和 list，配置方式是在 schema 中添加
+
+  ```json
+  {
+    ...
+    "ui:options": {
+      "modal": true
+    }
+  }
+```
+
 - [+] 添加 color 组件对 opacity 的支持
 - [+] 开放 antd 的 ConfigProvider 给用户配置
 

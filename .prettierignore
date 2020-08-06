@@ -1,7 +1,7 @@
-*.bundle.js
-*.min.js
-dist
-docs/dist
-lib
-node_modules
-atom.css
+**/*.svg
+**/*.ejs
+**/*.html
+package.json
+.umi
+.umi-production
+.umi-test

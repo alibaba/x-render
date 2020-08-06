@@ -40,7 +40,8 @@ function FrButton({ icon, children, ...rest }) {
 const List = listHoc(FrButton);
 
 const ListWithModal = props => {
-  const { options, schema } = props || {};
+  const { options, schema, value } = props || {};
+  const arrLength = (value && value.length) || 0;
   const [show, setShow] = useState(false);
   const toggle = () => setShow(o => !o);
   if (options && options.modal) {
@@ -51,11 +52,13 @@ const ListWithModal = props => {
         <a className="pointer" onClick={toggle}>
           {text && typeof text === 'string' ? '+ ' + text : '+ 配置'}
         </a>
+        <span>（{arrLength}条数据）</span>
         <Modal
           title={(schema && schema.title) || '子配置'}
           visible={show}
           onCancel={toggle}
-          footer={null}
+          onOk={toggle}
+          cancelText="关闭"
           width="80%"
           {...config}
           style={{ maxWidth: 800, ...config.style }}

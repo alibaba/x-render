@@ -9,6 +9,7 @@ import FormRender from './index';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import { mapping, widgets } from './widgets/antd';
+// import 'antd/dist/antd.css';
 
 export default class AntdForm extends React.PureComponent {
   static propTypes = {
