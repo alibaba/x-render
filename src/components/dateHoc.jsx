@@ -8,7 +8,9 @@ import moment from 'moment';
 import { getFormat } from '../base/utils';
 
 export default (p, onChange, DateComponent) => {
-  const style = p.invalid ? { borderColor: '#f5222d' } : {};
+  const style = p.invalid
+    ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 2px rgba(255,77,79,.2)' }
+    : {};
   let { format = 'dateTime' } = p.schema;
   if (p.options.format) {
     format = p.options.format;
