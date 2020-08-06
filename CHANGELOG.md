@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.7.0
+
+- [!] 文档大幅度翻新，构建发布流切换到 dumi、father
+- [!] 使用 schema 字段替换 propsSchema 字段，因为后者太长且意义不明（目前保持兼容）
+
 ### 0.6.2
 
 - [!] fusion 侧再也不需用户手动引入 css。~~`import "@alifd/next/dist/next.min.css";`~~

@@ -6,8 +6,6 @@ hero:
   actions:
     - text: playground
       link: /_demos/index
-    - text: 表单设计器
-      link: /_demos/index-1
     - text: 开始使用
       link: /guide/getting-started
 features:
