@@ -307,3 +307,21 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+/* 覆盖 antd 的样式 */
+
+.fr-wrapper .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+  margin-left: 0;
+}
+
+.fr-wrapper .ant-checkbox-wrapper {
+  margin-right: 8px;
+}
+
+.fr-wrapper .next-checkbox-wrapper + .next-checkbox-wrapper {
+  margin-left: 0;
+}
+
+.fr-wrapper .next-checkbox-wrapper {
+  margin: 4px 8px 4px 0;
+}

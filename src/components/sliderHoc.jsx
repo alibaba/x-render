@@ -6,7 +6,9 @@
 import React from 'react';
 
 export default (SliderComponent, NumberComponent) => p => {
-  const style = p.invalid ? { borderColor: '#f5222d' } : {};
+  const style = p.invalid
+    ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 2px rgba(255,77,79,.2)' }
+    : {};
   const { max, min, step } = p.schema;
   let setting = {};
   if (max || max === 0) {

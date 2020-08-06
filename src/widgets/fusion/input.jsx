@@ -17,17 +17,26 @@ const previewNode = (format, value) => {
   );
 };
 export default function input(p) {
-  const { options = {}, invalid } = p;
+  const { options = {}, invalid, schema } = p;
   const style = invalid
-    ? { borderColor: '#f5222d', width: '100%' }
+    ? {
+        borderColor: '#ff4d4f',
+        boxShadow: '0 0 0 2px rgba(255,77,79,.2)',
+        width: '100%',
+      }
     : { width: '100%' };
   const { addonBefore, addonAfter, ...rest } = options;
-  const { format = 'text' } = p.schema;
+  const { format = 'text', maxLength } = schema;
   const handleChange = value => p.onChange(p.name, value);
+  const config = {
+    ...rest,
+    maxLength,
+    hasLimitHint: maxLength ? true : false,
+  };
   return (
     <Input
       style={style}
-      {...rest}
+      {...config}
       value={p.value}
       disabled={p.disabled || p.readonly}
       addonTextBefore={addonBefore ? addonBefore : ''}

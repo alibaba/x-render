@@ -1,0 +1,42 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "input1": {
+        "title": "输入框",
+        "type": "string",
+        "maxLength": 12
+      },
+      "textarea1": {
+        "title": "文本编辑框",
+        "type": "string",
+        "format": "textarea",
+        "maxLength": 24
+      },
+      "listName": {
+        "title": "对象数组",
+        "description": "对象数组嵌套功能",
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "inputName": {
+              "title": "简单输入框",
+              "type": "string"
+            }
+          }
+        },
+        "ui:options": {
+          "buttons": [
+            {
+              "text": "复制最后",
+              "icon": "CopyOutlined",
+              "callback": "copyLast",
+              "type": "primary"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

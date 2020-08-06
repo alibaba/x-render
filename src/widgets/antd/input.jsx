@@ -19,15 +19,39 @@ const previewNode = (format, value) => {
 };
 
 export default function input(p) {
-  const { options = {}, invalid } = p;
-  const style = invalid ? { borderColor: '#f5222d' } : {};
-  const { format = 'text' } = p.schema;
+  const { options = {}, invalid, schema = {} } = p;
+  const style = invalid
+    ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 2px rgba(255,77,79,.2)' }
+    : {};
+  const { format = 'text', maxLength } = schema;
   const type = format === 'image' ? 'text' : format;
   const handleChange = e => p.onChange(p.name, e.target.value);
+  let suffix = undefined;
+  try {
+    suffix = options.suffix;
+    if (!suffix && maxLength) {
+      suffix = (
+        <span
+          style={
+            p.value.length > maxLength
+              ? { fontSize: 12, color: '#ff4d4f' }
+              : { fontSize: 12, color: '#999' }
+          }
+        >
+          {p.value.length + ' / ' + maxLength}
+        </span>
+      );
+    }
+  } catch (error) {}
+  const config = {
+    ...options,
+    maxLength,
+    suffix,
+  };
   return (
     <Input
       style={style}
-      {...options}
+      {...config}
       value={p.value}
       type={type}
       disabled={p.disabled || p.readonly}

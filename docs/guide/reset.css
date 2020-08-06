@@ -8,3 +8,11 @@
 .markdown ul {
   list-style: initial !important;
 }
+
+.hidden {
+  display: none;
+}
+
+.npm__react-simple-code-editor__textarea {
+  outline: none;
+}

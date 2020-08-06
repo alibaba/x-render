@@ -199,40 +199,39 @@ const fieldListHoc = ButtonComponent => {
               )}
               {buttons &&
                 buttons.length > 0 &&
-                buttons.map((item, i) => (
-                  <ButtonComponent
-                    className="ml2"
-                    icon={item.icon}
-                    key={i.toString()}
-                    onClick={() => {
-                      if (item.callback === 'clearAll') {
-                        p.onChange(p.name, []);
-                        return;
-                      }
-                      if (item.callback === 'copyLast') {
-                        const value = [...p.value];
-                        const lastIndex = value.length - 1;
-                        value.push(
-                          lastIndex > -1 ? value[lastIndex] : p.newItem
-                        );
-                        p.onChange(p.name, value);
-                        return;
-                      }
-                      if (typeof window[item.callback] === 'function') {
-                        const value = [...p.value];
-                        const onChange = value => p.onChange(p.name, value);
-                        window[item.callback](
-                          value,
-                          onChange,
-                          schema,
-                          p.newItem
-                        ); // eslint-disable-line
-                      }
-                    }}
-                  >
-                    {item.text}
-                  </ButtonComponent>
-                ))}
+                buttons.map((item, i) => {
+                  const { icon, text, callback, ...rest } = item;
+                  return (
+                    <ButtonComponent
+                      className="ml2"
+                      icon={icon}
+                      key={i.toString()}
+                      onClick={() => {
+                        if (callback === 'clearAll') {
+                          p.onChange(p.name, []);
+                          return;
+                        }
+                        if (callback === 'copyLast') {
+                          const value = [...p.value];
+                          const lastIndex = value.length - 1;
+                          value.push(
+                            lastIndex > -1 ? value[lastIndex] : p.newItem
+                          );
+                          p.onChange(p.name, value);
+                          return;
+                        }
+                        if (typeof window[callback] === 'function') {
+                          const value = [...p.value];
+                          const onChange = value => p.onChange(p.name, value);
+                          window[callback](value, onChange, schema, p.newItem); // eslint-disable-line
+                        }
+                      }}
+                      {...rest}
+                    >
+                      {text}
+                    </ButtonComponent>
+                  );
+                })}
             </div>
           )}
         </ul>
