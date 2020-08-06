@@ -1,0 +1,18 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "input1": {
+        "title": "输入框",
+        "type": "string",
+        "maxLength": 12
+      },
+      "textarea1": {
+        "title": "文本编辑框",
+        "type": "string",
+        "format": "textarea",
+        "maxLength": 24
+      }
+    }
+  }
+}

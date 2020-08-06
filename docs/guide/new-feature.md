@@ -9,6 +9,16 @@ toc: menu
 
 # 新功能
 
+## maxLength
+
+```jsx
+import React from 'react';
+import FR from '../demo/FR/index.jsx';
+import json from '../demo/new-feature/maxLength.json';
+
+export default () => <FR schema={json} />;
+```
+
 ## 弹层展示
 
 一般用于复杂结构, 支持 `modal` 和 `drawer`
