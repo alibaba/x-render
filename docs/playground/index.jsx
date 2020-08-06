@@ -67,9 +67,9 @@ class Root extends Component {
           bannerColor="#F6C14F"
           className="absolute top-0 right-0 z-999"
         /> */}
-        <a href="/" className="f6 absolute top-1 right-1 z-999">
+        {/* <a href="/" className="f6 absolute top-1 right-1 z-999">
           回主页
-        </a>
+        </a> */}
         <Collapse defaultActiveKey={['1']} onChange={() => {}}>
           <Panel
             header={

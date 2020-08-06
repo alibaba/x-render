@@ -22,7 +22,6 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
 ---
 
 <code src='./playground/index.jsx' className='hidden' />
-<code src='./generator/index.jsx' className='hidden' />
 
 ## 安装
 
