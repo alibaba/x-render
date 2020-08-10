@@ -5,7 +5,7 @@ hero:
   desc: 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
   actions:
     - text: playground
-      link: /_demos/index
+      link: /playground
     - text: 开始使用
       link: /guide/getting-started
 features:
@@ -79,4 +79,4 @@ export default Demo;
 
 <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="240">
 
-<code src='./playground/index.jsx' className='hidden' />
+<!-- <code src='./playground/index.jsx' className='hidden' /> -->
