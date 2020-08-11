@@ -2,7 +2,7 @@
 order: 1
 nav:
   order: 3
-  title: playground
+  title: Playground
 sidemenu: false
 gapless: true
 ---

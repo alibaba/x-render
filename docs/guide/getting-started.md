@@ -7,7 +7,7 @@ nav:
 toc: menu
 ---
 
-<a href="https://alibaba.github.io/form-render/">
+<a href="/form-render/">
   <img width="146" src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
 </a>
 
@@ -24,11 +24,11 @@ toc: menu
 
 ## 了解
 
-- <a href="/guide/design/what">设计理念</a>
-- <a href="https://form-render.github.io/schema-generator/" target="_blank">Schema 编辑器</a>
-- <a href="/_demos/index" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
-- <a href="/guide/others/faq">Typescript 支持</a>
-- <a href="/guide/others/used-by">常见场景</a>
+- [设计理念](/guide/design)
+- <a href="https://x-render.gitee.io/schema-generator/" target="_blank">Schema 编辑器</a>
+- [Playground](/playground) / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
+- [Typescript 支持](/guide/others/faq)
+- [常见场景](/guide/others/used-by)
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
 ## 效果
@@ -127,11 +127,10 @@ export default Demo;
 | **labelWidth**   | `Number` / `String` |          |   110    | 全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等 |
 | **widgets**      |      `Object`       |          |    {}    |                               自定义组件                               |
 
-**注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
-
-**注 2：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）
-
-**注 3：** FormRender 默认布局会占满它的父级元素，建议用一个`div`包裹 FormRender 用于表单布局样式调整
+- **注 1：** `schema`这个字段就是老用户熟悉的`propsSchema`，由于 propsSchema 不好写也意义不明，所以现在推荐直接使用 schema 字段，但目前还是兼容的
+- **注 2：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
+- **注 3：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）
+- **注 4：** FormRender 默认布局会占满它的父级元素，建议用一个`div`包裹 FormRender 用于表单布局样式调整
 
 ### 不常用 API
 
@@ -182,7 +181,7 @@ export default Demo;
 
 ## 支持
 
-- 在公司或个人项目中使用 FormRender，关注 <a href="/CHANGELOG.md" target="_blank">Changelog</a>
+- 在公司或个人项目中使用 FormRender，关注 <a href="https://github.com/alibaba/form-render/blob/master/CHANGELOG.md" target="_blank">Changelog</a>
 - 如果你觉得 FormRender 还不错，可以通过 Star 来表示你的喜欢
 - 加入钉钉聊天群帮忙解答使用问题
 

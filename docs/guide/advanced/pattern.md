@@ -2,8 +2,8 @@
 
 ### 概述
 
-- 简单的长度校验推荐使用 <a href="http://groups.alidemo.cn/hive/form-render/#/docs/prop-schema?type=html" target="_blank">propSchema</a> 中的属性
-- pattern 是存在于 propSchema 中属性的一个字段，长用在当长度限制还不满足要求的场景，可通过正则的方式来对用户输入项进行校验
+- 简单的长度校验推荐使用 [schema](/config/schema) 中的属性
+- pattern 是存在于 [schema](/config/schema) 中属性的一个字段，长用在当长度限制还不满足要求的场景，可通过正则的方式来对用户输入项进行校验
 - pattern 和 required、minLength、maxLength 等这一类显示为`&&`的关系，当有一个不满足时候，onValidate 回调中将会返回不符合的数组项
 
 ### 格式

@@ -14,7 +14,7 @@ toc: false
 
    <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/1573547684-OCOmqe.png" width="400"/>
 
-##### 2.可视化配置界面生成：并可以从代码层面 <a href="https://alibaba.github.io/form-render/#/docs/proptypes" target="_blank">自动生成</a> JSON Schema，来完成整体流程的打通
+##### 2.可视化配置界面生成：并可以从代码层面 <a href="https://x-render.gitee.io/schema-generator/demo/playground" target="_blank">自动生成</a> JSON Schema，来完成整体流程的打通
 
    <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/1573546822-GWwTVd.png" width="700"/>
 

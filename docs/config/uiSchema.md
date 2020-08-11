@@ -11,7 +11,7 @@ toc: menu
 ### 概述
 
 - uiSchema 虽然不是必备参数，但是通过它可以增强 FormRender 展示的丰富性，例如：
-- 通过 uiSchema 可以覆盖 propSchema 中 type 对应的默认 widget 组件
+- 通过 uiSchema 可以覆盖 schema 中 type 对应的默认 widget 组件
 - 通过 `ui:disabled`、`ui:readonly`、`ui:hidden` 属性来控制表单项的 UI 展示
 - 通过 `ui:options` 属性能够实现大量特定的 ui 展示选项
 
