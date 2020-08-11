@@ -110,3 +110,21 @@
 .z-999 {
   z-index: 999;
 }
+
+.fr-playground {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 0;
+  height: 100vh;
+}
+
+.fr-playground .setting-container {
+  border-bottom: 1px solid #ccc;
+  padding: 12px 24px;
+}
+
+.__dumi-default-previewer-demo {
+  padding: 0 0 24px;
+}
