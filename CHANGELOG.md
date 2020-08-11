@@ -31,7 +31,7 @@
 
   ```json
   {
-    ...
+    //...
     "ui:options": {
       "modal": true
     }
