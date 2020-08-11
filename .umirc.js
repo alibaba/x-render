@@ -17,6 +17,10 @@ export default defineConfig({
   // },
   navs: [
     null,
+    {
+      title: '表单设计器',
+      path: 'https://x-render.gitee.io/schema-generator/',
+    },
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
     {
       title: '更新日志',

@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.7.3
+
+- [!] 文档链接修复
+- [!] playground 彻底全屏展示，且修复 z-index 的问题
+
 ### 0.7.2
 
 - [+] input/textarea 有 maxLength 属性时，展示字数长度的提示 ([#127](https://github.com/alibaba/form-render/issues/127))

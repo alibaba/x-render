@@ -61,6 +61,14 @@ const Demo = () => {
 export default Demo;
 ```
 
+## schema 可以不用手写哦！
+
+使用 [表单设计器](https://x-render.gitee.io/schema-generator/)，拖拖拽拽导出 schema，丢到代码里生成可用表单
+
+<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
+
+<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*FfTuRYjRd1AAAAAAAAAAAABkARQnAQ?raw=true" alt="schema编辑器" width='750px' />
+
 ## 理念
 
 [详见 form-render 的理念](/guide/design)

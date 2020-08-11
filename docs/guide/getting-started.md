@@ -29,6 +29,7 @@ toc: menu
 - [Playground](/playground) / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
 - [Typescript 支持](/guide/others/faq)
 - [常见场景](/guide/others/used-by)
+- [新功能 Demo 展示](/guide/new-feature)
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
 ## 效果
