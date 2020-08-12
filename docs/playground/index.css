@@ -122,9 +122,9 @@
 
 .fr-playground .setting-container {
   border-bottom: 1px solid #ccc;
-  padding: 12px 24px;
+  padding: 0 12px 12px;
 }
 
 .__dumi-default-previewer-demo {
-  padding: 0 0 24px;
+  padding: 24px;
 }
