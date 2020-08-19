@@ -26,6 +26,10 @@ export default defineConfig({
       title: '更新日志',
       path: 'https://github.com/alibaba/form-render/blob/master/CHANGELOG.md',
     },
+    {
+      title: '国内镜像',
+      path: 'https://x-render.gitee.io/form-render/',
+    },
   ],
   mode: 'site',
   alias: { 'form-render/dist': path.resolve(__dirname, 'dist') },
