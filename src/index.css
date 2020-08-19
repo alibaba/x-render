@@ -250,7 +250,7 @@
   width: 160px;
   left: 50%;
   white-space: initial !important;
-  top: -34px;
+  bottom: 30px;
   text-align: center;
   background: #2b222a;
   padding: 4px;
@@ -263,6 +263,7 @@
   transition: all 0.5s ease;
   opacity: 0;
   visibility: hidden;
+  word-wrap: break-word;
 }
 
 .fr-tooltip-triangle {
