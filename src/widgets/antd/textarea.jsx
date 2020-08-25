@@ -21,7 +21,7 @@ export default function ta(p) {
         {...ui}
         onChange={onChange}
       />
-      {
+      {maxLength ? (
         <span
           style={{
             fontSize: 12,
@@ -33,7 +33,7 @@ export default function ta(p) {
         >
           {p.value.length + ' / ' + maxLength}
         </span>
-      }
+      ) : null}
     </div>
   );
 }
