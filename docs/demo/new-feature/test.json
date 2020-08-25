@@ -5,8 +5,7 @@
       "number": {
         "title": "数字",
         "description": "数字输入框",
-        "type": "number",
-        "max": 10
+        "type": "number"
       },
       "list": {
         "title": "对象数组",
@@ -24,16 +23,6 @@
             "required": ["input"]
           }
         }
-      },
-      "input": {
-        "title": "长度",
-        "type": "string",
-        "minLength": 5
-      },
-      "color": {
-        "title": "颜色",
-        "type": "string",
-        "format": "color"
       }
     }
   }
