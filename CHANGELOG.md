@@ -1,5 +1,12 @@
 # Change Log
 
+### 0.8.0
+
+- [Breaking] 对`antd`和`@alifd/next`的依赖修改为`peerDependencies`。意味着这两个包需要使用方提供。这么做避免了之前使用 form-render 时会打入两个 antd（或 fusion）的问题。目前的使用场景看来，90%以上的用户都已安装了 `antd` 或者 `@alifd/next`。所以这个升级对于 90% 的用户理应是无缝的。对于独立使用 form-render 而未安装任何组件的同学，需要 `npm i antd` 一下。详见文档的 [开始使用](https://x-render.gitee.io/form-render/guide/getting-started)
+- [!] 解决了首次渲染时就会展示校验红字的问题，现在通过设定`showValidate`为 false 来关闭此行为，只有动过的 field 会提示校验，提交时通过将 showValidate 设为 true 来唤起全部校验信息的展示
+- [!] 解决了 antd 组件 textArea 和 input 人为传入 undefined 和 null 为值时的报错 ([#138](https://github.com/alibaba/form-render/issues/138))
+- [!] description 隐藏时采用 info 图标代替问号图标，符合业界规范 ([#133](https://github.com/alibaba/form-render/issues/133))
+
 ### 0.7.3
 
 - [!] 文档链接修复

@@ -55,6 +55,14 @@ npm i form-render
 yarn add form-render
 ```
 
+同时安装依赖的组件库 (目前天然支持 antd 和 fusion 两套组件库，其他的组件库需要通过 widgets 的方式传入，下详)
+
+```shell
+yarn add antd
+# or
+yarn add @alifd/next
+```
+
 ## 快速使用
 
 ```jsx
