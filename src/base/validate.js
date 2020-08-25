@@ -55,24 +55,28 @@ export const getValidateText = (obj = {}) => {
   if (required && isEmptyValue(finalValue, schema)) {
     return (message && message.required) || '不能为空';
   }
-
   // 字符串相关校验
-  if (type === 'string' && finalValue) {
-    if (maxLength && !isLength(finalValue, 0, parseInt(maxLength, 10))) {
-      return (message && message.maxLength) || `长度不能大于 ${maxLength}`;
+  if (type === 'string') {
+    if (maxLength) {
+      if (!finalValue || !isLength(finalValue, 0, parseInt(maxLength, 10))) {
+        return (message && message.maxLength) || `长度不能大于 ${maxLength}`;
+      }
+    }
+    if (minLength || minLength === 0) {
+      if (
+        !finalValue ||
+        !isLength(finalValue, parseInt(minLength, 10), undefined)
+      ) {
+        return (message && message.minLength) || `长度不能小于 ${minLength}`;
+      }
     }
 
-    if (
-      (minLength || minLength === 0) &&
-      !isLength(finalValue, parseInt(minLength, 10), undefined)
-    ) {
-      return (message && message.minLength) || `长度不能小于 ${minLength}`;
-    }
     if (format === 'color' || widget === 'color') {
       try {
+        if (!finalValue) return '请填写正确的颜色格式';
         Color(finalValue);
       } catch (e) {
-        return `颜色不合法`;
+        return '请填写正确的颜色格式';
       }
     }
   }

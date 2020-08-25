@@ -29,6 +29,11 @@
         "title": "长度",
         "type": "string",
         "minLength": 5
+      },
+      "color": {
+        "title": "颜色",
+        "type": "string",
+        "format": "color"
       }
     }
   }
