@@ -102,7 +102,7 @@ export const getValidateText = (obj = {}) => {
   // 数组项目相关校验
   if (type === 'array') {
     if (maxItems && finalValue && finalValue.length > maxItems) {
-      return (message && message.maxItems) || `组数不能大于 ${maxItems}`;
+      return (message && message.maxItems) || `组数长度不能大于 ${maxItems}`;
     }
 
     if (
@@ -110,7 +110,7 @@ export const getValidateText = (obj = {}) => {
       finalValue &&
       finalValue.length < minItems
     ) {
-      return (message && message.minItems) || `组数不能小于 ${minItems}`;
+      return (message && message.minItems) || `组数长度不能小于 ${minItems}`;
     }
 
     if (uniqueItems && Array.isArray(finalValue) && finalValue.length > 1) {
