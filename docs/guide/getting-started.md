@@ -7,7 +7,7 @@ nav:
 toc: menu
 ---
 
-<a href="https://alibaba.github.io/form-render/">
+<a href="/form-render/">
   <img width="146" src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
 </a>
 
@@ -24,11 +24,12 @@ toc: menu
 
 ## 了解
 
-- <a href="/guide/design/what">设计理念</a>
-- <a href="https://form-render.github.io/schema-generator/" target="_blank">Schema 编辑器</a>
-- <a href="/_demos/index" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
-- <a href="/guide/others/faq">Typescript 支持</a>
-- <a href="/guide/others/used-by">常见场景</a>
+- [设计理念](/guide/design)
+- <a href="https://x-render.gitee.io/schema-generator/" target="_blank">Schema 编辑器</a>
+- [Playground](/playground) / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
+- [Typescript 支持](/guide/others/faq)
+- [常见场景](/guide/others/used-by)
+- [新功能 Demo 展示](/guide/new-feature)
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
 ## 效果
@@ -54,6 +55,17 @@ npm i form-render
 yarn add form-render
 ```
 
+同时安装依赖的组件库 (依赖哪个装哪个，天然支持 antd 和 fusion 两套。其他的组件库可通过 widgets 的方式传入，见[自定义组件](/guide/advanced/widget))
+
+```shell
+# 例如
+yarn add antd
+# 或者
+yarn add @alifd/next
+```
+
+注：一般来说，想使用 form-render 的 antd 主题的项目，dependencies 里肯定装了 antd。这里强调一下这步，主要是针对想尝试写个 demo 玩玩的同学，记得要安装对应的 ui 组件库
+
 ## 快速使用
 
 ```jsx
@@ -70,7 +82,12 @@ const schema = {
     string: {
       title: '字符串',
       type: 'string',
+      maxLength: 12,
       'ui:disabled': true,
+    },
+    number: {
+      title: '数字',
+      type: 'number',
     },
     select: {
       title: '单选',
@@ -85,9 +102,11 @@ const schema = {
 function Demo() {
   const [formData, setData] = useState({});
   const [valid, setValid] = useState([]);
+  const [showValidate, setShowValidate] = useState(false);
 
   const onSubmit = () => {
     // valid 是校验判断的数组，valid 长度为 0 代表校验全部通过
+    setShowValidate(true);
     if (valid.length > 0) {
       alert(`校验未通过字段：${valid.toString()}`);
     } else {
@@ -102,6 +121,7 @@ function Demo() {
         formData={formData}
         onChange={setData}
         onValidate={setValid}
+        showValidate={showValidate}
         displayType="row" // 详细配置见下
       />
       <button onClick={onSubmit}>提交</button>
@@ -114,35 +134,35 @@ export default Demo;
 
 ### API
 
-| Prop             |        Type         | Required | Default  |                              Description                               |
-| ---------------- | :-----------------: | :------: | :------: | :--------------------------------------------------------------------: |
-| **schema**       |      `Object`       |    ✓     |    {}    |                   详见 [schema 配置](/config/schema)                   |
-| **uiSchema**     |      `Object`       |          |    {}    | 详见 [uiSchema 配置](/config/ui-schema)（**一般建议合并到 `schema`**） |
-| **formData**     |      `Object`       |          |    {}    |                              配置表单数据                              |
-| **onChange**     |     `Function`      |    ✓     | () => {} |                            数据更改回调函数                            |
-| **onValidate**   |     `Function`      |          | () => {} |                            表单输入校验回调                            |
-| **displayType**  |      `String`       |          |  column  |               设置表单横向排列或者纵向排序`column`/`row`               |
-| **showDescIcon** |      `Boolean`      |          |  false   |    描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`     |
-| **readOnly**     |      `Boolean`      |          |  false   |                          预览模式/可编辑模式                           |
-| **labelWidth**   | `Number` / `String` |          |   110    | 全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等 |
-| **widgets**      |      `Object`       |          |    {}    |                               自定义组件                               |
+| Prop             |    Type    | Required | Default  |                                                                             Description                                                                             |
+| ---------------- | :--------: | :------: | :------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+| **schema**       |  `Object`  |    ✓     |    {}    |                                                                 详见 [schema 配置](/config/schema)                                                                  |
+| **uiSchema**     |  `Object`  |          |    {}    |                                               详见 [uiSchema 配置](/config/ui-schema)（**一般建议合并到 `schema`**）                                                |
+| **formData**     |  `Object`  |          |    {}    |                                                                            配置表单数据                                                                             |
+| **onChange**     | `Function` |    ✓     | () => {} |                                                                          数据更改回调函数                                                                           |
+| **onValidate**   | `Function` |          | () => {} |                                                                          表单输入校验回调                                                                           |
+| **showValidate** | `Boolean`  |          |   true   | 是否展示校验信息（默认 `true` 兼容旧版，但建议初始 `false`，然后在提交时改成 true）。`false`时只有触碰过的 field 会展示校验信息，`true`时展示整个表单所有的校验信息 |
 
-**注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
+| **displayType** | `String` | | column | 设置表单横向排列或者纵向排序`column`/`row` |
+| **showDescIcon** | `Boolean` | | false | 描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true` |
+| **readOnly** | `Boolean` | | false | 预览模式/可编辑模式 |
+| **labelWidth** | `Number` / `String` | | 110 | 全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等 |
+| **widgets** | `Object` | | {} | 自定义组件 |
 
-**注 2：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）
-
-**注 3：** FormRender 默认布局会占满它的父级元素，建议用一个`div`包裹 FormRender 用于表单布局样式调整
+- **注 1：** `schema`这个字段就是老用户熟悉的`propsSchema`，由于 propsSchema 不好写也意义不明，所以现在推荐直接使用 schema 字段，但目前还是兼容的
+- **注 2：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
+- **注 3：** **onChange** 方法会用于初始化表单 data，如果不写会造成没有初始值的表单元素无法渲染（出现不报错也不显示的情况）
+- **注 4：** FormRender 默认布局会占满它的父级元素，建议用一个`div`包裹 FormRender 用于表单布局样式调整
 
 ### 不常用 API
 
-| Prop             |    Type    |   usage   |  Default  |                                    Description                                     |
-| ---------------- | :--------: | :-------: | :-------: | :--------------------------------------------------------------------------------: |
-| **mapping**      |  `Object`  | sometimes | undefined |      用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)      |
-| **column**       |  `Number`  | sometimes |     1     |               **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                |
-| **useLogger**    | `Boolean`  |   debug   |   false   |           当 useLogger 为 true 时，会在 console 展示所有的 formData 变化           |
-| **name**         |  `String`  | very rare |  \$form   |                                     表单的名称                                     |
-| **showValidate** | `Boolean`  | very rare |   true    |                                  是否展示校验信息                                  |
-| **onMount**      | `Function` | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
+| Prop          |    Type    |   usage   |  Default  |                                    Description                                     |
+| ------------- | :--------: | :-------: | :-------: | :--------------------------------------------------------------------------------: |
+| **mapping**   |  `Object`  | sometimes | undefined |      用于修改默认组件映射表，一般用于让自定义组件作为默认选择(详见自定义组件)      |
+| **column**    |  `Number`  | sometimes |     1     |               **整体**布局 1 排 N，局部的 1 排 N 一般使用`ui:width`                |
+| **useLogger** | `Boolean`  |   debug   |   false   |           当 useLogger 为 true 时，会在 console 展示所有的 formData 变化           |
+| **name**      |  `String`  | very rare |  \$form   |                                     表单的名称                                     |
+| **onMount**   | `Function` | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
 
 [详见“不常用 props”](/config/props2)
 
@@ -182,7 +202,7 @@ export default Demo;
 
 ## 支持
 
-- 在公司或个人项目中使用 FormRender，关注 <a href="/CHANGELOG.md" target="_blank">Changelog</a>
+- 在公司或个人项目中使用 FormRender，关注 <a href="https://github.com/alibaba/form-render/blob/master/CHANGELOG.md" target="_blank">Changelog</a>
 - 如果你觉得 FormRender 还不错，可以通过 Star 来表示你的喜欢
 - 加入钉钉聊天群帮忙解答使用问题
 

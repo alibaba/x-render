@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import FormRender from '../../../src/antd';
+import { Button } from 'antd';
 // import FormRender from '../../../src/fusion';
 
 const Demo = ({ schema = {} }) => {
   const [formData, setFormData] = useState(() => schema.formData);
   const [valid, setValid] = useState([]);
-  const [readOnly, setReadOnly] = useState(false);
+  const [showValid, setShowValid] = useState(false);
 
   // useEffect(() => {
-  //   setTimeout(() => setFormData({ AllString: { input: 'abv' } }), 2000);
+  //   setTimeout(() => setFormData({ number: 12 }), 500);
   // }, []);
 
   const onValidate = _valid => {
@@ -16,17 +17,17 @@ const Demo = ({ schema = {} }) => {
     setValid(_valid);
   };
 
-  // const toggle = () => setReadOnly(o => !o);
-
-  // const submit = () => {
-  //   console.log(valid);
-  //   console.log(formData);
-  // };
+  const handleSubmit = () => {
+    setShowValid(true);
+    console.log(valid, formData);
+    if (valid.length > 0) {
+      return;
+    }
+    alert(JSON.stringify(formData, null, 2));
+  };
 
   return (
     <div style={{ maxWidth: 800 }}>
-      {/* <button onClick={toggle}>readOnly</button> */}
-      {/* <button onClick={submit}>click</button> */}
       <FormRender
         {...schema}
         formData={formData}
@@ -35,8 +36,11 @@ const Demo = ({ schema = {} }) => {
         showDescIcon
         labelWidth={120}
         onValidate={onValidate}
-        readOnly={readOnly}
+        showValidate={showValid}
       />
+      <Button type="primary" onClick={handleSubmit}>
+        提交
+      </Button>
     </div>
   );
 };

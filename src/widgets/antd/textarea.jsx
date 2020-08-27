@@ -12,6 +12,8 @@ export default function ta(p) {
   const defaultUi = { rows: 3 };
   const ui = { ...defaultUi, ...options };
   const onChange = e => p.onChange(p.name, e.target.value);
+
+  const _value = p.value || '';
   return (
     <div style={{ width: '100%', position: 'relative' }}>
       <TextArea
@@ -21,19 +23,19 @@ export default function ta(p) {
         {...ui}
         onChange={onChange}
       />
-      {
+      {maxLength ? (
         <span
           style={{
             fontSize: 12,
             position: 'absolute',
             bottom: 5,
             right: 11,
-            color: p.value.length > maxLength ? '#ff4d4f' : '#999',
+            color: _value.length > maxLength ? '#ff4d4f' : '#999',
           }}
         >
-          {p.value.length + ' / ' + maxLength}
+          {_value.length + ' / ' + maxLength}
         </span>
-      }
+      ) : null}
     </div>
   );
 }

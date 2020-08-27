@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getValidateText } from './validate';
+import isDeepEqual from 'deep-equal';
+import { usePrevious } from '../hooks';
 import { isHidden, isDependShow } from './isHidden';
 import {
   evaluateString,
@@ -27,7 +29,16 @@ export const asField = ({ FieldUI, Widget }) => {
     schema,
     ...rest
   }) => {
-    const { displayType, rootValue = {}, formData = {}, dependShow } = rest;
+    const firstRender = useRef(true);
+    const fieldTouched = useRef(false);
+    const {
+      displayType,
+      rootValue = {},
+      formData = {},
+      dependShow,
+      value: _value,
+    } = rest;
+    const prevValue = usePrevious(_value);
     // most key of schema, disabled, readonly, options, hidden, support for function expression
     const convertValue = item => {
       if (typeof item === 'function') {
@@ -100,13 +111,14 @@ export const asField = ({ FieldUI, Widget }) => {
       isComplex = false;
     }
 
-    const validateText = getValidateText(_rest);
+    const validateText =
+      showValidate || fieldTouched.current ? getValidateText(_rest) : '';
     // 必填*，label，描述，竖排时的校验语，只要存在一个，label就不为空
     const showLabel =
       _schema.title ||
       rest.description ||
       rest.required ||
-      (displayType !== 'row' && showValidate && validateText);
+      (displayType !== 'row' && validateText);
 
     let columnStyle = {};
     if (!isComplex && width) {
@@ -135,9 +147,23 @@ export const asField = ({ FieldUI, Widget }) => {
       validateText,
       labelWidth,
     };
+
+    useEffect(() => {
+      // 首次渲染不做
+      if (firstRender.current) {
+        firstRender.current = false;
+        return;
+      }
+      // 之后每次改动就算touch了
+      if (isDeepEqual(prevValue, rest.value)) {
+      } else {
+        fieldTouched.current = true;
+      }
+    }, [rest.value]);
+
     return (
       <FieldUI {...fieldProps}>
-        <Widget {..._rest} invalid={showValidate && validateText} />
+        <Widget {..._rest} invalid={validateText} />
       </FieldUI>
     );
   };
@@ -287,7 +313,7 @@ export const DefaultFieldUI = ({
               ) : (
                 <span className="fr-desc ml2">(&nbsp;{description}&nbsp;)</span>
               ))}
-            {displayType !== 'row' && showValidate && validateText && (
+            {displayType !== 'row' && validateText && (
               <span className="fr-validate">{validateText}</span>
             )}
           </label>
@@ -306,15 +332,13 @@ export const DefaultFieldUI = ({
         <div className={`flex ${isComplex ? 'flex-column' : 'items-center'}`}>
           {children}
         </div>
-        {displayType === 'row' && showValidate && validateText && (
-          <span
-            className={`fr-validate fr-validate-row ${
-              isComplex ? 'relative' : 'absolute'
-            }`}
-          >
-            {validateText}
-          </span>
-        )}
+        <span
+          className={`fr-validate fr-validate-row ${
+            isComplex ? 'relative' : 'absolute'
+          }`}
+        >
+          {displayType === 'row' && validateText ? validateText : ''}
+        </span>
       </div>
     </div>
   );

@@ -5,7 +5,7 @@ hero:
   desc: 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
   actions:
     - text: playground
-      link: /_demos/index
+      link: /playground
     - text: 开始使用
       link: /guide/getting-started
 features:
@@ -25,9 +25,20 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
 
 ```shell
 yarn add form-render
-# or
+# 或者
 npm i form-render
 ```
+
+同时安装依赖的组件库 (依赖哪个装哪个，天然支持 antd 和 fusion 两套。其他的组件库可通过 widgets 的方式传入，见[自定义组件](/guide/advanced/widget))
+
+```shell
+# 例如
+yarn add antd
+# 或者
+yarn add @alifd/next
+```
+
+注：一般来说，想使用 form-render 的 antd 主题的项目，dependencies 里肯定装了 antd。这里强调一下这步，主要是针对想尝试写个 demo 玩玩的同学，记得要安装对应的 ui 组件库
 
 ## 使用
 
@@ -61,6 +72,14 @@ const Demo = () => {
 export default Demo;
 ```
 
+## schema 可以不用手写哦！
+
+使用 [表单设计器](https://x-render.gitee.io/schema-generator/)，拖拖拽拽导出 schema，丢到代码里生成可用表单
+
+<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
+
+<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*FfTuRYjRd1AAAAAAAAAAAABkARQnAQ?raw=true" alt="schema编辑器" width='750px' />
+
 ## 理念
 
 [详见 form-render 的理念](/guide/design)
@@ -79,4 +98,4 @@ export default Demo;
 
 <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="240">
 
-<code src='./playground/index.jsx' className='hidden' />
+<!-- <code src='./playground/index.jsx' className='hidden' /> -->

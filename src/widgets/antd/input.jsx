@@ -28,17 +28,18 @@ export default function input(p) {
   const handleChange = e => p.onChange(p.name, e.target.value);
   let suffix = undefined;
   try {
+    const _value = p.value || '';
     suffix = options.suffix;
     if (!suffix && maxLength) {
       suffix = (
         <span
           style={
-            p.value.length > maxLength
+            _value.length > maxLength
               ? { fontSize: 12, color: '#ff4d4f' }
               : { fontSize: 12, color: '#999' }
           }
         >
-          {p.value.length + ' / ' + maxLength}
+          {_value.length + ' / ' + maxLength}
         </span>
       );
     }

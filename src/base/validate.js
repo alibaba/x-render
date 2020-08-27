@@ -55,24 +55,28 @@ export const getValidateText = (obj = {}) => {
   if (required && isEmptyValue(finalValue, schema)) {
     return (message && message.required) || '不能为空';
   }
-
   // 字符串相关校验
-  if (type === 'string' && finalValue) {
-    if (maxLength && !isLength(finalValue, 0, parseInt(maxLength, 10))) {
-      return (message && message.maxLength) || `长度不能大于 ${maxLength}`;
+  if (type === 'string') {
+    if (finalValue && maxLength) {
+      if (!isLength(finalValue, 0, parseInt(maxLength, 10))) {
+        return (message && message.maxLength) || `长度不能大于 ${maxLength}`;
+      }
+    }
+    if (finalValue && (minLength || minLength === 0)) {
+      if (
+        !finalValue ||
+        !isLength(finalValue, parseInt(minLength, 10), undefined)
+      ) {
+        return (message && message.minLength) || `长度不能小于 ${minLength}`;
+      }
     }
 
-    if (
-      (minLength || minLength === 0) &&
-      !isLength(finalValue, parseInt(minLength, 10), undefined)
-    ) {
-      return (message && message.minLength) || `长度不能小于 ${minLength}`;
-    }
     if (format === 'color' || widget === 'color') {
       try {
+        // if (!finalValue) return '请填写正确的颜色格式';
         Color(finalValue);
       } catch (e) {
-        return `颜色不合法`;
+        return '请填写正确的颜色格式';
       }
     }
   }
@@ -98,7 +102,7 @@ export const getValidateText = (obj = {}) => {
   // 数组项目相关校验
   if (type === 'array') {
     if (maxItems && finalValue && finalValue.length > maxItems) {
-      return (message && message.maxItems) || `组数不能大于 ${maxItems}`;
+      return (message && message.maxItems) || `组数长度不能大于 ${maxItems}`;
     }
 
     if (
@@ -106,7 +110,7 @@ export const getValidateText = (obj = {}) => {
       finalValue &&
       finalValue.length < minItems
     ) {
-      return (message && message.minItems) || `组数不能小于 ${minItems}`;
+      return (message && message.minItems) || `组数长度不能小于 ${minItems}`;
     }
 
     if (uniqueItems && Array.isArray(finalValue) && finalValue.length > 1) {
