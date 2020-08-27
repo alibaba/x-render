@@ -44,14 +44,25 @@ npm i form-render
 yarn add form-render
 ```
 
+同时安装依赖的组件库 (依赖哪个装哪个，天然支持 antd 和 fusion 两套。其他的组件库可通过 widgets 的方式传入，见文档 - 高级功能 - 自定义组件)
+
+```shell
+# 例如
+yarn add antd
+# 或者
+yarn add @alifd/next
+```
+
+注：一般来说，想使用 form-render 的 antd 主题的项目，dependencies 里肯定装了 antd。这里强调一下这步，主要是针对想尝试写个 demo 玩玩的同学，记得要安装对应的 ui 组件库
+
 ## 快速使用
 
 ```jsx
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-// 使用 Ant Design 体系
+// 使用 Ant Design 风格
 import FormRender from 'form-render/lib/antd';
-// 使用 Fusion Design 体系
+// 使用 Fusion Design 风格
 // import FormRender from "form-render/lib/fusion";
 
 const schema = {
