@@ -6,7 +6,7 @@
 import isLength from 'validator/lib/isLength';
 import Color from 'color';
 import { isHidden } from './isHidden';
-import { hasRepeat, isFunction } from './utils';
+import { hasRepeat, isFunction, baseGet } from './utils';
 
 const isEmptyObject = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -120,13 +120,16 @@ export const getValidateText = (obj = {}) => {
         }
       }
       if (typeof uniqueItems === 'string') {
-        const nameList = finalValue.map(item => item[uniqueItems]);
-        const isRepeat = nameList.find(
-          (x, index) => nameList.indexOf(x) !== index
-        );
-        if (isRepeat) {
-          return '存在重复的 ' + uniqueItems + ' 值';
-        }
+        try {
+          const nameList = finalValue.map(item => baseGet(item, uniqueItems));
+          // 只考虑非object的情况
+          const isRepeat = nameList.find(
+            (x, index) => nameList.indexOf(x) !== index
+          );
+          if (isRepeat) {
+            return uniqueItems + ' 的值存在重复的';
+          }
+        } catch (e) {}
       }
     }
   }
