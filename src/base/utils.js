@@ -230,3 +230,20 @@ function stringContains(str, text) {
 
 export const isObj = a =>
   stringContains(Object.prototype.toString.call(a), 'Object');
+
+// 函数表达式转换成值
+export const convertValue = (item, formData, rootValue) => {
+  if (typeof item === 'function') {
+    return item(formData, rootValue);
+  } else if (typeof item === 'string' && isFunction(item) !== false) {
+    const _item = isFunction(item);
+    try {
+      return evaluateString(_item, formData, rootValue);
+    } catch (error) {
+      console.error(error.message);
+      console.error(`happen at ${item}`);
+      return item;
+    }
+  }
+  return item;
+};
