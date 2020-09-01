@@ -9,13 +9,14 @@ toc: menu
 
 # 新功能
 
+<!--
 ```jsx
 import React from 'react';
 import FR from '../demo/FR2/index.jsx';
 import json from '../demo/new-feature/expression.json';
 
 export default () => <FR schema={json} />;
-```
+``` -->
 
 ## 0.8.1
 
