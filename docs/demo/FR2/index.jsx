@@ -9,7 +9,7 @@ const Demo = ({ schema = {} }) => {
   const [showValid, setShowValid] = useState(false);
 
   // useEffect(() => {
-  //   setTimeout(() => setFormData({ number: 12 }), 500);
+  //   setTimeout(() => setFormData({ a: 'sdfs' }), 1500);
   // }, []);
 
   const onValidate = _valid => {
@@ -29,13 +29,13 @@ const Demo = ({ schema = {} }) => {
   return (
     <div style={{ maxWidth: 800 }}>
       <FormRender
-        {...schema}
-        formData={formData}
-        onChange={setFormData}
         displayType="row"
         showDescIcon
         labelWidth={120}
         onValidate={onValidate}
+        {...schema}
+        formData={formData}
+        onChange={setFormData}
         showValidate={showValid}
       />
       <Button type="primary" onClick={handleSubmit}>

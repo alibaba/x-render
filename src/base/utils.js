@@ -230,3 +230,66 @@ function stringContains(str, text) {
 
 export const isObj = a =>
   stringContains(Object.prototype.toString.call(a), 'Object');
+
+// 函数表达式转换成值
+export const convertValue = (item, formData, rootValue) => {
+  if (typeof item === 'function') {
+    return item(formData, rootValue);
+  } else if (typeof item === 'string' && isFunction(item) !== false) {
+    const _item = isFunction(item);
+    try {
+      return evaluateString(_item, formData, rootValue);
+    } catch (error) {
+      console.error(error.message);
+      console.error(`happen at ${item}`);
+      return item;
+    }
+  }
+  return item;
+};
+
+// getValueByKey(formData, 'a.b.c')
+export function baseGet(object, path) {
+  path = castPath(path, object);
+
+  let index = 0;
+  const length = path.length;
+
+  while (object != null && index < length) {
+    object = object[toKey(path[index++])];
+  }
+  return index && index == length ? object : undefined;
+}
+
+function castPath(value, object) {
+  if (Array.isArray(value)) {
+    return value;
+  }
+  return isKey(value, object) ? [value] : value.match(/([^\.\[\]"']+)/g);
+}
+
+function toKey(value) {
+  if (typeof value === 'string') {
+    return value;
+  }
+  const result = `${value}`;
+  return result == '0' && 1 / value == -INFINITY ? '-0' : result;
+}
+
+const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
+const reIsPlainProp = /^\w*$/;
+
+function isKey(value, object) {
+  if (Array.isArray(value)) {
+    return false;
+  }
+  const type = typeof value;
+  if (type === 'number' || type === 'boolean' || value == null) {
+    return true;
+  }
+  return (
+    reIsPlainProp.test(value) ||
+    !reIsDeepProp.test(value) ||
+    (object != null && value in Object(object))
+  );
+}

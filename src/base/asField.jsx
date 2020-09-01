@@ -4,12 +4,7 @@ import { getValidateText } from './validate';
 import isDeepEqual from 'deep-equal';
 import { usePrevious } from '../hooks';
 import { isHidden, isDependShow } from './isHidden';
-import {
-  evaluateString,
-  isLooselyNumber,
-  isCssLength,
-  isFunction,
-} from './utils';
+import { isLooselyNumber, isCssLength, convertValue } from './utils';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
@@ -40,26 +35,28 @@ export const asField = ({ FieldUI, Widget }) => {
     } = rest;
     const prevValue = usePrevious(_value);
     // most key of schema, disabled, readonly, options, hidden, support for function expression
-    const convertValue = item => {
-      if (typeof item === 'function') {
-        return item(formData, rootValue);
-      } else if (typeof item === 'string' && isFunction(item) !== false) {
-        const _item = isFunction(item);
-        try {
-          return evaluateString(_item, formData, rootValue);
-        } catch (error) {
-          console.error(error.message);
-          console.error(`happen at ${item}`);
-          return item;
-        }
+    useEffect(() => {
+      // 首次渲染不做
+      if (firstRender.current) {
+        firstRender.current = false;
+        return;
       }
-      return item;
-    };
+      // 之后每次改动就算touch了
+      if (isDeepEqual(prevValue, rest.value)) {
+      } else {
+        fieldTouched.current = true;
+      }
+    }, [rest.value]);
 
-    hidden = convertValue(hidden);
-    disabled = convertValue(disabled);
-    readonly = convertValue(readonly);
-    options = convertValue(options);
+    const _hidden = convertValue(hidden, formData, rootValue);
+    const _disabled = convertValue(disabled, formData, rootValue);
+    const _readonly = convertValue(readonly, formData, rootValue);
+    const _options = { ...options };
+    try {
+      Object.entries(options).forEach(([key, _val]) => {
+        _options[key] = convertValue(_val, formData, rootValue);
+      });
+    } catch (e) {}
     // iterate over schema, and convert every key
     let _schema = { ...schema };
     Object.keys(schema).forEach(key => {
@@ -77,13 +74,18 @@ export const asField = ({ FieldUI, Widget }) => {
       ];
       // TODO: need to cover more
       if (availableKey.indexOf(key) > -1) {
-        _schema[key] = convertValue(schema[key]);
+        _schema[key] = convertValue(schema[key], formData, rootValue);
       }
     });
 
     // "ui:hidden": true, hide formItem
     // after "convertValue" being stable, this api will be discarded
-    if (hidden && isHidden({ hidden, rootValue, formData })) {
+    if (_hidden && isHidden({ hidden: _hidden, rootValue, formData })) {
+      return null;
+    }
+
+    // 历史方法，不建议使用ui:dependShow, 一律使用ui:hidden
+    if (isDependShow({ formData, dependShow })) {
       return null;
     }
 
@@ -91,17 +93,12 @@ export const asField = ({ FieldUI, Widget }) => {
     const _rest = {
       ...rest,
       schema: _schema,
-      disabled,
-      readonly,
-      options,
+      disabled: _disabled,
+      readonly: _readonly,
+      options: _options,
       formData: formData || {},
       rootValue: rootValue || {},
     };
-
-    // 不建议使用ui:dependShow, 一般一律使用ui:hidden。ui:dependShow可以做复杂、跨结构的校验
-    if (isDependShow({ formData, dependShow })) {
-      return null;
-    }
 
     let isComplex =
       _schema.type === 'object' ||
@@ -147,19 +144,6 @@ export const asField = ({ FieldUI, Widget }) => {
       validateText,
       labelWidth,
     };
-
-    useEffect(() => {
-      // 首次渲染不做
-      if (firstRender.current) {
-        firstRender.current = false;
-        return;
-      }
-      // 之后每次改动就算touch了
-      if (isDeepEqual(prevValue, rest.value)) {
-      } else {
-        fieldTouched.current = true;
-      }
-    }, [rest.value]);
 
     return (
       <FieldUI {...fieldProps}>

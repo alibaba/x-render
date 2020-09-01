@@ -1,5 +1,12 @@
 # Change Log
 
+### 0.8.1
+
+- [+] 单选现在允许设置 default: null，使得默认不选择任何一个选项 ([#146](https://github.com/alibaba/form-render/issues/146))
+- [!] "ui:options" 里每个 key 如果是函数表达式，也能正常解析 ([#104](https://github.com/alibaba/form-render/issues/104))
+- [!] uniqueItems 的判断，支持到复杂的 item 结构（详见 [“新功能”](https://x-render.gitee.io/form-render/guide/new-feature)）
+- [!] 修复了一个不常见的新校验机制和历史写法（现在的函数表达式的前身）产生的 bug
+
 ### 0.8.0
 
 - [Breaking] 对`antd`和`@alifd/next`的依赖修改为`peerDependencies`。意味着这两个包需要使用方提供。这么做避免了之前使用 form-render 时会打入两个 antd（或 fusion）的问题。目前的使用场景看来，90%以上的用户都已安装了 `antd` 或者 `@alifd/next`。所以这个升级对于 90% 的用户理应是无缝的。对于独立使用 form-render 而未安装任何组件的同学，需要 `npm i antd` 一下。详见文档的 [开始使用](https://x-render.gitee.io/form-render/guide/getting-started)

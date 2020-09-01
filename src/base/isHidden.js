@@ -4,7 +4,7 @@
  */
 
 import { pope } from 'pope';
-import { parseString } from './utils';
+import { parseString, baseGet } from './utils';
 
 export function isDependShow({ formData, dependShow } = {}) {
   if (formData && dependShow) {
@@ -49,22 +49,6 @@ export function isHidden({ hidden, rootValue, formData } = {}) {
   return hidden;
 }
 
-// data = {a: b: {c: 1}}  getExpressionValue(data, 'a.b.c')
-const getExpressionValue = (formData, expression) => {
-  if (typeof expression !== 'string') return '';
-  const keyList = expression.split('.') || [];
-  if (keyList.length === 0) {
-    return '';
-  }
-  if (keyList.length === 1) {
-    return formData[keyList[0]];
-  }
-  return keyList.reduce((x, y) => {
-    if (x && typeof x === 'object') return x[y];
-    return '';
-  }, formData);
-};
-
 // 计算单个表达式的hidden值
 const calcHidden = (hiddenString, rootValue, formData) => {
   if (!rootValue || typeof rootValue !== 'object') {
@@ -79,7 +63,7 @@ const calcHidden = (hiddenString, rootValue, formData) => {
     // feature: 允许从 formData 取值
     if (key.substring(0, 9) === 'formData.' && formData) {
       const subKey = key.substring(9);
-      left = getExpressionValue(formData, subKey);
+      left = baseGet(formData, subKey);
     }
     const right = parseString(value);
     return parseString(`"${String(left)}"${op}"${String(right)}"`);
