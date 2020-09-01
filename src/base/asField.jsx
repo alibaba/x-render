@@ -48,10 +48,15 @@ export const asField = ({ FieldUI, Widget }) => {
       }
     }, [rest.value]);
 
-    hidden = convertValue(hidden, formData, rootValue);
-    disabled = convertValue(disabled, formData, rootValue);
-    readonly = convertValue(readonly, formData, rootValue);
-    options = convertValue(options, formData, rootValue);
+    const _hidden = convertValue(hidden, formData, rootValue);
+    const _disabled = convertValue(disabled, formData, rootValue);
+    const _readonly = convertValue(readonly, formData, rootValue);
+    const _options = { ...options };
+    try {
+      Object.entries(options).forEach(([key, _val]) => {
+        _options[key] = convertValue(_val, formData, rootValue);
+      });
+    } catch (e) {}
     // iterate over schema, and convert every key
     let _schema = { ...schema };
     Object.keys(schema).forEach(key => {
@@ -75,7 +80,12 @@ export const asField = ({ FieldUI, Widget }) => {
 
     // "ui:hidden": true, hide formItem
     // after "convertValue" being stable, this api will be discarded
-    if (hidden && isHidden({ hidden, rootValue, formData })) {
+    if (_hidden && isHidden({ hidden: _hidden, rootValue, formData })) {
+      return null;
+    }
+
+    // 历史方法，不建议使用ui:dependShow, 一律使用ui:hidden
+    if (isDependShow({ formData, dependShow })) {
       return null;
     }
 
@@ -83,17 +93,12 @@ export const asField = ({ FieldUI, Widget }) => {
     const _rest = {
       ...rest,
       schema: _schema,
-      disabled,
-      readonly,
-      options,
+      disabled: _disabled,
+      readonly: _readonly,
+      options: _options,
       formData: formData || {},
       rootValue: rootValue || {},
     };
-
-    // 不建议使用ui:dependShow, 一般一律使用ui:hidden。ui:dependShow可以做复杂、跨结构的校验
-    if (isDependShow({ formData, dependShow })) {
-      return null;
-    }
 
     let isComplex =
       _schema.type === 'object' ||
