@@ -1,0 +1,47 @@
+{
+  "propsSchema": {
+    "type": "object",
+    "properties": {
+      "input": {
+        "title": "简单输入框",
+        "type": "string",
+        "ui:options": {
+          "placeholder": "{{formData.config.placeholder}}",
+          "size": "{{formData.config.size}}"
+        },
+        "ui:hidden": "{{formData.config.hidden === true}}",
+        "ui:disabled": "{{formData.config.disabled === true}}"
+      },
+      "config": {
+        "title": "配置",
+        "type": "object",
+        "properties": {
+          "placeholder": {
+            "title": "placeholder的值",
+            "type": "string"
+          },
+          "size": {
+            "title": "input大小",
+            "type": "string",
+            "enum": ["large", "middle", "small"],
+            "enumNames": ["大", "中", "小"],
+            "default": null,
+            "ui:widget": "radio"
+          },
+          "hidden": {
+            "title": "是否隐藏",
+            "type": "boolean"
+          },
+          "disabled": {
+            "title": "是否disable",
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "required": []
+  },
+  "uiSchema": {},
+  "formData": {},
+  "labelWidth": 140
+}

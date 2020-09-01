@@ -12,7 +12,39 @@ toc: menu
 ```jsx
 import React from 'react';
 import FR from '../demo/FR2/index.jsx';
-import json from '../demo/new-feature/test.json';
+import json from '../demo/new-feature/expression.json';
+
+export default () => <FR schema={json} />;
+```
+
+## 0.8.1
+
+现在所有组件库的属性都可以通过 `ui:options` 支持
+
+```jsx
+import React from 'react';
+import FR from '../demo/FR/index.jsx';
+import json from '../demo/new-feature/expression.json';
+
+export default () => <FR schema={json} />;
+```
+
+设 default 为 null，即可让单选组件不默认选择第一项
+
+```jsx
+import React from 'react';
+import FR from '../demo/FR/index.jsx';
+import json from '../demo/new-feature/noDefault.json';
+
+export default () => <FR schema={json} />;
+```
+
+uniqueItems 现在支持复杂的判断
+
+```jsx
+import React from 'react';
+import FR from '../demo/FR/index.jsx';
+import json from '../demo/new-feature/uniqueItems.json';
 
 export default () => <FR schema={json} />;
 ```
