@@ -16,7 +16,7 @@ import FoldIcon from './foldIcon';
 import DescriptionList, { getDescription } from './descList';
 
 const DragHandle = SortableHandle(() => (
-  <span className="fr-move-icon">:::</span>
+  <div className="fr-item-action-icon fr-move-icon">:::</div>
 ));
 
 const listItemHoc = ButtonComponent =>
@@ -94,23 +94,27 @@ const listItemHoc = ButtonComponent =>
           )}
 
           {canFold && fold && isObj ? <DescriptionList {...descProps} /> : item}
-          {canFold && (
-            <FoldIcon
-              fold={fold}
-              onClick={this.toggleFold}
-              style={{ position: 'absolute', top: 12, right: 32 }}
-            />
-          )}
-          {!readonly && <DragHandle />}
+          <div className="fr-item-actions">
+            {canFold && (
+              <FoldIcon
+                fold={fold}
+                onClick={this.toggleFold}
+                className="fr-item-action-icon"
+              />
+            )}
+            {!readonly && (
+              <div className="fr-item-action-icon" onClick={this.handleDelete}>
+                <img
+                  style={{ height: '70%' }}
+                  src="https://img.alicdn.com/tfs/TB12VseTuL2gK0jSZPhXXahvXXa-128-128.png"
+                  alt="delete"
+                />
+              </div>
+            )}
+            {!readonly && <DragHandle />}
+          </div>
           {!((canFold && fold) || hideDelete || readonly) && (
-            <div className="self-end flex">
-              <ButtonComponent
-                type="dashed"
-                icon="delete"
-                onClick={this.handleDelete}
-              >
-                删除
-              </ButtonComponent>
+            <div className="self-end flex mb2">
               {itemButtons &&
                 itemButtons.length > 0 &&
                 itemButtons.map((btn, idx) => {

@@ -6,11 +6,16 @@ const FoldIcon = ({
   height,
   fill,
   style = {},
+  className,
   ...rest
 }) => (
   <div
     style={style}
-    className={fold ? 'fold-icon' : 'fold-icon fold-icon-active'}
+    className={
+      fold
+        ? `fold-icon ${className}`
+        : `fold-icon fold-icon-active ${className}`
+    }
     {...rest}
   >
     <svg viewBox="0 0 1024 1024" width={width || 18} height={height || 18}>
