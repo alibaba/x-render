@@ -1,29 +1,21 @@
 {
-  "schema": {
+  "propsSchema": {
     "type": "object",
     "properties": {
-      "number": {
-        "title": "数字",
-        "description": "数字输入框",
-        "type": "number"
+      "string": {
+        "title": "字符串",
+        "type": "string"
       },
-      "list": {
-        "title": "对象数组",
-        "description": "对象数组嵌套功能",
-        "type": "array",
-        "minItems": 1,
-        "maxItems": 3,
-        "items": {
-          "type": "object",
-          "properties": {
-            "input": {
-              "title": "简单输入框",
-              "type": "string"
-            },
-            "required": ["input"]
-          }
-        }
+      "string22": {
+        "title": "测试效验",
+        "type": "string",
+        "ui:hidden": "{{formData.string!=='2'}}"
       }
-    }
+    },
+    "required": ["string22"]
+  },
+  "formData": {
+    "string": "2",
+    "string22": ""
   }
 }

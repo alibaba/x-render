@@ -3,7 +3,7 @@
  */
 
 .fr-set {
-  padding: 12px 14px 12px 12px;
+  padding: 12px 12px 0;
   margin-bottom: 12px;
   border-radius: 4px;
 }
@@ -108,14 +108,27 @@
   padding-bottom: 12px;
 }
 
-.fr-move-icon {
+.fr-item-actions {
   position: absolute;
   top: 0;
   right: 0;
-  padding-top: 2px;
-  padding-right: 10px;
-  font-size: 24px;
-  font-weight: 300;
+  padding-right: 8px;
+  height: 28px;
+  font-size: 18px;
+  display: flex;
+  opacity: 0;
+}
+
+.fr-set:hover .fr-item-actions {
+  opacity: 1;
+}
+
+.fr-item-action-icon {
+  display: flex;
+  align-items: center;
+  width: 20px;
+  margin-left: 8px;
+  cursor: pointer;
 }
 
 .fr-move-icon:hover {

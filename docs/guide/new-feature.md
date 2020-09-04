@@ -9,15 +9,6 @@ toc: menu
 
 # 新功能
 
-<!--
-```jsx
-import React from 'react';
-import FR from '../demo/FR2/index.jsx';
-import json from '../demo/new-feature/expression.json';
-
-export default () => <FR schema={json} />;
-``` -->
-
 ## 0.8.1
 
 现在所有组件库的属性都可以通过 `ui:options` 支持

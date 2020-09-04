@@ -1,10 +1,14 @@
 import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getValidateText } from './validate';
-import isDeepEqual from 'deep-equal';
 import { usePrevious } from '../hooks';
 import { isHidden, isDependShow } from './isHidden';
-import { isLooselyNumber, isCssLength, convertValue } from './utils';
+import {
+  isLooselyNumber,
+  isCssLength,
+  convertValue,
+  isDeepEqual,
+} from './utils';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
@@ -41,12 +45,12 @@ export const asField = ({ FieldUI, Widget }) => {
         firstRender.current = false;
         return;
       }
-      // 之后每次改动就算touch了
-      if (isDeepEqual(prevValue, rest.value)) {
-      } else {
-        fieldTouched.current = true;
-      }
-    }, [rest.value]);
+      // 已经动过了就不用验证是否动过
+      if (fieldTouched.current === true) return;
+      // 之后每次改动就算touch了，尽量避免多余的去使用isDeepEqual，大的复杂表单性能会不好
+      if (isDeepEqual(prevValue, _value)) return;
+      fieldTouched.current = true;
+    }, [_value]);
 
     const _hidden = convertValue(hidden, formData, rootValue);
     const _disabled = convertValue(disabled, formData, rootValue);
