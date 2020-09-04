@@ -1,15 +1,29 @@
-<a href="https://alibaba.github.io/form-render/">
-    <img width="146" src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
-</a>
+<p align="center">
+  <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/>
+</p>
+<h1 align= "center">
+FormRender
+</h1>
 
-# FormRender
+<p align="center">
+  <a href="https://www.npmjs.com/package/form-render?_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square"></a>
+  <a href="https://github.com/alibaba/form-render/commits/dev">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square"></a>
+  <a href="https://github.com/alibaba/form-render">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/alibaba/form-render"></a>
+  <a href="https://github.com/alibaba/form-render/issues?utf8=%E2%9C%93&q=">
+    <img alt = "GitHub closed issues" src="https://img.shields.io/github/issues-closed/alibaba/form-render.svg?style=flat-square"></a>
+  <a href="https://npmjs.org/package/form-render">
+    <img alt = "NPM downloads" src="https://img.shields.io/npm/dm/form-render.svg?style=flat-square"></a>
+  <a href="https://npmjs.org/package/form-render">
+    <img alt = "NPM all downloads" src="https://img.shields.io/npm/dt/form-render.svg?style=flat-square"></a>
+  <a>
+    <img alt = "PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
+</p>
 
-[![npm](https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/form-render?_blank)
-[![GitHub last commit](https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/commits/dev)
-[![NPM downloads](https://img.shields.io/npm/dm/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
-[![NPM all downloads](https://img.shields.io/npm/dt/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
-[![GitHub closed issues](https://img.shields.io/github/issues-closed/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/issues?utf8=%E2%9C%93&q=)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
+
+
 
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
 
