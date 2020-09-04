@@ -1,0 +1,18 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "inputName": {
+        "title": "简单输入框",
+        "type": "string"
+      },
+      "numberName": {
+        "title": "数字",
+        "description": "数字输入框",
+        "type": "number"
+      }
+    },
+    "required": []
+  },
+  "formData": {}
+}
