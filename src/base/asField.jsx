@@ -40,7 +40,8 @@ export const asField = ({ FieldUI, Widget }) => {
     const prevValue = usePrevious(_value);
     // most key of schema, disabled, readonly, options, hidden, support for function expression
     useEffect(() => {
-      // 首次渲染不做
+      if (showValidate) return;
+      // 首次渲染不做, TODO: 万一首次渲染是用户输入触发的呢？
       if (firstRender.current) {
         firstRender.current = false;
         return;
