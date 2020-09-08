@@ -57,20 +57,31 @@ export const getValidateText = (obj = {}) => {
   }
   // 字符串相关校验
   if (type === 'string') {
-    if (finalValue && maxLength) {
-      if (!isLength(finalValue, 0, parseInt(maxLength, 10))) {
+    // TODO： 考虑了下，目前先允许 string 类的填入值是 undefined null 和 数字，校验的时候先转成 string
+    let _finalValue = finalValue;
+    if (typeof finalValue !== 'string') {
+      if (finalValue === null || finalValue === undefined) {
+        _finalValue = '';
+      } else {
+        _finalValue = String(finalValue);
+        // return '内容不是字符串，请修改'; // 这里可以强制提示，但旧项目有修改成本
+      }
+    }
+    // TODO: 为了一个 isLength 去引入一个包有点过分了，有空自己改写一下，而且 antd 用的 async-validator，是不是可以考虑看看
+    if (_finalValue && maxLength) {
+      if (!isLength(_finalValue, 0, parseInt(maxLength, 10))) {
         return (message && message.maxLength) || `长度不能大于 ${maxLength}`;
       }
     }
-    if (finalValue && (minLength || minLength === 0)) {
+    if (_finalValue && (minLength || minLength === 0)) {
       if (
-        !finalValue ||
-        !isLength(finalValue, parseInt(minLength, 10), undefined)
+        !_finalValue ||
+        !isLength(_finalValue, parseInt(minLength, 10), undefined)
       ) {
         return (message && message.minLength) || `长度不能小于 ${minLength}`;
       }
     }
-
+    // TODO: 为了一个Color引入了一个挺大的包，可以优化
     if (format === 'color' || widget === 'color') {
       try {
         // if (!finalValue) return '请填写正确的颜色格式';
