@@ -28,7 +28,10 @@ export default function input(p) {
   const handleChange = e => p.onChange(p.name, e.target.value);
   let suffix = undefined;
   try {
-    const _value = p.value || '';
+    let _value = p.value || '';
+    if (typeof _value === 'number') {
+      _value = String(_value);
+    }
     suffix = options.suffix;
     if (!suffix && maxLength) {
       suffix = (
