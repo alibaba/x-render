@@ -67,6 +67,7 @@ function FormRender({
   labelWidth = 110,
   useLogger = false,
 }) {
+  const isUserInput = useRef(false); // 状态改变是否来自于用户操作
   const originWidgets = useRef();
   const generatedFields = useRef({});
   const previousSchema = usePrevious(schema);
@@ -84,16 +85,17 @@ function FormRender({
   }, []);
 
   useEffect(() => {
+    if (isUserInput.current) {
+      isUserInput.current = false;
+      return;
+    }
     if (!isDeepEqual(previousSchema, schema)) {
       onChange(data);
     }
-  }, [schema]);
-
-  useEffect(() => {
     if (!isDeepEqual(previousData, formData)) {
       updateValidation();
     }
-  }, [formData]);
+  }, [schema, formData]);
 
   const updateValidation = () => {
     onValidate(getValidateList(data, schema));
@@ -143,6 +145,7 @@ function FormRender({
         },
         {
           onChange(key, val) {
+            isUserInput.current = true;
             onChange(val);
             onValidate(getValidateList(val, schema));
           },
