@@ -6,7 +6,7 @@
 import isLength from 'validator/lib/isLength';
 import Color from 'color';
 import { isHidden } from './isHidden';
-import { hasRepeat, isFunction, baseGet } from './utils';
+import { hasRepeat, isFunction, baseGet, convertValue } from './utils';
 
 const isEmptyObject = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -148,7 +148,7 @@ export const getValidateText = (obj = {}) => {
   return false;
 };
 
-export const dealTypeValidate = (key, value, schema = {}) => {
+export const dealTypeValidate = (key, value, schema = {}, _formData) => {
   const checkList = [];
   const { type, items } = schema;
   const obj = {
@@ -156,11 +156,11 @@ export const dealTypeValidate = (key, value, schema = {}) => {
     schema,
   };
   if (type === 'object') {
-    const list = getValidateList(value, schema); // eslint-disable-line
+    const list = getValidateList(value, schema, _formData); // eslint-disable-line
     checkList.push(...list);
   } else if (type === 'array') {
     value.forEach(v => {
-      const list = dealTypeValidate(key, v, items);
+      const list = dealTypeValidate(key, v, items, _formData);
       checkList.push(...list);
     });
   }
@@ -179,16 +179,18 @@ const keyHidden = (schema, val) => {
   return hidden;
 };
 
-export const getValidateList = (val = {}, prop = {}) => {
+export const getValidateList = (val = {}, schema = {}, formData) => {
+  const _formData = formData || val;
   const checkList = [];
-  const { properties, required } = prop;
+  const { properties, required } = schema;
   // 校验必填（required 属性只在 type:object 下存在）
   if (required && required.length > 0) {
     required.forEach(key => {
       const schema = (properties && properties[key]) || {};
       const hidden = keyHidden(schema, val);
+      const _hidden = convertValue(hidden, formData, val);
       const itemValue = val && val[key];
-      if (isEmptyValue(itemValue, schema) && !hidden) {
+      if (isEmptyValue(itemValue, schema) && !_hidden) {
         checkList.push(key);
       }
     });
@@ -199,8 +201,9 @@ export const getValidateList = (val = {}, prop = {}) => {
       const value = val[key];
       const schema = properties[key] || {};
       const hidden = keyHidden(schema, val);
-      if (!hidden) {
-        const list = dealTypeValidate(key, value, schema);
+      const _hidden = convertValue(hidden, formData, val);
+      if (!_hidden) {
+        const list = dealTypeValidate(key, value, schema, _formData);
         checkList.push(...list);
       }
     });
