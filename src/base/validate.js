@@ -188,7 +188,7 @@ export const getValidateList = (val = {}, schema = {}, formData) => {
     required.forEach(key => {
       const schema = (properties && properties[key]) || {};
       const hidden = keyHidden(schema, val);
-      const _hidden = convertValue(hidden, formData, val);
+      const _hidden = convertValue(hidden, _formData, val);
       const itemValue = val && val[key];
       if (isEmptyValue(itemValue, schema) && !_hidden) {
         checkList.push(key);
@@ -201,7 +201,7 @@ export const getValidateList = (val = {}, schema = {}, formData) => {
       const value = val[key];
       const schema = properties[key] || {};
       const hidden = keyHidden(schema, val);
-      const _hidden = convertValue(hidden, formData, val);
+      const _hidden = convertValue(hidden, _formData, val);
       if (!_hidden) {
         const list = dealTypeValidate(key, value, schema, _formData);
         checkList.push(...list);
