@@ -18,7 +18,6 @@ const fetcher = Component => props => {
         .then(res => res.json())
         .then(data => {
           setState({ loading: false, urlSchema: data });
-          console.log(data);
         })
         .catch(err => {
           console.error(err);
