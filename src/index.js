@@ -6,6 +6,7 @@ import { asField, DefaultFieldUI } from './base/asField';
 import parse from './base/parser';
 import resolve from './base/resolve';
 import { getValidateList } from './base/validate';
+import fetcher from './HOC/fetcher';
 import './atom.css';
 import './index.css';
 
@@ -180,4 +181,4 @@ FormRender.propTypes = {
   useLogger: PropTypes.bool,
 };
 
-export default Wrapper;
+export default fetcher(Wrapper);

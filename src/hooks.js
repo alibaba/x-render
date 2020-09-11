@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useReducer } from 'react';
 import debounce from 'lodash.debounce';
 
 export function usePrevious(value) {
@@ -18,3 +18,6 @@ export const useDebounce = (action, ms = 500) => {
 
   return debouncedAction.current;
 };
+
+export const useSet = initState =>
+  useReducer((a, b) => ({ ...a, ...b }), initState);
