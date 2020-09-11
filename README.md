@@ -29,10 +29,10 @@ FormRender
 
 ## 了解
 
-- <a href="/guide/design/what">设计理念</a>
+- <a href="/docs/guide/design.md">设计理念</a>
 - <a href="https://form-render.github.io/schema-generator/" target="_blank">schema 编辑器</a>
 - <a href="/_demos/index" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
-- <a href="/guide/others/used-by">常见场景</a>
+- <a href="/docs/guide/others/usedBy.md">常见场景</a>
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
 ## 效果
@@ -131,8 +131,8 @@ export default Demo;
 
 | Prop             |        Type         | Required | Default  |                              Description                               |
 | ---------------- | :-----------------: | :------: | :------: | :--------------------------------------------------------------------: |
-| **schema**       |      `Object`       |    ✓     |    {}    |                   详见 [schema 配置](/config/schema)                   |
-| **uiSchema**     |      `Object`       |          |    {}    | 详见 [uiSchema 配置](/config/ui-schema)（**一般建议合并到 `schema`**） |
+| **schema**       |      `Object`       |    ✓     |    {}    |                   详见 [schema 配置](/docs/config/schema.md)                   |
+| **uiSchema**     |      `Object`       |          |    {}    | 详见 [uiSchema 配置](/docs/config/uiSchema.md)（**一般建议合并到 `schema`**） |
 | **formData**     |      `Object`       |          |    {}    |                              配置表单数据                              |
 | **onChange**     |     `Function`      |    ✓     | () => {} |                            数据更改回调函数                            |
 | **onValidate**   |     `Function`      |          | () => {} |                            表单输入校验回调                            |
@@ -159,7 +159,7 @@ export default Demo;
 | **showValidate** | `Boolean`  | very rare |   true    |                                  是否展示校验信息                                  |
 | **onMount**      | `Function` | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
 
-[详见“不常用 props”](/config/props2)
+[详见“不常用 props”](/docs/config/props2.md)
 
 ## 更多使用
 
