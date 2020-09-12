@@ -106,7 +106,11 @@ export const getValidateText = (obj = {}) => {
   }
 
   // 正则只对数字和字符串有效果
-  if (finalValue && needPattern && !new RegExp(pattern).test(finalValue)) {
+  if (
+    finalValue != null &&
+    needPattern &&
+    !new RegExp(pattern).test(finalValue)
+  ) {
     return (message && message.pattern) || '格式不匹配';
   }
 
