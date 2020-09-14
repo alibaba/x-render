@@ -14,7 +14,7 @@ function getWidgetName(schema, map) {
     list.push(`${type}:${format}`);
   }
   list.push(type); // 放在最后兜底，其他都不match时使用type默认的组件
-  const found = list.find(item => !!map[item])
+  const found = list.find(item => !!map[item]);
   return map[found] || '';
 }
 
