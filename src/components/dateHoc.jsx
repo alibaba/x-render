@@ -16,7 +16,7 @@ export default (p, onChange, DateComponent) => {
     format = p.options.format;
   }
   const dateFormat = getFormat(format);
-  let defaultObj = {};
+  let defaultObj = Object.create(null);
   if (p.value) {
     defaultObj.value = moment(p.value, dateFormat);
   } else {
