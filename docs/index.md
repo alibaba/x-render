@@ -42,9 +42,13 @@ yarn add @alifd/next
 
 ## 使用
 
-```js
+```jsx
 import React, { useState } from 'react';
+// 使用 Ant Design 风格
 import FormRender from 'form-render/lib/antd';
+// 使用 Fusion 风格
+// import FormRender from 'form-render/lib/fusion';
+// import '@alifd/next/dist/next.min.css';
 
 const schema = {
   type: 'object',
@@ -71,6 +75,8 @@ const Demo = () => {
 
 export default Demo;
 ```
+
+注：由于 fusion 的 css 无法按需引入，且在内部整个引入会造成样式覆盖，所以需要用户外部独立引入
 
 ## schema 可以不用手写哦！
 

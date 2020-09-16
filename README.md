@@ -59,11 +59,11 @@ yarn add @alifd/next
 
 ```jsx
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 // 使用 Ant Design 风格
 import FormRender from 'form-render/lib/antd';
-// 使用 Fusion Design 风格
-// import FormRender from "form-render/lib/fusion";
+// 使用 Fusion 风格
+// import FormRender from 'form-render/lib/fusion';
+// import '@alifd/next/dist/next.min.css';
 
 const schema = {
   type: 'object',
