@@ -2,7 +2,13 @@ import React from 'react';
 import { UploadOutlined } from '@ant-design/icons';
 import { Upload, message, Button } from 'antd';
 
-export default function input({ action, value, name, onChange, options = {} }) {
+export default function upload({
+  action,
+  value,
+  name,
+  onChange,
+  options = {},
+}) {
   const _action = action || (options && options.action);
   const _className = `fr-upload-file ${options ? options.className : ''}`;
   const props = {
