@@ -8,6 +8,8 @@ import Color from 'color';
 import { isHidden } from './isHidden';
 import { hasRepeat, isFunction, baseGet, convertValue } from './utils';
 
+const isNotEmpty = val => [undefined, null].indexOf(val) === -1;
+
 const isEmptyObject = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
 
@@ -17,7 +19,8 @@ const isEmptyValue = (value, schema) => {
   if (schema.type === 'array' && schema.enum) {
     return !value || value.length === 0;
   }
-  if (value === 0) {
+  // boolean里的false, number里的0, 都不要认为是空值
+  if (value === 0 || value === false) {
     return false;
   }
   return !value;
@@ -40,7 +43,8 @@ export const getValidateText = (obj = {}) => {
     maxItems, // list
     uniqueItems, // list
   } = schema;
-  let finalValue = value || defaultValue;
+  // TODO: 这里要不要把 null 算进去呢？感觉算进去更合理一点
+  let finalValue = [undefined, null].indexOf(value) > -1 ? defaultValue : value;
   // fix: number = 0 返回空字符串
   if (type === 'number' && value === 0) {
     finalValue = 0;
@@ -106,7 +110,11 @@ export const getValidateText = (obj = {}) => {
   }
 
   // 正则只对数字和字符串有效果
-  if (finalValue && needPattern && !new RegExp(pattern).test(finalValue)) {
+  if (
+    isNotEmpty(finalValue) &&
+    needPattern &&
+    !new RegExp(pattern).test(finalValue)
+  ) {
     return (message && message.pattern) || '格式不匹配';
   }
 
