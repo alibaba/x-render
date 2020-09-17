@@ -8,7 +8,9 @@ toc: menu
 
 # Schema
 
-<Alert>注：这个字段就是老用户熟悉的`propsSchema`，由于 propsSchema 不好写也意义不明，所以现在推荐直接使用 schema 字段，但目前还是兼容的</Alert>
+<Alert>
+  <span>注：这个字段就是老用户熟悉的`propsSchema`，由于 propsSchema 不好写也意义不明，所以现在推荐直接使用 schema 字段，但目前还是兼容的</span>
+</Alert>
 
 ### 概述
 

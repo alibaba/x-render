@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FormRender from '../../../src/antd';
 import { Button } from 'antd';
 // import FormRender from '../../../src/fusion';
+// import '@alifd/next/dist/next.min.css';
 
 const Demo = ({ schema = {} }) => {
   const [formData, setFormData] = useState(() => schema.formData);

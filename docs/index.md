@@ -102,6 +102,5 @@ export default Demo;
 
 请访问 [github](https://github.com/alibaba/form-render) 或加入讨论群：
 
-<img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="240">
-
+<img src="https://img.alicdn.com/tfs/TB1CprJg5pE_u4jSZKbXXbCUVXa-894-1087.jpg" width="240px" />
 <!-- <code src='./playground/index.jsx' className='hidden' /> -->
