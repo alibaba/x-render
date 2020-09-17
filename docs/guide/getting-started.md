@@ -143,7 +143,6 @@ export default Demo;
 | **onChange**     | `Function` |    ✓     | () => {} |                                                                          数据更改回调函数                                                                           |
 | **onValidate**   | `Function` |          | () => {} |                                                                          表单输入校验回调                                                                           |
 | **showValidate** | `Boolean`  |          |   true   | 是否展示校验信息（默认 `true` 兼容旧版，但建议初始 `false`，然后在提交时改成 true）。`false`时只有触碰过的 field 会展示校验信息，`true`时展示整个表单所有的校验信息 |
-
 | **displayType** | `String` | | column | 设置表单横向排列或者纵向排序`column`/`row` |
 | **showDescIcon** | `Boolean` | | false | 描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true` |
 | **readOnly** | `Boolean` | | false | 预览模式/可编辑模式 |
