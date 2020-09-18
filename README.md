@@ -1,24 +1,35 @@
-<a href="https://alibaba.github.io/form-render/">
-    <img width="146" src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
-</a>
+<p align="center">
+  <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/>
+</p>
+<h1 align= "center">
+FormRender
+</h1>
 
-# FormRender
-
-[![npm](https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/form-render?_blank)
-[![GitHub last commit](https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/commits/dev)
-[![NPM downloads](https://img.shields.io/npm/dm/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
-[![NPM all downloads](https://img.shields.io/npm/dt/form-render.svg?style=flat-square)](https://npmjs.org/package/form-render)
-[![GitHub closed issues](https://img.shields.io/github/issues-closed/alibaba/form-render.svg?style=flat-square)](https://github.com/alibaba/form-render/issues?utf8=%E2%9C%93&q=)
-![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)
+<p align="center">
+  <a href="https://www.npmjs.com/package/form-render?_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square"></a>
+  <a href="https://github.com/alibaba/form-render/commits/dev">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/alibaba/form-render.svg?style=flat-square"></a>
+  <a href="https://github.com/alibaba/form-render">
+    <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/alibaba/form-render"></a>
+  <a href="https://github.com/alibaba/form-render/issues?utf8=%E2%9C%93&q=">
+    <img alt = "GitHub closed issues" src="https://img.shields.io/github/issues-closed/alibaba/form-render.svg?style=flat-square"></a>
+  <a href="https://npmjs.org/package/form-render">
+    <img alt = "NPM downloads" src="https://img.shields.io/npm/dm/form-render.svg?style=flat-square"></a>
+  <a href="https://npmjs.org/package/form-render">
+    <img alt = "NPM all downloads" src="https://img.shields.io/npm/dt/form-render.svg?style=flat-square"></a>
+  <a>
+    <img alt = "PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
+</p>
 
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
 
 ## 了解
 
-- <a href="/guide/design/what">设计理念</a>
+- <a href="/docs/guide/design.md">设计理念</a>
 - <a href="https://form-render.github.io/schema-generator/" target="_blank">schema 编辑器</a>
 - <a href="/_demos/index" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
-- <a href="/guide/others/used-by">常见场景</a>
+- <a href="/docs/guide/others/usedBy.md">常见场景</a>
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
 ## 效果
@@ -33,7 +44,7 @@
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
 - 使用 JSON Schema 标准协议描述表单配置，并搭配丰富类型且可扩展的组件
 - 支持 1 排 N、横纵排、支持对象无限嵌套、自定义正则校验、自定义样式组件、列表拖拽等特性
-- 已在阿里云、淘宝、天猫、飞猪、亚博科技、安全智能、新零售行业工作台、人工智能实验室部门等多 BU 多场景使用，简单使用同时支持复杂场景使用
+- 已在阿里云、淘宝、天猫、飞猪、亚博科技、安全智能、新零售行业工作台、人工智能实验室等多 BU 多场景使用，简单使用同时支持复杂场景使用
 - 使用上有详细文档，维护上有专人支持
 
 ## 安装
@@ -115,18 +126,18 @@ export default Demo;
 
 ### API
 
-| Prop             |        Type         | Required | Default  |                              Description                               |
-| ---------------- | :-----------------: | :------: | :------: | :--------------------------------------------------------------------: |
-| **schema**       |      `Object`       |    ✓     |    {}    |                   详见 [schema 配置](/config/schema)                   |
-| **uiSchema**     |      `Object`       |          |    {}    | 详见 [uiSchema 配置](/config/ui-schema)（**一般建议合并到 `schema`**） |
-| **formData**     |      `Object`       |          |    {}    |                              配置表单数据                              |
-| **onChange**     |     `Function`      |    ✓     | () => {} |                            数据更改回调函数                            |
-| **onValidate**   |     `Function`      |          | () => {} |                            表单输入校验回调                            |
-| **displayType**  |      `String`       |          |  column  |               设置表单横向排列或者纵向排序`column`/`row`               |
-| **showDescIcon** |      `Boolean`      |          |  false   |    描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`     |
-| **readOnly**     |      `Boolean`      |          |  false   |                          预览模式/可编辑模式                           |
-| **labelWidth**   | `Number` / `String` |          |   110    | 全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等 |
-| **widgets**      |      `Object`       |          |    {}    |                               自定义组件                               |
+| Prop             |        Type         | Required | Default  |                                  Description                                  |
+| ---------------- | :-----------------: | :------: | :------: | :---------------------------------------------------------------------------: |
+| **schema**       |      `Object`       |    ✓     |    {}    |                  详见 [schema 配置](/docs/config/schema.md)                   |
+| **uiSchema**     |      `Object`       |          |    {}    | 详见 [uiSchema 配置](/docs/config/uiSchema.md)（**一般建议合并到 `schema`**） |
+| **formData**     |      `Object`       |          |    {}    |                                 配置表单数据                                  |
+| **onChange**     |     `Function`      |    ✓     | () => {} |                               数据更改回调函数                                |
+| **onValidate**   |     `Function`      |          | () => {} |                               表单输入校验回调                                |
+| **displayType**  |      `String`       |          |  column  |                  设置表单横向排列或者纵向排序`column`/`row`                   |
+| **showDescIcon** |      `Boolean`      |          |  false   |        描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`        |
+| **readOnly**     |      `Boolean`      |          |  false   |                              预览模式/可编辑模式                              |
+| **labelWidth**   | `Number` / `String` |          |   110    |    全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等     |
+| **widgets**      |      `Object`       |          |    {}    |                                  自定义组件                                   |
 
 **注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
 
@@ -145,7 +156,7 @@ export default Demo;
 | **showValidate** | `Boolean`  | very rare |   true    |                                  是否展示校验信息                                  |
 | **onMount**      | `Function` | very rare | undefined | onMount 有值时，首次加载时执行 onMount 而不是默认的 onChange。用于定制首次加载行为 |
 
-[详见“不常用 props”](/config/props2)
+[详见“不常用 props”](/docs/config/props2.md)
 
 ## 更多使用
 

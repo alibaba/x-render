@@ -21,7 +21,7 @@ schema 到组件的映射规则。比如 `{ type: 'string' }` 默认使用 `<Inp
 }
 ```
 
-完整的 mapping，以及对 mapping 使用方法的理解，建议读一下 [mapping 的使用：如何让自定义组件作为默认？](/guide/advanced/widget)
+完整的 mapping，以及对 mapping 使用方法的理解，建议读一下 [mapping 的使用：如何让自定义组件作为默认？](/docs/guide/advanced/widget.md)
 
 ## column
 

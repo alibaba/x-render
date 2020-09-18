@@ -83,14 +83,12 @@
 
   ```json
   {
-    ...
+    //...
     "ui:options": {
       "modal": true
     }
   }
   ```
-
-```
 
 - [+] 添加 color 组件对 opacity 的支持
 - [+] 开放 antd 的 ConfigProvider 给用户配置
@@ -267,4 +265,7 @@
 ### 0.1.0
 
 - [+] 对外开源的第一个版本
+
+```
+
 ```
