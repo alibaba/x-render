@@ -5,33 +5,39 @@
 
 import React, { useState } from 'react';
 import listHoc from '../../components/listHoc';
-import * as Icons from '@ant-design/icons';
+import { PlusCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 import { isObj } from '../../base/utils';
 import { Button, Modal, Drawer } from 'antd';
 
+const isComponent = comp => {
+  const type = typeof comp;
+  if (comp !== null && (type === 'function' || type === 'object')) {
+    return true;
+  }
+  return false;
+};
+
 function FrButton({ icon, children, ...rest }) {
-  let iconName;
+  let IconComponent;
   switch (icon) {
     case 'add':
-      iconName = 'PlusCircleOutlined';
+      IconComponent = PlusCircleOutlined;
       break;
     case 'delete':
-      iconName = 'DeleteOutlined';
+      IconComponent = DeleteOutlined;
       break;
     default:
-      iconName = icon;
+      IconComponent = icon;
       break;
   }
-  const IconComponent = Icons[iconName];
-  if (IconComponent) {
-    return (
-      <Button {...rest} size="small" icon={<IconComponent />}>
-        {children}
-      </Button>
-    );
-  }
+  let iconElement;
+  try {
+    if (isComponent(IconComponent)) {
+      iconElement = <IconComponent />;
+    }
+  } catch (error) {}
   return (
-    <Button {...rest} size="small">
+    <Button {...rest} size="small" icon={iconElement}>
       {children}
     </Button>
   );

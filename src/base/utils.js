@@ -30,6 +30,8 @@ export function isCssLength(str) {
 export function isDeepEqual(param1, param2) {
   if (param1 === undefined && param2 === undefined) return true;
   else if (param1 === undefined || param2 === undefined) return false;
+  if (param1 === null && param2 === null) return true;
+  else if (param1 === null || param2 === null) return false;
   else if (param1.constructor !== param2.constructor) return false;
 
   if (param1.constructor === Array) {
@@ -90,7 +92,9 @@ export function hasRepeat(list) {
 // ----------------- schema 相关
 
 // 合并propsSchema和UISchema。由于两者的逻辑相关性，合并为一个大schema能简化内部处理
-export function combineSchema(propsSchema, uiSchema) {
+export function combineSchema(_propsSchema, _uiSchema) {
+  const propsSchema = clone(_propsSchema);
+  const uiSchema = clone(_uiSchema);
   const propList = getChildren(propsSchema);
   const newList = propList.map(p => {
     const { name } = p;
@@ -210,6 +214,7 @@ export function isFunction(func) {
 }
 
 // 判断schema中是否有属性值是函数表达式
+// TODO: 这个util，没有考虑schema是array的情况，不过目前没有被用到
 export function isFunctionSchema(schema) {
   return Object.keys(schema).some(key => {
     if (typeof schema[key] === 'function') {
@@ -292,4 +297,27 @@ function isKey(value, object) {
     !reIsDeepProp.test(value) ||
     (object != null && value in Object(object))
   );
+}
+
+// 将schema内所有的 {{ ... }} 转换为正常函数，我们试着一次性在外部做好这件事，而不是在内部每次去计算，优化性能
+
+export function funcfySchema(schema) {
+  let _schema = clone(schema);
+  if (isObj(_schema)) {
+    Object.keys(_schema).forEach(key => {
+      _schema[key] = funcfySchema(_schema[key]);
+    });
+  } else if (Array.isArray(_schema)) {
+    _schema = _schema.map(item => funcfySchema(item));
+  } else {
+    const funcBody = isFunction(schema);
+    if (typeof funcBody === 'string') {
+      try {
+        _schema = new Function('formData', 'rootValue', `return ${funcBody}`);
+      } catch (error) {
+        console.error('funcfySchema', error);
+      }
+    }
+  }
+  return _schema;
 }

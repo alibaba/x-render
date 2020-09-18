@@ -8,7 +8,9 @@ toc: menu
 
 # Schema
 
-<Alert>注：这个字段就是老用户熟悉的`propsSchema`，由于 propsSchema 不好写也意义不明，所以现在推荐直接使用 schema 字段，但目前还是兼容的</Alert>
+<Alert>
+  <span>注：这个字段就是老用户熟悉的`propsSchema`，由于 propsSchema 不好写也意义不明，所以现在推荐直接使用 schema 字段，但目前还是兼容的</span>
+</Alert>
 
 ### 概述
 
@@ -53,7 +55,7 @@ toc: menu
 - `title`：表单的标题信息，作为 label 展示，注意 title 为""时占位，title 不写时不占位
 - `description`：表单的描述信息，常将填写注意点放入此参数
 - `type`：表单的类型，支持 string、number、boolean、array、object、range
-- `format`：用来描述输入框的格式，支持 image、dateTime、date、time
+- `format`：用来描述输入框的格式，支持 image、dateTime、date、time、upload, 其中 upload 为上传组件
 - `pattern`：自定义正则校验，用于校验 string 或 number 数据是否合格，详细使用可见 [pattern 自定义正则校验](/guide/advanced/pattern)
 - `message` 校验提示自定义文案，与 pattern 共同使用
 - `default` 默认值，对象类型不能使用 default，其他类型包括 array 都可以使用 default：

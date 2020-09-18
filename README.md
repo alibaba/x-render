@@ -22,9 +22,6 @@ FormRender
     <img alt = "PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
 </p>
 
-
-
-
 > 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
 
 ## 了解
@@ -73,11 +70,11 @@ yarn add @alifd/next
 
 ```jsx
 import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
 // 使用 Ant Design 风格
 import FormRender from 'form-render/lib/antd';
-// 使用 Fusion Design 风格
-// import FormRender from "form-render/lib/fusion";
+// 使用 Fusion 风格
+// import FormRender from 'form-render/lib/fusion';
+// import '@alifd/next/dist/next.min.css';
 
 const schema = {
   type: 'object',
@@ -129,18 +126,18 @@ export default Demo;
 
 ### API
 
-| Prop             |        Type         | Required | Default  |                              Description                               |
-| ---------------- | :-----------------: | :------: | :------: | :--------------------------------------------------------------------: |
-| **schema**       |      `Object`       |    ✓     |    {}    |                   详见 [schema 配置](/docs/config/schema.md)                   |
+| Prop             |        Type         | Required | Default  |                                  Description                                  |
+| ---------------- | :-----------------: | :------: | :------: | :---------------------------------------------------------------------------: |
+| **schema**       |      `Object`       |    ✓     |    {}    |                  详见 [schema 配置](/docs/config/schema.md)                   |
 | **uiSchema**     |      `Object`       |          |    {}    | 详见 [uiSchema 配置](/docs/config/uiSchema.md)（**一般建议合并到 `schema`**） |
-| **formData**     |      `Object`       |          |    {}    |                              配置表单数据                              |
-| **onChange**     |     `Function`      |    ✓     | () => {} |                            数据更改回调函数                            |
-| **onValidate**   |     `Function`      |          | () => {} |                            表单输入校验回调                            |
-| **displayType**  |      `String`       |          |  column  |               设置表单横向排列或者纵向排序`column`/`row`               |
-| **showDescIcon** |      `Boolean`      |          |  false   |    描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`     |
-| **readOnly**     |      `Boolean`      |          |  false   |                          预览模式/可编辑模式                           |
-| **labelWidth**   | `Number` / `String` |          |   110    | 全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等 |
-| **widgets**      |      `Object`       |          |    {}    |                               自定义组件                               |
+| **formData**     |      `Object`       |          |    {}    |                                 配置表单数据                                  |
+| **onChange**     |     `Function`      |    ✓     | () => {} |                               数据更改回调函数                                |
+| **onValidate**   |     `Function`      |          | () => {} |                               表单输入校验回调                                |
+| **displayType**  |      `String`       |          |  column  |                  设置表单横向排列或者纵向排序`column`/`row`                   |
+| **showDescIcon** |      `Boolean`      |          |  false   |        描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`        |
+| **readOnly**     |      `Boolean`      |          |  false   |                              预览模式/可编辑模式                              |
+| **labelWidth**   | `Number` / `String` |          |   110    |    全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等     |
+| **widgets**      |      `Object`       |          |    {}    |                                  自定义组件                                   |
 
 **注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
 
@@ -200,8 +197,7 @@ export default Demo;
 - 在公司或个人项目中使用 FormRender，关注 <a href="/CHANGELOG.md" target="_blank">Changelog</a>
 - 如果你觉得 FormRender 还不错，可以通过 Star 来表示你的喜欢
 - 加入钉钉聊天群帮忙解答使用问题
-
-  <img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="240">
+  <img src="https://img.alicdn.com/tfs/TB1CprJg5pE_u4jSZKbXXbCUVXa-894-1087.jpg" width="300px" />
 
 ## 贡献
 

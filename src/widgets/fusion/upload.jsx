@@ -1,11 +1,11 @@
 import React from 'react';
 import { Icon, Upload, Message, Button } from '@alifd/next';
 
-export default function input(p) {
+export default function upload(p) {
   const props = {
     name: 'file',
     listType: 'text',
-    action: p.action,
+    action: p.action || (p.options && p.options.action),
     enctype: 'multipart/form-data',
     withCredentials: true,
     type: 'file',

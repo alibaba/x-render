@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FormRender from '../../../src/antd';
 import { Button } from 'antd';
 // import FormRender from '../../../src/fusion';
+// import '@alifd/next/dist/next.min.css';
 
 const Demo = ({ schema = {} }) => {
   const [formData, setFormData] = useState(() => schema.formData);
@@ -9,7 +10,7 @@ const Demo = ({ schema = {} }) => {
   const [showValid, setShowValid] = useState(false);
 
   // useEffect(() => {
-  //   setTimeout(() => setFormData({ a: 'sdfs' }), 1500);
+  //   setTimeout(() => setFormData({ crowd: { upfIdList: 'sdfsdf' } }), 1500);
   // }, []);
 
   const onValidate = _valid => {

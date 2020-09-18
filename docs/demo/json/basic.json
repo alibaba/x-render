@@ -32,6 +32,14 @@
             "title": "图片展示",
             "type": "string",
             "format": "image"
+          },
+          "uploader": {
+            "title": "上传文件",
+            "type": "string",
+            "format": "upload",
+            "ui:options": {
+              "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            }
           }
         }
       },
@@ -125,7 +133,6 @@
     },
     "required": []
   },
-  "uiSchema": {},
   "formData": {
     "AllString": {
       "image": "http://placekitten.com/200/300"

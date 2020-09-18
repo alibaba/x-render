@@ -7,7 +7,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FormRender from './index';
 import { mapping, widgets } from './widgets/fusion';
-import '@alifd/next/dist/next.min.css';
 
 export default class FusionForm extends React.PureComponent {
   static propTypes = {

@@ -1,15 +1,16 @@
 import React, { useRef, useEffect, useMemo } from 'react';
-import { usePrevious } from './hooks';
+import { usePrevious, useDebounce } from './hooks';
 import PropTypes from 'prop-types';
 import { isDeepEqual, combineSchema } from './base/utils';
 import { asField, DefaultFieldUI } from './base/asField';
 import parse from './base/parser';
 import resolve from './base/resolve';
 import { getValidateList } from './base/validate';
+import fetcher from './HOC/fetcher';
 import './atom.css';
 import './index.css';
 
-function renderField(settings, fields, events) {
+function RenderField({ fields, onChange, ...settings }) {
   const { Field, props } = parse(settings, fields);
   if (!Field) {
     return null;
@@ -19,7 +20,7 @@ function renderField(settings, fields, events) {
       isRoot
       {...props}
       value={settings.data}
-      {...events}
+      onChange={onChange}
       formData={settings.formData}
     />
   );
@@ -34,8 +35,10 @@ const Wrapper = ({
   showValidate,
   ...rest
 }) => {
+  let _schema = {};
   const jsonSchema = schema || propsSchema; // 兼容schema字段和propsSchema字段
-  const _schema = combineSchema(jsonSchema, uiSchema);
+  // 将uiSchema和schema合并（推荐不写uiSchema）
+  _schema = combineSchema(jsonSchema, uiSchema);
 
   return (
     <FormRender
@@ -67,6 +70,7 @@ function FormRender({
   labelWidth = 110,
   useLogger = false,
 }) {
+  const isUserInput = useRef(false); // 状态改变是否来自于用户操作
   const originWidgets = useRef();
   const generatedFields = useRef({});
   const previousSchema = usePrevious(schema);
@@ -84,16 +88,26 @@ function FormRender({
   }, []);
 
   useEffect(() => {
+    if (isUserInput.current) {
+      isUserInput.current = false;
+      return;
+    }
     if (!isDeepEqual(previousSchema, schema)) {
       onChange(data);
     }
-  }, [schema]);
-
-  useEffect(() => {
     if (!isDeepEqual(previousData, formData)) {
       updateValidation();
     }
-  }, [formData]);
+  }, [schema, formData]);
+
+  const debouncedValidate = useDebounce(onValidate);
+
+  // 用户输入都是调用这个函数
+  const handleChange = (key, val) => {
+    isUserInput.current = true;
+    onChange(val);
+    debouncedValidate(getValidateList(val, schema));
+  };
 
   const updateValidation = () => {
     onValidate(getValidateList(data, schema));
@@ -117,37 +131,32 @@ function FormRender({
     generated[key] = gField;
   });
 
+  const settings = {
+    schema,
+    data,
+    name,
+    column,
+    showDescIcon,
+    showValidate,
+    displayType,
+    readOnly,
+    labelWidth,
+    useLogger,
+    formData: data,
+  };
+
+  const _fields = {
+    // 根据 Widget 生成的 Field
+    generated,
+    // 自定义的 Field
+    customized: fields,
+    // 字段 type 与 widgetName 的映射关系
+    mapping,
+  };
+
   return (
     <div className={`${className} fr-wrapper`}>
-      {renderField(
-        {
-          schema,
-          data,
-          name,
-          column,
-          showDescIcon,
-          showValidate,
-          displayType,
-          readOnly,
-          labelWidth,
-          useLogger,
-          formData: data,
-        },
-        {
-          // 根据 Widget 生成的 Field
-          generated,
-          // 自定义的 Field
-          customized: fields,
-          // 字段 type 与 widgetName 的映射关系
-          mapping,
-        },
-        {
-          onChange(key, val) {
-            onChange(val);
-            onValidate(getValidateList(val, schema));
-          },
-        }
-      )}
+      <RenderField {...settings} fields={_fields} onChange={handleChange} />
     </div>
   );
 }
@@ -172,4 +181,4 @@ FormRender.propTypes = {
   useLogger: PropTypes.bool,
 };
 
-export default Wrapper;
+export default fetcher(Wrapper);

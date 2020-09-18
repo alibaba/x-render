@@ -42,9 +42,13 @@ yarn add @alifd/next
 
 ## 使用
 
-```js
+```jsx
 import React, { useState } from 'react';
+// 使用 Ant Design 风格
 import FormRender from 'form-render/lib/antd';
+// 使用 Fusion 风格
+// import FormRender from 'form-render/lib/fusion';
+// import '@alifd/next/dist/next.min.css';
 
 const schema = {
   type: 'object',
@@ -72,6 +76,8 @@ const Demo = () => {
 export default Demo;
 ```
 
+注：由于 fusion 的 css 无法按需引入，且在内部整个引入会造成样式覆盖，所以需要用户外部独立引入
+
 ## schema 可以不用手写哦！
 
 使用 [表单设计器](https://x-render.gitee.io/schema-generator/)，拖拖拽拽导出 schema，丢到代码里生成可用表单
@@ -96,6 +102,5 @@ export default Demo;
 
 请访问 [github](https://github.com/alibaba/form-render) 或加入讨论群：
 
-<img src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/ts-upload/IMG_8838.JPG" width="240">
-
+<img src="https://img.alicdn.com/tfs/TB1CprJg5pE_u4jSZKbXXbCUVXa-894-1087.jpg" width="240px" />
 <!-- <code src='./playground/index.jsx' className='hidden' /> -->

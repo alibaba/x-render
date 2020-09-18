@@ -1,5 +1,38 @@
 # Change Log
 
+### 0.8.6
+
+- [!] 优化不再加载整个`@ant-design/icons`。暂时去掉 antd 侧使用 string 名称来描述列表新增组件的功能
+- [!] 重写 antd 的 upload 组件，去掉一些内置配置，允许在`ui:options`里自由配置
+- [!] 解决 fusion 的样式覆盖问题 ([#165](https://github.com/alibaba/form-render/issues/165))
+- [!] 表单类型为 number 输入值为 0 时没有触发 pattern 校验 ([#150](https://github.com/alibaba/form-render/issues/150))
+- [!] boolean 类设置必填时，选择 false 时必填校验不通过 ([#162](https://github.com/alibaba/form-render/issues/162))
+- [!] 文档更新，新功能补充说明，tooltip 太模糊换了个图标，钉钉群二维码更新 ([#163](https://github.com/alibaba/form-render/issues/163))
+
+### 0.8.5
+
+- [!] fix 了一个 dependencies 的问题
+
+### 0.8.4
+
+下面几个版本的一个大主题会是性能的提升
+
+- [+] 添加了一个实验性的 `path` 入参，填写 url 后 form-render 会自动抓取云端的 schema 进行渲染 （由于是实验性的，暂时不在文档中放出，等稳定后再给说明）
+- [!] 节流了内部校验逻辑，避免每次表单操作都调用
+
+### 0.8.3
+
+- [!] 避免了有些情况表单内部输入造成的反复渲染。这个渲染机制是为了监听外部人为的改动数据，现在内部输入不再会触发
+- [!] 避免了外部硬注入非 string 类的数据造成 input 的校验报 error
+- [!] 避免了外部硬注入非 string 类的数据造成 input 的 maxLength 的展示错误
+- [!] 修复了`ui:hidden`为函数表达式时，校验无法准确判断的问题
+- [!] 修复了单选组件 `default: null` 时的报错
+
+### 0.8.2
+
+- [!] 优化新的校验机制的触发，防止庞大的 schema 反复触发
+- [!] 优化列表的展示，删除按钮上移，现在的 list 占位更小
+
 ### 0.8.1
 
 - [+] 单选现在允许设置 default: null，使得默认不选择任何一个选项 ([#146](https://github.com/alibaba/form-render/issues/146))

@@ -6,7 +6,9 @@
 import isLength from 'validator/lib/isLength';
 import Color from 'color';
 import { isHidden } from './isHidden';
-import { hasRepeat, isFunction, baseGet } from './utils';
+import { hasRepeat, isFunction, baseGet, convertValue } from './utils';
+
+const isNotEmpty = val => [undefined, null].indexOf(val) === -1;
 
 const isEmptyObject = obj =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
@@ -17,7 +19,8 @@ const isEmptyValue = (value, schema) => {
   if (schema.type === 'array' && schema.enum) {
     return !value || value.length === 0;
   }
-  if (value === 0) {
+  // boolean里的false, number里的0, 都不要认为是空值
+  if (value === 0 || value === false) {
     return false;
   }
   return !value;
@@ -40,7 +43,8 @@ export const getValidateText = (obj = {}) => {
     maxItems, // list
     uniqueItems, // list
   } = schema;
-  let finalValue = value || defaultValue;
+  // TODO: 这里要不要把 null 算进去呢？感觉算进去更合理一点
+  let finalValue = [undefined, null].indexOf(value) > -1 ? defaultValue : value;
   // fix: number = 0 返回空字符串
   if (type === 'number' && value === 0) {
     finalValue = 0;
@@ -57,20 +61,31 @@ export const getValidateText = (obj = {}) => {
   }
   // 字符串相关校验
   if (type === 'string') {
-    if (finalValue && maxLength) {
-      if (!isLength(finalValue, 0, parseInt(maxLength, 10))) {
+    // TODO： 考虑了下，目前先允许 string 类的填入值是 undefined null 和 数字，校验的时候先转成 string
+    let _finalValue = finalValue;
+    if (typeof finalValue !== 'string') {
+      if (finalValue === null || finalValue === undefined) {
+        _finalValue = '';
+      } else {
+        _finalValue = String(finalValue);
+        // return '内容不是字符串，请修改'; // 这里可以强制提示，但旧项目有修改成本
+      }
+    }
+    // TODO: 为了一个 isLength 去引入一个包有点过分了，有空自己改写一下，而且 antd 用的 async-validator，是不是可以考虑看看
+    if (_finalValue && maxLength) {
+      if (!isLength(_finalValue, 0, parseInt(maxLength, 10))) {
         return (message && message.maxLength) || `长度不能大于 ${maxLength}`;
       }
     }
-    if (finalValue && (minLength || minLength === 0)) {
+    if (_finalValue && (minLength || minLength === 0)) {
       if (
-        !finalValue ||
-        !isLength(finalValue, parseInt(minLength, 10), undefined)
+        !_finalValue ||
+        !isLength(_finalValue, parseInt(minLength, 10), undefined)
       ) {
         return (message && message.minLength) || `长度不能小于 ${minLength}`;
       }
     }
-
+    // TODO: 为了一个Color引入了一个挺大的包，可以优化
     if (format === 'color' || widget === 'color') {
       try {
         // if (!finalValue) return '请填写正确的颜色格式';
@@ -95,7 +110,11 @@ export const getValidateText = (obj = {}) => {
   }
 
   // 正则只对数字和字符串有效果
-  if (finalValue && needPattern && !new RegExp(pattern).test(finalValue)) {
+  if (
+    isNotEmpty(finalValue) &&
+    needPattern &&
+    !new RegExp(pattern).test(finalValue)
+  ) {
     return (message && message.pattern) || '格式不匹配';
   }
 
@@ -137,7 +156,7 @@ export const getValidateText = (obj = {}) => {
   return false;
 };
 
-export const dealTypeValidate = (key, value, schema = {}) => {
+export const dealTypeValidate = (key, value, schema = {}, _formData) => {
   const checkList = [];
   const { type, items } = schema;
   const obj = {
@@ -145,11 +164,11 @@ export const dealTypeValidate = (key, value, schema = {}) => {
     schema,
   };
   if (type === 'object') {
-    const list = getValidateList(value, schema); // eslint-disable-line
+    const list = getValidateList(value, schema, _formData); // eslint-disable-line
     checkList.push(...list);
   } else if (type === 'array') {
     value.forEach(v => {
-      const list = dealTypeValidate(key, v, items);
+      const list = dealTypeValidate(key, v, items, _formData);
       checkList.push(...list);
     });
   }
@@ -168,16 +187,18 @@ const keyHidden = (schema, val) => {
   return hidden;
 };
 
-export const getValidateList = (val = {}, prop = {}) => {
+export const getValidateList = (val = {}, schema = {}, formData) => {
+  const _formData = formData || val;
   const checkList = [];
-  const { properties, required } = prop;
+  const { properties, required } = schema;
   // 校验必填（required 属性只在 type:object 下存在）
   if (required && required.length > 0) {
     required.forEach(key => {
       const schema = (properties && properties[key]) || {};
       const hidden = keyHidden(schema, val);
+      const _hidden = convertValue(hidden, _formData, val);
       const itemValue = val && val[key];
-      if (isEmptyValue(itemValue, schema) && !hidden) {
+      if (isEmptyValue(itemValue, schema) && !_hidden) {
         checkList.push(key);
       }
     });
@@ -188,8 +209,9 @@ export const getValidateList = (val = {}, prop = {}) => {
       const value = val[key];
       const schema = properties[key] || {};
       const hidden = keyHidden(schema, val);
-      if (!hidden) {
-        const list = dealTypeValidate(key, value, schema);
+      const _hidden = convertValue(hidden, _formData, val);
+      if (!_hidden) {
+        const list = dealTypeValidate(key, value, schema, _formData);
         checkList.push(...list);
       }
     });
