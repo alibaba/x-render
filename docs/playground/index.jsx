@@ -20,7 +20,7 @@ const themeList = [
 ];
 class Root extends Component {
   state = {
-    schemaName: 'default',
+    schemaName: 'simplest',
     theme: 'antd',
     column: 1,
     displayType: 'column',
