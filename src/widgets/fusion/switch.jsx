@@ -6,7 +6,7 @@ export default function sw(p) {
     <Switch
       disabled={p.disabled || p.readonly}
       onChange={checked => p.onChange(p.name, checked)}
-      defaultChecked={p.value}
+      checked={!!p.value}
     />
   );
 }

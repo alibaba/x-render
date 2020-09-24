@@ -10,18 +10,13 @@ import { getFormat } from '../base/utils';
 export default (p, onChange, RangeComponent) => {
   const { format = 'dateTime' } = p.schema;
   const dateFormat = getFormat(format);
-  let defaultObj = {};
-  if (p.value && Array.isArray(p.value) && p.value[0] && p.value[1]) {
-    defaultObj = {
-      defaultValue: [
-        moment(p.value[0], dateFormat),
-        moment(p.value[1], dateFormat),
-      ],
-    };
-  }
+  const [start, end] = Array.isArray(p.value) ? p.value : [];
+  const value =
+    start && end ? [moment(start, dateFormat), moment(end, dateFormat)] : [];
+
   const datePrams = {
     ...p.options,
-    ...defaultObj,
+    value,
     style: { width: '100%' },
     showTime: format === 'dateTime',
     disabled: p.disabled || p.readonly,
