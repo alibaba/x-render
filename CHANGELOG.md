@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.8.7
+
+- [!] validate pattern 的逻辑回滚到之前的
+
 ### 0.8.6
 
 - [!] 优化不再加载整个`@ant-design/icons`。暂时去掉 antd 侧使用 string 名称来描述列表新增组件的功能
