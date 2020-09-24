@@ -2,7 +2,10 @@
 
 ### 0.8.7
 
-- [!] validate pattern 的逻辑回滚到之前的
+- [!] 校验 pattern 的逻辑回滚到之前的模式。只有填写了值之后才会去校验 pattern 的正则表达式
+- [!] 修复了 switch 和时间区间组件有默认值时不展示的问题 ([#169](https://github.com/alibaba/form-render/issues/169))
+- [!] 修复了外部人为修改 schema 时数据不更新的的问题 ([#173](https://github.com/alibaba/form-render/issues/173))
+- [!] 修复了选择组件在 js 文件里使用 `default: undefined` 无效的问题 ([#174](https://github.com/alibaba/form-render/issues/174))
 
 ### 0.8.6
 

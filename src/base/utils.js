@@ -92,9 +92,7 @@ export function hasRepeat(list) {
 // ----------------- schema 相关
 
 // 合并propsSchema和UISchema。由于两者的逻辑相关性，合并为一个大schema能简化内部处理
-export function combineSchema(_propsSchema, _uiSchema) {
-  const propsSchema = clone(_propsSchema);
-  const uiSchema = clone(_uiSchema);
+export function combineSchema(propsSchema, uiSchema) {
   const propList = getChildren(propsSchema);
   const newList = propList.map(p => {
     const { name } = p;
