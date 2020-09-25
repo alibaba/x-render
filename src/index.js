@@ -94,8 +94,8 @@ function FormRender({
     }
     if (!isDeepEqual(previousSchema, schema)) {
       onChange(data);
-    }
-    if (!isDeepEqual(previousData, formData)) {
+      updateValidation();
+    } else if (!isDeepEqual(previousData, formData)) {
       updateValidation();
     }
   }, [schema, formData]);

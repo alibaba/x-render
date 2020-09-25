@@ -1,34 +1,35 @@
 // 从 path 参数去请求 schema 的功能
-import React, { useEffect } from 'react';
-import { useSet } from '../hooks';
+import React from 'react';
 
-const fetcher = Component => props => {
-  const { path, schema, propsSchema, uiSchema, ...rest } = props;
-  const [state, setState] = useSet({
-    urlSchema: null,
-    loading: false,
-  });
+function fetcher(Component) {
+  return class extends React.Component {
+    state = { urlSchema: null, loading: false };
 
-  const { urlSchema, loading } = state;
-
-  useEffect(() => {
-    if (path && typeof path === 'string') {
-      setState({ loading: true });
-      fetch(path)
-        .then(res => res.json())
-        .then(data => {
-          setState({ loading: false, urlSchema: data });
-        })
-        .catch(err => {
-          console.error(err);
-        });
+    componentDidMount() {
+      const { path } = this.props;
+      if (path && typeof path === 'string') {
+        this.setState({ loading: true });
+        fetch(path)
+          .then(res => res.json())
+          .then(data => {
+            this.setState({ loading: false, urlSchema: data });
+          })
+          .catch(err => {
+            console.error(err);
+          });
+      }
     }
-  }, []);
-  if (loading) {
-    return 'Loading...';
-  }
-  if (urlSchema) return <Component {...urlSchema} {...rest} />;
-  return <Component {...props} />;
-};
+
+    render() {
+      const { schema, propsSchema, uiSchema, ...rest } = this.props;
+      const { urlSchema, loading } = this.state;
+      if (loading) {
+        return 'Loading...';
+      }
+      if (urlSchema) return <Component {...urlSchema} {...rest} />;
+      return <Component {...this.props} />;
+    }
+  };
+}
 
 export default fetcher;
