@@ -7,7 +7,7 @@ import { Button } from 'antd';
 const Demo = ({ schema = {} }) => {
   const [formData, setFormData] = useState(() => schema.formData);
   const [valid, setValid] = useState([]);
-  const [showValid, setShowValid] = useState(false);
+  const [showValid, setShowValid] = useState(true);
 
   // useEffect(() => {
   //   setTimeout(() => setFormData({ crowd: { upfIdList: 'sdfsdf' } }), 1500);

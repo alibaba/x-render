@@ -88,8 +88,7 @@ export const getValidateText = (obj = {}) => {
     // TODO: 为了一个Color引入了一个挺大的包，可以优化
     if (format === 'color' || widget === 'color') {
       try {
-        // if (!finalValue) return '请填写正确的颜色格式';
-        Color(finalValue);
+        Color(finalValue || null); // 空字符串无法解析会报错，出现空的情况传 null
       } catch (e) {
         return '请填写正确的颜色格式';
       }
