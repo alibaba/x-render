@@ -28,7 +28,7 @@ FormRender
 
 - <a href="/docs/guide/design.md">设计理念</a>
 - <a href="https://form-render.github.io/schema-generator/" target="_blank">schema 编辑器</a>
-- <a href="/_demos/index" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
+- <a href="https://x-render.gitee.io/form-render/playground" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
 - <a href="/docs/guide/others/usedBy.md">常见场景</a>
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
