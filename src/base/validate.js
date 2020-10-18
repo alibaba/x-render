@@ -101,10 +101,10 @@ export const getValidateText = (obj = {}) => {
     if (typeof finalValue !== 'number') {
       return '请填写数字';
     }
-    if (maximum && parseInt(finalValue, 10) > maximum) {
+    if (maximum && parseFloat(finalValue, 10) > maximum) {
       return (message && message.maximum) || `数值不能大于 ${maximum}`;
     }
-    if ((minimum || minimum === 0) && parseInt(finalValue, 10) < minimum) {
+    if ((minimum || minimum === 0) && parseFloat(finalValue, 10) < minimum) {
       return (message && message.minimum) || `数值不能小于 ${minimum}`;
     }
   }
