@@ -27,7 +27,7 @@ FormRender
 ## 了解
 
 - <a href="/docs/guide/design.md">设计理念</a>
-- <a href="https://form-render.github.io/schema-generator/" target="_blank">schema 编辑器</a>
+- <a href="https://x-render.gitee.io/schema-generator/" target="_blank">schema 编辑器</a>
 - <a href="https://x-render.gitee.io/form-render/playground" target="_blank">Playground</a> / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
 - <a href="/docs/guide/others/usedBy.md">常见场景</a>
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
@@ -40,7 +40,7 @@ FormRender
 
 <table><tr><td><img src="https://gw.alicdn.com/tfs/TB1f5TAJND1gK0jSZFsXXbldVXa-2152-1162.gif?raw=true" width="750px"/></td><td><img src="https://gw.alipayobjects.com/zos/demos_resources/5ay8d5/fr-flow-short-par2.gif?raw=true" width='750px' /></td></tr></table>
 
-- 如上图，使用 [Schema 编辑器](https://form-render.github.io/schema-generator/) 快速生成可实现低上手成本、快速搭建
+- 如上图，使用 [Schema 编辑器](https://x-render.gitee.io/schema-generator/) 快速生成可实现低上手成本、快速搭建
 - 支持 Ant Design 和 Fusion Design 主流的视觉主题
 - 使用 JSON Schema 标准协议描述表单配置，并搭配丰富类型且可扩展的组件
 - 支持 1 排 N、横纵排、支持对象无限嵌套、自定义正则校验、自定义样式组件、列表拖拽等特性
@@ -162,7 +162,7 @@ export default Demo;
 
 - vscode 插件：快速准确书写 schema 一直是使用者的痛点，为此我们准备了 schema 书写利器： `form-render snippets`（vscode 插件），在 vscode 商店输入 ‘formrender’
 
-- 支持 TypeScript：详见[如何在 TypeScript 项目中使用](docs/typescript)
+- 支持 TypeScript：详见[如何在 TypeScript 项目中使用](https://x-render.gitee.io/form-render/guide/others/faq)
 
 - **支持 Ant Design 自定义主题不被覆盖**
 
