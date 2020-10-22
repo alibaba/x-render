@@ -2,12 +2,15 @@
 
 ### 0.8.8
 
+感谢各位的 PR。双十一有点忙，之后 FR 的发布会稳定进入一周一版
+
 - [!] 确保 color 组件在 antd 展示 100% 伸缩
 - [!] 添加更多字段允许函数表达式('minimum','maximum', 'minLength', 'maxLength') ([@monijiang](https://github.com/monijiang) in [#177](https://github.com/alibaba/form-render/pull/177))
 - [!] maximum 字段支持浮点数 ([@fayeah](https://github.com/fayeah) for [#188](https://github.com/alibaba/form-render/issues/188))
 - [!] 时间和时间范围组件都是非受控组件造成初始数据无法展示的问题 ([@zhangchen915](https://github.com/zhangchen915) in [#177](https://github.com/alibaba/form-render/pull/172))
 - [!] 支持离线使用，将 cdn 资源图片替换为 base64 ([#158](https://github.com/alibaba/form-render/issues/158))
 - [!] Demo 和文档的链接以及 schema 写法的翻新
+- [!] 列表折叠时，多选框内容正确显示（之前只展示{复杂结构}）([@terryz95](https://github.com/terryz95) in [#184](https://github.com/alibaba/form-render/pull/184))
 
 ### 0.8.7
 
