@@ -11,13 +11,16 @@ const getEnumValue = (value, enums, enumNames) => {
       }
       return value;
     } else if (Array.isArray(value)) {
-      const result = value.map(v => getEnumValue(value, enums, enumNames));
+      const result = value.map(v => getEnumValue(v, enums, enumNames));
       return String(result);
     }
     return value;
   }
   return value;
 };
+
+const isEnumText = text =>
+  typeof text === 'string' || typeof text === 'number' || Array.isArray(text);
 
 const DescriptionList = ({ schema = {}, value = [], index }) => {
   const list = getDescription({ schema, value, index })
@@ -67,10 +70,12 @@ export const getDescription = ({ schema = {}, value = [], index }) => {
       text = '';
     } else if (typeof text === 'boolean') {
       text = text ? '是' : '否';
-    } else if (typeof text !== 'string' && typeof text !== 'number' && text) {
-      text = '{复杂结构}';
-    } else if (t.enum && t.enumNames) {
+    } else if (t.enum && t.enumNames && text && isEnumText(text)) {
+      // 先判断是否有枚举配置
       text = getEnumValue(text, t.enum, t.enumNames);
+    } else if (typeof text !== 'string' && typeof text !== 'number' && text) {
+      // 最后的兜底处理
+      text = '{复杂结构}';
     }
     return {
       title,
