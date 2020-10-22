@@ -5,7 +5,11 @@
 
 import React, { useState } from 'react';
 import listHoc from '../../components/listHoc';
-import { PlusCircleOutlined, DeleteOutlined } from '@ant-design/icons';
+import {
+  PlusCircleOutlined,
+  DeleteOutlined,
+  CopyOutlined,
+} from '@ant-design/icons';
 import { isObj } from '../../base/utils';
 import { Button, Modal, Drawer } from 'antd';
 

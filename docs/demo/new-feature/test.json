@@ -10,6 +10,11 @@
         "title": "测试效验",
         "type": "string",
         "ui:hidden": "{{formData.string!=='2'}}"
+      },
+      "color": {
+        "title": "颜色选择",
+        "type": "string",
+        "format": "color"
       }
     },
     "required": ["string22"]

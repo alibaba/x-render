@@ -182,20 +182,20 @@
     "arrDemo": {
       "ui:options": {
         "foldable": true,
-        "hideDelete": "{{rootValue.length === 1}}"
+        "hideDelete": "{{rootValue.length === 1}}",
+        "buttons": [
+          {
+            "text": "复制",
+            "icon": "CopyOutlined",
+            "callback": "copyLast"
+          }
+        ]
       },
       "items": {
         "name": {
           "ui:disabled": "{{rootValue.num === 3}}"
         }
-      },
-      "ui:extraButtons": [
-        {
-          "text": "复制",
-          "icon": "copy",
-          "callback": "copyLast"
-        }
-      ]
+      }
     }
   },
   "formData": {

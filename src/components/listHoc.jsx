@@ -106,7 +106,7 @@ const listItemHoc = ButtonComponent =>
               <div className="fr-item-action-icon" onClick={this.handleDelete}>
                 <img
                   style={{ height: '70%' }}
-                  src="https://img.alicdn.com/tfs/TB12VseTuL2gK0jSZPhXXahvXXa-128-128.png"
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACABAMAAAAxEHz4AAAAFVBMVEVHcEwyMjIzMzMzMzMzMzMyMjIzMzPB9FYmAAAABnRSTlMAwO5OlCWVPuLSAAABQklEQVRo3u2ZzQ6CMBCEQeSuHHrGn3gmRjkbjZxN9AVA0/d/BAPR2OKCU+pJZ04E2A+6hTY7GwQU1atNoh+aHYbEh9rQZABAW3KPH9uAnTMgtwFXZ0BhA27OAGUDSmfAygZUvTdHiR6gMutKGKpr13jhV+j4ZmBV3wN4D8E7id7T+MyDy4+KnSSAAAJ+ARAlrwXDPIYBubFk5a3NFQIoY9FUrb0RApjLdntvRAEauUYAAQQQQAABBBBAAAEE/CXAr+DwLnm8iy7vso+1838CaiP6hMXHolFdAzIMEIkAhfcAxqLXXrv5CwywFt3+HLfwldhvGMF9jKb3kcqnS2AeYiU/Km4aCsvtp/jzvnHFhScVLqa01DEJXQAT6eVWQ3z9t3nAlMr5KXwy0MwkOIiq83O5QITq2POfTeefwufTLKCotu7zGChb6PfVgwAAAABJRU5ErkJggg=="
                   alt="delete"
                 />
               </div>

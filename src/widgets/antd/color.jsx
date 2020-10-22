@@ -35,6 +35,7 @@ export default function color(p) {
         <span>{p.value || defaultColor}</span>
       ) : (
         <Input
+          style={{ width: '100%' }}
           placeholder={defaultColor}
           disabled={p.disabled}
           value={p.value}
