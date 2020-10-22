@@ -1,5 +1,14 @@
 # Change Log
 
+### 0.8.8
+
+- [!] 确保 color 组件在 antd 展示 100% 伸缩
+- [!] 添加更多字段允许函数表达式('minimum','maximum', 'minLength', 'maxLength') ([@monijiang](https://github.com/monijiang) in [#177](https://github.com/alibaba/form-render/pull/177))
+- [!] maximum 字段支持浮点数 ([@fayeah](https://github.com/fayeah) for [#188](https://github.com/alibaba/form-render/issues/188))
+- [!] 时间和时间范围组件都是非受控组件造成初始数据无法展示的问题 ([@zhangchen915](https://github.com/zhangchen915) in [#177](https://github.com/alibaba/form-render/pull/172))
+- [!] 支持离线使用，将 cdn 资源图片替换为 base64 ([#158](https://github.com/alibaba/form-render/issues/158))
+- [!] Demo 和文档的链接以及 schema 写法的翻新
+
 ### 0.8.7
 
 - [!] 校验 pattern 的逻辑回滚到之前的模式。只有填写了值之后才会去校验 pattern 的正则表达式
@@ -62,7 +71,7 @@
 ### 0.7.2
 
 - [+] input/textarea 有 maxLength 属性时，展示字数长度的提示 ([#127](https://github.com/alibaba/form-render/issues/127))
-- [+] `"ui:options"/buttons` 支持 组件库的 button props 扩展。在按钮较多场景时，用户希望有重点的弱化或者强化部分按钮 ([#122](https://github.com/alibaba/form-render/issues/122))
+- [+] `"ui:options"/buttons` 支持 组件库的 button props 扩展 (原先的 `ui:extraButtons` 已经弃用，遵循 FR 的 schema 规范，见“设计理念”)。在按钮较多场景时，用户希望有重点的弱化或者强化部分按钮 ([#122](https://github.com/alibaba/form-render/issues/122))
 - [!] 校验失败的文字框的 box-shadow 展示正确淡红色（而不是以前的浅蓝）
 - [!] 当多选 checkbox 折行时，保持展示对齐（antd/fusion）([#125](https://github.com/alibaba/form-render/issues/125))
 
