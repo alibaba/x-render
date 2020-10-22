@@ -170,9 +170,9 @@ toc: menu
 "arrDemo": {
   "ui:options": {
     "buttons": [
+      // 可以不写 icon
       {
         "text": "Excel导入",
-        "icon": "copy",
         "callback": "someCallback"
       },
       {
@@ -182,7 +182,7 @@ toc: menu
       },
       {
         "text": "复制上个",
-        "icon": "copy",
+        "icon": "CopyOutlined", // fusion UI 侧 "icon": "copy"
         "callback": "copyLast"
       }
     ]
@@ -192,6 +192,7 @@ toc: menu
 
 1. 其中`clearAll` 和 `copyLast` 是内置函数, 前者用于清空数组，后者用于复制最后一个元素
 2. `callback` 也可使用自定义的名称 `someCallback`, 此时 form-render 会到 window.someCallback 上寻找回调函数，此回调函数可接受两个参数 `value` 和 `onChange`。
+3. antd 侧的 button 名称遵循 [Antd icons 文档](https://ant.design/components/icon/)，且必须外部引入 `@ant-design/icons` 包。fusion 侧 icons 已经随包安装所以不需要安装依赖，名称也遵循 fusion 文档
 
 ```js
 // value: 整个数组的值，onChange: 传入改变后的数组值，触发state更新
