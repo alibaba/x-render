@@ -1,3 +1,5 @@
+import { getEnum } from './utils';
+
 function getWidgetName(schema, map) {
   const { type, format, enum: enums, readonly } = schema;
   const list = [];
@@ -5,7 +7,7 @@ function getWidgetName(schema, map) {
     list.push(`${type}?readonly`);
     list.push('*?readonly');
   }
-  if (enums) {
+  if (getEnum(schema)) {
     list.push(`${type}?enum`);
     // array 默认使用list，array?enum 默认使用checkboxes，*?enum 默认使用select
     list.push('*?enum');

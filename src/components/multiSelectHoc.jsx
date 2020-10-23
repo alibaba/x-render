@@ -11,7 +11,9 @@ export default MultiComponent => p => {
   const style = p.invalid
     ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 2px rgba(255,77,79,.2)' }
     : {};
-  const { enum: enums, enumNames } = p.schema || {};
+  const schema = p.schema || {};
+  const { items = {} } = schema;
+  const { enum: enums, enumNames } = items && items.enum ? items : schema;
   const _value = p.value && Array.isArray(p.value) ? p.value : [];
   return (
     <MultiComponent
