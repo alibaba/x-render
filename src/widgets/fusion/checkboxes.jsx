@@ -2,7 +2,9 @@ import React from 'react';
 import { Checkbox } from '@alifd/next';
 
 export default function checkboxes(p) {
-  const { enum: enums, enumNames } = p.schema || {};
+  const schema = p.schema || {};
+  const { items = {} } = schema;
+  const { enum: enums, enumNames } = items && items.enum ? items : schema;
   const _value = p.value && Array.isArray(p.value) ? p.value : [];
   // if (p.readonly) {
   //   let displayText = _value.join(',');
