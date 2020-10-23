@@ -319,3 +319,10 @@ export function funcfySchema(schema) {
   }
   return _schema;
 }
+
+export const getEnum = schema => {
+  if (!schema) return undefined;
+  const itemEnum = schema && schema.items && schema.items.enum;
+  const schemaEnum = schema && schema.enum;
+  return itemEnum ? itemEnum : schemaEnum;
+};
