@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.8.9
+
+- [!] 支持 React 17（修改 peerDepedencies）
+
 ### 0.8.8
 
 感谢各位的 PR。双十一有点忙，之后 FR 的发布会稳定进入一周一版
