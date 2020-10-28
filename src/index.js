@@ -9,6 +9,7 @@ import { getValidateList } from './base/validate';
 import fetcher from './HOC/fetcher';
 import './atom.css';
 import './index.css';
+import Safe from './Safe';
 
 function RenderField({ fields, onChange, ...settings }) {
   const { Field, props } = parse(settings, fields);
@@ -156,7 +157,9 @@ function FormRender({
 
   return (
     <div className={`${className} fr-wrapper`}>
-      <RenderField {...settings} fields={_fields} onChange={handleChange} />
+      <Safe>
+        <RenderField {...settings} fields={_fields} onChange={handleChange} />
+      </Safe>
     </div>
   );
 }
