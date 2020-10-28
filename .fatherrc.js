@@ -27,5 +27,12 @@ export default {
       },
       '@alifd/next',
     ],
+    [
+      'import',
+      {
+        libraryName: '@ant-design/icons',
+        libraryDirectory: 'es',
+      },
+    ],
   ],
 };
