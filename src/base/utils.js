@@ -231,6 +231,8 @@ function stringContains(str, text) {
   return str.indexOf(text) > -1;
 }
 
+export const isNumber = a => !Number.isNaN(Number(a));
+
 export const isObj = a =>
   stringContains(Object.prototype.toString.call(a), 'Object');
 
