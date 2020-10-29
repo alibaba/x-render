@@ -31,8 +31,10 @@ export default {
       'import',
       {
         libraryName: '@ant-design/icons',
-        libraryDirectory: 'es',
+        libraryDirectory: 'lib/icons',
+        camel2DashComponentName: false,
       },
+      '@ant-design/icons',
     ],
   ],
 };
