@@ -4,12 +4,11 @@ export default function map(p) {
   let className = 'fr-map ';
   const { options = {} } = p || {};
   const isModal = options.modal || options.drawer;
-  try {
-    className += isModal ? 'fr-wrapper' : ''; // 因为modal跳出fr的dom层级了，需要重新加个顶层的className
-  } catch (error) {}
+  className += isModal ? 'fr-wrapper' : ''; // 因为modal跳出fr的dom层级了，需要重新加个顶层的className
+  const _value = p.value || {};
   return (
     <div className={className}>
-      {Object.keys(p.value).map(name => {
+      {Object.keys(_value).map(name => {
         return p.getSubField({
           name,
           value: p.value[name],

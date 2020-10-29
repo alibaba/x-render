@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { getArray } from '../base/utils';
 
 export default SelectComponent => p => {
   const { Option } = SelectComponent;
@@ -20,8 +21,9 @@ export default SelectComponent => p => {
       value={p.value}
       onChange={onChange}
     >
-      {(enums || []).map((val, index) => {
-        let option = enumNames ? enumNames[index] : val;
+      {getArray(enums).map((val, index) => {
+        let option =
+          enumNames && Array.isArray(enumNames) ? enumNames[index] : val;
         const isHtml = typeof option === 'string' && option[0] === '<';
         if (isHtml) {
           option = <span dangerouslySetInnerHTML={{ __html: option }} />;

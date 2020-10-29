@@ -1,5 +1,6 @@
 import React from 'react';
 import { Checkbox } from '@alifd/next';
+import { getArray } from '../../base/utils';
 
 export default function checkboxes(p) {
   const schema = p.schema || {};
@@ -21,12 +22,13 @@ export default function checkboxes(p) {
       value={_value}
       onChange={values => p.onChange(p.name, values)}
     >
-      {(enums || [true, false]).map((val, index) => (
+      {getArray(enums, [true, false]).map((val, index) => (
         <Checkbox value={val} key={index}>
           <span
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-              __html: enumNames ? enumNames[index] : val,
+              __html:
+                enumNames && Array.isArray(enumNames) ? enumNames[index] : val,
             }}
           />
         </Checkbox>

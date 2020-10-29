@@ -326,3 +326,8 @@ export const getEnum = schema => {
   const schemaEnum = schema && schema.enum;
   return itemEnum ? itemEnum : schemaEnum;
 };
+
+export const getArray = (arr, defaultValue = []) => {
+  if (Array.isArray(arr)) return arr;
+  return defaultValue;
+};

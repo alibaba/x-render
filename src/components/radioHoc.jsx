@@ -4,11 +4,7 @@
  */
 
 import React from 'react';
-
-const getArray = data => {
-  if (Array.isArray(data)) return data;
-  throw Error("type of your 'enum' is not array");
-};
+import { getArray } from '../base/utils';
 
 export default p => {
   const Radio = p.Radio;
@@ -25,7 +21,8 @@ export default p => {
           <span
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-              __html: enumNames && getArray(enumNames) ? enumNames[index] : val,
+              __html:
+                enumNames && Array.isArray(enumNames) ? enumNames[index] : val,
             }}
           />
         </Radio>

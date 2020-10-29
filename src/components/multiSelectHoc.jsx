@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { getArray } from '../base/utils';
 
 export default MultiComponent => p => {
   const { Option } = MultiComponent;
@@ -24,12 +25,13 @@ export default MultiComponent => p => {
       value={_value}
       onChange={onChange}
     >
-      {(enums || []).map((val, index) => (
+      {getArray(enums).map((val, index) => (
         <Option value={val} key={index}>
           <span
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-              __html: enumNames ? enumNames[index] : val,
+              __html:
+                enumNames && Array.isArray(enumNames) ? enumNames[index] : val,
             }}
           />
         </Option>
