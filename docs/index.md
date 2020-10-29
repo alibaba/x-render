@@ -59,8 +59,8 @@ const schema = {
     },
     select: {
       title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
+      type: 'number',
+      enum: [1, 2, 3],
       enumNames: ['选项1', '选项2', '选项3'],
     },
   },
@@ -68,8 +68,14 @@ const schema = {
 
 const Demo = () => {
   const [formData, setFormData] = useState({});
+  const onSubmit = () => {
+    alert(JSON.stringify(formData));
+  };
   return (
-    <FormRender schema={schema} formData={formData} onChange={setFormData} />
+    <div>
+      <FormRender schema={schema} formData={formData} onChange={setFormData} />
+      <button onClick={onSubmit}>提交</button>
+    </div>
   );
 };
 
@@ -85,6 +91,10 @@ export default Demo;
 <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
 
 <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*FfTuRYjRd1AAAAAAAAAAAABkARQnAQ?raw=true" alt="schema编辑器" width='750px' />
+
+还可在 vscode 商店搜索 “formrender” 下载配套 [可视化插件](https://marketplace.visualstudio.com/items?itemName=F-loat.vscode-plugin-fr-schema)
+
+<img src="https://img.alicdn.com/tfs/TB1b53cmGNj0u4jSZFyXXXgMVXa-2740-1748.gif" alt="schema编辑器" width='750px' />
 
 ## 理念
 
