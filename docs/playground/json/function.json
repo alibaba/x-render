@@ -36,7 +36,10 @@
             "title": "金额",
             "description": "{{rootValue.bi === 'dollar' ? '一次汇款不超过150美元':'一次汇款不超过1000元'}}",
             "type": "string",
-            "ui:options": "{{{addonBefore: rootValue.bi === 'rmb'? '￥':'$', addonAfter: rootValue.bi === 'rmb'? '元':'美元'}}}"
+            "ui:options": {
+              "addonBefore": "{{rootValue.bi === 'rmb'? '￥':'$'}}",
+              "addonAfter": "{{rootValue.bi === 'rmb'? '元':'美元'}}"
+            }
           }
         }
       },
