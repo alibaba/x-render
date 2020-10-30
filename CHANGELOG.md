@@ -2,7 +2,13 @@
 
 ### 0.8.9
 
-- [!] 支持 React 17（修改 peerDepedencies）
+- [+] 数组组件支持自动分页，并添加 `ui:options/pageSize` 可用于控制每页显示数量 ([#201](https://github.com/alibaba/form-render/issues/201))
+- [+] Array 类型组件兼容标准的 JSON schema 写法 ([@siyi98](https://github.com/siyi98) in [#191](https://github.com/alibaba/form-render/pull/191))
+
+- [!] 修复了两个 react dependencies 相关的问题，项目现在能正常支持所有 react 16.8 以上的版本（因为内部用到了 hooks）。([#197](https://github.com/alibaba/form-render/issues/197))
+- [!] 真正不再加载整个 `@ant-design/icons`，大量减少加载体积 ([@F-loat](https://github.com/F-loat) in [#202](https://github.com/alibaba/form-render/pull/202))
+- [!] 避免 enum 和 enumNames 乱写会造成整个项目 crash
+- [!] 修复文档，各种链接跳转正确地址，fusion demo 缺失 css 的问题解决 ([@siyi98](https://github.com/siyi98) in [#191](https://github.com/alibaba/form-render/pull/191))
 
 ### 0.8.8
 
