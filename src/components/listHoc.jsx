@@ -157,6 +157,20 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
       value.push(p.newItem);
       p.onChange(p.name, value);
       addUnfoldItem();
+      const list = Array.isArray(value) ? value : [];
+      const pageSize = this.getPageSize(p);
+      const page = Math.ceil(list.length / pageSize);
+      this.props.handlePageChange(page);
+    };
+
+    getPageSize = props => {
+      const { options } = props || {};
+      const _options = isObj(options) ? options : {};
+      let pageSize = 10;
+      if (isNumber(_options.pageSize)) {
+        pageSize = Number(_options.pageSize);
+      }
+      return pageSize;
     };
 
     onPageChange = (page, pageSize) => {
@@ -171,17 +185,13 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
 
     render() {
       const { p, foldList = [], currentIndex, toggleFoldItem } = this.props;
-      const { options, extraButtons } = p || {};
-      const _options = isObj(options) ? options : {};
       // prefer ui:options/buttons to ui:extraButtons, but keep both for backwards compatibility
+      const { readonly, schema = {}, extraButtons, options } = p || {};
+      const _options = isObj(options) ? options : {};
       const buttons = _options.buttons || extraButtons || [];
-      const { readonly, schema = {} } = p;
       const { maxItems } = schema;
       const list = Array.isArray(p.value) ? p.value : [];
-      let pageSize = 10;
-      if (isNumber(_options.pageSize)) {
-        pageSize = Number(_options.pageSize);
-      }
+      const pageSize = this.getPageSize(p);
       const total = list.length;
       const currentPage = list.slice(
         (currentIndex - 1) * pageSize,
