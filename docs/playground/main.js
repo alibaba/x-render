@@ -3,6 +3,7 @@ import deepEqual from 'deep-equal';
 import parseJson from 'json-parse-better-errors';
 import AntdComp from 'form-render/lib/antd';
 import FusionComp from 'form-render/lib/fusion';
+import '@alifd/next/dist/next.min.css';
 import DefaultSchema from './json/simplest.json';
 import { Tabs } from 'antd';
 import AsyncSelect from './customized/AsyncSelect';

@@ -11,7 +11,7 @@ import {
   SortableElement,
   arrayMove,
 } from 'react-sortable-hoc';
-import { isFunction, evaluateString } from '../base/utils';
+import { isFunction, evaluateString, isObj, isNumber } from '../base/utils';
 import FoldIcon from './foldIcon';
 import DescriptionList, { getDescription } from './descList';
 
@@ -50,9 +50,10 @@ const listItemHoc = ButtonComponent =>
     render() {
       const { item, p = {}, name, fold } = this.props;
       const descProps = { ...p, index: name };
-      const { options = {}, readonly, formData, value: rootValue } = p;
-      const { foldable: canFold, hideIndex } = options;
-      let { hideDelete, itemButtons } = options;
+      const { options, readonly, formData, value: rootValue } = p;
+      const _options = isObj(options) ? options : {};
+      const { foldable: canFold, hideIndex } = _options;
+      let { hideDelete, itemButtons } = _options;
 
       // 判断 hideDelete 是不是函数，是的话将计算后的值赋回
       let _isFunction = isFunction(hideDelete);
@@ -66,7 +67,7 @@ const listItemHoc = ButtonComponent =>
       }
 
       // 只有当items为object时才做收起（fold）处理
-      const isObj = p.schema.items && p.schema.items.type == 'object';
+      const isSchemaObj = p.schema.items && p.schema.items.type == 'object';
       let setClass =
         'fr-set ba b--black-10 hover-b--black-20 relative flex flex-column';
       if (canFold && fold) {
@@ -93,7 +94,11 @@ const listItemHoc = ButtonComponent =>
             </div>
           )}
 
-          {canFold && fold && isObj ? <DescriptionList {...descProps} /> : item}
+          {canFold && fold && isSchemaObj ? (
+            <DescriptionList {...descProps} />
+          ) : (
+            item
+          )}
           <div className="fr-item-actions">
             {canFold && (
               <FoldIcon
@@ -143,7 +148,7 @@ const listItemHoc = ButtonComponent =>
     }
   };
 
-const fieldListHoc = ButtonComponent => {
+const fieldListHoc = (ButtonComponent, Pagination) => {
   const SortableItem = SortableElement(listItemHoc(ButtonComponent));
   return class extends React.Component {
     handleAddClick = () => {
@@ -153,6 +158,10 @@ const fieldListHoc = ButtonComponent => {
       p.onChange(p.name, value);
       addUnfoldItem();
     };
+
+    onPageChange = (page, pageSize) => {
+      this.props.handlePageChange(page);
+    };
     // buttons is a list, each item looks like:
     // {
     //   "text": "删除全部",
@@ -161,91 +170,124 @@ const fieldListHoc = ButtonComponent => {
     // }
 
     render() {
-      const { p, foldList = [], toggleFoldItem } = this.props;
+      const { p, foldList = [], currentIndex, toggleFoldItem } = this.props;
       const { options, extraButtons } = p || {};
+      const _options = isObj(options) ? options : {};
       // prefer ui:options/buttons to ui:extraButtons, but keep both for backwards compatibility
-      const buttons = options.buttons || extraButtons || [];
+      const buttons = _options.buttons || extraButtons || [];
       const { readonly, schema = {} } = p;
       const { maxItems } = schema;
-      const list = p.value || [];
-      if (!Array.isArray(list)) {
+      const list = Array.isArray(p.value) ? p.value : [];
+      let pageSize = 10;
+      if (isNumber(_options.pageSize)) {
+        pageSize = Number(_options.pageSize);
+      }
+      const total = list.length;
+      const currentPage = list.slice(
+        (currentIndex - 1) * pageSize,
+        currentIndex * pageSize
+      );
+      if (!Array.isArray(p.value)) {
         console.error(`"${p.name}"这个字段相关的schema书写错误，请检查！`);
         return null;
       }
       const canAdd = maxItems ? maxItems > list.length : true; // 当到达最大个数，新增按钮消失
       return (
         <ul className="pl0 ma0">
-          {list.map((_, name) => (
-            <SortableItem
-              key={`item-${name}`}
-              index={name}
-              name={name}
-              p={p}
-              fold={foldList[name]}
-              toggleFoldItem={toggleFoldItem}
-              item={p.getSubField({
-                name,
-                value: p.value[name],
-                onChange(key, val) {
-                  const value = [...p.value];
-                  value[key] = val;
-                  p.onChange(p.name, value);
-                },
-              })}
-            />
-          ))}
-          {!readonly && (
-            <div className="tr mb2">
-              {canAdd && (
-                <ButtonComponent icon="add" onClick={this.handleAddClick}>
-                  新增
-                </ButtonComponent>
-              )}
-              {buttons &&
-                buttons.length > 0 &&
-                buttons.map((item, i) => {
-                  const { icon, text, callback, ...rest } = item;
-                  return (
-                    <ButtonComponent
-                      className="ml2"
-                      icon={icon}
-                      key={i.toString()}
-                      onClick={() => {
-                        if (callback === 'clearAll') {
-                          p.onChange(p.name, []);
-                          return;
-                        }
-                        if (callback === 'copyLast') {
-                          const value = [...p.value];
-                          const lastIndex = value.length - 1;
-                          value.push(
-                            lastIndex > -1 ? value[lastIndex] : p.newItem
-                          );
-                          p.onChange(p.name, value);
-                          return;
-                        }
-                        if (typeof window[callback] === 'function') {
-                          const value = [...p.value];
-                          const onChange = value => p.onChange(p.name, value);
-                          window[callback](value, onChange, schema, p.newItem); // eslint-disable-line
-                        }
-                      }}
-                      {...rest}
-                    >
-                      {text}
-                    </ButtonComponent>
-                  );
+          {currentPage.map((_, idx) => {
+            const name = (currentIndex - 1) * pageSize + idx;
+            return (
+              <SortableItem
+                key={`item-${name}`}
+                index={name}
+                name={name}
+                p={p}
+                fold={foldList[name]}
+                toggleFoldItem={toggleFoldItem}
+                item={p.getSubField({
+                  name,
+                  value: p.value[name],
+                  onChange(key, val) {
+                    const value = [...p.value];
+                    value[key] = val;
+                    p.onChange(p.name, value);
+                  },
                 })}
-            </div>
-          )}
+              />
+            );
+          })}
+          <div className="flex justify-between mb3">
+            {Pagination && total > pageSize ? (
+              <Pagination
+                size="small"
+                total={total}
+                pageSize={pageSize}
+                onChange={this.onPageChange}
+                current={currentIndex}
+              />
+            ) : (
+              <div />
+            )}
+            {!readonly && (
+              <div className="tr">
+                {canAdd && (
+                  <ButtonComponent icon="add" onClick={this.handleAddClick}>
+                    新增
+                  </ButtonComponent>
+                )}
+                {buttons &&
+                  buttons.length > 0 &&
+                  buttons.map((item, i) => {
+                    const { icon, text, callback, ...rest } = item;
+                    return (
+                      <ButtonComponent
+                        className="ml2"
+                        icon={icon}
+                        key={i.toString()}
+                        onClick={() => {
+                          if (callback === 'clearAll') {
+                            p.onChange(p.name, []);
+                            return;
+                          }
+                          if (callback === 'copyLast') {
+                            const value = [...p.value];
+                            const lastIndex = value.length - 1;
+                            value.push(
+                              lastIndex > -1 ? value[lastIndex] : p.newItem
+                            );
+                            p.onChange(p.name, value);
+                            return;
+                          }
+                          if (typeof window[callback] === 'function') {
+                            const value = [...p.value];
+                            const onChange = value => p.onChange(p.name, value);
+                            window[callback](
+                              value,
+                              onChange,
+                              schema,
+                              p.newItem
+                            ); // eslint-disable-line
+                          }
+                        }}
+                        {...rest}
+                      >
+                        {text}
+                      </ButtonComponent>
+                    );
+                  })}
+              </div>
+            )}
+          </div>
         </ul>
       );
     }
   };
 };
 
-export default function listHoc(ButtonComponent) {
-  const SortableList = SortableContainer(fieldListHoc(ButtonComponent));
+export default function listHoc(ButtonComponent, Pagination) {
+  const SortableList = SortableContainer(
+    fieldListHoc(ButtonComponent, Pagination)
+  );
   return class extends React.Component {
     static propTypes = {
       value: PropTypes.array,
@@ -260,6 +302,7 @@ export default function listHoc(ButtonComponent) {
       const len = this.props.value.length || 0;
       this.state = {
         foldList: new Array(len).fill(false) || [],
+        currentIndex: 1,
       };
     }
 
@@ -285,14 +328,20 @@ export default function listHoc(ButtonComponent) {
       });
     };
 
+    handlePageChange = page => {
+      this.setState({ currentIndex: page });
+    };
+
     render() {
-      const { foldList } = this.state;
+      const { foldList, currentIndex } = this.state;
       return (
         <SortableList
           p={this.props}
           foldList={foldList}
+          currentIndex={currentIndex}
           toggleFoldItem={this.toggleFoldItem}
           addUnfoldItem={this.addUnfoldItem}
+          handlePageChange={this.handlePageChange}
           distance={6}
           useDragHandle
           helperClass="fr-sort-help-class"

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Icon, Dialog as Modal, Drawer } from '@alifd/next';
+import { Button, Icon, Dialog as Modal, Drawer, Pagination } from '@alifd/next';
 import listHoc from '../../components/listHoc';
 import { isObj } from '../../base/utils';
 
@@ -24,7 +24,7 @@ function FrButton({ icon, children, type, ...rest }) {
   );
 }
 
-const List = listHoc(FrButton);
+const List = listHoc(FrButton, Pagination);
 
 const ListWithModal = props => {
   const { options, schema, value } = props || {};

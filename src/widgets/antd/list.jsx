@@ -11,7 +11,7 @@ import {
   CopyOutlined,
 } from '@ant-design/icons';
 import { isObj } from '../../base/utils';
-import { Button, Modal, Drawer } from 'antd';
+import { Button, Modal, Drawer, Pagination } from 'antd';
 
 const isComponent = comp => {
   const type = typeof comp;
@@ -47,7 +47,7 @@ function FrButton({ icon, children, ...rest }) {
   );
 }
 
-const List = listHoc(FrButton);
+const List = listHoc(FrButton, Pagination);
 
 const ListWithModal = props => {
   const { options, schema, value } = props || {};

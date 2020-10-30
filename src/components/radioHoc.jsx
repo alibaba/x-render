@@ -4,25 +4,28 @@
  */
 
 import React from 'react';
+import { getArray } from '../base/utils';
 
-export default (p, onChange, RadioComponent) => {
-  const RadioGroup = RadioComponent.Group;
+export default p => {
+  const Radio = p.Radio;
+  const RadioGroup = p.Radio.Group;
   const { enum: enums, enumNames } = p.schema || {};
   return (
     <RadioGroup
       disabled={p.disabled || p.readonly}
       value={p.value}
-      onChange={onChange}
+      onChange={p.onChange}
     >
-      {(enums || [true, false]).map((val, index) => (
-        <RadioComponent value={val} key={index}>
+      {getArray(enums).map((val, index) => (
+        <Radio value={val} key={index}>
           <span
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{
-              __html: enumNames ? enumNames[index] : val,
+              __html:
+                enumNames && Array.isArray(enumNames) ? enumNames[index] : val,
             }}
           />
-        </RadioComponent>
+        </Radio>
       ))}
     </RadioGroup>
   );

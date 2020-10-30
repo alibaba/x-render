@@ -147,6 +147,7 @@ toc: menu
 | hideIndex   |                  boolean                   | 列表（array） |                         是否隐藏列表 item 的序号标                          |
 | buttons     |                   array                    | 列表（array） |                                下详 （注 2）                                |
 | itemButtons |                   array                    | 列表（array） |                                下详 （注 3）                                |
+| pageSize    |                   number                   | 列表（array） |                  指定分页展示列表时的每页显示数量，默认 10                  |
 | picker      |           "week"/"month"/"year"            | 日期（date）  |             使用 WeekPicker、MonthPicker 和 YearPicker （注 1）             |
 
 **注 1：** picker 的简单用法如下：

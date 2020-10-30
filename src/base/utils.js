@@ -231,6 +231,8 @@ function stringContains(str, text) {
   return str.indexOf(text) > -1;
 }
 
+export const isNumber = a => !Number.isNaN(Number(a));
+
 export const isObj = a =>
   stringContains(Object.prototype.toString.call(a), 'Object');
 
@@ -325,4 +327,9 @@ export const getEnum = schema => {
   const itemEnum = schema && schema.items && schema.items.enum;
   const schemaEnum = schema && schema.enum;
   return itemEnum ? itemEnum : schemaEnum;
+};
+
+export const getArray = (arr, defaultValue = []) => {
+  if (Array.isArray(arr)) return arr;
+  return defaultValue;
 };
