@@ -10,7 +10,6 @@ import {
   isDeepEqual,
   getEnum,
 } from './utils';
-import Safe from '../Safe';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
@@ -157,13 +156,9 @@ export const asField = ({ FieldUI, Widget }) => {
     };
 
     return (
-      <Safe>
-        <FieldUI {...fieldProps}>
-          <Safe>
-            <Widget {..._rest} invalid={validateText} />
-          </Safe>
-        </FieldUI>
-      </Safe>
+      <FieldUI {...fieldProps}>
+        <Widget {..._rest} invalid={validateText} />
+      </FieldUI>
     );
   };
   FieldContainer.propTypes = {
