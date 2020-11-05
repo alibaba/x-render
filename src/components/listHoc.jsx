@@ -44,6 +44,7 @@ const listItemHoc = ButtonComponent =>
       const { p = {}, name } = this.props;
       const value = [...p.value];
       value.splice(name, 1);
+      this.props.handleDeleteItem(name);
       p.onChange(p.name, value);
     };
 
@@ -170,7 +171,13 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
     // }
 
     render() {
-      const { p, foldList = [], currentIndex, toggleFoldItem } = this.props;
+      const {
+        p,
+        foldList = [],
+        currentIndex,
+        toggleFoldItem,
+        handleDeleteItem,
+      } = this.props;
       const { options, extraButtons } = p || {};
       const _options = isObj(options) ? options : {};
       // prefer ui:options/buttons to ui:extraButtons, but keep both for backwards compatibility
@@ -204,6 +211,7 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
                 p={p}
                 fold={foldList[name]}
                 toggleFoldItem={toggleFoldItem}
+                handleDeleteItem={handleDeleteItem}
                 item={p.getSubField({
                   name,
                   value: p.value[name],
@@ -307,10 +315,33 @@ export default function listHoc(ButtonComponent, Pagination) {
     }
 
     // 新添加的item默认是展开的
-    addUnfoldItem = () =>
+    addUnfoldItem = () => {
       this.setState({
         foldList: [...this.state.foldList, 0],
       });
+      const { options, value } = this.props;
+      let pageSize = 10;
+      if (isNumber(options.pageSize)) {
+        pageSize = Number(options.pageSize);
+      }
+      debugger;
+      this.setState({
+        currentIndex: Math.floor(value.length / pageSize) + 1,
+      });
+    };
+
+    handleDeleteItem = () => {
+      const { options, value } = this.props;
+      let pageSize = 10;
+      if (isNumber(options.pageSize)) {
+        pageSize = Number(options.pageSize);
+      }
+      const idx =
+        Math.floor((value.length === 0 ? 0 : value.length - 2) / pageSize) + 1;
+      if (this.state.currentIndex > idx) {
+        this.setState({ currentIndex: idx });
+      }
+    };
 
     toggleFoldItem = index => {
       const { foldList = [] } = this.state;
@@ -342,6 +373,7 @@ export default function listHoc(ButtonComponent, Pagination) {
           toggleFoldItem={this.toggleFoldItem}
           addUnfoldItem={this.addUnfoldItem}
           handlePageChange={this.handlePageChange}
+          handleDeleteItem={this.handleDeleteItem}
           distance={6}
           useDragHandle
           helperClass="fr-sort-help-class"
