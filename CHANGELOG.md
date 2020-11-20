@@ -2,6 +2,8 @@
 
 ### 0.8.11
 
+- [+] 表单 props `column`、`displayType`、`showDescIcon` 属性都有了在 schema 中的对应的属性`ui:column`、`ui:displayType`、`ui:showDescIcon`, 可以在任何一层局部使用。同时意味着现在的 schema 已经能够完整传递所有展示信息（而不需要写一些 props）
+  <img src="https://img.alicdn.com/tfs/TB1oz5ervzO3e4jSZFxXXaP_FXa-882-348.png" width="250" />
 - [!] 列表点击“新增”会自动翻页, 列表修改 pageSize 能正常生效
 
 ### 0.8.9 - 0.8.10
