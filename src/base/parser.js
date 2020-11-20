@@ -9,7 +9,6 @@ function getSubSchemas(schema = {}) {
     properties,
     // array subset
     items,
-    column,
     // as subset's parent
     ...$parent
   } = schema;
@@ -28,7 +27,6 @@ function getSubSchemas(schema = {}) {
   return Object.keys(children).map(name => ({
     schema: children[name],
     name,
-    column,
     // parent propsSchema
     $parent,
   }));
@@ -65,25 +63,37 @@ function getBasicProps(settings, materials) {
     'ui:dependShow': dependShow,
     'ui:action': action,
     'ui:labelWidth': _labelWidth,
+    // 新增
+    'ui:column': _column,
+    'ui:displayType': _displayType,
+    'ui:showDescIcon': _showDescIcon,
   } = schema;
   const { required = [] } = $parent;
   const { generated: widgets, customized: fields } = materials;
   // 标准化属性模型
   // 除了value和onChange为动态值这里不处理
-  let basicProps = {
-    name,
-    schema,
-    column,
-    displayType,
-    showDescIcon,
-    showValidate,
-    options, // 所有特定组件规则，addable等规则TODO
-    hidden,
-    required: required.indexOf(name) !== -1,
+
+  // 一些从顶层一直传下去的props
+  const passDownProps = {
+    column: _column || column,
+    displayType: _displayType || displayType,
+    showDescIcon: _showDescIcon || showDescIcon,
     disabled: _disabled || disabled,
     readonly: readOnly || readonly, // 前者全局的，后者单个ui的
     labelWidth: _labelWidth || labelWidth,
+    showValidate,
     useLogger,
+  };
+
+  // console.log(passDownProps, 'passdow');
+
+  let basicProps = {
+    ...passDownProps,
+    name,
+    schema,
+    options, // 所有特定组件规则，addable等规则TODO
+    hidden,
+    required: required.indexOf(name) !== -1,
     width,
     widgets,
     fields,
@@ -109,15 +119,8 @@ function getBasicProps(settings, materials) {
       props: getBasicProps(
         {
           ...subSchema,
-          column,
-          displayType,
-          showDescIcon,
-          showValidate,
-          readOnly,
-          labelWidth: _labelWidth || labelWidth,
-          useLogger,
+          ...passDownProps,
           formData,
-          disabled: _disabled || disabled,
         },
         materials
       ),

@@ -41,10 +41,15 @@ const listItemHoc = ButtonComponent =>
     };
 
     handleDelete = () => {
-      const { p = {}, name } = this.props;
+      const { p = {}, name, pageSize } = this.props;
       const value = [...p.value];
       value.splice(name, 1);
+      this.props.handleDeleteItem(name);
       p.onChange(p.name, value);
+      // 计算页码
+      const list = Array.isArray(value) ? value : [];
+      const page = Math.ceil(list.length / pageSize);
+      this.props.handlePageChange(page, pageSize);
     };
 
     render() {
@@ -152,15 +157,19 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
   const SortableItem = SortableElement(listItemHoc(ButtonComponent));
   return class extends React.Component {
     handleAddClick = () => {
-      const { p, addUnfoldItem } = this.props;
+      const { p, addUnfoldItem, pageSize } = this.props;
       const value = [...p.value];
       value.push(p.newItem);
       p.onChange(p.name, value);
       addUnfoldItem();
+      // 计算页码
+      const list = Array.isArray(value) ? value : [];
+      const page = Math.ceil(list.length / pageSize);
+      this.props.handlePageChange(page, pageSize);
     };
 
     onPageChange = (page, pageSize) => {
-      this.props.handlePageChange(page);
+      this.props.handlePageChange(page, pageSize);
     };
     // buttons is a list, each item looks like:
     // {
@@ -170,18 +179,21 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
     // }
 
     render() {
-      const { p, foldList = [], currentIndex, toggleFoldItem } = this.props;
-      const { options, extraButtons } = p || {};
-      const _options = isObj(options) ? options : {};
+      const {
+        p,
+        foldList = [],
+        currentIndex,
+        pageSize,
+        handlePageChange,
+        toggleFoldItem,
+        handleDeleteItem,
+      } = this.props;
       // prefer ui:options/buttons to ui:extraButtons, but keep both for backwards compatibility
+      const { readonly, schema = {}, extraButtons, options } = p || {};
+      const _options = isObj(options) ? options : {};
       const buttons = _options.buttons || extraButtons || [];
-      const { readonly, schema = {} } = p;
       const { maxItems } = schema;
       const list = Array.isArray(p.value) ? p.value : [];
-      let pageSize = 10;
-      if (isNumber(_options.pageSize)) {
-        pageSize = Number(_options.pageSize);
-      }
       const total = list.length;
       const currentPage = list.slice(
         (currentIndex - 1) * pageSize,
@@ -204,6 +216,9 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
                 p={p}
                 fold={foldList[name]}
                 toggleFoldItem={toggleFoldItem}
+                pageSize={pageSize}
+                handlePageChange={handlePageChange}
+                handleDeleteItem={handleDeleteItem}
                 item={p.getSubField({
                   name,
                   value: p.value[name],
@@ -303,14 +318,29 @@ export default function listHoc(ButtonComponent, Pagination) {
       this.state = {
         foldList: new Array(len).fill(false) || [],
         currentIndex: 1,
+        pageSize: this.getPageSize(props),
       };
     }
 
     // 新添加的item默认是展开的
-    addUnfoldItem = () =>
+    addUnfoldItem = () => {
       this.setState({
         foldList: [...this.state.foldList, 0],
       });
+    };
+
+    handleDeleteItem = () => {
+      const { options, value } = this.props;
+      let pageSize = 10;
+      if (isNumber(options.pageSize)) {
+        pageSize = Number(options.pageSize);
+      }
+      const idx =
+        Math.floor((value.length === 0 ? 0 : value.length - 2) / pageSize) + 1;
+      if (this.state.currentIndex > idx) {
+        this.setState({ currentIndex: idx });
+      }
+    };
 
     toggleFoldItem = index => {
       const { foldList = [] } = this.state;
@@ -328,20 +358,32 @@ export default function listHoc(ButtonComponent, Pagination) {
       });
     };
 
-    handlePageChange = page => {
-      this.setState({ currentIndex: page });
+    handlePageChange = (page, pageSize) => {
+      this.setState({ currentIndex: page, pageSize });
+    };
+
+    getPageSize = props => {
+      const { options } = props || {};
+      const _options = isObj(options) ? options : {};
+      let pageSize = 10;
+      if (isNumber(_options.pageSize)) {
+        pageSize = Number(_options.pageSize);
+      }
+      return pageSize;
     };
 
     render() {
-      const { foldList, currentIndex } = this.state;
+      const { foldList, currentIndex, pageSize } = this.state;
       return (
         <SortableList
           p={this.props}
           foldList={foldList}
           currentIndex={currentIndex}
+          pageSize={pageSize}
           toggleFoldItem={this.toggleFoldItem}
           addUnfoldItem={this.addUnfoldItem}
           handlePageChange={this.handlePageChange}
+          handleDeleteItem={this.handleDeleteItem}
           distance={6}
           useDragHandle
           helperClass="fr-sort-help-class"

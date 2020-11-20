@@ -1,0 +1,44 @@
+{
+  "schema": {
+    "ui:column": 3,
+    "ui:displayType": "column",
+    "type": "object",
+    "properties": {
+      "string": {
+        "title": "字符串",
+        "type": "string"
+      },
+      "string22": {
+        "title": "测试效验",
+        "type": "string"
+      },
+      "color": {
+        "title": "颜色选择",
+        "type": "string",
+        "format": "color"
+      },
+      "objectName": {
+        "title": "对象",
+        "description": "这是一个对象类型",
+        "type": "object",
+        "ui:column": 2,
+        "ui:labelWidth": 100,
+        "ui:displayType": "row",
+        "properties": {
+          "inputName": {
+            "title": "简单输入框1",
+            "type": "string"
+          },
+          "inputName2": {
+            "title": "简单输入框2",
+            "type": "string"
+          },
+          "inputName3": {
+            "title": "简单输入框3",
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

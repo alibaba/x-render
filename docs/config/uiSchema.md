@@ -68,10 +68,15 @@ toc: menu
 | 单选项 | string/number(带属性 enum) |   select    |         radio         |
 | 多选   |     array(带属性 enum)     | checkboxes  |      multiSelect      |
 
-### 共通的表单 UI 配置
+## 共通的表单 UI 配置
 
-- `ui:disabled`: 可控制 input、number、date、checkbox、radio、select、switch 对于组件的 disabled 属性(变灰不可点击)
-- `ui:labelWidth` (v0.5.1) 新增。用于控制本元素以及其子元素（如果本元素是对象或列表）的标签宽度，使用方法与 FR 的全局变量`labelWidth`相同
+#### `ui:disabled`
+
+可控制 input、number、date、checkbox、radio、select、switch 对于组件的 disabled 属性(变灰不可点击)
+
+#### `ui:labelWidth`
+
+用于控制本元素以及其子元素（如果本元素是对象或列表）的标签宽度，使用方法与 FR 的全局变量`labelWidth`相同
 
 ```js
 "someList": {
@@ -84,7 +89,9 @@ toc: menu
 }
 ```
 
-- `ui:readonly`：可控制 input、number 组件中的 readonly 属性(不可编辑，但不变灰)，列表也支持`readonly`，效果是列表的控件都会隐藏，导致列表不能增、删和拖拽，进入“只读”模式。但注意列表内的内容还是允许修改的，所以特别要注意如果列表套列表的场景，内部的列表也要 "ui:readonly": true
+#### `ui:readonly`
+
+可控制 input、number 组件中的 readonly 属性(不可编辑，但不变灰)，列表也支持`readonly`，效果是列表的控件都会隐藏，导致列表不能增、删和拖拽，进入“只读”模式。但注意列表内的内容还是允许修改的，所以特别要注意如果列表套列表的场景，内部的列表也要 "ui:readonly": true
 
 ```js
 "someList": {
@@ -92,7 +99,9 @@ toc: menu
 }
 ```
 
-- `ui:hidden`：可控制所有基础组件是否显示，可使用 true/false 或函数表达式，例如：
+#### `ui:hidden`
+
+可控制所有基础组件是否显示，可使用 true/false 或函数表达式，例如：
 
 ```json
 "age": {
@@ -121,8 +130,25 @@ toc: menu
 
 如果使用如上函数表达式，age 组件将在 agree 组件的值为 false 且 personType 组件不等于 2 时隐藏。其中`formData`指向整个表单值，`rootValue`指向对应组件的父级元素值。函数表达式的详细写法见[如何联动](/guide/advanced/function)
 
-- `ui:className`：添加组件 root 元素的 className（和 fr-field 这个 className 在同级），用于自定义单独组件的样式
-- `ui:width`：单个基础组件的长度，建议使用百分比例如`"ui:width":"50%"`。
+#### `ui:className`
+
+添加组件 root 元素的 className（和 fr-field 这个 className 在同级），用于自定义单独组件的样式
+
+#### `ui:width`
+
+单个基础组件的长度，建议使用百分比例如`"ui:width":"50%"`。
+
+#### `ui:column`
+
+用于便捷控制一行排版几个元素，使用方法与 FR 的 props `column`相同
+
+#### `ui:displayType`
+
+用于控制 label 和表单 input 是同行左右展示还是分两行展示，使用方法与 FR 的 props `displayType`相同
+
+#### `ui:showDescIcon`
+
+用于控制详情描述（description）是正常展示还是用一个 icon 替代（鼠标悬浮后弹 pop 展示详情描述），使用方法与 FR 的 props `showDescIcon`相同
 
 ### ui:options 配置
 

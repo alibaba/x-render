@@ -9,6 +9,18 @@ toc: menu
 
 # 新功能
 
+## 0.8.11
+
+属性`ui:column`、`ui:displayType`、`ui:showDescIcon` 支持属性局部控制。原本只能通过 props 全局控制
+
+```jsx
+import React from 'react';
+import FR from '../demo/FR/index.jsx';
+import json from '../demo/new-feature/column.json';
+
+export default () => <FR schema={json} />;
+```
+
 ## 0.8.9
 
 长列表会自动分页, 可通过 `ui:options/pageSize` 来控制每页展示数量

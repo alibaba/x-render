@@ -110,7 +110,10 @@ export default Demo;
 
 ## 反馈与共建
 
-请访问 [github](https://github.com/alibaba/form-render) 或加入讨论群：
+1. 欢迎 issue、pr 和点赞哦 [github](https://github.com/alibaba/form-render)
 
-<img src="https://img.alicdn.com/tfs/TB1CprJg5pE_u4jSZKbXXbCUVXa-894-1087.jpg" width="240px" />
+2. 文档建议至少读一下 “开始使用”，有疑问、建议和讨论诉求的，请加入 FR 官方群：
+
+<img src="https://img.alicdn.com/tfs/TB1CprJg5pE_u4jSZKbXXbCUVXa-894-1087.jpg" width="300px" />
+
 <!-- <code src='./playground/index.jsx' className='hidden' /> -->

@@ -1,10 +1,15 @@
 # Change Log
 
-### 0.8.9
+### 0.8.11
+
+- [+] 表单 props `column`、`displayType`、`showDescIcon` 属性都有了在 schema 中的对应的属性`ui:column`、`ui:displayType`、`ui:showDescIcon`, 可以在任何一层局部使用。同时意味着现在的 schema 已经能够完整传递所有展示信息（而不需要写一些 props）
+  <img src="https://img.alicdn.com/tfs/TB1oz5ervzO3e4jSZFxXXaP_FXa-882-348.png" width="250" />
+- [!] 列表点击“新增”会自动翻页, 列表修改 pageSize 能正常生效
+
+### 0.8.9 - 0.8.10
 
 - [+] 数组组件支持自动分页，并添加 `ui:options/pageSize` 可用于控制每页显示数量 ([#201](https://github.com/alibaba/form-render/issues/201))
 - [+] Array 类型组件兼容标准的 JSON schema 写法 ([@siyi98](https://github.com/siyi98) in [#191](https://github.com/alibaba/form-render/pull/191))
-
 - [!] 修复了两个 react dependencies 相关的问题，项目现在能正常支持所有 react 16.8 以上的版本（因为内部用到了 hooks）。([#197](https://github.com/alibaba/form-render/issues/197))
 - [!] 真正不再加载整个 `@ant-design/icons`，大量减少加载体积 ([@F-loat](https://github.com/F-loat) in [#202](https://github.com/alibaba/form-render/pull/202))
 - [!] 避免 enum 和 enumNames 乱写会造成整个项目 crash
