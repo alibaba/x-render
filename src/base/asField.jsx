@@ -9,6 +9,7 @@ import {
   convertValue,
   isDeepEqual,
   getEnum,
+  hasItems
 } from './utils';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
@@ -112,7 +113,7 @@ export const asField = ({ FieldUI, Widget }) => {
 
     let isComplex =
       _schema.type === 'object' ||
-      (_schema.type === 'array' && getEnum(_schema) === undefined);
+      (_schema.type === 'array' && getEnum(_schema) === undefined && hasItems(_schema));
     const isModal = options && (options.modal || options.drawer);
     if (isModal) {
       isComplex = false;
@@ -230,7 +231,7 @@ export const DefaultFieldUI = ({
       if (isModal) {
         break;
       }
-      if (title && getEnum(schema) === undefined) {
+      if (title && getEnum(schema) === undefined && hasItems(schema)) {
         labelClass += ' fr-label-array mt2 mb3';
       }
       break;

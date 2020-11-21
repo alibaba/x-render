@@ -329,6 +329,12 @@ export const getEnum = schema => {
   return itemEnum ? itemEnum : schemaEnum;
 };
 
+export const hasItems = schema => {
+  if (!schema) return false;
+  if (schema.items) return true;
+  return false;
+};
+
 export const getArray = (arr, defaultValue = []) => {
   if (Array.isArray(arr)) return arr;
   return defaultValue;
