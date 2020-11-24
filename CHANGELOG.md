@@ -3,6 +3,7 @@
 ### 0.9.0
 
 - [+] 通过 ref 的方式将内部方法暴露出来，目前只用 `resetData`，具体使用参见 [api](https://x-render.gitee.io/form-render/config/api)
+- [!] 修改了 onMount 的逻辑，现在 onMount 会在 formData 首次计算后触发
 
 ### 0.8.11
 

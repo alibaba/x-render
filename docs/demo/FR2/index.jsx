@@ -11,9 +11,9 @@ const Demo = ({ schema = {} }) => {
 
   const formRef = useRef();
 
-  // useEffect(() => {
-  //   setTimeout(() => setFormData({ crowd: { upfIdList: 'sdfsdf' } }), 1500);
-  // }, []);
+  useEffect(() => {
+    // setTimeout(() => setFormData({ crowd: { upfIdList: 'sdfsdf' } }), 1500);
+  }, []);
 
   const onValidate = _valid => {
     console.log('没有通过的校验:', _valid);
@@ -44,6 +44,9 @@ const Demo = ({ schema = {} }) => {
         showDescIcon
         labelWidth={120}
         onValidate={onValidate}
+        onMount={() => {
+          console.log(formData);
+        }}
         {...schema}
         formData={formData}
         onChange={setFormData}

@@ -20,7 +20,6 @@
     "required": ["string22"]
   },
   "formData": {
-    "string": "2",
-    "string22": ""
+    "string": "2"
   }
 }

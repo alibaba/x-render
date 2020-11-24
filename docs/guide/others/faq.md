@@ -56,7 +56,7 @@ Could not find a declaration file for module 'form-render/lib/antd'. '/Users/nas
        schema: object;
        formData: object;
        onChange(data?: object): void;
-       onMount(data?: object): void;
+       onMount(): void;
        name?: string;
        column?: number;
        uiSchema?: object;

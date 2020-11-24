@@ -65,7 +65,7 @@ function FormRender({
   displayType = 'column',
   onChange = () => {},
   onValidate = () => {},
-  onMount,
+  onMount = () => {},
   readOnly = false,
   labelWidth = 110,
   useLogger = false,
@@ -74,17 +74,14 @@ function FormRender({
   const isUserInput = useRef(false); // 状态改变是否来自于用户操作
   const originWidgets = useRef();
   const generatedFields = useRef({});
+  const firstRender = useRef(true);
   const previousSchema = usePrevious(schema);
   const previousData = usePrevious(formData);
 
   const data = useMemo(() => resolve(schema, formData), [schema, formData]);
 
   useEffect(() => {
-    if (onMount) {
-      onMount(data);
-    } else {
-      onChange(data);
-    }
+    onChange(data);
     updateValidation();
   }, []);
 
@@ -97,6 +94,10 @@ function FormRender({
       onChange(data);
       updateValidation();
     } else if (!isDeepEqual(previousData, formData)) {
+      if (firstRender.current) {
+        onMount();
+        firstRender.current = false;
+      }
       updateValidation();
     }
   }, [schema, formData]);
