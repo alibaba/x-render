@@ -3,39 +3,28 @@
  * fusion 主题入口文件
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { forwardRef } from 'react';
 import FormRender from './index';
-import { mapping, widgets } from './widgets/fusion';
+import {
+  mapping as defaultMapping,
+  widgets as defaultWidgets,
+} from './widgets/fusion';
 
-export default class FusionForm extends React.PureComponent {
-  static propTypes = {
-    mapping: PropTypes.object,
-    widgets: PropTypes.object,
-  };
-  static defaultProps = {
-    mapping: {},
-    widgets: {},
-  };
+const FusionForm = ({ mapping = {}, widgets = {}, ...rest }, ref) => {
+  return (
+    <FormRender
+      mapping={{
+        ...defaultMapping,
+        ...mapping,
+      }}
+      widgets={{
+        ...defaultWidgets,
+        ...widgets,
+      }}
+      {...rest}
+      forwardedRef={ref}
+    />
+  );
+};
 
-  render() {
-    const {
-      mapping: customizedMapping,
-      widgets: customizedWidgets,
-      ...props
-    } = this.props;
-    return (
-      <FormRender
-        {...props}
-        mapping={{
-          ...mapping,
-          ...customizedMapping,
-        }}
-        widgets={{
-          ...widgets,
-          ...customizedWidgets,
-        }}
-      />
-    );
-  }
-}
+export default forwardRef(FusionForm);

@@ -3,45 +3,36 @@
  * antd 主题入口文件
  */
 
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { forwardRef } from 'react';
 import FormRender from './index';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
-import { mapping, widgets } from './widgets/antd';
+import {
+  mapping as defaultMapping,
+  widgets as defaultWidgets,
+} from './widgets/antd';
 // import 'antd/dist/antd.css';
 
-export default class AntdForm extends React.PureComponent {
-  static propTypes = {
-    mapping: PropTypes.object,
-    widgets: PropTypes.object,
-  };
-  static defaultProps = {
-    mapping: {},
-    widgets: {},
-  };
+const AntdForm = (
+  { mapping = {}, widgets = {}, configProvider = {}, ...rest },
+  ref
+) => {
+  return (
+    <ConfigProvider {...configProvider} locale={zhCN}>
+      <FormRender
+        mapping={{
+          ...defaultMapping,
+          ...mapping,
+        }}
+        widgets={{
+          ...defaultWidgets,
+          ...widgets,
+        }}
+        {...rest}
+        forwardedRef={ref}
+      />
+    </ConfigProvider>
+  );
+};
 
-  render() {
-    const {
-      mapping: customizedMapping,
-      widgets: customizedWidgets,
-      configProvider = {},
-      ...props
-    } = this.props;
-    return (
-      <ConfigProvider {...configProvider} locale={zhCN}>
-        <FormRender
-          {...props}
-          mapping={{
-            ...mapping,
-            ...customizedMapping,
-          }}
-          widgets={{
-            ...widgets,
-            ...customizedWidgets,
-          }}
-        />
-      </ConfigProvider>
-    );
-  }
-}
+export default forwardRef(AntdForm);

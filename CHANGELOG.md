@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.9.0
+
+- [+] 通过 ref 的方式将内部方法暴露出来，目前只用 `resetData`，具体使用参见 [api](https://x-render.gitee.io/form-render/config/api)
+
 ### 0.8.11
 
 - [+] 表单 props `column`、`displayType`、`showDescIcon` 属性都有了在 schema 中的对应的属性`ui:column`、`ui:displayType`、`ui:showDescIcon`, 可以在任何一层局部使用。同时意味着现在的 schema 已经能够完整传递所有展示信息（而不需要写一些 props）

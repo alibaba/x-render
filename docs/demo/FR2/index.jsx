@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from 'react';
-import FormRender from '../../../src/antd';
+import React, { useState, useEffect, useRef } from 'react';
+// import FormRender from '../../../src/antd';
 import { Button } from 'antd';
-// import FormRender from '../../../src/fusion';
-// import '@alifd/next/dist/next.min.css';
+import FormRender from '../../../src/fusion';
+import '@alifd/next/dist/next.min.css';
 
 const Demo = ({ schema = {} }) => {
   const [formData, setFormData] = useState(() => schema.formData);
   const [valid, setValid] = useState([]);
   const [showValid, setShowValid] = useState(true);
+
+  const formRef = useRef();
 
   // useEffect(() => {
   //   setTimeout(() => setFormData({ crowd: { upfIdList: 'sdfsdf' } }), 1500);
@@ -27,9 +29,17 @@ const Demo = ({ schema = {} }) => {
     alert(JSON.stringify(formData, null, 2));
   };
 
+  const handleClick = () => {
+    formRef.current.resetData({}).then(res => {
+      console.log(res);
+    });
+  };
+
   return (
     <div style={{ maxWidth: 800 }}>
+      <div onClick={handleClick}>点击</div>
       <FormRender
+        ref={formRef}
         displayType="row"
         showDescIcon
         labelWidth={120}
