@@ -167,20 +167,24 @@ export function combine() {}
 
 export const isValidVariableName = param => /^[a-zA-Z]+$/g.test(param);
 
-// Remove all window valid api
-// For safety jest-* variable will throw error
+// 去掉所有的window上的api，出现用户在这段逻辑里报错了。
+// export function safeEval(code) {
+//   let safeContextStr = '';
+//   if (typeof window !== 'undefined') {
+//     const windowContextAttr = Object.getOwnPropertyNames(window).filter(
+//       isValidVariableName
+//     );
+//     for (let i = 0, len = windowContextAttr.length; i < len; i++) {
+//       safeContextStr += `var ${windowContextAttr[i]} = undefined;`;
+//     }
+//   }
+//   return Function(`${safeContextStr} "use strict";  ${code}`)();
+// }
+
 export function safeEval(code) {
-  let safeContextStr = '';
-  if (typeof window !== 'undefined') {
-    const windowContextAttr = Object.getOwnPropertyNames(window).filter(
-      isValidVariableName
-    );
-    for (let i = 0, len = windowContextAttr.length; i < len; i++) {
-      safeContextStr += `var ${windowContextAttr[i]} = undefined;`;
-    }
-  }
-  return Function(`${safeContextStr} "use strict";  ${code}`)();
+  return Function(`"use strict"; ${code}`)();
 }
+
 // 代替eval的函数
 export const parseString = string => safeEval(`return (${string})`);
 
