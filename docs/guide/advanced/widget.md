@@ -79,7 +79,9 @@ export default Demo;
 - 如上例，可以使用内置的自定义组件，如`radio`、`checkboxes`。也可以真正写一个定制的组件并通过`widgets`这个 props 注册
 - 使用方法都是在 schema 中的对应元素里使用`ui:widget`字段指明使用的自定义组件
 - **注意**自定义组件的 `onChange`，接收的入参是`(name, value)`
-- 整体代码参考此 [CodeSandbox 案例](https://codesandbox.io/s/form-renderjichudemo-f55oy)
+- **整体代码参考以下 codesandbox 样例：**
+  - [省市区选择案例](https://codesandbox.io/s/form-renderjichudemo-f55oy)
+  - [下拉选框 + 选项从服务端获取](https://codesandbox.io/s/zidingyizujian-forked-wuujb)
 
 ### 写自定义组件
 
