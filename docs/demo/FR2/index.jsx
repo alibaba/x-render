@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-// import FormRender from '../../../src/antd';
+import FormRender from '../../../src/antd';
 import { Button } from 'antd';
-import FormRender from '../../../src/fusion';
-import '@alifd/next/dist/next.min.css';
+// import FormRender from '../../../src/fusion';
+// import '@alifd/next/dist/next.min.css';
 
 const Demo = ({ schema = {} }) => {
   const [formData, setFormData] = useState(() => schema.formData);
@@ -37,9 +37,9 @@ const Demo = ({ schema = {} }) => {
 
   return (
     <div style={{ maxWidth: 800 }}>
-      <div onClick={handleClick}>点击</div>
       <FormRender
         ref={formRef}
+        readOnly={true}
         displayType="row"
         showDescIcon
         labelWidth={120}
@@ -47,11 +47,13 @@ const Demo = ({ schema = {} }) => {
         onMount={() => {
           console.log(formData);
         }}
+        // readOnly={true}
         {...schema}
         formData={formData}
         onChange={setFormData}
         showValidate={showValid}
       />
+      <Button onClick={handleClick}>清空</Button>
       <Button type="primary" onClick={handleSubmit}>
         提交
       </Button>
