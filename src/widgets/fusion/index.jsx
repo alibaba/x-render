@@ -57,5 +57,5 @@ export const mapping = {
   'range:dateTime': 'dateRange',
   '*?enum': 'select',
   'array?enum': 'checkboxes',
-  '*?readonly': 'text',
+  // '*?readOnly': 'text', // TODO: 只读模式
 };

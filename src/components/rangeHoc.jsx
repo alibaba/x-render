@@ -19,7 +19,7 @@ export default (p, onChange, RangeComponent) => {
     value,
     style: { width: '100%' },
     showTime: format === 'dateTime',
-    disabled: p.disabled || p.readonly,
+    disabled: p.disabled || p.readOnly,
     onChange,
   };
   return <RangeComponent {...datePrams} />;

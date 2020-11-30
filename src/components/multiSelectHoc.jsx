@@ -21,7 +21,7 @@ export default MultiComponent => p => {
       {...p.options}
       style={{ width: '100%', ...style }}
       mode="multiple"
-      disabled={p.disabled || p.readonly}
+      disabled={p.disabled || p.readOnly}
       value={_value}
       onChange={onChange}
     >

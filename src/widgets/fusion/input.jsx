@@ -38,7 +38,7 @@ export default function input(p) {
       style={style}
       {...config}
       value={p.value}
-      disabled={p.disabled || p.readonly}
+      disabled={p.disabled || p.readOnly}
       addonTextBefore={addonBefore ? addonBefore : ''}
       addonTextAfter={addonAfter ? addonAfter : previewNode(format, p.value)}
       onChange={handleChange}

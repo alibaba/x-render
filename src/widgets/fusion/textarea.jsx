@@ -23,7 +23,7 @@ export default function ta(p) {
     <TextArea
       style={style}
       {...config}
-      disabled={p.disabled || p.readonly}
+      disabled={p.disabled || p.readOnly}
       value={p.value}
       onChange={onChange}
     />

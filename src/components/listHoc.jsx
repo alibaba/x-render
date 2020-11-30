@@ -55,7 +55,7 @@ const listItemHoc = ButtonComponent =>
     render() {
       const { item, p = {}, name, fold } = this.props;
       const descProps = { ...p, index: name };
-      const { options, readonly, formData, value: rootValue } = p;
+      const { options, readOnly, formData, value: rootValue } = p;
       const _options = isObj(options) ? options : {};
       const { foldable: canFold, hideIndex } = _options;
       let { hideDelete, itemButtons } = _options;
@@ -112,7 +112,7 @@ const listItemHoc = ButtonComponent =>
                 className="fr-item-action-icon"
               />
             )}
-            {!readonly && (
+            {!readOnly && (
               <div className="fr-item-action-icon" onClick={this.handleDelete}>
                 <img
                   style={{ height: '70%' }}
@@ -121,9 +121,9 @@ const listItemHoc = ButtonComponent =>
                 />
               </div>
             )}
-            {!readonly && <DragHandle />}
+            {!readOnly && <DragHandle />}
           </div>
-          {!((canFold && fold) || hideDelete || readonly) && (
+          {!((canFold && fold) || hideDelete || readOnly) && (
             <div className="self-end flex mb2">
               {itemButtons &&
                 itemButtons.length > 0 &&
@@ -189,7 +189,7 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
         handleDeleteItem,
       } = this.props;
       // prefer ui:options/buttons to ui:extraButtons, but keep both for backwards compatibility
-      const { readonly, schema = {}, extraButtons, options } = p || {};
+      const { readOnly, schema = {}, extraButtons, options } = p || {};
       const _options = isObj(options) ? options : {};
       const buttons = _options.buttons || extraButtons || [];
       const { maxItems } = schema;
@@ -243,7 +243,7 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
             ) : (
               <div />
             )}
-            {!readonly && (
+            {!readOnly && (
               <div className="tr">
                 {canAdd && (
                   <ButtonComponent icon="add" onClick={this.handleAddClick}>

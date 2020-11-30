@@ -7,7 +7,7 @@ export default function checkboxes(p) {
   const { items = {} } = schema;
   const { enum: enums, enumNames } = items && items.enum ? items : schema;
   const _value = p.value && Array.isArray(p.value) ? p.value : [];
-  // if (p.readonly) {
+  // if (p.readOnly) {
   //   let displayText = _value.join(',');
   //   if (enumNames) {
   //     const idxs = _value.map(v => enums.indexOf(v));
@@ -18,7 +18,7 @@ export default function checkboxes(p) {
   // }
   return (
     <Checkbox.Group
-      disabled={p.disabled || p.readonly}
+      disabled={p.disabled || p.readOnly}
       value={_value}
       onChange={values => p.onChange(p.name, values)}
     >

@@ -97,7 +97,7 @@ export default Demo;
   - **name**：对应 `title` 字段
   - **onChange**：函数，接收 name/value 两个入参，调用可修改 formData 里对应名字字段的值（见下例）
   - **options**：对应 `ui:options` 字段，所有的其他字段没有 cover 到的参数都建议放在 options 里
-  - **readonly**：对应 `ui:readonly` 字段
+  - **readOnly**：对应 `ui:readonly` 字段
   - **required**：组件是否是必填的
   - **rootValue**：组件对应键值对所在的 data 树从父级开始的所有值
   - **schema**：组件对应的子 schema
@@ -170,7 +170,7 @@ export const mapping = {
   'range:dateTime': 'dateRange',
   '*?enum': 'select',
   'array?enum': 'checkboxes',
-  '*?readonly': 'text',
+  '*?readOnly': 'text',
 };
 ```
 

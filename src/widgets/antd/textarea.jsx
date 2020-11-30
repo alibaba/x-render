@@ -18,7 +18,7 @@ export default function ta(p) {
     <div style={{ width: '100%', position: 'relative' }}>
       <TextArea
         style={style}
-        disabled={p.disabled || p.readonly}
+        disabled={p.disabled || p.readOnly}
         value={p.value}
         {...ui}
         onChange={onChange}
