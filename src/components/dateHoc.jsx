@@ -30,7 +30,7 @@ export default (p, onChange, DateComponent) => {
     ...p.options,
     ...defaultObj,
     style: { width: '100%', ...style },
-    disabled: p.disabled || p.readonly,
+    disabled: p.disabled || p.readOnly,
     onChange,
   };
 

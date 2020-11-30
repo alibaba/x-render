@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useRef, useEffect, useMemo, useImperativeHandle } from 'react';
 import { usePrevious, useDebounce } from './hooks';
 import PropTypes from 'prop-types';
 import { isDeepEqual, combineSchema } from './base/utils';
@@ -65,26 +65,24 @@ function FormRender({
   displayType = 'column',
   onChange = () => {},
   onValidate = () => {},
-  onMount,
+  onMount = () => {},
   readOnly = false,
   labelWidth = 110,
   useLogger = false,
+  forwardedRef,
 }) {
   const isUserInput = useRef(false); // 状态改变是否来自于用户操作
   const originWidgets = useRef();
   const generatedFields = useRef({});
+  const firstRender = useRef(true);
   const previousSchema = usePrevious(schema);
   const previousData = usePrevious(formData);
 
   const data = useMemo(() => resolve(schema, formData), [schema, formData]);
 
   useEffect(() => {
-    if (onMount) {
-      onMount(data);
-    } else {
-      onChange(data);
-    }
-    onValidate(getValidateList(data, schema));
+    onChange(data);
+    updateValidation();
   }, []);
 
   useEffect(() => {
@@ -96,9 +94,29 @@ function FormRender({
       onChange(data);
       updateValidation();
     } else if (!isDeepEqual(previousData, formData)) {
+      if (firstRender.current) {
+        onMount();
+        firstRender.current = false;
+      }
       updateValidation();
     }
   }, [schema, formData]);
+
+  // data修改比较常用，所以放第一位
+  const resetData = (newData, newSchema) => {
+    const _schema = newSchema || schema;
+    const _formData = newData || formData;
+    const res = resolve(_schema, _formData);
+    return new Promise(resolve => {
+      onChange(res);
+      updateValidation(res, _schema);
+      resolve(res);
+    });
+  };
+
+  useImperativeHandle(forwardedRef, () => ({
+    resetData,
+  }));
 
   const debouncedValidate = useDebounce(onValidate);
 
@@ -109,8 +127,10 @@ function FormRender({
     debouncedValidate(getValidateList(val, schema));
   };
 
-  const updateValidation = () => {
-    onValidate(getValidateList(data, schema));
+  const updateValidation = (outData, outSchema) => {
+    const _data = outData || data;
+    const _schema = outSchema || schema;
+    onValidate(getValidateList(_data, _schema));
   };
 
   const generated = {};

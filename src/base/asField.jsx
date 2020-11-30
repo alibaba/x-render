@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getValidateText } from './validate';
 import { usePrevious } from '../hooks';
@@ -10,6 +10,7 @@ import {
   isDeepEqual,
   getEnum,
 } from './utils';
+import FoldIcon from '../components/foldIcon';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {
@@ -24,7 +25,7 @@ export const asField = ({ FieldUI, Widget }) => {
     width,
     labelWidth,
     disabled,
-    readonly,
+    readOnly,
     options,
     schema,
     ...rest
@@ -39,7 +40,7 @@ export const asField = ({ FieldUI, Widget }) => {
       value: _value,
     } = rest;
     const prevValue = usePrevious(_value);
-    // most key of schema, disabled, readonly, options, hidden, support for function expression
+    // most key of schema, disabled, readOnly, options, hidden, support for function expression
     useEffect(() => {
       if (showValidate) return;
       // 首次渲染不做, TODO: 万一首次渲染是用户输入触发的呢？
@@ -56,7 +57,7 @@ export const asField = ({ FieldUI, Widget }) => {
 
     const _hidden = convertValue(hidden, formData, rootValue);
     const _disabled = convertValue(disabled, formData, rootValue);
-    const _readonly = convertValue(readonly, formData, rootValue);
+    const _readOnly = convertValue(readOnly, formData, rootValue);
     const _options = { ...options };
     try {
       Object.entries(options).forEach(([key, _val]) => {
@@ -104,7 +105,7 @@ export const asField = ({ FieldUI, Widget }) => {
       ...rest,
       schema: _schema,
       disabled: _disabled,
-      readonly: _readonly,
+      readOnly: _readOnly,
       options: _options,
       formData: formData || {},
       rootValue: rootValue || {},
@@ -206,6 +207,14 @@ export const DefaultFieldUI = ({
     'ui:widget': widget,
     'ui:options': options,
   } = schema;
+
+  const [collapsed, setCollapsed] = useState(options && options.collapsed);
+  // 一个object是否可以折叠，options里collapsed这个值，且这个值只能是true或者false，代表初始是展开还是收起
+  const toggleCollapsed = () => setCollapsed(!collapsed);
+  const objectCanCollapse =
+    type === 'object' &&
+    options &&
+    [false, true].indexOf(options.collapsed) > -1;
   const isCheckbox = type === 'boolean' && widget !== 'switch';
   const isModal = options && (options.modal || options.drawer);
   let fieldClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''}`;
@@ -287,6 +296,13 @@ export const DefaultFieldUI = ({
             }`} // boolean不带冒号
             title={title}
           >
+            {objectCanCollapse && (
+              <FoldIcon
+                style={{ marginRight: 6 }}
+                fold={collapsed}
+                onClick={toggleCollapsed}
+              />
+            )}
             {isRequired && <span className="fr-label-required"> *</span>}
             <span
               className={`${isComplex ? 'b' : ''} ${
@@ -313,27 +329,30 @@ export const DefaultFieldUI = ({
           </label>
         </div>
       )}
-      <div
-        className={contentClass}
-        style={
-          isCheckbox
-            ? displayType === 'row'
-              ? { marginLeft: _labelWidth }
-              : {}
-            : { flexGrow: 1 }
-        }
-      >
-        <div className={`flex ${isComplex ? 'flex-column' : 'items-center'}`}>
-          {children}
-        </div>
-        <span
-          className={`fr-validate fr-validate-row ${
-            isComplex ? 'relative' : 'absolute'
-          }`}
+      {/* TODO: animation or maybe using antd Collapse */}
+      {objectCanCollapse && collapsed ? null : (
+        <div
+          className={contentClass}
+          style={
+            isCheckbox
+              ? displayType === 'row'
+                ? { marginLeft: _labelWidth }
+                : {}
+              : { flexGrow: 1 }
+          }
         >
-          {displayType === 'row' && validateText ? validateText : ''}
-        </span>
-      </div>
+          <div className={`flex ${isComplex ? 'flex-column' : 'items-center'}`}>
+            {children}
+          </div>
+          <span
+            className={`fr-validate fr-validate-row ${
+              isComplex ? 'relative' : 'absolute'
+            }`}
+          >
+            {displayType === 'row' && validateText ? validateText : ''}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

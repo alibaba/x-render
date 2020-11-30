@@ -1,11 +1,12 @@
 import { getEnum } from './utils';
 
 function getWidgetName(schema, map) {
-  const { type, format, enum: enums, readonly } = schema;
+  const { type, format } = schema;
+  const readOnly = schema['ui:readonly'];
   const list = [];
-  if (readonly) {
-    list.push(`${type}?readonly`);
-    list.push('*?readonly');
+  if (readOnly) {
+    list.push(`${type}?readOnly`);
+    list.push('*?readOnly');
   }
   if (getEnum(schema)) {
     list.push(`${type}?enum`);

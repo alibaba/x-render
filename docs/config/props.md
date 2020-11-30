@@ -62,7 +62,7 @@ label 是否与表单元素同行（row 为同行），默认是 column（label 
 - type: `boolean`
 - default: `false`
 
-当 `displayType` 为 `'row'` 的时候，建议将 `showDescIcon` 设为 `true`, 效果见`readOnly`下面那个 demo
+描述用气泡展示。当 `displayType` 为 `'row'` 的时候，建议将 `showDescIcon` 设为 `true`, 效果见`readOnly`下面那个 demo
 
 ## readOnly
 

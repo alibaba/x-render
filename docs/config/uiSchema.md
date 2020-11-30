@@ -89,9 +89,9 @@ toc: menu
 }
 ```
 
-#### `ui:readonly`
+#### `ui:readonly` (注意由于历史原因，不是驼峰哦)
 
-可控制 input、number 组件中的 readonly 属性(不可编辑，但不变灰)，列表也支持`readonly`，效果是列表的控件都会隐藏，导致列表不能增、删和拖拽，进入“只读”模式。但注意列表内的内容还是允许修改的，所以特别要注意如果列表套列表的场景，内部的列表也要 "ui:readonly": true
+可控制 input、number 组件中的 `readOnly` 属性(不可编辑，但不变灰)，列表也支持`ui:readonly`，效果是列表的控件都会隐藏，导致列表不能增、删和拖拽，进入“只读”模式。但注意列表内的内容还是允许修改的，所以特别要注意如果列表套列表的场景，内部的列表也要 "ui:readonly": true
 
 ```js
 "someList": {
@@ -166,15 +166,16 @@ toc: menu
 1. **基本上所有`antd`/ `fusion`文档中组件的 props 都可以使用 `ui:options` 的方式来直接使用。**
 2. form-render 也内置了几个的常用的`ui:options`:
 
-| option      |                    类型                    |   可用组件    |                                    说明                                     |
-| ----------- | :----------------------------------------: | :-----------: | :-------------------------------------------------------------------------: |
-| foldable    |                  boolean                   | 列表（array） |                 `{ foldable: true }`用于长列表的收起和展开                  |
-| hideDelete  | boolean / (formData, rootValue) => boolean | 列表（array） | `{ hideDelete: true }`隐藏“删除”按钮。隐藏全部操作，使用`ui:readonly`: true |
-| hideIndex   |                  boolean                   | 列表（array） |                         是否隐藏列表 item 的序号标                          |
-| buttons     |                   array                    | 列表（array） |                                下详 （注 2）                                |
-| itemButtons |                   array                    | 列表（array） |                                下详 （注 3）                                |
-| pageSize    |                   number                   | 列表（array） |                  指定分页展示列表时的每页显示数量，默认 10                  |
-| picker      |           "week"/"month"/"year"            | 日期（date）  |             使用 WeekPicker、MonthPicker 和 YearPicker （注 1）             |
+| option      |                    类型                    |    可用组件    |                                    说明                                     |
+| ----------- | :----------------------------------------: | :------------: | :-------------------------------------------------------------------------: |
+| foldable    |                  boolean                   | 列表（array）  |                 `{ foldable: true }`用于长列表的收起和展开                  |
+| hideDelete  | boolean / (formData, rootValue) => boolean | 列表（array）  | `{ hideDelete: true }`隐藏“删除”按钮。隐藏全部操作，使用`ui:readonly`: true |
+| hideIndex   |                  boolean                   | 列表（array）  |                         是否隐藏列表 item 的序号标                          |
+| buttons     |                   array                    | 列表（array）  |                                下详 （注 2）                                |
+| itemButtons |                   array                    | 列表（array）  |                                下详 （注 3）                                |
+| pageSize    |                   number                   | 列表（array）  |                  指定分页展示列表时的每页显示数量，默认 10                  |
+| collapsed   |                  boolean                   | 对象（object） |               `{ collapsed: true/false }`用于对象的收起和展开               |
+| picker      |           "week"/"month"/"year"            |  日期（date）  |             使用 WeekPicker、MonthPicker 和 YearPicker （注 1）             |
 
 **注 1：** picker 的简单用法如下：
 

@@ -17,7 +17,7 @@ export default SelectComponent => p => {
     <SelectComponent
       style={{ width: '100%', ...style }}
       {...p.options}
-      disabled={p.disabled || p.readonly}
+      disabled={p.disabled || p.readOnly}
       value={p.value}
       onChange={onChange}
     >

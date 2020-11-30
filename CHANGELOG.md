@@ -1,5 +1,13 @@
 # Change Log
 
+### 0.9.0
+
+- [+] 【Breaking】通过 ref 的方式将内部方法暴露出来，目前只有 `resetData`，具体使用参见 [api](https://x-render.gitee.io/form-render/config/api)
+  如果有用户在之前因为任何原因在 form-render 上挂了 ref，那这个是 breaking change(虽然感觉情况不多见)
+- [!] 修改了 onMount 的逻辑，现在 onMount 会在 formData 首次计算后触发
+- [!] 【Breaking】自定义组件接受到的入参 `readonly` 改为 `readOnly` 遵守惯例的驼峰格式。同时修复了一个 readOnly 无效的问题
+- [+] 对象类型接受 collapsed 入参，用于折叠
+
 ### 0.8.11
 
 - [+] 表单 props `column`、`displayType`、`showDescIcon` 属性都有了在 schema 中的对应的属性`ui:column`、`ui:displayType`、`ui:showDescIcon`, 可以在任何一层局部使用。同时意味着现在的 schema 已经能够完整传递所有展示信息（而不需要写一些 props）

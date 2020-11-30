@@ -58,7 +58,7 @@ export default function input(p) {
       {...config}
       value={p.value}
       type={type}
-      disabled={p.disabled || p.readonly}
+      disabled={p.disabled || p.readOnly}
       addonAfter={
         options.addonAfter ? options.addonAfter : previewNode(format, p.value)
       }

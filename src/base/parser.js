@@ -58,7 +58,7 @@ function getBasicProps(settings, materials) {
     'ui:hidden': hidden,
     'ui:disabled': _disabled,
     'ui:width': width,
-    'ui:readonly': readonly,
+    'ui:readonly': _readOnly,
     'ui:extraButtons': extraButtons = [],
     'ui:dependShow': dependShow,
     'ui:action': action,
@@ -73,19 +73,20 @@ function getBasicProps(settings, materials) {
   // 标准化属性模型
   // 除了value和onChange为动态值这里不处理
 
+  // true/false的值，服务端可能传了 1/0, 或者"true"
+  const hasValue = val =>
+    ['string', 'boolean', 'number'].indexOf(typeof val) > -1;
   // 一些从顶层一直传下去的props
   const passDownProps = {
     column: _column || column,
     displayType: _displayType || displayType,
-    showDescIcon: _showDescIcon || showDescIcon,
-    disabled: _disabled || disabled,
-    readonly: readOnly || readonly, // 前者全局的，后者单个ui的
+    showDescIcon: hasValue(_showDescIcon) ? _showDescIcon : showDescIcon,
+    disabled: hasValue(_disabled) ? _disabled : disabled,
+    readOnly: hasValue(_readOnly) ? _readOnly : readOnly, // 前者单个ui的，后者全局的
     labelWidth: _labelWidth || labelWidth,
     showValidate,
     useLogger,
   };
-
-  // console.log(passDownProps, 'passdow');
 
   let basicProps = {
     ...passDownProps,

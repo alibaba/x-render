@@ -1,7 +1,21 @@
 {
-  "propsSchema": {
+  "schema": {
     "type": "object",
     "properties": {
+      "objectName": {
+        "title": "对象",
+        "description": "这是个对象类型",
+        "type": "object",
+        "ui:options": {
+          "collapsed": true
+        },
+        "properties": {
+          "inputName": {
+            "title": "简单输入框",
+            "type": "string"
+          }
+        }
+      },
       "string": {
         "title": "字符串",
         "type": "string"
@@ -20,7 +34,6 @@
     "required": ["string22"]
   },
   "formData": {
-    "string": "2",
-    "string22": ""
+    "string": "2"
   }
 }

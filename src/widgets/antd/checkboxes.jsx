@@ -9,7 +9,7 @@ export default function checkboxes(p) {
   const _value = p.value && Array.isArray(p.value) ? p.value : [];
   return (
     <Checkbox.Group
-      disabled={p.disabled || p.readonly}
+      disabled={p.disabled || p.readOnly}
       value={_value}
       onChange={values => p.onChange(p.name, values)}
     >

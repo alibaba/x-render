@@ -52,7 +52,8 @@ schema 到组件的映射规则。比如 `{ type: 'string' }` 默认使用 `<Inp
 
 - type: `function`
 
-表单首次加载会调用一次 `onChange`。如果对首次加载有特别逻辑，可以使用 `onMount` 这个 props，用法见[onChange](/config/props#onchange)
+在首次渲染 formData 首次计算之后执行。从原理上来说，
+表单首次加载会调用一次 `onChange`，`onMount` 会在 `onChange` 执行之后立刻触发，此时 formData 已经更新，在不少场景下需要拿到这个初始化的 formData
 
 ## configProvider
 

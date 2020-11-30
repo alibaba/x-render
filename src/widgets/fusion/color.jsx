@@ -8,7 +8,7 @@ export default function color(p) {
   const { format } = p.schema;
   const defaultColor = '#ffffff';
   const onPickerChange = e => {
-    if (p.disabled || p.readonly) return;
+    if (p.disabled || p.readOnly) return;
     let { color, alpha } = e;
     if (alpha !== 100) {
       color = Color(color)
@@ -31,7 +31,7 @@ export default function color(p) {
           onClose={onPickerChange}
         />
       }
-      {p.readonly ? (
+      {p.readOnly ? (
         <span>{p.value || defaultColor}</span>
       ) : (
         <Input

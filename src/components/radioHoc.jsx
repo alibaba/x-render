@@ -12,7 +12,7 @@ export default p => {
   const { enum: enums, enumNames } = p.schema || {};
   return (
     <RadioGroup
-      disabled={p.disabled || p.readonly}
+      disabled={p.disabled || p.readOnly}
       value={p.value}
       onChange={p.onChange}
     >
