@@ -24,4 +24,4 @@ assignees: FateRiddle, siyi98
 <!--
   请尽可能提供一个最小demo，我们会尽快解决并予以回复
 -->
-https://codesandbox.io/s/table-render-demo-qi3sf?file=/src/App.js
+https://codesandbox.io/s/form-renderjichudemo-f55oy
