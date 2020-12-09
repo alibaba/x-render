@@ -19,11 +19,6 @@
           }
         }
       },
-      "inputName2": {
-        "title": "email输入框",
-        "type": "string",
-        "format": "email"
-      },
       "inputName": {
         "title": "url输入框",
         "type": "string",
@@ -33,6 +28,11 @@
         "title": "图片展示",
         "type": "string",
         "format": "image"
+      },
+      "inputName2": {
+        "title": "email输入框",
+        "type": "string",
+        "format": "email"
       },
       "string": {
         "title": "字符串",

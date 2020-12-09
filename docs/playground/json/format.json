@@ -1,0 +1,42 @@
+{
+  "schema": {
+    "ui:labelWidth": 130,
+    "type": "object",
+    "properties": {
+      "inputName": {
+        "title": "url输入框",
+        "type": "string",
+        "format": "url"
+      },
+      "imageName": {
+        "title": "图片展示",
+        "type": "string",
+        "format": "image"
+      },
+      "inputName2": {
+        "title": "email输入框",
+        "type": "string",
+        "format": "email"
+      },
+      "string": {
+        "title": "正则校验字符串",
+        "type": "string",
+        "pattern": "^[A-Za-z0-9]+$",
+        "message": {
+          "pattern": "格式不对哦~"
+        }
+      },
+      "string1": {
+        "title": "前后有空格不校验",
+        "type": "string",
+        "ui:options": {
+          "noTrim": true
+        }
+      },
+      "string2": {
+        "title": "正常的会校验空格",
+        "type": "string"
+      }
+    }
+  }
+}

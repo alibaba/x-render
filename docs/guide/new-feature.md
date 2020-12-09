@@ -9,6 +9,18 @@ toc: menu
 
 # 新功能
 
+## 0.9.1
+
+新增了 `{ format: "email"/"url"/"image" }`
+
+```jsx
+import React from 'react';
+import FR from '../demo/FR/index.jsx';
+import json from '../demo/new-feature/format.json';
+
+export default () => <FR schema={json} />;
+```
+
 ## 0.8.11
 
 属性`ui:column`、`ui:displayType`、`ui:showDescIcon` 支持属性局部控制。原本只能通过 props 全局控制
