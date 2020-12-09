@@ -51,7 +51,7 @@ export const getValidateText = (obj = {}) => {
   if (type === 'number' && value === 0) {
     finalValue = 0;
   }
-  const needPattern = pattern && ['string', 'number'].indexOf(type) > -1;
+  const usePattern = pattern && ['string', 'number'].indexOf(type) > -1;
   // schema 里面没有内容的，直接退出
   if (isEmptyObject(schema)) {
     return false;
@@ -78,9 +78,6 @@ export const getValidateText = (obj = {}) => {
     // 添加检查，是否两侧有空格
     const noTrim = options && options.noTrim; // 配置项，不需要trim
     const trimedValue = _finalValue.trim();
-    if (format === 'email') {
-      console.log(finalValue === trimedValue, 'trim');
-    }
     if (trimedValue !== _finalValue && !noTrim) {
       return (message && message.trim) || `输入的内容有多余空格`;
     }
@@ -108,18 +105,24 @@ export const getValidateText = (obj = {}) => {
     if (format === 'image') {
       const imagePattern =
         '([/|.|w|s|-])*.(?:jpg|gif|png|bmp|apng|webp|jpeg|json)';
-      if (finalValue && !new RegExp(imagePattern).test(finalValue)) {
+      // image 里也可以填写网络链接
+      const _isUrl = isUrl(finalValue);
+      const _isImg = new RegExp(imagePattern).test(finalValue);
+      if (usePattern) {
+      } else if (finalValue && !_isUrl && !_isImg) {
         return (message && message.image) || '请输入正确的图片格式';
       }
     }
     if (format === 'url') {
-      if (finalValue && !isUrl(finalValue)) {
+      if (usePattern) {
+      } else if (finalValue && !isUrl(finalValue)) {
         return (message && message.url) || '请输入正确的url格式';
       }
     }
 
     if (format === 'email') {
-      if (finalValue && !isEmail(finalValue)) {
+      if (usePattern) {
+      } else if (finalValue && !isEmail(finalValue)) {
         return (message && message.email) || '请输入正确的email格式';
       }
     }
@@ -140,7 +143,7 @@ export const getValidateText = (obj = {}) => {
 
   // 正则只对数字和字符串有效果
   // finalValue 有值的时候才去算 pattern。从场景反馈还是这样好
-  if (finalValue && needPattern && !new RegExp(pattern).test(finalValue)) {
+  if (finalValue && usePattern && !new RegExp(pattern).test(finalValue)) {
     return (message && message.pattern) || '格式不匹配';
   }
 
