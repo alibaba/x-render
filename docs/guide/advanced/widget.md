@@ -151,6 +151,7 @@ import MyCheckbox from './path/to/MyCheckbox'
 在 FR 内部会有一个映射表 mapping，FR 读取 schema 后根据其特征（type/format 等）在 mapping 中寻找所对应的组件，并进行渲染。
 
 ```js
+// 例如在antd下映射如下：
 export const mapping = {
   default: 'input',
   string: 'input',
@@ -159,6 +160,7 @@ export const mapping = {
   integer: 'number',
   number: 'number',
   object: 'map',
+  html: 'html',
   'string:upload': 'upload',
   'string:date': 'date',
   'string:dateTime': 'date',
@@ -166,11 +168,12 @@ export const mapping = {
   'string:textarea': 'textarea',
   'string:color': 'color',
   'string:image': 'input',
+  'string:email': 'input',
+  'string:url': 'url',
   'range:date': 'dateRange',
   'range:dateTime': 'dateRange',
   '*?enum': 'select',
   'array?enum': 'checkboxes',
-  '*?readOnly': 'text',
 };
 ```
 

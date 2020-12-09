@@ -8,14 +8,14 @@ toc: menu
 
 # uiSchema
 
-### 概述
+## 概述
 
 - uiSchema 虽然不是必备参数，但是通过它可以增强 FormRender 展示的丰富性，例如：
 - 通过 uiSchema 可以覆盖 schema 中 type 对应的默认 widget 组件
 - 通过 `ui:disabled`、`ui:readonly`、`ui:hidden` 属性来控制表单项的 UI 展示
 - 通过 `ui:options` 属性能够实现大量特定的 ui 展示选项
 
-### 使用规范
+## 使用规范
 
 - uiSchema 里所有的字段都以 `ui:` 开始，如 `ui:widget`。
 - 为了满足各用户的使用偏好，uiSchema 可以单独书写，也可以完全归并到 schema，例如：
@@ -58,7 +58,7 @@ toc: menu
 
 事实上 form-render 内部处理协议时第一件事就是将 schema 和 uiSchema 合并，所以上述两种协议的渲染效果是一致的。前者适用于遵循 json schema 的团队无缝接入，后者在书写上更为高效，推荐大多数用户使用。
 
-### 覆盖 schema 中表单项对应的默认 UI Widget
+## 覆盖 schema 中表单项对应的默认 UI Widget
 
 | 类型   |            type            | 默认 widget | 其他支持 widget(备注) |
 | ------ | :------------------------: | :---------: | :-------------------: |
@@ -70,11 +70,11 @@ toc: menu
 
 ## 共通的表单 UI 配置
 
-#### `ui:disabled`
+### `ui:disabled`
 
 可控制 input、number、date、checkbox、radio、select、switch 对于组件的 disabled 属性(变灰不可点击)
 
-#### `ui:labelWidth`
+### `ui:labelWidth`
 
 用于控制本元素以及其子元素（如果本元素是对象或列表）的标签宽度，使用方法与 FR 的全局变量`labelWidth`相同
 
@@ -89,7 +89,7 @@ toc: menu
 }
 ```
 
-#### `ui:readonly` (注意由于历史原因，不是驼峰哦)
+### `ui:readonly` (注意由于历史原因，不是驼峰哦)
 
 可控制 input、number 组件中的 `readOnly` 属性(不可编辑，但不变灰)，列表也支持`ui:readonly`，效果是列表的控件都会隐藏，导致列表不能增、删和拖拽，进入“只读”模式。但注意列表内的内容还是允许修改的，所以特别要注意如果列表套列表的场景，内部的列表也要 "ui:readonly": true
 
@@ -99,7 +99,7 @@ toc: menu
 }
 ```
 
-#### `ui:hidden`
+### `ui:hidden`
 
 可控制所有基础组件是否显示，可使用 true/false 或函数表达式，例如：
 
@@ -130,11 +130,11 @@ toc: menu
 
 如果使用如上函数表达式，age 组件将在 agree 组件的值为 false 且 personType 组件不等于 2 时隐藏。其中`formData`指向整个表单值，`rootValue`指向对应组件的父级元素值。函数表达式的详细写法见[如何联动](/guide/advanced/function)
 
-#### `ui:className`
+### `ui:className`
 
 添加组件 root 元素的 className（和 fr-field 这个 className 在同级），用于自定义单独组件的样式
 
-#### `ui:width`
+### `ui:width`
 
 单个基础组件的长度，建议使用百分比例如`"ui:width":"50%"`。
 
@@ -142,15 +142,15 @@ toc: menu
 
 用于便捷控制一行排版几个元素，使用方法与 FR 的 props `column`相同
 
-#### `ui:displayType`
+### `ui:displayType`
 
 用于控制 label 和表单 input 是同行左右展示还是分两行展示，使用方法与 FR 的 props `displayType`相同
 
-#### `ui:showDescIcon`
+### `ui:showDescIcon`
 
 用于控制详情描述（description）是正常展示还是用一个 icon 替代（鼠标悬浮后弹 pop 展示详情描述），使用方法与 FR 的 props `showDescIcon`相同
 
-### ui:options 配置
+### `ui:options`
 
 `ui:options` 里存放特定元素的特定配置。例如`textarea`的`rows`
 
@@ -166,16 +166,17 @@ toc: menu
 1. **基本上所有`antd`/ `fusion`文档中组件的 props 都可以使用 `ui:options` 的方式来直接使用。**
 2. form-render 也内置了几个的常用的`ui:options`:
 
-| option      |                    类型                    |    可用组件    |                                    说明                                     |
-| ----------- | :----------------------------------------: | :------------: | :-------------------------------------------------------------------------: |
-| foldable    |                  boolean                   | 列表（array）  |                 `{ foldable: true }`用于长列表的收起和展开                  |
-| hideDelete  | boolean / (formData, rootValue) => boolean | 列表（array）  | `{ hideDelete: true }`隐藏“删除”按钮。隐藏全部操作，使用`ui:readonly`: true |
-| hideIndex   |                  boolean                   | 列表（array）  |                         是否隐藏列表 item 的序号标                          |
-| buttons     |                   array                    | 列表（array）  |                                下详 （注 2）                                |
-| itemButtons |                   array                    | 列表（array）  |                                下详 （注 3）                                |
-| pageSize    |                   number                   | 列表（array）  |                  指定分页展示列表时的每页显示数量，默认 10                  |
-| collapsed   |                  boolean                   | 对象（object） |               `{ collapsed: true/false }`用于对象的收起和展开               |
-| picker      |           "week"/"month"/"year"            |  日期（date）  |             使用 WeekPicker、MonthPicker 和 YearPicker （注 1）             |
+| option      |                    类型                    |     可用组件     |                                    说明                                     |
+| ----------- | :----------------------------------------: | :--------------: | :-------------------------------------------------------------------------: |
+| noTrim      |                  boolean                   | 所有 type:string |          `{ noTrim: true }` 不去校验 input 是否有空格（默认校验）           |
+| foldable    |                  boolean                   |  列表（array）   |                 `{ foldable: true }`用于长列表的收起和展开                  |
+| hideDelete  | boolean / (formData, rootValue) => boolean |  列表（array）   | `{ hideDelete: true }`隐藏“删除”按钮。隐藏全部操作，使用`ui:readonly`: true |
+| hideIndex   |                  boolean                   |  列表（array）   |                         是否隐藏列表 item 的序号标                          |
+| buttons     |                   array                    |  列表（array）   |                                下详 （注 2）                                |
+| itemButtons |                   array                    |  列表（array）   |                                下详 （注 3）                                |
+| pageSize    |                   number                   |  列表（array）   |                  指定分页展示列表时的每页显示数量，默认 10                  |
+| collapsed   |                  boolean                   |  对象（object）  |               `{ collapsed: true/false }`用于对象的收起和展开               |
+| picker      |           "week"/"month"/"year"            |   日期（date）   |             使用 WeekPicker、MonthPicker 和 YearPicker （注 1）             |
 
 **注 1：** picker 的简单用法如下：
 
