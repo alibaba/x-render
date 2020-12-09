@@ -64,8 +64,10 @@ export default function input(p) {
       );
     }
   } catch (error) {}
+  const _options = { ...options };
+  delete _options.noTrim;
   const config = {
-    ...options,
+    ..._options,
     maxLength,
     suffix,
   };
