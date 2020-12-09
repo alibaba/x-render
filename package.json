@@ -58,6 +58,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.0.2",
     "color": "^3.1.2",
+    "is-url": "^1.2.4",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.24.0",
     "pope": "^2.0.2",
@@ -67,14 +68,16 @@
     "validator": "^10.7.1"
   },
   "peerDependencies": {
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0",
+    "@alifd/next": "^1.x",
     "antd": "^4.x",
-    "@alifd/next": "^1.x"
+    "react": "^16.8.0 || ^17.0.0",
+    "react-dom": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
+    "@alifd/next": "^1.x",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.0.5",
+    "antd": "^4.x",
     "babel-plugin-import": "^1.13.0",
     "deep-equal": "^2.0.3",
     "dumi": "^1.0.33",
@@ -87,8 +90,6 @@
     "react": "^16.12.0",
     "react-simple-code-editor": "^0.11.0",
     "rollup-plugin-commonjs": "^10.1.0",
-    "yorkie": "^2.0.0",
-    "antd": "^4.x",
-    "@alifd/next": "^1.x"
+    "yorkie": "^2.0.0"
   }
 }

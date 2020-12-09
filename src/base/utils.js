@@ -337,3 +337,11 @@ export const getArray = (arr, defaultValue = []) => {
   if (Array.isArray(arr)) return arr;
   return defaultValue;
 };
+
+export const isEmail = value => {
+  const regex = '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$';
+  if (value && new RegExp(regex).test(value)) {
+    return true;
+  }
+  return false;
+};

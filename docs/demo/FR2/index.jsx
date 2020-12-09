@@ -39,7 +39,6 @@ const Demo = ({ schema = {} }) => {
     <div style={{ maxWidth: 800 }}>
       <FormRender
         ref={formRef}
-        readOnly={true}
         displayType="row"
         showDescIcon
         labelWidth={120}

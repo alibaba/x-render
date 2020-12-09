@@ -1,31 +1,48 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { PictureOutlined } from '@ant-design/icons';
 import { Input, Popover } from 'antd';
+import { useDebounce } from '../../hooks';
 import previewContent from '../../components/previewContent';
 
-const previewNode = (format, value) => {
-  if (format !== 'image') {
-    return null;
-  }
+const PreviewNode = ({ format, value, showPop, setShowPop }) => {
   return (
     <Popover
       content={previewContent(format, value)}
       className="fr-preview"
       placement="bottom"
+      visible={showPop}
     >
-      <PictureOutlined />
+      <PictureOutlined
+        onMouseEnter={() => setShowPop(true)}
+        onMouseLeave={() => setShowPop(false)}
+      />
     </Popover>
   );
 };
 
 export default function input(p) {
+  const [showPop, setShowPop] = useState(false);
   const { options = {}, invalid, schema = {} } = p;
   const style = invalid
     ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 2px rgba(255,77,79,.2)' }
     : {};
   const { format = 'text', maxLength } = schema;
-  const type = format === 'image' ? 'text' : format;
-  const handleChange = e => p.onChange(p.name, e.target.value);
+  const type = ['image', 'email'].indexOf(format) > -1 ? 'text' : format; // TODO: 这里要是添加新的input类型，注意是一个坑啊，每次不想用html的默认都要补上
+
+  const showAndHide = () => {
+    setShowPop(true);
+    setTimeout(() => {
+      setShowPop(false);
+    }, 1000);
+  };
+
+  const debouncedShowAndHide = useDebounce(showAndHide, 800);
+
+  const handleChange = e => {
+    p.onChange(p.name, e.target.value);
+    debouncedShowAndHide && debouncedShowAndHide();
+  };
+
   let suffix = undefined;
   try {
     let _value = p.value || '';
@@ -52,6 +69,19 @@ export default function input(p) {
     maxLength,
     suffix,
   };
+
+  let addonAfter = options.addonAfter;
+  if (format === 'image' && !addonAfter) {
+    addonAfter = (
+      <PreviewNode
+        format={format}
+        value={p.value}
+        showPop={showPop}
+        setShowPop={setShowPop}
+      />
+    );
+  }
+
   return (
     <Input
       style={style}
@@ -59,9 +89,7 @@ export default function input(p) {
       value={p.value}
       type={type}
       disabled={p.disabled || p.readOnly}
-      addonAfter={
-        options.addonAfter ? options.addonAfter : previewNode(format, p.value)
-      }
+      addonAfter={addonAfter}
       onChange={handleChange}
     />
   );
