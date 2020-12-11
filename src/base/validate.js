@@ -5,9 +5,15 @@
 
 import isLength from 'validator/lib/isLength';
 import Color from 'color';
-import isUrl from 'is-url';
 import { isHidden } from './isHidden';
-import { hasRepeat, isFunction, baseGet, convertValue, isEmail } from './utils';
+import {
+  hasRepeat,
+  isFunction,
+  baseGet,
+  convertValue,
+  isEmail,
+  isUrl,
+} from './utils';
 
 const isNotEmpty = val => [undefined, null].indexOf(val) === -1;
 

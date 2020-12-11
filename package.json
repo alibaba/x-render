@@ -58,7 +58,6 @@
   "dependencies": {
     "@ant-design/icons": "^4.0.2",
     "color": "^3.1.2",
-    "is-url": "^1.2.4",
     "lodash.debounce": "^4.0.8",
     "moment": "^2.24.0",
     "pope": "^2.0.2",

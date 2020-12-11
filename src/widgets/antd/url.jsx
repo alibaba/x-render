@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'antd';
-import isUrl from 'is-url';
+import { isUrl } from '../../base/utils';
 
 const TestNode = ({ value }) => {
   const useUrl = isUrl(value);
