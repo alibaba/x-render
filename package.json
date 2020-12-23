@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/*", "widgets/*"
   ],
   "scripts": {
     "build": "lerna run build",
