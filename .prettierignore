@@ -5,3 +5,5 @@ package.json
 .umi
 .umi-production
 .umi-test
+/packages/*/node_modules
+/node_modules

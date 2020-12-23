@@ -3,4 +3,14 @@ export default {
   esm: 'rollup',
   disableTypeCheck: false, // 如果出了问题，这个可以改成true
   cjs: { type: 'babel', lazy: true },
+  extraBabelPlugins: [
+    [
+      'babel-plugin-import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'lib',
+        style: true,
+      },
+    ],
+  ],
 };

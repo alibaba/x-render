@@ -7,6 +7,7 @@
 /yarn.lock
 /package-lock.json
 
+
 # production
 /dist
 /lib
@@ -15,12 +16,23 @@
 .idea
 .DS_Store
 .idea
+.vscode
 
 # umi
 .umi
 .umi-production
 .umi-test
 .env.local
+
+# lerna
+
+/packages/*/es
+/packages/*/lib
+/packages/*/node_modules
+/packages/*/.local
+/packages/*/dist
+/.local
+/packages/**/node_modules
 
 # custom
 old-doc

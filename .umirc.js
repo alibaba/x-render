@@ -36,7 +36,9 @@ export default defineConfig({
     },
   ],
   mode: 'site',
-  alias: { 'form-render/dist': path.resolve(__dirname, 'dist') },
+  alias: {
+    'form-render/dist': path.resolve(__dirname, 'packages/form-render/dist'),
+  },
   base: '/form-render/',
   publicPath: '/form-render/',
   exportStatic: {},
