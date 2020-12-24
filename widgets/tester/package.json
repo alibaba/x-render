@@ -36,6 +36,5 @@
   "peerDependencies": {
     "antd": "^4.x",
     "react": "^16.8.0 || ^17.0.0"
-  },
-  "devDependencies": {}
+  }
 }
