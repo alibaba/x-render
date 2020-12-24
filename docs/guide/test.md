@@ -16,7 +16,7 @@ export default () => <FR schema={json} />;
 
 ```jsx
 import React from 'react';
-import A from '@formrender/tester';
+import A from '@form-render/tester';
 
 export default () => <A />;
 ```
@@ -24,7 +24,7 @@ export default () => <A />;
 ```jsx
 import React, { useState } from 'react';
 import FR from 'form-render/lib/antd';
-import A from '@formrender/tester';
+import A from '@form-render/tester';
 
 export default () => {
   const [data, setData] = useState();
