@@ -14,7 +14,7 @@
     "size": "ANALYZE=1 dumi build",
     "clean": "lerna clean -y",
     "changelog": "lerna-changelog",
-    "publish": "npm run build && lerna publish -m \"chore: publish\""
+    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access"
   },
   "devDependencies": {
     "@alifd/next": "^1.x",
