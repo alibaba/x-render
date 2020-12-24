@@ -31,8 +31,15 @@
 /packages/*/node_modules
 /packages/*/.local
 /packages/*/dist
-/.local
 /packages/**/node_modules
+/.local
+
+/widgets/*/es
+/widgets/*/lib
+/widgets/*/node_modules
+/widgets/*/.local
+/widgets/*/dist
+/widgets/**/node_modules
 
 # custom
 old-doc
