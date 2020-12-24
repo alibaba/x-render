@@ -1,6 +1,6 @@
 {
   "name": "@form-render/tester",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "keywords": [
     "FormRender",
     "Render",
@@ -11,6 +11,7 @@
   "scripts": {
     "build": "father-build",
     "prepare": "npm run build",
+    "release": "npm publish --access public",
     "postpublish": "git push --tags",
     "beta": "npm publish --tag beta",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
