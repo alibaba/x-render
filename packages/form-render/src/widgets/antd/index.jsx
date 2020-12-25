@@ -15,6 +15,7 @@ import switch1 from './switch';
 import textarea from './textarea';
 import upload from './upload';
 import html from './html';
+import url from './url';
 
 export const widgets = {
   checkbox,
@@ -34,6 +35,7 @@ export const widgets = {
   textarea,
   upload,
   html,
+  url,
 };
 
 export const mapping = {
@@ -51,7 +53,9 @@ export const mapping = {
   'string:time': 'date',
   'string:textarea': 'textarea',
   'string:color': 'color',
-  'string:image': 'input',
+  'string:image': 'input', // 是不是考虑image分立出来
+  'string:email': 'input',
+  'string:url': 'url',
   'range:date': 'dateRange',
   'range:dateTime': 'dateRange',
   '*?enum': 'select',

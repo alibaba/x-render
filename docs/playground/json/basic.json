@@ -129,6 +129,47 @@
             "enumNames": ["杭州", "武汉", "湖州", "贵阳"]
           }
         }
+      },
+      "obj1": {
+        "title": "可折叠对象",
+        "description": "这是个对象类型",
+        "type": "object",
+        "ui:options": {
+          "collapsed": true
+        },
+        "properties": {
+          "input1": {
+            "title": "输入框1",
+            "type": "string"
+          },
+          "input2": {
+            "title": "输入框2",
+            "type": "string"
+          }
+        }
+      },
+      "listName2": {
+        "title": "对象数组",
+        "description": "对象数组嵌套功能",
+        "type": "array",
+        "minItems": 1,
+        "maxItems": 3,
+        "ui:displayType": "row",
+        "items": {
+          "type": "object",
+          "properties": {
+            "input1": {
+              "title": "简单输入框",
+              "type": "string"
+            },
+            "selet1": {
+              "title": "单选",
+              "type": "string",
+              "enum": ["a", "b", "c"],
+              "enumNames": ["早", "中", "晚"]
+            }
+          }
+        }
       }
     },
     "required": []

@@ -1,0 +1,38 @@
+{
+  "name": "@form-render/template",
+  "version": "1.0.0",
+  "keywords": [
+    "FormRender",
+    "Render",
+    "React",
+    "Json Schema",
+    "Ant Design"
+  ],
+  "scripts": {
+    "build": "father-build",
+    "prepare": "npm run build",
+    "release": "npm publish --access public",
+    "postpublish": "git push --tags",
+    "beta": "npm publish --tag beta",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "peerDependencies": {
+    "antd": "^4.x",
+    "react": "^16.8.0 || ^17.0.0"
+  }
+}

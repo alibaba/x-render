@@ -12,7 +12,7 @@ toc: menu
   <span>注：这个字段就是老用户熟悉的`propsSchema`，由于 propsSchema 不好写也意义不明，所以现在推荐直接使用 schema 字段，但目前还是兼容的</span>
 </Alert>
 
-### 概述
+## 概述
 
 - `schema` 是 FormRender 的必填 props，用于描述表单的基本信息、结构和校验。
 - `schema`遵从和使用了`JSON Schema`的约定规范。已经接入`JSON Schema`标准的团队可以几乎无缝接入`form-render`。`JSON Schema`是一个约定了可用的结构和字段的特殊 json，作为国际标准，主要应用于校验 JSON 数据
@@ -41,7 +41,7 @@ toc: menu
 
 描述了一个 object 结构，其第一个属性为数字类型。最外层约定为 object 结构，所有 schema 都需要如是写。
 
-### 通用参数
+## 通用参数
 
 对于每一个表单控件，我们都会使用如下的 schema 描述
 
@@ -52,13 +52,74 @@ toc: menu
 }
 ```
 
-- `title`：表单的标题信息，作为 label 展示，注意 title 为""时占位，title 不写时不占位
-- `description`：表单的描述信息，常将填写注意点放入此参数
-- `type`：表单的类型，支持 string、number、boolean、array、object、range
-- `format`：用来描述输入框的格式，支持 image、dateTime、date、time、upload, 其中 upload 为上传组件
-- `pattern`：自定义正则校验，用于校验 string 或 number 数据是否合格，详细使用可见 [pattern 自定义正则校验](/guide/advanced/pattern)
-- `message` 校验提示自定义文案，与 pattern 共同使用
-- `default` 默认值，对象类型不能使用 default，其他类型包括 array 都可以使用 default：
+### title
+
+表单的标题信息，作为 label 展示，注意 title 为""时占位，title 不写时不占位
+
+### description
+
+表单的描述信息，常将填写注意点放入此参数
+
+### type
+
+表单的类型，支持 string、number、boolean、array、object、range
+
+### format
+
+用来描述输入框的格式，支持 image、email、url、dateTime、date、time、upload, 其中 upload 为上传组件
+
+### pattern
+
+自定义正则校验，用于校验 string 或 number 数据是否合格，详细使用可见 [pattern 自定义正则校验](/config/pattern)
+
+### message
+
+所有的校验都有默认文案，有时你希望校验提示自定义的文案，就需要使用 message 字段。message 一般与 pattern、format、maxLength 等字段共同使用。简单的例子：
+
+```json
+{
+  "title": "字符串",
+  "description": "英文或数字组合",
+  "type": "string",
+  "format": "email",
+  "pattern": "^[A-Za-z0-9@]+$",
+  "message": {
+    "pattern": "输入的不正确哦~",
+    "email": "不是一个email哦~"
+  }
+}
+```
+
+也有唯一一个`message.trim`，单独使用。用于定制如果输入内容有前后空格的时候的提示
+
+```json
+{
+  "title": "一个地址链接",
+  "type": "string",
+  "message": {
+    "trim": "输入项有空格哦~"
+  }
+}
+```
+
+所有支持的 key 如下：
+
+| key           | 描述                                                          |
+| ------------- | ------------------------------------------------------------- |
+| pattern       | 配合 pattern 字段使用，正则校验的自定义提示文案               |
+| required      | 配合 required 字段使用，必填的自定义提示文案                  |
+| maxLength     | 配合 maxLength 字段使用，input 框输入最大长度的自定义提示文案 |
+| minLength     | 配合 minLength 字段使用，input 框输入最小长度的自定义提示文案 |
+| maximum       | 配合 maximum 字段使用，number 框输入最大长度的自定义提示文案  |
+| minimum       | 配合 minimum 字段使用，number 框输入最小长度的自定义提示文案  |
+| format: email | 配合 format 字段使用，email 格式校验的自定义提示文案          |
+| format: url   | 配合 format 字段使用，url 格式校验的自定义提示文案            |
+| format: image | 配合 format 字段使用，图片格式校验的自定义提示文案            |
+| trim          | 输入内容有空格时的自定义提示文案                              |
+
+### default
+
+默认值，对象类型不能使用 default，其他类型包括 array 都可以使用 default：
 
 ```json
 "list": {
@@ -75,7 +136,9 @@ toc: menu
 }
 ```
 
-#### String
+## 各个 type 的特有属性
+
+### type: "string"
 
 string 类对应的控件非常多, 使用 `format` 字段指定使用组件：
 
@@ -140,13 +203,13 @@ string 类对应的控件非常多, 使用 `format` 字段指定使用组件：
 
 单选默认会选中第一项，如果希望默认啥都不选，可设置 default: null。如果默认想选某一项，也使用 default 等于那一项的值来实现
 
-#### Number
+### type: "number"
 
 - `min`：数字最小值
 - `max`：数字最大值
 - `step`：允许递增的区间
 
-#### Object
+### type: "object"
 
 - `properties`：描述 object 的结构，必要属性
 - `required`：描述对象下哪些项必填，非必要属性。为数组结构，每项是对应必填组件的 name
@@ -165,7 +228,7 @@ string 类对应的控件非常多, 使用 `format` 字段指定使用组件：
 }
 ```
 
-#### Array
+### type: "array"
 
 `Array`的数据结构可能是：列表 & 多选框
 
@@ -240,7 +303,7 @@ string 类对应的控件非常多, 使用 `format` 字段指定使用组件：
 }
 ```
 
-#### Range
+### type: "range"
 
 长度为 2 的 array，目前支持的组件为时间范围
 
@@ -255,7 +318,7 @@ string 类对应的控件非常多, 使用 `format` 字段指定使用组件：
 }
 ```
 
-### html
+### type: "html"
 
 只要注明`type: "html"`, FR 支持 html 元素的渲染，最常用的是纯文本, 如下例：
 
@@ -291,7 +354,7 @@ string 类对应的控件非常多, 使用 `format` 字段指定使用组件：
 渲染结果如下：
 <img src="https://img.alicdn.com/tfs/TB18ug4XTM11u4jSZPxXXahcXXa-571-190.jpg" width="500px" />
 
-### 一个很全的结构
+## 一个健全的结构
 
 ```json
 {

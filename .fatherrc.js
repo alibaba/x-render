@@ -1,40 +1,6 @@
-import commonjs from 'rollup-plugin-commonjs';
-
+// 通用的配置，可以在每个package里写 fatherrc.js 来覆盖
 export default {
-  entry: ['src/index.js', 'src/antd.js', 'src/fusion.js'],
   esm: 'rollup',
-  cjs: 'babel',
-  extraRollupPlugins: [
-    commonjs({
-      include: 'node_modules/**',
-    }),
-  ],
-  extraBabelPlugins: [
-    [
-      'import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'lib',
-        style: 'css',
-      },
-      'antd',
-    ],
-    [
-      'import',
-      {
-        libraryName: '@alifd/next',
-        libraryDirectory: 'lib',
-      },
-      '@alifd/next',
-    ],
-    [
-      'import',
-      {
-        libraryName: '@ant-design/icons',
-        libraryDirectory: 'lib/icons',
-        camel2DashComponentName: false,
-      },
-      '@ant-design/icons',
-    ],
-  ],
+  disableTypeCheck: false, // 如果出了问题，这个可以改成true
+  cjs: { type: 'babel', lazy: true },
 };

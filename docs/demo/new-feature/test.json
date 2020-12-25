@@ -12,13 +12,35 @@
         "properties": {
           "inputName": {
             "title": "简单输入框",
-            "type": "string"
+            "type": "string",
+            "ui:options": {
+              "noTrim": false
+            }
           }
         }
       },
+      "inputName": {
+        "title": "url输入框",
+        "type": "string",
+        "format": "url"
+      },
+      "imageName": {
+        "title": "图片展示",
+        "type": "string",
+        "format": "image"
+      },
+      "inputName2": {
+        "title": "email输入框",
+        "type": "string",
+        "format": "email"
+      },
       "string": {
         "title": "字符串",
-        "type": "string"
+        "type": "string",
+        "pattern": "^[A-Za-z0-9]+$",
+        "message": {
+          "pattern": "请输入正确格式"
+        }
       },
       "string22": {
         "title": "测试效验",

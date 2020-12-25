@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import FormRender from '../../../src/antd';
+import FormRender from '../../../packages/form-render/src/antd';
 import { Button } from 'antd';
-// import FormRender from '../../../src/fusion';
+// import FormRender from '../../../packages/form-render/src/fusion';
 // import '@alifd/next/dist/next.min.css';
 
 const Demo = ({ schema = {} }) => {
   const [formData, setFormData] = useState(() => schema.formData);
   const [valid, setValid] = useState([]);
-  const [showValid, setShowValid] = useState(true);
+  const [showValid, setShowValid] = useState(false);
 
   const formRef = useRef();
 
@@ -39,7 +39,6 @@ const Demo = ({ schema = {} }) => {
     <div style={{ maxWidth: 800 }}>
       <FormRender
         ref={formRef}
-        readOnly={true}
         displayType="row"
         showDescIcon
         labelWidth={120}

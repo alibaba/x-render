@@ -12,6 +12,15 @@ export function clone(data) {
   }
 }
 
+// 做一个url的弱判断，就判断有没有 “//”
+
+export function isUrl(string) {
+  const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
+  // const domainRE = /^[^\s\.]+\.\S{2,}$/;
+  if (typeof string !== 'string') return false;
+  return protocolRE.test(string);
+}
+
 // '3' => true, 3 => true, undefined => false
 export function isLooselyNumber(num) {
   if (typeof num === 'number') return true;
@@ -336,4 +345,12 @@ export const getEnum = schema => {
 export const getArray = (arr, defaultValue = []) => {
   if (Array.isArray(arr)) return arr;
   return defaultValue;
+};
+
+export const isEmail = value => {
+  const regex = '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$';
+  if (value && new RegExp(regex).test(value)) {
+    return true;
+  }
+  return false;
 };

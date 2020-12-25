@@ -21,6 +21,10 @@ export default defineConfig({
       title: '表单设计器',
       path: 'https://x-render.gitee.io/schema-generator/',
     },
+    {
+      title: 'table-render',
+      path: 'https://x-render.gitee.io/table-render/',
+    },
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
     {
       title: '更新日志',
@@ -32,7 +36,9 @@ export default defineConfig({
     },
   ],
   mode: 'site',
-  alias: { 'form-render/dist': path.resolve(__dirname, 'dist') },
+  alias: {
+    'form-render/dist': path.resolve(__dirname, 'packages/form-render/dist'),
+  },
   base: '/form-render/',
   publicPath: '/form-render/',
   exportStatic: {},

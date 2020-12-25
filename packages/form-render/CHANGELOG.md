@@ -1,12 +1,27 @@
 # Change Log
 
+### 0.9.3
+
+- [内部] 对使用者无影响。为了方便后续自定义组件的开发，使用 lerna 将 form-render 从单仓库切换到 monorepo。之后的插件 & 自定义组件的开发都在 form-render 同一个仓库里进行
+
+### 0.9.2
+
+- [!] `format: url` 类型使用的兼容判断放宽，考虑到一些非常见的的网址
+
+### 0.9.1
+
+此版本主题是校验的扩展
+
+- [+] 新增了 format：`email`/`url`有全新的展示和校验, `image`也添加了数据校验
+- [!] type: string 类型的输入框，现在会校验是否在输入内容前后有空格。如果不希望空格被校验，可以使用 { noTrim: true } 属性
+
 ### 0.9.0
 
 - [+] 【Breaking】通过 ref 的方式将内部方法暴露出来，目前只有 `resetData`，具体使用参见 [api](https://x-render.gitee.io/form-render/config/api)
   如果有用户在之前因为任何原因在 form-render 上挂了 ref，那这个是 breaking change(虽然感觉情况不多见)
 - [!] 修改了 onMount 的逻辑，现在 onMount 会在 formData 首次计算后触发
 - [!] 【Breaking】自定义组件接受到的入参 `readonly` 改为 `readOnly` 遵守惯例的驼峰格式。同时修复了一个 readOnly 无效的问题
-- [+] 对象类型接受 collapsed 入参，用于折叠
+- [+] 对象类型接受 `collapsed` 入参，用于折叠
 
 ### 0.8.11
 

@@ -6,7 +6,14 @@
 import isLength from 'validator/lib/isLength';
 import Color from 'color';
 import { isHidden } from './isHidden';
-import { hasRepeat, isFunction, baseGet, convertValue } from './utils';
+import {
+  hasRepeat,
+  isFunction,
+  baseGet,
+  convertValue,
+  isEmail,
+  isUrl,
+} from './utils';
 
 const isNotEmpty = val => [undefined, null].indexOf(val) === -1;
 
@@ -34,7 +41,6 @@ export const getValidateText = (obj = {}) => {
     pattern,
     message,
     format,
-    'ui:widget': widget,
     minLength, // string
     maxLength, // string
     minimum, // number
@@ -42,6 +48,8 @@ export const getValidateText = (obj = {}) => {
     minItems, // list
     maxItems, // list
     uniqueItems, // list
+    'ui:widget': widget,
+    'ui:options': options,
   } = schema;
   // TODO: 这里要不要把 null 算进去呢？感觉算进去更合理一点
   let finalValue = [undefined, null].indexOf(value) > -1 ? defaultValue : value;
@@ -49,7 +57,7 @@ export const getValidateText = (obj = {}) => {
   if (type === 'number' && value === 0) {
     finalValue = 0;
   }
-  const needPattern = pattern && ['string', 'number'].indexOf(type) > -1;
+  const usePattern = pattern && ['string', 'number'].indexOf(type) > -1;
   // schema 里面没有内容的，直接退出
   if (isEmptyObject(schema)) {
     return false;
@@ -72,6 +80,13 @@ export const getValidateText = (obj = {}) => {
       }
     }
     // TODO: 为了一个 isLength 去引入一个包有点过分了，有空自己改写一下，而且 antd 用的 async-validator，是不是可以考虑看看
+
+    // 添加检查，是否两侧有空格
+    const noTrim = options && options.noTrim; // 配置项，不需要trim
+    const trimedValue = _finalValue.trim();
+    if (trimedValue !== _finalValue && !noTrim) {
+      return (message && message.trim) || `输入的内容有多余空格`;
+    }
     if (_finalValue && maxLength) {
       if (!isLength(_finalValue, 0, parseInt(maxLength, 10))) {
         return (message && message.maxLength) || `长度不能大于 ${maxLength}`;
@@ -93,6 +108,30 @@ export const getValidateText = (obj = {}) => {
         return '请填写正确的颜色格式';
       }
     }
+    if (format === 'image') {
+      const imagePattern =
+        '([/|.|w|s|-])*.(?:jpg|gif|png|bmp|apng|webp|jpeg|json)';
+      // image 里也可以填写网络链接
+      const _isUrl = isUrl(finalValue);
+      const _isImg = new RegExp(imagePattern).test(finalValue);
+      if (usePattern) {
+      } else if (finalValue && !_isUrl && !_isImg) {
+        return (message && message.image) || '请输入正确的图片格式';
+      }
+    }
+    if (format === 'url') {
+      if (usePattern) {
+      } else if (finalValue && !isUrl(finalValue)) {
+        return (message && message.url) || '请输入正确的url格式';
+      }
+    }
+
+    if (format === 'email') {
+      if (usePattern) {
+      } else if (finalValue && !isEmail(finalValue)) {
+        return (message && message.email) || '请输入正确的email格式';
+      }
+    }
   }
 
   // 数字相关校验
@@ -110,7 +149,7 @@ export const getValidateText = (obj = {}) => {
 
   // 正则只对数字和字符串有效果
   // finalValue 有值的时候才去算 pattern。从场景反馈还是这样好
-  if (finalValue && needPattern && !new RegExp(pattern).test(finalValue)) {
+  if (finalValue && usePattern && !new RegExp(pattern).test(finalValue)) {
     return (message && message.pattern) || '格式不匹配';
   }
 

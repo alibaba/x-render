@@ -1,21 +1,17 @@
 import React from 'react';
-import { PictureOutlined } from '@ant-design/icons';
-import { Input, Popover } from 'antd';
-import previewContent from '../../components/previewContent';
+import { Input } from 'antd';
+import { isUrl } from '../../base/utils';
 
-const previewNode = (format, value) => {
-  if (format !== 'image') {
-    return null;
+const TestNode = ({ value }) => {
+  const useUrl = isUrl(value);
+  if (useUrl) {
+    return (
+      <a target="_blank" href={value}>
+        测试链接
+      </a>
+    );
   }
-  return (
-    <Popover
-      content={previewContent(format, value)}
-      className="fr-preview"
-      placement="bottom"
-    >
-      <PictureOutlined />
-    </Popover>
-  );
+  return <div>测试链接</div>;
 };
 
 export default function input(p) {
@@ -25,7 +21,11 @@ export default function input(p) {
     : {};
   const { format = 'text', maxLength } = schema;
   const type = format === 'image' ? 'text' : format;
-  const handleChange = e => p.onChange(p.name, e.target.value);
+
+  const handleChange = e => {
+    p.onChange(p.name, e.target.value);
+  };
+
   let suffix = undefined;
   try {
     let _value = p.value || '';
@@ -52,6 +52,7 @@ export default function input(p) {
     maxLength,
     suffix,
   };
+
   return (
     <Input
       style={style}
@@ -59,9 +60,7 @@ export default function input(p) {
       value={p.value}
       type={type}
       disabled={p.disabled || p.readOnly}
-      addonAfter={
-        options.addonAfter ? options.addonAfter : previewNode(format, p.value)
-      }
+      addonAfter={<TestNode value={p.value} />}
       onChange={handleChange}
     />
   );
