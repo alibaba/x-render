@@ -1,6 +1,6 @@
 import { DatePicker } from '@alifd/next';
 import moment from 'moment';
-import rangeHoc from '../../components/rangeHoc';
+import RangeHoc from '../../components/rangeHoc';
 import { getFormat } from '../../base/utils';
 const { RangePicker } = DatePicker;
 
@@ -17,5 +17,11 @@ export default function dateRange(p) {
       p.onChange(p.name, result);
     }
   };
-  return rangeHoc(p, onChange, RangePicker);
+  const hocProps = {
+    ...p,
+    onChange,
+    RangeComponent: RangePicker,
+  };
+
+  return <RangeHoc {...hocProps} />;
 }

@@ -3,12 +3,16 @@
  * 日历多选组件
  */
 
-import { DatePicker } from 'antd';
-import rangeHoc from '../../components/rangeHoc';
+import { DatePicker, TimePicker } from 'antd';
+import RangeHoc from '../../components/rangeHoc';
 
-const { RangePicker } = DatePicker;
+const { RangePicker: DateRange } = DatePicker;
+const { RangePicker: TimeRange } = TimePicker;
 
 export default function dateRange(p) {
+  const { format = 'dateTime' } = p.schema;
   const onChange = (value, string) => p.onChange(p.name, string);
-  return rangeHoc(p, onChange, RangePicker);
+  const RangeComponent = format === 'time' ? TimeRange : DateRange;
+  const hocProps = { ...p, onChange, RangeComponent };
+  return <RangeHoc {...hocProps} />;
 }

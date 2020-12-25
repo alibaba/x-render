@@ -58,6 +58,11 @@ export const mapping = {
   'string:url': 'url',
   'range:date': 'dateRange',
   'range:dateTime': 'dateRange',
+  'range:time': 'dateRange',
+  'range:week': 'dateRange',
+  'range:month': 'dateRange',
+  'range:quarter': 'dateRange',
+  'range:year': 'dateRange',
   '*?enum': 'select',
   'array?enum': 'checkboxes',
   // '*?readOnly': 'text', // TODO: 只读模式
