@@ -16,11 +16,18 @@ export default (p, onChange, DateComponent) => {
     format = p.options.format;
   }
   const dateFormat = getFormat(format);
-  let defaultObj = {};
-  if (p.value) {
-    defaultObj.value = moment(p.value, dateFormat);
-  } else {
-    defaultObj.value = '';
+  // week的时候会返回 2020-31周 quarter会返回 2020-Q2 需要处理之后才能被 moment
+  let _value = p.value || '';
+  if (typeof _value === 'string') {
+    if (format === 'week') {
+      _value = _value.substring(0, _value.length - 1);
+    }
+    if (format === 'quarter') {
+      _value = _value.replace('Q', '');
+    }
+  }
+  if (_value) {
+    _value = moment(_value, dateFormat);
   }
 
   const placeholderObj = p.description ? { placeholder: p.description } : {};
@@ -28,7 +35,7 @@ export default (p, onChange, DateComponent) => {
   const dateParams = {
     ...placeholderObj,
     ...p.options,
-    ...defaultObj,
+    value: _value,
     style: { width: '100%', ...style },
     disabled: p.disabled || p.readOnly,
     onChange,
@@ -37,6 +44,10 @@ export default (p, onChange, DateComponent) => {
   // TODO: format是在options里自定义的情况，是否要判断一下要不要showTime
   if (format === 'dateTime') {
     dateParams.showTime = true;
+  }
+
+  if (['week', 'month', 'quarter', 'year'].indexOf(format) > -1) {
+    dateParams.picker = format;
   }
 
   return <DateComponent {...dateParams} />;

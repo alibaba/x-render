@@ -82,6 +82,18 @@ export function getFormat(format) {
     case 'dateTime':
       dateFormat = 'YYYY-MM-DD HH:mm:ss';
       break;
+    case 'year':
+      dateFormat = 'YYYY';
+      break;
+    case 'quarter':
+      dateFormat = 'YYYY-Q';
+      break;
+    case 'month':
+      dateFormat = 'YYYY-MM';
+      break;
+    case 'week':
+      dateFormat = 'YYYY-W';
+      break;
     default:
       dateFormat = 'YYYY-MM-DD';
       if (format && typeof format === 'string') {

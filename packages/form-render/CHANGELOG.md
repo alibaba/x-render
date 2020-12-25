@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.9.4
+
+[!] list 的操作按钮图标改成禁止被选择 ([#231](https://github.com/alibaba/form-render/issues/231))
+[!] 日期选择器和日期区间选择器都支持所有 antd 的 format（time/date/week/quarter/month/year）
+
 ### 0.9.3
 
 - [内部] 对使用者无影响。为了方便后续自定义组件的开发，使用 lerna 将 form-render 从单仓库切换到 monorepo。之后的插件 & 自定义组件的开发都在 form-render 同一个仓库里进行

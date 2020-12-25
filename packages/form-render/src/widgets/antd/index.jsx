@@ -51,6 +51,10 @@ export const mapping = {
   'string:date': 'date',
   'string:dateTime': 'date',
   'string:time': 'date',
+  'string:week': 'date',
+  'string:month': 'date',
+  'string:quarter': 'date',
+  'string:year': 'date',
   'string:textarea': 'textarea',
   'string:color': 'color',
   'string:image': 'input', // 是不是考虑image分立出来
@@ -58,6 +62,11 @@ export const mapping = {
   'string:url': 'url',
   'range:date': 'dateRange',
   'range:dateTime': 'dateRange',
+  'range:time': 'dateRange',
+  'range:week': 'dateRange',
+  'range:month': 'dateRange',
+  'range:quarter': 'dateRange',
+  'range:year': 'dateRange',
   '*?enum': 'select',
   'array?enum': 'checkboxes',
   // '*?readOnly': 'text', // TODO: 只读模式
