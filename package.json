@@ -7,8 +7,8 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "docs:build": "dumi build",
-    "predeploy": "npm run docs:build",
+    "doc:build": "dumi build",
+    "predeploy": "npm run doc:build",
     "deploy": "gh-pages -d docs-dist",
     "start": "dumi dev",
     "size": "ANALYZE=1 dumi build",

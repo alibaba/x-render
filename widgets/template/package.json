@@ -1,6 +1,6 @@
 {
-  "name": "@form-render/tester",
-  "version": "1.1.0",
+  "name": "@form-render/template",
+  "version": "1.0.0",
   "keywords": [
     "FormRender",
     "Render",
@@ -32,7 +32,6 @@
     ]
   },
   "dependencies": {
-    "lodash": "^4.17.20"
   },
   "peerDependencies": {
     "antd": "^4.x",
