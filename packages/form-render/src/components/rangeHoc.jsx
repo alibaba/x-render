@@ -16,7 +16,10 @@ export default ({
   disabled,
   readOnly,
 }) => {
-  const { format = 'dateTime' } = schema;
+  let { format = 'dateTime' } = schema;
+  if (options.format) {
+    format = options.format;
+  }
   const dateFormat = getFormat(format);
   let [start, end] = Array.isArray(value) ? value : [];
 
