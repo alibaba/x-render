@@ -12,7 +12,7 @@ export default (p, onChange, DateComponent) => {
     ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 2px rgba(255,77,79,.2)' }
     : {};
   let { format = 'dateTime' } = p.schema;
-  if (p.options.format) {
+  if (p.options && p.options.format) {
     format = p.options.format;
   }
   const dateFormat = getFormat(format);
