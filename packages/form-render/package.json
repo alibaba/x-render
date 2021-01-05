@@ -68,6 +68,7 @@
     "react-dom": "^16.8.0 || ^17.0.0"
   },
   "devDependencies": {
-    "deep-equal": "^2.0.3"
+    "deep-equal": "^2.0.3",
+    "rollup-plugin-commonjs": "^10.1.0"
   }
 }
