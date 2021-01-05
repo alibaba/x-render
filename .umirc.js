@@ -28,7 +28,8 @@ export default defineConfig({
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
     {
       title: '更新日志',
-      path: 'https://github.com/alibaba/form-render/blob/master/CHANGELOG.md',
+      path:
+        'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
     },
     {
       title: '国内镜像',
