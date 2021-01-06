@@ -204,6 +204,9 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
         return null;
       }
       const canAdd = maxItems ? maxItems > list.length : true; // 当到达最大个数，新增按钮消失
+
+      const showPagination = !!(Pagination && total > pageSize);
+
       return (
         <ul className="pl0 ma0">
           {currentPage.map((_, idx) => {
@@ -232,11 +235,12 @@ const fieldListHoc = (ButtonComponent, Pagination) => {
             );
           })}
           <div className="flex justify-between mb3">
-            {Pagination && total > pageSize ? (
+            {showPagination ? (
               <Pagination
                 size="small"
                 total={total}
                 pageSize={pageSize}
+                showSizeChanger={showPagination}
                 onChange={this.onPageChange}
                 current={currentIndex}
               />

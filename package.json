@@ -7,8 +7,8 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "doc:build": "dumi build",
-    "predeploy": "npm run doc:build",
+    "doc": "dumi build",
+    "predeploy": "npm run doc",
     "deploy": "gh-pages -d docs-dist",
     "start": "dumi dev",
     "size": "ANALYZE=1 dumi build",
@@ -33,7 +33,6 @@
     "prismjs": "^1.20.0",
     "react": "^16.12.0",
     "react-simple-code-editor": "^0.11.0",
-    "rollup-plugin-commonjs": "^10.1.0",
     "yorkie": "^2.0.0"
   }
 }

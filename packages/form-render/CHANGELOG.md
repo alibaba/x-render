@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.9.5
+
+[!] email 校验太过严格的问题修复 ([#237](https://github.com/alibaba/form-render/issues/237))
+[!] array 类型有跨页拖拽的诉求，放出页容量选择器，目前这个问题可以通过选择每页容量来解决 ([#239](https://github.com/alibaba/form-render/issues/239))
+
 ### 0.9.4
 
 [!] list 的操作按钮图标改成禁止被选择 ([#231](https://github.com/alibaba/form-render/issues/231))
