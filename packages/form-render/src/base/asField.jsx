@@ -55,6 +55,7 @@ export const asField = ({ FieldUI, Widget }) => {
       fieldTouched.current = true;
     }, [_value]);
 
+    const _className = convertValue(className, formData, rootValue);
     const _hidden = convertValue(hidden, formData, rootValue);
     const _disabled = convertValue(disabled, formData, rootValue);
     const _readOnly = convertValue(readOnly, formData, rootValue);
@@ -142,7 +143,7 @@ export const asField = ({ FieldUI, Widget }) => {
     }
 
     const fieldProps = {
-      className,
+      className: _className,
       columnStyle,
       displayType,
       isComplex,
