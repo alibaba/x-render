@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.9.6
+
+[+] `ui:className` 支持动态表达式
+
 ### 0.9.5
 
 [!] email 校验太过严格的问题修复 ([#237](https://github.com/alibaba/form-render/issues/237))
