@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.9.7
+
+- 内网没有同步`use-debounce`的 npm 包，回退了一下使用版本
+
 ### 0.9.6
 
 [+] `ui:className` 支持动态表达式 ([@F-loat](https://github.com/F-loat) in [#242](https://github.com/alibaba/form-render/pull/242))
