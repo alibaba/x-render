@@ -1,5 +1,12 @@
-import React, { useRef, useEffect, useMemo, useImperativeHandle } from 'react';
-import { usePrevious, useDebounce } from './hooks';
+import React, {
+  useRef,
+  useEffect,
+  useMemo,
+  useImperativeHandle,
+  useState,
+} from 'react';
+import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+import { usePrevious } from './hooks';
 import PropTypes from 'prop-types';
 import { isDeepEqual, combineSchema } from './base/utils';
 import { asField, DefaultFieldUI } from './base/asField';
@@ -78,6 +85,9 @@ function FormRender({
   const previousSchema = usePrevious(schema);
   const previousData = usePrevious(formData);
 
+  const [isEditing, setEditing] = useState(false);
+  const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
+
   const data = useMemo(() => resolve(schema, formData), [schema, formData]);
 
   useEffect(() => {
@@ -118,13 +128,14 @@ function FormRender({
     resetData,
   }));
 
-  const debouncedValidate = useDebounce(onValidate);
-
   // 用户输入都是调用这个函数
   const handleChange = (key, val) => {
     isUserInput.current = true;
+    // 开始编辑，节流
+    setEditing(true);
+    debouncedSetEditing.callback(false);
     onChange(val);
-    debouncedValidate(getValidateList(val, schema));
+    onValidate(getValidateList(val, schema));
   };
 
   const updateValidation = (outData, outSchema) => {
@@ -163,6 +174,7 @@ function FormRender({
     labelWidth,
     useLogger,
     formData: data,
+    isEditing,
   };
 
   const _fields = {
