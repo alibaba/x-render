@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PictureOutlined } from '@ant-design/icons';
 import { Input, Popover } from 'antd';
-import { useDebounce } from '../../hooks';
+import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
 import previewContent from '../../components/previewContent';
 
 const PreviewNode = ({ format, value, showPop, setShowPop }) => {
@@ -29,18 +29,12 @@ export default function input(p) {
   const { format = 'text', maxLength } = schema;
   const type = ['image', 'email'].indexOf(format) > -1 ? 'text' : format; // TODO: 这里要是添加新的input类型，注意是一个坑啊，每次不想用html的默认都要补上
 
-  const showAndHide = () => {
-    setShowPop(true);
-    setTimeout(() => {
-      setShowPop(false);
-    }, 1000);
-  };
-
-  const debouncedShowAndHide = useDebounce(showAndHide, 800);
+  const debouncedSetShowPop = useDebouncedCallback(setShowPop, 1000);
 
   const handleChange = e => {
     p.onChange(p.name, e.target.value);
-    debouncedShowAndHide && debouncedShowAndHide();
+    setShowPop(true);
+    debouncedSetShowPop.callback(false);
   };
 
   let suffix = undefined;
