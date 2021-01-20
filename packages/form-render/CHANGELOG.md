@@ -2,7 +2,9 @@
 
 ### 0.9.6
 
-[+] `ui:className` 支持动态表达式
+[+] `ui:className` 支持动态表达式 ([@F-loat](https://github.com/F-loat) in [#242](https://github.com/alibaba/form-render/pull/242))
+[!] 内部添加了`isEditing` 的状态控制，用于监控用户是否在输入。做了一系列优化确保用户输入时关闭大部分复杂计算，避免大型、多函数表达式的表单的卡顿
+[!] 去掉了表单校验结果的异步延迟，恢复到同步模式（因为这块不是性能瓶颈） ([#232](https://github.com/alibaba/form-render/issues/232))
 
 ### 0.9.5
 
