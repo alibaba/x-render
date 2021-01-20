@@ -47,6 +47,7 @@ function getBasicProps(settings, materials) {
     formData,
     // 父传子
     disabled,
+    isEditing,
   } = settings;
   // 写错的时候
   if (!schema) return {};
@@ -86,6 +87,7 @@ function getBasicProps(settings, materials) {
     labelWidth: _labelWidth || labelWidth,
     showValidate,
     useLogger,
+    isEditing,
   };
 
   let basicProps = {
