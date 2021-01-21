@@ -56,30 +56,30 @@ export const asField = ({ FieldUI, Widget }) => {
       fieldTouched.current = true;
     }, [_value]);
 
-    const [_hidden, setHidden] = useState(hidden);
-    const [_disabled, setDisabled] = useState(disabled);
-    const [_readOnly, setReadOnly] = useState(readOnly);
-    const [_className, setClassName] = useState(className);
-    const [_schema, setSchema] = useState({ ...schema });
-    const [_options, setOptions] = useState({ ...options });
+    let _hidden = hidden,
+      _className = className,
+      _disabled = disabled,
+      _readOnly = readOnly,
+      _options = options,
+      _schema = schema;
 
     const convertValues = () => {
-      let newHidden = convertValue(hidden, formData, rootValue);
-      if (newHidden !== undefined && typeof newHidden !== 'boolean') {
-        newHidden = isHidden({ hidden: newHidden, rootValue, formData });
+      _hidden = convertValue(hidden, formData, rootValue);
+      if (_hidden !== undefined && typeof _hidden !== 'boolean') {
+        _hidden = isHidden({ hidden: _hidden, rootValue, formData });
       }
-      const newClassName = convertValue(className, formData, rootValue);
-      const newDisabled = convertValue(disabled, formData, rootValue);
-      const newReadOnly = convertValue(readOnly, formData, rootValue);
-      let newOptions = { ...options };
+      _className = convertValue(className, formData, rootValue);
+      _disabled = convertValue(disabled, formData, rootValue);
+      _readOnly = convertValue(readOnly, formData, rootValue);
+      _options = { ...options };
       try {
-        Object.entries(options).forEach(([key, _val]) => {
-          newOptions[key] = convertValue(_val, formData, rootValue);
+        Object.entries(_options).forEach(([key, _val]) => {
+          _options[key] = convertValue(_val, formData, rootValue);
         });
       } catch (e) {}
       // iterate over schema, and convert every key
-      let newSchema = { ...schema };
-      Object.keys(schema).forEach(key => {
+      _schema = { ...schema };
+      Object.keys(_schema).forEach(key => {
         const availableKey = [
           'title',
           'description',
@@ -98,26 +98,31 @@ export const asField = ({ FieldUI, Widget }) => {
         ];
         // TODO: need to cover more
         if (availableKey.indexOf(key) > -1) {
-          newSchema[key] = convertValue(schema[key], formData, rootValue);
+          _schema[key] = convertValue(_schema[key], formData, rootValue);
         }
       });
-      setClassName(newClassName);
-      setHidden(newHidden);
-      setDisabled(newDisabled);
-      setReadOnly(newReadOnly);
-      setOptions(newOptions);
-      setSchema(newSchema);
     };
 
-    // 只有在非editing状态下才会去计算，这个是卡顿最大的源头
-    useEffect(() => {
-      if (!isEditing) {
-        convertValues();
-      }
-    }, [isEditing]);
+    // 在编辑时使用快照，否则正常计算
+    let screenShot = useRef();
+    if (!isEditing) {
+      convertValues();
+      screenShot.current = {};
+      screenShot.current.hidden = _hidden;
+      screenShot.current.className = _className;
+      screenShot.current.disabled = _disabled;
+      screenShot.current.readOnly = _readOnly;
+      screenShot.current.options = _options;
+      screenShot.current.schema = _schema;
+    } else {
+      _hidden = screenShot.current.hidden;
+      _className = screenShot.current.className;
+      _disabled = screenShot.current.disabled;
+      _readOnly = screenShot.current.readOnly;
+      _options = screenShot.current.options;
+      _schema = screenShot.current.schema;
+    }
 
-    // "ui:hidden": true, hide formItem
-    // after "convertValue" being stable, this api will be discarded
     if (_hidden) {
       return null;
     }
