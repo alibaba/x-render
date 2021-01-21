@@ -1,24 +1,28 @@
 # Change Log
 
+### 0.9.8
+
+- [!] `isEditing` 状态快照机制重写，避免非编辑状态下外部异步手动修改 schema 不被同步的问题
+
 ### 0.9.7
 
-- 内网没有同步`use-debounce`的 npm 包，回退了一下使用版本
+- [!] 内网没有同步`use-debounce`的 npm 包，回退了一下使用版本
 
 ### 0.9.6
 
-[+] `ui:className` 支持动态表达式 ([@F-loat](https://github.com/F-loat) in [#242](https://github.com/alibaba/form-render/pull/242))
-[!] 内部添加了`isEditing` 的状态控制，用于监控用户是否在输入。做了一系列优化确保用户输入时关闭大部分复杂计算，避免大型、多函数表达式的表单的卡顿
-[!] 去掉了表单校验结果的异步延迟，恢复到同步模式（因为这块不是性能瓶颈） ([#232](https://github.com/alibaba/form-render/issues/232))
+- [+] `ui:className` 支持动态表达式 ([@F-loat](https://github.com/F-loat) in [#242](https://github.com/alibaba/form-render/pull/242))
+- [!] 内部添加了`isEditing` 的状态控制，用于监控用户是否在输入。做了一系列优化确保用户输入时关闭大部分复杂计算，避免大型、多函数表达式的表单的卡顿
+- [!] 去掉了表单校验结果的异步延迟，恢复到同步模式（因为这块不是性能瓶颈） ([#232](https://github.com/alibaba/form-render/issues/232))
 
 ### 0.9.5
 
-[!] email 校验太过严格的问题修复 ([#237](https://github.com/alibaba/form-render/issues/237))
-[!] array 类型有跨页拖拽的诉求，放出页容量选择器，目前这个问题可以通过选择每页容量来解决 ([#239](https://github.com/alibaba/form-render/issues/239))
+- [!] email 校验太过严格的问题修复 ([#237](https://github.com/alibaba/form-render/issues/237))
+- [!] array 类型有跨页拖拽的诉求，放出页容量选择器，目前这个问题可以通过选择每页容量来解决 ([#239](https://github.com/alibaba/form-render/issues/239))
 
 ### 0.9.4
 
-[!] list 的操作按钮图标改成禁止被选择 ([#231](https://github.com/alibaba/form-render/issues/231))
-[!] 日期选择器和日期区间选择器都支持所有 antd 的 format（time/date/week/quarter/month/year）
+- [!] list 的操作按钮图标改成禁止被选择 ([#231](https://github.com/alibaba/form-render/issues/231))
+- [!] 日期选择器和日期区间选择器都支持所有 antd 的 format（time/date/week/quarter/month/year）
 
 ### 0.9.3
 
