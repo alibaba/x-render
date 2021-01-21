@@ -105,8 +105,7 @@ export const asField = ({ FieldUI, Widget }) => {
 
     // 在编辑时使用快照，否则正常计算
     let screenShot = useRef();
-    if (!isEditing) {
-      convertValues();
+    const saveScreenShot = () => {
       screenShot.current = {};
       screenShot.current.hidden = _hidden;
       screenShot.current.className = _className;
@@ -114,13 +113,22 @@ export const asField = ({ FieldUI, Widget }) => {
       screenShot.current.readOnly = _readOnly;
       screenShot.current.options = _options;
       screenShot.current.schema = _schema;
-    } else {
+    };
+
+    const readScreenShot = () => {
       _hidden = screenShot.current.hidden;
       _className = screenShot.current.className;
       _disabled = screenShot.current.disabled;
       _readOnly = screenShot.current.readOnly;
       _options = screenShot.current.options;
       _schema = screenShot.current.schema;
+    };
+
+    if (!isEditing || !screenShot.current) {
+      convertValues();
+      saveScreenShot();
+    } else {
+      readScreenShot();
     }
 
     if (_hidden) {
