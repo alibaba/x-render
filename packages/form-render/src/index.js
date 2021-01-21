@@ -78,7 +78,6 @@ function FormRender({
   useLogger = false,
   forwardedRef,
 }) {
-  const isUserInput = useRef(false); // 状态改变是否来自于用户操作
   const originWidgets = useRef();
   const generatedFields = useRef({});
   const firstRender = useRef(true);
@@ -96,10 +95,6 @@ function FormRender({
   }, []);
 
   useEffect(() => {
-    if (isUserInput.current) {
-      isUserInput.current = false;
-      return;
-    }
     if (!isDeepEqual(previousSchema, schema)) {
       onChange(data);
       updateValidation();
@@ -130,7 +125,6 @@ function FormRender({
 
   // 用户输入都是调用这个函数
   const handleChange = (key, val) => {
-    isUserInput.current = true;
     // 开始编辑，节流
     setEditing(true);
     debouncedSetEditing.callback(false);
