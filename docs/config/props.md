@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 3
 nav:
   order: 2
   title: 配置项
@@ -124,6 +124,13 @@ export default Demo;
 
 表单元素的 label 的宽度，可以在 schema 中单独调整每个，也可以在 props 中全局给个值，可接受的值形式参照 `style={{ width: xxx }}` 中可以接受的形式。
 例如`80`，`'3rem'`，`'200px'` 和 `'30%'` 都是有效的
+
+## column
+
+- type: `number`
+- default: 1
+
+如果希望统一的一行展示 n 个元素，可使用此 props 一键设置：例如你想整体表单三等分，就用 `column={3}`。一般还是建议在 schema 级别使用`ui:width`属性，更自由。
 
 ## widgets
 

@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 2
 nav:
   order: 2
   title: 配置项
