@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "0.9.6",
+  "version": "0.9.9",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "repository": {
     "type": "git",
@@ -58,7 +58,7 @@
     "prop-types": "^15.x",
     "rc-color-picker": "^1.2.6",
     "react-sortable-hoc": "^1.6.1",
-    "use-debounce": "^5.2.0",
+    "use-debounce": "^5.1.0",
     "validator": "^10.7.1"
   },
   "peerDependencies": {

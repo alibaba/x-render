@@ -86,7 +86,7 @@ function FormRender({
   const previousData = usePrevious(formData);
 
   const [isEditing, setEditing] = useState(false);
-  const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
+  const debouncedSetEditing = useDebouncedCallback(setEditing, 300);
 
   const data = useMemo(() => resolve(schema, formData), [schema, formData]);
 
