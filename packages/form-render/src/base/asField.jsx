@@ -286,7 +286,6 @@ export const DefaultFieldUI = ({
     case 'boolean':
       if (isCheckbox) {
         if (title) {
-          labelClass += ' ml2';
           labelClass = labelClass.replace('mb2', 'mb0');
         }
         contentClass += ' flex items-center'; // checkbox高度短，需要居中对齐
@@ -300,7 +299,7 @@ export const DefaultFieldUI = ({
   }
   // 横排时
   if (displayType === 'row' && !isComplex && !isCheckbox) {
-    fieldClass += ' flex items-center';
+    fieldClass += ' flex';
     labelClass += ' flex-shrink-0 fr-label-row';
     labelClass = labelClass.replace('mb2', 'mb0');
     contentClass += ' flex-grow-1 relative';
@@ -308,7 +307,7 @@ export const DefaultFieldUI = ({
 
   // 横排的checkbox
   if (displayType === 'row' && isCheckbox) {
-    contentClass += ' flex justify-end pr2';
+    contentClass += ' flex justify-end';
   }
 
   const _labelWidth = isLooselyNumber(labelWidth)
