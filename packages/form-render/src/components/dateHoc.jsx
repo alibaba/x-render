@@ -5,7 +5,6 @@
 
 import React from 'react';
 import moment from 'moment';
-import { getFormat } from '../base/utils';
 
 export default (p, onChange, DateComponent) => {
   const style = p.invalid
@@ -15,19 +14,19 @@ export default (p, onChange, DateComponent) => {
   if (p.options && p.options.format) {
     format = p.options.format;
   }
-  const dateFormat = getFormat(format);
-  // week的时候会返回 2020-31周 quarter会返回 2020-Q2 需要处理之后才能被 moment
+
   let _value = p.value || '';
-  if (typeof _value === 'string') {
-    if (format === 'week') {
-      _value = _value.substring(0, _value.length - 1);
-    }
-    if (format === 'quarter') {
-      _value = _value.replace('Q', '');
-    }
-  }
+  // const dateFormat = getFormat(format);
+  // if (typeof _value === 'string') {
+  //   if (format === 'week') {
+  //     _value = _value.substring(0, _value.length - 1);
+  //   }
+  //   if (format === 'quarter') {
+  //     _value = _value.replace('Q', '');
+  //   }
+  // }
   if (_value) {
-    _value = moment(_value, dateFormat);
+    _value = moment(_value);
   }
 
   const placeholderObj = p.description ? { placeholder: p.description } : {};
@@ -35,7 +34,7 @@ export default (p, onChange, DateComponent) => {
   const dateParams = {
     ...placeholderObj,
     ...p.options,
-    value: _value,
+    defaultValue: _value, // 用defaultValue，一劳永逸了
     style: { width: '100%', ...style },
     disabled: p.disabled || p.readOnly,
     onChange,
