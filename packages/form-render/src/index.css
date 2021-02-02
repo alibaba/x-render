@@ -83,6 +83,7 @@
 .fr-label-row {
   text-align: right;
   flex-shrink: 0;
+  margin-top: 5px;
 }
 
 .fr-field-row .fr-content {

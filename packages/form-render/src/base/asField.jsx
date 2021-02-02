@@ -300,7 +300,7 @@ export const DefaultFieldUI = ({
   }
   // 横排时
   if (displayType === 'row' && !isComplex && !isCheckbox) {
-    fieldClass += ' flex items-center';
+    fieldClass += ' flex';
     labelClass += ' flex-shrink-0 fr-label-row';
     labelClass = labelClass.replace('mb2', 'mb0');
     contentClass += ' flex-grow-1 relative';
