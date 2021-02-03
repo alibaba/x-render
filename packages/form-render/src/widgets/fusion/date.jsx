@@ -6,7 +6,7 @@
 import { DatePicker, TimePicker } from '@alifd/next';
 import moment from 'moment';
 import dateHoc from '../../components/dateHoc';
-import { getFormat } from '../../base/utils';
+import { getFormatForFusion } from '../../base/utils';
 const { MonthPicker, YearPicker, WeekPicker } = DatePicker;
 
 export default function date(p) {
@@ -14,7 +14,7 @@ export default function date(p) {
   if (p.options.format) {
     format = p.options.format;
   }
-  const dateFormat = getFormat(format);
+  const dateFormat = getFormatForFusion(format);
   const { picker } = p.options;
   const onChange = value => {
     let timeValue = value ? moment(value).format(dateFormat) : '';

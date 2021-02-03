@@ -5,6 +5,7 @@
 
 import React from 'react';
 import moment from 'moment';
+import { getFormat } from '../base/utils';
 
 export default (p, onChange, DateComponent) => {
   const style = p.invalid
@@ -16,17 +17,10 @@ export default (p, onChange, DateComponent) => {
   }
 
   let _value = p.value || '';
-  // const dateFormat = getFormat(format);
-  // if (typeof _value === 'string') {
-  //   if (format === 'week') {
-  //     _value = _value.substring(0, _value.length - 1);
-  //   }
-  //   if (format === 'quarter') {
-  //     _value = _value.replace('Q', '');
-  //   }
-  // }
+  const dateFormat = getFormat(format);
+
   if (_value) {
-    _value = moment(_value);
+    _value = moment(_value, dateFormat);
   }
 
   const placeholderObj = p.description ? { placeholder: p.description } : {};
@@ -34,7 +28,7 @@ export default (p, onChange, DateComponent) => {
   const dateParams = {
     ...placeholderObj,
     ...p.options,
-    defaultValue: _value, // 用defaultValue，一劳永逸了
+    value: _value,
     style: { width: '100%', ...style },
     disabled: p.disabled || p.readOnly,
     onChange,

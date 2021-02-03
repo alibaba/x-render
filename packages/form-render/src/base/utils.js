@@ -69,8 +69,9 @@ export function isDeepEqual(param1, param2) {
   return true;
 }
 
-// 时间组件
-export function getFormat(format) {
+// fusion 的时间 format
+
+export function getFormatForFusion(format) {
   let dateFormat;
   switch (format) {
     case 'date':
@@ -86,13 +87,50 @@ export function getFormat(format) {
       dateFormat = 'YYYY';
       break;
     case 'quarter':
-      dateFormat = 'YYYY-Q';
+      dateFormat = 'YYYY-[Q]Q';
       break;
     case 'month':
       dateFormat = 'YYYY-MM';
       break;
     case 'week':
-      dateFormat = 'YYYY-W';
+      dateFormat = 'YYYY-W[*]';
+      break;
+    default:
+      dateFormat = 'YYYY-MM-DD';
+      if (format && typeof format === 'string') {
+        dateFormat = format;
+      }
+  }
+  return dateFormat;
+}
+
+// 时间组件
+export function getFormat(format) {
+  let dateFormat;
+  switch (format) {
+    case 'date':
+      // dateFormat = 'YYYY-MM-DD';
+      dateFormat = undefined;
+      break;
+    case 'time':
+      dateFormat = 'HH:mm:ss';
+      break;
+    case 'dateTime':
+      // dateFormat = 'YYYY-MM-DD HH:mm:ss';
+      dateFormat = undefined;
+      break;
+    case 'year':
+      // dateFormat = 'YYYY';
+      dateFormat = undefined;
+      break;
+    case 'quarter':
+      dateFormat = 'YYYY-[Q]Q';
+      break;
+    case 'month':
+      dateFormat = 'YYYY-MM';
+      break;
+    case 'week':
+      dateFormat = 'YYYY-W[*]';
       break;
     default:
       dateFormat = 'YYYY-MM-DD';
