@@ -1,5 +1,11 @@
 # Change Log
 
+### 0.9.11
+
+- [!] 修复了 date 和 dateRange 组件格式支持的问题
+- [!] 修复了底层版本升级导致的 fusion 下 dateRange 选择无效的问题
+- [!] 修复了 date 组件接受外部异步传值部分情况不显示的问题
+
 ### 0.9.10
 
 - [!] 修复了 datePicker 接受到时间戳等格式时不能正常显示的 bug，新的 Date 元素可以接受任何 moment 支持的格式
