@@ -16,27 +16,17 @@ export default ({
   disabled,
   readOnly,
 }) => {
-  let { format = 'dateTime' } = schema;
-  if (options.format) {
-    format = options.format;
+  const { format = 'dateTime' } = schema;
+  let _format = format;
+  if (options && options.format) {
+    _format = options.format;
   }
-  const dateFormat = getFormat(format);
+  _format = getFormat(_format);
+
   let [start, end] = Array.isArray(value) ? value : [];
 
-  // week的时候会返回 2020-31周 quarter会返回 2020-Q2 需要处理之后才能被 moment
-  if (typeof start === 'string' && typeof end === 'string') {
-    if (format === 'week') {
-      start = start.substring(0, start.length - 1);
-      end = end.substring(0, end.length - 1);
-    }
-    if (format === 'quarter') {
-      start = start.replace('Q', '');
-      end = end.replace('Q', '');
-    }
-  }
-
   const _value =
-    start && end ? [moment(start, dateFormat), moment(end, dateFormat)] : [];
+    start && end ? [moment(start, _format), moment(end, _format)] : [];
 
   const dateParams = {
     ...options,
