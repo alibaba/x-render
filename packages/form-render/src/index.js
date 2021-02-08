@@ -77,6 +77,7 @@ function FormRender({
   labelWidth = 110,
   useLogger = false,
   forwardedRef,
+  helperContainer,
 }) {
   const isUserInput = useRef(false); // 状态改变是否来自于用户操作
   const originWidgets = useRef();
@@ -175,6 +176,7 @@ function FormRender({
     useLogger,
     formData: data,
     isEditing,
+    helperContainer,
   };
 
   const _fields = {
@@ -211,6 +213,7 @@ FormRender.propTypes = {
   readOnly: PropTypes.bool,
   labelWidth: PropTypes.number,
   useLogger: PropTypes.bool,
+  helperContainer: PropTypes.func
 };
 
 export default fetcher(Wrapper);

@@ -6,6 +6,7 @@ import 'rc-color-picker/assets/index.css';
 
 export default function color(p) {
   const { format } = p.schema;
+  const { helperContainer } = p;
   const defaultColor = '#ffffff';
   const onPickerChange = e => {
     if (p.disabled || p.readOnly) return;
@@ -29,6 +30,7 @@ export default function color(p) {
           animation="slide-up"
           color={p.value || defaultColor}
           onClose={onPickerChange}
+          gerCalendarContainer={helperContainer}
         />
       }
       {p.readOnly ? (

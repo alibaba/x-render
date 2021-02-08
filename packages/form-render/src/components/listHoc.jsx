@@ -394,6 +394,7 @@ export default function listHoc(ButtonComponent, Pagination) {
           shouldCancelStart={e =>
             e.toElement && e.toElement.className === 'fr-tooltip-container'
           }
+          helperContainer={this.props.helperContainer}
           onSortEnd={this.handleSort}
         />
       );

@@ -48,6 +48,7 @@ function getBasicProps(settings, materials) {
     // 父传子
     disabled,
     isEditing,
+    helperContainer,
   } = settings;
   // 写错的时候
   if (!schema) return {};
@@ -88,6 +89,7 @@ function getBasicProps(settings, materials) {
     showValidate,
     useLogger,
     isEditing,
+    helperContainer: helperContainer || (() => document.body)
   };
 
   let basicProps = {
