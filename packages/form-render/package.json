@@ -14,20 +14,6 @@
     "Ant Design",
     "Fusion Design"
   ],
-  "contributors": [
-    {
-      "name": "Tw93",
-      "email": "tw93@qq.com"
-    },
-    {
-      "name": "mankaiviky",
-      "email": "mankaiviky@163.com"
-    },
-    {
-      "name": "FateRiddle",
-      "email": "fateriddle@gmail.com"
-    }
-  ],
   "scripts": {
     "build": "father-build",
     "prepare": "npm run build",

@@ -1,0 +1,7 @@
+37 error Error: Command failed: git push --follow-tags --no-verify --atomic origin master
+37 error error: cannot spawn sh: No such file or directory
+37 error error: cannot spawn sh: No such file or directory
+37 error fatal: could not read Username for 'https://github.com': No such file or directory
+37 error
+37 error     at makeError (G:\workspace\Projects\THSoft.FrontEnd\fr\node_modules\execa\index.js:174:9)
+37 error     at G:\workspace\Projects\THSoft.FrontEnd\fr\node_modules\execa\index.js:278:16
