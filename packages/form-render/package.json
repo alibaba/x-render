@@ -1,10 +1,10 @@
 {
-  "name": "form-render",
+  "name": "th-fr",
   "version": "0.9.10",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "repository": {
     "type": "git",
-    "url": "git@github.com:alibaba/form-render.git"
+    "url": "git@github.com:simplast/fr.git"
   },
   "keywords": [
     "FormRender",
