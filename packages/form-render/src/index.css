@@ -86,6 +86,11 @@
   margin-top: 5px;
 }
 
+.fr-children {
+  display: flex;
+  min-height: 30px;
+}
+
 .fr-field-row .fr-content {
   flex: 1;
   position: relative;

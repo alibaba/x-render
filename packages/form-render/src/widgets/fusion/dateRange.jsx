@@ -1,27 +1,56 @@
 import { DatePicker } from '@alifd/next';
 import moment from 'moment';
-import RangeHoc from '../../components/rangeHoc';
-import { getFormat } from '../../base/utils';
+import { getFormatForFusion, getFormat } from '../../base/utils';
 const { RangePicker } = DatePicker;
 
-export default function dateRange(p) {
-  const { format = 'dateTime' } = p.schema;
-  const dateFormat = getFormat(format);
+export default function dateRange({
+  onChange,
+  schema = {},
+  value,
+  options,
+  disabled,
+  readOnly,
+  name,
+}) {
+  const { format } = schema;
+  let _format = format;
+  if (options.format) {
+    _format = options.format;
+  }
+  const dateFormat = getFormatForFusion(_format);
+  const formatBack = getFormat(_format);
 
-  const onChange = value => {
+  const _onChange = value => {
     if (Array.isArray(value)) {
       const result = value.map(
         // null 的时候返回空字符串
-        item => (item || '') && moment(item).format(dateFormat)
+        item => {
+          if (item) {
+            return moment(item).format(dateFormat);
+          }
+          return '';
+        }
       );
-      p.onChange(p.name, result);
+      onChange(name, result);
     }
   };
-  const hocProps = {
-    ...p,
-    onChange,
-    RangeComponent: RangePicker,
+
+  let [start, end] = Array.isArray(value) ? value : [];
+
+  const _value = [moment(start, formatBack), moment(end, formatBack)];
+
+  const dateParams = {
+    ...options,
+    value: _value,
+    style: { width: '100%' },
+    showTime: format === 'dateTime',
+    disabled: disabled || readOnly,
+    onChange: _onChange,
   };
 
-  return <RangeHoc {...hocProps} />;
+  if (['week', 'month', 'quarter', 'year'].indexOf(format) > -1) {
+    dateParams.picker = format;
+  }
+
+  return <RangePicker {...dateParams} />;
 }

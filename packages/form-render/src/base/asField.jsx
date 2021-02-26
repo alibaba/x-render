@@ -380,7 +380,11 @@ export const DefaultFieldUI = ({
               : { flexGrow: 1 }
           }
         >
-          <div className={`flex ${isComplex ? 'flex-column' : 'items-center'}`}>
+          <div
+            className={`fr-children ${
+              isComplex ? 'flex-column' : 'items-center'
+            }`}
+          >
             {children}
           </div>
           <span
