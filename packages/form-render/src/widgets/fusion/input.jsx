@@ -31,7 +31,7 @@ export default function input(p) {
   const config = {
     ...rest,
     maxLength,
-    hasLimitHint: maxLength ? true : false,
+    showLimitHint: maxLength ? true : false,
   };
   return (
     <Input
