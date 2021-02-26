@@ -36,7 +36,7 @@ function getDefaultValue(schema) {
   }
   // 如果enum是表达式，不处理
   // 如果设置枚举值，其次从枚举值中获取
-  if (Array.isArray(enums) && enums[0] && typeof enums[0] !== 'undefined') {
+  if (Array.isArray(enums) && typeof enums[0] !== 'undefined') {
     if (schema.hasOwnProperty('default')) {
       return schema.default; // 就算default: undefined, 也用 undefined, 这样就可以清空了
     }
