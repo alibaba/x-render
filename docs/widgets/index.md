@@ -78,7 +78,7 @@ export default () => {
 富文本编辑器
 
 ```jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormRender from 'form-render/lib/antd';
 import RichTextEditor from '@form-render/rich-text';
 
@@ -93,6 +93,8 @@ const schema = {
   },
 };
 
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
 export default function Demo() {
   const [formData, setData] = useState({});
   const [valid, setValid] = useState([]);
@@ -104,6 +106,12 @@ export default function Demo() {
       alert(JSON.stringify(formData, null, 2));
     }
   };
+
+  useEffect(() => {
+    delay(500).then(() => {
+      setData({ content: '<p>hello world</p>' });
+    });
+  }, []);
 
   return (
     <div>
