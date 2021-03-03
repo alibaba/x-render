@@ -1,24 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/index.css';
 
 const { createEditorState } = BraftEditor;
 
 const RichTextEditor = ({ name, onChange, value, ...rest }) => {
-  const [editor, set] = useState(() => createEditorState(value));
+  const [editor, set] = useState(null);
+
+  useEffect(() => {
+    if (value !== undefined) {
+      set(createEditorState(value));
+    }
+  }, [value]);
 
   const handleChange = editor => {
     set(editor);
-    const htmlContent = editor.toHTML();
-    onChange(name, htmlContent);
+    // const htmlContent = editor.toHTML();
+    // onChange(name, htmlContent);
   };
 
   const onSave = () => {
     // Pressing ctrl + s when the editor has focus will execute this method
     // Before the editor content is submitted to the server, you can directly call editorState.toHTML () to get the HTML content
-    // const htmlContent = editor.toHTML()
-    // console.log(htmlContent)
-    // onChange(name, htmlContent)
+    const htmlContent = editor.toHTML();
+    onChange(name, htmlContent);
   };
 
   return (
@@ -29,6 +34,7 @@ const RichTextEditor = ({ name, onChange, value, ...rest }) => {
         onChange={handleChange}
         onSave={onSave}
         onBlur={onSave}
+        onFocus={onSave}
       />
     </div>
   );
