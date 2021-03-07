@@ -15,7 +15,7 @@ toc: false
 
 注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态
 
-form-render 的社区以及提供了部分 [常用自定义组件](/widgets)
+form-render 的社区已经提供了部分 [常用自定义组件](/widgets)
 
 ## 如何使用
 
