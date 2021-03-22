@@ -133,7 +133,7 @@ function FormRender({
     isUserInput.current = true;
     // 开始编辑，节流
     setEditing(true);
-    debouncedSetEditing.callback(false);
+    debouncedSetEditing(false);
     onChange(val);
     onValidate(getValidateList(val, schema));
   };

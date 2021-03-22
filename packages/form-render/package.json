@@ -58,7 +58,6 @@
     "prop-types": "^15.x",
     "rc-color-picker": "^1.2.6",
     "react-sortable-hoc": "^1.6.1",
-    "use-debounce": "^5.1.0",
     "validator": "^10.7.1"
   },
   "peerDependencies": {

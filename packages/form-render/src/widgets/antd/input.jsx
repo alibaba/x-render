@@ -34,7 +34,7 @@ export default function input(p) {
   const handleChange = e => {
     p.onChange(p.name, e.target.value);
     setShowPop(true);
-    debouncedSetShowPop.callback(false);
+    debouncedSetShowPop(false);
   };
 
   let suffix = undefined;
