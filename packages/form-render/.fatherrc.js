@@ -15,7 +15,7 @@ export default {
       {
         libraryName: 'antd',
         libraryDirectory: 'lib',
-        style: 'css',
+        style: true,
       },
       'antd',
     ],
