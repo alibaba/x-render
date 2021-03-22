@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { PictureOutlined } from '@ant-design/icons';
 import { Input, Popover } from 'antd';
-import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+import useDebouncedCallback from '../../base/useDebounce';
 import previewContent from '../../components/previewContent';
 
 const PreviewNode = ({ format, value, showPop, setShowPop }) => {

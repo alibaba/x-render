@@ -5,7 +5,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from 'react';
-import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+import useDebouncedCallback from './base/useDebounce';
 import { usePrevious } from './hooks';
 import PropTypes from 'prop-types';
 import { isDeepEqual, combineSchema } from './base/utils';
