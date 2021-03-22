@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.9.13
+
+- [!] fusion 侧 input / textarea 的 props 变更：hasLimitHint -> showLimitHint
+- [!]
+
 ### 0.9.12
 
 - [!] 修复了 radio 选择框等较窄的展示没有对齐的问题
