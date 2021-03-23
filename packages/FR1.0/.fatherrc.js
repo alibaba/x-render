@@ -1,7 +1,7 @@
 import commonjs from 'rollup-plugin-commonjs';
 
 export default {
-  entry: ['src/index.js', 'src/antd.js', 'src/fusion.js'],
+  entry: ['src/index.js'],
   esm: 'rollup',
   cjs: 'babel',
   extraRollupPlugins: [
@@ -15,17 +15,9 @@ export default {
       {
         libraryName: 'antd',
         libraryDirectory: 'lib',
-        style: true,
+        style: 'css',
       },
       'antd',
-    ],
-    [
-      'import',
-      {
-        libraryName: '@alifd/next',
-        libraryDirectory: 'lib',
-      },
-      '@alifd/next',
     ],
     [
       'import',

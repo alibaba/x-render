@@ -34,7 +34,6 @@ const RichTextEditor = ({ name, onChange, value, ...rest }) => {
         onChange={handleChange}
         onSave={onSave}
         onBlur={onSave}
-        onFocus={onSave}
       />
     </div>
   );

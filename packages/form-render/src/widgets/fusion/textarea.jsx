@@ -17,7 +17,7 @@ export default function ta(p) {
   const config = {
     ...options,
     maxLength,
-    hasLimitHint: maxLength ? true : false,
+    showLimitHint: maxLength ? true : false,
   };
   return (
     <TextArea

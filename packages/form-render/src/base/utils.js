@@ -255,6 +255,14 @@ export const evaluateString = (string, formData, rootValue) =>
   return (${string})
   `);
 
+// 解析函数字符串值(用于validator，入参只有value)
+export const evaluateString2 = (string, value, formData) =>
+  safeEval(`
+  const value =${JSON.stringify(value)};
+  const formData = ${JSON.stringify(formData)};
+  return (${string})
+  `);
+
 // 判断schema的值是是否是“函数”
 // JSON无法使用函数值的参数，所以使用"{{...}}"来标记为函数，也可使用@标记，不推荐。
 export function isFunction(func) {
@@ -307,6 +315,23 @@ export const convertValue = (item, formData, rootValue) => {
     const _item = isFunction(item);
     try {
       return evaluateString(_item, formData, rootValue);
+    } catch (error) {
+      console.error(error.message);
+      console.error(`happen at ${item}`);
+      return item;
+    }
+  }
+  return item;
+};
+
+// 用于validator的求值，入参只有value
+export const convertValue2 = (item, value, formData) => {
+  if (typeof item === 'function') {
+    return item(value, formData);
+  } else if (typeof item === 'string' && isFunction(item) !== false) {
+    const _item = isFunction(item);
+    try {
+      return evaluateString2(_item, value, formData);
     } catch (error) {
       console.error(error.message);
       console.error(`happen at ${item}`);

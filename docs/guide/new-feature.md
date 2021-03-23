@@ -9,6 +9,18 @@ toc: menu
 
 # 新功能
 
+## 0.10.0
+
+新增了 validator 字段，用于动态校验
+
+```jsx
+import React from 'react';
+import FR from '../demo/FR/index.jsx';
+import json from '../demo/new-feature/validator.json';
+
+export default () => <FR schema={json} />;
+```
+
 ## 0.9.1
 
 新增了 `{ format: "email"/"url"/"image" }`
