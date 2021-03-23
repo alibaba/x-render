@@ -1,0 +1,17 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "pwd": {
+        "title": "密码",
+        "type": "string",
+        "validator": "{{value.length > 6 ? '长度超了': ''}}"
+      },
+      "pwd2": {
+        "title": "重复输入密码",
+        "type": "string",
+        "validator": "{{formData.pwd == value ? '': '两个密码不一致'}}"
+      }
+    }
+  }
+}

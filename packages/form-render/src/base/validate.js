@@ -11,6 +11,7 @@ import {
   isFunction,
   baseGet,
   convertValue,
+  convertValue2,
   isEmail,
   isUrl,
 } from './utils';
@@ -34,7 +35,7 @@ const isEmptyValue = (value, schema) => {
 };
 
 export const getValidateText = (obj = {}) => {
-  const { value, defaultValue, required, schema = {} } = obj;
+  const { value, defaultValue, required, schema = {}, formData } = obj;
 
   const {
     type,
@@ -50,6 +51,7 @@ export const getValidateText = (obj = {}) => {
     uniqueItems, // list
     'ui:widget': widget,
     'ui:options': options,
+    validator,
   } = schema;
   // TODO: 这里要不要把 null 算进去呢？感觉算进去更合理一点
   let finalValue = [undefined, null].indexOf(value) > -1 ? defaultValue : value;
@@ -57,6 +59,16 @@ export const getValidateText = (obj = {}) => {
   if (type === 'number' && value === 0) {
     finalValue = 0;
   }
+
+  // 新增 validator 校验
+  if (validator && isFunction(validator)) {
+    if (typeof validator === 'function') {
+      return validator(finalValue, formData);
+    } else if (typeof validator === 'string') {
+      return convertValue2(validator, finalValue, formData);
+    }
+  }
+
   const usePattern = pattern && ['string', 'number'].indexOf(type) > -1;
   // schema 里面没有内容的，直接退出
   if (isEmptyObject(schema)) {
@@ -197,6 +209,7 @@ export const dealTypeValidate = (key, value, schema = {}, _formData) => {
   const obj = {
     value,
     schema,
+    formData: _formData,
   };
   if (type === 'object') {
     const list = getValidateList(value, schema, _formData); // eslint-disable-line
