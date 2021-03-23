@@ -363,7 +363,11 @@ export default function listHoc(ButtonComponent, Pagination) {
     };
 
     handlePageChange = (page, pageSize) => {
-      this.setState({ currentIndex: page, pageSize });
+      const { currentIndex, pageSize: _size } = this.state;
+      this.setState({
+        currentIndex: page || currentIndex,
+        pageSize: pageSize || _size,
+      });
     };
 
     getPageSize = props => {
