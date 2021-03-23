@@ -24,7 +24,6 @@
 
 - [!] fusion 侧 input / textarea 的 props 变更：hasLimitHint -> showLimitHint
 - [!] fix 了内部使用 use-debounce 包在 webpack5 下报错的问题
-
 - [!] fix 了外部触发 formData 更新后不触碰表单直接提交时，default 和选择框初始值消失的问题
 
 ### 0.9.12
