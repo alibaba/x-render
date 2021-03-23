@@ -65,8 +65,8 @@
   "peerDependencies": {
     "@alifd/next": "^1.x",
     "antd": "^4.x",
-    "react": "^16.8.0 || ^17.0.0",
-    "react-dom": "^16.8.0 || ^17.0.0"
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",

@@ -1,5 +1,10 @@
 # Change Log
 
+### 0.10.1
+
+- [!] 修复了 `hideDelete` 无效的问题
+- [!] 修复了 fusion 下，list 的 pagination 无效的问题
+
 ### 0.10.0
 
 - [+] 新增 validator 字段，用于动态校验, 可使用 value、formData 写函数 or 表达式字符串

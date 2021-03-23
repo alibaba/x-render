@@ -3,6 +3,20 @@ import { Button, Icon, Dialog as Modal, Drawer, Pagination } from '@alifd/next';
 import listHoc from '../../components/listHoc';
 import { isObj } from '../../base/utils';
 
+const Pag = ({ showSizeChanger, onChange, ...rest }) => {
+  const handleChange = val => onChange(val);
+  const handleSizeChange = val => onChange(null, val);
+  const newProps = {
+    pageSizeSelector: showSizeChanger === true ? 'dropdown' : false,
+    pageSizeSelector: false,
+    onChange: handleChange,
+    showJump: false,
+    onPageSizeChange: handleSizeChange,
+    ...rest,
+  };
+  return <Pagination {...newProps} />;
+};
+
 function FrButton({ icon, children, type, ...rest }) {
   let iconName;
   switch (icon) {
@@ -24,7 +38,7 @@ function FrButton({ icon, children, type, ...rest }) {
   );
 }
 
-const List = listHoc(FrButton, Pagination);
+const List = listHoc(FrButton, Pag);
 
 const ListWithModal = props => {
   const { options, schema, value } = props || {};

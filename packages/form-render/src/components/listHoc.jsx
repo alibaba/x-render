@@ -112,7 +112,7 @@ const listItemHoc = ButtonComponent =>
                 className="fr-item-action-icon"
               />
             )}
-            {!readOnly && (
+            {readOnly || hideDelete ? (
               <div className="fr-item-action-icon" onClick={this.handleDelete}>
                 <img
                   style={{ height: '70%' }}
@@ -120,10 +120,10 @@ const listItemHoc = ButtonComponent =>
                   alt="delete"
                 />
               </div>
-            )}
+            ) : null}
             {!readOnly && <DragHandle />}
           </div>
-          {!((canFold && fold) || hideDelete || readOnly) && (
+          {!((canFold && fold) || readOnly) && (
             <div className="self-end flex mb2">
               {itemButtons &&
                 itemButtons.length > 0 &&
@@ -363,7 +363,11 @@ export default function listHoc(ButtonComponent, Pagination) {
     };
 
     handlePageChange = (page, pageSize) => {
-      this.setState({ currentIndex: page, pageSize });
+      const { currentIndex, pageSize: _size } = this.state;
+      this.setState({
+        currentIndex: page || currentIndex,
+        pageSize: pageSize || _size,
+      });
     };
 
     getPageSize = props => {
