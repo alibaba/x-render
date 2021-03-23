@@ -3,6 +3,7 @@
 ### 0.10.1
 
 - [!] 修复了 `hideDelete` 无效的问题
+- [!] 修复了 fusion 下，list 的 pagination 无效的问题
 
 ### 0.10.0
 
