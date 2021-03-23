@@ -1,9 +1,31 @@
 # Change Log
 
-### 0.9.13
+### 0.10.0
+
+- [+] 新增 validator 字段，用于动态校验, 可使用 value、formData 写函数 or 表达式字符串
+
+```js
+{
+  type: 'object',
+  properties: {
+    pwd: {
+      title: '密码',
+      type: 'string',
+      validator: "{{value.length > 6 ? '长度超了': ''}}",
+    },
+    pwd2: {
+      title: '重复输入密码',
+      type: 'string',
+      validator: "{{formData.pwd == value ? '': '两个密码不一致'}}",
+    },
+  },
+}
+```
 
 - [!] fusion 侧 input / textarea 的 props 变更：hasLimitHint -> showLimitHint
-- [!]
+- [!] fix 了内部使用 use-debounce 包在 webpack5 下报错的问题
+
+- [!] fix 了外部触发 formData 更新后不触碰表单直接提交时，default 和选择框初始值消失的问题
 
 ### 0.9.12
 

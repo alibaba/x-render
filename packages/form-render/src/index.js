@@ -88,7 +88,10 @@ function FormRender({
   const [isEditing, setEditing] = useState(false);
   const debouncedSetEditing = useDebouncedCallback(setEditing, 300);
 
-  const data = useMemo(() => resolve(schema, formData), [schema, formData]);
+  const data = useMemo(() => resolve(schema, formData), [
+    JSON.stringify(schema),
+    JSON.stringify(formData),
+  ]);
 
   useEffect(() => {
     onChange(data);
@@ -96,21 +99,22 @@ function FormRender({
   }, []);
 
   useEffect(() => {
-    if (isUserInput.current) {
+    if (firstRender.current) {
+      onMount();
+      firstRender.current = false;
+    }
+    updateValidation();
+    if (!isUserInput.current) {
+      onChange(data); // 这个操作不做，当外部修改formData后如果不操作form，返回的值会是没有resolve过的
+    } else {
       isUserInput.current = false;
-      return;
     }
-    if (!isDeepEqual(previousSchema, schema)) {
-      onChange(data);
-      updateValidation();
-    } else if (!isDeepEqual(previousData, formData)) {
-      if (firstRender.current) {
-        onMount();
-        firstRender.current = false;
-      }
-      updateValidation();
-    }
-  }, [schema, formData]);
+  }, [JSON.stringify(formData)]);
+
+  useEffect(() => {
+    onChange(data);
+    updateValidation();
+  }, [JSON.stringify(schema)]);
 
   // data修改比较常用，所以放第一位
   const resetData = (newData, newSchema) => {
