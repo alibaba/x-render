@@ -1,0 +1,223 @@
+{
+  "type": "object",
+  "properties": {
+    "dateRangeExample": {
+      "title": "日期范围",
+      "bind": ["startDate", "endDate"],
+      "type": "range",
+      "format": "date",
+      "required": true,
+      "ui:disabled": "{{formData.percentage == 10}}"
+    },
+    "list": {
+      "required": true,
+      "title": "对象数组",
+      "description": "对象数组嵌套功能",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "objectName": {
+            "title": "对象",
+            "description": "这是一个对象类型",
+            "type": "object",
+            "properties": {
+              "inputName": {
+                "title": "简单输入框",
+                "type": "string"
+              }
+            }
+          },
+          "userName": {
+            "bind": false,
+            "title": "User Name",
+            "type": "string",
+            "rules": [
+              {
+                "min": 5,
+                "message": "长度需要大于5"
+              },
+              {
+                "max": 12
+              }
+            ]
+          },
+          "selectName": {
+            "title": "单选",
+            "type": "string",
+            "enum": ["a", "b", "c"],
+            "enumNames": ["早", "中", "晚"],
+            "required": true
+          },
+          "checkboxName": {
+            "title": "是否判断",
+            "type": "boolean",
+            "valuePropName": "checked"
+          }
+        }
+      }
+    },
+    "percentage": {
+      "title": "百分比",
+      "type": "number",
+      "required": true,
+      "ui:widget": "percent",
+      "rules": [
+        {
+          "min": 10,
+          "message": "长度需要大于10"
+        },
+        {
+          "max": 80
+        }
+      ]
+    },
+    "AllString": {
+      "title": "string类",
+      "type": "object",
+      "properties": {
+        "objectName": {
+          "title": "对象",
+          "description": "这是一个对象类型",
+          "type": "object",
+          "properties": {
+            "inputName": {
+              "title": "简单输入框",
+              "type": "string"
+            }
+          }
+        },
+        "input": {
+          "title": "简单输入框",
+          "bind": "a.b.c",
+          "type": "string",
+          "ui:disabled": "{{rootValue.d === '1'}}",
+          "ui:options": {
+            "placeholder": "haha"
+          },
+          "required": "{{rootValue.d === '1'}}"
+        },
+        "textarea": {
+          "bind": "a.b.d",
+          "title": "简单文本编辑框",
+          "type": "string",
+          "format": "textarea"
+        },
+        "color": {
+          "bind": "color",
+          "title": "颜色选择",
+          "type": "string",
+          "format": "color"
+        },
+        "date": {
+          "title": "日期选择",
+          "type": "string",
+          "format": "date"
+        },
+        "image": {
+          "bind": false,
+          "title": "图片展示",
+          "type": "string",
+          "format": "image"
+        },
+        "uploader": {
+          "title": "上传文件",
+          "type": "string",
+          "format": "upload",
+          "ui:options": {
+            "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          }
+        }
+      }
+    },
+    "allNumber": {
+      "title": "number类",
+      "type": "object",
+      "properties": {
+        "number1": {
+          "title": "数字输入框",
+          "description": "1 - 1000",
+          "type": "number",
+          "min": 1,
+          "max": 1000
+        },
+        "number2": {
+          "title": "带滑动条",
+          "type": "number",
+          "ui:widget": "slider"
+        }
+      }
+    },
+    "allBoolean": {
+      "title": "boolean类",
+      "type": "object",
+      "properties": {
+        "checkbox": {
+          "title": "是否通过",
+          "type": "boolean",
+          "default": true
+        },
+        "switch": {
+          "title": "开关控制",
+          "type": "boolean",
+          "ui:widget": "switch"
+        }
+      }
+    },
+    "allRange": {
+      "title": "range类",
+      "type": "object",
+      "properties": {
+        "dateRange": {
+          "title": "日期范围",
+          "type": "range",
+          "format": "dateTime",
+          "ui:options": {
+            "placeholder": ["开始时间", "结束时间"]
+          }
+        }
+      }
+    },
+    "allEnum": {
+      "title": "选择类",
+      "type": "object",
+      "properties": {
+        "select": {
+          "title": "单选",
+          "type": "string",
+          "enum": ["a", "b", "c"],
+          "enumNames": ["早", "中", "晚"]
+        },
+        "radio": {
+          "title": "单选",
+          "type": "string",
+          "enum": ["a", "b", "c"],
+          "enumNames": ["早", "中", "晚"],
+          "ui:widget": "radio"
+        },
+        "multiSelect": {
+          "title": "多选",
+          "description": "下拉多选",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "enum": ["A", "B", "C", "D"],
+          "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
+          "ui:widget": "multiSelect"
+        },
+        "boxes": {
+          "title": "多选",
+          "description": "checkbox",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "enum": ["A", "B", "C", "D"],
+          "enumNames": ["杭州", "武汉", "湖州", "贵阳"]
+        }
+      }
+    }
+  },
+  "required": []
+}

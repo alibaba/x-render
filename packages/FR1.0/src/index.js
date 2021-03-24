@@ -1,101 +1,102 @@
-import React, { useState } from 'react';
-import ReactDOM from 'react-dom';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
+import { flattenSchema } from './utils';
+import FR from './FR';
+import { Ctx, StoreCtx, useSet } from './hooks';
+import { widgets as defaultWidgets } from './widgets/antd';
+import { mapping as defaultMapping } from './mapping';
+import 'tachyons';
 import './index.css';
-import 'antd/dist/antd.css';
-import FormRender, { useForm, createWidget } from './App';
-import schema from './basic.json';
-import Percent from './otherWidgets/Percent';
-// import schema1 from './basic1.json';
 
-// console.log(JSON.stringify(combineSchema(schema1.schema, schema1.uiSchema)));
+// 其他入参 watch: {"a.b.c": (value) => { ... }, }
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+export { useForm } from './useForm';
 
-// const Demo = () => {
-//   const form = useForm()
-//   return <App form={form} schema={schema} />;
-// };
+function App({
+  widgets,
+  mapping,
+  form,
+  beforeFinish,
+  onFinish,
+  displayType,
+  schema,
+  initialData,
+  flatten: _flatten,
+  ...rest
+}) {
+  const {
+    submitData,
+    errorFields,
+    isSubmitting,
+    isValidating,
+    endSubmitting,
+    bindSchema,
+    onItemChange,
+    formData,
+  } = form;
 
-const PercentWidget = createWidget(({ value, onChange }) => ({
-  onPress: onChange,
-  percent: value,
-}))(Percent);
+  const [state, setState] = useSet({
+    flatten: {}, // // schema 在内部通用转换成 flatten，一般就一次转换。schema便于书写，flatten便于数据处理
+  });
 
-const Demo = () => {
-  const [display, setDisplay] = useState({}); // TODO: 只是开发时候用
+  const { flatten } = state;
 
-  const form = useForm();
-
-  const onFinish = ({ formData, errorFields }) => {
-    console.log(formData, 'formData', errorFields, 'errors');
-    setDisplay([formData, errorFields]);
+  // window.blog(flatten, form.formData);
+  const store = {
+    flatten,
+    ...form,
+    widgets: { ...defaultWidgets, ...widgets },
+    mapping: { ...defaultMapping, ...mapping },
+    displayType: displayType || 'column',
+    ...rest,
   };
 
-  const outsideValidation = () => {
-    form.setErrorFields({ name: 'percentage', error: ['外部校验错误'] });
-  };
+  useEffect(() => {
+    const newFlatten = _flatten || flattenSchema(schema);
+    bindSchema({ schema, flatten: newFlatten });
+    setState({ flatten: newFlatten });
+  }, [
+    JSON.stringify(_flatten),
+    JSON.stringify(schema),
+    JSON.stringify(formData),
+  ]);
 
-  const beforeFinish = () => {
-    return delay(0).then(_ =>
-      form.setErrorFields({ name: 'percentage', error: ['外部校验错误'] })
-    );
-  };
+  useEffect(() => {
+    onItemChange('#', initialData);
+  }, [JSON.stringify(initialData)]);
 
-  // const watch = {
-  //   'a.b.c': value => {
-  //     form.onItemChange('a.b.d', value);
-  //   },
-  //   percentage: value => {
-  //     form.onItemChange('a.b.c', String(value));
-  //   },
-  // };
+  useEffect(() => {
+    // 如果validation结束，但是submitting开始
+    if (!isValidating && isSubmitting) {
+      if (beforeFinish && typeof beforeFinish === 'function') {
+        Promise.resolve(beforeFinish({ formData: submitData, errorFields }))
+          .then(_ => {
+            Promise.resolve(onFinish({ formData: submitData, errorFields }));
+          })
+          .then(endSubmitting);
+      } else {
+        Promise.resolve(onFinish({ formData: submitData, errorFields })).then(
+          endSubmitting
+        );
+      }
+    }
+  }, [isValidating, isSubmitting]);
 
-  // const extend = {
-  //   'a.b.c': ({ schema }) => {
-  //     return {
-  //       placeholder: 'hahahah' + schema.placeholder,
-  //     };
-  //   },
-  //   'allEnum.select': () => {
-  //     const options = [];
-  //     for (let i = 10; i < 36; i++) {
-  //       const value = i.toString(36) + i;
-  //       options.push({
-  //         label: `Long Label: ${value}`,
-  //         value,
-  //       });
-  //     }
-  //     return { options };
-  //   },
-  // };
-
-  // TODO: form 不传入，也可以用，至少可以展示
+  // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
-    <div>
-      <button onClick={form.submit}>提交</button>
-      <div style={{ height: 40 }}>{JSON.stringify(display[0])}</div>
-      <div style={{ minHeight: 40 }}>{JSON.stringify(display[1])}</div>
-      <div style={{ padding: 24 }}>
-        <button onClick={outsideValidation}>外部校验传入</button>
-        <FormRender
-          // watch={watch}
-          // extend={extend}
-          form={form}
-          schema={schema}
-          initialData={{
-            list: [
-              { userName: '123sdf', selectName: 'b', checkboxName: true },
-              { userName: '123', checkboxName: false },
-            ],
-          }}
-          beforeFinish={beforeFinish}
-          onFinish={onFinish}
-          widgets={{ percent: PercentWidget }}
-          displayType="column"
-        />
-      </div>
-    </div>
+    <StoreCtx.Provider value={store}>
+      <Ctx.Provider value={{}}>
+        <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
+        <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
+        <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
+        <div className="fr-wrapper">
+          <FR />
+        </div>
+      </Ctx.Provider>
+    </StoreCtx.Provider>
   );
-};
+}
 
-ReactDOM.render(<Demo />, document.getElementById('root'));
+export { createWidget } from './HOC';
+
+export default App;
