@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useStore } from '../../hooks';
-import useDebouncedCallback from 'use-debounce/lib/useDebouncedCallback';
+import useDebouncedCallback from '../../useDebounce';
 import {
   getDataPath,
   getValueByPath,
@@ -121,7 +121,7 @@ const RenderField = ({
   const onChange = value => {
     // 开始编辑，节流
     setEditing(true);
-    debouncedSetEditing.callback(false);
+    debouncedSetEditing(false);
     if (typeof dataPath === 'string') {
       onItemChange(dataPath, value);
     }
