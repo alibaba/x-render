@@ -10,13 +10,13 @@ export const validateAll = ({ formData, schema, isRequired = true }) => {
   // console.log(schema, 'schema', descriptor, 'descriptor', formData, 'formData');
 
   const cn = {
-    required: '%s 必填',
+    // required: '%s 必填',
+    required: '必填',
   };
 
   const validator = new Validator(descriptor);
   validator.messages(cn);
   return validator.validate(formData).catch(({ errors, fields }) => {
-    console.log(errors, fields, 'result');
     const normalizedErrors = errors.map(err => {
       const _path = formatPathFromValidator(err.field);
       return { name: _path, error: [err.message] };

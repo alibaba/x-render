@@ -39,10 +39,9 @@ export const useForm = () => {
       schema: schemaRef.current,
       isRequired,
     }).then(res => {
-      console.log(res, 'errorFields');
       setState({ errorFields: res });
     });
-  }, [formData, isValidating]);
+  }, [JSON.stringify(formData), isValidating]);
 
   const setEditing = isEditing => {
     setState({ isEditing });
@@ -80,7 +79,6 @@ export const useForm = () => {
       console.log('error format is wrong');
     }
     newErrorFields = sortedUniqBy(newErrorFields, item => item.name);
-    console.log('newErrorFields', newErrorFields);
     setState({ errorFields: newErrorFields });
   };
 
@@ -150,14 +148,12 @@ export const useForm = () => {
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
     validateAll({ formData, schema: schemaRef.current }).then(res => {
-      console.log(res, 'validate result');
       // setState({ errorFields: res });
       if (res && res.length > 0) {
         setState({ isSubmitting: false });
         return;
       }
       Promise.resolve(processData(formData)).then(res => {
-        console.log(res);
         setState({
           isValidating: false,
           submitData: res,

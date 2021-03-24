@@ -82,7 +82,7 @@ const Demo = () => {
         beforeFinish={beforeFinish}
         onFinish={onFinish}
         widgets={{ percent: PercentWidget }}
-        displayType="column"
+        debug
       />
     </div>
   );

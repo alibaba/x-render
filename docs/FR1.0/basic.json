@@ -31,6 +31,7 @@
           "userName": {
             "bind": false,
             "title": "User Name",
+            "required": true,
             "type": "string",
             "rules": [
               {

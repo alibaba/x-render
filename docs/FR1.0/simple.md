@@ -1,6 +1,6 @@
 ---
-title: 组件样例
-order: 2
+title: 简单样例
+order: 1
 nav:
   order: 5
   title: FR 1.0
@@ -8,4 +8,4 @@ nav:
 # gapless: true
 ---
 
-<code src='./index.jsx'  />
+<code src='./simple.jsx'  />
