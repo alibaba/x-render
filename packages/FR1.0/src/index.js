@@ -5,8 +5,9 @@ import FR from './FR';
 import { Ctx, StoreCtx, useSet } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
-import 'tachyons';
-import './index.css';
+import './tachyons.less';
+// import './index.css';
+import './index.less';
 
 // 其他入参 watch: {"a.b.c": (value) => { ... }, }
 
@@ -94,7 +95,7 @@ function App({
             <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
           </>
         ) : null}
-        <div className="fr-wrapper">
+        <div className="fr-container">
           <FR />
         </div>
       </Ctx.Provider>
