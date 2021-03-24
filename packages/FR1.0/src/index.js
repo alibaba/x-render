@@ -22,6 +22,7 @@ function App({
   schema,
   initialData,
   flatten: _flatten,
+  debug,
   ...rest
 }) {
   const {
@@ -86,9 +87,13 @@ function App({
   return (
     <StoreCtx.Provider value={store}>
       <Ctx.Provider value={{}}>
-        <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
-        <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
-        <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
+        {debug ? (
+          <>
+            <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
+            <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
+            <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
+          </>
+        ) : null}
         <div className="fr-wrapper">
           <FR />
         </div>
