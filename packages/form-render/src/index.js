@@ -14,8 +14,10 @@ import parse from './base/parser';
 import resolve from './base/resolve';
 import { getValidateList } from './base/validate';
 import fetcher from './HOC/fetcher';
-import './atom.css';
-import './index.css';
+// import './atom.css';
+import './atom.less';
+// import './index.css';
+import './index.less';
 
 function RenderField({ fields, onChange, ...settings }) {
   const { Field, props } = parse(settings, fields);
