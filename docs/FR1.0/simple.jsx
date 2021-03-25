@@ -4,16 +4,22 @@ import FormRender, { useForm } from 'form-render-beta';
 const schema = {
   type: 'object',
   properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚'],
+    objectName: {
+      title: '对象',
+      description: '这是一个对象类型',
+      type: 'object',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+        },
+      },
     },
   },
 };
@@ -29,7 +35,12 @@ const Demo = () => {
   return (
     <div>
       <button onClick={form.submit}>提交</button>
-      <FormRender form={form} schema={schema} onFinish={onFinish} debug />
+      <FormRender
+        form={form}
+        schema={schema}
+        onFinish={onFinish}
+        debug={false}
+      />
     </div>
   );
 };

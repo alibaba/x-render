@@ -13,6 +13,7 @@ export const useForm = () => {
     isValidating: false, // 含义有点变化了，只要提交了没有过校验，就一直会是true，这块有点投机取巧，叫hasValidated 可能更合适
     isSubmitting: false,
     isEditing: false, // 是否在编辑状态。主要用于优化体验，用户编辑时减少不必要的运算
+    touchedKeys: [], // 碰过的key
   });
 
   const schemaRef = useRef();
@@ -28,6 +29,7 @@ export const useForm = () => {
     isValidating,
     isSubmitting,
     isEditing,
+    touchedKeys,
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
