@@ -49,7 +49,7 @@ export default defineConfig({
       {
         libraryName: 'antd',
         libraryDirectory: 'lib',
-        style: 'css',
+        style: true,
       },
       'antd',
     ],
