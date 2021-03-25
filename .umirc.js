@@ -16,24 +16,49 @@ export default defineConfig({
   //   ],
   // },
   navs: [
-    null,
+    {
+      title: 'form-render',
+      children: [
+        { title: '教程', path: '/guide' },
+        { title: '配置', path: '/config' },
+      ],
+    },
+    { title: 'Playground', path: '/playground' },
+    { title: '自定义组件', path: '/widgets' },
+    {
+      title: 'table-render',
+      children: [
+        { title: '教程', path: '/table-render/guide' },
+        { title: '配置', path: '/table-render/config' },
+      ],
+    },
     {
       title: '表单设计器',
       path: 'https://x-render.gitee.io/schema-generator/',
     },
-    {
-      title: 'table-render',
-      path: 'https://x-render.gitee.io/table-render/',
-    },
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
     {
       title: '更新日志',
-      path:
-        'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
+      children: [
+        {
+          title: 'form-render',
+          path:
+            'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
+        },
+        {
+          title: 'table-render',
+          path:
+            'https://github.com/alibaba/form-render/blob/master/packages/table-render/CHANGELOG.md',
+        },
+      ],
     },
     {
       title: '国内镜像',
       path: 'https://x-render.gitee.io/form-render/',
+    },
+    {
+      title: 'FR1.0',
+      path: '/FR1.0',
     },
   ],
   mode: 'site',
