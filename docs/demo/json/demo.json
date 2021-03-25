@@ -182,7 +182,7 @@
     "arrDemo": {
       "ui:options": {
         "foldable": true,
-        "hideDelete": "{{rootValue.length === 1}}",
+        "hideDelete": "{{rootValue.arrDemo.length === 1}}",
         "buttons": [
           {
             "text": "复制",
