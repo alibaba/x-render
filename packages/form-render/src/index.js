@@ -15,7 +15,6 @@ import { getValidateList } from './base/validate';
 import fetcher from './HOC/fetcher';
 import './atom.less';
 import './index.less';
-import 'antd/dist/antd.less';
 
 function RenderField({ fields, onChange, ...settings }) {
   const { Field, props } = parse(settings, fields);

@@ -11,7 +11,7 @@ import {
   mapping as defaultMapping,
   widgets as defaultWidgets,
 } from './widgets/antd';
-// import 'antd/dist/antd.css';
+import 'antd/dist/antd.less';
 
 const AntdForm = (
   { mapping = {}, widgets = {}, configProvider = {}, ...rest },
