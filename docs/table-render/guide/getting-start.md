@@ -1,9 +1,6 @@
 ---
 order: 2
 title: 快速上手
-nav:
-  order: 1
-  title: 指南
 toc: menu
 ---
 

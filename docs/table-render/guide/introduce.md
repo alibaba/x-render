@@ -1,9 +1,6 @@
 ---
 order: 1
 title: 介绍
-nav:
-  order: 1
-  title: 指南
 toc: menu
 ---
 

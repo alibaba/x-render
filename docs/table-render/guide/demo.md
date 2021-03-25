@@ -1,9 +1,6 @@
 ---
 order: 3
 title: 使用案例
-nav:
-  order: 2
-  title: 指南
 toc: menu
 ---
 
