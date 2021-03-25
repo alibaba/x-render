@@ -4,7 +4,7 @@ export default function map(p) {
   let className = 'fr-map ';
   const { options = {} } = p || {};
   const isModal = options.modal || options.drawer;
-  className += isModal ? 'fr-wrapper' : ''; // 因为modal跳出fr的dom层级了，需要重新加个顶层的className
+  className += isModal ? 'fr-container' : ''; // 因为modal跳出fr的dom层级了，需要重新加个顶层的className
   const _value = p.value || {};
   return (
     <div className={className}>

@@ -1,5 +1,5 @@
 {
-  "name": "new-form-render",
+  "name": "form-render-beta",
   "version": "1.0.0",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "repository": {
@@ -58,9 +58,7 @@
     "nanoid": "^3.1.20",
     "lodash": "^4.17.20",
     "rc-color-picker": "^1.2.6",
-    "react-sortable-hoc": "^1.11.0",
-    "tachyons": "^4.12.0",
-    "use-debounce": "^5.2.0"
+    "react-sortable-hoc": "^1.11.0"
   },
   "peerDependencies": {
     "@alifd/next": "^1.x",

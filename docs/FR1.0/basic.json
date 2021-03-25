@@ -10,8 +10,8 @@
       "ui:disabled": "{{formData.percentage == 10}}"
     },
     "list": {
+      "required": true,
       "title": "对象数组",
-      "bind": "someList",
       "description": "对象数组嵌套功能",
       "type": "array",
       "items": {
@@ -31,6 +31,7 @@
           "userName": {
             "bind": false,
             "title": "User Name",
+            "required": true,
             "type": "string",
             "rules": [
               {

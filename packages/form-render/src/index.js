@@ -6,16 +6,16 @@ import React, {
   useState,
 } from 'react';
 import useDebouncedCallback from './base/useDebounce';
-import { usePrevious } from './hooks';
 import PropTypes from 'prop-types';
-import { isDeepEqual, combineSchema } from './base/utils';
+import { combineSchema } from './base/utils';
 import { asField, DefaultFieldUI } from './base/asField';
 import parse from './base/parser';
 import resolve from './base/resolve';
 import { getValidateList } from './base/validate';
 import fetcher from './HOC/fetcher';
-import './atom.css';
-import './index.css';
+import './atom.less';
+import './index.less';
+import 'antd/dist/antd.less';
 
 function RenderField({ fields, onChange, ...settings }) {
   const { Field, props } = parse(settings, fields);
@@ -82,8 +82,6 @@ function FormRender({
   const originWidgets = useRef();
   const generatedFields = useRef({});
   const firstRender = useRef(true);
-  const previousSchema = usePrevious(schema);
-  const previousData = usePrevious(formData);
 
   const [isEditing, setEditing] = useState(false);
   const debouncedSetEditing = useDebouncedCallback(setEditing, 300);

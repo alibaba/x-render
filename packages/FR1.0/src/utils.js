@@ -1,4 +1,3 @@
-import deepClone from 'clone';
 import { get } from 'lodash';
 
 // 后面三个参数都是内部递归使用的，将schema的树形结构扁平化成一层, 每个item的结构
@@ -112,7 +111,7 @@ export function isObjType(schema) {
 
 // TODO: 检验是否丢进去各种schema都能兜底不会crash
 export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
-  const schema = deepClone(_schema); // TODO: 是否需要deepClone，这个花费是不是有点大
+  const schema = JSON.parse(JSON.stringify(_schema)); // TODO: 是否需要deepClone，这个花费是不是有点大
   let _name = name;
   if (!schema.$id) {
     schema.$id = _name; // 给生成的schema添加一个唯一标识，方便从schema中直接读取

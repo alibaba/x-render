@@ -1,21 +1,14 @@
-import commonjs from 'rollup-plugin-commonjs';
-
 export default {
   entry: ['src/index.js'],
   esm: 'rollup',
-  cjs: 'babel',
-  extraRollupPlugins: [
-    commonjs({
-      include: 'node_modules/**',
-    }),
-  ],
+  cjs: 'rollup',
   extraBabelPlugins: [
     [
       'import',
       {
         libraryName: 'antd',
         libraryDirectory: 'lib',
-        style: 'css',
+        style: true,
       },
       'antd',
     ],

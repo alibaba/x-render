@@ -9,6 +9,8 @@ export default {
       include: 'node_modules/**',
     }),
   ],
+  lessInBabelMode: true,
+  lessInRollupMode: {},
   extraBabelPlugins: [
     [
       'import',
