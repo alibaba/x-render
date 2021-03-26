@@ -6,7 +6,6 @@ import { Ctx, StoreCtx, useSet } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
 import './tachyons.less';
-// import './index.css';
 import './index.less';
 
 // 其他入参 watch: {"a.b.c": (value) => { ... }, }
@@ -88,14 +87,14 @@ function App({
   return (
     <StoreCtx.Provider value={store}>
       <Ctx.Provider value={{}}>
-        {debug ? (
-          <>
-            <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
-            <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
-            <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
-          </>
-        ) : null}
         <div className="fr-container">
+          {debug ? (
+            <div className="mv2 bg-black-05 pa2 br2">
+              <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
+              <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
+              <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
+            </div>
+          ) : null}
           <FR />
         </div>
       </Ctx.Provider>

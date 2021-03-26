@@ -37,7 +37,7 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
   },
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "gitHooks": {
     "pre-commit": "lint-staged"

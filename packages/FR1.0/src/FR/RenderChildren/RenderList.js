@@ -196,11 +196,13 @@ const CardList = ({
         onClose={closeDrawer}
         visible={showDrawer}
       >
-        <FR
-          // id={children[currentIndex]}
-          _item={_infoItem}
-          dataIndex={[...dataIndex, currentIndex]}
-        />
+        <div className="fr-container">
+          <FR
+            // id={children[currentIndex]}
+            _item={_infoItem}
+            dataIndex={[...dataIndex, currentIndex]}
+          />
+        </div>
       </Drawer>
       <Table
         columns={columns}
