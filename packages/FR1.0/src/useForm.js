@@ -10,10 +10,11 @@ export const useForm = () => {
     formData: {}, // TODO: 初始值从外部传入
     submitData: {},
     errorFields: [],
-    isValidating: false, // 含义有点变化了，只要提交了没有过校验，就一直会是true，这块有点投机取巧，叫hasValidated 可能更合适
+    isValidating: false, // 是否在提交状态
     isSubmitting: false,
     isEditing: false, // 是否在编辑状态。主要用于优化体验，用户编辑时减少不必要的运算
-    touchedKeys: [], // 碰过的key
+    allTouched: false, // 是否所有表单元素都被碰过了（一键开关，用于提交的时候，默认所有都被touch了）
+    touchedKeys: [], // 碰过的key（用于submit之前，判断哪些被碰过了）
   });
 
   const schemaRef = useRef();
@@ -29,13 +30,14 @@ export const useForm = () => {
     isValidating,
     isSubmitting,
     isEditing,
+    allTouched,
     touchedKeys,
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
   useEffect(() => {
     let isRequired = false;
-    if (isValidating) isRequired = true;
+    if (allTouched) isRequired = true;
     validateAll({
       formData,
       schema: schemaRef.current,
@@ -43,7 +45,7 @@ export const useForm = () => {
     }).then(res => {
       setState({ errorFields: res });
     });
-  }, [JSON.stringify(formData), isValidating]);
+  }, [JSON.stringify(formData), allTouched]);
 
   const setEditing = isEditing => {
     setState({ isEditing });
@@ -144,15 +146,15 @@ export const useForm = () => {
   };
 
   const submit = () => {
-    setState({ isValidating: true, isSubmitting: true });
+    setState({ isValidating: true, allTouched: true, isSubmitting: true });
     //  https://formik.org/docs/guides/form-submission
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
     validateAll({ formData, schema: schemaRef.current }).then(res => {
-      // setState({ errorFields: res });
+      // 如果有错误，停止校验和提交
       if (res && res.length > 0) {
-        setState({ isSubmitting: false });
+        setState({ isValidating: false, isSubmitting: false });
         return;
       }
       Promise.resolve(processData(formData)).then(res => {

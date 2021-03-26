@@ -83,6 +83,7 @@
           "type": "object",
           "properties": {
             "inputName": {
+              "required": true,
               "title": "简单输入框",
               "type": "string"
             }
