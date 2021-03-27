@@ -24,12 +24,12 @@ toc: menu
 
 ## 了解
 
-- [设计理念](/guide/design)
+- [设计理念](/docs/guide/design.md)
 - <a href="https://x-render.gitee.io/schema-generator/" target="_blank">Schema 编辑器</a>
-- [Playground](/playground) / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
-- [Typescript 支持](/guide/others/faq)
-- [常见场景](/guide/others/used-by)
-- [新功能 Demo 展示](/guide/new-feature)
+- [Playground](/docs/playground) / <a href="https://codesandbox.io/s/form-renderjichudemo-8k1l5" target="_blank">Code Sandbox</a>
+- [Typescript 支持](/docs/guide/others/faq.md)
+- [常见场景](/docs/guide/others/usedBy.md)
+- [新功能 Demo 展示](/docs/guide/new-feature.md)
 - <a href="https://github.com/alibaba/form-render/projects/2" target="_blank">后期规划</a>
 
 ## 效果
@@ -55,7 +55,7 @@ npm i form-render
 yarn add form-render
 ```
 
-同时安装依赖的组件库 (依赖哪个装哪个，天然支持 antd 和 fusion 两套。其他的组件库可通过 widgets 的方式传入，见[自定义组件](/guide/advanced/widget))
+同时安装依赖的组件库 (依赖哪个装哪个，天然支持 antd 和 fusion 两套。其他的组件库可通过 widgets 的方式传入，见[自定义组件](/docs/guide/advanced/widget.md))
 
 ```shell
 # 例如
@@ -137,8 +137,8 @@ export default Demo;
 
 | Prop             |        Type         | Required | Default  |                                                                             Description                                                                             |
 | ---------------- | :-----------------: | :------: | :------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| **schema**       |      `Object`       |    ✓     |    {}    |                                                                 详见 [schema 配置](/config/schema)                                                                  |
-| **uiSchema**     |      `Object`       |          |    {}    |                                               详见 [uiSchema 配置](/config/ui-schema)（**一般建议合并到 `schema`**）                                                |
+| **schema**       |      `Object`       |    ✓     |    {}    |                                                                 详见 [schema 配置](/docs/config/schema.md)                                                                  |
+| **uiSchema**     |      `Object`       |          |    {}    |                                               详见 [uiSchema 配置](/docs/config/uiSchema.md)（**一般建议合并到 `schema`**）                                                |
 | **formData**     |      `Object`       |          |    {}    |                                                                            配置表单数据                                                                             |
 | **onChange**     |     `Function`      |    ✓     | () => {} |                                                                          数据更改回调函数                                                                           |
 | **onValidate**   |     `Function`      |          | () => {} |                                                                          表单输入校验回调                                                                           |
@@ -164,13 +164,13 @@ export default Demo;
 | **name**      |  `String`  | very rare |  \$form   |                                表单的名称                                |
 | **onMount**   | `Function` | very rare | undefined |                    onMount 在 formData 首次计算后触发                    |
 
-[详见“不常用 props”](/config/props2)
+[详见“不常用 props”](/docs/config/props2.md)
 
 ## 更多使用
 
 - vscode 插件：快速准确书写 schema 一直是使用者的痛点，为此我们准备了 schema 书写利器： `form-render snippets`（vscode 插件），在 vscode 商店输入 ‘formrender’
 
-- 支持 TypeScript：详见[如何在 TypeScript 项目中使用](/guide/others/faq)
+- 支持 TypeScript：详见[如何在 TypeScript 项目中使用](/docs/guide/others/faq.md)
 
 - **支持 Ant Design 自定义主题不被覆盖**
 

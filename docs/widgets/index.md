@@ -8,7 +8,7 @@ toc: menu
 
 # 自定义组件
 
-注：只是为了个人使用需要用自定义组件开发一些不常见的表单 UI，请参考[这个教程](/guide/advanced/widget)。本文适用于希望开发一些经常使用的自定义组件并发 npm 包的情况。
+注：只是为了个人使用需要用自定义组件开发一些不常见的表单 UI，请参考[这个教程](/docs/guide/advanced/widget.md)。本文适用于希望开发一些经常使用的自定义组件并发 npm 包的情况。
 
 ## 开发
 
@@ -130,4 +130,4 @@ export default function Demo() {
 }
 ```
 
-自定义组件的开发规范详见 [自定义组件](/guide/advanced/widget)
+自定义组件的开发规范详见 [自定义组件](/docs/guide/advanced/widget.md)

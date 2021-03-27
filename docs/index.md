@@ -29,7 +29,7 @@ yarn add form-render
 npm i form-render
 ```
 
-同时安装依赖的组件库 (依赖哪个装哪个，天然支持 antd 和 fusion 两套。其他的组件库可通过 widgets 的方式传入，见[自定义组件](/guide/advanced/widget))
+同时安装依赖的组件库 (依赖哪个装哪个，天然支持 antd 和 fusion 两套。其他的组件库可通过 widgets 的方式传入，见[自定义组件](/docs/guide/advanced/widget.md))
 
 ```shell
 # 例如
@@ -98,7 +98,7 @@ export default Demo;
 
 ## 理念
 
-[详见 form-render 的理念](/guide/design)
+[详见 form-render 的理念](/docs/guide/design.md)
 
 ## 贡献
 

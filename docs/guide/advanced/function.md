@@ -99,4 +99,4 @@ export default Demo1;
 
 ### 最后
 
-更复杂和定制化的表单需求建议使用自定义组件。form-render 的设计理念非常推崇组件的即插即用，详见[自定义组件](/guide/advanced/widget)章节。
+更复杂和定制化的表单需求建议使用自定义组件。form-render 的设计理念非常推崇组件的即插即用，详见[自定义组件](/docs/guide/advanced/widget.md)章节。
