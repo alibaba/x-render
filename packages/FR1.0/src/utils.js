@@ -704,3 +704,17 @@ export const isPathRequired = (path, schema) => {
     return !!schema.required; // 是否要这么干 TODO1: 意味着已经处理过了
   }
 };
+
+export const generateDataSkeleton = schema => {
+  let result = {};
+  if (isObjType(schema)) {
+    Object.keys(schema.properties).forEach(key => {
+      const childSchema = schema.properties[key];
+      const childResult = generateDataSkeleton(childSchema);
+      result[key] = childResult;
+    });
+  } else {
+    result = undefined;
+  }
+  return result;
+};

@@ -12,6 +12,7 @@ const schema = {
         input1: {
           title: '简单输入框',
           type: 'string',
+          required: true,
         },
         select1: {
           title: '单选',
@@ -39,7 +40,7 @@ const Demo = () => {
         form={form}
         schema={schema}
         onFinish={onFinish}
-        debug={false}
+        debug={true}
       />
     </div>
   );

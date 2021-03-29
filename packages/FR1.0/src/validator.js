@@ -3,6 +3,7 @@ import {
   getDscriptorFromSchema,
   formatPathFromValidator,
   isPathRequired,
+  generateDataSkeleton,
 } from './utils';
 import Validator from 'async-validator';
 import { get } from 'lodash';
@@ -10,16 +11,17 @@ import { get } from 'lodash';
 // export const validateAll = () => Promise.resolve([]);
 
 export const validateAll = ({
-  formData,
+  formData: _formData,
   schema,
   isRequired = true,
   touchedKeys = [],
 }) => {
+  // 生成一个基础结构，确保对象内的必填元素也被校验。
+  const formData = { ...generateDataSkeleton(schema), ..._formData };
   const descriptor = getDscriptorFromSchema({
     schema,
     isRequired,
   }).fields;
-  // console.log(schema, 'schema', descriptor, 'descriptor', formData, 'formData');
 
   let touchVerifyList = [];
 
@@ -70,7 +72,7 @@ export const validateAll = ({
         return { name: _path, error: [err.message] };
       });
       // 添加touched的required
-      normalizedErrors = [...normalizedErrors, touchVerifyList];
+      normalizedErrors = [...normalizedErrors, ...touchVerifyList];
       // 合并同名的error
       let _errorFields = [];
       normalizedErrors.forEach(item => {
