@@ -1,0 +1,53 @@
+{
+  "name": "chart-render",
+  "version": "0.1.1",
+  "scripts": {
+    "start": "dumi dev",
+    "docs:build": "dumi build",
+    "docs:deploy": "gh-pages -d docs-dist",
+    "build": "father-build",
+    "deploy": "npm run docs:build && npm run docs:deploy",
+    "release": "tnpm run build && tnpm publish",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/form-render.git"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "peerDependencies": {
+    "@ant-design/charts": ">=1.x",
+    "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "ali-react-table": "^2.4.0",
+    "dvt-aggregation": "^0.2.8"
+  },
+  "devDependencies": {
+    "@ant-design/charts": "^1.1.1",
+    "@types/react": "^17.0.3",
+    "@umijs/test": "^3.0.5",
+    "dumi": "^1.0.13",
+    "father-build": "^1.17.2",
+    "gh-pages": "^3.0.0",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1",
+    "react": "^16.14.0",
+    "yorkie": "^2.0.0"
+  }
+}
