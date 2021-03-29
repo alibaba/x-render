@@ -22,6 +22,7 @@ export const useForm = () => {
   const schemaRef = useRef();
   const flattenRef = useRef();
   const beforeFinishRef = useRef();
+  const localeRef = useRef('cn');
 
   const schema = schemaRef.current || {};
   const flatten = flattenRef.current || {};
@@ -52,9 +53,11 @@ export const useForm = () => {
     if (allTouched) isRequired = true;
     validateAll({
       formData,
+      flatten: flattenRef.current,
       schema: schemaRef.current,
       isRequired,
       touchedKeys,
+      locale: localeRef.current,
     }).then(res => {
       setState({ errorFields: res });
     });
@@ -79,10 +82,11 @@ export const useForm = () => {
   //   { name: 'a.b.c', errors: ['Please input your Password!', 'something else is wrong'] },
   // ]
 
-  const bindStuff = ({ schema, flatten, beforeFinish }) => {
+  const bindStuff = ({ schema, flatten, beforeFinish, locale }) => {
     schemaRef.current = schema;
     flattenRef.current = flatten;
     beforeFinishRef.current = beforeFinish;
+    localeRef.current = locale;
   };
 
   // TODO: 外部校验的error要和本地的合并么？
@@ -134,7 +138,13 @@ export const useForm = () => {
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
-    validateAll({ formData, schema: schemaRef.current, touchedKeys })
+    validateAll({
+      formData,
+      schema: schemaRef.current,
+      flatten: flattenRef.current,
+      touchedKeys,
+      locale: localeRef.current,
+    })
       .then(errors => {
         // 如果有错误，停止校验和提交
         if (errors && errors.length > 0) {

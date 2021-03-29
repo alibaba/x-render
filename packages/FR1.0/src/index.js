@@ -23,6 +23,7 @@ function App({
   initialData,
   flatten: _flatten,
   debug,
+  locale = 'cn', // 'cn'/'en'
   ...rest
 }) {
   const {
@@ -57,7 +58,7 @@ function App({
 
   useEffect(() => {
     const newFlatten = _flatten || flattenSchema(schema);
-    bindStuff({ schema, flatten: newFlatten, beforeFinish });
+    bindStuff({ schema, flatten: newFlatten, beforeFinish, locale });
     setState({ flatten: newFlatten });
   }, [
     JSON.stringify(_flatten),

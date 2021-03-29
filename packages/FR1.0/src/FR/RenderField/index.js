@@ -88,7 +88,28 @@ const RenderField = ({
 
   const errObj = errorFields.find(err => err.name === dataPath);
   const errList = errObj && errObj.error;
-  const errorMessage = Array.isArray(errList) ? errList[0] : undefined;
+  let errorMessage = Array.isArray(errList) ? errList[0] : '';
+  // 情况再多，可以批量一下
+  errorMessage = errorMessage.replace('${title}', _schema.title);
+  errorMessage = errorMessage.replace('${type}', _schema.type);
+  if (_schema.rules) {
+    const minRule = _schema.rules.find(r => r.min !== undefined);
+    if (minRule) {
+      errorMessage = errorMessage.replace('${min}', minRule.min);
+    }
+    const maxRule = _schema.rules.find(r => r.max !== undefined);
+    if (maxRule) {
+      errorMessage = errorMessage.replace('${max}', maxRule.max);
+    }
+    const lenRule = _schema.rules.find(r => r.len !== undefined);
+    if (lenRule) {
+      errorMessage = errorMessage.replace('${len}', lenRule.len);
+    }
+    const patternRule = _schema.rules.find(r => r.pattern !== undefined);
+    if (patternRule) {
+      errorMessage = errorMessage.replace('${pattern}', patternRule.pattern);
+    }
+  }
 
   // dataPath 有3种情况："#"、"a.b.c"、["a.b.c", "e.d.f"]
   const getValue = () => {

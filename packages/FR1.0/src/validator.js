@@ -5,6 +5,8 @@ import {
   isPathRequired,
   generateDataSkeleton,
 } from './utils';
+import { defaultValidateMessagesCN } from './validateMessageCN';
+import { defaultValidateMessages } from './validateMessage';
 import Validator from 'async-validator';
 import { get } from 'lodash';
 
@@ -12,9 +14,10 @@ import { get } from 'lodash';
 
 export const validateAll = ({
   formData: _formData,
-  schema,
+  schema = {},
   isRequired = true,
   touchedKeys = [],
+  locale = 'cn',
 }) => {
   // 生成一个基础结构，确保对象内的必填元素也被校验。
   const formData = { ...generateDataSkeleton(schema), ..._formData };
@@ -31,33 +34,32 @@ export const validateAll = ({
       const keyRequired = isPathRequired(key, schema);
       const val = get(formData, key);
       if (!val && keyRequired) {
-        touchVerifyList.push({ name: key, error: [`${key}必填`] });
+        touchVerifyList.push({ name: key, error: ["'${title}'必填"] });
       }
     });
   }
 
-  const cn = {
-    required: '%s 必填',
-    // required: '必填',
-  };
+  const cn = defaultValidateMessagesCN;
+  const en = defaultValidateMessages;
 
-  const descriptor2 = {
-    address: {
-      type: 'object',
-      required: true,
-      fields: {
-        street: { type: 'string', required: true },
-        city: { type: 'string', required: true },
-        zip: { type: 'number', required: true, len: 8, message: 'invalid zip' },
-      },
-    },
-    name: { required: true },
-  };
+  // const descriptor2 = {
+  //   address: {
+  //     type: 'object',
+  //     required: true,
+  //     fields: {
+  //       street: { type: 'string', required: true },
+  //       city: { type: 'string', required: true },
+  //       zip: { type: 'number', required: true, len: 8, message: 'invalid zip' },
+  //     },
+  //   },
+  //   name: { required: true },
+  // };
 
-  const formData2 = { address: {} };
+  // const formData2 = { address: {} };
 
   const validator = new Validator(descriptor);
-  validator.messages(cn);
+  const messageFeed = locale === 'en' ? en : cn;
+  validator.messages(messageFeed);
   // console.log(descriptor, formData, 'desc & formData');
   return validator
     .validate(formData || {})

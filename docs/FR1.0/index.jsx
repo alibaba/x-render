@@ -86,6 +86,7 @@ const Demo = () => {
         onFinish={onFinish}
         widgets={{ percent: PercentWidget }}
         debug
+        // locale="en"
       />
     </div>
   );
