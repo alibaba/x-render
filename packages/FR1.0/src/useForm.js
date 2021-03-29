@@ -4,7 +4,7 @@ import { getDataPath } from './utils';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash';
-import processData from './processData';
+import { processData } from './processData';
 
 export const useForm = () => {
   const [state, setState] = useSet({
