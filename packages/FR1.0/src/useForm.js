@@ -143,7 +143,7 @@ export const useForm = () => {
           return;
         }
         if (typeof beforeFinishRef.current === 'function') {
-          Promise.resolve(processData(formData)).then(res => {
+          Promise.resolve(processData(formData, flatten)).then(res => {
             setState({
               isValidating: true,
               isSubmitting: false,
@@ -153,7 +153,7 @@ export const useForm = () => {
           });
           return;
         }
-        Promise.resolve(processData(formData)).then(res => {
+        Promise.resolve(processData(formData, flatten)).then(res => {
           setState({
             isValidating: false,
             isSubmitting: true,

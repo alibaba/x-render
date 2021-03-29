@@ -1,7 +1,7 @@
 import { removeEmptyItemFromList } from './utils';
 import { unset } from 'lodash';
 // 提交前需要先处理formData的逻辑
-export const processData = data => {
+export const processData = (data, flatten) => {
   let _data = JSON.parse(JSON.stringify(data));
   // 1. bind = false 的处理
   const unbindKeys = Object.keys(flatten)
