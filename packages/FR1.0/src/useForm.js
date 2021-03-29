@@ -82,7 +82,7 @@ export const useForm = () => {
   //   { name: 'a.b.c', errors: ['Please input your Password!', 'something else is wrong'] },
   // ]
 
-  const bindStuff = ({ schema, flatten, beforeFinish, locale }) => {
+  const syncStuff = ({ schema, flatten, beforeFinish, locale }) => {
     schemaRef.current = schema;
     flattenRef.current = flatten;
     beforeFinishRef.current = beforeFinish;
@@ -226,7 +226,7 @@ export const useForm = () => {
     removeValidation,
     isEditing,
     setEditing,
-    bindStuff,
+    syncStuff,
   };
   return form;
 };

@@ -34,7 +34,7 @@ function App({
     isSubmitting,
     endValidating,
     endSubmitting,
-    bindStuff,
+    syncStuff,
     onItemChange,
     formData,
   } = form;
@@ -58,7 +58,7 @@ function App({
 
   useEffect(() => {
     const newFlatten = _flatten || flattenSchema(schema);
-    bindStuff({ schema, flatten: newFlatten, beforeFinish, locale });
+    syncStuff({ schema, flatten: newFlatten, beforeFinish, locale });
     setState({ flatten: newFlatten });
   }, [
     JSON.stringify(_flatten),
