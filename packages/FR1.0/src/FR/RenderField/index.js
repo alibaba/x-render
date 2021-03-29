@@ -175,20 +175,32 @@ const RenderField = ({
     );
   }
 
-  const titleElement = _showTitle && <FieldTitle {...titleProps} />;
+  let titleElement = <FieldTitle {...titleProps} />;
+
+  if (isObjType(_schema)) {
+    titleElement = (
+      <div style={{ display: 'flex' }}>
+        {titleElement}
+        {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
+      </div>
+    );
+  }
 
   if (isObjType(_schema)) {
     return (
       <div className={contentClass} style={contentStyle}>
-        <ExtendedWidget {...widgetProps} title={titleElement} />
-        {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
+        <ExtendedWidget
+          {...widgetProps}
+          message={_hideValidation ? null : errorMessage}
+          title={_showTitle ? titleElement : undefined}
+        />
       </div>
     );
   }
 
   return (
     <>
-      {titleElement}
+      {_showTitle && titleElement}
       <div className={contentClass} style={contentStyle}>
         <ExtendedWidget {...widgetProps} />
         {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
