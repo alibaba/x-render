@@ -669,3 +669,38 @@ export const formatPathFromValidator = err => {
       }
     }, '');
 };
+
+// schema = {
+//   type: 'object',
+//   properties: {
+//     x: {
+//       type: 'object',
+//       properties: {
+//         y: {
+//           type: 'string',
+//           required: true,
+//         },
+//       },
+//     },
+//   },
+// };
+// path = 'x.y'
+// return true
+export const isPathRequired = (path, schema) => {
+  let pathArr = path.split('.');
+  while (pathArr.length > 0) {
+    let [_path, ...rest] = pathArr;
+    _path = _path.split('[')[0];
+    let childSchema;
+    if (isObjType(schema)) {
+      childSchema = schema.properties[_path];
+    } else if (isListType(schema)) {
+      childSchema = schema.items.properties[_path];
+    }
+    pathArr = rest;
+    if (childSchema) {
+      return isPathRequired(rest.join('.'), childSchema);
+    }
+    return !!schema.required; // 是否要这么干 TODO1: 意味着已经处理过了
+  }
+};

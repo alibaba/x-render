@@ -74,6 +74,7 @@
       ]
     },
     "AllString": {
+      "required": true,
       "title": "string类",
       "type": "object",
       "properties": {
@@ -81,6 +82,7 @@
           "title": "对象",
           "description": "这是一个对象类型",
           "type": "object",
+          "required": true,
           "properties": {
             "inputName": {
               "required": true,
@@ -91,22 +93,19 @@
         },
         "input": {
           "title": "简单输入框",
-          "bind": "a.b.c",
           "type": "string",
-          "ui:disabled": "{{rootValue.d === '1'}}",
+          "ui:disabled": "{{rootValue.textarea === '1'}}",
           "ui:options": {
             "placeholder": "haha"
           },
-          "required": "{{rootValue.d === '1'}}"
+          "required": "{{rootValue.textarea === '1'}}"
         },
         "textarea": {
-          "bind": "a.b.d",
           "title": "简单文本编辑框",
           "type": "string",
           "format": "textarea"
         },
         "color": {
-          "bind": "color",
           "title": "颜色选择",
           "type": "string",
           "format": "color"

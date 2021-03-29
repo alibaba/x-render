@@ -90,6 +90,8 @@ function App({
         <div className="fr-container">
           {debug ? (
             <div className="mv2 bg-black-05 pa2 br2">
+              <div>{'formData:' + JSON.stringify(form.formData)}</div>
+              <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
               <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
               <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
               <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>

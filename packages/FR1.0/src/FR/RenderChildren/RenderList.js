@@ -208,9 +208,8 @@ const CardList = ({
         columns={columns}
         dataSource={dataSource}
         rowClassName={(record, idx) => {
-          // console.log(errorFields, `${dataPath}[${idx}]`, 'errorsadf');
           const hasError = errorFields.find(
-            item => item.name.indexOf(`${dataPath}[${idx}]`) > -1
+            item => item.name && item.name.indexOf(`${dataPath}[${idx}]`) > -1
           );
           return hasError ? 'fr-row-error' : '';
         }}

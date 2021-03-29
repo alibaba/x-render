@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { getDataPath, removeEmptyItemFromList } from './utils';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
-import { set, unset, sortedUniqBy } from 'lodash';
+import { get, set, unset, sortedUniqBy } from 'lodash';
 
 export const useForm = () => {
   const [state, setState] = useSet({
@@ -35,6 +35,14 @@ export const useForm = () => {
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
+  const touchKey = key => {
+    if (touchedKeys.indexOf(key) > -1) {
+      return;
+    }
+    const newKeyList = [...touchedKeys, key];
+    setState({ touchedKeys: newKeyList });
+  };
+
   useEffect(() => {
     let isRequired = false;
     if (allTouched) isRequired = true;
@@ -42,6 +50,7 @@ export const useForm = () => {
       formData,
       schema: schemaRef.current,
       isRequired,
+      touchedKeys,
     }).then(res => {
       setState({ errorFields: res });
     });
@@ -151,19 +160,22 @@ export const useForm = () => {
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
-    validateAll({ formData, schema: schemaRef.current }).then(res => {
-      // 如果有错误，停止校验和提交
-      if (res && res.length > 0) {
-        setState({ isValidating: false, isSubmitting: false });
-        return;
-      }
-      Promise.resolve(processData(formData)).then(res => {
-        setState({
-          isValidating: false,
-          submitData: res,
+    validateAll({ formData, schema: schemaRef.current, touchedKeys }).then(
+      res => {
+        // 如果有错误，停止校验和提交
+        if (res && res.length > 0) {
+          console.log('submit:', formData, res);
+          setState({ isValidating: false, isSubmitting: false });
+          return;
+        }
+        Promise.resolve(processData(formData)).then(res => {
+          setState({
+            isValidating: false,
+            submitData: res,
+          });
         });
-      });
-    });
+      }
+    );
   };
 
   const resetFields = () => {
@@ -185,7 +197,9 @@ export const useForm = () => {
     // state
     formData,
     schema,
+    touchedKeys,
     // methods
+    touchKey,
     onItemChange,
     setValue,
     getValues,

@@ -39,6 +39,7 @@ const RenderField = ({
     isEditing,
     setEditing,
     extend,
+    touchKey,
   } = useStore();
 
   const snapShot = useRef();
@@ -119,6 +120,8 @@ const RenderField = ({
 
   // TODO: 优化一下，只有touch还是false的时候，setTouched
   const onChange = value => {
+    // 动过的key，算被touch了
+    touchKey(dataPath);
     // 开始编辑，节流
     setEditing(true);
     debouncedSetEditing(false);
@@ -140,8 +143,7 @@ const RenderField = ({
 
   const _showTitle = !hideTitle && !!_schema.title;
 
-  const _hideValidation =
-    isObjType(_schema) || (hideValidation && !errorMessage);
+  const _hideValidation = hideValidation && !errorMessage;
 
   const widgetProps = {
     schema: _schema,

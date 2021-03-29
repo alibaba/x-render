@@ -1,41 +1,91 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { getDscriptorFromSchema, formatPathFromValidator } from './utils';
+import {
+  getDscriptorFromSchema,
+  formatPathFromValidator,
+  isPathRequired,
+} from './utils';
 import Validator from 'async-validator';
+import { get } from 'lodash';
 
-export const validateAll = ({ formData, schema, isRequired = true }) => {
+export const validateAll = ({
+  formData,
+  schema,
+  isRequired = true,
+  touchedKeys = [],
+}) => {
   const descriptor = getDscriptorFromSchema({
     schema,
     isRequired,
   }).fields;
   // console.log(schema, 'schema', descriptor, 'descriptor', formData, 'formData');
 
+  let touchVerifyList = [];
+
+  // 如果是最后的校验，所有key都touch了，就不用算这个了
+  if (!isRequired) {
+    touchedKeys.forEach(key => {
+      const keyRequired = isPathRequired(key, schema);
+      const val = get(formData, key);
+      if (!val && keyRequired) {
+        touchVerifyList.push({ name: key, error: [`${key}必填`] });
+      }
+    });
+  }
+
   const cn = {
-    // required: '%s 必填',
-    required: '必填',
+    required: '%s 必填',
+    // required: '必填',
   };
+
+  const descriptor2 = {
+    address: {
+      type: 'object',
+      required: true,
+      fields: {
+        street: { type: 'string', required: true },
+        city: { type: 'string', required: true },
+        zip: { type: 'number', required: true, len: 8, message: 'invalid zip' },
+      },
+    },
+    name: { required: true },
+  };
+
+  const formData2 = { address: {} };
 
   const validator = new Validator(descriptor);
   validator.messages(cn);
-  return validator.validate(formData).catch(({ errors, fields }) => {
-    const normalizedErrors = errors.map(err => {
-      const _path = formatPathFromValidator(err.field);
-      return { name: _path, error: [err.message] };
+  console.log(descriptor, formData, 'desc & formData');
+  return validator
+    .validate(formData || {})
+    .then(res => {
+      if (touchVerifyList.length > 0) return touchVerifyList;
+      return [];
+    })
+    .catch(({ errors, fields }) => {
+      // error的name改成正常的path
+      let normalizedErrors = errors.map(err => {
+        const _path = formatPathFromValidator(err.field);
+        return { name: _path, error: [err.message] };
+      });
+      // 添加touched的required
+      normalizedErrors = [...normalizedErrors, touchVerifyList];
+      // 合并同名的error
+      let _errorFields = [];
+      normalizedErrors.forEach(item => {
+        const matchIndex = _errorFields.findIndex(
+          ele => ele.name === item.name
+        );
+        if (matchIndex === -1) {
+          _errorFields.push(item);
+        } else {
+          _errorFields[matchIndex].error = [
+            ..._errorFields[matchIndex].error,
+            ...item.error,
+          ];
+        }
+      });
+      return _errorFields;
     });
-    let _errorFields = [];
-    normalizedErrors.forEach(item => {
-      const matchIndex = _errorFields.findIndex(ele => ele.name === item.name);
-      if (matchIndex === -1) {
-        _errorFields.push(item);
-      } else {
-        _errorFields[matchIndex].error = [
-          ..._errorFields[matchIndex].error,
-          ...item.error,
-        ];
-      }
-    });
-    return _errorFields;
-    // errors for address.street, address.city, address.zip
-  });
 };
 
 // useEffect(() => {
