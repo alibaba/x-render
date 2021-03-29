@@ -54,7 +54,7 @@ export const validateAll = ({
 
   const validator = new Validator(descriptor);
   validator.messages(cn);
-  console.log(descriptor, formData, 'desc & formData');
+  // console.log(descriptor, formData, 'desc & formData');
   return validator
     .validate(formData || {})
     .then(res => {

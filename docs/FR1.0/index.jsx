@@ -25,7 +25,10 @@ const Demo = () => {
   const form = useForm();
 
   const onFinish = ({ formData, errorFields }) => {
-    console.log(formData, 'formData', errorFields, 'errors');
+    console.group('onFinish');
+    console.log('formData:', formData);
+    console.log('errors:', errorFields);
+    console.groupEnd();
     setDisplay([formData, errorFields]);
   };
 

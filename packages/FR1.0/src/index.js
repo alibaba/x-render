@@ -28,10 +28,12 @@ function App({
   const {
     submitData,
     errorFields,
-    isSubmitting,
     isValidating,
+    outsideValidating,
+    isSubmitting,
+    endValidating,
     endSubmitting,
-    bindSchema,
+    bindStuff,
     onItemChange,
     formData,
   } = form;
@@ -54,7 +56,7 @@ function App({
 
   useEffect(() => {
     const newFlatten = _flatten || flattenSchema(schema);
-    bindSchema({ schema, flatten: newFlatten });
+    bindStuff({ schema, flatten: newFlatten, beforeFinish });
     setState({ flatten: newFlatten });
   }, [
     JSON.stringify(_flatten),
@@ -67,26 +69,26 @@ function App({
   }, [JSON.stringify(initialData)]);
 
   useEffect(() => {
-    // 如果validation结束，但是submitting开始
-    if (!isValidating && isSubmitting) {
-      if (beforeFinish && typeof beforeFinish === 'function') {
-        Promise.resolve(beforeFinish({ formData: submitData, errorFields }))
-          .then(_ => {
-            Promise.resolve(onFinish({ formData: submitData, errorFields }));
-          })
-          .then(endSubmitting);
-      } else {
-        Promise.resolve(onFinish({ formData: submitData, errorFields })).then(
-          endSubmitting
-        );
-      }
+    // 需要外部校验的情况，此时 submitting 还是 false
+    if (outsideValidating === true) {
+      Promise.resolve(beforeFinish({ formData: submitData, errorFields })).then(
+        () => {
+          endValidating();
+        }
+      );
+      return;
     }
-  }, [isValidating, isSubmitting]);
+    // 如果validation结束，submitting开始
+    if (isValidating === false && isSubmitting === true) {
+      endSubmitting();
+      onFinish({ formData: submitData, errorFields });
+    }
+  }, [isValidating, isSubmitting, outsideValidating]);
 
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
     <StoreCtx.Provider value={store}>
-      <Ctx.Provider value={{}}>
+      <Ctx.Provider value={''}>
         <div className="fr-container">
           {debug ? (
             <div className="mv2 bg-black-05 pa2 br2">

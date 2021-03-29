@@ -11,6 +11,7 @@ export const useForm = () => {
     submitData: {},
     errorFields: [],
     isValidating: false, // 是否在提交状态
+    outsideValidating: false, // 是否开始外部校验，没有外部校验回传的场景，一直是false
     isSubmitting: false,
     isEditing: false, // 是否在编辑状态。主要用于优化体验，用户编辑时减少不必要的运算
     allTouched: false, // 是否所有表单元素都被碰过了（一键开关，用于提交的时候，默认所有都被touch了）
@@ -19,6 +20,7 @@ export const useForm = () => {
 
   const schemaRef = useRef();
   const flattenRef = useRef();
+  const beforeFinishRef = useRef();
 
   const schema = schemaRef.current || {};
   const flatten = flattenRef.current || {};
@@ -28,6 +30,7 @@ export const useForm = () => {
     submitData,
     errorFields = [],
     isValidating,
+    outsideValidating,
     isSubmitting,
     isEditing,
     allTouched,
@@ -75,9 +78,10 @@ export const useForm = () => {
   //   { name: 'a.b.c', errors: ['Please input your Password!', 'something else is wrong'] },
   // ]
 
-  const bindSchema = ({ schema, flatten }) => {
+  const bindStuff = ({ schema, flatten, beforeFinish }) => {
     schemaRef.current = schema;
     flattenRef.current = flatten;
+    beforeFinishRef.current = beforeFinish;
   };
 
   // TODO: 外部校验的error要和本地的合并么？
@@ -155,27 +159,42 @@ export const useForm = () => {
   };
 
   const submit = () => {
-    setState({ isValidating: true, allTouched: true, isSubmitting: true });
+    setState({ isValidating: true, allTouched: true, isSubmitting: false });
     //  https://formik.org/docs/guides/form-submission
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
-    validateAll({ formData, schema: schemaRef.current, touchedKeys }).then(
-      res => {
+    validateAll({ formData, schema: schemaRef.current, touchedKeys })
+      .then(errors => {
         // 如果有错误，停止校验和提交
-        if (res && res.length > 0) {
-          console.log('submit:', formData, res);
+        if (errors && errors.length > 0) {
+          console.log('submit:', formData, errors);
           setState({ isValidating: false, isSubmitting: false });
+          return;
+        }
+        if (typeof beforeFinishRef.current === 'function') {
+          Promise.resolve(processData(formData)).then(res => {
+            setState({
+              isValidating: true,
+              isSubmitting: false,
+              outsideValidating: true,
+              submitData: res,
+            });
+          });
           return;
         }
         Promise.resolve(processData(formData)).then(res => {
           setState({
             isValidating: false,
+            isSubmitting: true,
             submitData: res,
           });
         });
-      }
-    );
+      })
+      .catch(err => {
+        // 不应该走到这边的
+        console.log('submit error:', err);
+      });
   };
 
   const resetFields = () => {
@@ -190,8 +209,19 @@ export const useForm = () => {
     onItemChange(path, value);
   };
 
+  const endValidating = () =>
+    setState({
+      isValidating: false,
+      outsideValidating: false,
+      isSubmitting: true,
+    });
+
   const endSubmitting = () =>
-    setState({ isSubmitting: false, isValidating: false });
+    setState({
+      isSubmitting: false,
+      isValidating: false,
+      outsideValidating: false,
+    });
 
   const form = {
     // state
@@ -207,14 +237,16 @@ export const useForm = () => {
     submit,
     submitData,
     errorFields,
-    isSubmitting,
     isValidating,
+    outsideValidating,
+    isSubmitting,
+    endValidating,
     endSubmitting,
     setErrorFields,
     removeValidation,
     isEditing,
     setEditing,
-    bindSchema,
+    bindStuff,
   };
   return form;
 };
