@@ -7,6 +7,8 @@ import {
 import Validator from 'async-validator';
 import { get } from 'lodash';
 
+// export const validateAll = () => Promise.resolve([]);
+
 export const validateAll = ({
   formData,
   schema,

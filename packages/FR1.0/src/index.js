@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { flattenSchema } from './utils';
 import FR from './FR';
 import { Ctx, StoreCtx, useSet } from './hooks';
@@ -44,8 +44,9 @@ function App({
 
   const { flatten } = state;
 
-  // window.blog(flatten, form.formData);
-  const store = {
+  const storeRef = useRef({});
+
+  storeRef.current = {
     flatten,
     ...form,
     widgets: { ...defaultWidgets, ...widgets },
@@ -87,7 +88,7 @@ function App({
 
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
-    <StoreCtx.Provider value={store}>
+    <StoreCtx.Provider value={storeRef.current}>
       <Ctx.Provider value={''}>
         <div className="fr-container">
           {debug ? (

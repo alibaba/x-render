@@ -10,7 +10,7 @@
       "ui:disabled": "{{formData.percentage == 10}}"
     },
     "list": {
-      "required": true,
+      "required": false,
       "title": "对象数组",
       "description": "对象数组嵌套功能",
       "type": "array",
@@ -94,11 +94,10 @@
         "input": {
           "title": "简单输入框",
           "type": "string",
-          "ui:disabled": "{{rootValue.textarea === '1'}}",
           "ui:options": {
             "placeholder": "haha"
           },
-          "required": "{{rootValue.textarea === '1'}}"
+          "required": false
         },
         "textarea": {
           "title": "简单文本编辑框",
