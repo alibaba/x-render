@@ -74,7 +74,6 @@
       ]
     },
     "AllString": {
-      "required": true,
       "title": "string类",
       "type": "object",
       "properties": {
@@ -82,7 +81,6 @@
           "title": "对象",
           "description": "这是一个对象类型",
           "type": "object",
-          "required": true,
           "properties": {
             "inputName": {
               "required": true,

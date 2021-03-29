@@ -29,7 +29,9 @@ const Demo = () => {
   const form = useForm();
 
   const onFinish = ({ formData, errorFields }) => {
+    console.group('onFinish');
     console.log(formData, 'formData', errorFields, 'errors');
+    console.groupEnd();
     alert('formData:' + JSON.stringify(formData, null, 2));
   };
 
