@@ -30,3 +30,15 @@ export const processData = (data, flatten) => {
 
   return _data;
 };
+
+// const isMultiPaths =
+//   Array.isArray(schema.bind) &&
+//   schema.bind.every(item => typeof item === 'string');
+// if (schema && schema.bind) {
+//   if (typeof schema.bind === 'string') {
+//     dataPath = getDataPath(schema.bind, dataIndex);
+//   }
+// else if (isMultiPaths) {
+//   dataPath = schema.bind.map(b => getDataPath(b, dataIndex));
+// }
+// }

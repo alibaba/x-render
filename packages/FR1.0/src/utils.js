@@ -597,7 +597,7 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
     }
     result.fields = {};
     Object.keys(schema.properties).forEach(key => {
-      const item = schema.properties[key]; // bind 的逻辑写这里 TODO:
+      const item = schema.properties[key];
       result.fields[key] = getDscriptorFromSchema({ schema: item, isRequired });
     });
   } else if (isListType(schema)) {

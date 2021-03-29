@@ -44,20 +44,7 @@ const RenderField = ({
 
   const snapShot = useRef();
 
-  // 计算数据的真实路径，bind字段会影响
   let dataPath = getDataPath($id, dataIndex);
-  // TODO: bind 允许bind数组，如果是bind数组，需要更多的处理。暂时只支持bind单个
-  // const isMultiPaths =
-  //   Array.isArray(schema.bind) &&
-  //   schema.bind.every(item => typeof item === 'string');
-  if (schema && schema.bind) {
-    if (typeof schema.bind === 'string') {
-      dataPath = getDataPath(schema.bind, dataIndex);
-    }
-    // else if (isMultiPaths) {
-    //   dataPath = schema.bind.map(b => getDataPath(b, dataIndex));
-    // }
-  }
 
   // 解析schema
 
