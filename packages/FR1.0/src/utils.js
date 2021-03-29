@@ -718,3 +718,31 @@ export const generateDataSkeleton = schema => {
   }
   return result;
 };
+
+export const translateMessage = (msg, schema) => {
+  if (typeof msg !== 'string') {
+    return '';
+  }
+  if (!schema) return msg;
+  msg = msg.replace('${title}', schema.title);
+  msg = msg.replace('${type}', schema.type);
+  if (schema.rules) {
+    const minRule = schema.rules.find(r => r.min !== undefined);
+    if (minRule) {
+      msg = msg.replace('${min}', minRule.min);
+    }
+    const maxRule = schema.rules.find(r => r.max !== undefined);
+    if (maxRule) {
+      msg = msg.replace('${max}', maxRule.max);
+    }
+    const lenRule = schema.rules.find(r => r.len !== undefined);
+    if (lenRule) {
+      msg = msg.replace('${len}', lenRule.len);
+    }
+    const patternRule = schema.rules.find(r => r.pattern !== undefined);
+    if (patternRule) {
+      msg = msg.replace('${pattern}', patternRule.pattern);
+    }
+  }
+  return msg;
+};

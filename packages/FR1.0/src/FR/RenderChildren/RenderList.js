@@ -135,7 +135,9 @@ const CardList = ({
         return (
           <div>
             <div>{getDisplayValue(value, schema)}</div>
-            {errorObj.error && <ErrorMessage message={errorObj.error} />}
+            {errorObj.error && (
+              <ErrorMessage message={errorObj.error} schema={schema} />
+            )}
           </div>
         );
       },
@@ -208,8 +210,9 @@ const CardList = ({
         columns={columns}
         dataSource={dataSource}
         rowClassName={(record, idx) => {
+          // console.log(errorFields, `${dataPath}[${idx}]`, 'errorsadf');
           const hasError = errorFields.find(
-            item => item.name && item.name.indexOf(`${dataPath}[${idx}]`) > -1
+            item => item.name.indexOf(`${dataPath}[${idx}]`) > -1
           );
           return hasError ? 'fr-row-error' : '';
         }}

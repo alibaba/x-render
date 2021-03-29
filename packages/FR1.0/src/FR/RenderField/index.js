@@ -87,29 +87,7 @@ const RenderField = ({
   }
 
   const errObj = errorFields.find(err => err.name === dataPath);
-  const errList = errObj && errObj.error;
-  let errorMessage = Array.isArray(errList) ? errList[0] : '';
-  // 情况再多，可以批量一下
-  errorMessage = errorMessage.replace('${title}', _schema.title);
-  errorMessage = errorMessage.replace('${type}', _schema.type);
-  if (_schema.rules) {
-    const minRule = _schema.rules.find(r => r.min !== undefined);
-    if (minRule) {
-      errorMessage = errorMessage.replace('${min}', minRule.min);
-    }
-    const maxRule = _schema.rules.find(r => r.max !== undefined);
-    if (maxRule) {
-      errorMessage = errorMessage.replace('${max}', maxRule.max);
-    }
-    const lenRule = _schema.rules.find(r => r.len !== undefined);
-    if (lenRule) {
-      errorMessage = errorMessage.replace('${len}', lenRule.len);
-    }
-    const patternRule = _schema.rules.find(r => r.pattern !== undefined);
-    if (patternRule) {
-      errorMessage = errorMessage.replace('${pattern}', patternRule.pattern);
-    }
-  }
+  const errorMessage = errObj && errObj.error; // 是一个list
 
   // dataPath 有3种情况："#"、"a.b.c"、["a.b.c", "e.d.f"]
   const getValue = () => {
@@ -190,7 +168,9 @@ const RenderField = ({
         {_showTitle && <div {...placeholderTitleProps} />}
         <div className={contentClass} style={contentStyle}>
           <ExtendedWidget {...widgetProps} />
-          {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
+          {_hideValidation ? null : (
+            <ErrorMessage message={errorMessage} schema={_schema} />
+          )}
         </div>
       </>
     );
@@ -202,7 +182,9 @@ const RenderField = ({
     titleElement = (
       <div style={{ display: 'flex' }}>
         {titleElement}
-        {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
+        {_hideValidation ? null : (
+          <ErrorMessage message={errorMessage} schema={_schema} />
+        )}
       </div>
     );
   }
@@ -224,7 +206,9 @@ const RenderField = ({
       {_showTitle && titleElement}
       <div className={contentClass} style={contentStyle}>
         <ExtendedWidget {...widgetProps} />
-        {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
+        {_hideValidation ? null : (
+          <ErrorMessage message={errorMessage} schema={_schema} />
+        )}
       </div>
     </>
   );
