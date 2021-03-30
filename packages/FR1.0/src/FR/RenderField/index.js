@@ -40,6 +40,7 @@ const RenderField = ({
     setEditing,
     extend,
     touchKey,
+    debounceInput,
   } = useStore();
 
   const snapShot = useRef();
@@ -76,16 +77,7 @@ const RenderField = ({
   const errObj = errorFields.find(err => err.name === dataPath);
   const errorMessage = errObj && errObj.error; // 是一个list
 
-  // dataPath 有3种情况："#"、"a.b.c"、["a.b.c", "e.d.f"]
-  const getValue = () => {
-    // if (isMultiPaths) {
-    //   return dataPath.map(path => getValueByPath(formData, path));
-    // }
-    return getValueByPath(formData, dataPath);
-  };
-
-  // 从全局 formData 获取 value
-  const _value = getValue(dataPath, formData);
+  const _value = getValueByPath(formData, dataPath);
 
   // check: 由于是专门针对checkbox的，目前只好写这里
   let _labelStyle = labelStyle;
@@ -109,8 +101,10 @@ const RenderField = ({
     // 动过的key，算被touch了
     touchKey(dataPath);
     // 开始编辑，节流
-    setEditing(true);
-    debouncedSetEditing(false);
+    if (debounceInput) {
+      setEditing(true);
+      debouncedSetEditing(false);
+    }
     if (typeof dataPath === 'string') {
       onItemChange(dataPath, value);
     }

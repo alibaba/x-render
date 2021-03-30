@@ -24,21 +24,20 @@ export const processData = (data, flatten) => {
       }
     });
   };
+  // 2. 其他 bind
+  // const isMultiPaths =
+  //   Array.isArray(schema.bind) &&
+  //   schema.bind.every(item => typeof item === 'string');
+  // if (schema && schema.bind) {
+  //   if (typeof schema.bind === 'string') {
+  //     dataPath = getDataPath(schema.bind, dataIndex);
+  //   } else if (isMultiPaths) {
+  //     dataPath = schema.bind.map(b => getDataPath(b, dataIndex));
+  //   }
+  // }
   removeUnbindData(_data);
-  // 2. 去掉list里面所有的空值
+  // 3. 去掉list里面所有的空值
   _data = removeEmptyItemFromList(_data);
 
   return _data;
 };
-
-// const isMultiPaths =
-//   Array.isArray(schema.bind) &&
-//   schema.bind.every(item => typeof item === 'string');
-// if (schema && schema.bind) {
-//   if (typeof schema.bind === 'string') {
-//     dataPath = getDataPath(schema.bind, dataIndex);
-//   }
-// else if (isMultiPaths) {
-//   dataPath = schema.bind.map(b => getDataPath(b, dataIndex));
-// }
-// }

@@ -18,12 +18,12 @@ function App({
   form,
   beforeFinish,
   onFinish,
-  displayType,
+  displayType = 'column',
   schema,
-  initialData,
   flatten: _flatten,
   debug,
   locale = 'cn', // 'cn'/'en'
+  debounceInput = false,
   ...rest
 }) {
   const {
@@ -35,7 +35,6 @@ function App({
     endValidating,
     endSubmitting,
     syncStuff,
-    onItemChange,
     formData,
   } = form;
 
@@ -52,7 +51,8 @@ function App({
     ...form,
     widgets: { ...defaultWidgets, ...widgets },
     mapping: { ...defaultMapping, ...mapping },
-    displayType: displayType || 'column',
+    displayType,
+    debounceInput,
     ...rest,
   };
 
@@ -65,10 +65,6 @@ function App({
     JSON.stringify(schema),
     JSON.stringify(formData),
   ]);
-
-  useEffect(() => {
-    onItemChange('#', initialData);
-  }, [JSON.stringify(initialData)]);
 
   useEffect(() => {
     // 需要外部校验的情况，此时 submitting 还是 false
