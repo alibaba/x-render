@@ -2,8 +2,17 @@ import { removeEmptyItemFromList, getDataPath } from './utils';
 import { unset, get, set } from 'lodash';
 // 提交前需要先处理formData的逻辑
 export const processData = (data, flatten) => {
-  let _data = JSON.parse(JSON.stringify(data));
   // 1. bind = false 的处理
+  let _data = transformDataWithBind(data, flatten);
+
+  // 2. 去掉list里面所有的空值
+  _data = removeEmptyItemFromList(_data);
+
+  return _data;
+};
+
+export const transformDataWithBind = (data, flatten) => {
+  let _data = JSON.parse(JSON.stringify(data));
   const unbindKeys = [];
   const bindKeys = [];
   const bindArrKeys = [];
@@ -22,7 +31,6 @@ export const processData = (data, flatten) => {
       bindArrKeys.push({ key, bind });
     }
   });
-  console.log(unbindKeys, bindKeys, bindArrKeys);
 
   const handleBindData = formData => {
     unbindKeys.forEach(key => {
@@ -57,20 +65,7 @@ export const processData = (data, flatten) => {
       } else {
       }
     });
-    // return formData
   };
-  // 2. 其他 bind
-
-  // if (schema && schema.bind) {
-  //   if (typeof schema.bind === 'string') {
-  //     dataPath = getDataPath(schema.bind, dataIndex);
-  //   } else if (isMultiPaths) {
-  //     dataPath = schema.bind.map(b => getDataPath(b, dataIndex));
-  //   }
-  // }
   handleBindData(_data);
-  // 3. 去掉list里面所有的空值
-  _data = removeEmptyItemFromList(_data);
-
   return _data;
 };

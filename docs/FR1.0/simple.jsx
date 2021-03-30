@@ -67,6 +67,13 @@ const Demo = () => {
 
   return (
     <div>
+      <button
+        onClick={() => {
+          console.log(form.getValues());
+        }}
+      >
+        取值
+      </button>
       <button onClick={form.submit}>提交</button>
       <FormRender
         form={form}

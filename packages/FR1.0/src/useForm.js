@@ -4,7 +4,7 @@ import { getDataPath } from './utils';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash';
-import { processData } from './processData';
+import { processData, transformDataWithBind } from './processData';
 
 export const useForm = props => {
   const {
@@ -150,7 +150,7 @@ export const useForm = props => {
   };
   // TODO: 提取出来，重新写一份，注意要处理async
 
-  const getValues = () => formData;
+  const getValues = () => transformDataWithBind(formData, flattenRef.current);
 
   const submit = () => {
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
