@@ -14,12 +14,12 @@ export interface IMetaItem {
   /**
    * 是否是维度，true-维度，false-指标
    */
-  isDim: boolean;
+  isDim?: boolean;
 
   /**
-   * 是否是百分数
+   * 是否是百分数，如果是，数据展示时会自动处理：0.5 => 50%
    */
-  isRate: boolean;
+  isRate?: boolean;
 };
 
 export interface IDataItem {
