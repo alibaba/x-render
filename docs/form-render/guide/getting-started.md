@@ -1,10 +1,9 @@
 ---
-order: 1
+order: 2
 title: 开始使用
-nav:
+group:
   order: 1
   title: 教程
-toc: menu
 ---
 
 <a href="/form-render/">
@@ -137,8 +136,8 @@ export default Demo;
 
 | Prop             |        Type         | Required | Default  |                                                                             Description                                                                             |
 | ---------------- | :-----------------: | :------: | :------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-| **schema**       |      `Object`       |    ✓     |    {}    |                                                                 详见 [schema 配置](/config/schema)                                                                  |
-| **uiSchema**     |      `Object`       |          |    {}    |                                               详见 [uiSchema 配置](/config/ui-schema)（**一般建议合并到 `schema`**）                                                |
+| **schema**       |      `Object`       |    ✓     |    {}    |                                                           详见 [schema 配置](/form-render/config/schema)                                                            |
+| **uiSchema**     |      `Object`       |          |    {}    |                                         详见 [uiSchema 配置](/form-render/config/ui-schema)（**一般建议合并到 `schema`**）                                          |
 | **formData**     |      `Object`       |          |    {}    |                                                                            配置表单数据                                                                             |
 | **onChange**     |     `Function`      |    ✓     | () => {} |                                                                          数据更改回调函数                                                                           |
 | **onValidate**   |     `Function`      |          | () => {} |                                                                          表单输入校验回调                                                                           |
@@ -164,7 +163,7 @@ export default Demo;
 | **name**      |  `String`  | very rare |  \$form   |                                表单的名称                                |
 | **onMount**   | `Function` | very rare | undefined |                    onMount 在 formData 首次计算后触发                    |
 
-[详见“不常用 props”](/config/props2)
+[详见“不常用 props”](/form-render/config/props)
 
 ## 更多使用
 

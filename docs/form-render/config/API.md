@@ -1,12 +1,11 @@
 ---
 order: 5
-nav:
+group:
   order: 2
   title: 配置项
-toc: menu
 ---
 
-# 常用内部方法
+# 内部方法
 
 首先，同 React 官网的建议一样，我们并不提倡频繁使用内部方法，form-render 是可控组件，`formData`和`schema`都是暴露在用户组件的 state 中的，大部分场景使用`setState`就能解决问题。
 

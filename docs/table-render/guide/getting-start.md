@@ -1,7 +1,6 @@
 ---
-order: 2
+order: 1
 title: 快速上手
-toc: menu
 ---
 
 ## 安装

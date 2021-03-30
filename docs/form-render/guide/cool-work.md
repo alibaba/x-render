@@ -1,10 +1,9 @@
 ---
 title: 高级用法 Demo
-order: 2
-nav:
+order: 3
+group:
   order: 1
   title: 教程
-toc: menu
 ---
 
 # 一些酷酷的用法

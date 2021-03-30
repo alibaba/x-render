@@ -1,8 +1,8 @@
 ---
 order: 1
-nav:
-  order: 2
+group:
   title: 配置项
+  order: 2
 toc: menu
 ---
 
@@ -70,7 +70,7 @@ toc: menu
 
 ### pattern
 
-自定义正则校验，用于校验 string 或 number 数据是否合格，详细使用可见 [pattern 自定义正则校验](/config/pattern)
+自定义正则校验，用于校验 string 或 number 数据是否合格，详细使用可见 [pattern 自定义正则校验](/form-render/config/pattern)
 
 ### message
 

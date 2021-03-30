@@ -19,10 +19,10 @@ export default defineConfig({
     {
       title: 'form-render',
       path: '/form-render',
-      children: [
-        { title: '教程', path: '/form-render/guide' },
-        { title: '配置', path: '/form-render/config' },
-      ],
+      // children: [
+      //   { title: '教程', path: '/form-render/guide' },
+      //   { title: '配置', path: '/form-render/config' },
+      // ],
     },
     { title: 'Playground', path: '/playground' },
     { title: '自定义组件', path: '/widgets' },

@@ -1,6 +1,8 @@
 ---
 order: 1
-toc: menu
+group:
+  title: 教程
+  order: 1
 ---
 
 # 设计理念
@@ -177,7 +179,7 @@ export default Demo2;
 1. `JSON schema` 是 form-render 的 schema 的一个子集，可以无缝接入
 2. 有别于 JSON schema 的扩展的字段，都用 `ui:` 开头
 3. 所有表单元素都有的 ui 属性各给一个独立字段，例如`ui:disabled`、`ui:hidden`
-4. 只有某些表单元素用的到的 ui 属性统一存放在 `ui:options`，详见[uiSchema 配置](/config/ui-schema)
+4. 只有某些表单元素用的到的 ui 属性统一存放在 `ui:options`，详见[uiSchema 配置](/form-render/config/ui-schema)
 
 随着[form-render 表单设计器](https://form-render.github.io/schema-generator/)的接入，协议层对于用户已经可看做实现细节，通过表单设计器，大伙可以轻松搭建表单，生成对应 schema
 

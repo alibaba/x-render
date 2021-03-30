@@ -1,5 +1,5 @@
 ---
-order: 2
+order: 1
 group:
   title: 高级功能
 ---
