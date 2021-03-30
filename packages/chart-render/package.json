@@ -1,6 +1,6 @@
 {
   "name": "chart-render",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "scripts": {
     "build": "father-build",
     "prepare": "npm run build",
