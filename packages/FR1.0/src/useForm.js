@@ -4,7 +4,11 @@ import { getDataPath } from './utils';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash';
-import { processData } from './processData';
+import {
+  processData,
+  transformDataWithBind,
+  transformDataWithBind2,
+} from './processData';
 
 export const useForm = props => {
   const {
@@ -150,7 +154,12 @@ export const useForm = props => {
   };
   // TODO: 提取出来，重新写一份，注意要处理async
 
-  const getValues = () => formData;
+  const getValues = () => transformDataWithBind(formData, flattenRef.current);
+
+  const setValues = newFormData => {
+    const newData = transformDataWithBind2(newFormData, flattenRef.current);
+    _setData(newData);
+  };
 
   const submit = () => {
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
@@ -231,7 +240,8 @@ export const useForm = props => {
     // methods
     touchKey,
     onItemChange,
-    setValue,
+    setValue, // 单个
+    setValues,
     getValues,
     resetFields,
     submit,
