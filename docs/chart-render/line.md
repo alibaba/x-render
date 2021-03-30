@@ -90,3 +90,32 @@ export default () => (
   />
 );
 ```
+
+### 面积图
+
+- 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
+
+```jsx
+import React from 'react';
+import { Line } from 'chart-render';
+
+export default () => (
+  <Line
+    withArea
+    meta={[
+      { id: "ds", name: "日期", "isDim": true },
+      { id: "pv", name: "访问量" },
+      { id: "uv", name: "访客数" }
+    ]}
+    data={[
+      { ds: "2020-12-31", pv: 50, uv: 20 },
+      { ds: "2021-01-01", pv: 76, uv: 21 },
+      { ds: "2021-01-02", pv: 46, uv: 15 },
+      { ds: "2021-01-03", pv: 89, uv: 40 },
+      { ds: "2021-01-04", pv: 66, uv: 31 },
+      { ds: "2021-01-05", pv: 46, uv: 32 },
+      { ds: "2021-01-06", pv: 45, uv: 30 },
+    ]}
+  />
+);
+```

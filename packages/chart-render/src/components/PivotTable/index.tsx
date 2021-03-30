@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CrossTable,
   buildDrillTree,
@@ -7,27 +7,27 @@ import {
 } from 'ali-react-table/pivot';
 import { createAggregateFunction } from 'dvt-aggregation';
 import { ICommonProps, IDataItem } from '../../utils/types';
-import { splitMeta } from '../../utils';
+import { splitMeta, strip } from '../../utils';
 import './index.less';
 
 export interface ICRPivotTableProps extends ICommonProps {
   /**
-   * 展示「总计/小计」
+   * 展示「总计/小计」，默认 `true`
    */
   showSubtotal?: boolean;
 
   /**
-   * 「总计/小计」的文案
+   * 「总计/小计」的文案，默认 `['总计', '小计']`
    */
   subtotalText?: [string, string];
 
   /**
-   * 指标的展示位置
+   * 指标的展示位置，默认 `'top'`
    */
   indicatorSide?: 'left' | 'top';
 
   /**
-   * 表格尺寸
+   * 表格尺寸，默认 `'middle'`
    */
   size?: 'small' | 'middle' | 'large';
 
@@ -35,6 +35,21 @@ export interface ICRPivotTableProps extends ICommonProps {
    * 左侧维度放多少个，超出的维度会放到表格顶部
    */
   leftDimensionLength?: number;
+
+  /**
+   * 左侧允许展开/收起，默认 `false`
+   */
+  leftExpandable?: boolean;
+
+  /**
+   * 左侧允许展开/收起，默认 `false`
+   */
+  topExpandable?: boolean;
+
+  /**
+   * 默认展开所有可展开项，默认 `true`
+   */
+  defaultExpandAll?: boolean;
 
   /**
    * 单元格渲染
@@ -56,9 +71,15 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
   size = 'middle',
   indicatorSide = 'top',
   leftDimensionLength = meta.length,
+  leftExpandable = false,
+  topExpandable = false,
+  defaultExpandAll = true,
   cellRender,
   ...props
 }) => {
+  const [topExpandKeys, setTopExpandKeys] = useState<string[]>([]);
+  const [leftExpandKeys, setLeftExpandKeys] = useState<string[]>([]);
+
   const { metaDim, metaInd } = splitMeta(meta);
 
   const indicators = metaInd.map(({ id, name, isRate }) => ({
@@ -69,15 +90,18 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
   }));
 
   // 左维树
-  const leftCodes = metaDim
-    .filter((_, index) => index < leftDimensionLength)
-    .map(({ id }) => id);
+  const leftMetaDim = metaDim.filter((_, index) => index < leftDimensionLength);
+  const leftCodes = leftMetaDim.map(({ id }) => id);
   const leftDrillTree = buildDrillTree(data, leftCodes, {
     includeTopWrapper: true,
+    isExpand: leftExpandable ? key => leftExpandKeys.includes(key) : undefined,
   });
   const [leftTreeRoot] = convertDrillTreeToCrossTree(leftDrillTree, {
     // @ts-expect-error => 可以传入 align 字段
     indicators: indicatorSide === 'left' ? indicators : undefined,
+    supportsExpand: leftExpandable,
+    expandKeys: leftExpandKeys,
+    onChangeExpandKeys: setLeftExpandKeys,
     generateSubtotalNode: showSubtotal
       ? drillNode => ({
           position: 'start',
@@ -90,15 +114,18 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
   });
 
   // 顶维树
-  const topCodes = metaDim
-    .filter((_, index) => index >= leftDimensionLength)
-    .map(({ id }) => id);
+  const topMetaDim = metaDim.filter((_, index) => index >= leftDimensionLength);
+  const topCodes = topMetaDim.map(({ id }) => id);
   const topDrillTree = buildDrillTree(data, topCodes, {
     includeTopWrapper: true,
+    isExpand: topExpandable ? key => topExpandKeys.includes(key) : undefined,
   });
   const [topTreeRoot] = convertDrillTreeToCrossTree(topDrillTree, {
     // @ts-expect-error => 可以传入 align 字段
     indicators: indicatorSide === 'top' ? indicators : undefined,
+    supportsExpand: topExpandable,
+    expandKeys: topExpandKeys,
+    onChangeExpandKeys: setTopExpandKeys,
     generateSubtotalNode: showSubtotal
       ? drillNode => ({
           position: 'start',
@@ -117,6 +144,7 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
     topCodes,
     aggregate: createAggregateFunction(indicators),
   });
+  console.log(leftExpandKeys, topExpandKeys, leftTreeRoot, topTreeRoot);
 
   return (
     <div
@@ -130,31 +158,33 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
           .map(({ id, name }) => ({ code: id, name }))}
         // @ts-expect-error
         leftTree={leftTreeRoot.children}
-        leftTotalNode={leftTreeRoot} // 当 leftTree 为空时，leftTotalNode 用于渲染总计行
+        leftTotalNode={leftTreeRoot}
         // @ts-expect-error
         topTree={topTreeRoot.children}
-        topTotalNode={topTreeRoot} // 当 topTree 为空时，topTotalNode 用于渲染总计列
+        topTotalNode={topTreeRoot}
         getValue={(leftNode, topNode) => {
-          // 注意这里我们使用 node.data.dataKey 来获取单元格在 matrix 中的 record
           const record = matrix
             .get(leftNode.data.dataKey)
             ?.get(topNode.data.dataKey);
           return record?.[topNode.code as string];
         }}
         render={(value, leftNode, topNode) => {
-          const { dataPath: leftDataPath = [] } = leftNode.data;
-          const { dataPath: topDataPath = [] } = topNode.data;
-          const dimRecord: IDataItem = {};
-          ([...leftDataPath, ...topDataPath] as string[]).forEach(
-            (dimValue, index) => {
-              dimRecord[metaDim[index]?.id] = dimValue;
-            },
-          );
+          // 自定义渲染
           if (cellRender) {
+            const { dataPath: leftDataPath = [] } = leftNode.data;
+            const { dataPath: topDataPath = [] } = topNode.data;
+            const dimRecord: IDataItem = {};
+            (leftDataPath as string[]).forEach((dimValue, index) => {
+              dimRecord[leftMetaDim[index]?.id] = dimValue;
+            });
+            (topDataPath as string[]).forEach((dimValue, index) => {
+              dimRecord[topMetaDim[index]?.id] = dimValue;
+            });
             return cellRender(value, dimRecord, topNode.code as string);
           }
+          // 正常渲染
           if (metaInd.find(({ id }) => id === topNode.code)?.isRate) {
-            return `${(value * 100).toFixed(2)}%`;
+            return `${strip((value * 100)).toFixed(2)}%`;
           } else {
             return value;
           }

@@ -103,6 +103,8 @@ const CRColumn: React.FC<ICRColumnProps> = ({
 }) => {
   if (inverted) {
     const { xField, yField, ...otherConfig } = generateConfig(meta, data);
+
+    // 条形图 x、y 互换
     return (
       <Bar
         xField={yField}

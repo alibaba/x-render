@@ -1,16 +1,19 @@
 import React from 'react';
-import { ICommonProps } from '../../utils/types';
-import { Line } from '@ant-design/charts';
-import { splitMeta } from '../../utils';
+import { Area, Line } from '@ant-design/charts';
+import { AreaConfig } from '@ant-design/charts/es/Area';
 import { LineConfig } from '@ant-design/charts/es/line';
+import { ICommonProps } from '../../utils/types';
+import { splitMeta } from '../../utils';
 import ErrorTemplate from '../ErrorTemplate';
 
-export interface ICRLineProps
-  extends ICommonProps,
-    Omit<
-      LineConfig,
-      keyof ICommonProps | 'yField' | 'xField' | 'seriesField'
-    > {};
+export interface ICRLineProps extends ICommonProps, Omit<LineConfig | AreaConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
+  /**
+   * 以面积图展示，默认 `false`
+   * - 注意面积图默认堆叠展示，如不需要可以传入 `isStack={true}` 覆盖
+   * - 开启面积图后方可使用 `areaStyle` `startOnZero` `isPercent` 属性
+   */
+  withArea: boolean;
+};
 
 export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['data']): LineConfig {
   const { metaDim, metaInd } = splitMeta(meta);
@@ -66,16 +69,29 @@ const CRLine: React.FC<ICRLineProps> = ({
   style,
   meta = [],
   data = [],
+  withArea,
   ...props
 }) => {
-  return (
-    <Line
-      {...generateConfig(meta, data)}
-      renderer="svg"
-      errorTemplate={() => <ErrorTemplate />}
-      {...props}
-    />
-  );
+  console.log('withArea >>> ', withArea);
+  if (withArea) {
+    return (
+      <Area
+        {...generateConfig(meta, data)}
+        renderer="svg"
+        errorTemplate={() => <ErrorTemplate />}
+        {...props}
+      />
+    );
+  } else {
+    return (
+      <Line
+        {...generateConfig(meta, data)}
+        renderer="svg"
+        errorTemplate={() => <ErrorTemplate />}
+        {...props}
+      />
+    );
+  }
 };
 
 export default CRLine;

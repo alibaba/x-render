@@ -17,3 +17,10 @@ export function splitMeta(meta: IMetaItem[]) {
   });
   return { metaDim, metaInd };
 }
+
+/**
+ * 解决浮点数丢失精度的问题，来源：https://github.com/camsong/blog/issues/9
+ */
+export function strip(num: number, precision = 12) {
+  return +parseFloat(num?.toPrecision(precision));
+}
