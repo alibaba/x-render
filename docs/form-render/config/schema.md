@@ -2,7 +2,7 @@
 order: 1
 group:
   title: 配置项
-  order: 2
+  order: 3
 toc: menu
 ---
 

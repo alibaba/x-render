@@ -1,7 +1,7 @@
 ---
 order: 5
 group:
-  order: 2
+  order: 3
   title: 配置项
 ---
 

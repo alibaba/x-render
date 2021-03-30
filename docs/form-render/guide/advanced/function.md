@@ -1,6 +1,7 @@
 ---
 order: 1
 group:
+  order: 2
   title: 高级功能
 ---
 

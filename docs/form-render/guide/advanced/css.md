@@ -1,8 +1,8 @@
 ---
 order: 3
 group:
+  order: 2
   title: 高级功能
-toc: false
 ---
 
 # 样式覆盖

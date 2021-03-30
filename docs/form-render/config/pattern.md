@@ -1,9 +1,8 @@
 ---
 order: 6
 group:
-  order: 2
+  order: 3
   title: 配置项
-toc: menu
 ---
 
 # pattern 自定义正则校验
