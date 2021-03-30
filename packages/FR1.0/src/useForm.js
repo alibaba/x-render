@@ -4,7 +4,11 @@ import { getDataPath } from './utils';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash';
-import { processData, transformDataWithBind } from './processData';
+import {
+  processData,
+  transformDataWithBind,
+  transformDataWithBind2,
+} from './processData';
 
 export const useForm = props => {
   const {
@@ -152,6 +156,11 @@ export const useForm = props => {
 
   const getValues = () => transformDataWithBind(formData, flattenRef.current);
 
+  const setValues = newFormData => {
+    const newData = transformDataWithBind2(newFormData, flattenRef.current);
+    _setData(newData);
+  };
+
   const submit = () => {
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
     //  https://formik.org/docs/guides/form-submission
@@ -231,7 +240,8 @@ export const useForm = props => {
     // methods
     touchKey,
     onItemChange,
-    setValue,
+    setValue, // 单个
+    setValues,
     getValues,
     resetFields,
     submit,

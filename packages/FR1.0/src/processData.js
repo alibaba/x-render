@@ -69,3 +69,7 @@ export const transformDataWithBind = (data, flatten) => {
   handleBindData(_data);
   return _data;
 };
+
+export const transformDataWithBind2 = (data, flatten) => {
+  return data; // TODO1:
+};
