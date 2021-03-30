@@ -10,7 +10,56 @@ export interface ICRLineProps
     Omit<
       LineConfig,
       keyof ICommonProps | 'yField' | 'xField' | 'seriesField'
-    > {}
+    > {};
+
+export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['data']): LineConfig {
+  const { metaDim, metaInd } = splitMeta(meta);
+
+  if (metaInd.length === 1 && metaDim.length === 1) {
+    // case 1: 单指标、单维度 => 维度作为 x 轴，指标作为 y 轴
+    const xField = metaDim.shift()?.id as string;
+    const yField = metaInd.shift()?.id as string;
+    return {
+      data,
+      xField,
+      yField,
+      meta: {
+        [yField]: { alias: meta.find(({ id }) => id === yField)?.name }
+      },
+    };
+  } else if (metaInd.length === 1 && metaDim.length === 2) {
+    // case 2: 单指标、双维度 => 第一维度作为 x 轴，指标作为 y 轴，第二维度作为 系列
+    return {
+      data,
+      xField: metaDim.shift()?.id as string,
+      yField: metaInd.shift()?.id as string,
+      seriesField: metaDim.shift()?.id,
+    };
+  } else if (metaInd.length > 1 && metaDim.length === 1) {
+    // case 3: 多指标、单维度 => 维度作为 x 轴，指标名作为系列，指标值作为 y 轴
+    // 需要把 data 做一下转化，例：从 { ds, uv, pv }[] 转为 [{ ds, type: uvName, value: xxx }, { ds, type: pvName, value: xxx }]
+    const xField = metaDim.shift()?.id as string;
+    const yField = 'value';
+    const seriesField = 'type';
+    return {
+      data: data
+        .map(item => {
+          return metaInd.map(({ id, name }) => {
+            return {
+              [xField]: item[xField],
+              [yField]: item[id],
+              [seriesField]: name,
+            };
+          });
+        })
+        .flat(),
+      xField,
+      yField,
+      seriesField,
+    };
+  }
+  return { data };
+};
 
 const CRLine: React.FC<ICRLineProps> = ({
   className,
@@ -19,43 +68,9 @@ const CRLine: React.FC<ICRLineProps> = ({
   data = [],
   ...props
 }) => {
-  const { metaDim, metaInd } = splitMeta(meta);
-
-  let chartData = data;
-  let xField: string = '';
-  let yField: string = '';
-  let seriesField: string | undefined = undefined;
-
-  if (metaInd.length === 1 && [1, 2].includes(metaDim.length)) {
-    // case 1: 单指标、N维度(N = 1 | 2) 第一个维度作为 x 轴，第二个维度作为系列
-    xField = metaDim.shift()?.id as string;
-    yField = metaInd.shift()?.id as string;
-    seriesField = metaDim.shift()?.id;
-  } else if (metaInd.length > 1 && metaDim.length === 1) {
-    // case 2: N指标、单维度(N > 1) 维度作为 x 轴，指标名作为系列，指标值作为 y 轴
-    // 需要把 data 做一下转化，例：从 { ds, uv, pv }[] 转为 [{ ds, type: uv, value: xxx }, { ds, type: pv, value: xxx }]
-    xField = metaDim.shift()?.id as string;
-    yField = 'value';
-    seriesField = 'type';
-    chartData = data
-      .map(item => {
-        return metaInd.map(({ id, name }) => {
-          return {
-            [xField]: item[xField],
-            [yField]: item[id],
-            [seriesField as string]: id,
-          };
-        });
-      })
-      .flat();
-  }
-
   return (
     <Line
-      data={chartData}
-      yField={yField}
-      xField={xField}
-      seriesField={seriesField}
+      {...generateConfig(meta, data)}
       renderer="svg"
       errorTemplate={() => <ErrorTemplate />}
       {...props}

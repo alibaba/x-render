@@ -4,7 +4,7 @@
 
 - 表格渲染上，维度作为 `左表头`，指标作为 `顶表头`。
 
-```tsx
+```jsx
 import React from 'react';
 import { PivotTable } from 'chart-render';
 
@@ -42,7 +42,7 @@ export default () => (
 
 ### 单元格自定义渲染
 
-```tsx
+```jsx
 import React from 'react';
 import { PivotTable } from 'chart-render';
 

@@ -4,7 +4,7 @@
 
 - 图表渲染上，维度作为 `x 轴`，指标作为 `y 轴`。
 
-```tsx
+```jsx
 import React from 'react';
 import { Line } from 'chart-render';
 
@@ -32,7 +32,7 @@ export default () => (
 - 图表渲染上，第一维度作为 `x 轴`，指标作为 `y 轴`，第二维度作为 `系列`。
 - 数据上，数据条数是 `「单指标 单维度」` 的两倍。
 
-```tsx
+```jsx
 import React from 'react';
 import { Line } from 'chart-render';
 
@@ -67,7 +67,7 @@ export default () => (
 
 - 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
 
-```tsx
+```jsx
 import React from 'react';
 import { Line } from 'chart-render';
 

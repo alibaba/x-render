@@ -4,7 +4,7 @@
 
 - 图表渲染上，指标作为 `x 轴`，指标值作为 `y 轴`。
 
-```tsx
+```jsx
 import React from 'react';
 import { Column } from 'chart-render';
 
@@ -25,7 +25,7 @@ export default () => (
 
 - 图表渲染上，维度作为 `x 轴`，指标作为 `y 轴`。
 
-```tsx
+```jsx
 import React from 'react';
 import { Column } from 'chart-render';
 
@@ -53,7 +53,7 @@ export default () => (
 - 图表渲染上，第一维度作为 `x 轴`，指标作为 `y 轴`，第二维度作为 `系列`。
 - 数据上，数据条数是 `「单指标 单维度」` 的两倍。
 
-```tsx
+```jsx
 import React from 'react';
 import { Column } from 'chart-render';
 
@@ -88,12 +88,41 @@ export default () => (
 
 - 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
 
-```tsx
+```jsx
 import React from 'react';
 import { Column } from 'chart-render';
 
 export default () => (
   <Column
+    meta={[
+      { id: "ds", name: "日期", "isDim": true },
+      { id: "pv", name: "访问量" },
+      { id: "uv", name: "访客数" }
+    ]}
+    data={[
+      { ds: "2020-12-31", pv: 50, uv: 20 },
+      { ds: "2021-01-01", pv: 76, uv: 21 },
+      { ds: "2021-01-02", pv: 46, uv: 15 },
+      { ds: "2021-01-03", pv: 89, uv: 40 },
+      { ds: "2021-01-04", pv: 66, uv: 31 },
+      { ds: "2021-01-05", pv: 46, uv: 32 },
+      { ds: "2021-01-06", pv: 45, uv: 30 },
+    ]}
+  />
+);
+```
+
+### 倒置，表现为条形图
+
+- 参数：`inverted`
+
+```jsx
+import React from 'react';
+import { Column } from 'chart-render';
+
+export default () => (
+  <Column
+    inverted
     meta={[
       { id: "ds", name: "日期", "isDim": true },
       { id: "pv", name: "访问量" },
