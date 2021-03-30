@@ -34,7 +34,7 @@ export const validateAll = ({
       const keyRequired = isPathRequired(key, schema);
       const val = get(formData, key);
       if (!val && keyRequired) {
-        touchVerifyList.push({ name: key, error: ["'${title}'必填"] });
+        touchVerifyList.push({ name: key, error: ['${title}必填'] });
       }
     });
   }
