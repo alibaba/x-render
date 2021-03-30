@@ -9,4 +9,4 @@ nav:
 ---
 
 <!-- <code src='./index.jsx'  /> -->
-<code src='./simple.jsx'  />
+<code src='./simple1.jsx'  />
