@@ -18,7 +18,7 @@ const RenderList = ({
   errorFields,
 }) => {
   // console.log(parentId, dataIndex, children);
-  const { formData, onItemChange, removeValidation, flatten } = useStore();
+  const { formData, onItemChange, flatten } = useStore();
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
@@ -43,7 +43,6 @@ const RenderList = ({
     const newList = displayList.filter((item, kdx) => kdx !== idx);
     onItemChange(dataPath, newList);
     // const itemPath = dataPath + `[${idx}]`; //TODO: 这块有问题啊，idx好像不准
-    removeValidation(dataPath);
   };
 
   //TODO1: 上线翻页要正确！！现在是错的
