@@ -23,12 +23,12 @@ footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](http
 
 ## 开始使用
 
-[开始使用 form-render](/form-render/guide/getting-started)
-[开始使用 table-render](/table-render/guide/getting-started)
-[开始使用 card-render](/card-render/guide/getting-started)
-[开始使用 chart-render](/chart-render/guide/getting-started)
+- [开始使用 form-render](/form-render/guide/getting-started)
+- [开始使用 table-render](/table-render/guide/getting-started)
+- [开始使用 card-render](/card-render/guide/getting-started)
+- [开始使用 chart-render](/chart-render/guide/getting-started)
 
-## 使用 form-render
+## form-render 简例
 
 ```jsx
 import React, { useState } from 'react';
@@ -72,19 +72,7 @@ export default Demo;
 
 注：由于 fusion 的 css 无法按需引入，且在内部整个引入会造成样式覆盖，所以需要用户外部独立引入
 
-### schema 可以不用手写哦！
-
-使用 [表单设计器](https://x-render.gitee.io/schema-generator/)，拖拖拽拽导出 schema，丢到代码里生成可用表单
-
-<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
-
-<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*FfTuRYjRd1AAAAAAAAAAAABkARQnAQ?raw=true" alt="schema编辑器" width='750px' />
-
-还可在 vscode 商店搜索 “formrender” 下载配套 [可视化插件](https://marketplace.visualstudio.com/items?itemName=F-loat.vscode-plugin-fr-schema)
-
-<img src="https://img.alicdn.com/tfs/TB1b53cmGNj0u4jSZFyXXXgMVXa-2740-1748.gif" alt="schema编辑器" width='750px' />
-
-## 使用 table-render
+## table-render 简例
 
 ```jsx
 import React, { useRef, useLayoutEffect, useEffect } from 'react';
@@ -195,7 +183,7 @@ const Wrapper = () => {
 export default Wrapper;
 ```
 
-## 使用 chart-render
+## chart-render 简例
 
 ```jsx
 import React from 'react';
@@ -227,6 +215,18 @@ export default () => (
   />
 );
 ```
+
+### schema 可以不用手写哦！
+
+使用 [表单设计器](https://x-render.gitee.io/schema-generator/)，拖拖拽拽导出 schema，丢到代码里生成可用表单
+
+<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
+
+<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*FfTuRYjRd1AAAAAAAAAAAABkARQnAQ?raw=true" alt="schema编辑器" width='750px' />
+
+还可在 vscode 商店搜索 “formrender” 下载配套 [可视化插件](https://marketplace.visualstudio.com/items?itemName=F-loat.vscode-plugin-fr-schema)
+
+<img src="https://img.alicdn.com/tfs/TB1b53cmGNj0u4jSZFyXXXgMVXa-2740-1748.gif" alt="schema编辑器" width='750px' />
 
 ## 贡献
 
