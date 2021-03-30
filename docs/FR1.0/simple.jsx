@@ -74,6 +74,16 @@ const Demo = () => {
       >
         取值
       </button>
+      <button
+        onClick={() => {
+          form.setValues({
+            a: { b: { c: '23434' } },
+            obj: { input2: 'heelo' },
+          });
+        }}
+      >
+        赋值
+      </button>
       <button onClick={form.submit}>提交</button>
       <FormRender
         form={form}
