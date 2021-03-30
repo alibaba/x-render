@@ -72,7 +72,6 @@ const CRLine: React.FC<ICRLineProps> = ({
   withArea,
   ...props
 }) => {
-  console.log('withArea >>> ', withArea);
   if (withArea) {
     return (
       <Area

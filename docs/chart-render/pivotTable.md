@@ -60,7 +60,7 @@ export default () => (
     topExpandable
     leftExpandable
     size="small"
-    // leftDimensionLength={}
+    leftDimensionLength={2}
     cellRender={(val, dimRecord, indId) => (
       <div>
         <p style={{
@@ -156,6 +156,18 @@ export default () => (
     <td>左侧维度放多少个，超出的维度会放到表格顶部</td>
     <td>number</td>
     <td>meta.length</td>
+  </tr>
+  <tr>
+    <td>topExpandable</td>
+    <td>顶部是否支持展开/收缩</td>
+    <td>boolean</td>
+    <td>false</td>
+  </tr>
+  <tr>
+    <td>leftExpandable</td>
+    <td>左侧是否支持展开/收缩</td>
+    <td>boolean</td>
+    <td>false</td>
   </tr>
   <tr>
     <td>size</td>

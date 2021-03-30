@@ -47,7 +47,7 @@ export interface ICRPivotTableProps extends ICommonProps {
   topExpandable?: boolean;
 
   /**
-   * 默认展开所有可展开项，默认 `true`
+   * [此属性无效] 默认展开所有可展开项，默认 `true`
    */
   defaultExpandAll?: boolean;
 
@@ -144,7 +144,6 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
     topCodes,
     aggregate: createAggregateFunction(indicators),
   });
-  console.log(leftExpandKeys, topExpandKeys, leftTreeRoot, topTreeRoot);
 
   return (
     <div
