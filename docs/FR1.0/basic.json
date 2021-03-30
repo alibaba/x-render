@@ -10,7 +10,7 @@
       "ui:disabled": "{{formData.percentage == 10}}"
     },
     "list": {
-      "required": true,
+      "required": false,
       "title": "对象数组",
       "description": "对象数组嵌套功能",
       "type": "array",
@@ -66,10 +66,10 @@
       "rules": [
         {
           "min": 10,
-          "message": "长度需要大于10"
+          "message": "要大于10哦~"
         },
         {
-          "max": 80
+          "max": 40
         }
       ]
     },
@@ -83,6 +83,7 @@
           "type": "object",
           "properties": {
             "inputName": {
+              "required": true,
               "title": "简单输入框",
               "type": "string"
             }
@@ -90,22 +91,18 @@
         },
         "input": {
           "title": "简单输入框",
-          "bind": "a.b.c",
           "type": "string",
-          "ui:disabled": "{{rootValue.d === '1'}}",
           "ui:options": {
             "placeholder": "haha"
           },
-          "required": "{{rootValue.d === '1'}}"
+          "required": false
         },
         "textarea": {
-          "bind": "a.b.d",
           "title": "简单文本编辑框",
           "type": "string",
           "format": "textarea"
         },
         "color": {
-          "bind": "color",
           "title": "颜色选择",
           "type": "string",
           "format": "color"

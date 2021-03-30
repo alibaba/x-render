@@ -25,7 +25,10 @@ const Demo = () => {
   const form = useForm();
 
   const onFinish = ({ formData, errorFields }) => {
-    console.log(formData, 'formData', errorFields, 'errors');
+    console.group('onFinish');
+    console.log('formData:', formData);
+    console.log('errors:', errorFields);
+    console.groupEnd();
     setDisplay([formData, errorFields]);
   };
 
@@ -34,9 +37,7 @@ const Demo = () => {
   };
 
   const beforeFinish = () => {
-    return delay(0).then(_ =>
-      form.setErrorFields({ name: 'percentage', error: ['外部校验错误'] })
-    );
+    form.setErrorFields({ name: 'percentage', error: ['外部校验错误'] });
   };
 
   // const watch = {
@@ -83,6 +84,7 @@ const Demo = () => {
         onFinish={onFinish}
         widgets={{ percent: PercentWidget }}
         debug
+        // locale="en"
       />
     </div>
   );

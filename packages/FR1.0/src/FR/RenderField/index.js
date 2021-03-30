@@ -39,24 +39,13 @@ const RenderField = ({
     isEditing,
     setEditing,
     extend,
+    touchKey,
+    debounceInput,
   } = useStore();
 
   const snapShot = useRef();
 
-  // 计算数据的真实路径，bind字段会影响
   let dataPath = getDataPath($id, dataIndex);
-  // TODO: bind 允许bind数组，如果是bind数组，需要更多的处理。暂时只支持bind单个
-  // const isMultiPaths =
-  //   Array.isArray(schema.bind) &&
-  //   schema.bind.every(item => typeof item === 'string');
-  if (schema && schema.bind) {
-    if (typeof schema.bind === 'string') {
-      dataPath = getDataPath(schema.bind, dataIndex);
-    }
-    // else if (isMultiPaths) {
-    //   dataPath = schema.bind.map(b => getDataPath(b, dataIndex));
-    // }
-  }
 
   // 解析schema
 
@@ -86,19 +75,9 @@ const RenderField = ({
   }
 
   const errObj = errorFields.find(err => err.name === dataPath);
-  const errList = errObj && errObj.error;
-  const errorMessage = Array.isArray(errList) ? errList[0] : undefined;
+  const errorMessage = errObj && errObj.error; // 是一个list
 
-  // dataPath 有3种情况："#"、"a.b.c"、["a.b.c", "e.d.f"]
-  const getValue = () => {
-    // if (isMultiPaths) {
-    //   return dataPath.map(path => getValueByPath(formData, path));
-    // }
-    return getValueByPath(formData, dataPath);
-  };
-
-  // 从全局 formData 获取 value
-  const _value = getValue(dataPath, formData);
+  const _value = getValueByPath(formData, dataPath);
 
   // check: 由于是专门针对checkbox的，目前只好写这里
   let _labelStyle = labelStyle;
@@ -119,9 +98,13 @@ const RenderField = ({
 
   // TODO: 优化一下，只有touch还是false的时候，setTouched
   const onChange = value => {
+    // 动过的key，算被touch了
+    touchKey(dataPath);
     // 开始编辑，节流
-    setEditing(true);
-    debouncedSetEditing(false);
+    if (debounceInput) {
+      setEditing(true);
+      debouncedSetEditing(false);
+    }
     if (typeof dataPath === 'string') {
       onItemChange(dataPath, value);
     }
@@ -140,8 +123,7 @@ const RenderField = ({
 
   const _showTitle = !hideTitle && !!_schema.title;
 
-  const _hideValidation =
-    isObjType(_schema) || (hideValidation && !errorMessage);
+  const _hideValidation = hideValidation && !errorMessage;
 
   const widgetProps = {
     schema: _schema,
@@ -167,29 +149,47 @@ const RenderField = ({
         {_showTitle && <div {...placeholderTitleProps} />}
         <div className={contentClass} style={contentStyle}>
           <ExtendedWidget {...widgetProps} />
-          {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
+          {_hideValidation ? null : (
+            <ErrorMessage message={errorMessage} schema={_schema} />
+          )}
         </div>
       </>
     );
   }
 
-  const titleElement = _showTitle && <FieldTitle {...titleProps} />;
+  let titleElement = <FieldTitle {...titleProps} />;
+
+  if (isObjType(_schema)) {
+    titleElement = (
+      <div style={{ display: 'flex' }}>
+        {titleElement}
+        {_hideValidation ? null : (
+          <ErrorMessage message={errorMessage} schema={_schema} />
+        )}
+      </div>
+    );
+  }
 
   if (isObjType(_schema)) {
     return (
       <div className={contentClass} style={contentStyle}>
-        <ExtendedWidget {...widgetProps} title={titleElement} />
-        {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
+        <ExtendedWidget
+          {...widgetProps}
+          message={_hideValidation ? null : errorMessage}
+          title={_showTitle ? titleElement : undefined}
+        />
       </div>
     );
   }
 
   return (
     <>
-      {titleElement}
+      {_showTitle && titleElement}
       <div className={contentClass} style={contentStyle}>
         <ExtendedWidget {...widgetProps} />
-        {_hideValidation ? null : <ErrorMessage message={errorMessage} />}
+        {_hideValidation ? null : (
+          <ErrorMessage message={errorMessage} schema={_schema} />
+        )}
       </div>
     </>
   );

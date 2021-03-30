@@ -597,7 +597,7 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
     }
     result.fields = {};
     Object.keys(schema.properties).forEach(key => {
-      const item = schema.properties[key]; // bind 的逻辑写这里 TODO:
+      const item = schema.properties[key];
       result.fields[key] = getDscriptorFromSchema({ schema: item, isRequired });
     });
   } else if (isListType(schema)) {
@@ -668,4 +668,81 @@ export const formatPathFromValidator = err => {
         return a + '.' + b;
       }
     }, '');
+};
+
+// schema = {
+//   type: 'object',
+//   properties: {
+//     x: {
+//       type: 'object',
+//       properties: {
+//         y: {
+//           type: 'string',
+//           required: true,
+//         },
+//       },
+//     },
+//   },
+// };
+// path = 'x.y'
+// return true
+export const isPathRequired = (path, schema) => {
+  let pathArr = path.split('.');
+  while (pathArr.length > 0) {
+    let [_path, ...rest] = pathArr;
+    _path = _path.split('[')[0];
+    let childSchema;
+    if (isObjType(schema)) {
+      childSchema = schema.properties[_path];
+    } else if (isListType(schema)) {
+      childSchema = schema.items.properties[_path];
+    }
+    pathArr = rest;
+    if (childSchema) {
+      return isPathRequired(rest.join('.'), childSchema);
+    }
+    return !!schema.required; // 是否要这么干 TODO1: 意味着已经处理过了
+  }
+};
+
+export const generateDataSkeleton = schema => {
+  let result = {};
+  if (isObjType(schema)) {
+    Object.keys(schema.properties).forEach(key => {
+      const childSchema = schema.properties[key];
+      const childResult = generateDataSkeleton(childSchema);
+      result[key] = childResult;
+    });
+  } else {
+    result = undefined;
+  }
+  return result;
+};
+
+export const translateMessage = (msg, schema) => {
+  if (typeof msg !== 'string') {
+    return '';
+  }
+  if (!schema) return msg;
+  msg = msg.replace('${title}', schema.title);
+  msg = msg.replace('${type}', schema.type);
+  if (schema.rules) {
+    const minRule = schema.rules.find(r => r.min !== undefined);
+    if (minRule) {
+      msg = msg.replace('${min}', minRule.min);
+    }
+    const maxRule = schema.rules.find(r => r.max !== undefined);
+    if (maxRule) {
+      msg = msg.replace('${max}', maxRule.max);
+    }
+    const lenRule = schema.rules.find(r => r.len !== undefined);
+    if (lenRule) {
+      msg = msg.replace('${len}', lenRule.len);
+    }
+    const patternRule = schema.rules.find(r => r.pattern !== undefined);
+    if (patternRule) {
+      msg = msg.replace('${pattern}', patternRule.pattern);
+    }
+  }
+  return msg;
 };

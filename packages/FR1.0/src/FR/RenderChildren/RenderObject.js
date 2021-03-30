@@ -2,7 +2,7 @@ import React from 'react';
 import FR from '../index';
 
 // TODO: nanoId 好像没啥用
-const RenderObject = ({ children = [], dataIndex = [], errorFields }) => {
+const RenderObject = ({ children = [], dataIndex = [] }) => {
   return (
     <>
       {children.map((child, i) => {

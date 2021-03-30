@@ -27,6 +27,10 @@ export default defineConfig({
     { title: 'Playground', path: '/playground' },
     { title: '自定义组件', path: '/widgets' },
     {
+      title: 'FR1.0',
+      path: '/FR1.0',
+    },
+    {
       title: 'table-render',
       path: '/table-render',
       children: [
@@ -61,10 +65,6 @@ export default defineConfig({
     {
       title: '国内镜像',
       path: 'https://x-render.gitee.io/form-render/',
-    },
-    {
-      title: 'FR1.0',
-      path: '/FR1.0',
     },
   ],
   mode: 'site',
