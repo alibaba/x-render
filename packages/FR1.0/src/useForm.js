@@ -6,9 +6,16 @@ import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash';
 import { processData } from './processData';
 
-export const useForm = () => {
+export const useForm = props => {
+  const {
+    // 为了更平滑兼容 0.x，如果外部传入状态，那么使用外部的状态
+    formData: _formData,
+    onChange: _onChange,
+    onValidate: _onValidate,
+  } = props || {};
+
   const [state, setState] = useSet({
-    formData: {}, // TODO: 初始值从外部传入
+    formData: {},
     submitData: {},
     errorFields: [],
     isValidating: false, // 是否在提交状态
@@ -28,7 +35,7 @@ export const useForm = () => {
   const flatten = flattenRef.current || {};
 
   const {
-    formData,
+    formData: innerData,
     submitData,
     errorFields = [],
     isValidating,
@@ -40,6 +47,26 @@ export const useForm = () => {
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
+  const dataFromOutside = props && props.hasOwnProperty('formData');
+
+  const formData = dataFromOutside ? _formData : innerData;
+
+  // 两个兼容 0.x 的函数
+  const _setData = data => {
+    if (typeof _onChange === 'function') {
+      _onChange(data);
+    } else {
+      setState({ formData: data });
+    }
+  };
+  const _setErrors = errors => {
+    if (typeof _onValidate === 'function') {
+      const oldFormatErrors = errors.map(item => item.name);
+      _onValidate(oldFormatErrors);
+    }
+    setState({ errorFields: errors });
+  };
+
   const touchKey = key => {
     if (touchedKeys.indexOf(key) > -1) {
       return;
@@ -48,18 +75,36 @@ export const useForm = () => {
     setState({ touchedKeys: newKeyList });
   };
 
+  // 为了兼容 0.x
   useEffect(() => {
-    let isRequired = false;
-    if (allTouched) isRequired = true;
+    // 如果是外部数据，submit没有收束，无校验
+    if (dataFromOutside && typeof _onValidate === 'function') {
+      setTimeout(() => {
+        validateAll({
+          formData,
+          flatten: flattenRef.current,
+          schema: schemaRef.current,
+          isRequired: true,
+          touchedKeys,
+          locale: localeRef.current,
+        }).then(res => {
+          const oldFormatErrors = res.map(item => item.name);
+          _onValidate(oldFormatErrors);
+        });
+      }, 200);
+    }
+  }, []);
+
+  useEffect(() => {
     validateAll({
       formData,
       flatten: flattenRef.current,
       schema: schemaRef.current,
-      isRequired,
+      isRequired: allTouched,
       touchedKeys,
       locale: localeRef.current,
     }).then(res => {
-      setState({ errorFields: res });
+      _setErrors(res);
     });
   }, [JSON.stringify(formData), allTouched]);
 
@@ -70,11 +115,11 @@ export const useForm = () => {
   const onItemChange = (path, value) => {
     if (typeof path !== 'string') return;
     if (path === '#') {
-      setState({ formData: { ...value } });
+      _setData({ ...value });
       return;
     }
     const newFormData = set(formData, path, value);
-    setState({ formData: { ...newFormData } });
+    _setData({ ...newFormData });
   };
 
   // TODO: 全局的没有path, 这个函数要这么写么。。全局的，可以path = #
@@ -101,33 +146,8 @@ export const useForm = () => {
       console.log('error format is wrong');
     }
     newErrorFields = sortedUniqBy(newErrorFields, item => item.name);
-    setState({ errorFields: newErrorFields });
+    _setErrors(newErrorFields);
   };
-
-  const removeValidation = _path => {
-    if (!_path || _path === '#') {
-      setState({ errorFields: [] });
-    }
-    let path;
-    if (typeof _path === 'string') {
-      path = _path;
-    } else if (Array.isArray(_path) && typeof _path[0] === 'string') {
-      path = _path[0];
-    } else {
-      // 说明有传参有问题，直接结束 TODO: 后续可给个提示
-      return;
-    }
-
-    setState(({ errorFields }) => {
-      let newErrorFields = errorFields.filter(
-        item => item.name.indexOf(path) === -1
-      );
-      return {
-        errorFields: newErrorFields,
-      };
-    });
-  };
-
   // TODO: 提取出来，重新写一份，注意要处理async
 
   const getValues = () => formData;
@@ -178,7 +198,7 @@ export const useForm = () => {
   };
 
   const resetFields = () => {
-    setState({ formData: {} });
+    _setData({});
   };
 
   const setValue = (id, value, dataIndex) => {
@@ -223,7 +243,6 @@ export const useForm = () => {
     endValidating,
     endSubmitting,
     setErrorFields,
-    removeValidation,
     isEditing,
     setEditing,
     syncStuff,
