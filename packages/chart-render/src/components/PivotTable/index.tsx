@@ -1,8 +1,13 @@
 import React from 'react';
-import { CrossTable, buildDrillTree, buildRecordMatrix, convertDrillTreeToCrossTree } from 'ali-react-table/pivot';
+import {
+  CrossTable,
+  buildDrillTree,
+  buildRecordMatrix,
+  convertDrillTreeToCrossTree,
+} from 'ali-react-table/pivot';
 import { createAggregateFunction } from 'dvt-aggregation';
-import { ICommonProps, IDataItem } from '@/utils/types';
-import { splitMeta } from '@/utils';
+import { ICommonProps, IDataItem } from '../../utils/types';
+import { splitMeta } from '../../utils';
 import './index.less';
 
 export interface ICRPivotTableProps extends ICommonProps {
@@ -34,8 +39,12 @@ export interface ICRPivotTableProps extends ICommonProps {
   /**
    * 单元格渲染
    */
-  cellRender?: (value: any, dimRecord: IDataItem, indId: string) => React.ReactNode;
-};
+  cellRender?: (
+    value: any,
+    dimRecord: IDataItem,
+    indId: string,
+  ) => React.ReactNode;
+}
 
 const CRPivotTable: React.FC<ICRPivotTableProps> = ({
   className,
@@ -60,27 +69,45 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
   }));
 
   // 左维树
-  const leftCodes = metaDim.filter((_, index) => index < leftDimensionLength).map(({ id }) => id);
-  const leftDrillTree = buildDrillTree(data, leftCodes, { includeTopWrapper: true });
+  const leftCodes = metaDim
+    .filter((_, index) => index < leftDimensionLength)
+    .map(({ id }) => id);
+  const leftDrillTree = buildDrillTree(data, leftCodes, {
+    includeTopWrapper: true,
+  });
   const [leftTreeRoot] = convertDrillTreeToCrossTree(leftDrillTree, {
     // @ts-expect-error => 可以传入 align 字段
     indicators: indicatorSide === 'left' ? indicators : undefined,
-    generateSubtotalNode: showSubtotal ? (drillNode) => ({
-      position: 'start',
-      value: drillNode.path.length === 0 ? subtotalText[0] || '总计' : subtotalText[1] || '小计',
-    }) : undefined,
+    generateSubtotalNode: showSubtotal
+      ? drillNode => ({
+          position: 'start',
+          value:
+            drillNode.path.length === 0
+              ? subtotalText[0] || '总计'
+              : subtotalText[1] || '小计',
+        })
+      : undefined,
   });
 
   // 顶维树
-  const topCodes = metaDim.filter((_, index) => index >= leftDimensionLength).map(({ id }) => id);
-  const topDrillTree = buildDrillTree(data, topCodes, { includeTopWrapper: true });
+  const topCodes = metaDim
+    .filter((_, index) => index >= leftDimensionLength)
+    .map(({ id }) => id);
+  const topDrillTree = buildDrillTree(data, topCodes, {
+    includeTopWrapper: true,
+  });
   const [topTreeRoot] = convertDrillTreeToCrossTree(topDrillTree, {
     // @ts-expect-error => 可以传入 align 字段
     indicators: indicatorSide === 'top' ? indicators : undefined,
-    generateSubtotalNode: showSubtotal ? (drillNode) => ({
-      position: 'start',
-      value: drillNode.path.length === 0 ? subtotalText[0] || '总计' : subtotalText[1] || '小计',
-    }) : undefined,
+    generateSubtotalNode: showSubtotal
+      ? drillNode => ({
+          position: 'start',
+          value:
+            drillNode.path.length === 0
+              ? subtotalText[0] || '总计'
+              : subtotalText[1] || '小计',
+        })
+      : undefined,
   });
 
   // 数据集
@@ -92,10 +119,15 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
   });
 
   return (
-    <div style={style} className={`CR-PivotTable CR-PivotTable-${size} ${className || ''}`}>
+    <div
+      style={style}
+      className={`CR-PivotTable CR-PivotTable-${size} ${className || ''}`}
+    >
       <CrossTable
         defaultColumnWidth={100}
-        leftMetaColumns={metaDim.filter(({ id }) => leftCodes.includes(id)).map(({ id, name }) => ({ code: id, name }))}
+        leftMetaColumns={metaDim
+          .filter(({ id }) => leftCodes.includes(id))
+          .map(({ id, name }) => ({ code: id, name }))}
         // @ts-expect-error
         leftTree={leftTreeRoot.children}
         leftTotalNode={leftTreeRoot} // 当 leftTree 为空时，leftTotalNode 用于渲染总计行
@@ -104,16 +136,20 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
         topTotalNode={topTreeRoot} // 当 topTree 为空时，topTotalNode 用于渲染总计列
         getValue={(leftNode, topNode) => {
           // 注意这里我们使用 node.data.dataKey 来获取单元格在 matrix 中的 record
-          const record = matrix.get(leftNode.data.dataKey)?.get(topNode.data.dataKey);
+          const record = matrix
+            .get(leftNode.data.dataKey)
+            ?.get(topNode.data.dataKey);
           return record?.[topNode.code as string];
         }}
         render={(value, leftNode, topNode) => {
           const { dataPath: leftDataPath = [] } = leftNode.data;
           const { dataPath: topDataPath = [] } = topNode.data;
           const dimRecord: IDataItem = {};
-          ([...leftDataPath, ...topDataPath] as string[]).forEach((dimValue, index) => {
-            dimRecord[metaDim[index]?.id] = dimValue;
-          });
+          ([...leftDataPath, ...topDataPath] as string[]).forEach(
+            (dimValue, index) => {
+              dimRecord[metaDim[index]?.id] = dimValue;
+            },
+          );
           if (cellRender) {
             return cellRender(value, dimRecord, topNode.code as string);
           }

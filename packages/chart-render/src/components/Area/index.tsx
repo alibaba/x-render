@@ -1,13 +1,16 @@
 import React from 'react';
-import { ICommonProps } from '@/utils/types';
+import { ICommonProps } from '../../utils/types';
 import { Area } from '@ant-design/charts';
-import { splitMeta } from '@/utils';
+import { splitMeta } from '../../utils';
 import { AreaConfig } from '@ant-design/charts/es/Area';
 import ErrorTemplate from '../ErrorTemplate';
 
-export interface ICRAreaProps extends ICommonProps, Omit<AreaConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
-
-};
+export interface ICRAreaProps
+  extends ICommonProps,
+    Omit<
+      AreaConfig,
+      keyof ICommonProps | 'yField' | 'xField' | 'seriesField'
+    > {}
 
 const CRArea: React.FC<ICRAreaProps> = ({
   className,
@@ -34,15 +37,17 @@ const CRArea: React.FC<ICRAreaProps> = ({
     xField = metaDim.shift()?.id as string;
     yField = 'value';
     seriesField = 'type';
-    chartData = data.map(item => {
-      return metaInd.map(({ id, name }) => {
-        return {
-          [xField]: item[xField],
-          [yField]: item[id],
-          [seriesField as string]: id,
-        }
+    chartData = data
+      .map(item => {
+        return metaInd.map(({ id, name }) => {
+          return {
+            [xField]: item[xField],
+            [yField]: item[id],
+            [seriesField as string]: id,
+          };
+        });
       })
-    }).flat();
+      .flat();
   }
 
   return (

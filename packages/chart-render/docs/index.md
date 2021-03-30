@@ -1,2 +1,0 @@
-
-## Hello chart-render!

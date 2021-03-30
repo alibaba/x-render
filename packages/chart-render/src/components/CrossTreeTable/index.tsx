@@ -1,8 +1,12 @@
 import React from 'react';
-import { CrossTreeTable, buildDrillTree, buildRecordMap } from 'ali-react-table/pivot';
+import {
+  CrossTreeTable,
+  buildDrillTree,
+  buildRecordMap,
+} from 'ali-react-table/pivot';
 import { createAggregateFunction } from 'dvt-aggregation';
-import { ICommonProps, IDataItem } from '@/utils/types';
-import { splitMeta } from '@/utils';
+import { ICommonProps, IDataItem } from '../../utils/types';
+import { splitMeta } from '../../utils';
 import './index.less';
 
 export interface ICRCrossTreeTableProps extends ICommonProps {
@@ -24,8 +28,12 @@ export interface ICRCrossTreeTableProps extends ICommonProps {
   /**
    * 单元格渲染
    */
-  cellRender?: (value: any, dimRecord: IDataItem, indId: string) => React.ReactNode;
-};
+  cellRender?: (
+    value: any,
+    dimRecord: IDataItem,
+    indId: string,
+  ) => React.ReactNode;
+}
 
 const CRCrossTreeTable: React.FC<ICRCrossTreeTableProps> = ({
   className,
@@ -59,15 +67,21 @@ const CRCrossTreeTable: React.FC<ICRCrossTreeTableProps> = ({
   const recordMap = buildRecordMap({
     data,
     codes: leftCodes,
-    aggregate: createAggregateFunction(metaInd.map(({ id, name, isRate }) => ({
-      name, // `求和项：${name}`,
-      code: id,
-      expression: isRate ? `AVG(${id})` : `SUM(${id})`,
-    }))),
+    aggregate: createAggregateFunction(
+      metaInd.map(({ id, name, isRate }) => ({
+        name, // `求和项：${name}`,
+        code: id,
+        expression: isRate ? `AVG(${id})` : `SUM(${id})`,
+      })),
+    ),
   });
 
   return (
-    <div style={style} className={`CR-CrossTreeTable CR-CrossTreeTable-${size} ${className || ''}`}>
+    <div
+      style={style}
+      className={`CR-CrossTreeTable CR-CrossTreeTable-${size} ${className ||
+        ''}`}
+    >
       <CrossTreeTable
         primaryColumn={{ lock: true, name: '数据维度', width: 200 }}
         leftTree={leftTree}

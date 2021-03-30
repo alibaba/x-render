@@ -1,13 +1,16 @@
 import React from 'react';
-import { ICommonProps } from '@/utils/types';
+import { ICommonProps } from '../../utils/types';
 import { Line } from '@ant-design/charts';
-import { splitMeta } from '@/utils';
+import { splitMeta } from '../../utils';
 import { LineConfig } from '@ant-design/charts/es/line';
 import ErrorTemplate from '../ErrorTemplate';
 
-export interface ICRLineProps extends ICommonProps, Omit<LineConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
-
-};
+export interface ICRLineProps
+  extends ICommonProps,
+    Omit<
+      LineConfig,
+      keyof ICommonProps | 'yField' | 'xField' | 'seriesField'
+    > {}
 
 const CRLine: React.FC<ICRLineProps> = ({
   className,
@@ -34,15 +37,17 @@ const CRLine: React.FC<ICRLineProps> = ({
     xField = metaDim.shift()?.id as string;
     yField = 'value';
     seriesField = 'type';
-    chartData = data.map(item => {
-      return metaInd.map(({ id, name }) => {
-        return {
-          [xField]: item[xField],
-          [yField]: item[id],
-          [seriesField as string]: id,
-        }
+    chartData = data
+      .map(item => {
+        return metaInd.map(({ id, name }) => {
+          return {
+            [xField]: item[xField],
+            [yField]: item[id],
+            [seriesField as string]: id,
+          };
+        });
       })
-    }).flat();
+      .flat();
   }
 
   return (

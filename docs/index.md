@@ -226,3 +226,34 @@ export default Wrapper;
 ```
 
 <!-- <code src='./playground/index.jsx' className='hidden' /> -->
+
+```jsx
+import React from 'react';
+import { Area } from 'chart-render';
+
+export default () => (
+  <Area
+    meta={[
+      { id: 'ds', name: '日期', isDim: true },
+      { id: 'page', name: '页面名称', isDim: true },
+      { id: 'uv', name: '访客数' },
+    ]}
+    data={[
+      { ds: '2020-12-31', page: '登录页', uv: 20 },
+      { ds: '2020-12-31', page: '首页', uv: 120 },
+      { ds: '2021-01-01', page: '登录页', uv: 21 },
+      { ds: '2021-01-01', page: '首页', uv: 121 },
+      { ds: '2021-01-02', page: '登录页', uv: 15 },
+      { ds: '2021-01-02', page: '首页', uv: 115 },
+      { ds: '2021-01-03', page: '登录页', uv: 40 },
+      { ds: '2021-01-03', page: '首页', uv: 140 },
+      { ds: '2021-01-04', page: '登录页', uv: 31 },
+      { ds: '2021-01-04', page: '首页', uv: 131 },
+      { ds: '2021-01-05', page: '登录页', uv: 32 },
+      { ds: '2021-01-05', page: '首页', uv: 132 },
+      { ds: '2021-01-06', page: '登录页', uv: 30 },
+      { ds: '2021-01-06', page: '首页', uv: 130 },
+    ]}
+  />
+);
+```

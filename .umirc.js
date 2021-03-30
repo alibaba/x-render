@@ -35,6 +35,10 @@ export default defineConfig({
       ],
     },
     {
+      title: 'chart-render',
+      path: '/chart-render',
+    },
+    {
       title: '表单设计器',
       path: 'https://x-render.gitee.io/schema-generator/',
     },
