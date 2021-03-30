@@ -8,4 +8,5 @@ nav:
 # gapless: true
 ---
 
-<code src='./index.jsx'  />
+<!-- <code src='./index.jsx'  /> -->
+<code src='./simple1.jsx'  />

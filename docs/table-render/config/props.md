@@ -1,9 +1,6 @@
 ---
-order: 1
+order: 2
 title: Props
-nav:
-  order: 2
-  title: 配置项
 toc: menu
 ---
 
@@ -79,7 +76,7 @@ Search 是表单的渲染组件
 - 默认值：无
 - 必填：Yes
 
-可以使用[表单设计器](https://x-render.gitee.io/schema-generator/playground)拖拽生成，导出 schema 即可。具体的 api 参考 [form-render 文档](https://x-render.gitee.io/form-render/config/schema)
+可以使用[表单设计器](https://x-render.gitee.io/schema-generator/playground)拖拽生成，导出 schema 即可。具体的 api 参考 [form-render 文档](/form-render/config/schema)
 
 ### hidden
 
@@ -169,12 +166,12 @@ ProTable 是 table-render 的表格渲染组件
 
 columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns](https://ant.design/components/table-cn/#Column) 的配置，但是我们也提供了一些更方便的 api，加快书写:
 
-| 属性 | 描述 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| ellipsis | 是否自动缩略 | boolean | - |
-| copyable | 是否支持复制 | boolean | - |
-| valueType | 值的类型，详见 [valueType 配置](./columns.md) | `text` \| `money` \| `date` \| `dateTime` | `text` |
-| enum | 当前列值的枚举，详见 [enum 配置](./columns.md) | object | - |
+| 属性      | 描述                                           | 类型                                      | 默认值 |
+| --------- | ---------------------------------------------- | ----------------------------------------- | ------ |
+| ellipsis  | 是否自动缩略                                   | boolean                                   | -      |
+| copyable  | 是否支持复制                                   | boolean                                   | -      |
+| valueType | 值的类型，详见 [valueType 配置](./columns.md)  | `text` \| `money` \| `date` \| `dateTime` | `text` |
+| enum      | 当前列值的枚举，详见 [enum 配置](./columns.md) | object                                    | -      |
 
 ## `<CardList />` 常用 Props
 

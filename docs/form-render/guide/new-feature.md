@@ -1,10 +1,9 @@
 ---
+order: 4
 title: 新功能 Demo
-order: 2
-nav:
+group:
   order: 1
   title: 教程
-toc: menu
 ---
 
 # 新功能

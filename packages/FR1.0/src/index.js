@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { flattenSchema } from './utils';
 import FR from './FR';
 import { Ctx, StoreCtx, useSet } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
 import './tachyons.less';
-// import './index.css';
 import './index.less';
 
 // 其他入参 watch: {"a.b.c": (value) => { ... }, }
@@ -19,21 +18,23 @@ function App({
   form,
   beforeFinish,
   onFinish,
-  displayType,
+  displayType = 'column',
   schema,
-  initialData,
   flatten: _flatten,
   debug,
+  locale = 'cn', // 'cn'/'en'
+  debounceInput = false,
   ...rest
 }) {
   const {
     submitData,
     errorFields,
-    isSubmitting,
     isValidating,
+    outsideValidating,
+    isSubmitting,
+    endValidating,
     endSubmitting,
-    bindSchema,
-    onItemChange,
+    syncStuff,
     formData,
   } = form;
 
@@ -43,19 +44,21 @@ function App({
 
   const { flatten } = state;
 
-  // window.blog(flatten, form.formData);
-  const store = {
+  const storeRef = useRef({});
+
+  storeRef.current = {
     flatten,
     ...form,
     widgets: { ...defaultWidgets, ...widgets },
     mapping: { ...defaultMapping, ...mapping },
-    displayType: displayType || 'column',
+    displayType,
+    debounceInput,
     ...rest,
   };
 
   useEffect(() => {
     const newFlatten = _flatten || flattenSchema(schema);
-    bindSchema({ schema, flatten: newFlatten });
+    syncStuff({ schema, flatten: newFlatten, beforeFinish, locale });
     setState({ flatten: newFlatten });
   }, [
     JSON.stringify(_flatten),
@@ -64,38 +67,36 @@ function App({
   ]);
 
   useEffect(() => {
-    onItemChange('#', initialData);
-  }, [JSON.stringify(initialData)]);
-
-  useEffect(() => {
-    // 如果validation结束，但是submitting开始
-    if (!isValidating && isSubmitting) {
-      if (beforeFinish && typeof beforeFinish === 'function') {
-        Promise.resolve(beforeFinish({ formData: submitData, errorFields }))
-          .then(_ => {
-            Promise.resolve(onFinish({ formData: submitData, errorFields }));
-          })
-          .then(endSubmitting);
-      } else {
-        Promise.resolve(onFinish({ formData: submitData, errorFields })).then(
-          endSubmitting
-        );
-      }
+    // 需要外部校验的情况，此时 submitting 还是 false
+    if (outsideValidating === true) {
+      Promise.resolve(beforeFinish({ formData: submitData, errorFields })).then(
+        () => {
+          endValidating();
+        }
+      );
+      return;
     }
-  }, [isValidating, isSubmitting]);
+    // 如果validation结束，submitting开始
+    if (isValidating === false && isSubmitting === true) {
+      endSubmitting();
+      onFinish({ formData: submitData, errorFields });
+    }
+  }, [isValidating, isSubmitting, outsideValidating]);
 
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
-    <StoreCtx.Provider value={store}>
-      <Ctx.Provider value={{}}>
-        {debug ? (
-          <>
-            <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
-            <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
-            <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
-          </>
-        ) : null}
+    <StoreCtx.Provider value={storeRef.current}>
+      <Ctx.Provider value={''}>
         <div className="fr-container">
+          {debug ? (
+            <div className="mv2 bg-black-05 pa2 br2">
+              <div>{'formData:' + JSON.stringify(form.formData)}</div>
+              <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
+              <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
+              <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
+              <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
+            </div>
+          ) : null}
           <FR />
         </div>
       </Ctx.Provider>

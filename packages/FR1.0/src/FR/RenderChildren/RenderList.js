@@ -18,7 +18,7 @@ const RenderList = ({
   errorFields,
 }) => {
   // console.log(parentId, dataIndex, children);
-  const { formData, onItemChange, removeValidation, flatten } = useStore();
+  const { formData, onItemChange, flatten } = useStore();
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
@@ -43,9 +43,9 @@ const RenderList = ({
     const newList = displayList.filter((item, kdx) => kdx !== idx);
     onItemChange(dataPath, newList);
     // const itemPath = dataPath + `[${idx}]`; //TODO: 这块有问题啊，idx好像不准
-    removeValidation(dataPath);
   };
 
+  //TODO1: 上线翻页要正确！！现在是错的
   const moveItemUp = idx => {
     if (idx === 0) return;
     const currentItem = displayList[idx];
@@ -135,7 +135,9 @@ const CardList = ({
         return (
           <div>
             <div>{getDisplayValue(value, schema)}</div>
-            {errorObj.error && <ErrorMessage message={errorObj.error} />}
+            {errorObj.error && (
+              <ErrorMessage message={errorObj.error} schema={schema} />
+            )}
           </div>
         );
       },
@@ -147,17 +149,18 @@ const CardList = ({
     key: '$action',
     fixed: 'right',
     width: 110,
-    render: (value, record, index) => {
+    render: (value, record, idx) => {
+      const index = (value && value.$idx) || 0;
       return (
         <Space>
           <a onClick={() => openDrawer(index)}>编辑</a>
           <a onClick={() => deleteItem(index)}>删除</a>
-          <ArrowUp height={18} width={24} onClick={() => moveItemUp(index)} />
+          {/* <ArrowUp height={18} width={24} onClick={() => moveItemUp(index)} />
           <ArrowDown
             height={18}
             width={24}
             onClick={() => moveItemDown(index)}
-          />
+          /> */}
         </Space>
       );
     },
@@ -196,19 +199,21 @@ const CardList = ({
         onClose={closeDrawer}
         visible={showDrawer}
       >
-        <FR
-          // id={children[currentIndex]}
-          _item={_infoItem}
-          dataIndex={[...dataIndex, currentIndex]}
-        />
+        <div className="fr-container">
+          <FR
+            // id={children[currentIndex]}
+            _item={_infoItem}
+            dataIndex={[...dataIndex, currentIndex]}
+          />
+        </div>
       </Drawer>
       <Table
         columns={columns}
         dataSource={dataSource}
         rowClassName={(record, idx) => {
-          // console.log(errorFields, `${dataPath}[${idx}]`, 'errorsadf');
+          const index = record && record.$idx;
           const hasError = errorFields.find(
-            item => item.name.indexOf(`${dataPath}[${idx}]`) > -1
+            item => item.name.indexOf(`${dataPath}[${index}]`) > -1
           );
           return hasError ? 'fr-row-error' : '';
         }}

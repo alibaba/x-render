@@ -1,12 +1,12 @@
 ---
 order: 2
-nav:
-  order: 2
+group:
+  order: 3
   title: 配置项
 toc: menu
 ---
 
-# uiSchema
+# UI:Schema
 
 ## 概述
 

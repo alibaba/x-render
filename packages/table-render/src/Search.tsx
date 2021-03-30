@@ -34,7 +34,9 @@ const Search = (props: any) => {
     setTable({ search: newSearch });
   };
   // TODO: 重新检查一下这个逻辑
-  const calcWidth = (schema: { properties: { [s: string]: unknown } | ArrayLike<unknown> }) => {
+  const calcWidth = (schema: {
+    properties: { [s: string]: unknown } | ArrayLike<unknown>;
+  }) => {
     try {
       let width = 100;
       const wList = Object.values(schema.properties)
@@ -63,7 +65,8 @@ const Search = (props: any) => {
 
   // 给schema里拼接一个buttons
   const modifySchema = () => {
-    const noDiff = JSON.stringify(modifiedSchema.current) === JSON.stringify(_schema);
+    const noDiff =
+      JSON.stringify(modifiedSchema.current) === JSON.stringify(_schema);
     if (_schema && _schema.properties) {
       if (formSchema && noDiff) return;
       try {
@@ -79,7 +82,7 @@ const Search = (props: any) => {
       }
     } else {
       console.error(
-        'SearchForm 传入了不正确的 schema，参考文档: https://x-render.gitee.io/form-render/config/schema',
+        'SearchForm 传入了不正确的 schema，参考文档: https://x-render.gitee.io/form-render/form-render/config/schema'
       );
     }
   };
@@ -121,7 +124,9 @@ const Search = (props: any) => {
   if (props.hidden) return null;
 
   const searchBtnArr =
-    typeof props.searchBtnRender === 'function' ? props.searchBtnRender(refresh, clearSearch) : [];
+    typeof props.searchBtnRender === 'function'
+      ? props.searchBtnRender(refresh, clearSearch)
+      : [];
 
   return (
     <div

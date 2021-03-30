@@ -1,8 +1,8 @@
 ---
 order: 2
 group:
+  order: 2
   title: 高级功能
-toc: false
 ---
 
 # 自定义组件

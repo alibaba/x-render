@@ -126,18 +126,18 @@ export default Demo;
 
 ### API
 
-| Prop             |        Type         | Required | Default  |                                  Description                                  |
-| ---------------- | :-----------------: | :------: | :------: | :---------------------------------------------------------------------------: |
-| **schema**       |      `Object`       |    ✓     |    {}    |                  详见 [schema 配置](/docs/config/schema.md)                   |
-| **uiSchema**     |      `Object`       |          |    {}    | 详见 [uiSchema 配置](/docs/config/uiSchema.md)（**一般建议合并到 `schema`**） |
-| **formData**     |      `Object`       |          |    {}    |                                 配置表单数据                                  |
-| **onChange**     |     `Function`      |    ✓     | () => {} |                               数据更改回调函数                                |
-| **onValidate**   |     `Function`      |          | () => {} |                               表单输入校验回调                                |
-| **displayType**  |      `String`       |          |  column  |                  设置表单横向排列或者纵向排序`column`/`row`                   |
-| **showDescIcon** |      `Boolean`      |          |  false   |        描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`        |
-| **readOnly**     |      `Boolean`      |          |  false   |                              预览模式/可编辑模式                              |
-| **labelWidth**   | `Number` / `String` |          |   110    |    全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等     |
-| **widgets**      |      `Object`       |          |    {}    |                                  自定义组件                                   |
+| Prop             |        Type         | Required | Default  |                                     Description                                      |
+| ---------------- | :-----------------: | :------: | :------: | :----------------------------------------------------------------------------------: |
+| **schema**       |      `Object`       |    ✓     |    {}    |                  详见 [schema 配置](/form-render/config/schema.md)                   |
+| **uiSchema**     |      `Object`       |          |    {}    | 详见 [uiSchema 配置](/form-render/config/uiSchema.md)（**一般建议合并到 `schema`**） |
+| **formData**     |      `Object`       |          |    {}    |                                     配置表单数据                                     |
+| **onChange**     |     `Function`      |    ✓     | () => {} |                                   数据更改回调函数                                   |
+| **onValidate**   |     `Function`      |          | () => {} |                                   表单输入校验回调                                   |
+| **displayType**  |      `String`       |          |  column  |                      设置表单横向排列或者纵向排序`column`/`row`                      |
+| **showDescIcon** |      `Boolean`      |          |  false   |           描述是否用 tooltip 展示。`displayType`为 `row`时建议设为 `true`            |
+| **readOnly**     |      `Boolean`      |          |  false   |                                 预览模式/可编辑模式                                  |
+| **labelWidth**   | `Number` / `String` |          |   110    |        全局设置 label 长度(默认 110)。数字值单位为 px，也可使用'20%'/'2rem'等        |
+| **widgets**      |      `Object`       |          |    {}    |                                      自定义组件                                      |
 
 **注 1：** 设置表单 `displayType` 为 row 时候，请设置 `showDescIcon` 为 `true`，隐藏说明，效果会更好
 
@@ -156,7 +156,7 @@ export default Demo;
 | **showValidate** | `Boolean`  | very rare |   true    |                             是否展示校验信息                             |
 | **onMount**      | `Function` | very rare | undefined |                    onMount 在 formData 首次计算后触发                    |
 
-[详见“不常用 props”](/docs/config/props2.md)
+[详见“不常用 props”](/form-render/config/props.md)
 
 ## 更多使用
 
