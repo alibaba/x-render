@@ -59,7 +59,7 @@ const Wrapper = ({
 function FormRender({
   name = '$form',
   column = 1,
-  className,
+  className = '',
   schema = {},
   formData = {},
   widgets = {},
