@@ -54,6 +54,7 @@ function App({
     mapping: { ...defaultMapping, ...mapping },
     displayType,
     debounceInput,
+    debug,
     ...rest,
   };
 

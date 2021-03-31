@@ -181,32 +181,30 @@
       "type": "object",
       "properties": {
         "select": {
-          "title": "单选",
+          "title": "单选1",
+          "description": "选项超过5个",
+          "type": "number",
+          "enum": [1, 2, 3, 4, 5, 6, 7],
+          "enumNames": ["红", "橙", "黄", "绿", "青", "蓝", "紫"]
+        },
+        "radio": {
+          "title": "单选2",
           "type": "string",
           "enum": ["a", "b", "c"],
           "enumNames": ["早", "中", "晚"]
         },
-        "radio": {
-          "title": "单选",
-          "type": "string",
-          "enum": ["a", "b", "c"],
-          "enumNames": ["早", "中", "晚"],
-          "ui:widget": "radio"
-        },
         "multiSelect": {
-          "title": "多选",
-          "description": "下拉多选",
+          "title": "多选1",
+          "description": "选项超过5个",
           "type": "array",
           "items": {
-            "type": "string"
+            "type": "number"
           },
-          "enum": ["A", "B", "C", "D"],
-          "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
-          "ui:widget": "multiSelect"
+          "enum": [1, 2, 3, 4, 5, 6, 7],
+          "enumNames": ["红", "橙", "黄", "绿", "青", "蓝", "紫"]
         },
         "boxes": {
-          "title": "多选",
-          "description": "checkbox",
+          "title": "多选2",
           "type": "array",
           "items": {
             "type": "string"
