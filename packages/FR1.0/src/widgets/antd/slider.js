@@ -32,7 +32,6 @@ const SliderWithNumber = p => {
     </span>
   ) : (
     <InputNumber
-      size="small"
       {...p.options}
       {...setting}
       style={{ width: '90px' }}

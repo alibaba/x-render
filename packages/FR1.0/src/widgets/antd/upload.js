@@ -30,7 +30,6 @@ export default function FrUpload({
   };
 
   const defaultBtnProps = {
-    size: 'small',
     icon: <UploadOutlined />,
     children: '上传',
   };

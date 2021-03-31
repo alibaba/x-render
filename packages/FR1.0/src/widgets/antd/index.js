@@ -17,7 +17,6 @@ import { createWidget } from '../../HOC';
 const { TextArea } = Input;
 
 const FrNumber = createWidget(({ style }) => ({
-  size: 'small',
   style: { width: '100%', ...style },
 }))(InputNumber);
 

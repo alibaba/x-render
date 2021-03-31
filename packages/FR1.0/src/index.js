@@ -5,7 +5,7 @@ import FR from './FR';
 import { Ctx, StoreCtx, useSet } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
-import './tachyons.less';
+import './atom.less';
 import 'antd/dist/antd.less';
 import './index.less';
 
@@ -25,6 +25,7 @@ function App({
   debug,
   locale = 'cn', // 'cn'/'en'
   debounceInput = false,
+  size,
   ...rest
 }) {
   const {
@@ -92,11 +93,18 @@ function App({
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
+  let sizeCls = '';
+  if (size === 'small') {
+    sizeCls = 'fr-form-small';
+  } else if (size === 'large') {
+    sizeCls = 'fr-form-large';
+  }
+
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
     <StoreCtx.Provider value={store}>
       <Ctx.Provider value={tools}>
-        <div className="fr-container">
+        <div className={`fr-container ${sizeCls}`}>
           {debug ? (
             <div className="mv2 bg-black-05 pa2 br2">
               <div>{'formData:' + JSON.stringify(form.formData)}</div>
