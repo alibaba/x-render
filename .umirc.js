@@ -12,7 +12,7 @@ export default defineConfig({
       title: 'FormRender',
       path: '/form-render',
       children: [
-        { title: 'FR1.0', path: '/FR1.0'},
+        { title: 'FR1.0', path: '/FR1.0' },
         { title: '教程', path: '/form-render/guide' },
         { title: '自定义组件', path: '/form-render/widgets' },
         { title: 'Playground', path: '/playground' },
@@ -34,9 +34,7 @@ export default defineConfig({
     {
       title: '周边工具',
       path: '/tools',
-      children: [
-        { title: 'VSCode 插件', path: '/tools/vscode' },
-      ],
+      children: [{ title: 'VSCode 插件', path: '/tools/vscode' }],
     },
     {
       title: '更新日志',

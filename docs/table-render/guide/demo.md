@@ -1,7 +1,10 @@
 ---
-order: 2
+group:
+  title: 教程
+  order: 1
+order: 3
 title: 使用案例
-toc: menu
+toc: content
 ---
 
 ## 基本 demo
@@ -28,14 +31,7 @@ toc: menu
 
 <code src='./demo/custom.jsx' />
 
-## 使用 cardList
-
-<code src='./demo/card.jsx' />
-
-## 使用 toolbarAction
-
-<code src='./demo/toolbarAction.jsx' />
-
 ## 不使用 searchForm
 
 <code src='./demo/nosearch.jsx' />
+

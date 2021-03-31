@@ -1,7 +1,10 @@
 ---
-order: 2
+group:
+  title: 配置
+  order: 2
+order: 1
 title: Props
-toc: menu
+toc: content
 ---
 
 # Props
@@ -172,26 +175,6 @@ columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns
 | copyable  | 是否支持复制                                   | boolean                                   | -      |
 | valueType | 值的类型，详见 [valueType 配置](./columns.md)  | `text` \| `money` \| `date` \| `dateTime` | `text` |
 | enum      | 当前列值的枚举，详见 [enum 配置](./columns.md) | object                                    | -      |
-
-## `<CardList />` 常用 Props
-
-对于 Card 场景我们提供了 CardList 组件进行快速渲染
-
-| 属性              | 描述                         | 类型 | 默认值   |
-| ----------------- | ---------------------------- | ---- | -------- |
-| onCardClick       | 卡片的点击事件               | -    | Function |
-| cardRender        | 渲染 card 组件的 schema 协议 | -    | object   |
-| paginationOptions | 分页器                       | -    | object   |
-
-### cardRender
-
-| 属性    | 描述                                        | 类型 | 默认值             |
-| ------- | ------------------------------------------- | ---- | ------------------ |
-| type    | card 类型: `default`、 `image`              | -    | default            | string |
-| cover   | 卡片封面                                    | -    | string             | Object |
-| header  | 卡片头部渲染逻辑                            | -    | object             |
-| content | 卡片内容                                    | -    | object             |
-| footer  | 卡片底部，对应 antd card 的 actionList 属性 | -    | `Array<ReactNode>` |
 
 ## useTable
 

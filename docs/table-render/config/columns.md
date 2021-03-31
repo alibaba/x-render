@@ -1,7 +1,8 @@
 ---
-order: 3
-title: columns
-toc: menu
+order: 2
+title: Columns
+toc: content
+
 ---
 
 # columns 补充 api

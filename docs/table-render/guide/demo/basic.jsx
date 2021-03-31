@@ -35,12 +35,16 @@ const Demo = () => {
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
-        { params },
+        { params }
       )
       .then(res => {
         // console.log('response:', res);
         if (res && res.data) {
-          return { rows: res.data, total: res.data.length, extraData: res.status }; // 注意一定要返回 rows 和 total
+          return {
+            rows: res.data,
+            total: res.data.length,
+            extraData: res.status,
+          }; // 注意一定要返回 rows 和 total
         }
       })
       .catch(e => console.log('Oops, error', e));
@@ -49,7 +53,6 @@ const Demo = () => {
   return (
     <TableContainer
       searchApi={searchApi}
-      searchOnMount={false}
       onSearch={search => console.log('onSearch', search)}
     >
       <TableBody />
@@ -152,7 +155,11 @@ const TableBody = () => {
           <Button key="out" onClick={showData}>
             导出数据
           </Button>,
-          <Button key="primary" type="primary" onClick={() => alert('table-render！')}>
+          <Button
+            key="primary"
+            type="primary"
+            onClick={() => alert('table-render！')}
+          >
             <PlusOutlined />
             创建
           </Button>,
