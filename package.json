@@ -19,6 +19,7 @@
   "devDependencies": {
     "@alifd/next": "^1.x",
     "@umijs/preset-react": "1.x",
+    "@umijs/plugin-esbuild": "1.x",
     "@umijs/test": "^3.0.5",
     "antd": "^4.x",
     "babel-plugin-import": "^1.13.0",

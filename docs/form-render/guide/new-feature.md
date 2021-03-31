@@ -17,7 +17,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/validator.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 ## 0.9.1
@@ -29,7 +29,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/format.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 ## 0.8.11
@@ -41,7 +41,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/column.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 ## 0.8.9
@@ -53,7 +53,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/pagination.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 ## 0.8.1
@@ -65,7 +65,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/expression.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 设 default 为 null，即可让单选组件不默认选择第一项
@@ -75,7 +75,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/noDefault.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 uniqueItems 现在支持复杂的判断
@@ -85,7 +85,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/uniqueItems.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 ## 0.7.2
@@ -98,7 +98,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/maxLength.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 ## 弹层展示
@@ -110,7 +110,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/modal.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 ## html
@@ -122,5 +122,5 @@ import React from 'react';
 import FR from '../demo/FR';
 import json from '../demo/new-feature/html.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```

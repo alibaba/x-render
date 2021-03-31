@@ -19,7 +19,7 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/expression.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
 
 ## 弹层展示
@@ -31,5 +31,5 @@ import React from 'react';
 import FR from '../demo/FR/index.jsx';
 import json from '../demo/new-feature/modal.json';
 
-export default () => <FR schema={json} />;
+export default () => <FR schema={json}/>;
 ```
