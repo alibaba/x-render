@@ -7,7 +7,7 @@ const schema = {
   type: 'object',
   properties: {
     range1: {
-      bind: ['startData', 'endData'],
+      bind: ['startDate', 'endDate'],
       title: '日期',
       type: 'range',
       format: 'date',
@@ -78,6 +78,8 @@ const Demo = () => {
         onClick={() => {
           form.setValues({
             a: { b: { c: '23434' } },
+            startDate: '2021-03-10',
+            endDate: '2021-04-08',
             obj: { input2: 'heelo' },
           });
         }}
