@@ -20,14 +20,7 @@ const FR = ({
   hideValidation = false,
   ...rest
 }) => {
-  const {
-    displayType,
-    column,
-    flatten,
-    errorFields,
-    labelWidth,
-    isEditing,
-  } = useStore();
+  const { displayType, column, flatten, errorFields, labelWidth } = useStore();
   const _displayType = rest.displayType || displayType || 'column';
   const item = _item ? _item : flatten[id];
   if (!item) return null;

@@ -11,7 +11,7 @@ export const Ctx = createContext(() => {});
 export const StoreCtx = createContext({});
 
 // 使用最顶层组件的 setState
-export const useGlobal = () => {
+export const useTools = () => {
   return useContext(Ctx);
 };
 

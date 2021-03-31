@@ -1,8 +1,12 @@
 import React, { useMemo } from 'react';
 import { getWidgetName, extraSchemaList } from '../../mapping';
 import { defaultWidgetNameList } from '../../widgets/antd';
-import { useStore } from '../../hooks';
+import { useTools } from '../../hooks';
 import { transformProps } from '../../HOC';
+
+// import { isObjType, isListType } from '../../utils';
+// import { Input } from 'antd';
+// import Map from '../../widgets/antd/map';
 
 const ExtendedWidget = ({
   title,
@@ -12,10 +16,21 @@ const ExtendedWidget = ({
   children,
   onItemChange,
 }) => {
-  const { widgets, mapping } = useStore();
+  const { widgets, mapping } = useTools();
+
+  // TODO1: 原来慢在这里啊！！！每次渲染都在算用哪个组件，这段代码用于测试
+  // if (isObjType(schema)) {
+  //   return <Map value={value} onChange={onChange} children={children} />;
+  // }
+  // if (isListType(schema)) {
+  //   return 'haha';
+  // }
+  // return <Input value={value} onChange={e => onChange(e.target.value)} />;
 
   // TODO: 计算是哪个widget，需要优化
-  let widgetName = getWidgetName(schema, mapping);
+  let widgetName = useMemo(() => getWidgetName(schema, mapping), [
+    JSON.stringify(schema),
+  ]);
   let Widget = widgets[widgetName];
   const customName = schema['ui:widget'];
   if (customName && widgets[customName]) {

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { flattenSchema } from './utils';
 import FR from './FR';
 import { Ctx, StoreCtx, useSet } from './hooks';
@@ -45,18 +45,25 @@ function App({
 
   const { flatten } = state;
 
-  const storeRef = useRef({});
+  const store = useMemo(
+    () => ({
+      flatten,
+      ...form,
+      displayType,
+      debounceInput,
+      debug,
+      ...rest,
+    }),
+    [JSON.stringify(flatten), JSON.stringify(formData)]
+  );
 
-  storeRef.current = {
-    flatten,
-    ...form,
-    widgets: { ...defaultWidgets, ...widgets },
-    mapping: { ...defaultMapping, ...mapping },
-    displayType,
-    debounceInput,
-    debug,
-    ...rest,
-  };
+  const tools = useMemo(
+    () => ({
+      widgets: { ...defaultWidgets, ...widgets },
+      mapping: { ...defaultMapping, ...mapping },
+    }),
+    []
+  );
 
   useEffect(() => {
     const newFlatten = _flatten || flattenSchema(schema);
@@ -87,8 +94,8 @@ function App({
 
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
-    <StoreCtx.Provider value={storeRef.current}>
-      <Ctx.Provider value={''}>
+    <StoreCtx.Provider value={store}>
+      <Ctx.Provider value={tools}>
         <div className="fr-container">
           {debug ? (
             <div className="mv2 bg-black-05 pa2 br2">
