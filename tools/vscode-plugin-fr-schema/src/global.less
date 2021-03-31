@@ -1,0 +1,106 @@
+// 布局类
+html, body, #root {
+  height: 100%;
+  margin: 0;
+}
+
+.dnd-container > .field-wrapper {
+  height: 98% !important;
+}
+
+.dnd-container > .field-wrapper > .fr-field {
+  margin-bottom: 0;
+}
+
+.left-layout > .f6.b:last-of-type,
+.left-layout > .pl0:last-of-type {
+  display: none;
+}
+
+.preview-mode {
+  .left-layout,
+  .right-layout,
+  .field-wrapper > div[style] {
+    display: none !important;
+  }
+}
+
+// 容器类
+body,
+.fr-wrapper,
+.fr-wrapper .bg-white,
+.field-wrapper,
+.ant-input-group-addon,
+.ant-input-affix-wrapper,
+.ant-picker-suffix,
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--vscode-input-foreground) !important;
+  background-color: var(--vscode-editor-background) !important;
+  outline: var(--vscode-button-background) !important;
+}
+
+.mid-layout,
+.fr-wrapper .b--black-20 {
+  border-color: var(--vscode-button-secondaryBackground) !important;
+}
+
+.fr-label-title {
+  color: var(--vscode-input-foreground) !important;
+}
+
+.left-layout::-webkit-scrollbar {
+  display: none;
+}
+
+// 按钮类
+.left-item,
+.left-element,
+.ant-btn,
+.field-wrapper > div[draggable],
+.fr-field + div:not([class]),
+.ant-tabs-nav:before {
+  color: var(--vscode-button-foreground) !important;
+  border-color: var(--vscode-inputOption-activeBorder) !important;
+  background-color: var(--vscode-button-background) !important;
+}
+
+.left-item:hover,
+.left-element:hover,
+.ant-btn:hover {
+  background-color: var(--vscode-button-hoverBackground) !important;
+}
+
+.ant-checkbox-disabled+span {
+  color: var(--vscode-debugIcon-breakpointDisabledForeground) !important;
+}
+
+// 组件类
+.ant-input,
+.ant-input-number,
+.ant-select,
+.ant-select-selector,
+.ant-picker,
+.ant-select-multiple .ant-select-selection-item,
+.ant-select-multiple .ant-select-selection-item-remove {
+  color: var(--vscode-input-foreground) !important;
+  background-color: var(--vscode-input-background) !important;
+  outline: var(--vscode-button-background) !important;
+}
+
+.ant-radio-wrapper,
+.ant-checkbox-wrapper {
+  color: var(--vscode-input-foreground) !important;
+}
+
+.ant-tabs {
+  color: var(--vscode-input-foreground) !important;
+}
+
+.ant-tabs-ink-bar  {
+  background-color: var(--vscode-checkbox-foreground) !important;
+}
+
+.ant-tabs-tab:hover,
+.ant-tabs-tab:active {
+  color: var(--vscode-editorHoverWidget-foreground) !important;
+}
