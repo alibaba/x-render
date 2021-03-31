@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import 'antd/dist/antd.css';
 import FormRender, { useForm, createWidget } from 'form-render-beta';
 import schema from './basic.json';
 import Percent from './otherWidgets/Percent';

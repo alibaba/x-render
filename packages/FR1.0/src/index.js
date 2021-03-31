@@ -6,6 +6,7 @@ import { Ctx, StoreCtx, useSet } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
 import './tachyons.less';
+import 'antd/dist/antd.less';
 import './index.less';
 
 // 其他入参 watch: {"a.b.c": (value) => { ... }, }
