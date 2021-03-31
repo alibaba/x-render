@@ -2,7 +2,6 @@ import React from 'react';
 import { InputNumber, Slider } from 'antd';
 
 const PercentSlider = p => {
-  const style = p.invalid ? { borderColor: '#f5222d' } : {};
   const { max, min, step } = p.schema;
   let setting = {};
   if (max || max === 0) {
@@ -46,7 +45,7 @@ const PercentSlider = p => {
     <InputNumber
       {...p.options}
       {...setting}
-      style={{ width: '80px', ...style }}
+      style={{ width: '80px' }}
       value={numberValue}
       disabled={p.disabled}
       onChange={handleChange}
@@ -56,7 +55,7 @@ const PercentSlider = p => {
   );
 
   return (
-    <div className='fr-slider'>
+    <div className="fr-slider">
       <Slider
         style={{ flexGrow: 1, marginRight: hideNumber ? 0 : 12 }}
         {...setting}

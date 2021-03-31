@@ -8,10 +8,22 @@ import multiSelect from './multiSelect';
 import radio from './radio';
 import select from './select';
 import slider from './slider';
-import textarea from './textarea';
 import upload from './upload';
 import ImageInput from './ImageInput';
+import Html from './html';
 import { InputNumber, Checkbox, Switch, Input } from 'antd';
+import { createWidget } from '../../HOC';
+
+const { TextArea } = Input;
+
+const FrNumber = createWidget(({ style }) => ({
+  size: 'small',
+  style: { width: '100%', ...style },
+}))(InputNumber);
+
+const FrTextArea = createWidget(({ autoSize }) => ({
+  autoSize: autoSize ? autoSize : { minRows: 3 },
+}))(TextArea);
 
 export const widgets = {
   checkbox: Checkbox,
@@ -24,13 +36,14 @@ export const widgets = {
   list,
   map,
   multiSelect, // 下拉多选
-  number: InputNumber,
+  number: FrNumber,
   radio,
   select,
   slider, // 带滚条的number
   switch: Switch,
-  textarea,
+  textarea: FrTextArea,
   upload,
+  html: Html,
 };
 
 export const defaultWidgetNameList = Object.keys(widgets);

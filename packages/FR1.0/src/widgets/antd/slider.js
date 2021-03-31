@@ -7,7 +7,6 @@ import React from 'react';
 import { InputNumber, Slider } from 'antd';
 
 const SliderWithNumber = p => {
-  const style = p.invalid ? { borderColor: '#f5222d' } : {};
   const { max, min, step } = p.schema;
   let setting = {};
   if (max || max === 0) {
@@ -33,9 +32,10 @@ const SliderWithNumber = p => {
     </span>
   ) : (
     <InputNumber
+      size="small"
       {...p.options}
       {...setting}
-      style={{ width: '90px', ...style }}
+      style={{ width: '90px' }}
       value={p.value}
       disabled={p.disabled}
       onChange={p.onChange}
@@ -43,7 +43,7 @@ const SliderWithNumber = p => {
   );
 
   return (
-    <div className='fr-slider'>
+    <div className="fr-slider">
       <Slider
         style={{ flexGrow: 1, marginRight: hideNumber ? 0 : 12 }}
         {...setting}

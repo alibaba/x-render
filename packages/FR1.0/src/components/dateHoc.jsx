@@ -8,9 +8,6 @@ import moment from 'moment';
 import { getFormat } from '../utils';
 
 export default (p, onChange, DateComponent) => {
-  const style = p.invalid
-    ? { borderColor: '#ff4d4f', boxShadow: '0 0 0 2px rgba(255,77,79,.2)' }
-    : {};
   let { format = 'dateTime' } = p.schema;
   if (p.options && p.options.format) {
     format = p.options.format;
@@ -36,7 +33,7 @@ export default (p, onChange, DateComponent) => {
     ...placeholderObj,
     ...p.options,
     value: _value,
-    style: { width: '100%', ...style },
+    style: { width: '100%' },
     disabled: p.disabled || p.readOnly,
     onChange,
   };
