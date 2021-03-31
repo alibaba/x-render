@@ -12,16 +12,12 @@ export default defineConfig({
       title: 'FormRender',
       path: '/form-render',
       children: [
+        { title: 'FR1.0', path: '/FR1.0'},
         { title: '教程', path: '/form-render/guide' },
         { title: '自定义组件', path: '/form-render/widgets' },
         { title: 'Playground', path: '/playground' },
         // { title: '表单设计器', path: '/generator' },
       ],
-    },
-    // 这里后面需要默认放到/form-render下面去
-    {
-      title: 'FR1.0',
-      path: '/FR1.0',
     },
     {
       title: 'TableRender',
@@ -35,7 +31,13 @@ export default defineConfig({
       title: 'ChartRender',
       path: '/chart-render',
     },
-    { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
+    {
+      title: '周边工具',
+      path: '/tools',
+      children: [
+        { title: 'VSCode 插件', path: '/tools/vscode' },
+      ],
+    },
     {
       title: '更新日志',
       children: [
@@ -55,6 +57,7 @@ export default defineConfig({
       title: '国内镜像',
       path: 'https://x-render.gitee.io/form-render/',
     },
+    { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
   ],
   mode: 'site',
   alias: {
