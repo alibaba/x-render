@@ -24,7 +24,7 @@ const RenderField = ({
   item,
   labelClass,
   labelStyle,
-  contentClass,
+  contentClass: _contentClass,
   hasChildren,
   children,
   errorFields = [],
@@ -76,6 +76,11 @@ const RenderField = ({
 
   const errObj = errorFields.find(err => err.name === dataPath);
   const errorMessage = errObj && errObj.error; // 是一个list
+  const hasError = Array.isArray(errorMessage) && errorMessage.length > 0;
+  // 补上这个class，会自动让下面所有的展示ui变红！
+  const contentClass = hasError
+    ? _contentClass + ' ant-form-item-has-error'
+    : _contentClass;
 
   const _value = getValueByPath(formData, dataPath);
 
