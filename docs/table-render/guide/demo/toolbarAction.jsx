@@ -40,7 +40,11 @@ const columns = [
   {
     title: '操作',
     render: row => (
-      <a href="https://x-render.gitee.io/form-render/" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://x-render.gitee.io/form-render/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         查看
       </a>
     ),
@@ -49,7 +53,10 @@ const columns = [
 
 const searchApi = params => {
   return request
-    .get('https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/simple', { params })
+    .get(
+      'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/simple',
+      { params }
+    )
     .then(res => {
       console.log('response:', res);
       if (res && res.data) {
@@ -69,12 +76,6 @@ const Demo = () => {
           headerTitle="最简表格"
           columns={columns}
           rowKey="id"
-          toolbarRender={() => [
-            <Button key="primary" type="primary" onClick={() => alert('table-render！')}>
-              <PlusOutlined />
-              创建
-            </Button>,
-          ]}
           toolbarAction
         />
       </TableContainer>

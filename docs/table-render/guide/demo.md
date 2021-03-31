@@ -31,7 +31,10 @@ toc: content
 
 <code src='./demo/custom.jsx' />
 
+## 使用 toolBarAction
+
+<code src='./demo/toolbarAction.jsx' />
+
 ## 不使用 searchForm
 
 <code src='./demo/nosearch.jsx' />
-

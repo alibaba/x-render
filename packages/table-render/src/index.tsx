@@ -3,7 +3,6 @@ import { useSet, useTable } from './hooks';
 import { Ctx } from './context';
 import Search from './Search';
 import ProTable from './ProTable';
-import CardList from './CardList';
 import { message, ConfigProvider } from 'antd';
 import { isObj } from './utils';
 import _get from 'lodash.get';
@@ -52,7 +51,10 @@ const useTableRoot = (props: RootProps) => {
 
   const { pagination, search, searchApi, tab: currentTab, checkPassed } = state;
 
-  const doSearch = (params: { current?: any; tab?: any; pageSize?: any }, customSearch?: any) => {
+  const doSearch = (
+    params: { current?: any; tab?: any; pageSize?: any },
+    customSearch?: any
+  ) => {
     // 删除自定义组件的参数名
     delete search.searchBtn;
 
@@ -113,7 +115,10 @@ const useTableRoot = (props: RootProps) => {
     }
   };
 
-  const refresh = (params?: { tab: string | number; stay?: boolean }, search?: any) => {
+  const refresh = (
+    params?: { tab: string | number; stay?: boolean },
+    search?: any
+  ) => {
     const _stay = (params && params.stay) || false;
     const _tab = params && params.tab;
     const _search = search || {};
@@ -123,7 +128,7 @@ const useTableRoot = (props: RootProps) => {
         tab: _tab,
         pageSize: pagination.pageSize,
       },
-      _search,
+      _search
     );
   };
 
@@ -152,7 +157,10 @@ const useTableRoot = (props: RootProps) => {
   return context;
 };
 
-const Container: React.ForwardRefRenderFunction<unknown, RootProps> = (props, ref) => {
+const Container: React.ForwardRefRenderFunction<unknown, RootProps> = (
+  props,
+  ref
+) => {
   const context = useTableRoot(props);
 
   useImperativeHandle(ref, () => context);
@@ -166,4 +174,4 @@ const Container: React.ForwardRefRenderFunction<unknown, RootProps> = (props, re
 
 const TableContainer = forwardRef(Container);
 
-export { Search, ProTable, CardList, TableContainer, useTable };
+export { Search, ProTable, TableContainer, useTable };
