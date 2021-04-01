@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useStore } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
 import {
@@ -18,20 +18,23 @@ import FieldTitle from './Title';
 import ExtendedWidget from './ExtendedWidget';
 
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
-const RenderField = ({
-  $id,
-  dataIndex,
-  item,
-  labelClass,
-  labelStyle,
-  contentClass: _contentClass,
-  hasChildren,
-  children,
-  errorFields = [],
-  hideTitle,
-  hideValidation,
-}) => {
+const RenderField = props => {
+  const {
+    $id,
+    dataIndex,
+    item,
+    labelClass,
+    labelStyle,
+    contentClass: _contentClass,
+    hasChildren,
+    children,
+    errorFields = [],
+    hideTitle,
+    hideValidation,
+  } = props;
+
   const { schema } = item;
+  const store = useStore();
   const {
     onItemChange,
     formData,
@@ -41,14 +44,11 @@ const RenderField = ({
     extend,
     touchKey,
     debounceInput,
-  } = useStore();
-
+  } = store;
+  console.log('renderField', $id);
   const snapShot = useRef();
-
+  const hasSetDefault = useRef(false);
   let dataPath = getDataPath($id, dataIndex);
-
-  // 解析schema
-
   let _schema = clone(schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
   let _rules = [...item.rules];
 
@@ -146,6 +146,14 @@ const RenderField = ({
     : isCheckBoxType(_schema)
     ? _schema.title
     : null;
+  if (
+    _schema &&
+    _schema.default !== undefined &&
+    hasSetDefault.current === false
+  ) {
+    widgetProps.value = _schema.default;
+    hasSetDefault.current = true;
+  }
 
   // checkbox必须单独处理，布局太不同了
   if (isCheckBoxType(_schema)) {
