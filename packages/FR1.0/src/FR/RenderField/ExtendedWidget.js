@@ -9,7 +9,6 @@ import { transformProps } from '../../HOC';
 // import Map from '../../widgets/antd/map';
 
 const ExtendedWidget = ({
-  title,
   schema,
   onChange,
   value,
@@ -18,7 +17,7 @@ const ExtendedWidget = ({
 }) => {
   const { widgets, mapping } = useTools();
 
-  // TODO1: 原来慢在这里啊！！！每次渲染都在算用哪个组件，这段代码用于测试
+  // TODO1: 需要查一下卡顿的源头
   // if (isObjType(schema)) {
   //   return <Map value={value} onChange={onChange} children={children} />;
   // }
@@ -28,9 +27,10 @@ const ExtendedWidget = ({
   // return <Input value={value} onChange={e => onChange(e.target.value)} />;
 
   // TODO: 计算是哪个widget，需要优化
-  let widgetName = useMemo(() => getWidgetName(schema, mapping), [
-    JSON.stringify(schema),
-  ]);
+  // let widgetName = useMemo(() => getWidgetName(schema, mapping), [
+  //   JSON.stringify(schema),
+  // ]);
+  let widgetName = getWidgetName(schema, mapping);
   let Widget = widgets[widgetName];
   const customName = schema['ui:widget'];
   if (customName && widgets[customName]) {
@@ -40,21 +40,32 @@ const ExtendedWidget = ({
 
   const extraSchema = extraSchemaList[widgetName];
 
-  const widgetProps = {
+  let widgetProps = {
     schema: { ...schema, ...extraSchema },
     onChange,
     value,
     children,
+    ...schema.props,
   };
 
-  if (title) {
-    widgetProps.title = title;
+  ['title', 'placeholder', 'disabled'].forEach(key => {
+    if (schema[key]) {
+      widgetProps[key] = schema[key];
+    }
+  });
+
+  if (schema.default !== undefined) {
+    widgetProps.defaultValue = schema.default;
+  }
+
+  if (schema.props) {
+    widgetProps = { ...widgetProps, ...schema.props };
   }
 
   // 避免传组件不接受的props，按情况传多余的props
   const isExternalWidget = defaultWidgetNameList.indexOf(widgetName) === -1; // 是否是外部组件
   if (isExternalWidget) {
-    widgetProps.onItemChange = onItemChange; // 只给外部组件提供，默认的组件都是简单组件，不需要，多余的props会warning，很烦
+    widgetProps.onItemChange = onItemChange; // 只给外部组件提供，默认的组件都是简单组件，不需要，多余的props在antd的input上会warning，很烦
   }
 
   const finalProps = transformProps(widgetProps);
@@ -62,4 +73,15 @@ const ExtendedWidget = ({
   return <Widget {...finalProps} />;
 };
 
-export default ExtendedWidget;
+const areEqual = (prev, current) => {
+  // 这儿需要考察一下
+  if (
+    prev.value === current.value &&
+    JSON.stringify(prev.schema) === JSON.stringify(current.schema)
+  ) {
+    return true;
+  }
+  return false;
+};
+
+export default React.memo(ExtendedWidget, areEqual);
