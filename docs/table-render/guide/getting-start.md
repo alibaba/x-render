@@ -8,7 +8,7 @@ title: 快速上手
 table-render 目前默认使用 ant design，所以请在 antd 项目下使用，如果要单独使用，不要忘记安装 antd
 
 ```sh
-npm i table-render antd
+npm i table-render antd --save
 ```
 
 or

@@ -22,10 +22,6 @@ export default defineConfig({
     {
       title: 'TableRender',
       path: '/table-render',
-      children: [
-        { title: '教程', path: '/table-render/guide' },
-        { title: '配置', path: '/table-render/config' },
-      ],
     },
     {
       title: 'CardRender',
