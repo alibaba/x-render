@@ -110,6 +110,7 @@ export const useForm = props => {
     }).then(res => {
       _setErrors(res);
     });
+    console.log('validateAll', formData, allTouched);
   }, [JSON.stringify(formData), allTouched]);
 
   const setEditing = isEditing => {

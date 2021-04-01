@@ -20,6 +20,7 @@ const FR = ({
   hideValidation = false,
   ...rest
 }) => {
+  console.log('FR');
   const { displayType, column, flatten, errorFields, labelWidth } = useStore();
   const _displayType = rest.displayType || displayType || 'column';
   const item = _item ? _item : flatten[id];

@@ -92,37 +92,39 @@
         "input": {
           "title": "简单输入框",
           "type": "string",
-          "ui:options": {
-            "placeholder": "haha"
-          },
+          "placeholder": "haha",
           "required": false
         },
         "textarea": {
           "title": "简单文本编辑框",
           "type": "string",
-          "format": "textarea"
+          "format": "textarea",
+          "default": "123"
         },
         "color": {
           "title": "颜色选择",
           "type": "string",
-          "format": "color"
+          "format": "color",
+          "default": "#000000"
         },
         "date": {
           "title": "日期选择",
           "type": "string",
-          "format": "date"
+          "format": "date",
+          "default": "1999-12-12"
         },
         "image": {
           "bind": false,
           "title": "图片展示",
           "type": "string",
-          "format": "image"
+          "format": "image",
+          "default": "https://img.alicdn.com/imgextra/i1/O1CN01jfLqRq1pixRWuFJ2J_!!6000000005395-2-tps-332-256.png"
         },
         "uploader": {
           "title": "上传文件",
           "type": "string",
           "format": "upload",
-          "ui:options": {
+          "props": {
             "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
           }
         }

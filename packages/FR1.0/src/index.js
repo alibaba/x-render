@@ -28,6 +28,7 @@ function App({
   size,
   ...rest
 }) {
+  console.log('App');
   const {
     submitData,
     errorFields,
