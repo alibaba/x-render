@@ -20,7 +20,7 @@ export default function color(p) {
         <ColorPicker
           type={format}
           animation="slide-up"
-          color={p.value ? p.value : '#ffffff'}
+          color={p.value ? p.value : p.defaultValue || '#ffffff'}
           onChange={onPickerChange}
         />
       }
@@ -29,6 +29,7 @@ export default function color(p) {
       ) : (
         <Input
           placeholder="#ffffff"
+          defaultValue={p.defaultValue}
           disabled={p.disabled}
           value={p.value}
           onChange={onInputChange}

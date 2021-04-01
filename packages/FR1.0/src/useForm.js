@@ -8,6 +8,7 @@ import {
   processData,
   transformDataWithBind,
   transformDataWithBind2,
+  getDataWithDefault,
 } from './processData';
 
 export const useForm = props => {
@@ -168,6 +169,9 @@ export const useForm = props => {
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
+
+    // const _data = getDataWithDefault(formData, flatten);
+
     validateAll({
       formData,
       schema: schemaRef.current,
@@ -178,7 +182,7 @@ export const useForm = props => {
       .then(errors => {
         // 如果有错误，停止校验和提交
         if (errors && errors.length > 0) {
-          console.log('submit:', formData, errors);
+          console.log('submit:', _data, errors);
           setState({ isValidating: false, isSubmitting: false });
           return;
         }

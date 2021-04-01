@@ -12,7 +12,7 @@ export default p => {
   const DateComponent = format === 'time' ? TimePicker : DatePicker;
   const dateFormat = getFormat(format);
   // week的时候会返回 2020-31周 quarter会返回 2020-Q2 需要处理之后才能被 moment
-  let _value = p.value || '';
+  let _value = p.value || p.defaultValue || '';
   if (typeof _value === 'string') {
     if (format === 'week') {
       _value = _value.substring(0, _value.length - 1);

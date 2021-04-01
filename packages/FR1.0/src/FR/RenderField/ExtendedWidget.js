@@ -74,7 +74,14 @@ const ExtendedWidget = ({
 };
 
 const areEqual = (prev, current) => {
+  // console.log(prev, current, 'asdgdhfgdgsfdf');
   // 这儿需要考察一下
+  if (prev.schema && prev.schema.$id === '#') {
+    return false;
+  }
+  if (prev.schema && prev.schema.type === 'object') {
+    return false;
+  }
   if (
     prev.value === current.value &&
     JSON.stringify(prev.schema) === JSON.stringify(current.schema)

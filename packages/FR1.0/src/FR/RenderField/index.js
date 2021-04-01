@@ -45,9 +45,8 @@ const RenderField = props => {
     touchKey,
     debounceInput,
   } = store;
-  console.log('renderField', $id);
+  console.log('<renderField>', $id);
   const snapShot = useRef();
-  const hasSetDefault = useRef(false);
   let dataPath = getDataPath($id, dataIndex);
   let _schema = clone(schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
   let _rules = [...item.rules];
@@ -146,14 +145,9 @@ const RenderField = props => {
     : isCheckBoxType(_schema)
     ? _schema.title
     : null;
-  if (
-    _schema &&
-    _schema.default !== undefined &&
-    hasSetDefault.current === false
-  ) {
-    widgetProps.value = _schema.default;
-    hasSetDefault.current = true;
-  }
+  // if (_schema && _schema.default !== undefined) {
+  //   widgetProps.value = _schema.default;
+  // }
 
   // checkbox必须单独处理，布局太不同了
   if (isCheckBoxType(_schema)) {
@@ -181,9 +175,7 @@ const RenderField = props => {
         )}
       </div>
     );
-  }
 
-  if (isObjType(_schema)) {
     return (
       <div className={contentClass} style={contentStyle}>
         <ExtendedWidget

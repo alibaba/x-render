@@ -23,8 +23,13 @@ const PreviewNode = ({ value }) => {
   );
 };
 
-export default function imageInput({ value, ...rest }) {
+export default function imageInput({ value, defaultValue, ...rest }) {
+  const _value = value || defaultValue;
   return (
-    <Input value={value} addonAfter={<PreviewNode value={value} />} {...rest} />
+    <Input
+      value={_value}
+      addonAfter={<PreviewNode value={_value} />}
+      {...rest}
+    />
   );
 }
