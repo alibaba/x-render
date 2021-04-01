@@ -36,7 +36,6 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
-    "@ant-design/pro-card": "^1.8.3",
     "dayjs": "^1.8.29",
     "form-render": "0.x",
     "lodash.get": "^4.4.2"
