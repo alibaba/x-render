@@ -1,6 +1,6 @@
 {
   "name": "table-render",
-  "version": "0.8.22",
+  "version": "0.8.23",
   "description": "中后台表格解决方案",
   "scripts": {
     "start": "dumi dev",
