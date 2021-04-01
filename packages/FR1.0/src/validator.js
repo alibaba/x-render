@@ -21,6 +21,7 @@ export const validateAll = ({
 }) => {
   // 生成一个基础结构，确保对象内的必填元素也被校验。
   const formData = { ...generateDataSkeleton(schema), ..._formData };
+  if (Object.keys(schema).length === 0) return Promise.resolve();
   const descriptor = getDscriptorFromSchema({
     schema,
     isRequired,
