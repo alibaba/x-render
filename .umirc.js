@@ -28,6 +28,10 @@ export default defineConfig({
       ],
     },
     {
+      title: 'CardRender',
+      path: '/card-render',
+    },
+    {
       title: 'ChartRender',
       path: '/chart-render',
     },
