@@ -182,7 +182,7 @@ export const useForm = props => {
       .then(errors => {
         // 如果有错误，停止校验和提交
         if (errors && errors.length > 0) {
-          console.log('submit:', _data, errors);
+          console.log('submit:', formData, errors);
           setState({ isValidating: false, isSubmitting: false });
           return;
         }

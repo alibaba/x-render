@@ -56,7 +56,11 @@ function App({
       debug,
       ...rest,
     }),
-    [JSON.stringify(flatten), JSON.stringify(formData)]
+    [
+      JSON.stringify(flatten),
+      JSON.stringify(formData),
+      JSON.stringify(errorFields),
+    ]
   );
 
   const tools = useMemo(
@@ -109,6 +113,7 @@ function App({
           {debug ? (
             <div className="mv2 bg-black-05 pa2 br2">
               <div>{'formData:' + JSON.stringify(form.formData)}</div>
+              <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
               <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
               <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
               <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
