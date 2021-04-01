@@ -23,15 +23,8 @@ const PreviewNode = ({ value }) => {
   );
 };
 
-export default function imageInput({ onChange, options, disabled, value }) {
+export default function imageInput({ value, ...rest }) {
   return (
-    <Input
-      value={value}
-      type="text"
-      disabled={disabled}
-      addonAfter={<PreviewNode value={value} />}
-      onChange={onChange}
-      {...options}
-    />
+    <Input value={value} addonAfter={<PreviewNode value={value} />} {...rest} />
   );
 }
