@@ -136,15 +136,16 @@
       "properties": {
         "number1": {
           "title": "数字输入框",
-          "description": "1 - 1000",
+          "description": "10 - 100",
           "type": "number",
-          "min": 1,
-          "max": 1000
+          "rules": [{ "min": 10, "max": 100 }]
         },
         "number2": {
           "title": "带滑动条",
+          "description": "20 - 50",
           "type": "number",
-          "ui:widget": "slider"
+          "ui:widget": "slider",
+          "rules": [{ "min": 20 }, { "max": 50 }]
         }
       }
     },

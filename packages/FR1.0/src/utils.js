@@ -726,6 +726,13 @@ export const translateMessage = (msg, schema) => {
   if (!schema) return msg;
   msg = msg.replace('${title}', schema.title);
   msg = msg.replace('${type}', schema.type);
+  // 兼容代码
+  if (schema.min) {
+    msg = msg.replace('${min}', schema.min);
+  }
+  if (schema.max) {
+    msg = msg.replace('${max}', schema.max);
+  }
   if (schema.rules) {
     const minRule = schema.rules.find(r => r.min !== undefined);
     if (minRule) {

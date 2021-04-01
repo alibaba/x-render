@@ -45,7 +45,7 @@ const RenderField = props => {
     touchKey,
     debounceInput,
   } = store;
-  console.log('<renderField>', $id);
+  // console.log('<renderField>', $id);
   const snapShot = useRef();
   let dataPath = getDataPath($id, dataIndex);
   let _schema = clone(schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
@@ -61,7 +61,6 @@ const RenderField = props => {
     snapShot.current = _schema;
 
     _rules = _rules.map(rule => {
-      // if (rule.required) debugger;
       const newRule = {};
       Object.keys(rule).forEach(key => {
         const needParse = isExpression(rule[key]);
