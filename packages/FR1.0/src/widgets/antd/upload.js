@@ -11,10 +11,8 @@ export default function FrUpload({
 }) {
   const props = {
     name: 'file',
-    action: action, // 旧的兼容
-    enctype: 'multipart/form-data',
-    withCredentials: true,
     type: 'file',
+    action, // 旧的兼容
     onChange(info) {
       if (info.file.status === 'done') {
         message.success(`${info.file.name} 上传成功`);
