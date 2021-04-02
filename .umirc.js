@@ -30,6 +30,10 @@ export default defineConfig({
     {
       title: 'ChartRender',
       path: '/chart-render',
+      children: [
+        { title: '文档', path: '/chart-render/docs' },
+        { title: '组件', path: '/chart-render/components' },
+      ],
     },
     {
       title: '周边工具',

@@ -1,6 +1,15 @@
-## PivotTable 交叉表
+---
+group:
+  title: 组件
+  order: 2
+order: 3
+title: PivotTable 交叉表
+toc: content
+---
 
-### 基本使用
+# PivotTable 交叉表
+
+## 基本使用
 
 - 表格渲染上，维度作为 `左表头`，指标作为 `顶表头`。
 
@@ -48,7 +57,7 @@ export default () => {
 };
 ```
 
-### 单元格自定义渲染
+## 单元格自定义渲染
 
 ```jsx
 import React from 'react';
@@ -100,7 +109,7 @@ export default () => (
 );
 ```
 
-### API
+## API
 
 <table>
   <tr>
