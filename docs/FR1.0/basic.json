@@ -41,6 +41,9 @@
               },
               {
                 "max": 12
+              },
+              {
+                "pattern": "^[A-Za-z0-9]+$"
               }
             ]
           },
@@ -86,7 +89,13 @@
             "inputName": {
               "required": true,
               "title": "简单输入框",
-              "type": "string"
+              "type": "string",
+              "rules": [
+                {
+                  "pattern": "^[A-Za-z0-9]+$",
+                  "message": "只允许英文字母 & 数字"
+                }
+              ]
             }
           }
         },
@@ -139,6 +148,7 @@
           "title": "数字输入框",
           "description": "10 - 100",
           "type": "number",
+          "placeholder": "nihao",
           "rules": [{ "min": 10, "max": 100 }]
         },
         "number2": {

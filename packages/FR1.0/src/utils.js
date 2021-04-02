@@ -617,8 +617,11 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
     // if (schema.type) {
     //   result.type = schema.type;
     // }
-    const addType = item => {
+    const processRule = item => {
       if (schema.type) return { ...item, type: schema.type };
+      if (item.pattern && typeof item.pattern === 'string') {
+        return { ...item, pattern: new RegExp(item.pattern) };
+      }
       return item;
     };
     const { required, ...rest } = schema;
@@ -627,10 +630,12 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
     }
     if (schema.rules) {
       if (Array.isArray(schema.rules)) {
-        const _rules = schema.rules.map(item => addType(item));
+        const _rules = schema.rules.map(item => {
+          return processRule(item);
+        });
         result = [rest, ..._rules];
       } else if (isObject(schema.rules)) {
-        result = [rest, addType(schema.rules)];
+        result = [rest, processRule(schema.rules)];
       } else {
         result = rest;
       }
@@ -752,4 +757,134 @@ export const translateMessage = (msg, schema) => {
     }
   }
   return msg;
+};
+
+// "objectName": {
+//   "title": "对象",
+//   "description": "这是一个对象类型",
+//   "type": "object",
+//   "properties": {
+
+//   }
+// }
+
+// "listName": {
+//   "title": "对象数组",
+//   "description": "对象数组嵌套功能",
+//   "type": "array",
+//   "items": {
+//     "type": "object",
+//     "properties": {
+
+//     }
+//   }
+// }
+
+const changeSchema = (_schema, singleChange) => {
+  let schema = clone(_schema);
+  schema = singleChange(schema);
+  if (isObjType(schema)) {
+    let requiredKeys = [];
+    if (Array.isArray(schema.required)) {
+      requiredKeys = schema.required;
+      delete schema.required;
+    }
+    Object.keys(schema.properties).forEach(key => {
+      const item = schema.properties[key];
+      if (requiredKeys.indexOf(key) > -1) {
+        item.required = true;
+      }
+      schema.properties[key] = changeSchema(item, singleChange);
+    });
+  } else if (isListType(schema)) {
+    Object.keys(schema.items.properties).forEach(key => {
+      const item = schema.items.properties[key];
+      schema.items.properties[key] = changeSchema(item, singleChange);
+    });
+  }
+  return schema;
+};
+
+export const updateSchemaToNewVersion = schema => {
+  return changeSchema(schema, updateSingleSchema);
+};
+
+const updateSingleSchema = schema => {
+  try {
+    let _schema = clone(schema);
+    _schema.rules = [];
+    _schema.props = {};
+    if (_schema['ui:options']) {
+      _schema.props = _schema['ui:options'];
+      delete _schema['ui:options'];
+    }
+    if (_schema.pattern) {
+      const validItem = { pattern: _schema.pattern };
+      if (_schema.message && _schema.message.pattern) {
+        validItem.message = _schema.message.pattern;
+      }
+      _schema.rules.push(validItem);
+      delete _schema.pattern;
+      delete _schema.message;
+    }
+    if (_schema.minLength) {
+      _schema.rules.push({ min: _schema.minLength });
+      delete _schema.minLength;
+    }
+    if (_schema.maxLength) {
+      _schema.rules.push({ max: _schema.maxLength });
+      _schema.props.maxLength = _schema.maxLength;
+      delete _schema.maxLength;
+    }
+    if (_schema.min) {
+      _schema.rules.push({ min: _schema.min });
+      _schema.props.min = _schema.min;
+      delete _schema.min;
+    }
+    if (_schema.max) {
+      _schema.rules.push({ max: _schema.max });
+      _schema.props.max = _schema.max;
+      delete _schema.max;
+    }
+    if (_schema.step) {
+      _schema.props.step = _schema.step;
+      delete _schema.step;
+    }
+    if (_schema.minItems) {
+      _schema.props.minItems = _schema.minItems;
+      delete _schema.minItems;
+    }
+    if (_schema.maxItems) {
+      _schema.props.maxItems = _schema.maxItems;
+      delete _schema.maxItems;
+    }
+    if (_schema['ui:className']) {
+      _schema.className = _schema['ui:className'];
+      delete _schema['ui:className'];
+    }
+    if (_schema['ui:hidden']) {
+      _schema.hidden = _schema['ui:hidden'];
+      delete _schema['ui:hidden'];
+    }
+    if (_schema['ui:readonly']) {
+      _schema.readOnly = _schema['ui:readonly']; // 改成驼峰了
+      delete _schema['ui:readonly'];
+    }
+    if (_schema['ui:disabled']) {
+      _schema.disabled = _schema['ui:disabled'];
+      delete _schema['ui:disabled'];
+    }
+    if (_schema['ui:width']) {
+      _schema.width = _schema['ui:width'];
+      delete _schema['ui:width'];
+    }
+    if (_schema['ui:labelWidth']) {
+      _schema.labelWidth = _schema['ui:labelWidth'];
+      delete _schema['ui:labelWidth'];
+    }
+    return _schema;
+  } catch (error) {
+    console.error('旧schema转换失败！', error);
+    return schema;
+  }
 };

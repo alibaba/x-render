@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react';
-import { flattenSchema } from './utils';
+import { flattenSchema, updateSchemaToNewVersion } from './utils';
 import FR from './FR';
 import { Ctx, StoreCtx, useSet } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
@@ -129,4 +129,19 @@ function App({
 
 export { createWidget } from './HOC';
 
-export default App;
+const VersionChanger = props => {
+  const { isOldVersion, schema, ...rest } = props;
+
+  // useEffect(() => {
+
+  //   console.log(updateSchemaToNewVersion(test), 'updateSchemaToNewVersion');
+  // }, []);
+
+  if (isOldVersion) {
+    const _schema = updateSchemaToNewVersion(schema);
+    return <App schema={_schema} {...rest} />;
+  }
+  return <App schema={schema} {...rest} />;
+};
+
+export default VersionChanger;
