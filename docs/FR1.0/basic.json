@@ -7,7 +7,8 @@
       "type": "range",
       "format": "date",
       "required": true,
-      "ui:disabled": "{{formData.percentage == 10}}"
+      "ui:disabled": "{{formData.percentage == 30}}",
+      "default": ["2021-04-13", "2021-05-11"]
     },
     "list": {
       "required": false,
@@ -203,6 +204,7 @@
           "items": {
             "type": "number"
           },
+          "default": [1, 5],
           "enum": [1, 2, 3, 4, 5, 6, 7],
           "enumNames": ["红", "橙", "黄", "绿", "青", "蓝", "紫"]
         },
@@ -213,7 +215,8 @@
             "type": "string"
           },
           "enum": ["A", "B", "C", "D"],
-          "enumNames": ["杭州", "武汉", "湖州", "贵阳"]
+          "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
+          "default": ["A", "B"]
         }
       }
     }

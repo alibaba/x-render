@@ -33,11 +33,9 @@ export const useForm = props => {
 
   const schemaRef = useRef();
   const flattenRef = useRef();
+  const clickSubmit = useRef(false); // 点击submit的那一下，不要执行useEffect里的validate
   const beforeFinishRef = useRef();
   const localeRef = useRef('cn');
-
-  const schema = schemaRef.current || {};
-  const flatten = flattenRef.current || {};
 
   const {
     formData: innerData,
@@ -85,9 +83,9 @@ export const useForm = props => {
     // 如果是外部数据，submit没有收束，无校验
     if (dataFromOutside && typeof _onValidate === 'function') {
       setTimeout(() => {
+        const _data = getDataWithDefault(formData, flattenRef.current);
         validateAll({
-          formData,
-          flatten: flattenRef.current,
+          formData: _data,
           schema: schemaRef.current,
           isRequired: true,
           touchedKeys,
@@ -101,9 +99,13 @@ export const useForm = props => {
   }, []);
 
   useEffect(() => {
+    if (clickSubmit.current) {
+      clickSubmit.current = false;
+      return;
+    }
+    const _data = getDataWithDefault(formData, flattenRef.current);
     validateAll({
-      formData,
-      flatten: flattenRef.current,
+      formData: _data,
       schema: schemaRef.current,
       isRequired: allTouched,
       touchedKeys,
@@ -164,30 +166,35 @@ export const useForm = props => {
   };
 
   const submit = () => {
+    clickSubmit.current = true;
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
     //  https://formik.org/docs/guides/form-submission
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
 
-    // const _data = getDataWithDefault(formData, flatten);
+    const _data = getDataWithDefault(formData, flattenRef.current);
 
     validateAll({
-      formData,
+      formData: _data,
       schema: schemaRef.current,
-      flatten: flattenRef.current,
-      touchedKeys,
+      touchedKeys: [],
+      isRequired: true,
       locale: localeRef.current,
     })
       .then(errors => {
         // 如果有错误，停止校验和提交
         if (errors && errors.length > 0) {
-          console.log('submit:', formData, errors);
-          setState({ isValidating: false, isSubmitting: false });
+          console.log('submit:', _data, errors);
+          setState({
+            isValidating: false,
+            isSubmitting: false,
+            errorFields: errors,
+          });
           return;
         }
         if (typeof beforeFinishRef.current === 'function') {
-          Promise.resolve(processData(formData, flatten)).then(res => {
+          Promise.resolve(processData(_data, flattenRef.current)).then(res => {
             setState({
               isValidating: true,
               isSubmitting: false,
@@ -197,7 +204,7 @@ export const useForm = props => {
           });
           return;
         }
-        Promise.resolve(processData(formData, flatten)).then(res => {
+        Promise.resolve(processData(_data, flattenRef.current)).then(res => {
           setState({
             isValidating: false,
             isSubmitting: true,
@@ -240,7 +247,7 @@ export const useForm = props => {
   const form = {
     // state
     formData,
-    schema,
+    schema: schemaRef.current,
     touchedKeys,
     // methods
     touchKey,
