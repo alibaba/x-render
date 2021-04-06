@@ -68,6 +68,6 @@
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",
-    "rollup-plugin-commonjs": "^10.1.0"
+    "rollup-plugin-copy": "^3.4.0"
   }
 }
