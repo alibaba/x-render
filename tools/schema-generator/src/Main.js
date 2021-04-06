@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef } from 'react';
+import React, { useEffect, useRef, forwardRef } from 'react';
 import { useSet } from './hooks';
 // import SCHEMA from './json/basic.json';
 import FRWrapper from './FRWrapper';
@@ -44,6 +44,7 @@ function App(props, ref) {
     }
   }
 
+  const frwRef = ref || useRef();
   const [state, setState] = useSet({
     formData: {},
     frProps: {
@@ -94,7 +95,7 @@ function App(props, ref) {
     result.schema = newSchema;
     setState({ schema: result });
     if (props.onSchemaChange) {
-      const pureSchema = ref.current.getValue();
+      const pureSchema = frwRef.current.getValue();
       props.onSchemaChange(pureSchema);
     }
   };
@@ -133,7 +134,7 @@ function App(props, ref) {
     frProps: _frProps, // fr顶层的props
   };
 
-  return <FRWrapper ref={ref} {...allProps} />;
+  return <FRWrapper ref={frwRef} {...allProps} />;
 }
 
 export default forwardRef(App);

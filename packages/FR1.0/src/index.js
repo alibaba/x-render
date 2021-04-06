@@ -1,11 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useRef } from 'react';
-import { flattenSchema } from './utils';
+import React, { useEffect, useMemo } from 'react';
+import {
+  flattenSchema,
+  updateSchemaToNewVersion,
+  // completeSchemaWithTheme,
+} from './utils';
 import FR from './FR';
-import { Ctx, StoreCtx, useSet } from './hooks';
+import { Ctx, StoreCtx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
-import './tachyons.less';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
+import './atom.less';
+import 'antd/dist/antd.less';
 import './index.less';
 
 // 其他入参 watch: {"a.b.c": (value) => { ... }, }
@@ -24,6 +31,9 @@ function App({
   debug,
   locale = 'cn', // 'cn'/'en'
   debounceInput = false,
+  size,
+  configProvider,
+  theme,
   ...rest
 }) {
   const {
@@ -36,35 +46,43 @@ function App({
     endSubmitting,
     syncStuff,
     formData,
+    isEditing,
   } = form;
 
-  const [state, setState] = useSet({
-    flatten: {}, // // schema 在内部通用转换成 flatten，一般就一次转换。schema便于书写，flatten便于数据处理
-  });
-
-  const { flatten } = state;
-
-  const storeRef = useRef({});
-
-  storeRef.current = {
-    flatten,
-    ...form,
-    widgets: { ...defaultWidgets, ...widgets },
-    mapping: { ...defaultMapping, ...mapping },
-    displayType,
-    debounceInput,
-    ...rest,
-  };
-
-  useEffect(() => {
-    const newFlatten = _flatten || flattenSchema(schema);
-    syncStuff({ schema, flatten: newFlatten, beforeFinish, locale });
-    setState({ flatten: newFlatten });
-  }, [
+  const flatten = useMemo(() => _flatten || flattenSchema(schema), [
     JSON.stringify(_flatten),
     JSON.stringify(schema),
-    JSON.stringify(formData),
   ]);
+
+  useEffect(() => {
+    syncStuff({ schema, flatten, beforeFinish, locale });
+  }, [JSON.stringify(_flatten), JSON.stringify(schema)]);
+
+  const store = useMemo(
+    () => ({
+      flatten,
+      ...form,
+      displayType,
+      theme,
+      debounceInput,
+      debug,
+      isEditing,
+      ...rest,
+    }),
+    [
+      JSON.stringify(flatten),
+      JSON.stringify(formData),
+      JSON.stringify(errorFields),
+    ]
+  );
+
+  const tools = useMemo(
+    () => ({
+      widgets: { ...defaultWidgets, ...widgets },
+      mapping: { ...defaultMapping, ...mapping },
+    }),
+    []
+  );
 
   useEffect(() => {
     // 需要外部校验的情况，此时 submitting 还是 false
@@ -83,27 +101,48 @@ function App({
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
+  let sizeCls = '';
+  if (size === 'small') {
+    sizeCls = 'fr-form-small';
+  } else if (size === 'large') {
+    sizeCls = 'fr-form-large';
+  }
+
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
-    <StoreCtx.Provider value={storeRef.current}>
-      <Ctx.Provider value={''}>
-        <div className="fr-container">
-          {debug ? (
-            <div className="mv2 bg-black-05 pa2 br2">
-              <div>{'formData:' + JSON.stringify(form.formData)}</div>
-              <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
-              <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
-              <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
-              <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
-            </div>
-          ) : null}
-          <FR />
-        </div>
-      </Ctx.Provider>
-    </StoreCtx.Provider>
+    <ConfigProvider locale={zhCN} {...configProvider}>
+      <StoreCtx.Provider value={store}>
+        <Ctx.Provider value={tools}>
+          <div className={`fr-container ${sizeCls}`}>
+            {debug ? (
+              <div className="mv2 bg-black-05 pa2 br2">
+                <div>{'formData:' + JSON.stringify(form.formData)}</div>
+                <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
+                <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
+                <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
+                <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
+                <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
+              </div>
+            ) : null}
+            <FR />
+          </div>
+        </Ctx.Provider>
+      </StoreCtx.Provider>
+    </ConfigProvider>
   );
 }
 
-export { createWidget } from './HOC';
+export { createWidget } from './createWidget';
 
-export default App;
+const Wrapper = props => {
+  const { isOldVersion = true, schema, ...rest } = props;
+  let _schema = schema;
+  // let _schema = completeSchemaWithTheme(schema, theme);
+  if (isOldVersion) {
+    _schema = updateSchemaToNewVersion(schema);
+    // console.log(_schema, 'schema');
+  }
+  return <App schema={_schema} {...rest} />;
+};
+
+export default Wrapper;

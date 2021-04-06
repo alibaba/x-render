@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
-import { getDataPath } from './utils';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash';
@@ -8,6 +7,7 @@ import {
   processData,
   transformDataWithBind,
   transformDataWithBind2,
+  getDataWithDefault,
 } from './processData';
 
 export const useForm = props => {
@@ -32,11 +32,9 @@ export const useForm = props => {
 
   const schemaRef = useRef();
   const flattenRef = useRef();
+  const clickSubmit = useRef(false); // 点击submit的那一下，不要执行useEffect里的validate
   const beforeFinishRef = useRef();
   const localeRef = useRef('cn');
-
-  const schema = schemaRef.current || {};
-  const flatten = flattenRef.current || {};
 
   const {
     formData: innerData,
@@ -84,9 +82,9 @@ export const useForm = props => {
     // 如果是外部数据，submit没有收束，无校验
     if (dataFromOutside && typeof _onValidate === 'function') {
       setTimeout(() => {
+        const _data = getDataWithDefault(formData, flattenRef.current);
         validateAll({
-          formData,
-          flatten: flattenRef.current,
+          formData: _data,
           schema: schemaRef.current,
           isRequired: true,
           touchedKeys,
@@ -99,16 +97,26 @@ export const useForm = props => {
     }
   }, []);
 
+  // 这里导致第二次的渲染
   useEffect(() => {
+    if (clickSubmit.current) {
+      clickSubmit.current = false;
+      return;
+    }
+    const _data = getDataWithDefault(formData, flattenRef.current);
     validateAll({
-      formData,
-      flatten: flattenRef.current,
+      formData: _data,
       schema: schemaRef.current,
       isRequired: allTouched,
       touchedKeys,
       locale: localeRef.current,
     }).then(res => {
       _setErrors(res);
+      window.NOTHING_CHANGED_IN_WIDGETS = true;
+      // 如果500ms内触发多次，试着减少一些不必要的渲染（见ExtendedWidget）TODO: 这个不是最优解
+      setTimeout(() => {
+        window.NOTHING_CHANGED_IN_WIDGETS = false;
+      }, 500);
     });
   }, [JSON.stringify(formData), allTouched]);
 
@@ -122,8 +130,8 @@ export const useForm = props => {
       _setData({ ...value });
       return;
     }
-    const newFormData = set(formData, path, value);
-    _setData({ ...newFormData });
+    set(formData, path, value);
+    _setData({ ...formData });
   };
 
   // TODO: 全局的没有path, 这个函数要这么写么。。全局的，可以path = #
@@ -162,27 +170,32 @@ export const useForm = props => {
   };
 
   const submit = () => {
+    clickSubmit.current = true;
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
     //  https://formik.org/docs/guides/form-submission
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
+
+    const _data = getDataWithDefault(formData, flattenRef.current);
+
     validateAll({
-      formData,
+      formData: _data,
       schema: schemaRef.current,
-      flatten: flattenRef.current,
-      touchedKeys,
+      touchedKeys: [],
+      isRequired: true,
       locale: localeRef.current,
     })
       .then(errors => {
-        // 如果有错误，停止校验和提交
+        // 如果有错误，也不停止校验和提交，在onFinish里让用户自己搞
         if (errors && errors.length > 0) {
-          console.log('submit:', formData, errors);
-          setState({ isValidating: false, isSubmitting: false });
-          return;
+          console.log('submit:', _data, errors);
+          setState({
+            errorFields: errors,
+          });
         }
         if (typeof beforeFinishRef.current === 'function') {
-          Promise.resolve(processData(formData, flatten)).then(res => {
+          Promise.resolve(processData(_data, flattenRef.current)).then(res => {
             setState({
               isValidating: true,
               isSubmitting: false,
@@ -192,7 +205,7 @@ export const useForm = props => {
           });
           return;
         }
-        Promise.resolve(processData(formData, flatten)).then(res => {
+        Promise.resolve(processData(_data, flattenRef.current)).then(res => {
           setState({
             isValidating: false,
             isSubmitting: true,
@@ -210,13 +223,13 @@ export const useForm = props => {
     _setData({});
   };
 
-  const setValue = (id, value, dataIndex) => {
-    let path = id;
-    if (dataIndex && Array.isArray(dataIndex)) {
-      path = getDataPath(id, dataIndex);
-    }
-    onItemChange(path, value);
-  };
+  // const setValue = (id, value, dataIndex) => {
+  //   let path = id;
+  //   if (dataIndex && Array.isArray(dataIndex)) {
+  //     path = getDataPath(id, dataIndex);
+  //   }
+  //   onItemChange(path, value);
+  // };
 
   const endValidating = () =>
     setState({
@@ -235,12 +248,12 @@ export const useForm = props => {
   const form = {
     // state
     formData,
-    schema,
+    schema: schemaRef.current,
     touchedKeys,
     // methods
     touchKey,
     onItemChange,
-    setValue, // 单个
+    // setValue, // 单个
     setValues,
     getValues,
     resetFields,

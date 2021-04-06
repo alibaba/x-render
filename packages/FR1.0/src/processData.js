@@ -1,9 +1,9 @@
 import { removeEmptyItemFromList, getDataPath } from './utils';
 import { unset, get, set } from 'lodash';
-import { isObject } from './utils';
+import { isObject, clone } from './utils';
 // 提交前需要先处理formData的逻辑
 export const processData = (data, flatten) => {
-  // 1. bind = false 的处理
+  // 1. bind 的处理
   let _data = transformDataWithBind(data, flatten);
 
   // 2. 去掉list里面所有的空值
@@ -12,8 +12,39 @@ export const processData = (data, flatten) => {
   return _data;
 };
 
+export const getDataWithDefault = (data, flatten) => {
+  const defaultList = getDefaultList(flatten);
+  return transformDataWithDefault(data, defaultList);
+};
+
+const getDefaultList = flatten => {
+  let result = [];
+  Object.keys(flatten).forEach(key => {
+    const { schema } = flatten[key];
+    if (schema.default) {
+      result.push({ path: key, value: schema.default });
+    }
+  });
+  return result;
+};
+
+// TODO: 没有考虑list，list还是不建议给default
+const transformDataWithDefault = (data, dList) => {
+  let _data = clone(data);
+  dList.forEach(item => {
+    if (item.path.indexOf('[]') === -1) {
+      const val = get(_data, item.path);
+      if (val === undefined) {
+        set(_data, item.path, item.value);
+      }
+    } else {
+    }
+  });
+  return _data;
+};
+
 export const transformDataWithBind = (data, flatten) => {
-  let _data = JSON.parse(JSON.stringify(data));
+  let _data = clone(data);
   const unbindKeys = [];
   const bindKeys = [];
   const bindArrKeys = [];
@@ -79,7 +110,7 @@ export const transformDataWithBind = (data, flatten) => {
 // 反向，外部赋值formData，bind的字段要转换后赋值给formData
 // 思路是一个个bind的字段反向转换 dataPath <=> bindPath
 export const transformDataWithBind2 = (data, flatten) => {
-  let _data = JSON.parse(JSON.stringify(data));
+  let _data = clone(data);
 
   const bindKeys = [];
   const bindArrKeys = [];

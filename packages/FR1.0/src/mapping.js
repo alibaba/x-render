@@ -13,15 +13,18 @@ export const mapping = {
   'string:textarea': 'textarea',
   'string:color': 'color',
   'string:image': 'imageInput',
+  'range:time': 'dateRange',
   'range:date': 'dateRange',
   'range:dateTime': 'dateRange',
-  '*?enum': 'select',
+  '*?enum': 'radio',
+  '*?enum_long': 'select',
   'array?enum': 'checkboxes',
-  '*?readonly': 'text',
+  'array?enum_long': 'multiSelect',
+  '*?readOnly': 'html', // TODO: 只读模式加上后，这儿要还要2个自定义组件。一个渲染list，一个渲染select
 };
 
 export function getWidgetName(schema, _mapping = mapping) {
-  const { type, format, enum: enums, readonly } = schema;
+  const { type, format, enum: enums, readOnly } = schema;
 
   // 如果已经注明了渲染widget，那最好
   // if (schema['ui:widget']) {
@@ -29,14 +32,20 @@ export function getWidgetName(schema, _mapping = mapping) {
   // }
 
   const list = [];
-  if (readonly) {
-    list.push(`${type}?readonly`);
-    list.push('*?readonly');
+  if (readOnly) {
+    list.push(`${type}?readOnly`);
+    list.push('*?readOnly');
   }
   if (enums) {
-    list.push(`${type}?enum`);
-    // array 默认使用list，array?enum 默认使用checkboxes，*?enum 默认使用select
-    list.push('*?enum');
+    // 根据enum长度来智能选择控件
+    if (Array.isArray(enums) && enums.length > 5) {
+      list.push(`${type}?enum_long`);
+      list.push('*?enum_long');
+    } else {
+      list.push(`${type}?enum`);
+      // array 默认使用list，array?enum 默认使用checkboxes，*?enum 默认使用select
+      list.push('*?enum');
+    }
   }
   if (format) {
     list.push(`${type}:${format}`);

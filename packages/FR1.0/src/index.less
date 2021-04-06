@@ -30,41 +30,21 @@
   }
 
   .fr-label {
-    height: 32px;
-    align-items: center;
-  }
-
-  .fr-label-column {
-    display: flex;
-    /* text-align: left; */
+    display: block;
   }
 
   .fr-label-row {
-    display: inline-flex;
     text-align: right;
     flex-shrink: 0;
+    margin-top: 5px;
   }
 
   .fr-label-title {
     display: inline-flex;
+    color: #333;
     font-size: 14px;
     min-height: 22px; /* ""的标签页占位 */
     line-height: 22px;
-  }
-
-  .fr-label-list .fr-label-title {
-    font-size: 16px;
-    color: #222;
-    margin: 0 0 12px;
-  }
-
-  .fr-label-object .fr-label-title {
-    font-size: 16px;
-    color: #222;
-  }
-
-  .fr-label-object.fr-label {
-    height: auto;
   }
 
   .fr-label-required {
@@ -86,7 +66,26 @@
     margin: 0;
   }
 
+  .fr-label-object .fr-label-title {
+    font-size: 16px;
+    color: #222;
+  }
+
+  .fr-label-array .fr-label-title {
+    font-size: 16px;
+    color: #222;
+  }
+
   .fr-content {
+    min-height: 32px;
+  }
+
+  .fr-form-large .fr-content {
+    min-height: 40px;
+  }
+
+  .fr-form-small .fr-content {
+    min-height: 24px;
   }
 
   .fr-content-row {
@@ -161,7 +160,7 @@
 
   .fr-color-picker .rc-color-picker-trigger {
     margin-right: 12px;
-    height: 30px;
+    height: 32px;
     width: 60px;
     border: 1px solid #e5e5e5;
   }

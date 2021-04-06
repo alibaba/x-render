@@ -9,7 +9,7 @@ import ArrowUp from '../../components/ArrowUp';
 import ArrowDown from '../../components/ArrowDown';
 import ErrorMessage from '../RenderField/ErrorMessage';
 
-const FIELD_LENGTH = 200;
+const FIELD_LENGTH = 120;
 
 const RenderList = ({
   parentId,
@@ -18,7 +18,7 @@ const RenderList = ({
   errorFields,
 }) => {
   // console.log(parentId, dataIndex, children);
-  const { formData, onItemChange, flatten } = useStore();
+  const { formData, flatten, onItemChange } = useStore();
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
@@ -89,7 +89,7 @@ const RenderList = ({
 export default RenderList;
 
 const CardList = ({
-  displayList = [{}],
+  displayList = [],
   dataPath,
   dataIndex,
   children,
@@ -118,9 +118,7 @@ const CardList = ({
     $idx: index,
   }));
 
-  const truncatedChildren = children.slice(0, 3); // TODO：允许调整，允许选择使用哪几个child
-
-  const columns = truncatedChildren.map(child => {
+  const columns = children.map(child => {
     const item = flatten[child];
     const schema = (item && item.schema) || {};
     const _dataIndex = getKeyFromPath(child);
@@ -148,7 +146,7 @@ const CardList = ({
     title: '操作',
     key: '$action',
     fixed: 'right',
-    width: 110,
+    width: 80,
     render: (value, record, idx) => {
       const index = (value && value.$idx) || 0;
       return (
@@ -208,6 +206,7 @@ const CardList = ({
         </div>
       </Drawer>
       <Table
+        scroll={{ x: 'max-content' }}
         columns={columns}
         dataSource={dataSource}
         rowClassName={(record, idx) => {
@@ -219,7 +218,6 @@ const CardList = ({
         }}
         rowKey="$idx"
         size="small"
-        scroll={{ x: children.length * FIELD_LENGTH }}
         pagination={{ size: 'small', hideOnSinglePage: true }}
       />
     </>
@@ -227,7 +225,7 @@ const CardList = ({
 };
 
 const TableList = ({
-  displayList = [{}],
+  displayList = [],
   dataIndex,
   children,
   deleteItem,
@@ -279,11 +277,11 @@ const TableList = ({
         </Button>
       </div>
       <Table
+        scroll={{ x: 'max-content' }}
         columns={columns}
         dataSource={dataSource}
         rowKey="index"
         size="small"
-        scroll={{ x: children.length * FIELD_LENGTH }}
         pagination={{ size: 'small', hideOnSinglePage: true }}
       />
     </>

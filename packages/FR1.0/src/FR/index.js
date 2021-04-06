@@ -20,14 +20,8 @@ const FR = ({
   hideValidation = false,
   ...rest
 }) => {
-  const {
-    displayType,
-    column,
-    flatten,
-    errorFields,
-    labelWidth,
-    isEditing,
-  } = useStore();
+  // console.log('<FR>');
+  const { displayType, column, flatten, errorFields, labelWidth } = useStore();
   const _displayType = rest.displayType || displayType || 'column';
   const item = _item ? _item : flatten[id];
   if (!item) return null;
@@ -57,7 +51,7 @@ const FR = ({
       // list 有两种展示形式！
       if (isList) {
         if (schema.title) {
-          labelClass += ' fr-label-list';
+          // labelClass += ' fr-label-list';
         }
         containerClass += ' fr-field-column';
       }
