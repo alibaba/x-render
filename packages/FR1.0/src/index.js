@@ -1,6 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react';
-import { flattenSchema, updateSchemaToNewVersion } from './utils';
+import {
+  flattenSchema,
+  updateSchemaToNewVersion,
+  parseAllExpression,
+} from './utils';
 import FR from './FR';
 import { Ctx, StoreCtx, useSet } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
@@ -26,9 +30,9 @@ function App({
   locale = 'cn', // 'cn'/'en'
   debounceInput = false,
   size,
+  isEditing,
   ...rest
 }) {
-  // console.log('<App>');
   const {
     submitData,
     errorFields,
@@ -41,11 +45,16 @@ function App({
     formData,
   } = form;
 
-  const [state, setState] = useSet({
-    flatten: {}, // // schema 在内部通用转换成 flatten，一般就一次转换。schema便于书写，flatten便于数据处理
-  });
+  // const flatten = _flatten || flattenSchema(schema);
 
-  const { flatten } = state;
+  const flatten = useMemo(() => _flatten || flattenSchema(schema), [
+    JSON.stringify(_flatten),
+    JSON.stringify(schema),
+  ]);
+
+  useEffect(() => {
+    syncStuff({ schema, flatten, beforeFinish, locale });
+  }, [JSON.stringify(_flatten), JSON.stringify(schema)]);
 
   const store = useMemo(
     () => ({
@@ -70,16 +79,6 @@ function App({
     }),
     []
   );
-
-  useEffect(() => {
-    const newFlatten = _flatten || flattenSchema(schema);
-    syncStuff({ schema, flatten: newFlatten, beforeFinish, locale });
-    setState({ flatten: newFlatten });
-  }, [
-    JSON.stringify(_flatten),
-    JSON.stringify(schema),
-    JSON.stringify(formData),
-  ]);
 
   useEffect(() => {
     // 需要外部校验的情况，此时 submitting 还是 false
@@ -132,10 +131,10 @@ export { createWidget } from './HOC';
 const VersionChanger = props => {
   const { isOldVersion, schema, ...rest } = props;
 
-  // useEffect(() => {
-
-  //   console.log(updateSchemaToNewVersion(test), 'updateSchemaToNewVersion');
-  // }, []);
+  useEffect(() => {
+    // parseAllExpression(sch, {}, '#')
+    // console.log(updateSchemaToNewVersion(test), 'updateSchemaToNewVersion');
+  }, []);
 
   if (isOldVersion) {
     const _schema = updateSchemaToNewVersion(schema);
