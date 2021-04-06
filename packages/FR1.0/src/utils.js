@@ -386,8 +386,12 @@ export function parseSingleExpression(func, formData, dataPath) {
     const match2 = /rootValue.([a-zA-Z0-9.$_\[\]]+)/g;
     const str = `
     return (${funcBody
-      .replaceAll(match1, (v, m1) => getValueByPath(formData, m1))
-      .replaceAll(match2, (v, m1) => getValueByPath(parent, m1))})`;
+      .replaceAll(match1, (v, m1) =>
+        JSON.stringify(getValueByPath(formData, m1))
+      )
+      .replaceAll(match2, (v, m1) =>
+        JSON.stringify(getValueByPath(parent, m1))
+      )})`;
     try {
       return Function(str)();
     } catch (error) {
