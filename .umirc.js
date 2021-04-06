@@ -24,10 +24,6 @@ export default defineConfig({
       path: '/table-render',
     },
     {
-      title: 'CardRender',
-      path: '/card-render',
-    },
-    {
       title: 'ChartRender',
       path: '/chart-render',
       children: [
@@ -35,6 +31,10 @@ export default defineConfig({
         { title: '组件', path: '/chart-render/components' },
       ],
     },
+    // {
+    //   title: 'CardRender',
+    //   path: '/card-render',
+    // },
     {
       title: '周边工具',
       path: '/tools',
