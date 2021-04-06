@@ -412,6 +412,7 @@ export const schemaContainsExpression = schema => {
   });
 };
 
+// TODO: 两个优化，1. 可以通过表达式的path来判断，避免一些重复计算
 export const parseAllExpression = (_schema, formData, dataPath) => {
   const schema = clone(_schema);
   Object.keys(schema).forEach(key => {
