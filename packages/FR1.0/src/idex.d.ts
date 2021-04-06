@@ -65,6 +65,7 @@ export interface FRProps {
   displayType?: string;
   /** antd的全局config */
   configProvider?: any;
+  theme?: any;
   flatten?: any;
   debug?: boolean;
   locale?: string;

@@ -38,10 +38,8 @@ const RenderField = props => {
   const {
     onItemChange,
     formData,
-    displayType,
     isEditing,
     setEditing,
-    extend,
     touchKey,
     debounceInput,
   } = store;
@@ -84,10 +82,6 @@ const RenderField = props => {
 
   let contentStyle = {};
 
-  const outMapProps = isObject(extend) && extend[dataPath];
-  const _outMapProps =
-    typeof outMapProps === 'function' ? outMapProps : () => {};
-
   const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
 
   // TODO: 优化一下，只有touch还是false的时候，setTouched
@@ -125,10 +119,6 @@ const RenderField = props => {
     value: _value,
     onItemChange,
   };
-
-  if (_outMapProps) {
-    widgetProps.mapProps = _outMapProps;
-  }
 
   widgetProps.children = hasChildren
     ? children
@@ -169,7 +159,6 @@ const RenderField = props => {
         )}
       </div>
     );
-
     return (
       <div className={contentClass} style={contentStyle}>
         <ExtendedWidget

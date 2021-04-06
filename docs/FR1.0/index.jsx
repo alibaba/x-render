@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import FormRender, { useForm, createWidget } from 'form-render-beta';
 import schema from './basic.js';
 import Percent from './otherWidgets/Percent';
-import Percent2 from './otherWidgets/Percent2';
-import { Input } from 'antd';
 // import schema1 from './basic1.json';
 
 // console.log(JSON.stringify(combineSchema(schema1.schema, schema1.uiSchema)));
@@ -84,7 +82,8 @@ const Demo = () => {
         beforeFinish={beforeFinish}
         onFinish={onFinish}
         widgets={{ percent: PercentWidget, percent: PercentWidget }}
-        displayType="row"
+        // displayType="row"
+        theme="1"
         // debug
         // debounceInput={true}
         // size="small"

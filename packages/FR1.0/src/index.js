@@ -1,9 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react';
-import { flattenSchema, updateSchemaToNewVersion } from './utils';
+import {
+  flattenSchema,
+  updateSchemaToNewVersion,
+  // completeSchemaWithTheme,
+} from './utils';
 import FR from './FR';
 import { Ctx, StoreCtx } from './hooks';
-import { cloneDeep } from 'lodash';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
 import { ConfigProvider } from 'antd';
@@ -30,6 +33,7 @@ function App({
   debounceInput = false,
   size,
   configProvider,
+  theme,
   ...rest
 }) {
   const {
@@ -59,6 +63,7 @@ function App({
       flatten,
       ...form,
       displayType,
+      theme,
       debounceInput,
       debug,
       isEditing,
@@ -129,19 +134,15 @@ function App({
 
 export { createWidget } from './HOC';
 
-const VersionChanger = props => {
-  const { isOldVersion = false, schema, ...rest } = props;
-
-  useEffect(() => {
-    // parseAllExpression(sch, {}, '#')
-    // console.log(updateSchemaToNewVersion(test), 'updateSchemaToNewVersion');
-  }, []);
-
+const Wrapper = props => {
+  const { isOldVersion = true, schema, ...rest } = props;
+  let _schema = schema;
+  // let _schema = completeSchemaWithTheme(schema, theme);
   if (isOldVersion) {
-    const _schema = updateSchemaToNewVersion(schema);
-    return <App schema={_schema} {...rest} />;
+    _schema = updateSchemaToNewVersion(schema);
+    // console.log(_schema, 'schema');
   }
-  return <App schema={schema} {...rest} />;
+  return <App schema={_schema} {...rest} />;
 };
 
-export default VersionChanger;
+export default Wrapper;
