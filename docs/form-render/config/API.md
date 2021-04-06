@@ -14,9 +14,9 @@ group:
 form-render 将所有方法挂在组件的顶层 ref 上：
 
 ```jsx
-import React, { useState, useEffect, useRef } from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import FormRender from 'form-render/lib/antd';
-import { Button } from 'antd';
+import {Button} from 'antd';
 import schema from '../demo/json/simplest.json';
 
 const Demo = () => {
@@ -34,14 +34,14 @@ const Demo = () => {
   };
 
   return (
-    <div style={{ width: 400 }}>
+    <div style={{width: 400}}>
       <FormRender
         ref={formRef}
         {...schema}
         formData={formData}
         onChange={setFormData}
       />
-      <Button style={{ marginRight: 12 }} onClick={handleClick}>
+      <Button style={{marginRight: 12}} onClick={handleClick}>
         重置
       </Button>
       <Button type="primary" onClick={handleSubmit}>

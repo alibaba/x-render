@@ -2,61 +2,54 @@ import { defineConfig } from 'dumi';
 import path from 'path';
 
 export default defineConfig({
-  title: 'form-render',
+  title: 'XRender',
   favicon: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   outputPath: 'docs-dist',
   dynamicImport: {},
-  // menus: {
-  //   '/guide': [
-  //     {
-  //       title: '介绍',
-  //       children: ['guide/getting-started', 'guide/new-feature'],
-  //     },
-  //   ],
-  // },
   navs: [
     {
-      title: 'form-render',
+      title: 'FormRender',
       path: '/form-render',
-      // children: [
-      //   { title: '教程', path: '/form-render/guide' },
-      //   { title: '配置', path: '/form-render/config' },
-      // ],
-    },
-    { title: 'Playground', path: '/playground' },
-    { title: '自定义组件', path: '/widgets' },
-    {
-      title: 'FR1.0',
-      path: '/FR1.0',
-    },
-    {
-      title: 'table-render',
-      path: '/table-render',
       children: [
-        { title: '教程', path: '/table-render/guide' },
-        { title: '配置', path: '/table-render/config' },
+        { title: 'FR1.0', path: '/FR1.0' },
+        { title: '教程', path: '/form-render/guide' },
+        { title: '自定义组件', path: '/form-render/widgets' },
+        { title: 'Playground', path: '/playground' },
+        // { title: '表单设计器', path: '/generator' },
       ],
     },
     {
-      title: 'chart-render',
-      path: '/chart-render',
+      title: 'TableRender',
+      path: '/table-render',
     },
     {
-      title: '表单设计器',
-      path: 'https://x-render.gitee.io/schema-generator/',
+      title: 'ChartRender',
+      path: '/chart-render',
+      children: [
+        { title: '文档', path: '/chart-render/docs' },
+        { title: '组件', path: '/chart-render/components' },
+      ],
     },
-    { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
+    // {
+    //   title: 'CardRender',
+    //   path: '/card-render',
+    // },
+    {
+      title: '周边工具',
+      path: '/tools',
+      children: [{ title: 'VSCode 插件', path: '/tools/vscode' }],
+    },
     {
       title: '更新日志',
       children: [
         {
-          title: 'form-render',
+          title: 'FormTender',
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
         },
         {
-          title: 'table-render',
+          title: 'TableRender',
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/table-render/CHANGELOG.md',
         },
@@ -66,13 +59,15 @@ export default defineConfig({
       title: '国内镜像',
       path: 'https://x-render.gitee.io/form-render/',
     },
+    { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
   ],
   mode: 'site',
   alias: {
     'form-render/dist': path.resolve(__dirname, 'packages/form-render/dist'),
   },
-  base: '/form-render/',
-  publicPath: '/form-render/',
+  esbuild: {},
+  base: '/x-render/',
+  publicPath: '/x-render/',
   exportStatic: {},
   extraBabelPlugins: [
     [

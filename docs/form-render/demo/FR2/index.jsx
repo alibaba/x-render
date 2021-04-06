@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import FormRender from '../../../packages/form-render/src/antd';
+import FormRender from 'form-render/src/antd';
 import { Button } from 'antd';
 // import FormRender from '../../../packages/form-render/src/fusion';
 // import '@alifd/next/dist/next.min.css';

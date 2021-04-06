@@ -1,0 +1,14 @@
+.right-layout {
+  flex-shrink: 0;
+  width: 270px;
+  padding-top: 24px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+@media screen and (min-width: 60em) {
+  .right-layout {
+    width: 350px;
+  }
+}
