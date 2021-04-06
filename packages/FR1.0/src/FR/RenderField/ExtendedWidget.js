@@ -74,20 +74,24 @@ const ExtendedWidget = ({
 };
 
 const areEqual = (prev, current) => {
-  // console.log(prev, current, 'asdgdhfgdgsfdf');
-  // 这儿需要考察一下
-  if (prev.schema && prev.schema.$id === '#') {
-    return false;
-  }
-  if (prev.schema && prev.schema.type === 'object') {
-    return false;
-  }
-  if (
-    prev.value === current.value &&
-    JSON.stringify(prev.schema) === JSON.stringify(current.schema)
-  ) {
+  if (window.NOTHING_CHANGED_IN_WIDGETS) {
+    window.NOTHING_CHANGED_IN_WIDGETS = false;
     return true;
   }
+  // console.log('areEqual', prev.value, current.value);
+  // if (prev.schema && prev.schema.$id === '#') {
+  //   return false;
+  // }
+  // if (prev.schema && prev.schema.type === 'object') {
+  //   return false;
+  // }
+  // if (
+  //   prev.value === current.value &&
+  //   JSON.stringify(prev.schema) === JSON.stringify(current.schema)
+  // ) {
+  //   return false; // TODO: return true 之后 useForm 里的 formData 的更新会出问题，why
+  //   // return false;
+  // }
   return false;
 };
 
