@@ -24,9 +24,7 @@ window.plog = value => {
 };
 
 export function isCheckBoxType(schema) {
-  return (
-    schema && schema.type === 'boolean' && schema['ui:widget'] !== 'switch'
-  ); // TODO: 感觉有点不准
+  return schema && schema.type === 'boolean' && schema['widget'] !== 'switch'; // TODO: 感觉有点不准
 }
 
 // a[].b.c => a.b.c

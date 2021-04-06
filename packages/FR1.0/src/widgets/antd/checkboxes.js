@@ -23,13 +23,9 @@ const mapProps = ({ schema, style, options: _options }) => {
   return {
     options,
     mode: 'multiple',
-    style: { width: '100%', ...style },
+    style: { width: '100%', marginTop: 5, ...style },
   };
 };
-
-// const A = ({ ...rest }) => {
-//   return <Checkbox.Group {...rest} />;
-// };
 
 const Checkboxes = createWidget(mapProps)(Checkbox.Group);
 

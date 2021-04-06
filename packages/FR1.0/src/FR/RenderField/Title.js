@@ -1,9 +1,9 @@
 import React from 'react';
 import { useStore } from '../../hooks';
-import { isCheckBoxType } from '../../utils'
+import { isCheckBoxType } from '../../utils';
 
 const Title = ({ labelClass, labelStyle, schema }) => {
-  const { showDescIcon, displayType } = useStore();
+  const { displayType } = useStore();
   const { title, description, required, type } = schema;
   const isObjType = type === 'object';
 
@@ -11,9 +11,7 @@ const Title = ({ labelClass, labelStyle, schema }) => {
     <div className={labelClass} style={labelStyle}>
       <label
         className={`fr-label-title ${
-          isCheckBoxType(schema) || displayType === 'column'
-            ? 'no-colon'
-            : ''
+          isCheckBoxType(schema) || displayType === 'column' ? 'no-colon' : ''
         }`} // checkbox不带冒号
         title={title}
       >
@@ -26,7 +24,7 @@ const Title = ({ labelClass, labelStyle, schema }) => {
           {title}
         </span>
         {description &&
-          (showDescIcon ? (
+          (displayType === 'row' ? (
             <span className="fr-tooltip-toggle" aria-label={description}>
               <i className="fr-tooltip-icon" />
               <div className="fr-tooltip-container">

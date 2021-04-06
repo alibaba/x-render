@@ -82,16 +82,7 @@ const RenderField = props => {
 
   const _value = getValueByPath(formData, dataPath);
 
-  // check: 由于是专门针对checkbox的，目前只好写这里
-  let _labelStyle = labelStyle;
-  if (isCheckBoxType(_schema)) {
-    _labelStyle = { flexGrow: 1 };
-  }
-
   let contentStyle = {};
-  if (isCheckBoxType(_schema) && displayType === 'row') {
-    contentStyle.marginLeft = labelStyle.width;
-  }
 
   const outMapProps = isObject(extend) && extend[dataPath];
   const _outMapProps =
@@ -115,13 +106,13 @@ const RenderField = props => {
 
   const titleProps = {
     labelClass,
-    labelStyle: _labelStyle,
+    labelStyle: labelStyle,
     schema: _schema,
   };
 
   const placeholderTitleProps = {
     className: labelClass,
-    style: _labelStyle,
+    style: labelStyle,
   };
 
   const _showTitle = !hideTitle && !!_schema.title;

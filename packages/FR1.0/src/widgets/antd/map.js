@@ -9,7 +9,11 @@ export default function map({ children, title }) {
   return (
     <div className="w-100">
       <Collapse defaultActiveKey={['1']}>
-        <Panel header={title} key="1" className="fr-collapse-object">
+        <Panel
+          header={<div style={{ fontSize: 14, fontWeight: 500 }}>{title}</div>}
+          key="1"
+          className="fr-collapse-object"
+        >
           {children}
         </Panel>
       </Collapse>

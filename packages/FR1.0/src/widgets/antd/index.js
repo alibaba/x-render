@@ -20,6 +20,10 @@ const FrNumber = createWidget(({ style }) => ({
   style: { width: '100%', ...style },
 }))(InputNumber);
 
+const FrSwitch = createWidget(({ style }) => ({
+  style: { marginTop: 5, ...style },
+}))(Switch);
+
 const FrTextArea = createWidget(({ autoSize }) => ({
   autoSize: autoSize ? autoSize : { minRows: 3 },
 }))(TextArea);
@@ -39,7 +43,7 @@ export const widgets = {
   radio,
   select,
   slider, // 带滚条的number
-  switch: Switch,
+  switch: FrSwitch,
   textarea: FrTextArea,
   upload,
   html: Html,

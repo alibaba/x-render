@@ -96,7 +96,7 @@
           "type": "string",
           "format": "textarea",
           "default": "123",
-          "hidden": "{{formData.AllString && formData.AllString.input === '123'}}"
+          "hidden": "{{formData.AllString.input === '123'}}"
         },
         "color": {
           "title": "颜色选择",

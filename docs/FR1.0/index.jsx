@@ -84,6 +84,7 @@ const Demo = () => {
         beforeFinish={beforeFinish}
         onFinish={onFinish}
         widgets={{ percent: PercentWidget, percent2: Percent2 }}
+        displayType="row"
         // debug
         // debounceInput={true}
         // size="small"
