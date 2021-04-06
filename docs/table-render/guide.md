@@ -3,11 +3,13 @@ order: 1
 title: 使用教程
 ---
 
+<div style="display:flex;justify-content:center">
   <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="200"/>
+</div>
 
 # TableRender
 
-<p style="display:flex;justify-content:space-between;width:500px">
+<p style="display:flex;justify-content:space-between;width:440px">
   <a href="https://www.npmjs.com/package/table-render?_blank">
     <img alt="npm" src="https://img.shields.io/npm/v/table-render.svg?maxAge=3600&style=flat-square">
   </a>
@@ -51,7 +53,7 @@ yarn add table-render antd
 ```
 
 ### 代码演示
-去[codesandbox](https://codesandbox.io/s/vfopu)试试
+去[CodeSandbox](https://codesandbox.io/s/vfopu)试试
 
 ```js
 import React, { useRef, useLayoutEffect, useEffect } from 'react';
