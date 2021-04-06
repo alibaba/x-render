@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { ProTable, Search, TableContainer, useTable } from 'table-render';
-import { Tag, Space, Menu, Dropdown, message, Tooltip, Button } from 'antd';
+import { Tag, Space, Menu, message, Tooltip, Button } from 'antd';
 import {
   PlusOutlined,
   EllipsisOutlined,
@@ -132,10 +132,10 @@ const TableBody = () => {
           <a target="_blank" key="1">
             <div
               onClick={() => {
-                alert('Table-Render!');
+                message.success('预订成功');
               }}
             >
-              查看
+              预订
             </div>
           </a>
         </Space>
