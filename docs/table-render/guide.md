@@ -204,6 +204,7 @@ Table-Render 封装了一些常用的值类型来减少重复的 render 操作�
 | 属性     | 描述                     |类型 |
 | -------- | ------------------------------ | ---- |
 | refresh     | 刷新表格数据          | Function |
+| clearSearch  | 重置筛选项         | Function |
 | tableState | 这些是全局的状态，根据需要使用 | object|
 | setTable    | 用于修改全局状态的工具函数，setTable 之于 tableState，等同 setState 之于 state|Function|
 | changeTab    | 手动切换 tab 的函数，例如目前两个搜索 tab： “我的活动”，“全部活动” （分别对应 tab 值为 0 和 1）|Function|
@@ -211,7 +212,7 @@ Table-Render 封装了一些常用的值类型来减少重复的 render 操作�
 #### useTable用法
 ```js
 import { useTable } from 'table-render';
-const { refresh,tableState, setTable } = useTable()
+const { refresh, tableState, setTable } = useTable()
 ```
 
 #### tableState

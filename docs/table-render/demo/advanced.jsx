@@ -12,19 +12,19 @@ const schema = {
   type: 'object',
   properties: {
     state: {
-      title: '状态',
+      title: '酒店状态',
       type: 'string',
-      enum: ['open', 'closed', 'processing'],
-      enumNames: ['未解决', '已解决', '解决中'],
+      enum: ['open', 'closed'],
+      enumNames: ['营业中', '已打烊'],
       'ui:width': '25%',
     },
     labels: {
-      title: '标签',
+      title: '酒店星级',
       type: 'string',
       'ui:width': '25%',
     },
     created_at: {
-      title: '创建时间',
+      title: '成立时间',
       type: 'string',
       format: 'date',
       'ui:width': '25%',
@@ -34,7 +34,6 @@ const schema = {
 };
 
 const Demo = () => {
-  // 如何写一个SearchApi：
   const searchApi = params => {
     return request
       .get(
@@ -56,7 +55,16 @@ const Demo = () => {
 
   return (
     <TableContainer
-      searchApi={searchApi}
+      searchApi={[
+        {
+          name: '全部数据',
+          api: searchApi,
+        },
+        {
+          name: '我的数据',
+          api: searchApi,
+        },
+      ]}
       onSearch={search => console.log('onSearch', search)}
     >
       <TableBody />
@@ -69,8 +77,14 @@ const TableBody = () => {
   // 配置完全透传antd table
   const columns = [
     {
-      title: '标题',
+      title: '酒店名称',
       dataIndex: 'title',
+      valueType: 'text',
+      width: '25%',
+    },
+    {
+      title: '酒店地址',
+      dataIndex: 'address',
       ellipsis: true,
       copyable: true,
       valueType: 'text',
@@ -79,20 +93,20 @@ const TableBody = () => {
     {
       title: (
         <>
-          状态
+          酒店状态
           <Tooltip placement="top" title="使用valueType">
             <InfoCircleOutlined style={{ marginLeft: 6 }} />
           </Tooltip>
         </>
       ),
       enum: {
-        open: '未解决',
-        closed: '已解决',
+        open: '营业中',
+        closed: '已打烊',
       },
       dataIndex: 'state',
     },
     {
-      title: '标签',
+      title: '酒店星级',
       dataIndex: 'labels',
       render: (_, row) => (
         <Space>
@@ -106,8 +120,8 @@ const TableBody = () => {
     },
 
     {
-      title: '创建时间',
-      key: 'since',
+      title: '成立时间',
+      key: 'created_at',
       dataIndex: 'created_at',
       valueType: 'date',
     },
