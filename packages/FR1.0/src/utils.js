@@ -1,4 +1,4 @@
-import { get } from 'lodash';
+import { get, cloneDeep } from 'lodash';
 
 // 后面三个参数都是内部递归使用的，将schema的树形结构扁平化成一层, 每个item的结构
 // {
@@ -111,7 +111,7 @@ export function isObjType(schema) {
 
 // TODO: 检验是否丢进去各种schema都能兜底不会crash
 export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
-  const schema = JSON.parse(JSON.stringify(_schema)); // TODO: 是否需要deepClone，这个花费是不是有点大
+  const schema = clone(_schema); // TODO: 是否需要deepClone，这个花费是不是有点大
   let _name = name;
   if (!schema.$id) {
     schema.$id = _name; // 给生成的schema添加一个唯一标识，方便从schema中直接读取
@@ -159,13 +159,31 @@ export const isObject = a =>
   stringContains(Object.prototype.toString.call(a), 'Object');
 
 // 克隆对象
-export function clone(data) {
-  try {
-    return JSON.parse(JSON.stringify(data));
-  } catch (e) {
-    return data;
-  }
-}
+// function clone1(data) {
+//   // data = functionToString(data);
+//   try {
+//     return JSON.parse(JSON.stringify(data));
+//   } catch (e) {
+//     return data;
+//   }
+// }
+
+export const clone = cloneDeep;
+// export const clone = clone1;
+
+// export const functionToString = data => {
+//   let result;
+//   if (isObject(data)) {
+//     result = {};
+//     Object.keys(data).forEach(key => {
+//       result[key] = functionToString(data[key]);
+//     });
+//     return result;
+//   } else if (typeof data === 'function') {
+//     return result.toString();
+//   }
+//   return data;
+// };
 
 // '3' => true, 3 => true, undefined => false
 export function isLooselyNumber(num) {
@@ -334,14 +352,20 @@ export function isExpression(func) {
     const funcString = func.toString();
     return (
       funcString.indexOf('formData') > -1 ||
-      funcString.indexOf('rootValue') > -1 // Check: 这个旧版兼容，值得么
+      funcString.indexOf('rootValue') > -1
     );
   }
   // 这样的pattern {{.....}}
-  const pattern = /^({{){1}.+(}}){1}$/g;
-  if (typeof func === 'string' && func.match(pattern)) {
+  const pattern = /^{{(.+)}}$/;
+  const reg1 = /^{{(function.+)}}$/;
+  const reg2 = /^{{(.+=>.+)}}$/;
+  if (
+    typeof func === 'string' &&
+    func.match(pattern) &&
+    !func.match(reg1) &&
+    !func.match(reg2)
+  ) {
     return true;
-    // return func.substring(2, func.length - 2);
   }
   return false;
 }
@@ -350,14 +374,15 @@ export function isExpression(func) {
 export function parseSingleExpression(func, formData, dataPath) {
   const parentPath = getParentPath(dataPath);
   const parent = getValueByPath(formData, parentPath);
-  if (typeof func === 'function') {
-    try {
-      return func(formData, parent);
-    } catch (e) {
-      console.error(`${dataPath}表达式解析错误`);
-      return;
-    }
-  } else if (typeof func === 'string') {
+  // if (typeof func === 'function') {
+  //   try {
+  //     return func(formData, parent);
+  //   } catch (e) {
+  //     console.error(`${dataPath}表达式解析错误`);
+  //     return;
+  //   }
+  // } else
+  if (typeof func === 'string') {
     const funcBody = func.substring(2, func.length - 2);
     const match1 = /formData.([a-zA-Z0-9.$_\[\]]+)/g;
     const match2 = /rootValue.([a-zA-Z0-9.$_\[\]]+)/g;
@@ -894,6 +919,3 @@ export const parseFunctionString = string => {
   }
   return false;
 };
-
-// 检验一个string是表达式："{{ ... }}"
-export const parseExpressionString = string => {};
