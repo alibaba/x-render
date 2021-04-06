@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef } from 'react';
-import { getDataPath } from './utils';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash';
@@ -68,6 +67,7 @@ export const useForm = props => {
       _onValidate(oldFormatErrors);
     }
     setState({ errorFields: errors });
+    window.NOTHING_CHANGED_IN_WIDGETS = true;
   };
 
   const touchKey = key => {
@@ -98,6 +98,7 @@ export const useForm = props => {
     }
   }, []);
 
+  // 这里导致第二次的渲染
   useEffect(() => {
     if (clickSubmit.current) {
       clickSubmit.current = false;
@@ -113,7 +114,7 @@ export const useForm = props => {
     }).then(res => {
       _setErrors(res);
     });
-    console.log('validateAll', formData, allTouched);
+    // console.log('validateAll', formData, allTouched);
   }, [JSON.stringify(formData), allTouched]);
 
   const setEditing = isEditing => {
@@ -126,8 +127,8 @@ export const useForm = props => {
       _setData({ ...value });
       return;
     }
-    const newFormData = set(formData, path, value);
-    _setData({ ...newFormData });
+    set(formData, path, value);
+    _setData({ ...formData });
   };
 
   // TODO: 全局的没有path, 这个函数要这么写么。。全局的，可以path = #
@@ -222,13 +223,13 @@ export const useForm = props => {
     _setData({});
   };
 
-  const setValue = (id, value, dataIndex) => {
-    let path = id;
-    if (dataIndex && Array.isArray(dataIndex)) {
-      path = getDataPath(id, dataIndex);
-    }
-    onItemChange(path, value);
-  };
+  // const setValue = (id, value, dataIndex) => {
+  //   let path = id;
+  //   if (dataIndex && Array.isArray(dataIndex)) {
+  //     path = getDataPath(id, dataIndex);
+  //   }
+  //   onItemChange(path, value);
+  // };
 
   const endValidating = () =>
     setState({
@@ -252,7 +253,7 @@ export const useForm = props => {
     // methods
     touchKey,
     onItemChange,
-    setValue, // 单个
+    // setValue, // 单个
     setValues,
     getValues,
     resetFields,
