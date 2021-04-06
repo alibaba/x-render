@@ -10,8 +10,8 @@
       },
       "imageName": {
         "title": "图片展示",
-        "type": "string",
-        "format": "image"
+        "type": "range",
+        "format": "date"
       },
       "inputName2": {
         "title": "email输入框",
@@ -28,10 +28,7 @@
       },
       "string1": {
         "title": "前后有空格不校验",
-        "type": "string",
-        "ui:options": {
-          "noTrim": true
-        }
+        "type": "string"
       },
       "string2": {
         "title": "正常的会校验空格",

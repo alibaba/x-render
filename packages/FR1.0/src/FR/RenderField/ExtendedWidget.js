@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { getWidgetName, extraSchemaList } from '../../mapping';
 import { defaultWidgetNameList } from '../../widgets/antd';
 import { useTools } from '../../hooks';
-import { transformProps } from '../../HOC';
+import { transformProps } from '../../createWidget';
 
 // import { isObjType, isListType } from '../../utils';
 // import { Input } from 'antd';

@@ -12,7 +12,7 @@ import upload from './upload';
 import ImageInput from './ImageInput';
 import Html from './html';
 import { InputNumber, Checkbox, Switch, Input } from 'antd';
-import { createWidget } from '../../HOC';
+import { createWidget } from '../../createWidget';
 
 const { TextArea } = Input;
 

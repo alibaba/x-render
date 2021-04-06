@@ -1,6 +1,6 @@
 import React from 'react';
 import { Select } from 'antd';
-import { createWidget } from '../../HOC';
+import { createWidget } from '../../createWidget';
 import { getArray } from '../../utils';
 
 const mapProps = ({ schema, style, options: _options }) => {

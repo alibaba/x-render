@@ -132,7 +132,7 @@ function App({
   );
 }
 
-export { createWidget } from './HOC';
+export { createWidget } from './createWidget';
 
 const Wrapper = props => {
   const { isOldVersion = true, schema, ...rest } = props;
