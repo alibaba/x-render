@@ -67,7 +67,6 @@ export const useForm = props => {
       _onValidate(oldFormatErrors);
     }
     setState({ errorFields: errors });
-    window.NOTHING_CHANGED_IN_WIDGETS = true;
   };
 
   const touchKey = key => {
@@ -113,6 +112,11 @@ export const useForm = props => {
       locale: localeRef.current,
     }).then(res => {
       _setErrors(res);
+      window.NOTHING_CHANGED_IN_WIDGETS = true;
+      // 如果500ms内触发多次，试着减少一些不必要的渲染（见ExtendedWidget）TODO: 这个不是最优解
+      setTimeout(() => {
+        window.NOTHING_CHANGED_IN_WIDGETS = false;
+      }, 500);
     });
     // console.log('validateAll', formData, allTouched);
   }, [JSON.stringify(formData), allTouched]);
