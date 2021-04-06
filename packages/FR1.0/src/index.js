@@ -3,7 +3,8 @@ import React, { useEffect, useMemo } from 'react';
 import {
   flattenSchema,
   updateSchemaToNewVersion,
-  parseAllExpression,
+  schemaContainsExpression,
+  parseExpression,
 } from './utils';
 import FR from './FR';
 import { Ctx, StoreCtx, useSet } from './hooks';
@@ -46,6 +47,12 @@ function App({
   } = form;
 
   // const flatten = _flatten || flattenSchema(schema);
+
+  // let schema
+  // if (schemaContainsExpression(_schema)) {
+  //   console.log('parseAllExpression');
+  //   schema = parseExpression(_schema, formData);
+  // }
 
   const flatten = useMemo(() => _flatten || flattenSchema(schema), [
     JSON.stringify(_flatten),
@@ -130,7 +137,7 @@ function App({
 export { createWidget } from './HOC';
 
 const VersionChanger = props => {
-  const { isOldVersion = true, schema, ...rest } = props;
+  const { isOldVersion = false, schema, ...rest } = props;
 
   useEffect(() => {
     // parseAllExpression(sch, {}, '#')

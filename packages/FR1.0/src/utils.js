@@ -891,3 +891,8 @@ const updateSingleSchema = schema => {
     return schema;
   }
 };
+
+export const parseExpression = (schema, formData) => {
+  let schema1 = parseRootValue(schema);
+  let schema2 = replaceParseValue(schema1);
+};
