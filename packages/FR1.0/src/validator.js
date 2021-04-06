@@ -8,8 +8,7 @@ import {
 import { defaultValidateMessagesCN } from './validateMessageCN';
 import { defaultValidateMessages } from './validateMessage';
 import Validator from 'async-validator';
-import { get } from 'lodash';
-
+import { get, merge } from 'lodash';
 // export const validateAll = () => Promise.resolve([]);
 
 export const validateAll = ({
@@ -20,11 +19,16 @@ export const validateAll = ({
   locale = 'cn',
 }) => {
   // 生成一个基础结构，确保对象内的必填元素也被校验。
-  const formData = { ...generateDataSkeleton(schema), ..._formData };
+  const formData = merge(generateDataSkeleton(schema), _formData);
+  // debugger;
+  // const formData = { ...generateDataSkeleton(schema), ..._formData };
+  // console.log(formData, '&&&& formData');
+  if (Object.keys(schema).length === 0) return Promise.resolve();
   const descriptor = getDscriptorFromSchema({
     schema,
     isRequired,
   }).fields;
+  // console.log(descriptor, '&&&& descriptor');
 
   let touchVerifyList = [];
 
@@ -42,25 +46,9 @@ export const validateAll = ({
   const cn = defaultValidateMessagesCN;
   const en = defaultValidateMessages;
 
-  // const descriptor2 = {
-  //   address: {
-  //     type: 'object',
-  //     required: true,
-  //     fields: {
-  //       street: { type: 'string', required: true },
-  //       city: { type: 'string', required: true },
-  //       zip: { type: 'number', required: true, len: 8, message: 'invalid zip' },
-  //     },
-  //   },
-  //   name: { required: true },
-  // };
-
-  // const formData2 = { address: {} };
-
   const validator = new Validator(descriptor);
   const messageFeed = locale === 'en' ? en : cn;
   validator.messages(messageFeed);
-  // console.log(descriptor, formData, 'desc & formData');
   return validator
     .validate(formData || {})
     .then(res => {

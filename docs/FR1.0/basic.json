@@ -7,7 +7,26 @@
       "type": "range",
       "format": "date",
       "required": true,
-      "ui:disabled": "{{formData.percentage == 10}}"
+      "disabled": "{{formData.percentage == 20}}",
+      "default": ["2021-04-13", "2021-05-11"]
+    },
+    "inputTest": {
+      "title": "输入框",
+      "type": "string"
+    },
+    "percentage": {
+      "title": "百分比",
+      "type": "number",
+      "widget": "percent2",
+      "rules": [
+        {
+          "min": 10,
+          "message": "要大于10哦~"
+        },
+        {
+          "max": 40
+        }
+      ]
     },
     "list": {
       "required": false,
@@ -17,17 +36,6 @@
       "items": {
         "type": "object",
         "properties": {
-          "objectName": {
-            "title": "对象",
-            "description": "这是一个对象类型",
-            "type": "object",
-            "properties": {
-              "inputName": {
-                "title": "简单输入框",
-                "type": "string"
-              }
-            }
-          },
           "userName": {
             "bind": false,
             "title": "User Name",
@@ -40,6 +48,9 @@
               },
               {
                 "max": 12
+              },
+              {
+                "pattern": "^[A-Za-z0-9]+$"
               }
             ]
           },
@@ -54,29 +65,66 @@
             "title": "是否判断",
             "type": "boolean",
             "valuePropName": "checked"
+          },
+          "objectName": {
+            "title": "对象",
+            "description": "这是一个对象类型",
+            "type": "object",
+            "properties": {
+              "inputName": {
+                "title": "简单输入框",
+                "type": "string"
+              }
+            }
           }
         }
       }
     },
-    "percentage": {
-      "title": "百分比",
-      "type": "number",
-      "required": true,
-      "ui:widget": "percent",
-      "rules": [
-        {
-          "min": 10,
-          "message": "要大于10哦~"
-        },
-        {
-          "max": 40
-        }
-      ]
-    },
+
     "AllString": {
       "title": "string类",
       "type": "object",
       "properties": {
+        "input": {
+          "title": "简单输入框",
+          "type": "string",
+          "placeholder": "haha",
+          "required": false
+        },
+        "textarea": {
+          "title": "简单文本编辑框",
+          "type": "string",
+          "format": "textarea",
+          "default": "123",
+          "hidden": "{{formData.AllString && formData.AllString.input === '123'}}"
+        },
+        "color": {
+          "title": "颜色选择",
+          "type": "string",
+          "format": "color",
+          "default": "#000000"
+        },
+        "date": {
+          "title": "日期选择",
+          "type": "string",
+          "format": "date",
+          "default": "1999-12-12"
+        },
+        "image": {
+          "bind": false,
+          "title": "图片展示",
+          "type": "string",
+          "format": "image",
+          "default": "https://img.alicdn.com/imgextra/i1/O1CN01jfLqRq1pixRWuFJ2J_!!6000000005395-2-tps-332-256.png"
+        },
+        "uploader": {
+          "title": "上传文件",
+          "type": "string",
+          "format": "upload",
+          "props": {
+            "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          }
+        },
         "objectName": {
           "title": "对象",
           "description": "这是一个对象类型",
@@ -85,45 +133,14 @@
             "inputName": {
               "required": true,
               "title": "简单输入框",
-              "type": "string"
+              "type": "string",
+              "rules": [
+                {
+                  "pattern": "^[A-Za-z0-9]+$",
+                  "message": "只允许英文字母 & 数字"
+                }
+              ]
             }
-          }
-        },
-        "input": {
-          "title": "简单输入框",
-          "type": "string",
-          "ui:options": {
-            "placeholder": "haha"
-          },
-          "required": false
-        },
-        "textarea": {
-          "title": "简单文本编辑框",
-          "type": "string",
-          "format": "textarea"
-        },
-        "color": {
-          "title": "颜色选择",
-          "type": "string",
-          "format": "color"
-        },
-        "date": {
-          "title": "日期选择",
-          "type": "string",
-          "format": "date"
-        },
-        "image": {
-          "bind": false,
-          "title": "图片展示",
-          "type": "string",
-          "format": "image"
-        },
-        "uploader": {
-          "title": "上传文件",
-          "type": "string",
-          "format": "upload",
-          "ui:options": {
-            "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
           }
         }
       }
@@ -134,15 +151,17 @@
       "properties": {
         "number1": {
           "title": "数字输入框",
-          "description": "1 - 1000",
+          "description": "10 - 100",
           "type": "number",
-          "min": 1,
-          "max": 1000
+          "placeholder": "nihao",
+          "rules": [{ "min": 10, "max": 100 }]
         },
         "number2": {
           "title": "带滑动条",
+          "description": "20 - 50",
           "type": "number",
-          "ui:widget": "slider"
+          "widget": "slider",
+          "rules": [{ "min": 20 }, { "max": 50 }]
         }
       }
     },
@@ -158,7 +177,8 @@
         "switch": {
           "title": "开关控制",
           "type": "boolean",
-          "ui:widget": "switch"
+          "widget": "switch",
+          "default": true
         }
       }
     },
@@ -170,9 +190,7 @@
           "title": "日期范围",
           "type": "range",
           "format": "dateTime",
-          "ui:options": {
-            "placeholder": ["开始时间", "结束时间"]
-          }
+          "placeholder": ["开始时间", "结束时间"]
         }
       }
     },
@@ -181,41 +199,40 @@
       "type": "object",
       "properties": {
         "select": {
-          "title": "单选",
+          "title": "单选1",
+          "description": "选项超过5个",
+          "type": "number",
+          "enum": [1, 2, 3, 4, 5, 6, 7],
+          "enumNames": ["红", "橙", "黄", "绿", "青", "蓝", "紫"]
+        },
+        "radio": {
+          "title": "单选2",
           "type": "string",
           "enum": ["a", "b", "c"],
           "enumNames": ["早", "中", "晚"]
         },
-        "radio": {
-          "title": "单选",
-          "type": "string",
-          "enum": ["a", "b", "c"],
-          "enumNames": ["早", "中", "晚"],
-          "ui:widget": "radio"
-        },
         "multiSelect": {
-          "title": "多选",
-          "description": "下拉多选",
+          "title": "多选1",
+          "description": "选项超过5个",
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "default": [1, 5],
+          "enum": [1, 2, 3, 4, 5, 6, 7],
+          "enumNames": ["红", "橙", "黄", "绿", "青", "蓝", "紫"]
+        },
+        "boxes": {
+          "title": "多选2",
           "type": "array",
           "items": {
             "type": "string"
           },
           "enum": ["A", "B", "C", "D"],
           "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
-          "ui:widget": "multiSelect"
-        },
-        "boxes": {
-          "title": "多选",
-          "description": "checkbox",
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "enum": ["A", "B", "C", "D"],
-          "enumNames": ["杭州", "武汉", "湖州", "贵阳"]
+          "default": ["A", "B"]
         }
       }
     }
-  },
-  "required": []
+  }
 }

@@ -25,16 +25,17 @@ export const createWidget = (mapProps, extraSchema) => Component => props => {
 };
 
 export const transformProps = props => {
-  const { onChange, value, schema: ownSchema, ...rest } = props;
+  const { onChange, value, defaultValue, schema: ownSchema, ...rest } = props;
   const schema = { ...ownSchema };
   const { trigger, valuePropName } = schema || {};
   const controlProps = {};
   let _valuePropName = 'value';
+  const _value = value === undefined ? defaultValue : value;
   if (valuePropName && typeof valuePropName === 'string') {
     _valuePropName = valuePropName;
-    controlProps[valuePropName] = value;
+    controlProps[valuePropName] = _value;
   } else {
-    controlProps.value = value;
+    controlProps.value = _value;
   }
   const _onChange = (...args) => {
     const newValue = defaultGetValueFromEvent(_valuePropName, ...args);

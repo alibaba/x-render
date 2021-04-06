@@ -3,11 +3,11 @@ import { Select } from 'antd';
 import { createWidget } from '../../HOC';
 import { getArray } from '../../utils';
 
-const mapProps = ({ schema, style, ...rest }) => {
+const mapProps = ({ schema, style, options: _options }) => {
   let options;
   // 如果已经有外部注入的options了，内部的schema就会被忽略
-  if (rest && rest.options && Array.isArray(rest.options)) {
-    options = rest.options;
+  if (_options && Array.isArray(_options)) {
+    options = _options;
   } else {
     const { enum: enums, enumNames } = schema || {};
     options = getArray(enums).map((item, idx) => {
@@ -26,13 +26,6 @@ const mapProps = ({ schema, style, ...rest }) => {
   };
 };
 
-const A = props => {
-  // if (props.schema.$id === 'allEnum.select') {
-  //   console.log(props, 'selectProps');
-  // }
-  return <Select {...props} />;
-};
-
-const Component = createWidget(mapProps)(A);
+const Component = createWidget(mapProps)(Select);
 
 export default Component;

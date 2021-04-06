@@ -18,7 +18,7 @@ const RenderList = ({
   errorFields,
 }) => {
   // console.log(parentId, dataIndex, children);
-  const { formData, onItemChange, flatten } = useStore();
+  const { formData, flatten, onItemChange } = useStore();
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
@@ -89,7 +89,7 @@ const RenderList = ({
 export default RenderList;
 
 const CardList = ({
-  displayList = [{}],
+  displayList = [],
   dataPath,
   dataIndex,
   children,
@@ -227,7 +227,7 @@ const CardList = ({
 };
 
 const TableList = ({
-  displayList = [{}],
+  displayList = [],
   dataIndex,
   children,
   deleteItem,
