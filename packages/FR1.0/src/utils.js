@@ -376,7 +376,7 @@ export function parseSingleExpression(func, formData, _dataPath) {
     const funcBody = func.substring(2, func.length - 2);
     const match1 = /(formData\.){1}[a-zA-Z0-9.$_[]]+/;
     const match2 = /(rootValue\.){1}[a-zA-Z0-9.$_[]]+/; // 这里叫rootValue是为了兼容旧的
-    const str = `"use strict";
+    const str = `'use strict';
     var formData = ${JSON.stringify(formData)};
     var rootValue = ${JSON.stringify(parent)};
     return (${funcBody
