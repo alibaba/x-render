@@ -17,7 +17,6 @@ export default defineConfig({
         { title: '教程', path: '/form-render/guide' },
         { title: '自定义组件', path: '/form-render/widgets' },
         { title: 'Playground', path: '/playground' },
-        // { title: '表单设计器', path: '/generator' },
       ],
     },
     {
@@ -32,10 +31,6 @@ export default defineConfig({
         { title: '组件', path: '/chart-render/components' },
       ],
     },
-    // {
-    //   title: 'CardRender',
-    //   path: '/card-render',
-    // },
     {
       title: '周边工具',
       path: '/tools',

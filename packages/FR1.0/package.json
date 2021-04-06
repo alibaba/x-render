@@ -1,5 +1,5 @@
 {
-  "name": "form-render-beta",
+  "name": "form-render",
   "version": "1.0.1",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "repository": {

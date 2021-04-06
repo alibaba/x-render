@@ -5,7 +5,7 @@ import {
   updateSchemaToNewVersion,
   // completeSchemaWithTheme,
 } from './utils';
-import FR from './FR';
+import FR from './core';
 import { Ctx, StoreCtx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
