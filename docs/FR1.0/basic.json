@@ -7,8 +7,27 @@
       "type": "range",
       "format": "date",
       "required": true,
-      "ui:disabled": "{{formData.percentage == 30}}",
+      "ui:disabled": "{{formData.percentage == 20}}",
       "default": ["2021-04-13", "2021-05-11"]
+    },
+    "inputTest": {
+      "title": "输入框",
+      "type": "string",
+      "ui:widget": "input2"
+    },
+    "percentage": {
+      "title": "百分比",
+      "type": "number",
+      "ui:widget": "percent2",
+      "rules": [
+        {
+          "min": 10,
+          "message": "要大于10哦~"
+        },
+        {
+          "max": 40
+        }
+      ]
     },
     "list": {
       "required": false,
@@ -18,17 +37,6 @@
       "items": {
         "type": "object",
         "properties": {
-          "objectName": {
-            "title": "对象",
-            "description": "这是一个对象类型",
-            "type": "object",
-            "properties": {
-              "inputName": {
-                "title": "简单输入框",
-                "type": "string"
-              }
-            }
-          },
           "userName": {
             "bind": false,
             "title": "User Name",
@@ -58,47 +66,26 @@
             "title": "是否判断",
             "type": "boolean",
             "valuePropName": "checked"
+          },
+          "objectName": {
+            "title": "对象",
+            "description": "这是一个对象类型",
+            "type": "object",
+            "properties": {
+              "inputName": {
+                "title": "简单输入框",
+                "type": "string"
+              }
+            }
           }
         }
       }
     },
-    "percentage": {
-      "title": "百分比",
-      "type": "number",
-      "required": true,
-      "ui:widget": "percent",
-      "rules": [
-        {
-          "min": 10,
-          "message": "要大于10哦~"
-        },
-        {
-          "max": 40
-        }
-      ]
-    },
+
     "AllString": {
       "title": "string类",
       "type": "object",
       "properties": {
-        "objectName": {
-          "title": "对象",
-          "description": "这是一个对象类型",
-          "type": "object",
-          "properties": {
-            "inputName": {
-              "required": true,
-              "title": "简单输入框",
-              "type": "string",
-              "rules": [
-                {
-                  "pattern": "^[A-Za-z0-9]+$",
-                  "message": "只允许英文字母 & 数字"
-                }
-              ]
-            }
-          }
-        },
         "input": {
           "title": "简单输入框",
           "type": "string",
@@ -109,7 +96,8 @@
           "title": "简单文本编辑框",
           "type": "string",
           "format": "textarea",
-          "default": "123"
+          "default": "123",
+          "hidden": "{{formData.AllString && formData.AllString.input === '123'}}"
         },
         "color": {
           "title": "颜色选择",
@@ -136,6 +124,24 @@
           "format": "upload",
           "props": {
             "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
+          }
+        },
+        "objectName": {
+          "title": "对象",
+          "description": "这是一个对象类型",
+          "type": "object",
+          "properties": {
+            "inputName": {
+              "required": true,
+              "title": "简单输入框",
+              "type": "string",
+              "rules": [
+                {
+                  "pattern": "^[A-Za-z0-9]+$",
+                  "message": "只允许英文字母 & 数字"
+                }
+              ]
+            }
           }
         }
       }
@@ -172,7 +178,8 @@
         "switch": {
           "title": "开关控制",
           "type": "boolean",
-          "ui:widget": "switch"
+          "ui:widget": "switch",
+          "default": true
         }
       }
     },
@@ -184,9 +191,7 @@
           "title": "日期范围",
           "type": "range",
           "format": "dateTime",
-          "ui:options": {
-            "placeholder": ["开始时间", "结束时间"]
-          }
+          "placeholder": ["开始时间", "结束时间"]
         }
       }
     },
@@ -230,6 +235,5 @@
         }
       }
     }
-  },
-  "required": []
+  }
 }
