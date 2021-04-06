@@ -11,7 +11,7 @@ export default {
       default: ['2021-04-13', '2021-05-11'],
     },
     inputTest: {
-      title: '输入框',
+      title: '地址输入',
       type: 'string',
     },
     percentage: {

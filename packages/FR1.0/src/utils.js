@@ -651,12 +651,23 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
         result = rest;
       }
     } else {
-      // TODO1: 补齐
       result = rest;
+      // TODO1: 补齐
     }
     switch (schema.type) {
       case 'range':
         result.type = 'array';
+        break;
+      default:
+        break;
+    }
+    switch (schema.format) {
+      case 'email':
+      case 'url':
+        result.type = schema.format;
+        break;
+      case 'image':
+        // TODO1: 补齐
         break;
       default:
         break;
@@ -741,7 +752,7 @@ export const translateMessage = (msg, schema) => {
   }
   if (!schema) return msg;
   msg = msg.replace('${title}', schema.title);
-  msg = msg.replace('${type}', schema.type);
+  msg = msg.replace('${type}', schema.format || schema.type);
   // 兼容代码
   if (schema.min) {
     msg = msg.replace('${min}', schema.min);
@@ -869,6 +880,8 @@ const updateSingleSchema = schema => {
       _schema.props.maxItems = _schema.maxItems;
       delete _schema.maxItems;
     }
+
+    //
     if (_schema['ui:className']) {
       _schema.className = _schema['ui:className'];
       delete _schema['ui:className'];
@@ -921,4 +934,19 @@ export const parseFunctionString = string => {
     return string.match(reg2)[1];
   }
   return false;
+};
+
+export const completeSchemaWithTheme = (schema = {}, theme = {}) => {
+  let result = {};
+  if (isObject(schema)) {
+    if (schema.theme && theme[schema.theme]) {
+      result = { ...schema, ...theme[schema.theme] };
+    }
+    Object.keys(schema).forEach(key => {
+      result[key] = completeSchemaWithTheme(schema[key], theme);
+    });
+  } else {
+    result = schema;
+  }
+  return result;
 };
