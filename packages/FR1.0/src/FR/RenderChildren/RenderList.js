@@ -89,7 +89,7 @@ const RenderList = ({
 export default RenderList;
 
 const CardList = ({
-  displayList = [{}],
+  displayList = [],
   dataPath,
   dataIndex,
   children,
@@ -227,7 +227,7 @@ const CardList = ({
 };
 
 const TableList = ({
-  displayList = [{}],
+  displayList = [],
   dataIndex,
   children,
   deleteItem,
