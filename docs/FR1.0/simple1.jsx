@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render-beta';
+import testSchema from './testJson.json';
 
 const schema = {
   type: 'object',
@@ -35,11 +36,11 @@ const Demo = () => {
   const onSubmit = () => {
     form.submit();
     console.log(data, valid);
-    if (valid.length > 0) {
-      alert(`errors: ${JSON.stringify(valid)}`);
-    } else {
-      alert(`data: ${JSON.stringify(data)}`);
-    }
+    // if (valid.length > 0) {
+    //   alert(`errors: ${JSON.stringify(valid)}`);
+    // } else {
+    //   alert(`data: ${JSON.stringify(data)}`);
+    // }
   };
 
   const onFinish = ({ formData, errorFields }) => {
@@ -50,16 +51,16 @@ const Demo = () => {
 
   return (
     <div>
-      <div>{JSON.stringify(valid)}</div>
-      <FormRender
-        form={form}
-        schema={schema}
-        onFinish={onFinish}
-        debug={true}
-      />
       <Button type="primary" onClick={onSubmit}>
         提交
       </Button>
+      <div>{JSON.stringify(valid)}</div>
+      <FormRender
+        form={form}
+        schema={testSchema.schema}
+        onFinish={onFinish}
+        // debug
+      />
     </div>
   );
 };

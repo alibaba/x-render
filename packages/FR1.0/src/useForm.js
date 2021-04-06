@@ -118,7 +118,6 @@ export const useForm = props => {
         window.NOTHING_CHANGED_IN_WIDGETS = false;
       }, 500);
     });
-    // console.log('validateAll', formData, allTouched);
   }, [JSON.stringify(formData), allTouched]);
 
   const setEditing = isEditing => {
@@ -188,15 +187,12 @@ export const useForm = props => {
       locale: localeRef.current,
     })
       .then(errors => {
-        // 如果有错误，停止校验和提交
+        // 如果有错误，也不停止校验和提交，在onFinish里让用户自己搞
         if (errors && errors.length > 0) {
           console.log('submit:', _data, errors);
           setState({
-            isValidating: false,
-            isSubmitting: false,
             errorFields: errors,
           });
-          return;
         }
         if (typeof beforeFinishRef.current === 'function') {
           Promise.resolve(processData(_data, flattenRef.current)).then(res => {

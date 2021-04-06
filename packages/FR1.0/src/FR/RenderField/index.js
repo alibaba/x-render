@@ -38,10 +38,8 @@ const RenderField = props => {
   const {
     onItemChange,
     formData,
-    displayType,
     isEditing,
     setEditing,
-    extend,
     touchKey,
     debounceInput,
   } = store;
@@ -82,20 +80,7 @@ const RenderField = props => {
 
   const _value = getValueByPath(formData, dataPath);
 
-  // check: 由于是专门针对checkbox的，目前只好写这里
-  let _labelStyle = labelStyle;
-  if (isCheckBoxType(_schema)) {
-    _labelStyle = { flexGrow: 1 };
-  }
-
   let contentStyle = {};
-  if (isCheckBoxType(_schema) && displayType === 'row') {
-    contentStyle.marginLeft = labelStyle.width;
-  }
-
-  const outMapProps = isObject(extend) && extend[dataPath];
-  const _outMapProps =
-    typeof outMapProps === 'function' ? outMapProps : () => {};
 
   const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
 
@@ -115,13 +100,13 @@ const RenderField = props => {
 
   const titleProps = {
     labelClass,
-    labelStyle: _labelStyle,
+    labelStyle: labelStyle,
     schema: _schema,
   };
 
   const placeholderTitleProps = {
     className: labelClass,
-    style: _labelStyle,
+    style: labelStyle,
   };
 
   const _showTitle = !hideTitle && !!_schema.title;
@@ -134,10 +119,6 @@ const RenderField = props => {
     value: _value,
     onItemChange,
   };
-
-  if (_outMapProps) {
-    widgetProps.mapProps = _outMapProps;
-  }
 
   widgetProps.children = hasChildren
     ? children
@@ -178,7 +159,6 @@ const RenderField = props => {
         )}
       </div>
     );
-
     return (
       <div className={contentClass} style={contentStyle}>
         <ExtendedWidget
