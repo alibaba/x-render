@@ -347,11 +347,7 @@ export function isExpression(func) {
 }
 
 // TODO: dataPath 是 array 的情况？
-export function parseSingleExpression(func, formData, _dataPath) {
-  let dataPath = _dataPath;
-  if (Array.isArray(_dataPath)) {
-    dataPath = _dataPath[0]; // Check: 就不要去支持array的情况下去使用rootValue，逻辑上就是不通的, 这里取第一个值的，是默认所有值的parent都一样。
-  }
+export function parseSingleExpression(func, formData, dataPath) {
   const parentPath = getParentPath(dataPath);
   const parent = getValueByPath(formData, parentPath);
   if (typeof func === 'function') {
@@ -362,26 +358,13 @@ export function parseSingleExpression(func, formData, _dataPath) {
       return;
     }
   } else if (typeof func === 'string') {
-    const parser = match => {
-      const path = match.replace('formData.', '');
-      const result = get(formData, path);
-      return result;
-    };
-    const parser2 = match => {
-      const replaceValue = parentPath === '#' ? '' : parentPath + '.';
-      const path = match.replace('rootValue.', replaceValue);
-      const result = get(formData, path);
-      return result;
-    };
     const funcBody = func.substring(2, func.length - 2);
-    const match1 = /(formData\.){1}[a-zA-Z0-9.$_[]]+/;
-    const match2 = /(rootValue\.){1}[a-zA-Z0-9.$_[]]+/; // 这里叫rootValue是为了兼容旧的
-    const str = `'use strict';
-    var formData = ${JSON.stringify(formData)};
-    var rootValue = ${JSON.stringify(parent)};
+    const match1 = /formData.([a-zA-Z0-9.$_\[\]]+)/g;
+    const match2 = /rootValue.([a-zA-Z0-9.$_\[\]]+)/g;
+    const str = `
     return (${funcBody
-      .replace(match1, v => JSON.stringify(parser(v)))
-      .replace(match2, v => JSON.stringify(parser2(v)))})`;
+      .replaceAll(match1, (v, m1) => getValueByPath(formData, m1))
+      .replaceAll(match2, (v, m1) => getValueByPath(parent, m1))})`;
     try {
       return Function(str)();
     } catch (error) {
@@ -892,7 +875,25 @@ const updateSingleSchema = schema => {
   }
 };
 
+// 旧版schema转新版schema
 export const parseExpression = (schema, formData) => {
   let schema1 = parseRootValue(schema);
   let schema2 = replaceParseValue(schema1);
 };
+
+// 检验一个string是 function（传统活箭头函数）
+export const parseFunctionString = string => {
+  if (typeof string !== 'string') return false;
+  const reg1 = /^{{(function.+)}}$/;
+  const reg2 = /^{{(.+=>.+)}}$/;
+  if (string.match(reg1)) {
+    return string.match(reg1)[1];
+  }
+  if (string.match(reg2)) {
+    return string.match(reg2)[1];
+  }
+  return false;
+};
+
+// 检验一个string是表达式："{{ ... }}"
+export const parseExpressionString = string => {};
