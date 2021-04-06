@@ -1,15 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo } from 'react';
-import {
-  flattenSchema,
-  updateSchemaToNewVersion,
-  schemaContainsExpression,
-  parseExpression,
-} from './utils';
+import { flattenSchema, updateSchemaToNewVersion } from './utils';
 import FR from './FR';
-import { Ctx, StoreCtx, useSet } from './hooks';
+import { Ctx, StoreCtx } from './hooks';
+import { cloneDeep } from 'lodash';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
 import 'antd/dist/antd.less';
 import './index.less';
@@ -31,7 +29,7 @@ function App({
   locale = 'cn', // 'cn'/'en'
   debounceInput = false,
   size,
-  isEditing,
+  configProvider,
   ...rest
 }) {
   const {
@@ -44,15 +42,8 @@ function App({
     endSubmitting,
     syncStuff,
     formData,
+    isEditing,
   } = form;
-
-  // const flatten = _flatten || flattenSchema(schema);
-
-  // let schema
-  // if (schemaContainsExpression(_schema)) {
-  //   console.log('parseAllExpression');
-  //   schema = parseExpression(_schema, formData);
-  // }
 
   const flatten = useMemo(() => _flatten || flattenSchema(schema), [
     JSON.stringify(_flatten),
@@ -114,23 +105,25 @@ function App({
 
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
-    <StoreCtx.Provider value={store}>
-      <Ctx.Provider value={tools}>
-        <div className={`fr-container ${sizeCls}`}>
-          {debug ? (
-            <div className="mv2 bg-black-05 pa2 br2">
-              <div>{'formData:' + JSON.stringify(form.formData)}</div>
-              <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
-              <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
-              <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
-              <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
-              <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
-            </div>
-          ) : null}
-          <FR />
-        </div>
-      </Ctx.Provider>
-    </StoreCtx.Provider>
+    <ConfigProvider locale={zhCN} {...configProvider}>
+      <StoreCtx.Provider value={store}>
+        <Ctx.Provider value={tools}>
+          <div className={`fr-container ${sizeCls}`}>
+            {debug ? (
+              <div className="mv2 bg-black-05 pa2 br2">
+                <div>{'formData:' + JSON.stringify(form.formData)}</div>
+                <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
+                <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
+                <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
+                <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
+                <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
+              </div>
+            ) : null}
+            <FR />
+          </div>
+        </Ctx.Provider>
+      </StoreCtx.Provider>
+    </ConfigProvider>
   );
 }
 

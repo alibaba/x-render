@@ -24,9 +24,9 @@ export interface Error {
 }
 
 export interface FormParams {
-  formData: any;
-  onChange: (data: any) => void;
-  onValidate: (valid: any) => void;
+  formData?: any;
+  onChange?: (data: any) => void;
+  onValidate?: (valid: any) => void;
 }
 
 export interface FormInstance {
@@ -71,14 +71,15 @@ export interface FRProps {
   column?: number;
   debounceInput?: boolean;
   size?: string;
+  configProvider?: any;
   /** 表单提交前钩子 */
   beforeFinish?: (result: ResultType) => void;
   /** 表单提交后钩子 */
-  onFinish?: (result: ResultType) => void;
+  onFinish: (result: ResultType) => void;
 }
 
 declare const FR: React.FC<FRProps>;
 
-export declare function useForm(params: FormParams): FormInstance;
+export declare function useForm(params?: FormParams): FormInstance;
 
 export default FR;
