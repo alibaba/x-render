@@ -13,6 +13,7 @@ export default defineConfig({
       path: '/form-render',
       children: [
         { title: 'FR1.0', path: '/FR1.0' },
+        { title: '0.x - 1.x 迁移', path: '/FR1.0/migrate' },
         { title: '教程', path: '/form-render/guide' },
         { title: '自定义组件', path: '/form-render/widgets' },
         { title: 'Playground', path: '/playground' },

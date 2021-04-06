@@ -10,8 +10,8 @@
       },
       "imageName": {
         "title": "图片展示",
-        "type": "range",
-        "format": "date"
+        "type": "string",
+        "format": "image"
       },
       "inputName2": {
         "title": "email输入框",
@@ -20,19 +20,12 @@
       },
       "string": {
         "title": "正则校验字符串",
+        "description": "a-z",
         "type": "string",
-        "pattern": "^[A-Za-z0-9]+$",
+        "pattern": "^[a-z]+$",
         "message": {
           "pattern": "格式不对哦~"
         }
-      },
-      "string1": {
-        "title": "前后有空格不校验",
-        "type": "string"
-      },
-      "string2": {
-        "title": "正常的会校验空格",
-        "type": "string"
       }
     }
   }
