@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useStore } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
 import {
@@ -147,6 +147,10 @@ const RenderField = props => {
   // if (_schema && _schema.default !== undefined) {
   //   widgetProps.value = _schema.default;
   // }
+
+  if (_schema.hidden) {
+    return null;
+  }
 
   // checkbox必须单独处理，布局太不同了
   if (isCheckBoxType(_schema)) {

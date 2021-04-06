@@ -22,13 +22,13 @@ export const validateAll = ({
   const formData = merge(generateDataSkeleton(schema), _formData);
   // debugger;
   // const formData = { ...generateDataSkeleton(schema), ..._formData };
-  console.log(formData, '&&&& formData');
+  // console.log(formData, '&&&& formData');
   if (Object.keys(schema).length === 0) return Promise.resolve();
   const descriptor = getDscriptorFromSchema({
     schema,
     isRequired,
   }).fields;
-  console.log(descriptor, '&&&& descriptor');
+  // console.log(descriptor, '&&&& descriptor');
 
   let touchVerifyList = [];
 
