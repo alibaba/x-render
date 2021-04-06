@@ -7,22 +7,24 @@ title: 使用教程
   <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="200"/>
 </div>
 
-# TableRender
+<h1 style="text-align:center">TableRender</h1>
 
-<p style="display:flex;justify-content:space-between;width:440px">
-  <a href="https://www.npmjs.com/package/table-render?_blank">
-    <img alt="npm" src="https://img.shields.io/npm/v/table-render.svg?maxAge=3600&style=flat-square">
-  </a>
-  <a href="https://npmjs.org/package/table-render">
-    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/table-render.svg?style=flat-square">
-  </a>
-  <a href="https://npmjs.org/package/table-render">
-    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/table-render.svg?style=flat-square">
-  </a>
-  <a>
-    <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
-  </a>
-</p>
+<div style="display:flex;justify-content:center">
+  <p style="display:flex;justify-content:space-between;width:440px">
+    <a href="https://www.npmjs.com/package/table-render?_blank">
+      <img alt="npm" src="https://img.shields.io/npm/v/table-render.svg?maxAge=3600&style=flat-square">
+    </a>
+    <a href="https://npmjs.org/package/table-render">
+      <img alt="NPM downloads" src="https://img.shields.io/npm/dm/table-render.svg?style=flat-square">
+    </a>
+    <a href="https://npmjs.org/package/table-render">
+      <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/table-render.svg?style=flat-square">
+    </a>
+    <a>
+      <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
+    </a>
+  </p>
+</div>
 
 > 易用且轻量的中后台**表单解决方案**，常用于**搜索列表页**快速生成
 
@@ -141,9 +143,7 @@ export default Wrapper;
 
 ## API
 
-
-### Props
-#### TableContainer
+### TableContainer参数
 
 | 属性       | 描述                          | 类型                    | 默认值 |
 | --------- | --------------------------- | ----------------------- | ------ |
@@ -153,7 +153,7 @@ export default Wrapper;
 | searchOnMount | 组件初次挂载时，是否默认执行查询动作  | boolean |   `true` |
 
 
-### Search
+### Search参数
 
 | 属性       | 描述                          | 类型                    | 默认值 |
 | --------- | --------------------------- | ----------------------- | ------ |
@@ -162,7 +162,7 @@ export default Wrapper;
 | searchBtnRender   | 自定义表单查询按钮 | `(refresh,clearSearch) => ReactNode[]`           | -      |
 
 
-### ProTable
+### ProTable参数
 
 > 支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写。最基本的使用就需要填写`columns`
 
@@ -174,7 +174,7 @@ export default Wrapper;
 | columns   | 列定义  | `boolean` | false  |
 
 
-### Columns 列定义
+##### Columns 列定义
 
 columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns](https://ant.design/components/table-cn/#Column) 的配置，但是我们也提供了一些更方便的 api，加快书写:
 
@@ -185,7 +185,7 @@ columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns
 | valueType | 值的类型，详见下方 `valueType 配置` | `text` \| `money` \| `date` \| `dateTime` | `text` |
 | enum      | 当前列值的枚举，详见[高级用法](./demo.md#基本用法) | object                                    | -      |
 
-### valueType 值类型
+##### valueType 值类型
 
 Table-Render 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考：[高级用法](./demo#高级用法)。
 
