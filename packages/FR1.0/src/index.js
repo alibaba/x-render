@@ -63,6 +63,7 @@ function App({
       displayType,
       debounceInput,
       debug,
+      isEditing,
       ...rest,
     }),
     [
@@ -129,7 +130,7 @@ function App({
 export { createWidget } from './HOC';
 
 const VersionChanger = props => {
-  const { isOldVersion, schema, ...rest } = props;
+  const { isOldVersion = true, schema, ...rest } = props;
 
   useEffect(() => {
     // parseAllExpression(sch, {}, '#')

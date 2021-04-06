@@ -882,6 +882,9 @@ const updateSingleSchema = schema => {
       _schema.labelWidth = _schema['ui:labelWidth'];
       delete _schema['ui:labelWidth'];
     }
+    if (_schema.rules && _schema.rules.length === 0) {
+      delete _schema.rules;
+    }
     return _schema;
   } catch (error) {
     console.error('旧schema转换失败！', error);

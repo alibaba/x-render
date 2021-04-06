@@ -7,18 +7,17 @@
       "type": "range",
       "format": "date",
       "required": true,
-      "ui:disabled": "{{formData.percentage == 20}}",
+      "disabled": "{{formData.percentage == 20}}",
       "default": ["2021-04-13", "2021-05-11"]
     },
     "inputTest": {
       "title": "输入框",
-      "type": "string",
-      "ui:widget": "input2"
+      "type": "string"
     },
     "percentage": {
       "title": "百分比",
       "type": "number",
-      "ui:widget": "percent2",
+      "widget": "percent2",
       "rules": [
         {
           "min": 10,
@@ -161,7 +160,7 @@
           "title": "带滑动条",
           "description": "20 - 50",
           "type": "number",
-          "ui:widget": "slider",
+          "widget": "slider",
           "rules": [{ "min": 20 }, { "max": 50 }]
         }
       }
@@ -178,7 +177,7 @@
         "switch": {
           "title": "开关控制",
           "type": "boolean",
-          "ui:widget": "switch",
+          "widget": "switch",
           "default": true
         }
       }

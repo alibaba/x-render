@@ -32,7 +32,7 @@ const ExtendedWidget = ({
   // ]);
   let widgetName = getWidgetName(schema, mapping);
   let Widget = widgets[widgetName];
-  const customName = schema['ui:widget'];
+  const customName = schema.widget || schema['ui:widget'];
   if (customName && widgets[customName]) {
     Widget = widgets[customName];
     widgetName = customName;

@@ -83,8 +83,9 @@ const Demo = () => {
         schema={schema}
         beforeFinish={beforeFinish}
         onFinish={onFinish}
-        widgets={{ percent: PercentWidget, percent2: Percent2, input2: Input }}
+        widgets={{ percent: PercentWidget, percent2: Percent2 }}
         debug
+        // debounceInput={true}
         // size="small"
         // locale="en"
       />
