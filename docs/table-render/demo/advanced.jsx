@@ -1,8 +1,11 @@
 import React, { useRef } from 'react';
 import { ProTable, Search, TableContainer, useTable } from 'table-render';
-import { Tag, Space, Menu, Dropdown, message } from 'antd';
-import { Button } from 'antd';
-import { PlusOutlined, EllipsisOutlined } from '@ant-design/icons';
+import { Tag, Space, Menu, Dropdown, message, Tooltip, Button } from 'antd';
+import {
+  PlusOutlined,
+  EllipsisOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 import request from 'umi-request';
 // 可以使用schema编辑器配置 https://form-render.github.io/schema-generator/
 const schema = {
@@ -27,6 +30,7 @@ const schema = {
       'ui:width': '25%',
     },
   },
+  'ui:labelWidth': 80,
 };
 
 const Demo = () => {
@@ -68,10 +72,23 @@ const TableBody = () => {
       title: '标题',
       dataIndex: 'title',
       ellipsis: true,
+      copyable: true,
       valueType: 'text',
+      width: '30%',
     },
     {
-      title: '状态',
+      title: (
+        <>
+          状态
+          <Tooltip placement="top" title="使用valueType">
+            <InfoCircleOutlined style={{ marginLeft: 6 }} />
+          </Tooltip>
+        </>
+      ),
+      enum: {
+        open: '未解决',
+        closed: '已解决',
+      },
       dataIndex: 'state',
     },
     {
@@ -104,22 +121,9 @@ const TableBody = () => {
                 alert('Table-Render!');
               }}
             >
-              链路
+              查看
             </div>
           </a>
-          <a
-            href="https://x-render.gitee.io/form-render/"
-            target="_blank"
-            rel="noopener noreferrer"
-            key="2"
-          >
-            查看
-          </a>
-          <Dropdown key="3" overlay={menu} placement="bottomLeft" arrow>
-            <a target="_blank">
-              <EllipsisOutlined />
-            </a>
-          </Dropdown>
         </Space>
       ),
     },
@@ -142,7 +146,7 @@ const TableBody = () => {
 
   return (
     <div style={{ background: 'rgb(245,245,245)' }}>
-      <Search schema={schema} />
+      <Search schema={schema} displayType="row" />
       <ProTable
         // size="small"
         columns={columns}

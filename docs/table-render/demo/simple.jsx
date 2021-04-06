@@ -1,6 +1,4 @@
 import React, { useRef, useLayoutEffect, useEffect } from 'react';
-import { Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import { ProTable, Search, TableContainer, useTable } from 'table-render';
 import request from 'umi-request';
 
@@ -8,13 +6,23 @@ import request from 'umi-request';
 const schema = {
   type: 'object',
   properties: {
+    string: {
+      title: '标题',
+      type: 'string',
+      pattern: '^[A-Za-z0-9]+$',
+      message: {
+        pattern: '格式不对哦~',
+      },
+      'ui:width': '30%',
+    },
     created_at: {
       title: '创建时间',
       type: 'string',
       format: 'date',
-      'ui:width': '25%',
+      'ui:width': '30%',
     },
   },
+  'ui:labelWidth': 90,
 };
 
 // 配置完全透传antd table
@@ -51,36 +59,35 @@ const columns = [
   },
 ];
 
-const searchApi = params => {
-  return request
-    .get(
-      'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/simple',
-      { params }
-    )
-    .then(res => {
-      console.log('response:', res);
-      if (res && res.data) {
-        return { rows: res.data, total: res.data.length }; // 注意一定要返回 rows 和 total
-      }
-    })
-    .catch(e => console.log('Oops, error', e));
-};
-
 const Demo = () => {
-  const tableRef = useRef();
   return (
     <div style={{ background: 'rgb(245,245,245)' }}>
-      <TableContainer ref={tableRef} searchApi={searchApi}>
-        <Search schema={schema} />
-        <ProTable
-          headerTitle="最简表格"
-          columns={columns}
-          rowKey="id"
-          toolbarAction
-        />
-      </TableContainer>
+      <Search schema={schema} />
+      <ProTable headerTitle="最简表格" columns={columns} rowKey="id" />
     </div>
   );
 };
 
-export default Demo;
+const Wrapper = () => {
+  const searchApi = params => {
+    return request
+      .get(
+        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/simple',
+        { params }
+      )
+      .then(res => {
+        console.log('response:', res);
+        if (res && res.data) {
+          return { rows: res.data, total: res.data.length }; // 注意一定要返回 rows 和 total
+        }
+      })
+      .catch(e => console.log('Oops, error', e));
+  };
+  return (
+    <TableContainer searchApi={searchApi}>
+      <Demo />
+    </TableContainer>
+  );
+};
+
+export default Wrapper;
