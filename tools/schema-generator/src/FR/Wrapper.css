@@ -1,0 +1,13 @@
+.field-wrapper {
+  padding: 20px 8px 0 8px;
+  border: 1px dashed #bbb;
+  margin: 0 0 8px 0;
+}
+
+.dnd-container > .field-wrapper {
+  margin: 0;
+}
+
+.dnd-container > .field-wrapper > .fr-field {
+  margin: 0;
+}
