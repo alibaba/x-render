@@ -28,7 +28,6 @@ const Search = (props: any) => {
   const _schema = props.schema || props.propsSchema;
 
   const modifiedSchema = useRef();
-  const sref = useRef(null); // 搜索组件的ref
 
   const onChange = (newSearch: any) => {
     setTable({ search: newSearch });
@@ -72,9 +71,10 @@ const Search = (props: any) => {
       try {
         const curSchema = JSON.parse(JSON.stringify(_schema));
         curSchema.properties.searchBtn = {
-          'ui:widget': 'searchBtn',
-          'ui:className': 'search-btn',
-          'ui:width': calcWidth(_schema),
+          type: 'string',
+          widget: 'searchBtn',
+          className: 'search-btn',
+          width: calcWidth(_schema),
         };
         setSchema(curSchema);
       } catch (error) {
@@ -84,22 +84,6 @@ const Search = (props: any) => {
       console.error(
         'SearchForm 传入了不正确的 schema，参考文档: https://x-render.gitee.io/form-render/form-render/config/schema'
       );
-    }
-  };
-
-  const clearSearch = () => {
-    sref.current?.resetData({});
-  };
-
-  useEffect(() => {
-    if (!props.hidden) {
-      modifySchema();
-    }
-  }, [_schema]);
-
-  const onMount = () => {
-    if (searchOnMount) {
-      refresh();
     }
   };
 
@@ -115,9 +99,21 @@ const Search = (props: any) => {
     });
   };
 
+  const form = useForm({ formData: search, onChange, onValidate });
+
+  const clearSearch = () => {
+    form.setValues({});
+  };
+
   useEffect(() => {
-    if (props.hidden && searchOnMount) {
-      onMount();
+    if (!props.hidden) {
+      modifySchema();
+    }
+  }, [_schema]);
+
+  useEffect(() => {
+    if (props.hidden || searchOnMount) {
+      refresh();
     }
   }, []);
 
@@ -139,13 +135,9 @@ const Search = (props: any) => {
       }}
     >
       <SearchForm
-        ref={sref}
+        form={form}
         {...props}
         schema={formSchema}
-        formData={search}
-        onChange={onChange}
-        onValidate={onValidate}
-        onMount={onMount}
         displayType="row"
         widgets={{
           searchBtn: () =>
