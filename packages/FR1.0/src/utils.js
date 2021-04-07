@@ -354,13 +354,15 @@ export const evaluateString = (string, formData, rootValue) =>
 // 判断schema的值是是否是“函数”
 // JSON无法使用函数值的参数，所以使用"{{...}}"来标记为函数，也可使用@标记，不推荐。
 export function isExpression(func) {
-  if (typeof func === 'function') {
-    const funcString = func.toString();
-    return (
-      funcString.indexOf('formData') > -1 ||
-      funcString.indexOf('rootValue') > -1
-    );
-  }
+  // if (typeof func === 'function') {
+  //   const funcString = func.toString();
+  //   return (
+  //     funcString.indexOf('formData') > -1 ||
+  //     funcString.indexOf('rootValue') > -1
+  //   );
+  // }
+  // 不再允许函数式的表达式了！
+  if (typeof func !== 'string') return false;
   // 这样的pattern {{.....}}
   const pattern = /^{{(.+)}}$/;
   const reg1 = /^{{(function.+)}}$/;
@@ -412,7 +414,7 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
 export const schemaContainsExpression = schema => {
   return Object.keys(schema).some(key => {
     const value = schema[key];
-    if (['string', 'function'].indexOf(typeof value) > -1) {
+    if (typeof value === 'string') {
       return isExpression(value);
     } else if (isObject(value)) {
       return schemaContainsExpression(value);
@@ -426,9 +428,20 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
   const schema = clone(_schema);
   Object.keys(schema).forEach(key => {
     const value = schema[key];
-    if (['string', 'function'].indexOf(typeof value) > -1) {
-      if (isExpression(value)) {
-        schema[key] = parseSingleExpression(value, formData, dataPath);
+    if (isExpression(value)) {
+      schema[key] = parseSingleExpression(value, formData, dataPath);
+    }
+    // 有可能叫 xxxProps
+    if (typeof key === 'string' && key.toLowerCase().indexOf('props') > -1) {
+      const propsObj = schema[key];
+      if (isObject(propsObj)) {
+        Object.keys(propsObj).forEach(k => {
+          schema[key][k] = parseSingleExpression(
+            propsObj[k],
+            formData,
+            dataPath
+          );
+        });
       }
     }
   });
@@ -844,7 +857,7 @@ const updateSingleSchema = schema => {
   try {
     let _schema = clone(schema);
     _schema.rules = [];
-    _schema.props = {};
+    _schema.props = _schema.props || {};
     if (_schema['ui:options']) {
       _schema.props = _schema['ui:options'];
       delete _schema['ui:options'];

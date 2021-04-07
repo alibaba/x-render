@@ -53,7 +53,6 @@ export const transformProps = props => {
     readOnly: schema.readOnly || schema['ui:readonly'],
     hidden: schema.hidden || schema['ui:hidden'],
     // $options: schema.options || schema['ui:options'],
-    // width: schema.width || schema['ui:width'],
   };
 
   const _props = {

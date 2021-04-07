@@ -12,7 +12,7 @@ import {
 } from '../utils';
 
 // rest: 允许在每层FR重新定义全局props，覆盖
-const FR = ({
+const Core = ({
   id = '#',
   _item, // 如果直接传了item，就不用id去取item, 暂时是内部属性，不外用
   dataIndex = [], // 数据来源是数组的第几个index，上层每有一个list，就push一个index
@@ -20,7 +20,7 @@ const FR = ({
   hideValidation = false,
   ...rest
 }) => {
-  // console.log('<FR>');
+  // console.log('<Core>');
   const { displayType, column, flatten, errorFields, labelWidth } = useStore();
   const _displayType = rest.displayType || displayType || 'column';
   const item = _item ? _item : flatten[id];
@@ -31,7 +31,7 @@ const FR = ({
   const isList = isListType(schema);
   const isComplex = isObjType || isList;
   const isCheckBox = isCheckBoxType(schema);
-  const width = schema['ui:width'];
+  const width = schema.width || schema['ui:width'];
   let containerClass = `fr-field ${
     _displayType === 'inline' ? '' : 'w-100'
   } flex`;
@@ -167,7 +167,7 @@ const FR = ({
   );
 };
 
-export default FR;
+export default Core;
 
 // const FieldWrapper = ({ children, ...rest }) => {
 //   const fieldProps = { ...rest };
