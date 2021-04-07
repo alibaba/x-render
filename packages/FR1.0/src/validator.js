@@ -46,7 +46,13 @@ export const validateAll = ({
   const cn = defaultValidateMessagesCN;
   const en = defaultValidateMessages;
 
-  const validator = new Validator(descriptor);
+  // TODO: 有些情况会出现没有rules，需要看一下，先兜底
+  let validator;
+  try {
+    validator = new Validator(descriptor);
+  } catch (error) {
+    return Promise.resolve([]);
+  }
   const messageFeed = locale === 'en' ? en : cn;
   validator.messages(messageFeed);
   return validator
