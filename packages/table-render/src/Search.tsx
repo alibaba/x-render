@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTable } from './hooks';
 import { Button } from 'antd';
-import SearchForm from 'form-render/lib/antd';
+import SearchForm, { useForm } from 'form-render';
 
 const SearchBtn = ({ clearSearch }: any) => {
   const { tableState = {}, refresh }: any = useTable();
