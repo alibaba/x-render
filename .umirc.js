@@ -1,4 +1,4 @@
-import { defineConfig } from 'dumi';
+import {defineConfig} from 'dumi';
 import path from 'path';
 
 export default defineConfig({
@@ -7,16 +7,17 @@ export default defineConfig({
   logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   outputPath: 'docs-dist',
   dynamicImport: {
-    loading:'antd/lib/spin',
+    loading: 'antd/lib/spin',
   },
+  ignoreMomentLocale: false,
   navs: [
     {
       title: 'FormRender',
       path: '/form-render',
       children: [
-        { title: '教程', path: '/form-render/guide' },
-        { title: 'Schema', path: '/form-render/schema' },
-        { title: 'Playground', path: '/playground' },
+        {title: '教程', path: '/form-render/guide'},
+        {title: 'Schema', path: '/form-render/schema'},
+        {title: 'Playground', path: '/playground'},
       ],
     },
     {
@@ -56,7 +57,7 @@ export default defineConfig({
       title: '国内镜像',
       path: 'https://x-render.gitee.io/form-render/',
     },
-    { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
+    {title: 'GitHub', path: 'https://github.com/alibaba/form-render'},
   ],
   mode: 'site',
   alias: {
