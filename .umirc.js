@@ -25,11 +25,11 @@ export default defineConfig({
       title: 'ChartRender',
       path: '/chart-render',
     },
-    {
-      title: '周边工具',
-      path: '/tools',
-      children: [{ title: 'VSCode 插件', path: '/tools/vscode' }],
-    },
+    // {
+    //   title: '周边工具',
+    //   path: '/tools',
+    //   children: [{ title: 'VSCode 插件', path: '/tools/vscode' }],
+    // },
     {
       title: '更新日志',
       children: [
@@ -43,6 +43,11 @@ export default defineConfig({
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/table-render/CHANGELOG.md',
         },
+        {
+          title: 'ChartRender',
+          path:
+            'https://github.com/alibaba/form-render/blob/master/packages/chart-render/CHANGELOG.md',
+        }
       ],
     },
     {

@@ -41,6 +41,7 @@ XRender
 - 在公司或个人项目中使用 XRender，并帮忙推广给伙伴使用
 - 如果你觉得 XRender 还不错，可以通过 Star 来表示你的喜欢
 - 加入钉钉聊天群帮忙解答使用问题
+  <img src=https://qpluspicture.oss-cn-beijing.aliyuncs.com/N5hVht/IMG_4485.JPG width=300/>
 
 ## 贡献
 
@@ -48,7 +49,9 @@ XRender
 
 感谢给 XRender 贡献代码的你们：
 
-<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false"/></a>
+  <a href="https://github.com/alibaba/form-render/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=alibaba/form-render" />
+  </a>
 
 ## 协议
 
