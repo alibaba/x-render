@@ -25,17 +25,24 @@ toc: content
 }
 ```
 
-- 单个 schema 的书写分为基础属性和 props
+- 单个 schema 的书写分为基础属性, rules 和 props, 其中基础属性为常用
 
 ```json
 {
   "type": "object",
   "properties": {
     "count": {
+      // 基础属性
       "title": "数字",
       "type": "number",
+      "readOnly": false,
+      "disabled": true,
+      "hidden": false,
+      // rules
+      "rules": [],
+      // props
       "props": {
-        "step": 0.000000000001
+        "step": 0.0000001
       }
     }
   }

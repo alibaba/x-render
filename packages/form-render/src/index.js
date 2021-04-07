@@ -36,6 +36,12 @@ function App({
   theme,
   ...rest
 }) {
+  try {
+    const _ = form.submit;
+  } catch (error) {
+    console.error('form 为必填 props，<FormRender /> 没有接收到 form 属性!');
+  }
+
   const {
     submitData,
     errorFields,
