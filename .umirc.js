@@ -12,10 +12,8 @@ export default defineConfig({
       title: 'FormRender',
       path: '/form-render',
       children: [
-        { title: 'FR1.0', path: '/form-render' },
-        { title: '0.x - 1.x 迁移', path: '/form-render/migrate' },
         { title: '教程', path: '/form-render/guide' },
-        { title: '自定义组件', path: '/form-render/widgets' },
+        { title: 'Schema', path: '/form-render/schema' },
         { title: 'Playground', path: '/playground' },
       ],
     },

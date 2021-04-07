@@ -1,6 +1,18 @@
+---
+order: 1
+group:
+  title: 教程
+  order: 2
+toc: content
+---
+
 ## 迁移文档
 
-舍
+## 1.0 升级了什么
+
+-
+
+取舍
 
 1. 不再允许函数式的表达式了！
 
@@ -32,3 +44,9 @@ input1: {
 2. 不再计算初始值
 
 3. 不再
+
+## 如何迁移
+
+<code src='../demo/simple1.jsx'  />
+
+<code src='../demo/simple.jsx'  />
