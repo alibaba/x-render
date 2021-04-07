@@ -6,20 +6,38 @@ group:
 toc: content
 ---
 
-form-render 1.x 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](/FR1.0/migrate)
+<div>
+  <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="100"/>
+</div>
+<h1>FormRender</h1>
+
+<p style="display:flex;justify-content:space-between;width:440px">
+  <a href="https://www.npmjs.com/package/form-render?_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square">
+  </a>
+  <a href="https://npmjs.org/package/form-render">
+    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/form-render.svg?style=flat-square">
+  </a>
+  <a href="https://npmjs.org/package/form-render">
+    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/form-render.svg?style=flat-square">
+  </a>
+  <a>
+    <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
+  </a>
+</p>
+
+form-render 1.0 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](/form-render/migrate)
 
 ## 安装
 
 ```shell
-yarn add form-render
-# 或者
 npm i form-render
 ```
 
 form-render 默认使用 antd 作为组件库，并以 peerDependencies 的方式依赖，所以需要同时安装 antd 的依赖。其他的组件库可通过 widgets 的方式传入，详见[自定义组件](/form-render/widget))
 
 ```shell
-yarn add antd
+npm i antd
 ```
 
 ### 第一个表单

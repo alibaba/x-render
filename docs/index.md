@@ -7,7 +7,7 @@ hero:
     - text: Playground
       link: /playground
     - text: 开始使用
-      link: /form-render/guide/getting-started
+      link: /form-render/guide
 features:
   - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
     title: FormRender
@@ -20,5 +20,3 @@ features:
     desc: 傻瓜式的图表绘制库
 footer: Please feel free to use and contribute to the development.
 ---
-
-
