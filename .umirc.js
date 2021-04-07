@@ -1,4 +1,4 @@
-import {defineConfig} from 'dumi';
+import { defineConfig } from 'dumi';
 import path from 'path';
 
 export default defineConfig({
@@ -34,9 +34,9 @@ export default defineConfig({
       title: 'FormRender',
       path: '/form-render',
       children: [
-        {title: '教程', path: '/form-render/guide'},
-        {title: 'Schema', path: '/form-render/schema'},
-        {title: 'Playground', path: '/playground'},
+        { title: '教程', path: '/form-render/guide' },
+        { title: 'Schema', path: '/form-render/schema' },
+        { title: 'Playground', path: '/playground' },
       ],
     },
     {
@@ -69,14 +69,14 @@ export default defineConfig({
           title: 'ChartRender',
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/chart-render/CHANGELOG.md',
-        }
+        },
       ],
     },
     {
       title: '国内镜像',
       path: 'https://x-render.gitee.io/form-render/',
     },
-    {title: 'GitHub', path: 'https://github.com/alibaba/form-render'},
+    { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
   ],
   mode: 'site',
   alias: {

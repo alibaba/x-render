@@ -10,11 +10,13 @@ toc: content
 
 ## 概述
 
-- `schema` 是 FormRender 的必填 props，用于描述表单的基本信息、结构和校验。
-- `schema` 在结构上使用了 `JSON Schema` 国际规范，例如
+1. `schema` 是 \<FormRender/\> 的必填 props，用于描述表单的基本信息、结构和校验。
+2. `schema` 在结构上使用了 `JSON Schema` 国际规范(<a href="https://json-schema.org/understanding-json-schema/" target="_blank">Understanding JSON Schema</a>)，例如
 
 ```json
+// 对象结构如下:
 {
+  "title": "对象",
   "type": "object",
   "properties": {
     "count": {
@@ -23,9 +25,25 @@ toc: content
     }
   }
 }
+// 对象列表结构如下：
+{
+  "title": "对象数组",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "count": {
+        "title": "数字",
+        "type": "number"
+      }
+    }
+  }
+}
 ```
 
-- 单个 schema 的书写分为基础属性, rules 和 props, 其中基础属性为常用
+3. 单个 schema 的书写分为`基础属性`, `rules` 和 `props`
+
+基础属性为各个组件共通的描述，rules 描述校验补充信息，props 描述组件 props
 
 ```json
 {
@@ -49,43 +67,14 @@ toc: content
 }
 ```
 
-- 引入了新类型`range`
-- 使用字段 `enumNames`，用于描述下拉单选的选项文案（enumNames 曾经是 JSON Schema 的 draft 提案，但最后被否绝了）
-- 这是权衡各类用户使用便利性的结果。毕竟`JSON Schema`是为了校验数据而生的，与表单的场景的侧重点是不尽相同的。当然`schema`规范坚守的原则是对于使用`JSON Schema`标准的用户做到不改一字快速接入
+4. 虽然这里我们只以 json 格式为例，但 javascript object 作为入参完全可以
 
-- 通过 `JSON Schema` 里的字段可以描述表单的标题、描述、类型、必须项、自定义正则校验等信息。想深入了解的同学，<a href="https://json-schema.org/understanding-json-schema/" target="_blank">Understanding JSON Schema</a>是笔者认为最好的学习文档，同时也可去 [Playground](/playground) 折腾
-- 虽然这里我们只以 json 格式为例，但 javascript object 作为入参完全可以
+## 基础属性
 
-一个基础的 schema 如下：
+所有表单原素会用到的属性。从 form-render 内部实现的角度：
 
-```json
-{
-  "type": "object",
-  "properties": {
-    "jobNumber": {
-      "title": "数字",
-      "type": "number"
-    }
-  }
-}
-```
-
-描述了一个 object 结构，其第一个属性为数字类型。最外层约定为 object 结构，所有 schema 都需要如是写。
-
-## 通用参数
-
-对于每一个表单控件，我们都会使用如下的 schema 描述
-
-```json
-{
-  "title": "数字",
-  "type": "number"
-}
-```
-
-### title
-
-表单的标题信息，作为 label 展示，注意 title 为""时占位，title 不写时不占位
+1. type,format,enum,readOnly 和 widget 这几个属性决定了使用哪个组件来渲染
+2.
 
 ### description
 
@@ -99,13 +88,13 @@ toc: content
 
 用来描述输入框的格式，支持 image、email、url、dateTime、date、time、upload, 其中 upload 为上传组件
 
-### pattern
+### placeholder
 
-自定义正则校验，用于校验 string 或 number 数据是否合格，详细使用可见 [pattern 自定义正则校验](/form-render/config/pattern)
+Input 等元素的 placeholder，这个属性太
 
-### message
+## rules
 
-所有的校验都有默认文案，有时你希望校验提示自定义的文案，就需要使用 message 字段。message 一般与 pattern、format、maxLength 等字段共同使用。简单的例子：
+表单的标题信息，作为 label 展示，注意 title 为""时占位，title 不写时不占位
 
 ```json
 {
