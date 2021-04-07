@@ -48,12 +48,6 @@ table-render 目前默认使用 ant design，所以请在 antd 项目下使用�
 npm i table-render antd --save
 ```
 
-or
-
-```sh
-yarn add table-render antd
-```
-
 ### 代码演示
 去[CodeSandbox](https://codesandbox.io/s/vfopu)试试
 
