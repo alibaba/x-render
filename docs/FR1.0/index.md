@@ -34,11 +34,10 @@ const schema = {
     input1: {
       bind: 'a.b.c',
       title: '简单输入框',
-      description: '输入‘123’，避免外部校验错误',
       type: 'string',
-      required: true,
     },
   },
+  required: ['input1'],
 };
 
 const Demo = () => {

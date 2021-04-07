@@ -625,22 +625,30 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
   let result = {};
   if (isObjType(schema)) {
     result.type = 'object';
-    if (isRequired && schema.required) {
+    if (isRequired && schema.required === true) {
       result.required = true;
     }
     result.fields = {};
     Object.keys(schema.properties).forEach(key => {
       const item = schema.properties[key];
+      // 兼容旧的！
+      if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
+        item.required = true;
+      }
       result.fields[key] = getDscriptorFromSchema({ schema: item, isRequired });
     });
   } else if (isListType(schema)) {
     result.type = 'array';
-    if (isRequired && schema.required) {
+    if (isRequired && schema.required === true) {
       result.required = true;
     }
     result.defaultField = { type: 'object', fields: {} }; // 目前就默认只有object类型的 TODO:
     Object.keys(schema.items.properties).forEach(key => {
       const item = schema.items.properties[key];
+      // 兼容旧的！
+      if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
+        item.required = true;
+      }
       result.defaultField.fields[key] = getDscriptorFromSchema({
         schema: item,
         isRequired,
@@ -658,7 +666,7 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
       return item;
     };
     const { required, ...rest } = schema;
-    if (isRequired && schema.required) {
+    if (isRequired && schema.required === true) {
       rest.required = true;
     }
     if (schema.rules) {
