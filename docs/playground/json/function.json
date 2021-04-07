@@ -13,12 +13,12 @@
           "x1": {
             "title": "输入框1",
             "type": "string",
-            "ui:hidden": "{{rootValue.showMore === false}}"
+            "ui:hidden": "{{!rootValue.showMore}}"
           },
           "x2": {
             "title": "输入框2",
             "type": "string",
-            "ui:hidden": "{{rootValue.showMore === false}}"
+            "ui:hidden": "{{!rootValue.showMore}}"
           }
         }
       },

@@ -10,6 +10,7 @@ import select from './select';
 import slider from './slider';
 import upload from './upload';
 import ImageInput from './ImageInput';
+import urlInput from './urlInput';
 import Html from './html';
 import { InputNumber, Checkbox, Switch, Input } from 'antd';
 import { createWidget } from '../../createWidget';
@@ -36,6 +37,7 @@ export const widgets = {
   dateRange,
   input: Input,
   imageInput: ImageInput,
+  url: urlInput,
   list,
   map,
   multiSelect, // 下拉多选

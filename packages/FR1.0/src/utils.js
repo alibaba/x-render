@@ -7,21 +7,29 @@ import { get, cloneDeep } from 'lodash';
 //   children: []
 // }
 
-window.blog = value => {
+// TODO: 发布后去掉
+window.log1 = value => {
   console.log('%ccommon:', 'color: #00A7F7; font-weight: 500;', value);
 };
 
-window.rlog = value => {
+window.log2 = value => {
   console.log('%cwarning:', 'color: #f50; font-weight: 500;', value);
 };
 
-window.glog = value => {
+window.log3 = value => {
   console.log('%csuccess:', 'color: #87d068; font-weight: 500;', value);
 };
 
-window.plog = value => {
+window.log4 = value => {
   console.log('%cspecial:', 'color: #722ed1; font-weight: 500;', value);
 };
+
+export function isUrl(string) {
+  const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
+  // const domainRE = /^[^\s\.]+\.\S{2,}$/;
+  if (typeof string !== 'string') return false;
+  return protocolRE.test(string);
+}
 
 export function isCheckBoxType(schema) {
   return schema && schema.type === 'boolean' && schema['widget'] !== 'switch'; // TODO: 感觉有点不准
@@ -369,9 +377,9 @@ export function isExpression(func) {
 }
 
 // TODO: dataPath 是 array 的情况？
-export function parseSingleExpression(func, formData, dataPath) {
+export function parseSingleExpression(func, formData = {}, dataPath) {
   const parentPath = getParentPath(dataPath);
-  const parent = getValueByPath(formData, parentPath);
+  const parent = getValueByPath(formData, parentPath) || {};
   // if (typeof func === 'function') {
   //   try {
   //     return func(formData, parent);
@@ -392,6 +400,7 @@ export function parseSingleExpression(func, formData, dataPath) {
       .replaceAll(match2, (v, m1) =>
         JSON.stringify(getValueByPath(parent, m1))
       )})`;
+    console.log(str, parent, formData);
     try {
       return Function(str)();
     } catch (error) {

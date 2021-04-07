@@ -7,7 +7,8 @@
         "type": "string",
         "enum": ["a", "b", "c"],
         "enumNames": ["jack", "steve", "david"],
-        "ui:options": {
+        "widget": "select",
+        "props": {
           "filterOption": true,
           "showSearch": true,
           "optionFilterProp": "children"
@@ -18,8 +19,8 @@
         "description": "除了可选的标签，还可输入自定义的标签",
         "type": "array",
         "enum": ["旅行达人", "工作狂", "老司机", "小资"],
-        "ui:widget": "select",
-        "ui:options": {
+        "widget": "select",
+        "props": {
           "mode": "tags"
         }
       }
