@@ -9,6 +9,25 @@ export default defineConfig({
   dynamicImport: {
     loading: 'antd/lib/spin',
   },
+  locales: [['zh-CN', '中文']],
+  hire: {
+    title: '飞猪用户技术正寻觅前端',
+    content: `
+<p><strong>招聘团队：</strong>飞猪用户技术（拔赤）- 前端组</p>
+<p><strong>招聘层级：</strong>P5 ~ P7</p>
+<p><strong>工作城市：</strong>杭州、北京</p>
+<p><strong>面试效率：</strong>加急面试</p>
+<p><strong>团队链接：</strong></p>
+<ul>
+  <li>微信：<a href="http://mp.weixin.qq.com/profile?src=3&timestamp=1617785038&ver=1&signature=yEIt6K-iuUGabtE3BZhh6LeXmUWnA37yvou2KbNlNnli4naTICfCbR*b2hryUv7kjmN6Fm7nGLZOsHFU2V1FTQ==" target="_blank">Fliggy F2E</a></li>
+  <li>掘金：<a href="https://juejin.cn/user/3051900006845944" target="_blank">飞猪前端团队</a></li>
+  <li>开源：<a href="https://github.com/alibaba/form-render/" target="_blank">alibaba/x-render</a></li>
+  <li>开源：<a href="https://github.com/apache/incubator-weex-ui" target="_blank">apache/weex-ui</a></li>
+  <li>开源：<a href="https://github.com/fliggy-mobile" target="_blank">fliggy-mobile</a></li>
+</ul>`,
+    email: 'tw102972@alibaba-inc.com',
+    slogan: '在寻找心仪的工作吗？',
+  },
   ignoreMomentLocale: false,
   navs: [
     {
