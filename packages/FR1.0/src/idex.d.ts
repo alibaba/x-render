@@ -72,7 +72,6 @@ export interface FRProps {
   column?: number;
   debounceInput?: boolean;
   size?: string;
-  configProvider?: any;
   /** 表单提交前钩子 */
   beforeFinish?: (result: ResultType) => void;
   /** 表单提交后钩子 */
