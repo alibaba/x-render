@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from 'antd';
-import FormRender, { useForm } from 'form-render-beta';
+import FormRender, { useForm } from 'form-render';
 import testSchema from './testJson.json';
 
 const schema = {
