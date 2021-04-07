@@ -1,5 +1,5 @@
 import React from 'react';
-import FormRender, { useForm } from 'form-render-beta';
+import FormRender, { useForm } from 'form-render';
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 

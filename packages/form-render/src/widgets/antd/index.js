@@ -9,7 +9,7 @@ import radio from './radio';
 import select from './select';
 import slider from './slider';
 import upload from './upload';
-import ImageInput from './ImageInput';
+import ImageInput from './imageInput';
 import urlInput from './urlInput';
 import Html from './html';
 import { InputNumber, Checkbox, Switch, Input } from 'antd';
