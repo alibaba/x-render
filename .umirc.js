@@ -26,7 +26,7 @@ export default defineConfig({
   <li>开源：<a href="https://github.com/fliggy-mobile" target="_blank">fliggy-mobile</a></li>
 </ul>`,
     email: 'tw102972@alibaba-inc.com',
-    slogan: '在寻找心仪的工作吗？',
+    slogan: '想快乐的写前端吗？',
   },
   ignoreMomentLocale: false,
   navs: [
