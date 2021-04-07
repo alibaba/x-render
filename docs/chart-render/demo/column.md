@@ -1,24 +1,44 @@
 ---
+order: 3
+title: 柱状图
 group:
-  title: 组件
+  title: 案例展示
   order: 2
-order: 1
-title: Line 折线图
-toc: content
 ---
 
-# Line 折线图
+## 基本用法
 
-## 单指标 单维度
+### N指标 零维度
+
+- 图表渲染上，指标作为 `x 轴`，指标值作为 `y 轴`。
+
+```jsx
+import React from 'react';
+import { Column } from 'chart-render';
+
+export default () => (
+  <Column
+    meta={[
+      { id: "pv", name: "访问量" },
+      { id: "uv", name: "访客数" },
+    ]}
+    data={[
+      { pv: 50, uv: 20 },
+    ]}
+  />
+);
+```
+
+### 单指标 单维度
 
 - 图表渲染上，维度作为 `x 轴`，指标作为 `y 轴`。
 
 ```jsx
 import React from 'react';
-import { Line } from 'chart-render';
+import { Column } from 'chart-render';
 
 export default () => (
-  <Line
+  <Column
     meta={[
       { id: "ds", name: "日期", isDim: true },
       { id: "uv", name: "访客数" },
@@ -36,17 +56,17 @@ export default () => (
 );
 ```
 
-## 单指标 双维度
+### 单指标 双维度
 
 - 图表渲染上，第一维度作为 `x 轴`，指标作为 `y 轴`，第二维度作为 `系列`。
 - 数据上，数据条数是 `「单指标 单维度」` 的两倍。
 
 ```jsx
 import React from 'react';
-import { Line } from 'chart-render';
+import { Column } from 'chart-render';
 
 export default () => (
-  <Line
+  <Column
     meta={[
       { id: "ds", name: "日期", isDim: true },
       { id: "page", name: "页面名称", isDim: true },
@@ -72,16 +92,16 @@ export default () => (
 );
 ```
 
-## 多指标 单维度
+### 多指标 单维度
 
 - 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
 
 ```jsx
 import React from 'react';
-import { Line } from 'chart-render';
+import { Column } from 'chart-render';
 
 export default () => (
-  <Line
+  <Column
     meta={[
       { id: "ds", name: "日期", "isDim": true },
       { id: "pv", name: "访问量" },
@@ -100,17 +120,25 @@ export default () => (
 );
 ```
 
-## 面积图
+## 高级用法
 
-- 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
+### 图形上显示数字的条形图
 
 ```jsx
 import React from 'react';
-import { Line } from 'chart-render';
+import { Column } from 'chart-render';
 
 export default () => (
-  <Line
-    withArea
+  <Column
+    inverted
+    label={{
+      position: 'middle',
+      layout: [
+        { type: 'interval-adjust-position' },
+        { type: 'interval-hide-overlap' },
+        { type: 'adjust-color' },
+      ],
+    }}
     meta={[
       { id: "ds", name: "日期", "isDim": true },
       { id: "pv", name: "访问量" },

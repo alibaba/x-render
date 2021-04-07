@@ -37,12 +37,12 @@ export interface ICRPivotTableProps extends ICommonProps {
   leftDimensionLength?: number;
 
   /**
-   * 左侧允许展开/收起，默认 `false`
+   * 左侧维度允许展开/收起，默认 `false`
    */
   leftExpandable?: boolean;
 
   /**
-   * 左侧允许展开/收起，默认 `false`
+   * 顶部维度允许展开/收起，默认 `false`
    */
   topExpandable?: boolean;
 

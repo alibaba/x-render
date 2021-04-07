@@ -1,45 +1,23 @@
 ---
-group:
-  title: 组件
-  order: 2
 order: 2
-title: Column 柱状图
-toc: content
+title: 折线图
+group:
+  title: 案例展示
+  order: 2
 ---
 
-# Column 柱状图
+## 基本用法
 
-## N指标 零维度
-
-- 图表渲染上，指标作为 `x 轴`，指标值作为 `y 轴`。
-
-```jsx
-import React from 'react';
-import { Column } from 'chart-render';
-
-export default () => (
-  <Column
-    meta={[
-      { id: "pv", name: "访问量" },
-      { id: "uv", name: "访客数" },
-    ]}
-    data={[
-      { pv: 50, uv: 20 },
-    ]}
-  />
-);
-```
-
-## 单指标 单维度
+### 单指标 单维度
 
 - 图表渲染上，维度作为 `x 轴`，指标作为 `y 轴`。
 
 ```jsx
 import React from 'react';
-import { Column } from 'chart-render';
+import { Line } from 'chart-render';
 
 export default () => (
-  <Column
+  <Line
     meta={[
       { id: "ds", name: "日期", isDim: true },
       { id: "uv", name: "访客数" },
@@ -57,17 +35,17 @@ export default () => (
 );
 ```
 
-## 单指标 双维度
+### 单指标 双维度
 
 - 图表渲染上，第一维度作为 `x 轴`，指标作为 `y 轴`，第二维度作为 `系列`。
 - 数据上，数据条数是 `「单指标 单维度」` 的两倍。
 
 ```jsx
 import React from 'react';
-import { Column } from 'chart-render';
+import { Line } from 'chart-render';
 
 export default () => (
-  <Column
+  <Line
     meta={[
       { id: "ds", name: "日期", isDim: true },
       { id: "page", name: "页面名称", isDim: true },
@@ -93,16 +71,16 @@ export default () => (
 );
 ```
 
-## 多指标 单维度
+### 多指标 单维度
 
 - 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
 
 ```jsx
 import React from 'react';
-import { Column } from 'chart-render';
+import { Line } from 'chart-render';
 
 export default () => (
-  <Column
+  <Line
     meta={[
       { id: "ds", name: "日期", "isDim": true },
       { id: "pv", name: "访问量" },
@@ -121,17 +99,19 @@ export default () => (
 );
 ```
 
-## 倒置，表现为条形图
+## 高级用法
 
-- 参数：`inverted`
+### 百分百堆叠面积图
 
 ```jsx
 import React from 'react';
-import { Column } from 'chart-render';
+import { Line } from 'chart-render';
 
 export default () => (
-  <Column
-    inverted
+  <Line
+    withArea // 开启面积图
+    isStack // 堆叠展示
+    isPercent // 百分比面积图
     meta={[
       { id: "ds", name: "日期", "isDim": true },
       { id: "pv", name: "访问量" },

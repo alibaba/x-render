@@ -9,7 +9,7 @@ import ErrorTemplate from '../ErrorTemplate';
 export interface ICRLineProps extends ICommonProps, Omit<LineConfig | AreaConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
   /**
    * 以面积图展示，默认 `false`
-   * - 注意面积图默认堆叠展示，如不需要可以传入 `isStack={true}` 覆盖
+   * - 注意面积图默认堆叠展示，如不需要可以传入 `isStack={false}` 覆盖
    * - 开启面积图后方可使用 `areaStyle` `startOnZero` `isPercent` 属性
    */
   withArea: boolean;
