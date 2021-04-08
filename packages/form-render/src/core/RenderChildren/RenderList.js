@@ -8,6 +8,7 @@ import { Button, Table, Drawer, Space } from 'antd';
 import ArrowUp from '../../components/ArrowUp';
 import ArrowDown from '../../components/ArrowDown';
 import ErrorMessage from '../RenderField/ErrorMessage';
+import { MinusCircleOutlined } from '@ant-design/icons';
 
 const FIELD_LENGTH = 120;
 
@@ -19,6 +20,11 @@ const RenderList = ({
 }) => {
   // console.log(parentId, dataIndex, children);
   const { formData, flatten, onItemChange } = useStore();
+
+  let renderWidget = 'list';
+  try {
+    renderWidget = flatten[parentId].schema.widget;
+  } catch (error) {}
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
@@ -80,38 +86,65 @@ const RenderList = ({
     errorFields,
   };
 
-  // TODO: 还有其他的写法
-  return <SimpleList {...displayProps} />;
-  // return <CardList {...displayProps} />;
-
-  return <TableList {...displayProps} />;
+  switch (renderWidget) {
+    case 'simple':
+      return <SimpleList {...displayProps} />;
+    case 'table':
+      return <TableList {...displayProps} />;
+    case 'list':
+      return <DefaultList {...displayProps} />;
+    default:
+      return <DefaultList {...displayProps} />;
+  }
 };
 
 export default RenderList;
 
 const SimpleList = ({
   displayList = [],
-  dataPath,
   dataIndex,
   children,
   deleteItem,
   addItem,
-  moveItemDown,
-  moveItemUp,
-  flatten,
-  errorFields,
 }) => {
-  console.log(displayList, dataPath, dataIndex, flatten, errorFields);
+  const _infoItem = {
+    schema: { type: 'object', properties: {} },
+    rules: [],
+    children,
+  };
+
   return (
-    <ul>
-      {displayList.map(item => {
-        return 'haha';
+    <div>
+      {displayList.map((item, idx) => {
+        return (
+          <div
+            style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}
+          >
+            <Core
+              key={idx}
+              displayType="inline"
+              _item={_infoItem}
+              dataIndex={[...dataIndex, idx]}
+            />
+            <MinusCircleOutlined
+              style={{ fontSize: 24, marginLeft: 8 }}
+              onClick={() => deleteItem(idx)}
+            />
+          </div>
+        );
       })}
-    </ul>
+      <Button
+        style={{ marginTop: displayList.length > 0 ? 0 : 8 }}
+        type="dashed"
+        onClick={addItem}
+      >
+        添加
+      </Button>
+    </div>
   );
 };
 
-const CardList = ({
+const DefaultList = ({
   displayList = [],
   dataPath,
   dataIndex,

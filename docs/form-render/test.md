@@ -3,49 +3,50 @@ import React from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
 
-// const schema = {
-//   type: 'object',
-//   properties: {
-//     listName2: {
-//       title: '对象数组',
-//       description: '对象数组嵌套功能',
-//       type: 'array',
-//       items: {
-//         type: 'object',
-//         properties: {
-//           input1: {
-//             title: '简单输入框',
-//             type: 'string',
-//           },
-//           selet1: {
-//             title: '单选',
-//             type: 'string',
-//             enum: ['a', 'b', 'c'],
-//             enumNames: ['早', '中', '晚'],
-//           },
-//         },
-//       },
-//     },
-//   },
-// };
-
 const schema = {
-  displayType: 'inline',
   type: 'object',
   properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚'],
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'simple',
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+          },
+          selet1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+          },
+        },
+      },
     },
   },
 };
+
+// const schema = {
+//   displayType: 'column',
+//   type: 'object',
+//   properties: {
+//     input1: {
+//       title: '简单输入框',
+//       type: 'string',
+//       required: true,
+//     },
+//     select1: {
+//       title: '单选',
+//       type: 'string',
+//       enum: ['a', 'b', 'c'],
+//       enumNames: ['早', '中', '晚'],
+//     },
+//   },
+// };
 
 const Demo = () => {
   const form = useForm();
