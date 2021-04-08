@@ -149,7 +149,7 @@ export default Demo;
 
 ### 例 3
 
-**接口数据与展示经常会不符，例如 form 的交互是日期范围组件，服务端传的值是 startData，endData 两个字段。此时使用 bind 字段**
+**接口数据与展示经常会不符，例如 form 的交互是日期范围组件，服务端传的值是 startDate，endDate 两个字段。此时使用 bind 字段**
 
 ```jsx
 /**
@@ -157,7 +157,7 @@ export default Demo;
  * defaultShowCode: true
  */
 import React from 'react';
-import { Button, message } from 'antd';
+import { Button, message, Space } from 'antd';
 import FormRender, { useForm } from 'form-render';
 import { fakeApi } from './utils';
 
@@ -165,9 +165,10 @@ const schema = {
   type: 'object',
   properties: {
     dateRange: {
-      bind: ['startData', 'endData'],
+      bind: ['startDate', 'endDate'],
       title: '日期范围',
       type: 'range',
+      format: 'date',
     },
   },
 };
@@ -187,18 +188,14 @@ const Demo = () => {
 
   const getRemoteData = () => {
     fakeApi('xxx/getForm').then(_ => {
-      form.setValues({ startData: '2020-04-04', select1: '2020-04-24' });
+      form.setValues({ startDate: '2020-04-04', endDate: '2020-04-24' });
     });
   };
 
   return (
     <div style={{ width: '400px' }}>
-      <FormRender
-        form={form}
-        schema={schema}
-        onFinish={onFinish}
-      />
-      Space>
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
+      <Space>
         <Button onClick={getRemoteData}>加载服务端数据</Button>
         <Button type="primary" onClick={form.submit}>
           提交
