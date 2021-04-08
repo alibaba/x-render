@@ -101,7 +101,7 @@ export default Demo;
 - **schema**：组件对应的子 schema
 - **addons.onItemChange**: 注意挂在 addons 下面。用于在本组件内修改其他组件的值 onItemChange(value, path)
 
-`form-render` 内置了 `createWidget` 方法，支持用类似于 `redux` 的 `connect` 的语法生产自定义组件：
+对高阶组件熟悉的同学，`form-render` 内置了 `createWidget` 方法，支持用类似于 `redux` 的 `connect` 的语法快速生产自定义组件：
 
 ```js
 import { Checkbox } from 'antd';
@@ -114,7 +114,7 @@ const MyCheckBox = createWidget(({ value }) => {
 })(Checkbox);
 ```
 
-`createWidget` 是一个高阶组件，它接收组件 props，允许用户对齐做修改并返回真正需要的 props
+`createWidget` 是一个高阶组件，它接收组件 props，允许用户对齐做修改并返回真正需要的 props。使用 `createWidget` 与直接写自定义组件的工作量基本是一样的，只是一个语法糖，喜欢的同学可以使用
 
 ## 最佳实践
 
