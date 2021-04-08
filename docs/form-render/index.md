@@ -41,54 +41,11 @@ npm i antd
 
 # 使用
 
-```js
-import React from 'react';
-import FormRender, { useForm } from 'form-render';
-
-const schema = {
-  type: 'object',
-  properties: {
-    dateRange: {
-      bind: ['startDate', 'endDate'],
-      title: '日期',
-      type: 'range',
-      format: 'date',
-    },
-    siteUrl: {
-      title: '网址',
-      type: 'string',
-      placeholder: '此处必填',
-      required: true,
-      props: {
-        addonBefore: 'https://',
-        addonAfter: '.com',
-      },
-    },
-  },
-};
-
-const Demo = () => {
-  const form = useForm();
-  const onFinish = (formData, errorFields) => {
-    if (errorFields.length > 0) {
-      alert('errorFields:' + JSON.stringify(errorFields));
-    } else {
-      alert('formData:' + JSON.stringify(formData));
-    }
-  };
-
-  return (
-    <div>
-      <FormRender form={form} schema={schema} onFinish={onFinish} />
-      <button onClick={form.submit}>提交</button>
-    </div>
-  );
-};
-
-export default Demo;
-```
-
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';

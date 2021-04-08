@@ -34,10 +34,10 @@ title: 使用教程
 
 1. 需要针对一堆数据快速建立可视化图表，并且需要 **折线图/柱状图/交叉表** 频繁切换查看。
 2. 前端小白，只关心手里的数据，不想看长篇大论了解那些图表库该怎么使用，只想搭个图表看。
-3. 现阶段我们提供折线图、柱状图、交叉表三类组件进行图表绘制：
-  - 折线图常用来观察资料在一段维度之内的变化，如果X轴为时间，这种折线图又称为趋势图。
-  - 柱状图描述的是分类数据，常用来回答的是每一个分类中『有多少？』这个问题。
-  - 交叉表是一种矩阵形式的表格，拥有最强大的数据分析能力，可以展示无限指标和无限维度间的关系。
+3. 提供折线图、柱状图、交叉表三类组件进行图表绘制：
+    - 折线图：常用来观察资料在一段维度之内的变化，如果X轴为时间，这种折线图又称为趋势图。
+    - 柱状图：描述的是分类数据，常用来回答的是每一个分类中「有多少？」这个问题。
+    - 交叉表：是一种矩阵形式的表格，拥有最强大的数据分析能力，可以展示无限指标和无限维度间的关系。
 
 ## 如何使用
 
@@ -52,12 +52,16 @@ $ npm install chart-render @ant-design/charts --save
 ### 代码演示
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React, { useState } from 'react';
 import { Line, Column, PivotTable, } from 'chart-render';
 
 export default () => {
   const [component, setComponent] = useState('Line');
-  const C = { Line, Column, PivotTable }[component];
+  const ChartRender = { Line, Column, PivotTable }[component];
 
   return (
     <div>
@@ -84,21 +88,21 @@ export default () => {
           交叉表
         </button>
       </div>
-      {C && (
-        <C
-          meta={[
-            { id: 'date', name: '日期', isDim: true },
-            { id: 'pv', name: '访问量', isDim: false },
-            { id: 'uv', name: '访客数', isDim: false },
-          ]}
-          data={[
-            { date: '20200101', pv: 100, uv: 50 },
-            { date: '20200102', pv: 120, uv: 60 },
-            { date: '20200103', pv: 140, uv: 70 },
-            { date: '20200104', pv: 160, uv: 80 },
-          ]}
-        />
-      )}
+      
+      <ChartRender
+        meta={[
+          { id: 'date', name: '日期', isDim: true },
+          { id: 'pv', name: '访问量', isDim: false },
+          { id: 'uv', name: '访客数', isDim: false },
+        ]}
+        data={[
+          { date: '20200101', pv: 100, uv: 50 },
+          { date: '20200102', pv: 120, uv: 60 },
+          { date: '20200103', pv: 140, uv: 70 },
+          { date: '20200104', pv: 160, uv: 80 },
+        ]}
+      />
+      
     </div>
   );
 };

@@ -47,22 +47,31 @@ npm i table-render antd --save
 ```
 
 ### 代码演示
-去[CodeSandbox](https://codesandbox.io/s/great-taussig-y5w1k?file=/App.jsx)试试
 
-```js
+```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
-import { ProTable, Search, TableContainer, useTable } from 'table-render';
+import { ProTable, Search, TableContainer } from 'table-render';
 
+const dataSource = [];
+for (let i = 0; i < 6; i++) {
+  dataSource.push({
+    id: i.toString(),
+    title: `标题${i + 1}`,
+    created_at: new Date().getTime(),
+  });
+}
+
+// 详细可见 form-render 的使用
 const schema = {
   type: 'object',
   properties: {
     string: {
       title: '标题',
       type: 'string',
-      pattern: '^[A-Za-z0-9]+$',
-      message: {
-        pattern: '格式不对哦~',
-      },
       'ui:width': '30%',
     },
     created_at: {
@@ -71,23 +80,14 @@ const schema = {
       format: 'date',
       'ui:width': '30%',
     },
-  },
-  'ui:labelWidth': 90,
+  }
 };
 
-// 配置完全透传antd table
+// 配置完全透传 antd table
 const columns = [
   {
     title: '标题',
     dataIndex: 'title',
-  },
-  {
-    title: '状态',
-    dataIndex: 'state',
-    enum: {
-      open: '未解决',
-      closed: '已解决',
-    },
   },
   {
     title: '创建时间',
@@ -97,38 +97,31 @@ const columns = [
   },
   {
     title: '操作',
-    render: row => (
-      <a
-        href="https://x-render.gitee.io/form-render/"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        查看
-      </a>
+    render: (row, record) => (
+     <a onClick={()=>alert(row.title)}>编辑</a>
     ),
   },
 ];
 
-const Demo = () => {
-  return (
-    <div style={{ background: 'rgb(245,245,245)' }}>
-      <Search schema={schema} />
-      <ProTable headerTitle="最简表格" columns={columns} rowKey="id" />
-    </div>
-  );
-};
-
 const Wrapper = () => {
-  const searchApi = params => ({ rows: [], total: 10 });
+  const searchApi = () => {
+    return {
+      rows: dataSource,
+      total: dataSource.length,
+    };
+  };
   return (
     <TableContainer searchApi={searchApi}>
-      <Demo />
+       <Search schema={schema} />
+       <ProTable headerTitle="最简表格" columns={columns} rowKey="id" />
     </TableContainer>
   );
 };
 
 export default Wrapper;
 ```
+
+
 
 ## API
 
@@ -141,18 +134,12 @@ export default Wrapper;
 | onSearch      | 在表格查询时执行一些额外的操作 | `Function`           | -      |
 | searchOnMount | 组件初次挂载时，是否默认执行查询动作  | boolean |   `true` |
 
-| 属性          | 描述                                                                                                                                         | 类型                  | 默认值 |
-| ------------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- | ------ |
-| searchApi     | 初始化&点击查询时执行的函数                                                                                                                  | `Function` or `Array` | -      |
-| params        | 允许外部传入自定义参数给搜索请求（searchApi）, 会与 searchApi 的默认请求参数合并，且优先级高（就是参数名同样的 params 里的参数覆盖默认参数） | `object`              | -      |
-| onSearch      | 在表格查询时执行一些额外的操作                                                                                                               | `Function`            | -      |
-| searchOnMount | 组件初次挂载时，是否默认执行查询动作                                                                                                         | boolean               | `true` |
 
 ### Search 参数
 
 | 属性            | 描述                                                                                                                                                                                         | 类型                                   | 默认值 |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------ |
-| schema          | 用于渲染表单的 schema，可以使用[表单设计器](https://x-render.gitee.io/schema-generator/playground)拖拽生成，导出 schema 即可。具体的 api 参考 [form-render 文档](/form-render/config/schema) | `object`                               | -      |
+| schema          | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](/form-render/config/schema) | `object`                               | -      |
 | hidden          | 是否隐藏`<Search />`组件                                                                                                                                                                     | `boolean`                              | false  |
 | searchBtnRender | 自定义表单查询按钮                                                                                                                                                                           | `(refresh,clearSearch) => ReactNode[]` | -      |
 
@@ -168,7 +155,7 @@ export default Wrapper;
 | columns   | 列定义  | `object` | false  |
 
 
-##### Columns 列定义
+#### ProTable 参数 中 Columns 列定义
 
 columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns](https://ant.design/components/table-cn/#Column) 的配置，但是我们也提供了一些更方便的 api，加快书写:
 
@@ -176,80 +163,75 @@ columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns
 | --------- | -------------------------------------------------- | ----------------------------------------- | ------ |
 | ellipsis  | 是否自动缩略                                       | boolean                                   | -      |
 | copyable  | 是否支持复制                                       | boolean                                   | -      |
-| valueType | 值的类型，详见下方 `valueType 配置`                | `text` \| `money` \| `date` \| `dateTime` | `text` |
+| valueType | 值的类型，详见下方 `valueType 配置`                | `string`（`text` \| `money` \| `date` \| `dateTime`） | `text` |
 | enum      | 当前列值的枚举，详见[高级用法](./demo.md#基本用法) | object                                    | -      |
 
-##### valueType 值类型
+- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [高级用法](./demo#高级用法)：
+  
+  | 属性     | 描述                                                               |
+  | -------- | ------------------------------------------------------------------ |
+  | text     | 普通的文本类型                                                     |
+  | date     | 当数据是日期类型的返回时，会自动将格式转换为 '2020-10-20'          |
+  | dateTime | 当数据是日期类型的返回时，会自动将格式转换为 '2020-10-20 19:30:00' |
+  | money    | 当数据是金额时，会自动将格式转换为 '¥999,999,999.99'               |
 
-Table-Render 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考：[高级用法](./demo#高级用法)。
+### Context 上下文
 
-- 类型：`string`
-- 默认值：text
-
-| 属性     | 描述                                                               |
-| -------- | ------------------------------------------------------------------ |
-| text     | 普通的文本类型                                                     |
-| date     | 当数据是日期类型的返回时，会自动将格式转换为 '2020-10-20'          |
-| dateTime | 当数据是日期类型的返回时，会自动将格式转换为 '2020-10-20 19:30:00' |
-| money    | 当数据是金额时，会自动将格式转换为 '¥999,999,999.99'               |
-
-## Context
-
-可通过`useTable`获取`table-render`的 context，例如: `refresh`、`tableState`、`setTable`等属性
+可通过 `useTable` 获取 `table-render` 的 context，例如: `refresh`、`tableState`、`setTable` 等属性
 
 | 属性        | 描述                                                                                            | 类型     |
 | ----------- | ----------------------------------------------------------------------------------------------- | -------- |
+| tableState  | 这些是全局的状态，根据需要使用                                                                  | object   |
 | refresh     | 刷新表格数据                                                                                    | Function |
 | clearSearch | 重置筛选项                                                                                      | Function |
-| tableState  | 这些是全局的状态，根据需要使用                                                                  | object   |
 | setTable    | 用于修改全局状态的工具函数，setTable 之于 tableState，等同 setState 之于 state                  | Function |
 | changeTab   | 手动切换 tab 的函数，例如目前两个搜索 tab： “我的活动”，“全部活动” （分别对应 tab 值为 0 和 1） | Function |
 
 
-#### useTable 用法
-```js
-import { useTable } from 'table-render';
-const { refresh, tableState, setTable } = useTable();
-```
 
-#### tableState
+- **导出 useTable 以及对应的方法**
+  ```js
+  import { useTable } from 'table-render';
+  const { refresh, tableState, setTable } = useTable();
+  ```
 
-```js
-{
-  loading: false, // 表单是否在加载中
-  search: {}, // 选项数据
-  searchApi // 搜索用的api
-  tab: 0, // 如果searchApi是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
-  dataSource: [], // 表格的数据
-  extraData: { ... }, // 自定义的扩展星系
-  pagination: {
-    current: 1,
-    pageSize: 10,
-    total: 100,
-  },
-}
-```
+- **其中 tableState 的数据格式如下：**
 
-#### refresh 用法
+  ```js
+  {
+    loading: false, // 表单是否在加载中
+    search: {}, // 选项数据
+    searchApi // 搜索用的api
+    tab: 0, // 如果searchApi是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
+    dataSource: [], // 表格的数据
+    extraData: { ... }, // 自定义的扩展星系
+    pagination: {
+      current: 1,
+      pageSize: 10,
+      total: 100,
+    },
+  }
+  ```
 
-| 入参 | 类型    | 说明                                                                            |
-| ---- | ------- | ------------------------------------------------------------------------------- |
-| stay | boolean | 刷新是否保留在现在的页码上，默认 false，回到第一页                              |
-| tab  | number  | 0,1,2.. 如果 searchApi 是数组会出现的搜索选择 tab，用于强制搜索某个 tab，不常用 |
+- **refresh 用法**
 
-1. 直接用：refresh()
-2. 刷新数据，但停留在现有的页码：refresh({ stay: true })
+    | 入参 | 类型    | 说明                                                                            |
+    | ---- | ------- | ------------------------------------------------------------------------------- |
+    | stay | boolean | 刷新是否保留在现在的页码上，默认 false，回到第一页                              |
+    | tab  | number  | 0,1,2.. 如果 searchApi 是数组会出现的搜索选择 tab，用于强制搜索某个 tab，不常用 |
+    
+    1. 直接用：refresh()
+    2. 刷新数据，但停留在现有的页码：refresh({ stay: true })
 
-#### changeTab 用法
+- **changeTab 用法**
 
-```js
-const { changeTab } = useTable()
+    ```js
+    //以下代码将手动切换到“全部活动”（tab = 1）
+    const { changeTab } = useTable()
+    //...
+    const onClick = () => {
+      changeTab(1)
+    }
+    ```
 
-...
 
-const onClick = () => {
-  changeTab(1)
-}
-```
-
-以上代码将手动切换到“全部活动”（tab = 1）
