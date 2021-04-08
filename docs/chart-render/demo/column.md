@@ -13,6 +13,10 @@ group:
 - 图表渲染上，指标作为 `x 轴`，指标值作为 `y 轴`。
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import { Column } from 'chart-render';
 
@@ -34,6 +38,10 @@ export default () => (
 - 图表渲染上，维度作为 `x 轴`，指标作为 `y 轴`。
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import { Column } from 'chart-render';
 
@@ -62,6 +70,10 @@ export default () => (
 - 数据上，数据条数是 `「单指标 单维度」` 的两倍。
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import { Column } from 'chart-render';
 
@@ -97,6 +109,10 @@ export default () => (
 - 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import { Column } from 'chart-render';
 
@@ -125,6 +141,10 @@ export default () => (
 ### 图形上显示数字的条形图
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import { Column } from 'chart-render';
 

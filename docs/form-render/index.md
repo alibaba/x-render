@@ -29,14 +29,10 @@ form-render 1.0 是下一代的 `React.js` 表单解决方案。项目从内核�
 
 # 安装
 
-```shell
-npm i form-render
-```
-
-form-render 默认使用 antd 作为组件库，并以 peerDependencies 的方式依赖，所以需要同时安装 antd 的依赖（大多数情况，使用 form-render 的项目已经安装 antd）
+form-render 依赖 ant design，单独使用不要忘记安装～
 
 ```shell
-npm i antd
+npm i form-render --save
 ```
 
 # 使用

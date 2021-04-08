@@ -29,15 +29,14 @@
     ]
   },
   "peerDependencies": {
-    "@ant-design/charts": "1.x",
     "react": ">=16.8.0"
   },
   "dependencies": {
+    "@ant-design/charts": "1.1.1",
     "ali-react-table": "^2.4.0",
     "dvt-aggregation": "^0.2.8"
   },
   "devDependencies": {
-    "@ant-design/charts": "1.x",
     "@types/react": "^17.0.3",
     "@umijs/test": "^3.0.5"
   }

@@ -61,4 +61,22 @@ export interface FRGeneratorProps {
 declare const FRGenerator: React.ForwardRefExoticComponent<FRGeneratorProps &
   React.RefAttributes<unknown>>;
 
+declare const defaultSettings: Setting;
+declare const defaultCommonSettings: any;
+declare const defaultGlobalSettings: any;
+
+declare const fromFormily: (schame: any) => any;
+declare const toFormily: (schame: any) => any;
+declare const fromFormRender: (schame: any) => any;
+declare const toFormRender: (schame: any) => any;
+
+export {
+  defaultSettings,
+  defaultCommonSettings,
+  defaultGlobalSettings,
+  fromFormily,
+  toFormily,
+  fromFormRender,
+  toFormRender,
+}
 export default FRGenerator;
