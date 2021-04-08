@@ -10,7 +10,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'simple',
+      widget: 'list1',
       items: {
         type: 'object',
         properties: {
