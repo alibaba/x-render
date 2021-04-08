@@ -7,7 +7,7 @@ hero:
     - text: Playground
       link: /playground
     - text: 开始使用
-      link: /form-render/guide
+      link: /form-render
 features:
   - icon: https://qpluspicture.oss-cn-beijing.aliyuncs.com/k21jAW/006-parade-5.png
     title: FormRender

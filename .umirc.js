@@ -33,13 +33,6 @@ export default defineConfig({
     {
       title: 'FormRender',
       path: '/form-render',
-      children: [
-        { title: 'form-render v1.x', path: '/form-render' },
-        {
-          title: 'form-render v0.x',
-          path: 'http://x-components.gitee.io/form-render/',
-        },
-      ],
     },
     {
       title: 'TableRender',
