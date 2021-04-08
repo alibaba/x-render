@@ -22,11 +22,14 @@ const Core = ({
 }) => {
   // console.log('<Core>');
   const { displayType, column, flatten, errorFields, labelWidth } = useStore();
-  const _displayType = rest.displayType || displayType || 'column';
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
   const { schema } = item;
+
+  // displayType 一层层网上找值
+  const _displayType =
+    schema.displayType || rest.displayType || displayType || 'column';
   const isObjType = schema.type === 'object'; // TODO: 这个好像太笼统了，万一不是这样呢
   const isList = isListType(schema);
   const isComplex = isObjType || isList;
@@ -126,6 +129,11 @@ const Core = ({
     labelStyle = { flexGrow: 1 };
   }
 
+  if (_displayType === 'inline') {
+    labelStyle = { marginTop: 5 };
+    labelClass = '';
+  }
+
   const hasChildren = item.children && item.children.length > 0;
 
   const fieldProps = {
@@ -138,27 +146,37 @@ const Core = ({
     errorFields,
     hasChildren,
     // 层级间可使用的字段
+    displayType: _displayType,
     hideTitle,
     hideValidation,
   };
 
   const objChildren = hasChildren ? (
-    <ul className={`flex flex-wrap pl0`}>
-      <RenderObject dataIndex={dataIndex} errorFields={errorFields}>
+    <div className={`flex flex-wrap`}>
+      <RenderObject
+        dataIndex={dataIndex}
+        errorFields={errorFields}
+        displayType={_displayType}
+      >
         {item.children}
       </RenderObject>
-    </ul>
+    </div>
   ) : null;
 
   const listChildren = hasChildren ? (
-    <RenderList parentId={id} dataIndex={dataIndex} errorFields={errorFields}>
+    <RenderList
+      parentId={id}
+      dataIndex={dataIndex}
+      errorFields={errorFields}
+      displayType={_displayType}
+    >
       {item.children}
     </RenderList>
   ) : null;
 
   // TODO: list 也要算进去
   return (
-    <div style={columnStyle} className={containerClass}>
+    <div style={columnStyle} className={containerClass + ' debug'}>
       <RenderField {...fieldProps}>
         {isObjType && objChildren}
         {isList && listChildren}

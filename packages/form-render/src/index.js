@@ -5,7 +5,7 @@ import {
   updateSchemaToNewVersion,
   // completeSchemaWithTheme,
 } from './utils';
-import FR from './core';
+import Core from './core';
 import { Ctx, StoreCtx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
@@ -17,14 +17,18 @@ import './index.less';
 
 // 其他入参 watch: {"a.b.c": (value) => { ... }, }
 
+const defaultFinish = (data, error) => {
+  console.log(data, error);
+};
+
 export { useForm } from './useForm';
 
 function App({
   widgets,
   mapping,
   form,
-  beforeFinish,
-  onFinish,
+  beforeFinish = defaultFinish,
+  onFinish = defaultFinish,
   displayType = 'column',
   schema,
   flatten: _flatten,
@@ -128,7 +132,7 @@ function App({
                 <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
               </div>
             ) : null}
-            <FR />
+            <Core />
           </div>
         </Ctx.Provider>
       </StoreCtx.Provider>

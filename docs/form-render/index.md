@@ -41,11 +41,52 @@ npm i antd
 
 # 使用
 
+最简使用 demo
+
 ```jsx
 /**
  * transform: true
  * defaultShowCode: true
  */
+import React from 'react';
+import { Button } from 'antd';
+import FormRender, { useForm } from 'form-render';
+
+const schema = {
+  type: 'object',
+  properties: {
+    input1: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+    },
+    select1: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b', 'c'],
+      enumNames: ['早', '中', '晚'],
+    },
+  },
+};
+
+const Demo = () => {
+  const form = useForm();
+  return (
+    <div style={{ width: '400px' }}>
+      <FormRender form={form} schema={schema} />
+      <Button type="primary" onClick={form.submit}>
+        提交
+      </Button>
+    </div>
+  );
+};
+
+export default Demo;
+```
+
+换一个更复杂一点的 schema，我们支持数据绑定、antd 的 props 透传等一系列功能
+
+```jsx
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -74,9 +115,9 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
-  const onFinish = (formData, errorFields) => {
-    if (errorFields.length > 0) {
-      alert('errorFields:' + JSON.stringify(errorFields));
+  const onFinish = (formData, errors) => {
+    if (errors.length > 0) {
+      alert('errors:' + JSON.stringify(errors));
     } else {
       alert('formData:' + JSON.stringify(formData, null, 2));
     }

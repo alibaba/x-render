@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import FR from '../index';
+import Core from '../index';
 import { get } from 'lodash';
 import { useStore, useSet } from '../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../utils';
@@ -28,7 +28,7 @@ const RenderList = ({
     listData = get(formData, dataPath);
   }
 
-  const displayList = Array.isArray(listData) ? listData : [undefined];
+  const displayList = Array.isArray(listData) ? listData : [];
 
   const addItem = () => {
     const newList = [...displayList, undefined];
@@ -81,12 +81,35 @@ const RenderList = ({
   };
 
   // TODO: 还有其他的写法
-  return <CardList {...displayProps} />;
+  return <SimpleList {...displayProps} />;
+  // return <CardList {...displayProps} />;
 
   return <TableList {...displayProps} />;
 };
 
 export default RenderList;
+
+const SimpleList = ({
+  displayList = [],
+  dataPath,
+  dataIndex,
+  children,
+  deleteItem,
+  addItem,
+  moveItemDown,
+  moveItemUp,
+  flatten,
+  errorFields,
+}) => {
+  console.log(displayList, dataPath, dataIndex, flatten, errorFields);
+  return (
+    <ul>
+      {displayList.map(item => {
+        return 'haha';
+      })}
+    </ul>
+  );
+};
 
 const CardList = ({
   displayList = [],
@@ -198,7 +221,7 @@ const CardList = ({
         visible={showDrawer}
       >
         <div className="fr-container">
-          <FR
+          <Core
             // id={children[currentIndex]}
             _item={_infoItem}
             dataIndex={[...dataIndex, currentIndex]}
@@ -247,9 +270,9 @@ const TableList = ({
         // Check: record.index 似乎是antd自己会给的，不错哦
         const childIndex = [...dataIndex, record.index];
         return (
-          <FR
+          <Core
             hideTitle={true}
-            hideValidation={true}
+            displayType="inline"
             key={index.toString()}
             id={child}
             dataIndex={childIndex}
@@ -334,7 +357,7 @@ const TableList = ({
 //               <li className={`w-100`}>
 //                 {children.map((child, idx2) => {
 //                   return (
-//                     <FR
+//                     <Core
 //                       key={idx2.toString()}
 //                       id={child}
 //                       dataIndex={childIndex}
@@ -360,7 +383,7 @@ const TableList = ({
 //           <li key={idx.toString()} className={`w-100`}>
 //             {children.map((child, idx2) => {
 //               return (
-//                 <FR key={idx2.toString()} id={child} dataIndex={childIndex} />
+//                 <Core key={idx2.toString()} id={child} dataIndex={childIndex} />
 //               );
 //             })}
 //             {Array.isArray(displayList) && displayList.length > 1 && (

@@ -1,16 +1,17 @@
 import React from 'react';
-import FR from '../index';
+import Core from '../index';
 
 // TODO: nanoId 好像没啥用
-const RenderObject = ({ children = [], dataIndex = [] }) => {
+const RenderObject = ({ children = [], dataIndex = [], displayType }) => {
   return (
     <>
       {children.map((child, i) => {
         const FRProps = {
+          displayType,
           id: child,
           dataIndex,
         };
-        return <FR key={i.toString()} {...FRProps} />;
+        return <Core key={i.toString()} {...FRProps} />;
       })}
     </>
   );
