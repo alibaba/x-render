@@ -39,7 +39,7 @@ function Demo() {
   const [valid, setValid] = useState([]);
   const onSubmit = () => {
     if (valid.length > 0) {
-      alert(`校验未通过字段：${JSON.stringify(errorFields)}`);
+      alert(`校验未通过字段：${JSON.stringify(valid)}`);
     } else {
       alert(JSON.stringify(formData));
     }
@@ -87,7 +87,7 @@ function Demo() {
   const onSubmit = () => {
     form.submit(); // 触发提交的校验
     if (valid.length > 0) {
-      alert(`校验未通过字段：${JSON.stringify(errorFields)}`);
+      alert(`校验未通过字段：${JSON.stringify(valid)}`);
     } else {
       alert(JSON.stringify(formData));
     }
@@ -132,9 +132,9 @@ const schema = {
 function Demo() {
   const form = useForm(); // 2
   // 3 onSubmit 的入参
-  const onSubmit = ({ formData, errorFields }) => {
-    if (errorFields.length > 0) {
-      alert(`校验未通过字段：${JSON.stringify(errorFields)}`);
+  const onSubmit = (formData, valid) => {
+    if (valid.length > 0) {
+      alert(`校验未通过字段：${JSON.stringify(valid)}`);
     } else {
       alert(JSON.stringify(formData));
     }

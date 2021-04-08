@@ -76,7 +76,7 @@ const Demo = () => {
         form={form}
         schema={schema}
         widgets={{ site: SiteInput }}
-        onFinish={({ formData }) => alert(JSON.stringify(formData, null, 2))}
+        onFinish={formData => alert(JSON.stringify(formData, null, 2))}
       />
       <Button type="primary" onClick={form.submit}>
         提交

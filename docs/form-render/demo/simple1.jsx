@@ -43,7 +43,7 @@ const Demo = () => {
     // }
   };
 
-  const onFinish = ({ formData, errorFields }) => {
+  const onFinish = (formData, errorFields) => {
     console.group('onFinish');
     console.log(formData, 'formData', errorFields, 'errors');
     console.groupEnd();
