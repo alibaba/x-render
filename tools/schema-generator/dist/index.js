@@ -316,8 +316,8 @@ function _nonIterableRest() {
   throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
-var Ctx = React.createContext(function () {});
-var StoreCtx = React.createContext({});
+var Ctx = /*#__PURE__*/React.createContext(function () {});
+var StoreCtx = /*#__PURE__*/React.createContext({});
 
 var useGlobal = function useGlobal() {
   return React.useContext(Ctx);
@@ -1859,7 +1859,7 @@ function createCommonjsModule(fn, module) {
 
 var classnames = createCommonjsModule(function (module) {
 /*!
-  Copyright (c) 2018 Jed Watson.
+  Copyright (c) 2017 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
@@ -1869,7 +1869,7 @@ var classnames = createCommonjsModule(function (module) {
 
 	var hasOwn = {}.hasOwnProperty;
 
-	function classNames() {
+	function classNames () {
 		var classes = [];
 
 		for (var i = 0; i < arguments.length; i++) {
@@ -1880,22 +1880,16 @@ var classnames = createCommonjsModule(function (module) {
 
 			if (argType === 'string' || argType === 'number') {
 				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				if (arg.length) {
-					var inner = classNames.apply(null, arg);
-					if (inner) {
-						classes.push(inner);
-					}
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
 				}
 			} else if (argType === 'object') {
-				if (arg.toString === Object.prototype.toString) {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
 					}
-				} else {
-					classes.push(arg.toString());
 				}
 			}
 		}
@@ -19300,7 +19294,7 @@ function Wrapper$1(_ref, ref) {
   }))))));
 }
 
-var FRWrapper = React.forwardRef(Wrapper$1);
+var FRWrapper = /*#__PURE__*/React.forwardRef(Wrapper$1);
 FRWrapper.defaultProps = {
   labelWidth: 120
 };
@@ -19547,7 +19541,7 @@ function App(props, ref) {
   }, allProps));
 }
 
-var Main = React.forwardRef(App);
+var Main = /*#__PURE__*/React.forwardRef(App);
 
 var css_248z$6 = "/*\n  用于原有样式的覆盖\n */\n.fr-generator-container {\n  /* Row */\n  /* 自定义类 */\n  /* 组件内部样式*/\n  /* 其他样式 */\n}\n.fr-generator-container .top-upper {\n  top: -12px;\n}\n.fr-generator-container .fr-set {\n  padding: 12px 14px 12px 12px;\n  margin-bottom: 12px;\n  border-radius: 4px;\n}\n.fr-generator-container .fr-field {\n  margin-bottom: 24px;\n}\n.fr-generator-container .fr-field-object {\n  /* margin-bottom: 0; */\n}\n.fr-generator-container .fr-label {\n  display: block;\n}\n.fr-generator-container .fr-label-title {\n  display: inline-flex;\n  color: #333;\n  font-size: 14px;\n  min-height: 22px;\n  /* \"\"的标签页占位 */\n  line-height: 22px;\n}\n.fr-generator-container .fr-label-required {\n  margin: 1px 4px 0 0;\n  color: #f5222d;\n  font-size: 14px;\n  font-family: SimSun, sans-serif;\n}\n.fr-generator-container .fr-label-title::after {\n  content: ':';\n  position: relative;\n  top: -0.5px;\n  margin: 0 10px 0 2px;\n}\n.fr-generator-container .fr-label-title.no-colon::after {\n  content: '';\n  margin: 0;\n}\n.fr-generator-container .fr-label-object .fr-label-title {\n  font-size: 16px;\n  color: #222;\n}\n.fr-generator-container .fr-desc {\n  margin-top: 3px;\n  font-size: 12px;\n  word-break: break-all;\n  color: #888;\n}\n.fr-generator-container .fr-validate {\n  margin-left: 12px;\n  font-size: 12px;\n  word-break: break-all;\n  color: #f5222d;\n}\n.fr-generator-container .fr-validate-row {\n  margin: 3px 0 0 0;\n}\n.fr-generator-container .fr-label-row {\n  text-align: right;\n  flex-shrink: 0;\n}\n.fr-generator-container .fr-field-row .fr-content {\n  flex: 1;\n  position: relative;\n}\n.fr-generator-container .fr-field-row .fr-tooltip-icon {\n  margin: 3px 2px 0 0;\n}\n.fr-generator-container .hover-b--black-20:hover {\n  border-color: rgba(0, 0, 0, 0.3);\n}\n.fr-generator-container .pt44 {\n  padding-top: 46px;\n}\n.fr-generator-container .pv12 {\n  padding-top: 12px;\n  padding-bottom: 12px;\n}\n.fr-generator-container .fr-move-icon {\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding-top: 2px;\n  padding-right: 10px;\n  font-size: 24px;\n  font-weight: 300;\n}\n.fr-generator-container .fr-move-icon:hover {\n  cursor: move;\n}\n.fr-generator-container .fr-color-picker {\n  width: 100%;\n  display: flex;\n  flex-direction: row;\n  align-items: center;\n  color: #666;\n}\n.fr-generator-container .fr-color-picker .rc-color-picker-trigger {\n  margin-right: 12px;\n  height: 30px;\n  width: 60px;\n  border: 1px solid #e5e5e5;\n}\n.fr-generator-container .fr-color-picker > p {\n  margin: 0;\n  font-size: 14px;\n  line-height: 28px;\n}\n.fr-generator-container .fr-color-picker .rc-color-picker-wrap {\n  display: flex;\n}\n.fr-generator-container .next-input,\n.fr-generator-container .next-number-picker {\n  width: 100%;\n}\n.fr-generator-container .upload-img {\n  max-width: 200px;\n  max-height: 200px;\n  margin-right: 24px;\n}\n.fr-generator-container .fr-preview-image {\n  width: 160px;\n}\n.fr-generator-container .fr-preview {\n  position: relative;\n  cursor: pointer;\n}\n.fr-generator-container .fr-upload-mod,\n.fr-generator-container .fr-upload-file {\n  display: flex;\n}\n.fr-generator-container .fr-upload-mod {\n  align-items: center;\n}\n.fr-generator-container .fr-upload-mod .fr-upload-preview {\n  margin: 0 12px;\n}\n.fr-generator-container .fr-upload-file .ant-upload-list-item {\n  margin: 5px 0 0 8px;\n}\n.fr-generator-container .fr-upload-file .ant-upload-list-item-name {\n  margin-right: 6px;\n}\n.fr-generator-container .fr-upload-file .ant-upload-list-item-info {\n  cursor: pointer;\n}\n.fr-generator-container .fr-upload-file .next-upload-list-text .next-upload-list-item-done,\n.fr-generator-container .fr-upload-file .next-upload-list-text .next-upload-list-item .next-icon {\n  height: 28px;\n  line-height: 28px;\n  margin-left: 12px;\n}\n.fr-generator-container .fr-upload-file .next-upload-list-item-name-wrap {\n  margin-top: -4px;\n}\n.fr-generator-container .fr-sort-help-class {\n  background: #fff;\n}\n.fr-generator-container .fold-icon.fold-icon-active {\n  transform: rotate(0deg);\n}\n.fr-generator-container .fold-icon {\n  transform: rotate(-90deg);\n  transition: transform 0.24s;\n  cursor: pointer;\n  position: relative;\n}\n.fr-generator-container .fold-icon::after {\n  content: '';\n  position: absolute;\n  top: -20px;\n  right: -10px;\n  bottom: -5px;\n  left: -20px;\n}\n.fr-generator-container .fr-tooltip-toggle {\n  cursor: pointer;\n  position: relative;\n}\n.fr-generator-container .fr-tooltip-toggle:hover .fr-tooltip-container {\n  opacity: 1;\n  visibility: visible;\n}\n.fr-generator-container .fr-tooltip-icon {\n  height: 14px;\n  width: 14px;\n  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEnUlEQVR42u1bS0iUURT+zd4Y9KDosSihNhYUaBE9YKpFDKKOOmOLahtJ2SoxA2fUdUoQJK5qU0ib6LlxUYJpkY0LE3tQZkU7y7A0e1jnA4Of8pz//5373/+BF44Oc+/c853v3nOf5xpup0QiMZ9kD8mxeDzeTHKXPveSvKXP3+j/GP1/h++QhzIoW1ZWthu/NYKYysvLN5EhKZJ7ZMQEye8ZyjjJfZIk6vS10YWFhcvI4FoC2wfwLkkf6aiBLt8YHovFNhCoFnRlgNQkY9BJbrLeS9uzqFueYAzXJV9ITgKLVsvBPCnuAAifSIe23kBd7zApHHUI8D3JBfptFUlialbYSJIDweep7+Iog7L4jUMdn4HNzeksmxRcdgColyRZWlq6NQOd21AH6rKrFxiBVanxxcXFS6jSdpsAHtLYUODC1FqAum0S0Q7Mqlp+ESlO2zD8DUmJBhcsgS4bJDwBdhUKb1ko+kll6qLR6AJDU4IuuAZ0W2C7kWnrJy1a/QONvjsNjxLp32VjsEzO1OcOkoJJoeJuGuBWGB4nYCCcD4RGmiSJOm35PIup7kokEplr+CQBCzAJeEeJqC22V3jE2IBQWVd+fv48w2cJmAhbp4C7H7bZaf1KoZJBbET8vCEDRgF/pdXGZim1/ifGl344WtTIJJ//B+ggts+K6t4BrAwBH2GjNKo2CuxVqzJeGLDqFemoFnQ0sq0vDHyP4D+KwI1ILqZqpyqsGmFjznStX8tNIzQlbjYUJasVnCo9wAzsjE1npyPgFQPqJvKDRYC8ioWt/200BFD7FRMwIu0nFBNwgNMFm80Fz0mAFIOqVz4IyoS/ZvQ1mQv1MYBqkO8GCSDXTDRjvAoCznAHrH/X0qu4FqE99Voj2AkErOPsg+3w/wqmwDMjHAkkPGdsPITMBqb7t4SFANjCjTkgoI0ZJY+Hwnp5f9MGdtIMOxF35n1ZXDrG38fYmDa48zWcs4eFANxesUtv+jPMZC4PCwE4NWL0DRvcehkHjyEhACdGCxl9vwBwggEyxw0wXhCAOANG34TsAi4k37kA/RliMnND1ANyGX1DGAMe89Og+uSjaRDSAwKucgeIYSEAcQzc8T4ISDGZrSFygVaml6dAQILJfBEiAl4yy/0KZK6WtsMBJwD+v0bcDk/tlp4yveB0cAmQj8hhs7lQE1NoIAQEPGdsazZ3k+3SoahOAvQfisoDBeR2QAmArjvcsbi2i5FMQ+Ay0Jvn6GIE10VWV2MBIiALmKWrMfFylJsRgkIAsAp1NojX47hCZn74HdfjficAAzp3PY6rf9g4GyBhw3/6Axoi0yW48IDtcQwBRVIUOHaQfguSAiYpvB42Od1Cxiz8s5tkpdfGAwOwSFhhy0xXUnV+DpSEbmCwwFiXKcPXbYTKpnSHykIndFsYf01JsDRJTxCDpUGU7nB5SKcfwuWLiooWK38wQXLJwcOFtIoHE/Bh5v6SE2DMdvNN4BE3nszQ93szfTJDclTbU7lAP5pSGIxY5eWzOdL/lXrkKW6Fp7M3XPTi4SR0zz6dnX087fOEq2k8hTc/nydJm57Pj3v5fP4PSqRR6oYkTaUAAAAASUVORK5CYII=');\n  background-size: cover;\n  display: block;\n  margin: 4px 0 0 4px;\n}\n.fr-generator-container .fr-tooltip-container {\n  position: absolute;\n  width: 160px;\n  left: 50%;\n  white-space: initial !important;\n  bottom: 30px;\n  text-align: center;\n  background: #2b222a;\n  padding: 4px;\n  margin-left: -77px;\n  border-radius: 4px;\n  color: #efefef;\n  font-size: 13px;\n  cursor: auto;\n  z-index: 99999;\n  transition: all 0.5s ease;\n  opacity: 0;\n  visibility: hidden;\n  word-wrap: break-word;\n}\n.fr-generator-container .fr-tooltip-triangle {\n  position: absolute;\n  left: 50%;\n  border-left: 5px solid transparent;\n  border-right: 5px solid transparent;\n  border-top: 5px solid #2b222a;\n  transition: all 0.5s ease;\n  content: ' ';\n  font-size: 0;\n  line-height: 0;\n  margin-left: -5px;\n  width: 0;\n  bottom: -5px;\n}\n.fr-generator-container .fr-tooltip-toggle::before,\n.fr-generator-container .fr-tooltip-toggle::after {\n  color: #efefef;\n  font-size: 13px;\n  opacity: 0;\n  pointer-events: none;\n  text-align: center;\n}\n.fr-generator-container .fr-tooltip-toggle:focus::before,\n.fr-generator-container .fr-tooltip-toggle:focus::after,\n.fr-generator-container .fr-tooltip-toggle:hover::before,\n.fr-generator-container .fr-tooltip-toggle:hover::after {\n  opacity: 1;\n  transition: all 0.75s ease;\n}\n.fr-generator-container .fr-slider {\n  display: flex;\n  width: 100%;\n  align-items: center;\n}\n.fr-generator-container .fr-map {\n  display: flex;\n  flex-wrap: wrap;\n}\n";
 styleInject(css_248z$6);
@@ -19687,7 +19681,7 @@ var Root = function Root(props, ref) {
     ref: ref
   }, props)));
 };
-var index = React.forwardRef(Root);
+var index = /*#__PURE__*/React.forwardRef(Root);
 
 exports.default = index;
 exports.defaultCommonSettings = defaultCommonSettings;
