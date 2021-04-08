@@ -17,6 +17,7 @@ const schema = {
           input1: {
             title: '简单输入框',
             type: 'string',
+            required: true,
           },
           selet1: {
             title: '单选',

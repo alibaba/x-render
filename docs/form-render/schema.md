@@ -279,12 +279,21 @@ export default () => <FR schema={basic} />;
 - `min`：最少数组项为几项
 - `max`：最多数组项为几项
 
+列表的展示有三种模式：
+
+1. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: simple
+2. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: table
+3. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: list
+
+默认使用的 simple 展示
+
 ```json
 {
   "title": "对象数组",
   "type": "array",
   "min": 1,
   "max": 3,
+  "widget": "simple",
   "items": {
     "type": "object",
     "properties": {

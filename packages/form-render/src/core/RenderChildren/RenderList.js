@@ -19,7 +19,7 @@ const RenderList = ({
   errorFields,
 }) => {
   // console.log(parentId, dataIndex, children);
-  const { formData, flatten, onItemChange } = useStore();
+  const { formData, flatten, onItemChange, removeErrorByPath } = useStore();
 
   let renderWidget = 'list';
   try {
@@ -48,7 +48,7 @@ const RenderList = ({
     // remark: 删除时，不存在的item需要补齐，用null
     const newList = displayList.filter((item, kdx) => kdx !== idx);
     onItemChange(dataPath, newList);
-    // const itemPath = dataPath + `[${idx}]`; //TODO: 这块有问题啊，idx好像不准
+    removeErrorByPath(`${dataPath}[${idx}]`);
   };
 
   //TODO1: 上线翻页要正确！！现在是错的
@@ -113,6 +113,11 @@ const SimpleList = ({
     children,
   };
 
+  const handleDelete = idx => {
+    deleteItem(idx);
+    console.log(dataIndex);
+  };
+
   return (
     <div>
       {displayList.map((item, idx) => {
@@ -127,8 +132,8 @@ const SimpleList = ({
               dataIndex={[...dataIndex, idx]}
             />
             <MinusCircleOutlined
-              style={{ fontSize: 24, marginLeft: 8 }}
-              onClick={() => deleteItem(idx)}
+              style={{ fontSize: 16, marginLeft: 8 }}
+              onClick={() => handleDelete(idx)}
             />
           </div>
         );
@@ -138,7 +143,7 @@ const SimpleList = ({
         type="dashed"
         onClick={addItem}
       >
-        添加
+        新增一条
       </Button>
     </div>
   );

@@ -162,6 +162,13 @@ export const useForm = props => {
   };
   // TODO: 提取出来，重新写一份，注意要处理async
 
+  const removeErrorByPath = path => {
+    let newError = errorFields.map(item => {
+      return item.name.indexOf(path) === -1;
+    });
+    _setErrors(newError);
+  };
+
   const getValues = () => transformDataWithBind(formData, flattenRef.current);
 
   const setValues = newFormData => {
@@ -266,6 +273,7 @@ export const useForm = props => {
     endValidating,
     endSubmitting,
     setErrorFields,
+    removeErrorByPath,
     isEditing,
     setEditing,
     syncStuff,

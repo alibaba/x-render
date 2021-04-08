@@ -187,17 +187,19 @@ const Demo = () => {
 
 对 class 组件的支持会在下一个版本添加上
 
-| Prop           | Description                                         | Type                               |
-| -------------- | --------------------------------------------------- | ---------------------------------- |
-| submit         | 触发提交流程，一般在提交按钮上使用                  | function                           |
-| errorFields    | Check if a field is touched                         | [{name, error: []}]                |
-| setErrorFields | 外部手动修改 errorFields 校验信息，用于外部校验回填 | (error: Error[]) => void           |
-| setValues      | 外部手动修改 formData，用于已填写的表单的数据回填   | (formData: any) => void            |
-| onItemChange   | 外部修改指定单个 field 的数据                       | (path: string, value: any) => void |
-| getValues      | 获取表单内部维护的数据 formData                     | () => void                         |
-| schema         | 表单的 schema                                       | object                             |
-| touchedKeys    | 已经触碰过的 field 的数据路径                       | string[]                           |
-| formData       | 表单内部维护的数据，建议使用 getValues/setValues    | object                             |
+| Prop           | Description                                         | Type                     |
+| -------------- | --------------------------------------------------- | ------------------------ |
+| submit         | 触发提交流程，一般在提交按钮上使用                  | function                 |
+| errorFields    | Check if a field is touched                         | [{name, error: []}]      |
+| setErrorFields | 外部手动修改 errorFields 校验信息，用于外部校验回填 | (error: Error[]) => void |
+
+| setValues | 外部手动修改 formData，用于已填写的表单的数据回填 | (formData: any) => void |
+| onItemChange | 外部修改指定单个 field 的数据 | (path: string, value: any) => void |
+| getValues | 获取表单内部维护的数据 formData | () => void |
+| schema | 表单的 schema | object |
+| touchedKeys | 已经触碰过的 field 的数据路径 | string[] |
+| removeErrorByPath | 外部手动删除某一个 path 下所有的校验信息 | (path: string) => void |
+| formData | 表单内部维护的数据，建议使用 getValues/setValues | object |
 
 # 如何速写 Schema
 
