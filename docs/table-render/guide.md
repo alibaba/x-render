@@ -166,7 +166,7 @@ columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns
 | valueType | 值的类型，详见下方 `valueType 配置`                | `string`（`text` \| `money` \| `date` \| `dateTime`） | `text` |
 | enum      | 当前列值的枚举，详见[高级用法](./demo.md#基本用法) | object                                    | -      |
 
-- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [高级用法](./demo#高级用法)：
+- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [案例代码](./demo)：
   
   | 属性     | 描述                                                               |
   | -------- | ------------------------------------------------------------------ |
