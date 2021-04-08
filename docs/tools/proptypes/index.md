@@ -1,11 +1,10 @@
 ---
-order: 3
+order: 4
 title: PropToSchema
 group:
   title: PropToSchema
 toc: menu
 ---
-
 
 # PropToSchema   &nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/proptypes-to-json-schema.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/proptypes-to-json-schema?_blank)
 
@@ -14,7 +13,7 @@ toc: menu
 ## 安装
 
 ``` sh
-npm i proptypes-to-json-schema -S
+npm i proptypes-to-json-schema
 ```
 
 ## 使用
@@ -31,21 +30,21 @@ fs.writeFileSync(path.join(__dirname, 'schema.json'), JSON.stringify(apiInfo, nu
 
 ## 说明
 
-|名称|类型|默认值|备注|
-|:--:|:--:|:--:|:--:|
-|path|string|必填|需要转换的jsx目录地址|
-|options|object|`{}`|目前支持参数shouldAddUi,true会自动生成带 ui 配置的 schema|
+| 名称 | 类型 | 默认值 | 备注 |
+| --- | --- | --- | --- |
+| path | string | 必填 | 需要转换的jsx目录地址 |
+| options | object | `{}` | 目前支持参数shouldAddUi,true会自动生成带 ui 配置的 schema |
 
 ### 目前支持
 
-|类型|PropTypes|prop schema type |默认 ui setting |可选 ui setting|
-|:--:|:--:|:--:|:--:|:--:|
-|布尔值|bool|boolean|checkbox|无|
-|字符串|string|string|input[type=text]|textarea、password、color、date、date-time、image|
-|数字|number|number|input[type=text]|updown(步进器，搭配min、max、step使用)|
-|单选项|oneOf|enum|select box|无|
-|数组项|arrayOf|array|组展示(*1)|同左|
-|对象|shape|object|对象展示(*2)|同左|
+| 类型 | PropTypes | prop schema type  | 默认 ui setting  | 可选 ui setting |
+| --- | --- | --- | --- | --- |
+| 布尔值 | bool | boolean | checkbox | 无 |
+| 字符串 | string | string | input[type=text] | textarea、password、color、date、date-time、image |
+| 数字 | number | number | input[type=text] | updown(步进器，搭配min、max、step使用) |
+| 单选项 | oneOf | enum | select box | 无 |
+| 数组项 | arrayOf | array | 组展示(*1) | 同左 |
+| 对象 | shape | object | 对象展示(*2) | 同左 |
 
 
 1. 子元素展示依赖于arrayOf的设置，类似这样设置 `PropTypes.arrayOf(PropTypes.xxx)`,其实xxx为前3种基本类型,不设置默认是字符串形式
@@ -70,6 +69,23 @@ fs.writeFileSync(path.join(__dirname, 'schema.json'), JSON.stringify(apiInfo, nu
 
 ## 效果
 
-<table><tr><td>React 输入</td><td>标准Json schema 输出</td><td>带 Ui 配置的 schema 输出</td></tr><tr><td><img src="https://img.alicdn.com/tfs/TB1jVQFtuuSBuNjy1XcXXcYjFXa-1004-1310.png" width="420"></td><td><img src="https://gw.alicdn.com/tfs/TB14I0Rzx1YBuNjy1zcXXbNcXXa-862-1538.png" width="310"></td><td><img src="https://gw.alicdn.com/tfs/TB1r9QFwXmWBuNjSspdXXbugXXa-898-1460.png" width="340"></td></tr></table>
+<table>
+  <tr>
+    <td>React 输入</td>
+    <td>标准Json schema 输出</td>
+    <td>带 Ui 配置的 schema 输出</td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://img.alicdn.com/tfs/TB1jVQFtuuSBuNjy1XcXXcYjFXa-1004-1310.png" width="420">
+    </td>
+    <td>
+      <img src="https://gw.alicdn.com/tfs/TB14I0Rzx1YBuNjy1zcXXbNcXXa-862-1538.png" width="310">
+    </td>
+    <td>
+      <img src="https://gw.alicdn.com/tfs/TB1r9QFwXmWBuNjSspdXXbugXXa-898-1460.png" width="340">
+    </td>
+  </tr>
+</table>
 
 可以参考 [Demo](https://github.com/alibaba/form-render/tree/master/tools/proptypes-to-json-schema/demo) 中的使用

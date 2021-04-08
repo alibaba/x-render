@@ -3,7 +3,7 @@
     "prefix": "fr-init",
     "body": [
       "{",
-      "  \"propsSchema\": {",
+      "  \"schema\": {",
       "    \"type\": \"object\",",
       "    \"properties\": {",
       "      $0",
@@ -325,7 +325,7 @@
     "prefix": "fr-demo",
     "body": [
       "{",
-      "  \"propsSchema\": {",
+      "  \"schema\": {",
       "    \"type\": \"object\",",
       "    \"properties\": {",
       "      \"AllString\": {",

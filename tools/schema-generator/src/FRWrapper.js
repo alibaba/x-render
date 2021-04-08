@@ -16,7 +16,7 @@ import {
 } from './utils';
 import { Ctx, StoreCtx } from './context';
 // import SCHEMA from './json/basic.json';
-import FR from './core';
+import FR from './FR';
 import { Modal, Input, message } from 'antd';
 import { Button } from 'antd';
 
