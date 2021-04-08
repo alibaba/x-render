@@ -73,7 +73,7 @@ const columns = [
   },
 ];
 
-const searchApi = params => {
+const api = params => {
   return {
     rows: [
       {
@@ -95,7 +95,7 @@ const searchApi = params => {
 
 const Demo = () => {
   return (
-    <TableContainer searchApi={searchApi}>
+    <TableContainer api={api}>
       <Search schema={searchSchema} />
       <ProTable
         headerTitle="高级表单"

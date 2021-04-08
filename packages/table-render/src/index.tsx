@@ -1,8 +1,8 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import { useSet, useTable } from './hooks';
 import { Ctx } from './context';
 import Search from './Search';
-import ProTable from './ProTable';
+import Table from './Table';
 import { message, ConfigProvider } from 'antd';
 import { isObj } from './utils';
 import _get from 'lodash.get';
@@ -12,44 +12,29 @@ import zh_CN from 'antd/lib/locale/zh_CN';
 import 'antd/dist/antd.less'; // 需要配置一下babel-plugins
 import './index.css';
 
-export interface RootState {
-  loading: boolean;
-  search: any;
-  searchApi: any;
-  tab: number | string;
-  dataSource: any[];
-  pagination?: TablePaginationConfig;
-  tableSize?: string;
-}
-
-export interface RootProps {
-  searchApi: any;
-  searchOnMount?: boolean;
-  onSearch?: (params: any) => {};
-  pageSize?: number;
-  params?: any;
-  locale?: string;
-}
-
-const useTableRoot = (props: RootProps) => {
+const useTableRoot = props => {
   const [state, set] = useSet({
     loading: false,
     search: {}, // 选项data
-    searchApi: props.searchApi,
-    searchOnMount: props.searchOnMount,
-    tab: 0, // 如果searchApi是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
+    api: null,
+    tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
     dataSource: [],
     extraData: null, // 需要用到的 dataSource 以外的扩展返回值
     pagination: {
       current: 1,
-      pageSize: props.pageSize || 10,
+      pageSize: 10,
       total: 1,
     },
     tableSize: 'default',
     checkPassed: true,
   });
 
-  const { pagination, search, searchApi, tab: currentTab, checkPassed } = state;
+  const api = useRef<any>();
+  const onSearch = useRef<any>();
+  const afterSearch = useRef<any>();
+
+  const { pagination, search, tab: currentTab, checkPassed } = state;
+  const table = useTable();
 
   const doSearch = (
     params: { current?: any; tab?: any; pageSize?: any },
@@ -58,8 +43,8 @@ const useTableRoot = (props: RootProps) => {
     // 删除自定义组件的参数名
     delete search.searchBtn;
 
-    if (props.onSearch) {
-      props.onSearch(search);
+    if (onSearch.current) {
+      onSearch.current(search);
     }
     // console.log(checkPassed);
     if (!checkPassed) return;
@@ -72,42 +57,42 @@ const useTableRoot = (props: RootProps) => {
     }
     // console.log(params, { _current, _pageSize, _tab }, 'searchParams');
     const _pagination = { current: _current, pageSize: _pageSize };
-    if (typeof props.searchApi === 'function') {
-      basicSearch(props.searchApi);
-    } else if (Array.isArray(props.searchApi)) {
-      const _searchApi = _get(props.searchApi, `[${_tab}].api`);
-      if (typeof _searchApi === 'function') {
-        basicSearch(_searchApi);
+    if (typeof api.current === 'function') {
+      basicSearch(api.current);
+    } else if (Array.isArray(api.current)) {
+      const _api = _get(api.current, `[${_tab}].api`);
+      if (typeof _api === 'function') {
+        basicSearch(_api);
       } else {
-        message.warning('searchApi 不是函数，检查 <TableContainer /> 的 props');
+        message.warning('api 不是函数，检查 <Search /> 的 props');
       }
     } else {
-      message.warning('searchApi 不是函数，检查 <TableContainer /> 的 props');
+      console.log(api.current);
+      message.warning('api 不是函数，检查 <Search /> 的 props');
     }
 
-    function basicSearch(searchApi: (arg0: any) => any) {
+    function basicSearch(api: (arg0: any) => any) {
       set({ loading: true });
       let _params = { ...search, ...customSearch, ..._pagination };
-      if (props.params && isObj(props.params)) {
-        _params = { ..._params, ...props.params };
-      }
-      if (Array.isArray(props.searchApi)) {
+
+      if (Array.isArray(api)) {
         _params = { ..._params, tab };
       }
-      Promise.resolve(searchApi(_params))
+      Promise.resolve(api(_params))
         .then(res => {
           // TODO：这里校验res是否规范
-          const { rows, total, pageSize, extraData } = res;
+          const { rows, total, pageSize, ...extraData } = res;
           set({
             loading: false,
             dataSource: rows,
-            extraData,
+            ...extraData,
             pagination: {
               ..._pagination,
               total,
               pageSize: pageSize || _pageSize,
             },
           });
+          afterSearch.current({ rows, total, pageSize, ...extraData });
         })
         .catch(err => {
           set({ loading: false });
@@ -141,6 +126,12 @@ const useTableRoot = (props: RootProps) => {
     }
   };
 
+  const syncMethods = ({ searchApi, syncOnSearch, syncAfterSearch }) => {
+    api.current = searchApi;
+    onSearch.current = syncOnSearch;
+    afterSearch.current = syncAfterSearch;
+  };
+
   const context = {
     tableState: state,
     // setTable: (newState: any, fn?: Function) => {
@@ -153,6 +144,7 @@ const useTableRoot = (props: RootProps) => {
     doSearch,
     refresh,
     changeTab,
+    syncMethods,
   };
   return context;
 };
@@ -172,6 +164,6 @@ const Container: React.ForwardRefRenderFunction<unknown, RootProps> = (
   );
 };
 
-const TableContainer = forwardRef(Container);
+const TableProvider = forwardRef(Container);
 
-export { Search, ProTable, TableContainer, useTable };
+export { Search, Table, TableProvider, useTable };

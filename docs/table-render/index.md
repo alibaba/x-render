@@ -54,7 +54,7 @@ npm i table-render --save
  * defaultShowCode: true
  */
 import React from 'react';
-import { ProTable, Search, TableContainer } from 'table-render';
+import { Table, Search, TableProvider } from 'table-render';
 
 const dataSource = [];
 for (let i = 0; i < 6; i++) {
@@ -111,10 +111,10 @@ const Wrapper = () => {
     };
   };
   return (
-    <TableContainer searchApi={searchApi}>
-       <Search schema={schema} />
-       <ProTable headerTitle="最简表格" columns={columns} rowKey="id" />
-    </TableContainer>
+    <TableProvider>
+       <Search schema={schema} api={searchApi}/>
+       <Table headerTitle="最简表格" columns={columns} rowKey="id" />
+    </TableProvider>
   );
 };
 
@@ -125,29 +125,27 @@ export default Wrapper;
 
 ## API
 
-### TableContainer 参数
+### TableProvider
 
-**TableContainer 属于 provider 的能力，将对应的 `<Search>` 和 `<ProTable>` 包裹起来，可以很方便在里面插入一些其他东西**
+**TableProvider 本质就是一个 React Context，将对应的 `<Search>` 和 `<Table>` 包裹起来，可以很方便在里面插入一些其他东西**
 
-| 属性       | 描述                          | 类型                    | 默认值 |
-| --------- | --------------------------- | ----------------------- | ------ |
-| searchApi | 初始化&点击查询时执行的函数     | `Function` or `Array`   | -      |
-| params    | 允许外部传入自定义参数给搜索请求（searchApi）, 会与 searchApi 的默认请求参数合并，且优先级高（就是参数名同样的 params 里的参数覆盖默认参数）                     | `object`                | -      |
-| onSearch      | 在表格查询时执行一些额外的操作 | `Function`           | -      |
-| searchOnMount | 组件初次挂载时，是否默认执行查询动作  | boolean |   `true` |
 
 
 ### Search 参数
 
 **我们将搜索相关的能力放到 `<Search>` 上面配置，包括对应的搜索筛选表单的渲染**
 
-| 属性            | 描述                                                                                                                                                                                         | 类型                                   | 默认值 |
+| 属性            | 描述      | 类型                                   | 默认值 |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------ |
-| schema          | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](/form-render/config/schema) | `object`                               | -      |
-| hidden          | 是否隐藏`<Search />`组件                                                                                                                                                                     | `boolean`                              | false  |
-| searchBtnRender | 自定义表单查询按钮                                                                                                                                                                           | `(refresh,clearSearch) => ReactNode[]` | -      |
+| schema| 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](/form-render/config/schema) | `object` | - |
+| api | 初始化&点击查询时执行的函数     | `Function` or `Array`   | -      |
+| onSearch      | 在表格查询时执行一些额外的操作 | `Function`           | -      |
+| afterSearch   | 在表格查询结束后执行一些额外的操作 | `Function`           | -      |
+| searchOnMount | 组件初次挂载时，是否默认执行查询动作  | `boolean` |   true |
+| hidden          | 是否隐藏`<Search />`组件    | `boolean`  | false |
+| searchBtnRender | 自定义表单查询按钮 | `(refresh,clearSearch) => ReactNode[]` | -      |
 
-### ProTable 参数
+### Table 参数
 
 **支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写，最基本的使用就需要填写`columns`**
 
@@ -159,7 +157,7 @@ export default Wrapper;
 | columns   | 列定义  | `object` | false  |
 
 
-#### ProTable 参数 中 Columns 列定义
+#### Table 参数 中 Columns 列定义
 
 **columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns](https://ant.design/components/table-cn/#Column) 的配置，同时也提供了一些更方便的 api，加快书写**
 
