@@ -1,13 +1,17 @@
-import React, { useRef } from 'react';
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
+
+import React from 'react';
 import { ProTable, Search, TableContainer, useTable } from 'table-render';
 import { Tag, Space, Menu, message, Tooltip, Button } from 'antd';
 import {
   PlusOutlined,
-  EllipsisOutlined,
   InfoCircleOutlined,
 } from '@ant-design/icons';
 import request from 'umi-request';
-// 可以使用schema编辑器配置 https://form-render.github.io/schema-generator/
+
 const schema = {
   type: 'object',
   properties: {
@@ -74,6 +78,9 @@ const Demo = () => {
 
 const TableBody = () => {
   const { refresh, tableState } = useTable();
+
+  console.log(">>>>data:",tableState);
+
   // 配置完全透传antd table
   const columns = [
     {
