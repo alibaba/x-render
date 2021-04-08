@@ -28,13 +28,14 @@ export const expression = {
   type: 'object',
   properties: {
     input: {
-      title: '{{formData.config.title}}',
+      title: '{{formData.config.title || "输入框"}}',
       type: 'string',
       placeholder: '{{formData.config.placeholder}}',
       props: {
         size: '{{formData.config.size}}',
       },
       hidden: '{{formData.config.hidden === true}}',
+      readOnly: '{{formData.config.readOnly === true}}',
       disabled: '{{formData.config.disabled === true}}',
     },
     rate: {
@@ -49,7 +50,6 @@ export const expression = {
         title: {
           title: 'title',
           type: 'string',
-          default: '输入框',
         },
         placeholder: {
           title: 'placeholder',
@@ -64,6 +64,10 @@ export const expression = {
         },
         hidden: {
           title: '是否隐藏',
+          type: 'boolean',
+        },
+        readOnly: {
+          title: '是否只读',
           type: 'boolean',
         },
         disabled: {
