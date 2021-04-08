@@ -12,7 +12,15 @@ import upload from './upload';
 import ImageInput from './imageInput';
 import urlInput from './urlInput';
 import Html from './html';
-import { InputNumber, Checkbox, Switch, Input } from 'antd';
+import {
+  InputNumber,
+  Checkbox,
+  Switch,
+  Input,
+  Rate,
+  TreeSelect,
+  Cascader,
+} from 'antd';
 import { createWidget } from '../../createWidget';
 
 const { TextArea } = Input;
@@ -29,13 +37,21 @@ const FrTextArea = createWidget(({ autoSize }) => ({
   autoSize: autoSize ? autoSize : { minRows: 3 },
 }))(TextArea);
 
+const FrTreeSelect = ({ style, ...rest }) => (
+  <TreeSelect style={{ width: '100%', ...style }} {...rest} />
+);
+
+const FrCascader = ({ style, ...rest }) => (
+  <Cascader style={{ width: '100%', ...style }} {...rest} />
+);
+
 export const widgets = {
+  input: Input,
   checkbox: Checkbox,
   checkboxes, // checkbox多选
   color,
   date,
   dateRange,
-  input: Input,
   imageInput: ImageInput,
   url: urlInput,
   list,
@@ -49,6 +65,9 @@ export const widgets = {
   textarea: FrTextArea,
   upload,
   html: Html,
+  rate: Rate,
+  treeSelect: FrTreeSelect,
+  cascader: FrCascader,
 };
 
 export const defaultWidgetNameList = Object.keys(widgets);

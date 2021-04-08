@@ -63,10 +63,8 @@ const ExtendedWidget = ({
   }
 
   // 避免传组件不接受的props，按情况传多余的props
-  const isExternalWidget = defaultWidgetNameList.indexOf(widgetName) === -1; // 是否是外部组件
-  if (isExternalWidget) {
-    widgetProps.onItemChange = onItemChange; // 只给外部组件提供，默认的组件都是简单组件，不需要，多余的props在antd的input上会warning，很烦
-  }
+  // const isExternalWidget = defaultWidgetNameList.indexOf(widgetName) === -1; // 是否是外部组件
+  widgetProps.addons = { onItemChange };
 
   const finalProps = transformProps(widgetProps);
 

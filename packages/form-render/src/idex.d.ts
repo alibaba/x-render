@@ -8,14 +8,6 @@ export interface FormInstance {
   /** 表单 data 变化回调 */
   onChange?: (data: any) => void;
 }
-
-export interface ResultType {
-  /** 表单数据 */
-  formData: any;
-  /** 报错数组 */
-  errorFields: Error[];
-}
-
 export interface Error {
   /** 错误的数据路径 */
   name: string;
@@ -73,9 +65,9 @@ export interface FRProps {
   debounceInput?: boolean;
   size?: string;
   /** 表单提交前钩子 */
-  beforeFinish?: (result: ResultType) => void;
+  beforeFinish?: (formData: any, error: string[]) => void;
   /** 表单提交后钩子 */
-  onFinish: (result: ResultType) => void;
+  onFinish: (formData: any, error: string[]) => void;
 }
 
 declare const FR: React.FC<FRProps>;

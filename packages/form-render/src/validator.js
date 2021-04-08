@@ -4,6 +4,7 @@ import {
   formatPathFromValidator,
   isPathRequired,
   generateDataSkeleton,
+  getArray,
 } from './utils';
 import { defaultValidateMessagesCN } from './validateMessageCN';
 import { defaultValidateMessages } from './validateMessage';
@@ -63,7 +64,7 @@ export const validateAll = ({
     })
     .catch(({ errors, fields }) => {
       // error的name改成正常的path
-      let normalizedErrors = errors.map(err => {
+      let normalizedErrors = getArray(errors).map(err => {
         const _path = formatPathFromValidator(err.field);
         return { name: _path, error: [err.message] };
       });

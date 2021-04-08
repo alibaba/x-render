@@ -1,0 +1,16 @@
+---
+order: 6
+toc: false
+---
+
+## FAQ
+
+Q: 我在 schema 里写的内容是按什么规则传递给自定义组件的？
+
+A: 基础属性按固定规则传递，一般只有和渲染组件相关的属性会传入，当然整个 schema 也会作为一个字段传入。而 props 会直接展开透传，便于直接平滑使用 antd 的组件，所以受到的 props 的结构会类似于： props = {...schema, ...schema.props}
+
+Q: format 和 widget 的区别在哪里，比如使用 format: color 来指明用颜色选择组件和使用 widget: color 有区别么？
+
+A: 问题中的例子，效果是一样的。但是 format 同时是一个校验关键词。例如 format: url 和 widget: url 都会指明使用链接组件进行渲染，但是前者会校验链接的有效性。一般来说 date，dateTime，time，url，image 这些同时声明数据校验格式和渲染组件的，使用 format，其他的都可以使用 widget。那为啥例如 textarea 和 color 也可以用 format 呢？历史兼容问题。
+
+更多待补充

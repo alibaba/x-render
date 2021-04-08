@@ -9,9 +9,7 @@
           "input": {
             "title": "简单输入框",
             "type": "string",
-            "ui:options": {
-              "placeholder": "昵称"
-            }
+            "placeholder": "昵称"
           },
           "textarea": {
             "title": "简单文本编辑框",
@@ -37,8 +35,40 @@
             "title": "上传文件",
             "type": "string",
             "format": "upload",
-            "ui:options": {
+            "props": {
               "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            }
+          },
+          "treeSelect": {
+            "title": "树形选择",
+            "type": "string",
+            "widget": "treeSelect",
+            "props": {
+              "treeDefaultExpandAll": true,
+              "treeData": [
+                {
+                  "title": "Node1",
+                  "value": "0-0",
+                  "key": "0-0",
+                  "children": [
+                    {
+                      "title": "Child Node1",
+                      "value": "0-0-1",
+                      "key": "0-0-1"
+                    },
+                    {
+                      "title": "Child Node2",
+                      "value": "0-0-2",
+                      "key": "0-0-2"
+                    }
+                  ]
+                },
+                {
+                  "title": "Node2",
+                  "value": "0-1",
+                  "key": "0-1"
+                }
+              ]
             }
           }
         }
@@ -57,7 +87,12 @@
           "number2": {
             "title": "带滑动条",
             "type": "number",
-            "ui:widget": "slider"
+            "widget": "slider"
+          },
+          "rate": {
+            "title": "评价",
+            "type": "number",
+            "widget": "rate"
           }
         }
       },
@@ -72,7 +107,7 @@
           "switch": {
             "title": "开关控制",
             "type": "boolean",
-            "ui:widget": "switch"
+            "widget": "switch"
           }
         }
       },
@@ -84,9 +119,7 @@
             "title": "日期范围",
             "type": "range",
             "format": "dateTime",
-            "ui:options": {
-              "placeholder": ["开始时间", "结束时间"]
-            }
+            "placeholder": ["开始时间", "结束时间"]
           }
         }
       },
@@ -105,7 +138,7 @@
             "type": "string",
             "enum": ["a", "b", "c"],
             "enumNames": ["早", "中", "晚"],
-            "ui:widget": "radio"
+            "widget": "radio"
           },
           "multiSelect": {
             "title": "多选",
@@ -116,7 +149,7 @@
             },
             "enum": ["A", "B", "C", "D"],
             "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
-            "ui:widget": "multiSelect"
+            "widget": "multiSelect"
           },
           "boxes": {
             "title": "多选",
@@ -127,6 +160,47 @@
             },
             "enum": ["A", "B", "C", "D"],
             "enumNames": ["杭州", "武汉", "湖州", "贵阳"]
+          },
+          "cascade": {
+            "title": "级联选择",
+            "type": "array",
+            "widget": "cascader",
+            "props": {
+              "options": [
+                {
+                  "value": "zhejiang",
+                  "label": "Zhejiang",
+                  "children": [
+                    {
+                      "value": "hangzhou",
+                      "label": "Hangzhou",
+                      "children": [
+                        {
+                          "value": "xihu",
+                          "label": "West Lake"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "value": "jiangsu",
+                  "label": "Jiangsu",
+                  "children": [
+                    {
+                      "value": "nanjing",
+                      "label": "Nanjing",
+                      "children": [
+                        {
+                          "value": "zhonghuamen",
+                          "label": "Zhong Hua Men"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
           }
         }
       },
@@ -134,9 +208,6 @@
         "title": "可折叠对象",
         "description": "这是个对象类型",
         "type": "object",
-        "ui:options": {
-          "collapsed": true
-        },
         "properties": {
           "input1": {
             "title": "输入框1",
@@ -154,7 +225,7 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 3,
-        "ui:displayType": "row",
+        "displayType": "row",
         "items": {
           "type": "object",
           "properties": {
