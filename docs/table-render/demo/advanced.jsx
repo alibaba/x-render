@@ -4,12 +4,9 @@
  */
 
 import React from 'react';
-import { ProTable, Search, TableContainer, useTable } from 'table-render';
+import { Table, Search, TableProvider, useTable } from 'table-render';
 import { Tag, Space, Menu, message, Tooltip, Button } from 'antd';
-import {
-  PlusOutlined,
-  InfoCircleOutlined,
-} from '@ant-design/icons';
+import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import request from 'umi-request';
 
 const schema = {
@@ -21,24 +18,36 @@ const schema = {
       enum: ['open', 'closed'],
       enumNames: ['营业中', '已打烊'],
       'ui:width': '25%',
+      widget: 'select',
     },
     labels: {
       title: '酒店星级',
       type: 'string',
-      'ui:width': '25%',
+      width: '25%',
     },
     created_at: {
       title: '成立时间',
       type: 'string',
       format: 'date',
-      'ui:width': '25%',
+      width: '25%',
     },
   },
   'ui:labelWidth': 80,
 };
 
 const Demo = () => {
+  return (
+    <TableProvider>
+      <TableBody />
+    </TableProvider>
+  );
+};
+
+const TableBody = () => {
+  const { refresh, tableState } = useTable();
+
   const searchApi = params => {
+    console.log('params >>> ', params);
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
@@ -57,37 +66,13 @@ const Demo = () => {
       .catch(e => console.log('Oops, error', e));
   };
 
-  return (
-    <TableContainer
-      searchApi={[
-        {
-          name: '全部数据',
-          api: searchApi,
-        },
-        {
-          name: '我的数据',
-          api: searchApi,
-        },
-      ]}
-      onSearch={search => console.log('onSearch', search)}
-    >
-      <TableBody />
-    </TableContainer>
-  );
-};
-
-const TableBody = () => {
-  const { refresh, tableState } = useTable();
-
-  console.log(">>>>data:",tableState);
-
   // 配置完全透传antd table
   const columns = [
     {
       title: '酒店名称',
       dataIndex: 'title',
       valueType: 'text',
-      width: '25%',
+      width: '20%',
     },
     {
       title: '酒店地址',
@@ -95,7 +80,7 @@ const TableBody = () => {
       ellipsis: true,
       copyable: true,
       valueType: 'text',
-      width: '30%',
+      width: '25%',
     },
     {
       title: (
@@ -126,6 +111,12 @@ const TableBody = () => {
       ),
     },
 
+    {
+      title: '酒店GMV',
+      key: 'money',
+      dataIndex: 'money',
+      valueType: 'money',
+    },
     {
       title: '成立时间',
       key: 'created_at',
@@ -167,8 +158,23 @@ const TableBody = () => {
 
   return (
     <div style={{ background: 'rgb(245,245,245)' }}>
-      <Search schema={schema} displayType="row" />
-      <ProTable
+      <Search
+        schema={schema}
+        displayType="row"
+        onSearch={search => console.log('onSearch', search)}
+        afterSearch={params => console.log('afterSearch', params)}
+        api={[
+          {
+            name: '全部数据',
+            api: searchApi,
+          },
+          {
+            name: '我的数据',
+            api: searchApi,
+          },
+        ]}
+      />
+      <Table
         // size="small"
         columns={columns}
         // headerTitle="高级表单"

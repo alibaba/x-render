@@ -4,7 +4,7 @@ import FormRender, { useForm } from 'form-render';
 const Demo = ({ schema }) => {
   const form = useForm();
   return (
-    <div style={{ width: '400px' }}>
+    <div>
       <FormRender form={form} schema={schema} />
     </div>
   );

@@ -21,11 +21,33 @@ const SearchBtn = ({ clearSearch }: any) => {
   );
 };
 
-const Search = (props: any) => {
+export interface SearchProps {
+  api: any;
+  propsSchema?: any;
+  className?: string;
+  style?: React.CSSProperties;
+  schema?: any;
+  hidden?: boolean;
+  searchOnMount?: boolean | unknown;
+  searchBtnRender?: (
+    refresh: Function,
+    clearSearch: Function
+  ) => React.ReactNode[];
+  onSearch?: (search: any) => any;
+  afterSearch?: (params: any) => any;
+  widgets?: any;
+}
+
+const Search = (props: SearchProps) => {
   const [formSchema, setSchema] = useState({});
-  const { tableState, setTable, refresh }: any = useTable();
-  const { search, searchOnMount = true } = tableState;
+  const { tableState, setTable, refresh, syncMethods }: any = useTable();
+  const { search } = tableState;
   const _schema = props.schema || props.propsSchema;
+  let searchOnMount = true;
+  if (!props.searchOnMount && props.searchOnMount !== undefined) {
+    console.log('props.searchOnMount', props.searchOnMount);
+    searchOnMount = false;
+  }
 
   const modifiedSchema = useRef();
 
@@ -39,8 +61,10 @@ const Search = (props: any) => {
     try {
       let width = 100;
       const wList = Object.values(schema.properties)
-        .filter((v: any) => v['ui:hidden'] !== true)
-        .map((v: any) => v['ui:width']);
+        .filter((v: any) =>
+          v['hidden'] ? v['hidden'] !== true : v['ui:hidden'] !== true
+        )
+        .map((v: any) => (v['width'] ? v['width'] : v['ui:width']));
       const idx = wList.lastIndexOf(undefined);
       const effectiveList = wList
         .slice(idx + 1)
@@ -112,6 +136,11 @@ const Search = (props: any) => {
   }, [_schema]);
 
   useEffect(() => {
+    syncMethods({
+      searchApi: props.api,
+      syncOnSearch: props.onSearch,
+      syncAfterSearch: props.afterSearch,
+    });
     if (props.hidden || searchOnMount) {
       refresh();
     }

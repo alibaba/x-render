@@ -15,11 +15,11 @@ import { ProTableProps } from './typing';
 const ProTable = (props: ProTableProps) => {
   if (props.dataSource) {
     console.error(
-      '设置table-render的数据请使用searchApi，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo',
+      '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
     );
   }
   const { tableState, setTable, doSearch }: any = useTable();
-  const { dataSource, pagination, loading, searchApi, tableSize } = tableState;
+  const { dataSource, pagination, loading, api, tableSize } = tableState;
   const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
 
   const onPageChange = (page: any, pageSize: any) => {
@@ -79,9 +79,10 @@ const ProTable = (props: ProTableProps) => {
     size: tableSize,
   };
 
-  const toolbarArray = typeof toolbarRender === 'function' ? toolbarRender() : [];
+  const toolbarArray =
+    typeof toolbarRender === 'function' ? toolbarRender() : [];
   const showTableTop =
-    headerTitle || (toolbarArray && toolbarArray.length) || Array.isArray(searchApi);
+    headerTitle || (toolbarArray && toolbarArray.length) || Array.isArray(api);
 
   const fullScreen = () => {
     return Promise.resolve(rootRef.current?.requestFullscreen());
@@ -95,9 +96,15 @@ const ProTable = (props: ProTableProps) => {
 
   return (
     <ErrorBoundary>
-      <div className={`tr-table-wrapper ${className}`} style={style} ref={rootRef}>
+      <div
+        className={`tr-table-wrapper ${className}`}
+        style={style}
+        ref={rootRef}
+      >
         {
-          <div className={showTableTop ? 'tr-table-top' : 'tr-table-top-nohead'}>
+          <div
+            className={showTableTop ? 'tr-table-top' : 'tr-table-top-nohead'}
+          >
             <div className="tr-table-title">
               <TableTitle title={headerTitle} />
             </div>
@@ -129,7 +136,7 @@ export default ProTable;
 
 const TableTitle = ({ title }: any) => {
   const { tableState, setTable, doSearch }: any = useTable();
-  const { tab, searchApi } = tableState;
+  const { tab, api } = tableState;
   const _tab = tab || 0;
   const onTabChange = (e: any) => {
     const _tab = e.target.value;
@@ -137,13 +144,15 @@ const TableTitle = ({ title }: any) => {
     doSearch({ tab: _tab });
   };
 
-  if (typeof searchApi === 'function') return <div className="tr-single-tab">{title}</div>;
-  if (searchApi && Array.isArray(searchApi)) {
-    if (searchApi.length === 1) return <div className="tr-single-tab">{searchApi[0].name}</div>;
+  if (typeof api === 'function')
+    return <div className="tr-single-tab">{title}</div>;
+  if (api && Array.isArray(api)) {
+    if (api.length === 1)
+      return <div className="tr-single-tab">{api[0].name}</div>;
     return (
       <>
         <Radio.Group onChange={onTabChange} value={_tab}>
-          {searchApi.map((item, i) => {
+          {api.map((item, i) => {
             return (
               <Radio.Button key={i.toString()} value={i}>
                 {item.name}

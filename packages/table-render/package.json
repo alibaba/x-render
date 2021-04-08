@@ -1,6 +1,6 @@
 {
   "name": "table-render",
-  "version": "0.8.23",
+  "version": "1.0.0",
   "description": "中后台表格解决方案",
   "scripts": {
     "start": "dumi dev",
@@ -32,12 +32,12 @@
   "peerDependencies": {
     "antd": "4.x",
     "react": ">=16.8.0",
-    "form-render": "0.x"
+    "form-render": "1.x"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "dayjs": "^1.8.29",
-    "form-render": "0.x",
+    "form-render": "1.x",
     "lodash.get": "^4.4.2"
   },
   "devDependencies": {
