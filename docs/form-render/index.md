@@ -1,9 +1,6 @@
 ---
 order: 1
 title: 开始使用
-group:
-  title: 教程
-  order: 1
 toc: content
 ---
 
@@ -28,7 +25,7 @@ toc: content
 
 > 一站式中后台**表单解决方案**
 
-form-render 1.0 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](/form-render/guide/migrate)
+form-render 1.0 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](/form-render/migrate)
 
 # 安装
 
@@ -220,8 +217,8 @@ const Demo = () => {
 
 # 高级用法
 
-1. [如何写一个完整的服务端数据表单加载和提交](/form-render/guide/form-methods)
-2. [如何用自定义组件完成定制元素的展示](/form-render/guide/widget)
-3. [如何写表单间的联动关系](/form-render/guide/function)
+1. [如何写一个完整的服务端数据表单加载和提交](/form-render/form-methods)
+2. [如何用自定义组件完成定制元素的展示](/form-render/widget)
+3. [如何写表单间的联动关系](/form-render/function)
 4. 如何做服务端校验的回填
-5. [常见问题 FAQ](/form-render/guide/faq)
+5. [常见问题 FAQ](/form-render/faq)

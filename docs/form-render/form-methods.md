@@ -1,7 +1,5 @@
 ---
-order: 2
-group:
-  order: 1
+order: 5
 toc: content
 ---
 

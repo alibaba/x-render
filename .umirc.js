@@ -34,8 +34,7 @@ export default defineConfig({
       title: 'FormRender',
       path: '/form-render',
       children: [
-        { title: '教程', path: '/form-render/guide' },
-        { title: 'Schema', path: '/form-render/schema' },
+        { title: '教程', path: '/form-render' },
         { title: 'Playground', path: '/playground' },
       ],
     },

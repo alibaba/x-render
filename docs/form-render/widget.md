@@ -1,7 +1,5 @@
 ---
-order: 5
-group:
-  order: 1
+order: 4
 toc: content
 ---
 
@@ -103,7 +101,7 @@ export default Demo;
 - **schema**：组件对应的子 schema
 - **addons.onItemChange**: 注意挂在 addons 下面。用于在本组件内修改其他组件的值 onItemChange(value, path)
 
-为此，事实上还有一种更简单的自定义组件书写方式，`form-render` 内置了 `createWidget` 方法：
+`form-render` 内置了 `createWidget` 方法，支持用类似于 `redux` 的 `connect` 的语法生产自定义组件：
 
 ```js
 import { Checkbox } from 'antd';
@@ -123,7 +121,7 @@ const MyCheckBox = createWidget(({ value }) => {
 同一个项目下不同的 form 里，使用到的自定义组件可能大致相同，但也有可能互相不同，笔者建议是中心化一个 Form 组件，并一次性将所有需要的自定义组件注入其中。在项目的各处引入对应组件：
 
 ```js
-// FR.js
+//  /Component/FormRender.js
 import Form from 'form-render';
 import Cascade from './Cascade';
 import Percentage from './Percentage';
@@ -153,5 +151,54 @@ import FormRender from './Component/FormRender';
 const Demo1 = props => {
   const form = useForm();
   return <FormRender form={form} onFinish={() => {}} />;
+};
+```
+
+## 内置组件
+
+使用自定义组件前，也许已经有内置组件支持。所以在此罗列一下所有支持的内置组件，以及他们与 schema 的匹配规则：
+
+```js
+export const mapping = {
+  default: 'input',
+  string: 'input',
+  array: 'list',
+  boolean: 'checkbox',
+  integer: 'number',
+  number: 'number',
+  object: 'map',
+  html: 'html',
+  'string:upload': 'upload',
+  'string:date': 'date',
+  'string:url': 'url',
+  'string:dateTime': 'date',
+  'string:time': 'date',
+  'string:textarea': 'textarea',
+  'string:color': 'color',
+  'string:image': 'imageInput',
+  'range:time': 'dateRange',
+  'range:date': 'dateRange',
+  'range:dateTime': 'dateRange',
+  '*?enum': 'radio',
+  '*?enum_long': 'select',
+  'array?enum': 'checkboxes',
+  'array?enum_long': 'multiSelect',
+  '*?readOnly': 'html',
+};
+```
+
+其中左侧为匹配规则（格式为 `type:format?enum/readOnly`），右侧为匹配到的组件。如果需要强制以某个组件渲染，使用方式和自定义组件相同
+
+```js
+const schema = {
+  type: 'object',
+  properties: {
+    string: {
+      title: '下拉选框',
+      type: 'string',
+      widget: 'select',
+    },
+    ...
+  },
 };
 ```

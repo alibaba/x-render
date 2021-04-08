@@ -1,7 +1,5 @@
 ---
-order: 1
-group:
-  order: 2
+order: 7
 toc: false
 ---
 
@@ -68,13 +66,13 @@ export default Demo;
 
 以最小的改动量完成迁移，submit 逻辑仍然暴露在外。改改两分钟，但无法使用部分新功能
 
-<code src='../demo/simple1.jsx'  />
+<code src='./demo/simple1.jsx'  />
 
 1. 彻底迁移方案
 
 以最小的改动量完成迁移，submit 逻辑仍然暴露在外。改改两分钟，但无法使用部分新功能
 
-<code src='../demo/simple.jsx'  />
+<code src='./demo/simple.jsx'  />
 
 ## 一个 Changelog
 

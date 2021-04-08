@@ -1,8 +1,5 @@
 ---
 order: 2
-group:
-  title: Schema
-  order: 3
 toc: content
 ---
 
@@ -128,7 +125,7 @@ toc: content
 }
 ```
 
-如果使用如上函数表达式，age 组件将在 agree 组件的值为 false 且 personType 组件不等于 2 时隐藏。其中`formData`指向整个表单值，`rootValue`指向对应组件的父级元素值。函数表达式的详细写法见[如何联动](/guide/advanced/function)
+如果使用如上函数表达式，age 组件将在 agree 组件的值为 false 且 personType 组件不等于 2 时隐藏。其中`formData`指向整个表单值，`rootValue`指向对应组件的父级元素值。函数表达式的详细写法见[如何联动](/form-render/function)
 
 ### `ui:className`
 
