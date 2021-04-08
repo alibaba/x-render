@@ -211,36 +211,46 @@ export default () => <FR schema={basic} />;
 - 类型：int
 - 详细：最大值。type:string/array 时代表最大长度，type:number 时代表最大值
 
-#### disabled
+#### disabled (0.x 版本 `ui:disabled`)
 
 - 类型：boolean
 - 详细：组件是否禁用状态
 
-#### readOnly
+#### readOnly (0.x 版本 `ui:readonly`)
 
 - 类型：boolean
 - 详细：组件是否只读状态
 
-#### hidden
+#### hidden (0.x 版本 `ui:hidden`)
 
 - 类型：boolean
 - 详细：组件是否隐藏状态
 
-#### displayType
+#### displayType (0.x 版本 `ui:displayType`)
 
 - 类型：`'row'` | `'column'`
 - 详细：Label 与 Field 的展示关系，row 表示并排展示，column 表示两排展示
 
-#### width
+#### width (0.x 版本 `ui:width`)
 
 - 类型：string
 - 详细：单个元素的展示宽度（带 label 一起），例如 '20%'
 
-#### labelWidth
+#### labelWidth (0.x 版本 `ui:labelWidth`)
 
 - 类型：number | string
 - 默认值：110
 - 详细：label 的宽度，数字值单位为 px，也可使用'20%'/'2rem'等
+
+#### widget (0.x 版本 `ui:widget`)
+
+- 类型：string
+- 详细：指定使用哪个组件来渲染，是优先级最高的一个字段。常用语指明使用某个“自定义组件”。注意以下这些内置组件没有自然匹配的 schema，也必须用 widget 字段指明：
+  widget:slider 滑动输入条
+  widget:rate 五星评分
+  widget:cascader 级联选择
+  widget:treeSelect 树形选择
+  详细的如何使用 `widget` 字段和 `widgets` props 来做定制化表单渲染，请参见[自定义组件](/form-render/widget)
 
 ## 基础属性（非共通的）
 

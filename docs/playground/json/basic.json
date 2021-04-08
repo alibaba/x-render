@@ -9,9 +9,7 @@
           "input": {
             "title": "简单输入框",
             "type": "string",
-            "ui:options": {
-              "placeholder": "昵称"
-            }
+            "placeholder": "昵称"
           },
           "textarea": {
             "title": "简单文本编辑框",
@@ -37,7 +35,7 @@
             "title": "上传文件",
             "type": "string",
             "format": "upload",
-            "ui:options": {
+            "props": {
               "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
             }
           },
@@ -121,9 +119,7 @@
             "title": "日期范围",
             "type": "range",
             "format": "dateTime",
-            "ui:options": {
-              "placeholder": ["开始时间", "结束时间"]
-            }
+            "placeholder": ["开始时间", "结束时间"]
           }
         }
       },
@@ -212,9 +208,6 @@
         "title": "可折叠对象",
         "description": "这是个对象类型",
         "type": "object",
-        "ui:options": {
-          "collapsed": true
-        },
         "properties": {
           "input1": {
             "title": "输入框1",
@@ -232,7 +225,7 @@
         "type": "array",
         "minItems": 1,
         "maxItems": 3,
-        "ui:displayType": "row",
+        "displayType": "row",
         "items": {
           "type": "object",
           "properties": {
