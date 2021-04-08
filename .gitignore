@@ -27,16 +27,22 @@
 # lerna
 node_modules
 
+/.local
+
 /packages/*/es
 /packages/*/lib
 /packages/*/.local
 /packages/*/dist
-/.local
 
 /widgets/*/es
 /widgets/*/lib
 /widgets/*/.local
 /widgets/*/dist
+
+/tools/*/es
+/tools/*/lib
+/tools/*/.local
+/tools/*/dist
 
 # custom
 old-doc
