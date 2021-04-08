@@ -32,12 +32,12 @@
   "peerDependencies": {
     "antd": "4.x",
     "react": ">=16.8.0",
-    "form-render": "0.x"
+    "form-render": "1.x"
   },
   "dependencies": {
     "@ant-design/icons": "^4.2.2",
     "dayjs": "^1.8.29",
-    "form-render": "0.x",
+    "form-render": "1.x",
     "lodash.get": "^4.4.2"
   },
   "devDependencies": {
