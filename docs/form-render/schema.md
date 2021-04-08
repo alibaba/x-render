@@ -3,72 +3,69 @@ order: 2
 toc: content
 ---
 
-# Schema
+# Schema 协议
 
 ## 概述
 
-1. `schema` 是 \<FormRender/\> 的必填 props，用于描述表单的基本信息、结构和校验。
-2. `schema` 在结构上使用了 `JSON Schema` 国际规范(<a href="https://json-schema.org/understanding-json-schema/" target="_blank">Understanding JSON Schema</a>)，例如
+1. **`schema` 是 \<FormRender/\> 的必填 props，用于描述表单的基本信息、结构和校验。他在结构上使用了 `JSON Schema` 国际规范(<a href="https://json-schema.org/understanding-json-schema/" target="_blank">Understanding JSON Schema</a>)，例如：**
 
-```json
-// 对象结构如下:
-{
-  "title": "对象",
-  "type": "object",
-  "properties": {
-    "count": {
-      "title": "数字",
-      "type": "number"
-    }
-  }
-}
-// 对象列表结构如下：
-{
-  "title": "对象数组",
-  "type": "array",
-  "items": {
-    "type": "object",
-    "properties": {
-      "count": {
-        "title": "数字",
-        "type": "number"
+    ```json
+    // 对象结构如下:
+    {
+      "title": "对象",
+      "type": "object",
+      "properties": {
+        "count": {
+          "title": "数字",
+          "type": "number"
+        }
       }
     }
-  }
-}
-```
-
-3. 单个 schema 的书写分为`基础属性`, `rules` 和 `props`
-
-`基础属性`为各个组件共通的描述，`rules` 描述校验补充信息，`props` 描述组件 props
-
-```json
-{
-  "type": "object",
-  "properties": {
-    "count": {
-      // 基础属性
-      "title": "代号",
-      "type": "string",
-      "min": 6,
-      // rules (补充校验信息)
-      "rules": [
-        { "pattern": "^[A-Za-z0-9]+$", "message": "只允许填写英文字母和数字" }
-      ],
-      // props (补充antd组件props)
-      "props": {
-        "allowClear": true
+    // 对象列表结构如下：
+    {
+      "title": "对象数组",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "title": "数字",
+            "type": "number"
+          }
+        }
       }
     }
-  }
-}
-```
+    ```
 
-4. 虽然这里我们只以 json 格式为例，但 javascript object 作为入参完全可以
+2. **单个 schema 的书写分为`基础属性`, `rules` 和 `props`，`基础属性`为各个组件共通的描述，`rules` 描述校验补充信息，`props` 描述组件 props，例如：**
+
+    ```json
+    {
+      "type": "object",
+      "properties": {
+        "count": {
+          // 基础属性
+          "title": "代号",
+          "type": "string",
+          "min": 6,
+          // rules (补充校验信息)
+          "rules": [
+            { "pattern": "^[A-Za-z0-9]+$", "message": "只允许填写英文字母和数字" }
+          ],
+          // props (补充antd组件props)
+          "props": {
+            "allowClear": true
+          }
+        }
+      }
+    }
+    ```
+
+3. **虽然这里我们只以 json 格式为例，但 javascript object 作为入参完全可以。**
 
 ## 基础属性（共通的）
 
-所有表单原素会用到的属性。从 form-render 内部实现的角度：
+所有表单原素会用到的属性。从 FormRender 内部实现的角度：
 
 1. type,format,enum 和 widget 这几个属性决定了使用哪个组件来渲染。具体判断规则见[内置组件](/form-render/widget#内置组件)
 2. type,format,min,max,required,rules 字段用于做校验判断
@@ -133,63 +130,63 @@ export default () => <FR schema={basic} />;
 - 类型：one of [`'image'`, `'textarea'`, `'color'`, `'email'`, `'url'`, `'dateTime'`, `'date'`, `'time'`, `'upload'`]
 - 详细：用来描述输入框的格式，辅助 type 一同用于判断使用哪个组件来渲染，以及校验表单数据
 
-```json
-// 默认 input
-"input": {
-  "title": "简单输入框",
-  "type": "string",
-}
-// textarea
-"textarea": {
-  "title": "简单文本编辑框",
-  "type": "string",
-  "format": "textarea"
-}
-// 颜色组件
-"color": {
-  "title": "颜色选择",
-  "type": "string",
-  "format": "color"
-}
-// 日期组件
-"date": {
-  "title": "日期选择",
-  "type": "string",
-  "format": "date" // "dateTime"
-}
-// 时间组件
-"time": {
-  "title": "时间选择",
-  "type": "string",
-  "format": "time"
-}
-// 图片链接组件
-"image": {
-  "title": "图片展示",
-  "type": "string",
-  "format": "image"
-}
-```
+    ```json
+    // 默认 input
+    "input": {
+      "title": "简单输入框",
+      "type": "string",
+    }
+    // textarea
+    "textarea": {
+      "title": "简单文本编辑框",
+      "type": "string",
+      "format": "textarea"
+    }
+    // 颜色组件
+    "color": {
+      "title": "颜色选择",
+      "type": "string",
+      "format": "color"
+    }
+    // 日期组件
+    "date": {
+      "title": "日期选择",
+      "type": "string",
+      "format": "date" // "dateTime"
+    }
+    // 时间组件
+    "time": {
+      "title": "时间选择",
+      "type": "string",
+      "format": "time"
+    }
+    // 图片链接组件
+    "image": {
+      "title": "图片展示",
+      "type": "string",
+      "format": "image"
+    }
+    ```
 
 #### default
 
 - 类型：any
 - 详细：组件的默认值，注意默认的对象组件使用 default 无效（其值会由子元素值决定），其他类型包括 array 都可以使用 default：
 
-```json
-"list": {
-  "type": "array",
-  "items": {
-    "type": "object",
-    "properties": {
-      "x": {
-        "type": "string",
-      }
+    ```json
+    "list": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "string",
+          }
+        }
+      },
+      "default": [{ "x": "a" }, { "x": "b" }]
     }
-  },
-  "default": [{ "x": "a" }, { "x": "b" }]
-}
-```
+    ```
 
 #### required
 
@@ -258,20 +255,19 @@ export default () => <FR schema={basic} />;
 
 ### 对象
 
-- `properties` 用于包裹对象的子属性
-
-```json
-{
-  "title": "对象",
-  "type": "object",
-  "properties": {
-    "tickets": {
-      "title": "门票数",
-      "type": "number"
+`properties` 用于包裹对象的子属性：
+  ```json
+  {
+    "title": "对象",
+    "type": "object",
+    "properties": {
+      "tickets": {
+        "title": "门票数",
+        "type": "number"
+      }
     }
   }
-}
-```
+  ```
 
 ### 列表
 
@@ -281,30 +277,30 @@ export default () => <FR schema={basic} />;
 
 列表的展示有三种模式：
 
-1. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: 'list1'
-2. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: 'list2'
-3. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: 'list3'
+1. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'list1'`
+2. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'list2'`
+3. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: `'list3'`
 
-默认使用的 'list1' 展示
+默认使用的 `'list1'` 展示
 
-```json
-{
-  "title": "对象数组",
-  "type": "array",
-  "min": 1,
-  "max": 3,
-  "widget": "simple",
-  "items": {
-    "type": "object",
-    "properties": {
-      "tickets": {
-        "title": "门票数",
-        "type": "number"
+    ```json
+    {
+      "title": "对象数组",
+      "type": "array",
+      "min": 1,
+      "max": 3,
+      "widget": "simple",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tickets": {
+            "title": "门票数",
+            "type": "number"
+          }
+        }
       }
     }
-  }
-}
-```
+    ```
 
 ### 选择类组件
 
@@ -318,25 +314,25 @@ export default () => <FR schema={basic} />;
 - 类型：string | number
 - 详细：选项的文案
 
-```json
-// 单选
-{
-  "title": "单选",
-  "type": "string",
-  "enum": ["hz", "wh", "gy"],
-  "enumNames": ["杭州", "武汉", "贵阳"]
-}
-// 多选
-{
-  "title": "多选",
-  "type": "array",
-  "items": {
-    "type": "string"
-  },
-  "enum": ["hz", "wh", "gy"],
-  "enumNames": ["杭州", "武汉", "贵阳"]
-}
-```
+    ```json
+    // 单选
+    {
+      "title": "单选",
+      "type": "string",
+      "enum": ["hz", "wh", "gy"],
+      "enumNames": ["杭州", "武汉", "贵阳"]
+    }
+    // 多选
+    {
+      "title": "多选",
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "enum": ["hz", "wh", "gy"],
+      "enumNames": ["杭州", "武汉", "贵阳"]
+    }
+    ```
 
 ### Range 组件
 
@@ -365,71 +361,71 @@ export default () => <FR schema={basic} />;
 
 ## rules（校验规则）
 
-1. form-render v1.x 开始，校验的支持异步校验规则，支持的规则也扩展到 antd form 所有的 rules。antd 在底层使用了 `async-validator`，这同时是 form-render 的依赖，所以所有符合[`async-validator`文档](https://github.com/yiminghe/async-validator#type) 的规则都适用于 form-render，例如
+1. FormRender v1.x 开始，校验的支持异步校验规则，支持的规则也扩展到 antd form 所有的 rules。antd 在底层使用了 `async-validator`，这同时是 FormRender 的依赖，所以所有符合[`async-validator`文档](https://github.com/yiminghe/async-validator#type) 的规则都适用于 FormRender，例如
 
-```json
-"zip": {
-  "title": "zip code",
-  "type": "string",
-  rules: [{ len: 8, message: 'invalid zip' }]
-}
-```
+    ```json
+    "zip": {
+      "title": "zip code",
+      "type": "string",
+      "rules": [{ "len": 8, "message": "invalid zip" }]
+    }
+    ```
 
-2. 作为 form-render 书写的特别规则，由于以下个字段同时涉及到了展示和校验，所以已经放在“基础属性”中，而不需要在 rules 中特别注明
+2. 作为 FormRender 书写的特别规则，由于以下个字段同时涉及到了展示和校验，所以已经放在“基础属性”中，而不需要在 rules 中特别注明
 
-```
-type
-format
-min
-max
-required
-```
+  ```text
+  type
+  format
+  min
+  max
+  required
+  ```
 
 3. 如果你想定制对应字段的校验展示文案，请同时书写基础属性和 rules：
 
-```json
-"zip": {
-  "title": "zip code",
-  "type": "string",
-  required: true,
-  rules: [{ len: 8, message: 'invalid zip'  },{ required: true, message: 'zip is required'  }]
-}
-```
+  ```json
+  "zip": {
+    "title": "zip code",
+    "type": "string",
+    "required": true,
+    "rules": [{ "len": 8, "message": "invalid zip"  },{ "required": true, "message": "zip is required"  }]
+  }
+  ```
 
 ## props
 
 - 类型：object
-- 详细：
+- 详细说明：
+    1. 当基础字段不够描述组件的展示时，使用 props 字段作为扩展。所以 props 的具体属性可以查询 antd 的组件文档。所有 props 中的属性都会直接透传给组件，所以理论上 FormRender 支持所有 antd 组件库支持的展示
+    2. 有些情况自定义组件（或者例如 color，slider 这类内置组件）是复合组件（由多个组件组合而成）。此时的推荐做法是 props 中放置一些全局需要使用的 props，会直接透传给组件，而其中单个元素的定制 props 使用 props1，props2，... 这样的命名。凡是包含 props（不区分大小写）的 schema 的 key 值，都会原样传递给自定义组件，例如
 
-1. 当基础字段不够描述组件的展示时，使用 props 字段作为扩展。所以 props 的具体属性可以查询 antd 的组件文档。所有 props 中的属性都会直接透传给组件，所以理论上 form-render 支持所有 antd 组件库支持的展示
-2. 有些情况自定义组件（或者例如 color，slider 这类内置组件）是复合组件（由多个组件组合而成）。此时的推荐做法是 props 中放置一些全局需要使用的 props，会直接透传给组件，而其中单个元素的定制 props 使用 props1，props2，... 这样的命名。凡是包含 props（不区分大小写）的 schema 的 key 值，都会原样传递给自定义组件，例如
+      ```js
+        percentInput: {
+          title: "百分比输入",
+          type: "number",
+          props: {
+            showInput: false
+          },
+          inputProps: {
+            suffix: '%'
+          },
+          percentProps: {
+            step: 10
+          }
+        }
+      ```
 
-```js
-"percentInput": {
-  "title": "百分比输入",
-  "type": "number",
-  props: {
-    showInput: false
-  },
-  inputProps: {
-    suffix: '%'
-  },
-  percentProps: {
-    step: 10
-  }
-}
-```
+    3. 传递给自定义组件的 props 为
 
-传递给自定义组件的 props 为
-
-```js
-{
-  type: 'number',showInput: false,
-  inputProps: {
-    suffix: '%'
-  },
-  percentProps: {
-    step: 10
-  }
-}
-```
+      ```js
+      {
+        type: 'number',
+        showInput: false,
+        inputProps: {
+          suffix: '%'
+        },
+        percentProps: {
+          step: 10
+        }
+      }
+      ```

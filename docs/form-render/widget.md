@@ -5,15 +5,13 @@ toc: content
 
 # 自定义组件
 
-当 form-render 提供的组件无法 100%满足用户需求时，可以考虑自己写一个。自定义组件功能使 form-render 拥有很好扩展性，可能的应用场景如下：
+当 FormRender 提供的组件无法 100%满足用户需求时，可以考虑自己写一个。自定义组件功能使 FormRender 拥有很好扩展性，可能的应用场景如下：
 
 - 我需要写一个异步加载的搜索输入框（普适性不高/难以用 schema 描述的组件）
-- 我们团队使用 xxx ui，与 antd 不搭，希望能适配一套 xxx ui 组件的 form-render（欢迎 Pull Request）
+- 我们团队使用 xxx ui，与 antd 不搭，希望能适配一套 xxx ui 组件的 FormRender（欢迎 Pull Request）
 - 我需要在表单内部写一个 excel 上传按钮（完全定制化的需求）
 
-注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态
-
-form-render 的社区以及提供了部分 [常用自定义组件](/widgets)
+注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态，FormRender 的社区以及提供了部分 [常用自定义组件](/widgets)。
 
 ## 使用
 
@@ -28,14 +26,14 @@ const schema = {
       type: 'string',
       widget: 'site',
     },
-    ...
+    //...
   },
 };
 
 <Form
   schema={schema}
   widgets={{ site: SiteInput }}
-  ...
+  //...
 />;
 ```
 

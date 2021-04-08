@@ -4,7 +4,7 @@ order: 3
 
 # 表单联动
 
-表单组件间的联动是开发中普遍的问题，form-render 希望能保持简洁易用的 api 的同时支持联动。为此我们提供了“函数表达式”。
+表单组件间的联动是开发中普遍的问题，FormRender 希望能保持简洁易用的 api 的同时支持联动。为此我们提供了“函数表达式”。
 
 ### 函数表达式
 
@@ -19,8 +19,8 @@ order: 3
 
 3. 函数表达式可使用以下 2 关键字：
 
-| 名称      |                                       说明                                        |
-| --------- | :-------------------------------------------------------------------------------: |
+| 名称      |说明|
+| --------- | :----------------------------------------------: |
 | formData  | 整个 form 的值 （最常用，当两个关联组件距离较远时，可以从顶层的 formData 里获取） |
 | rootValue | 父组件的值 （上一级的值，一般在列表场景中的子元素获取对应 index 的 item 时使用）  |
 
@@ -60,7 +60,7 @@ export default Demo1;
 ```
 
 1. 在以上场景，`formData.select1`的父级就是 formData，所以`rootValue`字段与`formData`字段使用起来没有区别。
-2. 写表达式的时候，需要注意的是首次渲染时，所有没有指明 default 值的元素的值都是 undefined。所以例如 checkbox 的初始值并不是 false，而是 undefined。写类似于 "{{formData.checkbox === false}}" 的表达式在首次渲染中是无效的，更好的处理方式是曲线救国的 "{{formData.checkbox !== true}}"
+2. 写表达式的时候，需要注意的是首次渲染时，所有没有指明 default 值的元素的值都是 undefined。所以例如 checkbox 的初始值并不是 false，而是 undefined。写类似于 `"{{formData.checkbox === false}}"` 的表达式在首次渲染中是无效的，更好的处理方式是曲线救国的 `"{{formData.checkbox !== true}}"`
 
 ### 更多属性的 demo
 
@@ -74,4 +74,4 @@ export default () => <FR schema={expression} />;
 
 ### 最后
 
-更复杂和定制化的表单需求建议使用自定义组件。form-render 的设计理念非常推崇组件的即插即用，详见[自定义组件](/form-render/widget)章节。
+更复杂和定制化的表单需求建议使用自定义组件。FormRender 的设计理念非常推崇组件的即插即用，详见[自定义组件](/form-render/widget)章节。
