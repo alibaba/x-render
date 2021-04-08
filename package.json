@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "widgets/*"
+    "widgets/*",
+    "tools/schema-generator"
   ],
   "scripts": {
     "build": "lerna run build",

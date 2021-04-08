@@ -8,8 +8,23 @@
     "vscode": "^1.46.0"
   },
   "categories": [
+    "Snippets",
     "Other"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alibaba/form-render.git"
+  },
+  "icon": "media/icon.png",
+  "main": "./out/extension/index.js",
+  "scripts": {
+    "dev:web": "umi dev",
+    "dev:extension": "webpack --mode development",
+    "build:web": "umi build",
+    "build:extension": "webpack --mode production",
+    "lint": "eslint . --ext .jsx,.ts,.tsx --fix",
+    "vscode:prepublish": "npm run lint && npm run build:web && npm run build:extension"
+  },
   "activationEvents": [
     "onCommand:frSchema.p2s",
     "onCommand:frSchema.s2i",
@@ -19,13 +34,17 @@
     "onCommand:frSchema.preview",
     "onCustomEditor:frSchema.editor"
   ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/F-loat/vscode-plugin-fr-schema.git"
-  },
-  "icon": "media/icon.png",
-  "main": "./out/extension/index.js",
   "contributes": {
+    "snippets": [
+      {
+        "language": "json",
+        "path": "./src/snippets/snippets.json"
+      },
+      {
+        "language": "javascript",
+        "path": "./src/snippets/snippets.json"
+      }
+    ],
     "commands": [
       {
         "command": "frSchema.gen",
@@ -144,14 +163,6 @@
       }
     ]
   },
-  "scripts": {
-    "dev:web": "umi dev",
-    "dev:extension": "webpack --mode development",
-    "build:web": "umi build",
-    "build:extension": "webpack --mode production",
-    "lint": "eslint . --ext .jsx,.ts,.tsx --fix",
-    "vscode:prepublish": "npm run lint && npm run build:web && npm run build:extension"
-  },
   "dependencies": {
     "fr-generator": "^1.0.0",
     "lodash-es": "^4.17.15",
@@ -178,7 +189,8 @@
     "eslint-plugin-react-hooks": "^4.1.2",
     "ts-loader": "^8.0.4",
     "typescript": "^3.9.4",
-    "webpack-cli": "^3.3.12"
+    "webpack": "^4.4.0",
+    "webpack-cli": "^3.3.0"
   },
   "browserslist": {
     "production": [
