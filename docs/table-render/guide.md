@@ -40,10 +40,10 @@ title: 使用教程
 
 ### 安装
 
-table-render 目前默认使用 ant design，所以请在 antd 项目下使用，如果要单独使用，不要忘记安装 antd
+table-render 依赖 ant design，单独使用不要忘记安装～
 
 ```sh
-npm i table-render antd --save
+npm i table-render --save
 ```
 
 ### 代码演示
@@ -127,6 +127,8 @@ export default Wrapper;
 
 ### TableContainer 参数
 
+**TableContainer 属于 provider 的能力，将对应的 `<Search>` 和 `<ProTable>` 包裹起来，可以很方便在里面插入一些其他东西**
+
 | 属性       | 描述                          | 类型                    | 默认值 |
 | --------- | --------------------------- | ----------------------- | ------ |
 | searchApi | 初始化&点击查询时执行的函数     | `Function` or `Array`   | -      |
@@ -137,6 +139,8 @@ export default Wrapper;
 
 ### Search 参数
 
+**我们将搜索相关的能力放到 `<Search>` 上面配置，包括对应的搜索筛选表单的渲染**
+
 | 属性            | 描述                                                                                                                                                                                         | 类型                                   | 默认值 |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------ |
 | schema          | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](/form-render/config/schema) | `object`                               | -      |
@@ -145,7 +149,7 @@ export default Wrapper;
 
 ### ProTable 参数
 
-> 支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写。最基本的使用就需要填写`columns`
+**支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写，最基本的使用就需要填写`columns`**
 
 | 属性       | 描述                          | 类型                    | 默认值 |
 | --------- | --------------------------- | ----------------------- | ------ |
@@ -157,7 +161,7 @@ export default Wrapper;
 
 #### ProTable 参数 中 Columns 列定义
 
-columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns](https://ant.design/components/table-cn/#Column) 的配置，但是我们也提供了一些更方便的 api，加快书写:
+**columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns](https://ant.design/components/table-cn/#Column) 的配置，同时也提供了一些更方便的 api，加快书写**
 
 | 属性      | 描述                                               | 类型                                      | 默认值 |
 | --------- | -------------------------------------------------- | ----------------------------------------- | ------ |
@@ -177,7 +181,7 @@ columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns
 
 ### Context 上下文
 
-可通过 `useTable` 获取 `table-render` 的 context，例如: `refresh`、`tableState`、`setTable` 等属性
+**可通过 `useTable` 获取 `table-render` 的 context，例如: `refresh`、`tableState`、`setTable` 等属性**
 
 | 属性        | 描述                                                                                            | 类型     |
 | ----------- | ----------------------------------------------------------------------------------------------- | -------- |

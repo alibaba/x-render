@@ -43,6 +43,8 @@ title: 使用教程
 
 ### 安装
 
+chart-render 依赖 ant design，单独使用不要忘记安装～
+
 ```bash
 $ npm install chart-render --save
 ```
