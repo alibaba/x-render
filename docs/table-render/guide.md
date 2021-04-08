@@ -49,13 +49,12 @@ npm i table-render antd --save
 ```
 
 ### 代码演示
-去[CodeSandbox](https://codesandbox.io/s/vfopu)试试
+去[CodeSandbox](https://codesandbox.io/s/great-taussig-y5w1k?file=/App.jsx)试试
 
 ```js
-import React, { useRef, useLayoutEffect, useEffect } from 'react';
+import React from 'react';
 import { ProTable, Search, TableContainer, useTable } from 'table-render';
 
-// 可以使用schema编辑器配置 https://form-render.github.io/schema-generator/
 const schema = {
   type: 'object',
   properties: {
@@ -137,7 +136,7 @@ export default Wrapper;
 
 ## API
 
-### TableContainer参数
+### TableContainer 参数
 
 | 属性       | 描述                          | 类型                    | 默认值 |
 | --------- | --------------------------- | ----------------------- | ------ |
@@ -147,7 +146,7 @@ export default Wrapper;
 | searchOnMount | 组件初次挂载时，是否默认执行查询动作  | boolean |   `true` |
 
 
-### Search参数
+### Search 参数
 
 | 属性       | 描述                          | 类型                    | 默认值 |
 | --------- | --------------------------- | ----------------------- | ------ |
@@ -156,7 +155,7 @@ export default Wrapper;
 | searchBtnRender   | 自定义表单查询按钮 | `(refresh,clearSearch) => ReactNode[]`           | -      |
 
 
-### ProTable参数
+### ProTable 参数
 
 > 支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写。最基本的使用就需要填写`columns`
 
@@ -165,7 +164,7 @@ export default Wrapper;
 | headerTitle | 表格标题     | `string` | `ReactNode`  | -      |
 | toolbarRender    | 表格主体右上方的控件，例如“添加”按钮  | `() => ReactNode[]`     | false      |
 | toolbarAction   | 显示在表格主体右上方的 Icon 列表，内置了`刷新、调整密度、全屏显示` 等功能 | `boolean` | false  |
-| columns   | 列定义  | `boolean` | false  |
+| columns   | 列定义  | `object` | false  |
 
 
 ##### Columns 列定义
@@ -205,7 +204,7 @@ Table-Render 封装了一些常用的值类型来减少重复的 render 操作�
 | setTable    | 用于修改全局状态的工具函数，setTable 之于 tableState，等同 setState 之于 state|Function|
 | changeTab    | 手动切换 tab 的函数，例如目前两个搜索 tab： “我的活动”，“全部活动” （分别对应 tab 值为 0 和 1）|Function|
 
-#### useTable用法
+#### useTable 用法
 ```js
 import { useTable } from 'table-render';
 const { refresh, tableState, setTable } = useTable()
