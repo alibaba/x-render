@@ -93,17 +93,15 @@ function App({
   useEffect(() => {
     // 需要外部校验的情况，此时 submitting 还是 false
     if (outsideValidating === true) {
-      Promise.resolve(beforeFinish({ formData: submitData, errorFields })).then(
-        () => {
-          endValidating();
-        }
-      );
+      Promise.resolve(beforeFinish(submitData, errorFields)).then(() => {
+        endValidating();
+      });
       return;
     }
     // 如果validation结束，submitting开始
     if (isValidating === false && isSubmitting === true) {
       endSubmitting();
-      onFinish({ formData: submitData, errorFields });
+      onFinish(submitData, errorFields);
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 

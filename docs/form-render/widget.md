@@ -187,6 +187,15 @@ export const mapping = {
 };
 ```
 
+除此之外还有必须通过 `widget` 关键词来使用的组件
+
+```
+widget:slider  滑动输入条
+widget:rate  五星评分
+widget:cascader  级联选择
+widget:treeSelect  树形选择
+```
+
 其中左侧为匹配规则（格式为 `type:format?enum/readOnly`），右侧为匹配到的组件。如果需要强制以某个组件渲染，使用方式和自定义组件相同
 
 ```js

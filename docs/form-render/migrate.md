@@ -1,6 +1,5 @@
 ---
 order: 7
-toc: false
 ---
 
 # 1.x 迁移文档
@@ -163,7 +162,7 @@ export default Demo;
 
 - 暂时不支持 fusion 了
 
-fusion 与 antd 展示上非常类似，但组件 api 本身以及构建层面的配置上还是有不少不同的，对两者的同时支持花了大量的精力。form-render 选择暂时放弃 fusion，更加贴合 antd，在功能深入实现和迭代效率上都会有很大的提高。也欢迎 pr 支持 fusion 侧的组件的独立支持。
+fusion 与 antd 展示上非常类似，但组件 api 本身以及构建层面的配置上还是有不少不同的，对两者的同时支持花了大量的精力。form-render 选择暂时放弃 fusion，更加贴合 antd，在功能深入实现和迭代效率上都会有很大的提高。但组件库的入口是一直开放着的（widgets props），欢迎 pr 支持 fusion 侧的组件的独立支持。
 
 - 不再允许写函数式的表达式了
 
@@ -197,6 +196,8 @@ input1: {
 这是一个内部的改动。新的 form-render，不会每次 onChange 后都执行 resolve 生成一份 formData 的骨架，没有填的框的值就是 undefined。而只在提交和校验时会生成骨架。这避免了很多在自定义组件中尝试修改 formData 时容易产生死循环或者修改无效的问题，也避免了外部没有很好的方法拿到黑箱的 resolve 后的数据
 
 - 校验的展示 & 展示实际终于符合用户习惯了
+
+- 不再只支持 pattern 校验了，现在支持包括自定义 validator 的所有 antd form 支持的校验
 
 - 校验支持异步了
 
@@ -255,3 +256,8 @@ const MyWidget = props => {
 2. onChange 方法的入参不再需要传 name 作为第一个参数（这个设计其实很不自然和没有必要），同时如果原生组件的 onChange 返回的是 event，也会处理一步自动能拿到 value 值
 
 这些细节的目标，是让自定义组件的书写贴近拿来一个组件直接能用，而不是像之前一样再简单的场景也需要做一步包装处理
+
+- 新增了 rate，treeSelect, cascader 组件的内置支持
+
+- 渲染会根据 schema 的结构来渲染，不再会因为 formData 值的顺序变化影响到展示
+- 提交的 formData，不展示的 key 不会返回

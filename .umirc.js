@@ -33,10 +33,6 @@ export default defineConfig({
     {
       title: 'FormRender',
       path: '/form-render',
-      children: [
-        { title: '教程', path: '/form-render' },
-        { title: 'Playground', path: '/playground' },
-      ],
     },
     {
       title: 'TableRender',
@@ -45,6 +41,10 @@ export default defineConfig({
     {
       title: 'ChartRender',
       path: '/chart-render',
+    },
+    {
+      title: 'Playground',
+      path: '/playground',
     },
     {
       title: '周边工具',

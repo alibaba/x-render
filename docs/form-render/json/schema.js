@@ -23,3 +23,55 @@ export const basic = {
     },
   },
 };
+
+export const expression = {
+  type: 'object',
+  properties: {
+    input: {
+      title: '{{formData.config.title}}',
+      type: 'string',
+      placeholder: '{{formData.config.placeholder}}',
+      props: {
+        size: '{{formData.config.size}}',
+      },
+      hidden: '{{formData.config.hidden === true}}',
+      disabled: '{{formData.config.disabled === true}}',
+    },
+    rate: {
+      title: 'rate',
+      type: 'number',
+      widget: 'rate',
+    },
+    config: {
+      title: '配置',
+      type: 'object',
+      properties: {
+        title: {
+          title: 'title',
+          type: 'string',
+          default: '输入框',
+        },
+        placeholder: {
+          title: 'placeholder',
+          type: 'string',
+        },
+        size: {
+          title: 'input大小',
+          type: 'string',
+          enum: ['large', 'middle', 'small'],
+          enumNames: ['大', '中', '小'],
+          widget: 'radio',
+        },
+        hidden: {
+          title: '是否隐藏',
+          type: 'boolean',
+        },
+        disabled: {
+          title: '是否置灰',
+          type: 'boolean',
+        },
+      },
+    },
+  },
+  required: [],
+};

@@ -46,7 +46,7 @@ const schema = {
 const Demo = () => {
   const form = useForm();
 
-  const beforeFinish = ({ formData, errorFields }) => {
+  const beforeFinish = (formData, errorFields) => {
     if ((formData.objectName && formData.objectName.input1 === '123') || true)
       return;
     return delay(1000).then(() => {
@@ -57,7 +57,7 @@ const Demo = () => {
     });
   };
 
-  const onFinish = ({ formData, errorFields }) => {
+  const onFinish = (formData, errorFields) => {
     console.group('onFinish');
     console.log(formData, 'formData', errorFields, 'errors');
     console.groupEnd();

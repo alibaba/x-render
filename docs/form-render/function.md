@@ -1,6 +1,5 @@
 ---
 order: 3
-toc: false
 ---
 
 # 表单联动
@@ -60,7 +59,18 @@ const Demo1 = () => {
 export default Demo1;
 ```
 
-在以上场景，`formData.select1`的父级就是 formData，所以`rootValue`字段与`formData`字段使用起来没有区别。
+1. 在以上场景，`formData.select1`的父级就是 formData，所以`rootValue`字段与`formData`字段使用起来没有区别。
+2. 写表达式的时候，需要注意的是首次渲染时，所有没有指明 default 值的元素的值都是 undefined。所以例如 checkbox 的初始值并不是 false，而是 undefined。写类似于 "{{formData.checkbox === false}}" 的表达式在首次渲染中是无效的，更好的处理方式是曲线救国的 "{{formData.checkbox !== true}}"
+
+### 更多属性的 demo
+
+```jsx
+import React from 'react';
+import FR from './demo/FR';
+import { expression } from './json/schema';
+
+export default () => <FR schema={expression} />;
+```
 
 ### 最后
 
