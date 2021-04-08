@@ -30,7 +30,7 @@ const RenderField = props => {
     children,
     errorFields = [],
     hideTitle,
-    hideValidation,
+    displayType,
   } = props;
 
   const { schema } = item;
@@ -102,6 +102,16 @@ const RenderField = props => {
     labelClass,
     labelStyle: labelStyle,
     schema: _schema,
+    displayType,
+  };
+
+  const hideValidation = displayType === 'inline';
+
+  const messageProps = {
+    message: errorMessage,
+    schema: _schema,
+    displayType,
+    hideValidation: hideValidation,
   };
 
   const placeholderTitleProps = {
@@ -110,8 +120,6 @@ const RenderField = props => {
   };
 
   const _showTitle = !hideTitle && !!_schema.title;
-
-  const _hideValidation = hideValidation && !errorMessage;
 
   const widgetProps = {
     schema: _schema,
@@ -140,9 +148,7 @@ const RenderField = props => {
         {_showTitle && <div {...placeholderTitleProps} />}
         <div className={contentClass} style={contentStyle}>
           <ExtendedWidget {...widgetProps} />
-          {_hideValidation ? null : (
-            <ErrorMessage message={errorMessage} schema={_schema} />
-          )}
+          <ErrorMessage {...messageProps} />
         </div>
       </>
     );
@@ -154,16 +160,14 @@ const RenderField = props => {
     titleElement = (
       <div style={{ display: 'flex' }}>
         {titleElement}
-        {_hideValidation ? null : (
-          <ErrorMessage message={errorMessage} schema={_schema} />
-        )}
+        <ErrorMessage {...messageProps} />
       </div>
     );
     return (
       <div className={contentClass} style={contentStyle}>
         <ExtendedWidget
           {...widgetProps}
-          message={_hideValidation ? null : errorMessage}
+          message={errorMessage}
           title={_showTitle ? titleElement : undefined}
         />
       </div>
@@ -175,9 +179,7 @@ const RenderField = props => {
       {_showTitle && titleElement}
       <div className={contentClass} style={contentStyle}>
         <ExtendedWidget {...widgetProps} />
-        {_hideValidation ? null : (
-          <ErrorMessage message={errorMessage} schema={_schema} />
-        )}
+        <ErrorMessage {...messageProps} />
       </div>
     </>
   );

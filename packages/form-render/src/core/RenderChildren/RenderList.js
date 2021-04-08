@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import FR from '../index';
+import Core from '../index';
 import { get } from 'lodash';
 import { useStore, useSet } from '../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../utils';
@@ -8,6 +8,7 @@ import { Button, Table, Drawer, Space } from 'antd';
 import ArrowUp from '../../components/ArrowUp';
 import ArrowDown from '../../components/ArrowDown';
 import ErrorMessage from '../RenderField/ErrorMessage';
+import { MinusCircleOutlined } from '@ant-design/icons';
 
 const FIELD_LENGTH = 120;
 
@@ -18,7 +19,12 @@ const RenderList = ({
   errorFields,
 }) => {
   // console.log(parentId, dataIndex, children);
-  const { formData, flatten, onItemChange } = useStore();
+  const { formData, flatten, onItemChange, removeErrorByPath } = useStore();
+
+  let renderWidget = 'list';
+  try {
+    renderWidget = flatten[parentId].schema.widget;
+  } catch (error) {}
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
@@ -28,7 +34,7 @@ const RenderList = ({
     listData = get(formData, dataPath);
   }
 
-  const displayList = Array.isArray(listData) ? listData : [undefined];
+  const displayList = Array.isArray(listData) ? listData : [];
 
   const addItem = () => {
     const newList = [...displayList, undefined];
@@ -42,7 +48,7 @@ const RenderList = ({
     // remark: 删除时，不存在的item需要补齐，用null
     const newList = displayList.filter((item, kdx) => kdx !== idx);
     onItemChange(dataPath, newList);
-    // const itemPath = dataPath + `[${idx}]`; //TODO: 这块有问题啊，idx好像不准
+    removeErrorByPath(`${dataPath}[${idx}]`);
   };
 
   //TODO1: 上线翻页要正确！！现在是错的
@@ -80,15 +86,65 @@ const RenderList = ({
     errorFields,
   };
 
-  // TODO: 还有其他的写法
-  return <CardList {...displayProps} />;
-
-  return <TableList {...displayProps} />;
+  switch (renderWidget) {
+    case 'list1':
+      return <SimpleList {...displayProps} />;
+    case 'list2':
+      return <TableList {...displayProps} />;
+    case 'list3':
+      return <DefaultList {...displayProps} />;
+    default:
+      return <DefaultList {...displayProps} />;
+  }
 };
 
 export default RenderList;
 
-const CardList = ({
+const SimpleList = ({
+  displayList = [],
+  dataIndex,
+  children,
+  deleteItem,
+  addItem,
+}) => {
+  const _infoItem = {
+    schema: { type: 'object', properties: {} },
+    rules: [],
+    children,
+  };
+
+  return (
+    <div>
+      {displayList.map((item, idx) => {
+        return (
+          <div
+            style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}
+          >
+            <Core
+              key={idx}
+              displayType="inline"
+              _item={_infoItem}
+              dataIndex={[...dataIndex, idx]}
+            />
+            <MinusCircleOutlined
+              style={{ fontSize: 16, marginLeft: 8 }}
+              onClick={() => deleteItem(idx)}
+            />
+          </div>
+        );
+      })}
+      <Button
+        style={{ marginTop: displayList.length > 0 ? 0 : 8 }}
+        type="dashed"
+        onClick={addItem}
+      >
+        新增一条
+      </Button>
+    </div>
+  );
+};
+
+const DefaultList = ({
   displayList = [],
   dataPath,
   dataIndex,
@@ -198,7 +254,7 @@ const CardList = ({
         visible={showDrawer}
       >
         <div className="fr-container">
-          <FR
+          <Core
             // id={children[currentIndex]}
             _item={_infoItem}
             dataIndex={[...dataIndex, currentIndex]}
@@ -247,9 +303,9 @@ const TableList = ({
         // Check: record.index 似乎是antd自己会给的，不错哦
         const childIndex = [...dataIndex, record.index];
         return (
-          <FR
+          <Core
             hideTitle={true}
-            hideValidation={true}
+            displayType="inline"
             key={index.toString()}
             id={child}
             dataIndex={childIndex}
@@ -334,7 +390,7 @@ const TableList = ({
 //               <li className={`w-100`}>
 //                 {children.map((child, idx2) => {
 //                   return (
-//                     <FR
+//                     <Core
 //                       key={idx2.toString()}
 //                       id={child}
 //                       dataIndex={childIndex}
@@ -360,7 +416,7 @@ const TableList = ({
 //           <li key={idx.toString()} className={`w-100`}>
 //             {children.map((child, idx2) => {
 //               return (
-//                 <FR key={idx2.toString()} id={child} dataIndex={childIndex} />
+//                 <Core key={idx2.toString()} id={child} dataIndex={childIndex} />
 //               );
 //             })}
 //             {Array.isArray(displayList) && displayList.length > 1 && (

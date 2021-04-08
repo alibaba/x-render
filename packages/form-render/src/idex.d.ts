@@ -39,6 +39,7 @@ export interface FormInstance {
   endValidating: () => void;
   endSubmitting: () => void;
   setErrorFields: (error: Error[]) => void;
+  removeErrorByPath: (path: string) => void;
   isEditing: boolean;
   setEditing: (status: boolean) => void;
   syncStuff: (any) => void;

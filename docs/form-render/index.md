@@ -37,11 +37,52 @@ npm i form-render --save
 
 # 使用
 
+最简使用 demo
+
 ```jsx
 /**
  * transform: true
  * defaultShowCode: true
  */
+import React from 'react';
+import { Button } from 'antd';
+import FormRender, { useForm } from 'form-render';
+
+const schema = {
+  type: 'object',
+  properties: {
+    input1: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+    },
+    select1: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b', 'c'],
+      enumNames: ['早', '中', '晚'],
+    },
+  },
+};
+
+const Demo = () => {
+  const form = useForm();
+  return (
+    <div style={{ width: '400px' }}>
+      <FormRender form={form} schema={schema} />
+      <Button type="primary" onClick={form.submit}>
+        提交
+      </Button>
+    </div>
+  );
+};
+
+export default Demo;
+```
+
+换一个更复杂一点的 schema，我们支持数据绑定、antd 的 props 透传等一系列功能
+
+```jsx
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -70,9 +111,9 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
-  const onFinish = (formData, errorFields) => {
-    if (errorFields.length > 0) {
-      alert('errorFields:' + JSON.stringify(errorFields));
+  const onFinish = (formData, errors) => {
+    if (errors.length > 0) {
+      alert('errors:' + JSON.stringify(errors));
     } else {
       alert('formData:' + JSON.stringify(formData, null, 2));
     }
@@ -105,14 +146,14 @@ import Form, { useForm } from 'form-render';
 
 #### \<Form \/>
 
-| Prop         | Description                                    | Type                                      | Required | Default    |
-| ------------ | ---------------------------------------------- | ----------------------------------------- | -------- | ---------- |
-| schema       | 描述表单的 schema，详见                        | object                                    | ✓        |            |
-| form         | `useForm`创建的表单实例，与 Form 一对一绑定    | FormInstance                              | ✓        |            |
-| onFinish     | 提交后的回调，执行 form.submit() 后触发        | (formData, errorFields: string[]) => void |          | () => void |
-| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填 | (formData, errorFields: string[]) => void |          | () => void |
-| displayType  | 表单元素与 label 同行 or 分两行展示            | 'column' / 'row'                          |          | 'column'   |
-| widgets      | 自定义组件，当内置组件无法满足时使用           | object                                    |          | {}         |
+| Prop         | Description                                                    | Type                                      | Required | Default    |
+| ------------ | -------------------------------------------------------------- | ----------------------------------------- | -------- | ---------- |
+| schema       | 描述表单的 schema，详见                                        | object                                    | ✓        |            |
+| form         | `useForm`创建的表单实例，与 Form 一对一绑定                    | FormInstance                              | ✓        |            |
+| onFinish     | 提交后的回调，执行 form.submit() 后触发                        | (formData, errorFields: string[]) => void |          | () => void |
+| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填                 | (formData, errorFields: string[]) => void |          | () => void |
+| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排 | 'column' / 'row' / 'inline'               |          | 'column'   |
+| widgets      | 自定义组件，当内置组件无法满足时使用                           | object                                    |          | {}         |
 
 #### \<Form \/> (不常用 props)
 
@@ -142,17 +183,19 @@ const Demo = () => {
 
 对 class 组件的支持会在下一个版本添加上
 
-| Prop           | Description                                         | Type                               |
-| -------------- | --------------------------------------------------- | ---------------------------------- |
-| submit         | 触发提交流程，一般在提交按钮上使用                  | function                           |
-| errorFields    | Check if a field is touched                         | [{name, error: []}]                |
-| setErrorFields | 外部手动修改 errorFields 校验信息，用于外部校验回填 | (error: Error[]) => void           |
-| setValues      | 外部手动修改 formData，用于已填写的表单的数据回填   | (formData: any) => void            |
-| onItemChange   | 外部修改指定单个 field 的数据                       | (path: string, value: any) => void |
-| getValues      | 获取表单内部维护的数据 formData                     | () => void                         |
-| schema         | 表单的 schema                                       | object                             |
-| touchedKeys    | 已经触碰过的 field 的数据路径                       | string[]                           |
-| formData       | 表单内部维护的数据，建议使用 getValues/setValues    | object                             |
+| Prop           | Description                                         | Type                     |
+| -------------- | --------------------------------------------------- | ------------------------ |
+| submit         | 触发提交流程，一般在提交按钮上使用                  | function                 |
+| errorFields    | Check if a field is touched                         | [{name, error: []}]      |
+| setErrorFields | 外部手动修改 errorFields 校验信息，用于外部校验回填 | (error: Error[]) => void |
+
+| setValues | 外部手动修改 formData，用于已填写的表单的数据回填 | (formData: any) => void |
+| onItemChange | 外部修改指定单个 field 的数据 | (path: string, value: any) => void |
+| getValues | 获取表单内部维护的数据 formData | () => void |
+| schema | 表单的 schema | object |
+| touchedKeys | 已经触碰过的 field 的数据路径 | string[] |
+| removeErrorByPath | 外部手动删除某一个 path 下所有的校验信息 | (path: string) => void |
+| formData | 表单内部维护的数据，建议使用 getValues/setValues | object |
 
 # 如何速写 Schema
 

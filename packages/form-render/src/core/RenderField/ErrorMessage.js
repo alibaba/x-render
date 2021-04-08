@@ -1,8 +1,8 @@
 import React from 'react';
-import './ErrorMessage.css';
 import { translateMessage } from '../../utils';
+import './ErrorMessage.less';
 
-const ErrorMessage = ({ message, schema }) => {
+const ErrorMessage = ({ message, schema, hideValidation }) => {
   let msg = '';
   if (typeof message === 'string') msg = message;
   if (Array.isArray(message)) {
@@ -11,7 +11,9 @@ const ErrorMessage = ({ message, schema }) => {
 
   msg = translateMessage(msg, schema);
 
-  return <div className="error-message">{msg}</div>;
+  return !msg && hideValidation ? null : (
+    <div className={`error-message`}>{msg}</div>
+  );
 };
 
 export default ErrorMessage;

@@ -76,6 +76,10 @@ export default defineConfig({
       ],
     },
     {
+      title: '老版本',
+      path: 'http://x-components.gitee.io/form-render/',
+    },
+    {
       title: '国内镜像',
       path: 'https://x-render.gitee.io/form-render/',
     },

@@ -25,21 +25,24 @@
 .env.local
 
 # lerna
+node_modules
+
+/.local
 
 /packages/*/es
 /packages/*/lib
-/packages/*/node_modules
 /packages/*/.local
 /packages/*/dist
-/packages/**/node_modules
-/.local
 
 /widgets/*/es
 /widgets/*/lib
-/widgets/*/node_modules
 /widgets/*/.local
 /widgets/*/dist
-/widgets/**/node_modules
+
+/tools/*/es
+/tools/*/lib
+/tools/*/.local
+/tools/*/dist
 
 # custom
 old-doc

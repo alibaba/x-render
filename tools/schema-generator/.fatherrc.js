@@ -8,7 +8,7 @@ export default {
   lessInRollupMode: {},
   extraRollupPlugins: [
     commonjs({
-      include: 'node_modules/**',
+      include: '../../node_modules/**',
     }),
     copy({
       targets: [{ src: 'src/index.d.ts', dest: 'dist/' }],
