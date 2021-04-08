@@ -150,14 +150,14 @@ import Form, { useForm } from 'form-render';
 
 #### \<Form \/>
 
-| Prop         | Description                                    | Type                                      | Required | Default    |
-| ------------ | ---------------------------------------------- | ----------------------------------------- | -------- | ---------- |
-| schema       | 描述表单的 schema，详见                        | object                                    | ✓        |            |
-| form         | `useForm`创建的表单实例，与 Form 一对一绑定    | FormInstance                              | ✓        |            |
-| onFinish     | 提交后的回调，执行 form.submit() 后触发        | (formData, errorFields: string[]) => void |          | () => void |
-| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填 | (formData, errorFields: string[]) => void |          | () => void |
-| displayType  | 表单元素与 label 同行 or 分两行展示            | 'column' / 'row'                          |          | 'column'   |
-| widgets      | 自定义组件，当内置组件无法满足时使用           | object                                    |          | {}         |
+| Prop         | Description                                                    | Type                                      | Required | Default    |
+| ------------ | -------------------------------------------------------------- | ----------------------------------------- | -------- | ---------- |
+| schema       | 描述表单的 schema，详见                                        | object                                    | ✓        |            |
+| form         | `useForm`创建的表单实例，与 Form 一对一绑定                    | FormInstance                              | ✓        |            |
+| onFinish     | 提交后的回调，执行 form.submit() 后触发                        | (formData, errorFields: string[]) => void |          | () => void |
+| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填                 | (formData, errorFields: string[]) => void |          | () => void |
+| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排 | 'column' / 'row' / 'inline'               |          | 'column'   |
+| widgets      | 自定义组件，当内置组件无法满足时使用                           | object                                    |          | {}         |
 
 #### \<Form \/> (不常用 props)
 

@@ -87,11 +87,11 @@ const RenderList = ({
   };
 
   switch (renderWidget) {
-    case 'simple':
+    case 'list1':
       return <SimpleList {...displayProps} />;
-    case 'table':
+    case 'list2':
       return <TableList {...displayProps} />;
-    case 'list':
+    case 'list3':
       return <DefaultList {...displayProps} />;
     default:
       return <DefaultList {...displayProps} />;
@@ -113,11 +113,6 @@ const SimpleList = ({
     children,
   };
 
-  const handleDelete = idx => {
-    deleteItem(idx);
-    console.log(dataIndex);
-  };
-
   return (
     <div>
       {displayList.map((item, idx) => {
@@ -133,7 +128,7 @@ const SimpleList = ({
             />
             <MinusCircleOutlined
               style={{ fontSize: 16, marginLeft: 8 }}
-              onClick={() => handleDelete(idx)}
+              onClick={() => deleteItem(idx)}
             />
           </div>
         );

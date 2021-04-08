@@ -281,11 +281,11 @@ export default () => <FR schema={basic} />;
 
 列表的展示有三种模式：
 
-1. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: simple
-2. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: table
-3. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: list
+1. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: 'list1'
+2. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: 'list2'
+3. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: 'list3'
 
-默认使用的 simple 展示
+默认使用的 'list1' 展示
 
 ```json
 {

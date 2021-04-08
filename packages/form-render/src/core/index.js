@@ -130,7 +130,7 @@ const Core = ({
   }
 
   if (_displayType === 'inline') {
-    labelStyle = { marginTop: 5, paddingLeft: 8 };
+    labelStyle = { marginTop: 5, paddingLeft: 12 };
     labelClass = '';
   }
 
