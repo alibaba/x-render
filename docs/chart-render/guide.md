@@ -32,8 +32,12 @@ title: 使用教程
 
 ## 何时使用
 
-1. 需要针对一堆数据快速建立可视化图表，并且需要**折线图/柱状图/表格**频繁切换查看。
+1. 需要针对一堆数据快速建立可视化图表，并且需要 **折线图/柱状图/交叉表** 频繁切换查看。
 2. 前端小白，只关心手里的数据，不想看长篇大论了解那些图表库该怎么使用，只想搭个图表看。
+3. 现阶段我们提供折线图、柱状图、交叉表三类组件进行图表绘制：
+  - 折线图常用来观察资料在一段维度之内的变化，如果X轴为时间，这种折线图又称为趋势图。
+  - 柱状图描述的是分类数据，常用来回答的是每一个分类中『有多少？』这个问题。
+  - 交叉表是一种矩阵形式的表格，拥有最强大的数据分析能力，可以展示无限指标和无限维度间的关系。
 
 ## 如何使用
 
@@ -49,7 +53,7 @@ $ npm install chart-render @ant-design/charts --save
 
 ```jsx
 import React, { useState } from 'react';
-import { Line, Column, PivotTable } from 'chart-render';
+import { Line, Column, PivotTable, } from 'chart-render';
 
 export default () => {
   const [component, setComponent] = useState('Line');
@@ -104,41 +108,63 @@ export default () => {
 
 ### 通用参数
 
-所有的图表组件都有以下 4 个入参：
+所有的图表组件都有以下 4 个入参（**`data` 和 `meta` 是必传的参数**，请务必注意）：
 
-| 参数      | 说明             | 类型                        | 默认值 | 是否必填 |
-| --------- | ---------------- | --------------------------- | ------ | -------- |
-| style     | 最外层容器的样式 | `React.CSSProperties`       | -      | 否       |
-| className | 最外层容器的类名 | `string`                    | -      | 否       |
-| data      | 数据             | `IDataItem[]`               | -      | 是       |
-| meta      | 元数据描述       | [`IMetaItem[]`](#imetaitem) | -      | 是       |
+| 参数      | 说明             | 类型                          | 是否必填 |
+| --------- | ---------------- | --------------------------- | -------- |
+| style     | 最外层容器的样式 | `React.CSSProperties`          | 否       |
+| className | 最外层容器的类名 | `string`                       | 否       |
+| data      | 数据配置项 `注1`            | `IDataItem[]`                | 是       |
+| meta      | 元数据配置项 `注2`       | `IMetaItem[]`                 | 是       |
 
-#### IMetaItem
+##### 注1：通用参数 - data 数据配置项
 
-| 参数   | 说明                                                                 | 类型      | 是否必填 |
-| ------ | -------------------------------------------------------------------- | --------- | -------- |
-| id     | 对应单条数据项的 key 名                                              | `string`  | 是       |
-| name   | 对应单条数据项的 key 的描述                                          | `string`  | 是       |
-| isDim  | 是否是维度，`true`-维度，`false`-指标                                | `boolean` | 是       |
-| isRate | 是否是百分数，仅限指标使用，启用后，数值 `0.5` 会以 `50%` 来输出渲染 | `boolean` | 否       |
+是普通的对象数组，形如：
 
-### Line 折线图
+```js
+[
+  { date: '20200101', pv: 100, uv: 50 },
+  { date: '20200102', pv: 120, uv: 60 },
+  { date: '20200103', pv: 140, uv: 70 },
+  { date: '20200104', pv: 160, uv: 80 },
+]
+```
+
+##### 注2：通用参数 - meta 元数据配置项
+
+用来描述 data 的各个字段的东西，形如：
+
+```js
+/**
+ * id: 对应单条数据项的 key 名
+ * name: 对应单条数据项的 key 的描述
+ * isDim: 是否是维度，`true`-维度，`false`-指标
+ * isRate: 是否是百分数，仅限指标使用，启用后，数值 `0.5` 会以 `50%` 来输出渲染
+ */
+[
+  { id: 'date', name: '日期', isDim: true, isRate: false },
+  { id: 'pv', name: '访问量', isDim: false, isRate: false },
+  { id: 'uv', name: '访客数', isDim: false, isRate: false },
+]
+```
+
+### Line 折线图的额外参数
 
 | 参数     | 说明                                                                                                                                                         | 类型      | 默认值  | 是否必填 |
 | -------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------- | ------- | -------- |
 | withArea | 是否以面积图展示<br> - 注意面积图默认堆叠展示，如不需要可以传入 `isStack={false}` 覆盖<br> - 开启面积图后方可使用 `areaStyle` `startOnZero` `isPercent` 属性 | `boolean` | `false` | 否       |
 
-除了 `yField`、`xField`、`seriesField` 不做透传，其他字段均做透传处理，参数表参见：[折线图参数表](https://charts.ant.design/zh-CN/demos/line?type=api) [面积图参数表](https://charts.ant.design/zh-CN/demos/area?type=api)
+如果你需要修改点、线等样式，可以参考参数表：[折线图参数表](https://charts.ant.design/zh-CN/demos/line?type=api) [面积图参数表](https://charts.ant.design/zh-CN/demos/area?type=api)，除了 `yField`、`xField`、`seriesField` 三个字段不做透传，其他字段均做透传处理。
 
-### Column 柱状图
+### Column 柱状图的额外参数
 
 | 参数     | 说明             | 类型      | 默认值  | 是否必填 |
 | -------- | ---------------- | --------- | ------- | -------- |
 | inverted | 是否以条形图展示 | `boolean` | `false` | 否       |
 
-除了 `yField`、`xField`、`seriesField` 不做透传，其他字段均做透传处理，参数表参见：[柱状图参数表](https://charts.ant.design/zh-CN/demos/column?type=api)
+如果你需要修改颜色、柱等样式，可以参考参数表：[柱状图参数表](https://charts.ant.design/zh-CN/demos/column?type=api)，除了 `yField`、`xField`、`seriesField` 三个字段不做透传，其他字段均做透传处理。
 
-### PivotTable 交叉表
+### PivotTable 交叉表的额外参数
 
 | 参数                | 说明                                                                      | 类型                                                                    | 默认值             | 是否必填 |
 | ------------------- | ------------------------------------------------------------------------- | ----------------------------------------------------------------------- | ------------------ | -------- |
@@ -149,4 +175,4 @@ export default () => {
 | leftDimensionLength | 左侧维度放多少个，超出的维度会放到表格顶部                                | `number`                                                                | -                  | 否       |
 | leftExpandable      | 左侧维度允许展开/收起                                                     | `boolean`                                                               | `false`            | 否       |
 | topExpandable       | 顶部维度允许展开/收起                                                     | `boolean`                                                               | `false`            | 否       |
-| cellRender          | 单元格自定义渲染函数，可见[高级案例](./demo/pivot-table#自定义单元格渲染) | `(value: any, dimRecord: IDataItem, indId: string ) => React.ReactNode` | -                  | 否       |
+| cellRender          | 单元格自定义渲染函数，可见[交叉表案例 - 高级案例 - 自定义单元格渲染](./demo/pivot-table#自定义单元格渲染) | `(value: any, dimRecord: IDataItem, indId: string ) => React.ReactNode` | -                  | 否       |

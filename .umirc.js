@@ -46,11 +46,15 @@ export default defineConfig({
       title: 'ChartRender',
       path: '/chart-render',
     },
-    // {
-    //   title: '周边工具',
-    //   path: '/tools',
-    //   children: [{ title: 'VSCode 插件', path: '/tools/vscode' }],
-    // },
+    {
+      title: '周边工具',
+      path: '/tools',
+      children: [
+        { title: 'Schema 编辑器', path: '/tools/generator' },
+        { title: 'VSCode 插件', path: '/tools/vscode' },
+        { title: 'PropToSchema', path: '/tools/proptypes' },
+      ],
+    },
     {
       title: '更新日志',
       children: [
