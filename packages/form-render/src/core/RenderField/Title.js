@@ -10,8 +10,6 @@ const Title = ({ labelClass, labelStyle, schema, displayType }) => {
   let _displayType =
     schema.displayType || displayType || globalDisplayType || 'column';
 
-  console.log(labelClass, labelStyle);
-
   return (
     <div className={labelClass} style={labelStyle}>
       <label

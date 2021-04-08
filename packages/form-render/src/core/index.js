@@ -130,7 +130,7 @@ const Core = ({
   }
 
   if (_displayType === 'inline') {
-    labelStyle = { marginTop: 5 };
+    labelStyle = { marginTop: 5, paddingLeft: 8 };
     labelClass = '';
   }
 
@@ -176,7 +176,7 @@ const Core = ({
 
   // TODO: list 也要算进去
   return (
-    <div style={columnStyle} className={containerClass + ' debug'}>
+    <div style={columnStyle} className={containerClass + ' '}>
       <RenderField {...fieldProps}>
         {isObjType && objChildren}
         {isList && listChildren}
