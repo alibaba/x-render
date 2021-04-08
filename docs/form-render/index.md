@@ -6,7 +6,7 @@ toc: content
 
 <div style="display:flex;align-items:center;margin-bottom:24px">
   <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="48px"/>
-  <span style="font-size:38px;display:inline-block;margin-left:12px">FormRender</span>
+  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">FormRender</span>
 </div>
 <p style="display:flex;justify-content:space-between;width:440px">
   <a href="https://www.npmjs.com/package/form-render?_blank">

@@ -5,7 +5,7 @@ title: 使用教程
 
 <div style="display:flex;align-items:center;margin-bottom:24px">
   <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="48px"/>
-  <span style="font-size:38px;display:inline-block;margin-left:12px">TableRender</span>
+  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">TableRender</span>
 </div>
 
 <p style="display:flex;justify-content:space-between;width:440px">
