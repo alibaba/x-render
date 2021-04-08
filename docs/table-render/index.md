@@ -166,9 +166,9 @@ export default Wrapper;
 | ellipsis  | 是否自动缩略                                       | boolean                                   | -      |
 | copyable  | 是否支持复制                                       | boolean                                   | -      |
 | valueType | 值的类型，详见下方 `valueType 配置`                | `string`（`text` \| `money` \| `date` \| `dateTime`） | `text` |
-| enum      | 当前列值的枚举，详见[高级用法](./demo.md#基本用法) | object                                    | -      |
+| enum      | 当前列值的枚举，详见[高级用法](./table-render/demo) | object                                    | -      |
 
-- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [案例代码](./demo)：
+- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [案例代码](./table-render/demo)：
   
   | 属性     | 描述                                                               |
   | -------- | ------------------------------------------------------------------ |

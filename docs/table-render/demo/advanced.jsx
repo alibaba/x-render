@@ -72,7 +72,7 @@ const TableBody = () => {
       title: '酒店名称',
       dataIndex: 'title',
       valueType: 'text',
-      width: '25%',
+      width: '20%',
     },
     {
       title: '酒店地址',
@@ -80,7 +80,7 @@ const TableBody = () => {
       ellipsis: true,
       copyable: true,
       valueType: 'text',
-      width: '30%',
+      width: '25%',
     },
     {
       title: (
@@ -111,6 +111,12 @@ const TableBody = () => {
       ),
     },
 
+    {
+      title: '酒店GMV',
+      key: 'money',
+      dataIndex: 'money',
+      valueType: 'money',
+    },
     {
       title: '成立时间',
       key: 'created_at',
