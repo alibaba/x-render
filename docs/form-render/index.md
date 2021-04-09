@@ -33,7 +33,7 @@ FormRender 1.0 是下一代的 `React.js` 表单解决方案。项目从内核�
 
 ## 安装
 
-FormRender 依赖 ant design，单独使用不要忘记安装～
+FormRender 依赖 ant design，单独使用不要忘记同时安装 `antd`
 
 ```shell
 npm i form-render --save
@@ -42,6 +42,51 @@ npm i form-render --save
 ## 使用
 
 **最简使用 demo：**
+
+```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
+import React from 'react';
+import { Button } from 'antd';
+import FormRender, { connectForm } from 'form-render';
+
+const schema = {
+  type: 'object',
+  properties: {
+    input1: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+    },
+    select1: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b', 'c'],
+      enumNames: ['早', '中', '晚'],
+    },
+  },
+};
+
+class Demo extends React.Component {
+  render() {
+    const { form } = this.props;
+    return (
+      <div>
+        <FormRender form={form} schema={schema} />
+        <Button type="primary" onClick={form.submit}>
+          提交
+        </Button>
+      </div>
+    );
+  }
+}
+
+export default connectForm(Demo);
+```
+
+**对于函数组件，FormRender 提供了 `useForm` hooks, 书写更为灵活**
 
 ```jsx
 /**
@@ -145,7 +190,7 @@ export default Demo;
 ## 组件 Props
 
 ```js
-import Form, { useForm } from 'form-render';
+import Form, { useForm, connectForm } from 'form-render';
 ```
 
 #### \<Form \/> (常用 props)
@@ -170,10 +215,9 @@ import Form, { useForm } from 'form-render';
 | configProvider | antd 的 configProvider，配置透传                                 | `object`            | -      |
 | debounceInput  | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
 
-#### useForm
+#### useForm / connectForm
 
-**useForm 用于创建表单实例，所有对表单的外部操作和回调函数全挂在其生产的实例上,例如表单提交是 `form.submit`。
-使用时需要创建实例，并通过 props 挂钩到与其对应的表单上：**
+`useForm` / `connectForm` 用于创建表单实例，所有对表单的外部操作和回调函数全挂在其生产的实例上,例如表单提交是 `form.submit`。注意 `useForm` 是 hooks，而 `connectForm` 是高阶组件，所以前者只能在函数组件使用，后者可用于 class 组件。两者无其他区别。使用时需要创建实例，并通过 props 挂钩到与其对应的表单上：
 
 ```js
 import Form, { useForm } from 'form-render';
@@ -184,7 +228,17 @@ const Demo = () => {
 };
 ```
 
-**对 class 组件的参数如下：**
+```js
+import Form, { connectForm } from 'form-render';
+
+const Demo = ({ form }) => {
+  return <Form form={form} schema={...} />;
+};
+
+export default connectForm(Demo);
+```
+
+**form 方法**
 
 | 参数             | 描述                                                | 类型                                 |
 | ---------------- | --------------------------------------------------- | ------------------------------------ |

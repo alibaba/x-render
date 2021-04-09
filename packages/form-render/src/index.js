@@ -22,6 +22,7 @@ const defaultFinish = (data, error) => {
 };
 
 export { useForm } from './useForm';
+export { connectForm } from './connectForm';
 
 function App({
   widgets,
