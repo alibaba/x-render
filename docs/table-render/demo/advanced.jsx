@@ -153,7 +153,7 @@ const TableBody = () => {
   );
 
   const showData = () => {
-    refresh();
+    refresh({ a: 1 });
   };
 
   return (
