@@ -7,7 +7,7 @@ export default defineConfig({
   logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   outputPath: 'docs-dist',
   dynamicImport: {
-    loading: 'antd/lib/spin',
+    loading: '@/docs/Loading.js',
   },
   locales: [['zh-CN', '中文']],
   hire: {
