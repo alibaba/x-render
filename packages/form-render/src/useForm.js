@@ -162,7 +162,7 @@ export const useForm = props => {
   };
   // TODO: 提取出来，重新写一份，注意要处理async
 
-  const removeErrorByPath = path => {
+  const removeErrorField = path => {
     let newError = errorFields.map(item => {
       return item.name.indexOf(path) === -1;
     });
@@ -273,7 +273,7 @@ export const useForm = props => {
     endValidating,
     endSubmitting,
     setErrorFields,
-    removeErrorByPath,
+    removeErrorField,
     isEditing,
     setEditing,
     syncStuff,

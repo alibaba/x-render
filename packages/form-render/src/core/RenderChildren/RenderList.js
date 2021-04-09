@@ -19,7 +19,7 @@ const RenderList = ({
   errorFields,
 }) => {
   // console.log(parentId, dataIndex, children);
-  const { formData, flatten, onItemChange, removeErrorByPath } = useStore();
+  const { formData, flatten, onItemChange, removeErrorField } = useStore();
 
   let renderWidget = 'list';
   try {
@@ -48,7 +48,7 @@ const RenderList = ({
     // remark: 删除时，不存在的item需要补齐，用null
     const newList = displayList.filter((item, kdx) => kdx !== idx);
     onItemChange(dataPath, newList);
-    removeErrorByPath(`${dataPath}[${idx}]`);
+    removeErrorField(`${dataPath}[${idx}]`);
   };
 
   //TODO1: 上线翻页要正确！！现在是错的

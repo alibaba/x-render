@@ -27,6 +27,10 @@ toc: content
 
 FormRender 1.0 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](/form-render/migrate)
 
+<Alert>
+  <span>FormRender 已升级到 v1.x 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本(v0.x)，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 老文档 </a></span>
+</Alert>
+
 ## 安装
 
 FormRender 依赖 ant design，单独使用不要忘记安装～
@@ -146,14 +150,14 @@ import Form, { useForm } from 'form-render';
 
 #### \<Form \/> (常用 props)
 
-| 参数         | 描述                                                           | 类型                                                | 是否必填 | 默认值     |
-| ------------ | -------------------------------------------------------------- | --------------------------------------------------- | -------- | ---------- |
-| schema       | 描述表单的 schema，详见                                        | `object`                                            | 是       |            |
-| form         | `useForm`创建的表单实例，与 Form 一对一绑定                    | `FormInstance`                                      | 是       |            |
-| onFinish     | 提交后的回调，执行 form.submit() 后触发                        | `function(formData, errorFields: string[]) => void` | 否       | () => void |
-| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填                 | `function(formData, errorFields: string[]) => void` | 否       | () => void |
-| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排 | `string('column' / 'row' / 'inline')`               | 否       | 'column'   |
-| widgets      | 自定义组件，当内置组件无法满足时使用                           | `object`                                            | 否       | {}         |
+| 参数         | 描述                                                           | 类型                                                               | 是否必填 | 默认值     |
+| ------------ | -------------------------------------------------------------- | ------------------------------------------------------------------ | -------- | ---------- |
+| schema       | 描述表单的 schema，详见                                        | `object`                                                           | 是       |            |
+| form         | `useForm`创建的表单实例，与 Form 一对一绑定                    | `FormInstance`                                                     | 是       |            |
+| onFinish     | 提交后的回调，执行 form.submit() 后触发                        | `function(formData, errorFields: Error[]) => void`                 | 否       | () => void |
+| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填                 | `function(formData, errorFields: Error[]) => errorFields: Error[]` | 否       | () => void |
+| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排 | `string('column' / 'row' / 'inline')`                              | 否       | 'column'   |
+| widgets      | 自定义组件，当内置组件无法满足时使用                           | `object`                                                           | 否       | {}         |
 
 #### \<Form \/> (不常用 props)
 
@@ -182,18 +186,18 @@ const Demo = () => {
 
 **对 class 组件的参数如下：**
 
-| 参数              | 描述                                                | 类型                                 |
-| ----------------- | --------------------------------------------------- | ------------------------------------ |
-| submit            | 触发提交流程，一般在提交按钮上使用                  | `function`                           |
-| errorFields       | Check if a field is touched                         | `array,[{name, error: []}]`          |
-| setErrorFields    | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error[]) => void`           |
-| setValues         | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`            |
-| onItemChange      | 外部修改指定单个 field 的数据                       | `(path: string, value: any) => void` |
-| getValues         | 获取表单内部维护的数据 formData                     | `() => void`                         |
-| schema            | 表单的 schema                                       | object                               |
-| touchedKeys       | 已经触碰过的 field 的数据路径                       | `string[]`                           |
-| removeErrorByPath | 外部手动删除某一个 path 下所有的校验信息            | `(path: string) => void`             |
-| formData          | 表单内部维护的数据，建议使用 getValues/setValues    | `object`                             |
+| 参数             | 描述                                                | 类型                                 |
+| ---------------- | --------------------------------------------------- | ------------------------------------ |
+| submit           | 触发提交流程，一般在提交按钮上使用                  | `function`                           |
+| errorFields      | Check if a field is touched                         | `array,[{name, error: []}]`          |
+| setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error | Error[]) => void`   |
+| setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`            |
+| onItemChange     | 外部修改指定单个 field 的数据                       | `(path: string, value: any) => void` |
+| getValues        | 获取表单内部维护的数据 formData                     | `() => void`                         |
+| schema           | 表单的 schema                                       | object                               |
+| touchedKeys      | 已经触碰过的 field 的数据路径                       | `string[]`                           |
+| removeErrorField | 外部手动删除某一个 path 下所有的校验信息            | `(path: string) => void`             |
+| formData         | 表单内部维护的数据，建议使用 getValues/setValues    | `object`                             |
 
 ## 如何速写 Schema
 
