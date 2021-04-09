@@ -19493,8 +19493,10 @@ function App(props, ref) {
     });
 
     if (props.onSchemaChange) {
-      var pureSchema = frwRef.current.getValue();
-      props.onSchemaChange(pureSchema);
+      setTimeout(function () {
+        var pureSchema = frwRef.current.getValue();
+        props.onSchemaChange(pureSchema);
+      }, 0);
     }
   };
 
