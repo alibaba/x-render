@@ -22,6 +22,7 @@ const defaultFinish = (data, error) => {
 };
 
 export { useForm } from './useForm';
+export { connectForm } from './connectForm';
 
 function App({
   widgets,
@@ -57,6 +58,7 @@ function App({
     syncStuff,
     formData,
     isEditing,
+    setErrorFields,
   } = form;
 
   const flatten = useMemo(() => _flatten || flattenSchema(schema), [
@@ -97,7 +99,10 @@ function App({
   useEffect(() => {
     // 需要外部校验的情况，此时 submitting 还是 false
     if (outsideValidating === true) {
-      Promise.resolve(beforeFinish(submitData, errorFields)).then(() => {
+      Promise.resolve(beforeFinish(submitData, errorFields)).then(error => {
+        if (error) {
+          setErrorFields(error);
+        }
         endValidating();
       });
       return;

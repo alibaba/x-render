@@ -13,7 +13,7 @@ const Demo = () => {
   console.log(defaultSettings, defaultCommonSettings, defaultGlobalSettings);
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '50vh' }}>
       <Generator
         widgets={{ NewWidget }}
         settings={[

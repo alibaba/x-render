@@ -39,7 +39,7 @@ export interface FormInstance {
   endValidating: () => void;
   endSubmitting: () => void;
   setErrorFields: (error: Error[]) => void;
-  removeErrorByPath: (path: string) => void;
+  removeErrorField: (path: string) => void;
   isEditing: boolean;
   setEditing: (status: boolean) => void;
   syncStuff: (any) => void;
@@ -66,9 +66,9 @@ export interface FRProps {
   debounceInput?: boolean;
   size?: string;
   /** 表单提交前钩子 */
-  beforeFinish?: (formData: any, error: string[]) => void;
+  beforeFinish?: (formData: any, error: Error[]) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
-  onFinish: (formData: any, error: string[]) => void;
+  onFinish: (formData: any, error: Error[]) => void;
 }
 
 declare const FR: React.FC<FRProps>;

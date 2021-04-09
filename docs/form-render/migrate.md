@@ -2,11 +2,11 @@
 order: 6
 ---
 
-# 0.x 到 1.0
+# 0.x 到 1.x
 
 ## 三个改变
 
-**FormRender v1.0 的升级，从使用方视角来看，最主要的变动归结为三条：**
+**FormRender v1.0.0 的升级，从使用方视角来看，最主要的变动归结为三条：**
 
 1. 提交的方法收束（即统一提供 submit 方法），formData 和校验信息内置
 
@@ -105,6 +105,62 @@ function Demo() {
 export default Demo;
 ```
 
+由于新版的 formData/onChange/validate/onValidate 全部内置了，所以在迁移时，外部所有使用到三者的地方一律使用 form 方法替换：
+
+```js
+formData  ->  form.getValues()
+onChange  ->  form.setValues(data)
+validate  ->  form.errorFields
+onValidate  ->  直接去掉
+```
+
+自定义组件侧的 0.x 与 1.x 的使用对比：
+
+```js
+// 0.x
+const schema = {
+  title: '自定义',
+  type: 'string',
+  'ui:widget': 'myWidget',
+  'ui:options': {
+    prefix: 'hello',
+  },
+};
+
+const MyWidget = ({ name, value, onChange, options }) => {
+  const handleChange = e => {
+    onChange(name, e.target.value);
+  };
+  return (
+    <div>
+      <Input value={value} onChange={handleChange} {...options} />
+      <span>注意事项</span>
+    </div>
+  );
+};
+// 1.x
+const schema = {
+  title: '自定义',
+  type: 'string',
+  widget: 'myWidget',
+  props: {
+    prefix: 'hello',
+  },
+};
+
+const MyWidget = props => {
+  return (
+    <div>
+      <Input {...props} />
+      <span>注意事项</span>
+    </div>
+  );
+};
+```
+
+1. `onChange` 不再接收 name 作为第一个入参，而改为更为自然的只有一个入参 value
+2. 所有`ui:options`的内容会直接在 props 里拿到，而不需要再从 props.options 里获取 （ui:options 已更名为 props，不过在顶层做了 schema 字段的兼容）
+
 ## Changelog 思考
 
 在最后罗列一下细节上 FormRender 0.x -> 1.0 细节上的改动 & 思考
@@ -129,50 +185,50 @@ export default Demo;
    - 自定义组件内置了 onItemChange(namePath, value) 方法，可以方便的在一个自定义组件中修改表单任何数据的值
    - **这些细节的目标，是让自定义组件的书写贴近拿来一个组件直接能用，而不是像之前一样再简单的场景也需要做一步包装处理，从原本的：**
 
-      ```js
-      const schema = {
-        title: '自定义',
-        type: 'string',
-        'ui:widget': 'myWidget',
-        'ui:options': {
-          prefix: 'hello',
-        },
-      };
+     ```js
+     const schema = {
+       title: '自定义',
+       type: 'string',
+       'ui:widget': 'myWidget',
+       'ui:options': {
+         prefix: 'hello',
+       },
+     };
 
-      const MyWidget = ({ name, value, onChange, options }) => {
-        const handleChange = e => {
-          onChange(name, e.target.value);
-        };
-        return (
-          <div>
-            <Input value={value} onChange={handleChange} {...options} />
-            <span>注意事项</span>
-          </div>
-        );
-      };
-      ```
+     const MyWidget = ({ name, value, onChange, options }) => {
+       const handleChange = e => {
+         onChange(name, e.target.value);
+       };
+       return (
+         <div>
+           <Input value={value} onChange={handleChange} {...options} />
+           <span>注意事项</span>
+         </div>
+       );
+     };
+     ```
 
    - **变为：**
 
-      ```js
-      const schema = {
-        title: '自定义',
-        type: 'string',
-        widget: 'myWidget',
-        props: {
-          prefix: 'hello',
-        },
-      };
+     ```js
+     const schema = {
+       title: '自定义',
+       type: 'string',
+       widget: 'myWidget',
+       props: {
+         prefix: 'hello',
+       },
+     };
 
-      const MyWidget = props => {
-        return (
-          <div>
-            <Input {...props} />
-            <span>注意事项</span>
-          </div>
-        );
-      };
-      ```
+     const MyWidget = props => {
+       return (
+         <div>
+           <Input {...props} />
+           <span>注意事项</span>
+         </div>
+       );
+     };
+     ```
 
 4. **校验丰富度和体验大幅升级**
 

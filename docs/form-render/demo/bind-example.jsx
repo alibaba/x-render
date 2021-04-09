@@ -47,13 +47,12 @@ const Demo = () => {
   const form = useForm();
 
   const beforeFinish = (formData, errorFields) => {
-    if ((formData.objectName && formData.objectName.input1 === '123') || true)
-      return;
+    if (formData.objectName && formData.objectName.input1 === '123') return;
     return delay(1000).then(() => {
-      form.setErrorFields({
+      return {
         name: 'objectName.select1',
         error: ['外部校验错误'],
-      });
+      };
     });
   };
 
