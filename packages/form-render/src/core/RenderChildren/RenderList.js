@@ -117,9 +117,7 @@ const SimpleList = ({
     <div>
       {displayList.map((item, idx) => {
         return (
-          <div
-            style={{ marginBottom: 8, display: 'flex', alignItems: 'center' }}
-          >
+          <div style={{ display: 'flex', alignItems: 'center' }}>
             <Core
               key={idx}
               displayType="inline"

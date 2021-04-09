@@ -117,7 +117,7 @@ const Core = ({
 
   // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
   const effectiveLabelWidth =
-    getParentProps('ui:labelWidth', id, flatten) || labelWidth;
+    getParentProps('labelWidth', id, flatten) || labelWidth;
   const _labelWidth = isLooselyNumber(effectiveLabelWidth)
     ? Number(effectiveLabelWidth)
     : isCssLength(effectiveLabelWidth)
@@ -132,6 +132,9 @@ const Core = ({
   if (_displayType === 'inline') {
     labelStyle = { marginTop: 5, paddingLeft: 12 };
     labelClass = '';
+    if (containerClass.indexOf('fr-field-object') === -1) {
+      containerClass += ' fr-field-inline';
+    }
   }
 
   const hasChildren = item.children && item.children.length > 0;
