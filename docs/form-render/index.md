@@ -137,6 +137,8 @@ import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
 
 const schema = {
+  displayType: 'row',
+  labelWidth: 60,
   type: 'object',
   properties: {
     dateRange: {
@@ -181,11 +183,12 @@ const Demo = () => {
 export default Demo;
 ```
 
-**从 demo 中我们不难发现的 FormRender 的一些设计：**
+**从 demo 中我们不难发现 FormRender 的一些设计：**
 
 1. 以 schema 来描述表单展示，提交方式与 antd v4 的方式类似
 2. schema 以国际标准的 JSON schema 为基础，同时能够方便使用任何 antd 的 props
 3. 通过 bind 字段，我们允许数据的双向绑定，数据展示和真实提交的数据可以根据开发需求不同（例如从服务端接口拿到不规则数据时，也能直接使用）
+4. 可以通过`displayType`,`labelWidth`等字段轻易修改展示
 
 ## 组件 Props
 
