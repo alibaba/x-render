@@ -1,12 +1,13 @@
 import React from 'react';
-import { Area, Line } from '@ant-design/charts';
+import { Area, Line, DualAxes } from '@ant-design/charts';
 import { AreaConfig } from '@ant-design/charts/es/Area';
 import { LineConfig } from '@ant-design/charts/es/line';
+import { DualAxesConfig } from '@ant-design/charts/es/dualAxes';
 import { ICommonProps } from '../../utils/types';
 import { splitMeta } from '../../utils';
 import ErrorTemplate from '../ErrorTemplate';
 
-export interface ICRLineProps extends ICommonProps, Omit<LineConfig | AreaConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
+export interface ICRLineProps extends ICommonProps, Omit<LineConfig | AreaConfig | DualAxesConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
   /**
    * 以面积图展示，默认 `false`
    * - 注意面积图默认堆叠展示，如不需要可以传入 `isStack={false}` 覆盖
@@ -15,7 +16,7 @@ export interface ICRLineProps extends ICommonProps, Omit<LineConfig | AreaConfig
   withArea: boolean;
 };
 
-export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['data']): LineConfig {
+export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['data']): AreaConfig | LineConfig | DualAxesConfig {
   const { metaDim, metaInd } = splitMeta(meta);
 
   if (metaInd.length === 1 && metaDim.length === 1) {
@@ -38,8 +39,22 @@ export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['d
       yField: metaInd.shift()?.id as string,
       seriesField: metaDim.shift()?.id,
     };
+  } else if (metaInd.length === 2 && metaDim.length === 2) {
+    // case 3: 双指标、双维度 => 第一维度作为 x 轴，第二维度作为 系列，第一指标作为左 y 轴，第二指标作为右 y 轴
+    const data1 = data.map(({ [metaInd[0].id]: _, [metaDim[1].id]: metaValue, ...item }) => ({ [metaDim[1].id]: `${metaValue}-${metaInd[0].name}`, ...item }));
+    const data2 = data.map(({ [metaInd[1].id]: _, [metaDim[1].id]: metaValue, ...item }) => ({ [metaDim[1].id]: `${metaValue}-${metaInd[1].name}`, ...item }));
+    return {
+      data: [data2, data1],
+      geometryOptions: [
+        { geometry: 'line', seriesField: metaDim[1].id },
+        { geometry: 'line', seriesField: metaDim[1].id, lineStyle: { lineDash: [5, 5] }, },
+      ],
+      xField: metaDim.shift()?.id as string,
+      yField: [metaInd.shift()?.id as string, metaInd.shift()?.id as string],
+      seriesField: metaDim.shift()?.id,
+    };
   } else if (metaInd.length > 1 && metaDim.length === 1) {
-    // case 3: 多指标、单维度 => 维度作为 x 轴，指标名作为系列，指标值作为 y 轴
+    // case 4: 多指标、单维度 => 维度作为 x 轴，指标名作为系列，指标值作为 y 轴
     // 需要把 data 做一下转化，例：从 { ds, uv, pv }[] 转为 [{ ds, type: uvName, value: xxx }, { ds, type: pvName, value: xxx }]
     const xField = metaDim.shift()?.id as string;
     const yField = 'value';
@@ -72,25 +87,41 @@ const CRLine: React.FC<ICRLineProps> = ({
   withArea,
   ...props
 }) => {
+  const config = generateConfig(meta, data);
+
+  // 面积图展示
   if (withArea) {
     return (
       <Area
-        {...generateConfig(meta, data)}
+        {...config as AreaConfig}
         renderer="svg"
         errorTemplate={() => <ErrorTemplate />}
-        {...props}
-      />
-    );
-  } else {
-    return (
-      <Line
-        {...generateConfig(meta, data)}
-        renderer="svg"
-        errorTemplate={() => <ErrorTemplate />}
-        {...props}
+        {...props as Omit<AreaConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'>}
       />
     );
   }
+
+  // 双轴图展示
+  if (Array.isArray(config.yField)) {
+    return (
+      <DualAxes
+        {...config as DualAxesConfig}
+        renderer="svg"
+        errorTemplate={() => <ErrorTemplate />}
+        {...props as Omit<DualAxesConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'>}
+      />
+    );
+  }
+
+  // 普通折线图
+  return (
+    <Line
+      {...config as LineConfig}
+      renderer="svg"
+      errorTemplate={() => <ErrorTemplate />}
+      {...props as Omit<LineConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'>}
+    />
+  );
 };
 
 export default CRLine;
