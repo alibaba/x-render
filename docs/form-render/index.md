@@ -211,8 +211,7 @@ const Demo = () => {
 
 ## 高级用法
 
-1. [如何写一个完整的服务端数据表单加载和提交](/form-render/form-methods)
+1. [如何写表单间的联动关系](/form-render/function)
 2. [如何用自定义组件完成定制元素的展示](/form-render/widget)
-3. [如何写表单间的联动关系](/form-render/function)
-4. 如何做服务端校验的回填 还在补充中，敬请期待
-5. [常见问题 FAQ](/form-render/faq)
+3. [如何写一个完整的服务端数据表单加载和提交](/form-render/form-methods)
+4. [常见问题 FAQ](/form-render/faq)
