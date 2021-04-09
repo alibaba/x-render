@@ -44,7 +44,7 @@ const Demo = () => {
 };
 
 const TableBody = () => {
-  const { refresh, tableState } = useTable();
+  const { refresh, tableState }: any = useTable();
 
   const searchApi = params => {
     console.log('params >>> ', params);
@@ -153,7 +153,7 @@ const TableBody = () => {
   );
 
   const showData = () => {
-    refresh({ a: 1 });
+    refresh(null, { extra: 1 });
   };
 
   return (
@@ -177,6 +177,7 @@ const TableBody = () => {
       <Table
         // size="small"
         columns={columns}
+        pagi
         // headerTitle="高级表单"
         rowKey="id"
         toolbarRender={() => [

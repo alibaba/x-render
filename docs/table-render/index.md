@@ -154,6 +154,7 @@ export default Wrapper;
 | headerTitle | 表格标题     | `string` | `ReactNode`  | -      |
 | toolbarRender    | 表格主体右上方的控件，例如“添加”按钮  | `() => ReactNode[]`     | `false`      |
 | toolbarAction   | 显示在表格主体右上方的 Icon 列表，内置了`刷新、调整密度、全屏显示` 等功能 | `boolean` | `false`  |
+| pageChangeWithRequest | 切换分页时是否需要请求接口  | `boolean` | `true`  |
 | columns   | 列定义  | `object` | `false`  |
 
 

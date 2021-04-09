@@ -22,7 +22,7 @@ const useTableRoot = props => {
     extraData: null, // 需要用到的 dataSource 以外的扩展返回值
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: 3,
       total: 1,
     },
     tableSize: 'default',
@@ -136,6 +136,9 @@ const useTableRoot = props => {
     api.current = searchApi;
     onSearch.current = syncOnSearch;
     afterSearch.current = syncAfterSearch;
+    set({
+      api: searchApi,
+    });
   };
 
   const context = {
@@ -154,6 +157,14 @@ const useTableRoot = props => {
   };
   return context;
 };
+
+export interface RootState {
+  tableState: any;
+  setTable: any;
+  doSearch: () => {};
+  refresh: () => {};
+  changeTab: () => {};
+}
 
 const Container = (props, ref) => {
   const context = useTableRoot(props);

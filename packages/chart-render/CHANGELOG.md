@@ -1,5 +1,9 @@
 # Change Log
 
+### 0.1.5
+
+- [+] 折线图增加双指标 双维度 支持
+
 ### 0.1.4
 
 - [-] 移除 CrossTreeTable 下钻树表，与 PivotTable 交叉表合并，通过 `leftExpandable`、`topExpandable` 参数控制是否可展开
