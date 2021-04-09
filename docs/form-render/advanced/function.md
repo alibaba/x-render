@@ -1,5 +1,9 @@
 ---
-order: 3
+order: 1
+group:
+  order: 2
+  title: 高级用法
+toc: false
 ---
 
 # 表单联动
@@ -19,8 +23,8 @@ order: 3
 
 3. 函数表达式可使用以下 2 关键字：
 
-| 名称      |说明|
-| --------- | :----------------------------------------------: |
+| 名称      |                                       说明                                        |
+| --------- | :-------------------------------------------------------------------------------: |
 | formData  | 整个 form 的值 （最常用，当两个关联组件距离较远时，可以从顶层的 formData 里获取） |
 | rootValue | 父组件的值 （上一级的值，一般在列表场景中的子元素获取对应 index 的 item 时使用）  |
 
@@ -66,12 +70,12 @@ export default Demo1;
 
 ```jsx
 import React from 'react';
-import FR from './demo/FR';
-import { expression } from './json/schema';
+import FR from '../demo/FR';
+import { expression } from '../json/schema';
 
 export default () => <FR schema={expression} />;
 ```
 
 ### 最后
 
-更复杂和定制化的表单需求建议使用自定义组件。FormRender 的设计理念非常推崇组件的即插即用，详见[自定义组件](/form-render/widget)章节。
+更复杂和定制化的表单需求建议使用自定义组件。FormRender 的设计理念非常推崇组件的即插即用，详见[自定义组件](/form-render/advanced/widget)章节。

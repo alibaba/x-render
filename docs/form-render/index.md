@@ -272,7 +272,7 @@ export default connectForm(Demo);
 
 ## 高级用法
 
-1. [如何写表单间的联动关系](/form-render/function)
-2. [如何用自定义组件完成定制元素的展示](/form-render/widget)
-3. [如何写一个完整的服务端数据表单加载和提交](/form-render/form-methods)
+1. [如何写表单间的联动关系](/form-render/advanced/function)
+2. [如何用自定义组件完成定制元素的展示](/form-render/advanced/widget)
+3. [如何写一个完整的服务端数据表单加载和提交](/form-render/advanced/form-methods)
 4. [常见问题 FAQ](/form-render/faq)
