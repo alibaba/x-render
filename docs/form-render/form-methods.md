@@ -82,7 +82,7 @@ export default Demo;
 
 ### 例 2
 
-**服务端校验，通过 `beforeFinish` 配合 `setErrorFields` 从外部回填 error 信息到表单**
+**服务端校验，通过 `beforeFinish` 从外部回填 error 信息到表单，注意 `beforeFinish` 需返回要回填的 error**
 
 ```jsx
 /**
@@ -126,7 +126,9 @@ const Demo = () => {
 
   // 服务端校验在这里做
   const beforeFinish = (data, error) => {
-    form.setErrorFields({ name: 'select1', error: ['外部校验错误'] });
+    return fakeApi('xxx/validation').then(_ => {
+      return { name: 'select1', error: ['外部校验错误'] };
+    });
   };
 
   return (

@@ -78,7 +78,7 @@ const Demo = () => {
         okText="保存"
         cancelText="关闭"
         width="90%"
-        bodyStyle={{ height: '80vh' }}
+        bodyStyle={{ height: '70vh' }}
       >
         <Generator
           ref={genRef}

@@ -22,7 +22,7 @@ const useTableRoot = props => {
     extraData: null, // 需要用到的 dataSource 以外的扩展返回值
     pagination: {
       current: 1,
-      pageSize: 10,
+      pageSize: 3,
       total: 1,
     },
     tableSize: 'default',
@@ -48,7 +48,7 @@ const useTableRoot = props => {
     }
     // console.log(checkPassed);
     if (!checkPassed) return;
-    const { current, pageSize, tab } = params || {};
+    const { current, pageSize, tab, ...extraSearch } = params || {};
     const _current = current || 1;
     const _pageSize = pageSize || 10;
     let _tab = currentTab;
@@ -73,7 +73,12 @@ const useTableRoot = props => {
 
     function basicSearch(api: (arg0: any) => any) {
       set({ loading: true });
-      let _params = { ...search, ...customSearch, ..._pagination };
+      let _params = {
+        ...search,
+        ...customSearch,
+        ...extraSearch,
+        ..._pagination,
+      };
 
       if (Array.isArray(api)) {
         _params = { ..._params, tab };
@@ -109,6 +114,7 @@ const useTableRoot = props => {
     const _search = search || {};
     doSearch(
       {
+        ...params,
         current: _stay ? pagination.current : 1,
         tab: _tab,
         pageSize: pagination.pageSize,
@@ -130,6 +136,9 @@ const useTableRoot = props => {
     api.current = searchApi;
     onSearch.current = syncOnSearch;
     afterSearch.current = syncAfterSearch;
+    set({
+      api: searchApi,
+    });
   };
 
   const context = {
@@ -149,10 +158,15 @@ const useTableRoot = props => {
   return context;
 };
 
-const Container: React.ForwardRefRenderFunction<unknown, RootProps> = (
-  props,
-  ref
-) => {
+export interface RootState {
+  tableState: any;
+  setTable: any;
+  doSearch: () => {};
+  refresh: () => {};
+  changeTab: () => {};
+}
+
+const Container = (props, ref) => {
   const context = useTableRoot(props);
 
   useImperativeHandle(ref, () => context);

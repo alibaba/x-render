@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react';
 
 import { useTable } from './hooks';
 import { Table, Radio, Space } from 'antd';
-import { ColumnsType, TablePaginationConfig } from 'antd/lib/table';
 
 import { getDate, getDateTime, getMoneyType } from './utils';
 import { renderDom } from './field';
@@ -24,6 +23,11 @@ const ProTable = (props: ProTableProps) => {
 
   const onPageChange = (page: any, pageSize: any) => {
     setTable({ pagination: { ...pagination, current: page, pageSize } });
+    if (
+      !props.pageChangeWithRequest &&
+      props.pageChangeWithRequest !== undefined
+    )
+      return;
     doSearch({ current: page, pageSize });
   };
 
@@ -71,9 +75,9 @@ const ProTable = (props: ProTableProps) => {
             onChange: onPageChange,
             size: 'small',
             ...props.pagination,
-            pageSize: pagination.pageSize,
-            total: pagination.total,
-            current: pagination.current,
+            pageSize: props.pagination?.pageSize || pagination.pageSize,
+            total: props.pagination?.total || pagination.total,
+            current: props.pagination?.current || pagination.current,
           },
     loading,
     size: tableSize,

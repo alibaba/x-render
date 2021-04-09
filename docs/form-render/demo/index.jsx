@@ -32,11 +32,11 @@ const Demo = () => {
   };
 
   const outsideValidation = () => {
-    form.setErrorFields({ name: 'percentage', error: ['外部校验错误'] });
+    return { name: 'percentage', error: ['外部校验错误'] };
   };
 
   const beforeFinish = () => {
-    form.setErrorFields({ name: 'percentage', error: ['外部校验错误'] });
+    return { name: 'percentage', error: ['外部校验错误'] };
   };
 
   // const watch = {

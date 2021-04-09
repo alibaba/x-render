@@ -41,7 +41,7 @@ const defaultValue = {
 
 const Demo = () => {
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '80vh' }}>
       <Generator defaultValue={defaultValue} />
     </div>
   );
@@ -56,12 +56,12 @@ export default Demo;
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
-| defaultValue | 默认表单 schema | `object` | `null` |
-| transformer | schema 双向转换 | `object` | FormRender 适配转换 |
+| defaultValue | 默认表单 schema | `object` | `DEFAULT_SCHEMA` |
+| transformer | schema 双向转换 | `object` | `{ fromFormRender, toFormRender }` |
 | extraButtons | 操作栏按钮 | `array` | `[]` |
-| settings | 左右侧栏配置 | `array` | `[]` |
-| commonSettings | 通用配置 | `object` | `{}` |
-| globalSettings | 全局配置 | `object` | `{}` |
+| settings | 左右侧栏配置 | `array` | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L513) |
+| commonSettings | 通用配置 | `object` | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L2) |
+| globalSettings | 全局配置 | `object` | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L513) |
 | widgets | 自定义组件 | `object` | `{}` |
 
 ### Events
@@ -101,6 +101,8 @@ export default Demo;
 
 <code src='./demo/settings.jsx' />
 
-## 注意
+## 常见问题
 
-使用此组件时，外层要包裹的 div **一定要给一个高度**，否则会默认 min-height: 30vh
+**1、如何控制编辑器高度**
+
+给组件外层要包裹的 div 设置高度即可，否则为默认值 min-height: 30vh

@@ -94,12 +94,12 @@ function App(props, ref) {
     const result = { ...schema };
     result.schema = newSchema;
     setState({ schema: result });
-    setTimeout(() => {
-      if (props.onSchemaChange) {
+    if (props.onSchemaChange) {
+      setTimeout(() => {
         const pureSchema = frwRef.current.getValue();
         props.onSchemaChange(pureSchema);
-      }
-    }, 0);
+      }, 0);
+    }
   };
 
   const _mapping = { ...mapping, array: 'listEditor' };

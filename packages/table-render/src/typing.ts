@@ -10,6 +10,7 @@ export interface ProTableProps extends TableProps<any> {
   className?: string;
   columns?: ColumnsType;
   size?: any;
+  pageChangeWithRequest?: boolean;
 }
 
 export interface CardListProps {}
