@@ -149,10 +149,7 @@ const useTableRoot = props => {
   return context;
 };
 
-const Container: React.ForwardRefRenderFunction<unknown, RootProps> = (
-  props,
-  ref
-) => {
+const Container = (props, ref) => {
   const context = useTableRoot(props);
 
   useImperativeHandle(ref, () => context);
