@@ -34,8 +34,8 @@ export default (p, onChange, DateComponent) => {
     onChange,
   };
 
-  // TODO: format是在options里自定义的情况，是否要判断一下要不要showTime
-  if (format === 'dateTime') {
+  // fix format类型为dateTime且showTime无值时，设置默认showTime值为true
+  if (format === 'dateTime' && !p.options.showTime) {
     dateParams.showTime = true;
   }
 
