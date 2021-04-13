@@ -23,7 +23,7 @@ const mapProps = ({ schema, style, options: _options }) => {
   return {
     options,
     mode: 'multiple',
-    style: { width: '100%', marginTop: 5, ...style },
+    style: { width: '100%', minWidth: 120, marginTop: 5, ...style },
   };
 };
 

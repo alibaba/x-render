@@ -178,3 +178,161 @@ const schema = {
 
 export default () => <Form labelWidth="200" schema={schema} />;
 ```
+
+### 列表的展示
+
+列表的展示丑，简单需求占位太多，复杂需求定制不够一直是痛点。所以我们给出了三种展示，充分满足从极简到复杂的所有需求
+
+1. widget: 'list1' 用于展示每行只有 1-3 个简单元素的情况
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'list1',
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+            required: true,
+          },
+          selet1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  return <Form schema={schema} />;
+};
+
+export default Demo;
+```
+
+2. widget: 'list2' 用于展示每行只有 3 - n 个简单元素的情况，特别是数据量很大需要分页的
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'list2',
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+            required: true,
+          },
+          input2: {
+            title: '简单输入框2',
+            type: 'string',
+          },
+          input3: {
+            title: '简单输入框3',
+            type: 'string',
+          },
+          selet1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+            widget: 'select',
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  return <Form schema={schema} />;
+};
+
+export default Demo;
+```
+
+3. widget: 'list3' 用于展示存在列表套列表，列表套对象等复杂元素的情况
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'list3',
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+            required: true,
+          },
+          selet1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+          },
+          listName2: {
+            title: '对象数组',
+            description: '对象数组嵌套功能',
+            type: 'array',
+            widget: 'list1',
+            items: {
+              type: 'object',
+              properties: {
+                input1: {
+                  title: '简单输入框',
+                  type: 'string',
+                  required: true,
+                },
+                selet1: {
+                  title: '单选',
+                  type: 'string',
+                  enum: ['a', 'b', 'c'],
+                  enumNames: ['早', '中', '晚'],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  return <Form schema={schema} />;
+};
+
+export default Demo;
+```

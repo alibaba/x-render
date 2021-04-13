@@ -61,7 +61,7 @@ const Core = ({
       // list 有两种展示形式！
       if (isList) {
         if (schema.title) {
-          // labelClass += ' fr-label-list';
+          labelClass += ' fr-label-list';
         }
         containerClass += ' fr-field-column';
       }

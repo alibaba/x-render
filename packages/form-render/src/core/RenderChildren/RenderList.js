@@ -18,7 +18,6 @@ const RenderList = ({
   children = [],
   errorFields,
 }) => {
-  // console.log(parentId, dataIndex, children);
   const { formData, flatten, onItemChange, removeErrorField } = useStore();
 
   let renderWidget = 'list';
@@ -316,7 +315,7 @@ const TableList = ({
     title: '操作',
     key: '$action',
     fixed: 'right',
-    width: 120,
+    width: 60,
     render: (value, record, index) => {
       return <a onClick={() => deleteItem(index)}>删除</a>;
     },
@@ -340,91 +339,3 @@ const TableList = ({
     </>
   );
 };
-
-// TODO: 1. 展示有问题, 需要去具体算text的内容 2. 校验有问题，没有展开的项没有被校验到
-// const ExpandList = ({
-//   displayList = [{}],
-//   dataIndex,
-//   children,
-//   deleteItem,
-//   addItem,
-//   listData = [],
-//   childrenSchema,
-// }) => {
-//   const dataSource = displayList.map((item, idx) => {
-//     const data = listData[idx] || {};
-//     return { ...data, index: idx };
-//   });
-
-//   const columns = Object.keys(childrenSchema).map(key => {
-//     const item = childrenSchema[key];
-//     return {
-//       dataIndex: key,
-//       title: item.title,
-//       render: value => value || '-', // TODO: something
-//     };
-//   });
-
-//   columns.push({
-//     title: '操作',
-//     key: '$action',
-//     render: (record, idx) => {
-//       return <a onClick={() => deleteItem(idx)}>Delete</a>;
-//     },
-//   });
-
-//   return (
-//     <>
-//       <Table
-//         columns={columns}
-//         dataSource={dataSource}
-//         // defaultExpandAllRows
-//         rowKey="index"
-//         expandable={{
-//           expandedRowRender: (record, idx) => {
-//             const childIndex = [...dataIndex, idx];
-//             return (
-//               <li className={`w-100`}>
-//                 {children.map((child, idx2) => {
-//                   return (
-//                     <Core
-//                       key={idx2.toString()}
-//                       id={child}
-//                       dataIndex={childIndex}
-//                     />
-//                   );
-//                 })}
-//               </li>
-//             );
-//           },
-//         }}
-//       />
-//       <div className="w-100">
-//         <Button onClick={addItem}>addItem</Button>
-//       </div>
-//     </>
-//   );
-
-//   return (
-//     <ul className="flex flex-wrap pl0 list">
-//       {(displayList || []).map((item, idx) => {
-//         const childIndex = [...dataIndex, idx];
-//         return (
-//           <li key={idx.toString()} className={`w-100`}>
-//             {children.map((child, idx2) => {
-//               return (
-//                 <Core key={idx2.toString()} id={child} dataIndex={childIndex} />
-//               );
-//             })}
-//             {Array.isArray(displayList) && displayList.length > 1 && (
-//               <Button onClick={() => deleteItem(idx)}>delete</Button>
-//             )}
-//           </li>
-//         );
-//       })}
-//       <div className="w-100">
-//         <Button onClick={addItem}>addItem</Button>
-//       </div>
-//     </ul>
-//   );
-// };
