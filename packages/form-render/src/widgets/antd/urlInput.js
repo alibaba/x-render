@@ -15,5 +15,7 @@ const TestNode = ({ value }) => {
 };
 
 export default function imageInput({ value, ...rest }) {
-  return <Input addonAfter={<TestNode value={value} />} {...rest} />;
+  return (
+    <Input value={value} addonAfter={<TestNode value={value} />} {...rest} />
+  );
 }
