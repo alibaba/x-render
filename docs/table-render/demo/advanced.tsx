@@ -177,7 +177,6 @@ const TableBody = () => {
       <Table
         // size="small"
         columns={columns}
-        pagi
         // headerTitle="高级表单"
         rowKey="id"
         toolbarRender={() => [
