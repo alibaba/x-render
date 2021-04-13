@@ -25,11 +25,13 @@ XRender
 > 阿里巴巴 - 飞猪中后台开箱即用解决方案
 
 ## 优势
+
 - FormRender：像写一个 input 一样写表单
 - TableRender：协议生成 & 高度灵活的搜索列表
 - ChartRender：傻瓜式的图表绘制库
 
 ## 谁在使用？
+
 <table>
   <tr>
     <td width="160" align="center">

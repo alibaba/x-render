@@ -86,7 +86,7 @@ export default defineConfig({
     'form-render/dist': path.resolve(__dirname, 'packages/form-render/dist'),
   },
   esbuild: {},
-  base: '/x-render/',
+  base: '/form-render/',
   publicPath: '/form-render/',
   exportStatic: {},
   extraBabelPlugins: [
