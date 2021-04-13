@@ -90,9 +90,7 @@ const areEqual = (prev, current) => {
     prev.value === current.value &&
     JSON.stringify(prev.schema) === JSON.stringify(current.schema)
   ) {
-    if (window.NOTHING_CHANGED_IN_WIDGETS) {
-      return true; // TODO: return true 之后 useForm 里的 formData 的更新会出问题，why
-    }
+    return true;
   }
   return false;
 };
