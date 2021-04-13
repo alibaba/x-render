@@ -21,14 +21,7 @@ const Core = ({
   ...rest
 }) => {
   // console.log('<Core>');
-  const {
-    displayType,
-    column,
-    flatten,
-    errorFields,
-    labelWidth,
-    readOnly,
-  } = useStore();
+  const { displayType, column, flatten, errorFields, labelWidth } = useStore();
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
@@ -125,7 +118,6 @@ const Core = ({
   // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
   const effectiveLabelWidth =
     getParentProps('labelWidth', id, flatten) || labelWidth;
-  const effectiveReadOnly = readOnly || getParentProps('readOnly', id, flatten);
   const _labelWidth = isLooselyNumber(effectiveLabelWidth)
     ? Number(effectiveLabelWidth)
     : isCssLength(effectiveLabelWidth)
@@ -158,7 +150,6 @@ const Core = ({
     hasChildren,
     // 层级间可使用的字段
     displayType: _displayType,
-    readOnly: effectiveReadOnly,
     hideTitle,
     hideValidation,
   };

@@ -53,7 +53,7 @@ const schema = {
       title: '输入框',
       description: '尝试输入超过5个字符',
       type: 'string',
-      hidden: '{{formData.select1 !== "b"}}',
+      hidden: '{{formData.select1 == "a"}}',
     },
   },
 };

@@ -31,7 +31,6 @@ const RenderField = props => {
     errorFields = [],
     hideTitle,
     displayType,
-    readOnly,
   } = props;
 
   const { schema } = item;
@@ -43,6 +42,7 @@ const RenderField = props => {
     setEditing,
     touchKey,
     debounceInput,
+    readOnly,
   } = store;
   // console.log('<renderField>', $id);
   const snapShot = useRef();
@@ -124,7 +124,7 @@ const RenderField = props => {
 
   const widgetProps = {
     schema: _schema,
-    readOnly,
+    readOnly: readOnly !== undefined ? readOnly : _schema.readOnly,
     onChange,
     value: _value,
     onItemChange,

@@ -1,20 +1,10 @@
 import * as React from 'react';
-
-export interface FormInstance {
-  /** 正向的转换函数 */
-  from: (schema: any) => any;
-  /** 反向的转换函数 */
-  to: (schema: any) => any;
-  /** 表单 data 变化回调 */
-  onChange?: (data: any) => void;
-}
 export interface Error {
   /** 错误的数据路径 */
   name: string;
   /** 错误的内容 */
   error: string[];
 }
-
 export interface FormParams {
   formData?: any;
   onChange?: (data: any) => void;
@@ -56,6 +46,10 @@ export interface FRProps {
   widgets?: any;
   /** 表单提交前钩子 */
   displayType?: string;
+  /** 只读模式 */
+  readOnly?: boolean;
+  /** 标签宽度 */
+  labelWidth?: string;
   /** antd的全局config */
   configProvider?: any;
   theme?: any;
