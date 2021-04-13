@@ -21,7 +21,14 @@ const Core = ({
   ...rest
 }) => {
   // console.log('<Core>');
-  const { displayType, column, flatten, errorFields, labelWidth } = useStore();
+  const {
+    displayType,
+    column,
+    flatten,
+    errorFields,
+    labelWidth,
+    readOnly,
+  } = useStore();
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
@@ -33,7 +40,7 @@ const Core = ({
   const isObjType = schema.type === 'object'; // TODO: 这个好像太笼统了，万一不是这样呢
   const isList = isListType(schema);
   const isComplex = isObjType || isList;
-  const isCheckBox = isCheckBoxType(schema);
+  const isCheckBox = isCheckBoxType(schema, readOnly);
   const width = schema.width || schema['ui:width'];
   let containerClass = `fr-field ${
     _displayType === 'inline' ? '' : 'w-100'

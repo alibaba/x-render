@@ -85,6 +85,8 @@ const RenderField = props => {
 
   const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
 
+  const _readOnly = readOnly !== undefined ? readOnly : _schema.readOnly;
+
   // TODO: 优化一下，只有touch还是false的时候，setTouched
   const onChange = value => {
     // 动过的key，算被touch了
@@ -106,7 +108,7 @@ const RenderField = props => {
     displayType,
   };
 
-  const hideValidation = displayType === 'inline';
+  const hideValidation = displayType === 'inline' || _readOnly === true;
 
   const messageProps = {
     message: errorMessage,
@@ -124,7 +126,7 @@ const RenderField = props => {
 
   const widgetProps = {
     schema: _schema,
-    readOnly: readOnly !== undefined ? readOnly : _schema.readOnly,
+    readOnly: _readOnly,
     onChange,
     value: _value,
     onItemChange,
@@ -134,7 +136,7 @@ const RenderField = props => {
 
   widgetProps.children = hasChildren
     ? children
-    : isCheckBoxType(_schema)
+    : isCheckBoxType(_schema, _readOnly)
     ? _schema.title
     : null;
   // if (_schema && _schema.default !== undefined) {
@@ -146,7 +148,7 @@ const RenderField = props => {
   }
 
   // checkbox必须单独处理，布局太不同了
-  if (isCheckBoxType(_schema)) {
+  if (isCheckBoxType(_schema, _readOnly)) {
     return (
       <>
         {_showTitle && <div {...placeholderTitleProps} />}

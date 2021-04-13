@@ -31,7 +31,8 @@ export function isUrl(string) {
   return protocolRE.test(string);
 }
 
-export function isCheckBoxType(schema) {
+export function isCheckBoxType(schema, readOnly) {
+  if (readOnly) return false;
   return schema && schema.type === 'boolean' && schema['widget'] !== 'switch'; // TODO: 感觉有点不准
 }
 
@@ -762,8 +763,12 @@ export const generateDataSkeleton = schema => {
       const childResult = generateDataSkeleton(childSchema);
       result[key] = childResult;
     });
+  } else if (schema.default !== undefined) {
+    result = schema.default;
+  } else if (schema.type === 'boolean') {
+    result = false;
   } else {
-    result = schema.default || undefined;
+    result = undefined;
   }
   return result;
 };
