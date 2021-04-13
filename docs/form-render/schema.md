@@ -295,24 +295,24 @@ export default () => <FR schema={basic} />;
 
 默认使用的 `'list1'` 展示
 
-    ```json
-    {
-      "title": "对象数组",
-      "type": "array",
-      "min": 1,
-      "max": 3,
-      "widget": "simple",
-      "items": {
-        "type": "object",
-        "properties": {
-          "tickets": {
-            "title": "门票数",
-            "type": "number"
-          }
-        }
+```json
+{
+  "title": "对象数组",
+  "type": "array",
+  "min": 1,
+  "max": 3,
+  "widget": "list1",
+  "items": {
+    "type": "object",
+    "properties": {
+      "tickets": {
+        "title": "门票数",
+        "type": "number"
       }
     }
-    ```
+  }
+}
+```
 
 ### 选择类组件
 

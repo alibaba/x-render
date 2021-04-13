@@ -56,6 +56,7 @@ function Demo() {
     </div>
   );
 }
+
 export default Demo;
 ```
 
@@ -64,8 +65,12 @@ export default Demo;
 完全使用新 api，formData 和 onChange 这些原本暴露在外的属性收束，submit 方法由 form 实例提供，一般情况下迁移也快的，只是要注意所有在外部使用到 formData 的场景，需要替换为 `form.getValues()`，所有使用到 onChange 的地方需要修改为 `form.setValues()`
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
-import FormRender, { useForm } from 'form-render'; // 1
+import FormRender, { useForm } from 'form-render'; // 1. 改 import
 
 const schema = {
   type: 'object',
@@ -79,7 +84,7 @@ const schema = {
 };
 
 function Demo() {
-  const form = useForm(); // 2
+  const form = useForm(); // 2. 获取 form 实例，现在所有表单方法都挂在上面
   // 3 onSubmit 的入参
   const onSubmit = (formData, valid) => {
     if (valid.length > 0) {
