@@ -81,6 +81,16 @@ const RenderField = props => {
 
   const _value = getValueByPath(formData, dataPath);
 
+  const _getValue = path => {
+    if (path === '#' || !path) {
+      return formData;
+    } else if (typeof path === 'string') {
+      return getValueByPath(formData, path);
+    } else {
+      console.error('path has to be a string');
+    }
+  };
+
   let contentStyle = {};
 
   const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
@@ -128,6 +138,8 @@ const RenderField = props => {
     schema: _schema,
     readOnly: _readOnly,
     onChange,
+    getValue: _getValue,
+    formData,
     value: _value,
     onItemChange,
     dataIndex,
