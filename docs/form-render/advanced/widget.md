@@ -101,6 +101,8 @@ export default Demo;
 - **onChange**：函数，接收 value 为入参，用于将自定义组件的返回值同步给 Form
 - **schema**：组件对应的子 schema
 - **addons.onItemChange**: 注意挂在 addons 下面。用于在本组件内修改其他组件的值 onItemChange(value, path)
+- **addons.dataPath**: 注意挂在 addons 下面。目前数据所在的 path，例如"a.b[2].c[0].d"，string 类型。
+- **addons.dataIndex**: 注意挂在 addons 下面。如果 dataPath 不包含数组，则为 [], 如果 dataPath 包含数组，例如"a.b[2].c[0].d"，则为 [2,0]。是自上到下所有经过的数组的 index 按顺序存放的一个数组类型
 
 对高阶组件熟悉的同学，`form-render` 内置了 `createWidget` 方法，支持用类似于 `redux` 的 `connect` 的语法快速生产自定义组件：
 

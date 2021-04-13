@@ -12,7 +12,7 @@ toc: false
 
 ### 函数表达式
 
-函数表达式为字符串，并以双括号`"{{...}}"`为语法特征。schema 里除了 rules 字段（用于描述校验）以外，所有字段都支持函数表达式，例如
+函数表达式为字符串，并以双括号`"{{...}}"`为语法特征。schema 里除了 default (默认值) / rules 字段(校验信息) 以外，所有字段都支持函数表达式，例如
 
 ```json
 {
@@ -20,6 +20,9 @@ toc: false
   "type": "string"
 }
 ```
+
+注 1：rules 字段已经可以是用 validator 方法定制校验，详见 `async-validator` github 仓库文档。
+注 2：default 字段对应的是 Input 的 defaultValue，defaultValue 是不会根据值的后续变化而变化的，所以我们选择不允许 default 字段为函数表达式，需要修改指定字段的值，请使用自定义组件的 `onItemChange` 方法
 
 3. 函数表达式可使用以下 2 关键字：
 
