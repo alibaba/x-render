@@ -71,7 +71,7 @@ const Demo = () => {
       <Space>
         <Button onClick={getRemoteData}>加载服务端数据</Button>
         <Button type="primary" onClick={form.submit}>
-          提交
+          提交（见console）
         </Button>
       </Space>
     </div>
@@ -141,7 +141,7 @@ const Demo = () => {
         onFinish={onFinish}
       />
       <Button type="primary" onClick={form.submit}>
-        提交
+        提交（见console）
       </Button>
     </div>
   );
@@ -201,7 +201,7 @@ const Demo = () => {
       <Space>
         <Button onClick={getRemoteData}>加载服务端数据</Button>
         <Button type="primary" onClick={form.submit}>
-          提交
+          提交（见console）
         </Button>
       </Space>
     </div>
