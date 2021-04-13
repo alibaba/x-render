@@ -117,15 +117,14 @@ const SimpleList = ({
     <div>
       {displayList.map((item, idx) => {
         return (
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div key={idx} style={{ display: 'flex', alignItems: 'center' }}>
             <Core
-              key={idx}
               displayType="inline"
               _item={_infoItem}
               dataIndex={[...dataIndex, idx]}
             />
             <MinusCircleOutlined
-              style={{ fontSize: 16, marginLeft: 8 }}
+              style={{ fontSize: 16, marginLeft: 8, marginBottom: 12 }}
               onClick={() => deleteItem(idx)}
             />
           </div>

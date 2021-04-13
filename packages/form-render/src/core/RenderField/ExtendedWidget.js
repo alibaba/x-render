@@ -14,6 +14,9 @@ const ExtendedWidget = ({
   value,
   children,
   onItemChange,
+  readOnly,
+  dataPath,
+  dataIndex,
 }) => {
   const { widgets, mapping } = useTools();
 
@@ -31,6 +34,11 @@ const ExtendedWidget = ({
   //   JSON.stringify(schema),
   // ]);
   let widgetName = getWidgetName(schema, mapping);
+  if (readOnly) {
+    if (['object', 'array'].indexOf(schema.type) === -1) {
+      widgetName = 'html';
+    }
+  }
   let Widget = widgets[widgetName];
   const customName = schema.widget || schema['ui:widget'];
   if (customName && widgets[customName]) {
@@ -64,7 +72,7 @@ const ExtendedWidget = ({
 
   // 避免传组件不接受的props，按情况传多余的props
   // const isExternalWidget = defaultWidgetNameList.indexOf(widgetName) === -1; // 是否是外部组件
-  widgetProps.addons = { onItemChange };
+  widgetProps.addons = { onItemChange, dataPath, dataIndex };
 
   const finalProps = transformProps(widgetProps);
 

@@ -31,6 +31,7 @@ const RenderField = props => {
     errorFields = [],
     hideTitle,
     displayType,
+    readOnly,
   } = props;
 
   const { schema } = item;
@@ -123,9 +124,12 @@ const RenderField = props => {
 
   const widgetProps = {
     schema: _schema,
+    readOnly,
     onChange,
     value: _value,
     onItemChange,
+    dataIndex,
+    dataPath,
   };
 
   widgetProps.children = hasChildren
