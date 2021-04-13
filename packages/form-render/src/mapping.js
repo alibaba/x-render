@@ -40,7 +40,7 @@ export function getWidgetName(schema, _mapping = mapping) {
   }
   if (enums) {
     // 根据enum长度来智能选择控件
-    if (Array.isArray(enums) && enums.length > 3) {
+    if (Array.isArray(enums) && enums.length > 2) {
       list.push(`${type}?enum_long`);
       list.push('*?enum_long');
     } else {
