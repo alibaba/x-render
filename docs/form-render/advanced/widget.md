@@ -1,7 +1,7 @@
 ---
 order: 2
 group:
-  order: 2
+  order: 3
   title: 高级用法
 toc: content
 ---

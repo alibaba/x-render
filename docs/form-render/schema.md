@@ -70,9 +70,9 @@ toc: content
 
 所有表单原素会用到的属性。从 FormRender 内部实现的角度：
 
-1. type,format,enum 和 widget 这几个属性决定了使用哪个组件来渲染。具体判断规则见[内置组件](/form-render/advanced/widget#内置组件)
-2. type,format,min,max,required,rules 字段用于做校验判断
-3. props 字段用于补充组件支持的更为细致的属性
+1. `type`, `format`, `enum` 和 `widget` 字段决定了使用哪个组件来渲染。具体判断规则见[内置组件](/form-render/advanced/widget#内置组件)
+2. `type`, `format`, `min`, `max`, `required` 和 `rules` 字段用于做校验判断
+3. `props` 字段用于补充组件支持的更为细致的属性
 
 一个简单的使用各种“基础属性”的样例如下：
 
@@ -200,6 +200,11 @@ export default () => <FR schema={basic} />;
 
 - 类型：string
 - 详细：Input 等元素的 placeholder。这个属性太常用了，虽然不是每个组件都有，但 80%以上都有，所以决定放在“基础属性”
+
+#### bind
+
+- 类型：string | string[]
+- 详细：当服务端接口获取的字段与你希望的表单展示结构不同时，可以通过 bind 字段绑定的方式指明表单的某个字段对应的是外部数据的另一个字段。详细例子见 [“表单与外界的交互”](/form-render/advanced/form-methods) 的例 3
 
 #### min
 
