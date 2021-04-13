@@ -161,6 +161,21 @@ const MyWidget = props => {
 1. `onChange` 不再接收 name 作为第一个入参，而改为更为自然的只有一个入参 value
 2. 所有`ui:options`的内容会直接在 props 里拿到，而不需要再从 props.options 里获取 （ui:options 已更名为 props，不过在顶层做了 schema 字段的兼容）
 
+## schema 细节上的改动
+
+单选组件不再默认选中第一项，默认值为 undefined，除非通过 default 字段指明。
+
+```js
+// 单选
+{
+  "title": "单选",
+  "type": "string",
+  "enum": ["hz", "wh", "gy"],
+  "enumNames": ["杭州", "武汉", "贵阳"],
+  "default": "hz"
+}
+```
+
 ## Changelog 思考
 
 在最后罗列一下细节上 FormRender 0.x -> 1.0 细节上的改动 & 思考

@@ -254,7 +254,7 @@ export default () => <FR schema={basic} />;
 
 ## 基础属性（非共通的）
 
-以下是特定组件中使用的基础属性，并非所有组件通用
+以下是特定组件中使用的基础属性，并非所有组件通用。
 
 ### 对象
 
@@ -318,25 +318,28 @@ export default () => <FR schema={basic} />;
 - 类型：string | number
 - 详细：选项的文案
 
-  ```json
-  // 单选
-  {
-    "title": "单选",
-    "type": "string",
-    "enum": ["hz", "wh", "gy"],
-    "enumNames": ["杭州", "武汉", "贵阳"]
-  }
-  // 多选
-  {
-    "title": "多选",
-    "type": "array",
-    "items": {
-      "type": "string"
-    },
-    "enum": ["hz", "wh", "gy"],
-    "enumNames": ["杭州", "武汉", "贵阳"]
-  }
-  ```
+注: 旧版 form-render 会默认选中第一项，但是新版除非通过 default 指明，否则不会选中任何一项，且初始值是 undefined
+
+```json
+// 单选
+{
+  "title": "单选",
+  "type": "string",
+  "enum": ["hz", "wh", "gy"],
+  "enumNames": ["杭州", "武汉", "贵阳"],
+  "default": "hz"
+}
+// 多选
+{
+  "title": "多选",
+  "type": "array",
+  "items": {
+    "type": "string"
+  },
+  "enum": ["hz", "wh", "gy"],
+  "enumNames": ["杭州", "武汉", "贵阳"]
+}
+```
 
 ### Range 组件
 
