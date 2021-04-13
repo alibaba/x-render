@@ -1,6 +1,6 @@
 {
   "name": "table-render",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "中后台表格解决方案",
   "scripts": {
     "start": "dumi dev",
@@ -17,7 +17,7 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "typings": "dist/src/index.d.ts",
+  "typings": "dist/index.d.ts",
   "gitHooks": {
     "pre-commit": "lint-staged"
   },

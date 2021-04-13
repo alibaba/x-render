@@ -6,7 +6,6 @@ import Table from './Table';
 import { message, ConfigProvider } from 'antd';
 import { isObj } from './utils';
 import _get from 'lodash.get';
-import { TablePaginationConfig } from 'antd/lib/table';
 import zh_CN from 'antd/lib/locale/zh_CN';
 
 import 'antd/dist/antd.less'; // 需要配置一下babel-plugins
@@ -22,7 +21,7 @@ const useTableRoot = props => {
     extraData: null, // 需要用到的 dataSource 以外的扩展返回值
     pagination: {
       current: 1,
-      pageSize: 3,
+      pageSize: 10,
       total: 1,
     },
     tableSize: 'default',
