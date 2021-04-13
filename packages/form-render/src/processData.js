@@ -12,37 +12,6 @@ export const processData = (data, flatten) => {
   return _data;
 };
 
-export const getDataWithDefault = (data, flatten) => {
-  const defaultList = getDefaultList(flatten);
-  return transformDataWithDefault(data, defaultList);
-};
-
-const getDefaultList = flatten => {
-  let result = [];
-  Object.keys(flatten).forEach(key => {
-    const { schema } = flatten[key];
-    if (schema.default) {
-      result.push({ path: key, value: schema.default });
-    }
-  });
-  return result;
-};
-
-// TODO: 没有考虑list，list还是不建议给default
-const transformDataWithDefault = (data, dList) => {
-  let _data = clone(data);
-  dList.forEach(item => {
-    if (item.path.indexOf('[]') === -1) {
-      const val = get(_data, item.path);
-      if (val === undefined) {
-        set(_data, item.path, item.value);
-      }
-    } else {
-    }
-  });
-  return _data;
-};
-
 export const transformDataWithBind = (data, flatten) => {
   let _data = clone(data);
   const unbindKeys = [];

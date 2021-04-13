@@ -13,14 +13,12 @@ import { get, merge } from 'lodash';
 // export const validateAll = () => Promise.resolve([]);
 
 export const validateAll = ({
-  formData: _formData,
+  formData,
   schema = {},
   isRequired = true,
   touchedKeys = [],
   locale = 'cn',
 }) => {
-  // 生成一个基础结构，确保对象内的必填元素也被校验。
-  const formData = merge(generateDataSkeleton(schema), _formData);
   // debugger;
   // const formData = { ...generateDataSkeleton(schema), ..._formData };
   // console.log(formData, '&&&& formData');

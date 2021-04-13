@@ -382,14 +382,6 @@ export function isExpression(func) {
 export function parseSingleExpression(func, formData = {}, dataPath) {
   const parentPath = getParentPath(dataPath);
   const parent = getValueByPath(formData, parentPath) || {};
-  // if (typeof func === 'function') {
-  //   try {
-  //     return func(formData, parent);
-  //   } catch (e) {
-  //     console.error(`${dataPath}表达式解析错误`);
-  //     return;
-  //   }
-  // } else
   if (typeof func === 'string') {
     const funcBody = func.substring(2, func.length - 2);
     const match1 = /formData.([a-zA-Z0-9.$_\[\]]+)/g;
@@ -771,7 +763,7 @@ export const generateDataSkeleton = schema => {
       result[key] = childResult;
     });
   } else {
-    result = undefined;
+    result = schema.default || undefined;
   }
   return result;
 };

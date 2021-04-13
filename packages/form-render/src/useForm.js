@@ -2,13 +2,13 @@
 import { useEffect, useRef } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
-import { set, sortedUniqBy } from 'lodash';
+import { set, sortedUniqBy, merge } from 'lodash';
 import {
   processData,
   transformDataWithBind,
   transformDataWithBind2,
-  getDataWithDefault,
 } from './processData';
+import { generateDataSkeleton } from './utils';
 
 export const useForm = props => {
   const {
@@ -30,8 +30,8 @@ export const useForm = props => {
     touchedKeys: [], // 碰过的key（用于submit之前，判断哪些被碰过了）
   });
 
-  const schemaRef = useRef();
-  const flattenRef = useRef();
+  const schemaRef = useRef({});
+  const flattenRef = useRef({});
   const clickSubmit = useRef(false); // 点击submit的那一下，不要执行useEffect里的validate
   const beforeFinishRef = useRef();
   const localeRef = useRef('cn');
@@ -52,6 +52,9 @@ export const useForm = props => {
   const dataFromOutside = props && props.hasOwnProperty('formData');
 
   const formData = dataFromOutside ? _formData : innerData;
+
+  // 生成一个基础结构，确保对象内的必填元素也被校验。
+  const _data = merge(generateDataSkeleton(schemaRef.current), formData);
 
   // 两个兼容 0.x 的函数
   const _setData = data => {
@@ -82,7 +85,6 @@ export const useForm = props => {
     // 如果是外部数据，submit没有收束，无校验
     if (dataFromOutside && typeof _onValidate === 'function') {
       setTimeout(() => {
-        const _data = getDataWithDefault(formData, flattenRef.current);
         validateAll({
           formData: _data,
           schema: schemaRef.current,
@@ -103,7 +105,6 @@ export const useForm = props => {
       clickSubmit.current = false;
       return;
     }
-    const _data = getDataWithDefault(formData, flattenRef.current);
     validateAll({
       formData: _data,
       schema: schemaRef.current,
@@ -130,8 +131,8 @@ export const useForm = props => {
       _setData({ ...value });
       return;
     }
-    set(formData, path, value);
-    _setData({ ...formData });
+    set(_data, path, value);
+    _setData({ ..._data });
   };
 
   // TODO: 全局的没有path, 这个函数要这么写么。。全局的，可以path = #
@@ -169,7 +170,7 @@ export const useForm = props => {
     _setErrors(newError);
   };
 
-  const getValues = () => transformDataWithBind(formData, flattenRef.current);
+  const getValues = () => transformDataWithBind(_data, flattenRef.current);
 
   const setValues = newFormData => {
     const newData = transformDataWithBind2(newFormData, flattenRef.current);
@@ -183,9 +184,6 @@ export const useForm = props => {
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
-
-    const _data = getDataWithDefault(formData, flattenRef.current);
-
     validateAll({
       formData: _data,
       schema: schemaRef.current,
@@ -254,7 +252,7 @@ export const useForm = props => {
 
   const form = {
     // state
-    formData,
+    formData: _data,
     schema: schemaRef.current,
     touchedKeys,
     // methods
