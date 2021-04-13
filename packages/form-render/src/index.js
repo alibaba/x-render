@@ -70,6 +70,13 @@ function App({
     syncStuff({ schema, flatten, beforeFinish, locale });
   }, [JSON.stringify(_flatten), JSON.stringify(schema)]);
 
+  // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
+  useEffect(() => {
+    return () => {
+      form.destroyForm();
+    };
+  }, []);
+
   const store = useMemo(
     () => ({
       flatten,
@@ -132,6 +139,7 @@ function App({
                 <div>{'formData:' + JSON.stringify(form.formData)}</div>
                 <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
                 <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
+                <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
                 <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
                 <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
                 <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>

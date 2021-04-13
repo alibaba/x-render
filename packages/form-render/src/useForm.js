@@ -251,6 +251,15 @@ export const useForm = props => {
       outsideValidating: false,
     });
 
+  const destroyForm = () =>
+    setState({
+      formData: {},
+      submitData: {},
+      errorFields: [],
+      allTouched: false,
+      touchedKeys: [],
+    });
+
   const form = {
     // state
     formData: _data.current,
@@ -277,6 +286,7 @@ export const useForm = props => {
     isEditing,
     setEditing,
     syncStuff,
+    destroyForm,
   };
   return form;
 };
