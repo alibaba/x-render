@@ -87,7 +87,7 @@ export default defineConfig({
   },
   esbuild: {},
   base: '/x-render/',
-  publicPath: '/x-render/',
+  publicPath: '/form-render/',
   exportStatic: {},
   extraBabelPlugins: [
     [
