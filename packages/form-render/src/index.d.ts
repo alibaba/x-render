@@ -69,6 +69,6 @@ declare const FR: React.FC<FRProps>;
 
 export declare function useForm(params?: FormParams): FormInstance;
 
-export declare function connectForm(): any;
+export declare function connectForm(component: React.FC<any>): any;
 
 export default FR;
