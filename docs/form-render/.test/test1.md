@@ -13,29 +13,15 @@ const schema = {
     },
     input2: {
       title: '简单输入框2',
+      type: 'boolean',
+    },
+    input3: {
+      title: '简单输入框3',
       type: 'string',
       required: true,
     },
   },
 };
-
-// const schema = {
-//   displayType: 'column',
-//   type: 'object',
-//   properties: {
-//     input1: {
-//       title: '简单输入框',
-//       type: 'string',
-//       required: true,
-//     },
-//     select1: {
-//       title: '单选',
-//       type: 'string',
-//       enum: ['a', 'b', 'c'],
-//       enumNames: ['早', '中', '晚'],
-//     },
-//   },
-// };
 
 const Demo = () => {
   const form = useForm();

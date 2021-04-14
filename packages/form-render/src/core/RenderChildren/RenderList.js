@@ -4,11 +4,16 @@ import Core from '../index';
 import { get } from 'lodash';
 import { useStore, useSet } from '../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../utils';
-import { Button, Table, Drawer, Space } from 'antd';
+import { Button, Table, Drawer, Space, Popconfirm } from 'antd';
 import ArrowUp from '../../components/ArrowUp';
 import ArrowDown from '../../components/ArrowDown';
 import ErrorMessage from '../RenderField/ErrorMessage';
-import { MinusCircleOutlined } from '@ant-design/icons';
+import {
+  MinusCircleOutlined,
+  DeleteOutlined,
+  CopyOutlined,
+} from '@ant-design/icons';
+import './list.less';
 
 const FIELD_LENGTH = 120;
 
@@ -17,6 +22,7 @@ const RenderList = ({
   dataIndex = [],
   children = [],
   errorFields,
+  displayType,
 }) => {
   const { formData, flatten, onItemChange, removeErrorField } = useStore();
 
@@ -33,13 +39,23 @@ const RenderList = ({
     listData = get(formData, dataPath);
   }
 
-  const displayList = Array.isArray(listData) ? listData : [];
+  const displayList = Array.isArray(listData) ? listData : [{}];
 
   const addItem = () => {
-    const newList = [...displayList, undefined];
+    const newList = [...displayList, {}];
     const newIndex = newList.length - 1;
     onItemChange(dataPath, newList);
     return newIndex;
+  };
+
+  const copyItem = idx => {
+    const newItem = displayList[idx];
+    const newList = [
+      ...displayList.slice(0, idx),
+      newItem,
+      ...displayList.slice(idx),
+    ];
+    onItemChange(dataPath, newList);
   };
 
   const deleteItem = idx => {
@@ -78,14 +94,18 @@ const RenderList = ({
     children,
     deleteItem,
     addItem,
+    copyItem,
     moveItemDown,
     moveItemUp,
     listData,
     flatten,
     errorFields,
+    displayType,
   };
 
   switch (renderWidget) {
+    case 'list0':
+      return <CardList {...displayProps} />;
     case 'list1':
       return <SimpleList {...displayProps} />;
     case 'list2':
@@ -93,7 +113,7 @@ const RenderList = ({
     case 'list3':
       return <DefaultList {...displayProps} />;
     default:
-      return <DefaultList {...displayProps} />;
+      return <CardList {...displayProps} />;
   }
 };
 
@@ -105,6 +125,7 @@ const SimpleList = ({
   children,
   deleteItem,
   addItem,
+  copyItem,
 }) => {
   const _infoItem = {
     schema: { type: 'object', properties: {} },
@@ -113,19 +134,29 @@ const SimpleList = ({
   };
 
   return (
-    <div>
+    <div className="">
       {displayList.map((item, idx) => {
         return (
-          <div key={idx} style={{ display: 'flex', alignItems: 'center' }}>
+          <div key={idx} style={{ display: 'flex' }}>
             <Core
               displayType="inline"
               _item={_infoItem}
               dataIndex={[...dataIndex, idx]}
             />
-            <MinusCircleOutlined
-              style={{ fontSize: 16, marginLeft: 8, marginBottom: 12 }}
-              onClick={() => deleteItem(idx)}
-            />
+            <div style={{ marginTop: 6 }}>
+              <Popconfirm
+                title="确定删除?"
+                onConfirm={() => deleteItem(idx)}
+                okText="确定"
+                cancelText="取消"
+              >
+                <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
+              </Popconfirm>
+              <CopyOutlined
+                style={{ fontSize: 16, marginLeft: 8 }}
+                onClick={() => copyItem(idx)}
+              />
+            </div>
           </div>
         );
       })}
@@ -204,7 +235,14 @@ const DefaultList = ({
       return (
         <Space>
           <a onClick={() => openDrawer(index)}>编辑</a>
-          <a onClick={() => deleteItem(index)}>删除</a>
+          <Popconfirm
+            title="确定删除?"
+            onConfirm={() => deleteItem(idx)}
+            okText="确定"
+            cancelText="取消"
+          >
+            <a>删除</a>
+          </Popconfirm>
           {/* <ArrowUp height={18} width={24} onClick={() => moveItemUp(index)} />
           <ArrowDown
             height={18}
@@ -243,7 +281,7 @@ const DefaultList = ({
         </Button>
       </div>
       <Drawer
-        width="500"
+        width="600"
         title="编辑"
         placement="right"
         onClose={closeDrawer}
@@ -317,7 +355,16 @@ const TableList = ({
     fixed: 'right',
     width: 60,
     render: (value, record, index) => {
-      return <a onClick={() => deleteItem(index)}>删除</a>;
+      return (
+        <Popconfirm
+          title="确定删除?"
+          onConfirm={() => deleteItem(idx)}
+          okText="确定"
+          cancelText="取消"
+        >
+          <a>删除</a>
+        </Popconfirm>
+      );
     },
   });
 
@@ -336,6 +383,68 @@ const TableList = ({
         size="small"
         pagination={{ size: 'small', hideOnSinglePage: true }}
       />
+    </>
+  );
+};
+
+const CardList = ({
+  displayList = [],
+  dataIndex,
+  children,
+  deleteItem,
+  copyItem,
+  addItem,
+  displayType,
+}) => {
+  const _infoItem = {
+    schema: { type: 'object', properties: {} },
+    rules: [],
+    children,
+  };
+
+  return (
+    <>
+      <div className="fr-card-list">
+        {displayList.map((item, idx) => {
+          return (
+            <div
+              className={`fr-card-item ${
+                displayType === 'row' ? 'fr-card-item-row' : ''
+              }`}
+              key={idx}
+            >
+              <div className="fr-card-index">{idx + 1}</div>
+              <Core
+                displayType={displayType}
+                _item={_infoItem}
+                dataIndex={[...dataIndex, idx]}
+              />
+
+              <Space direction="horizontal" className="fr-card-toolbar">
+                <Popconfirm
+                  title="确定删除?"
+                  onConfirm={() => deleteItem(idx)}
+                  okText="确定"
+                  cancelText="取消"
+                >
+                  <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
+                </Popconfirm>
+                <CopyOutlined
+                  style={{ fontSize: 16, marginLeft: 8 }}
+                  onClick={() => copyItem(idx)}
+                />
+              </Space>
+            </div>
+          );
+        })}
+      </div>
+      <Button
+        style={{ marginTop: displayList.length > 0 ? 0 : 8 }}
+        type="dashed"
+        onClick={addItem}
+      >
+        新增一条
+      </Button>
     </>
   );
 };

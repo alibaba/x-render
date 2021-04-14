@@ -260,6 +260,7 @@ const MyWidget = props => {
 5. **其他**
 
    - 未压缩的包体积从 76k -> 11k
+   - 对 typescript 的内置支持
    - 渲染会根据 schema 的结构来渲染，不再会因为 formData 值的顺序变化影响到展示
    - 提交的 formData，不展示的 key 不会返回
 

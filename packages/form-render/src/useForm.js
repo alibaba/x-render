@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy, merge } from 'lodash';
@@ -36,6 +36,7 @@ export const useForm = props => {
   const beforeFinishRef = useRef();
   const localeRef = useRef('cn');
   const _data = useRef({}); // 用ref是为了破除闭包的影响
+  const _touchedKeys = useRef([]); // 用ref是为了破除闭包的影响
 
   const {
     formData: innerData,
@@ -55,7 +56,12 @@ export const useForm = props => {
   const formData = dataFromOutside ? _formData : innerData;
 
   // 生成一个基础结构，确保对象内的必填元素也被校验。
-  _data.current = merge(generateDataSkeleton(schemaRef.current), formData);
+  // _data.current = merge(generateDataSkeleton(schemaRef.current), formData);
+  _data.current = useMemo(() => {
+    return merge(generateDataSkeleton(schemaRef.current), formData);
+  }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
+
+  _touchedKeys.current = touchedKeys;
 
   // 两个兼容 0.x 的函数
   const _setData = data => {
@@ -74,10 +80,10 @@ export const useForm = props => {
   };
 
   const touchKey = key => {
-    if (touchedKeys.indexOf(key) > -1) {
+    if (_touchedKeys.current.indexOf(key) > -1) {
       return;
     }
-    const newKeyList = [...touchedKeys, key];
+    const newKeyList = [..._touchedKeys.current, key];
     setState({ touchedKeys: newKeyList });
   };
 
@@ -90,7 +96,7 @@ export const useForm = props => {
           formData: _data.current,
           schema: schemaRef.current,
           isRequired: true,
-          touchedKeys,
+          touchedKeys: _touchedKeys.current,
           locale: localeRef.current,
         }).then(res => {
           const oldFormatErrors = res.map(item => item.name);
@@ -110,7 +116,7 @@ export const useForm = props => {
       formData: _data.current,
       schema: schemaRef.current,
       isRequired: allTouched,
-      touchedKeys,
+      touchedKeys: _touchedKeys.current,
       locale: localeRef.current,
     }).then(res => {
       _setErrors(res);
@@ -264,7 +270,7 @@ export const useForm = props => {
     // state
     formData: _data.current,
     schema: schemaRef.current,
-    touchedKeys,
+    touchedKeys: _touchedKeys.current,
     allTouched,
     // methods
     touchKey,
