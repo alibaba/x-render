@@ -82,12 +82,12 @@ export default defineConfig({
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
   ],
   mode: 'site',
-  alias: {
-    'form-render/dist': path.resolve(__dirname, 'packages/form-render/dist'),
-  },
+  // alias: {
+  //   'form-render/dist': path.resolve(__dirname, 'packages/form-render/dist'),
+  // },
   esbuild: {},
-  base: '/form-render/',
-  publicPath: '/form-render/',
+  base: '/x-render/',
+  publicPath: '/x-render/',
   exportStatic: {},
   extraBabelPlugins: [
     [
