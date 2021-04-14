@@ -612,7 +612,7 @@ export const removeEmptyItemFromList = formData => {
   return result;
 };
 
-export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
+export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
   let result = {};
   if (isObjType(schema)) {
     result.type = 'object';
@@ -626,7 +626,10 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
       if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
         item.required = true;
       }
-      result.fields[key] = getDscriptorFromSchema({ schema: item, isRequired });
+      result.fields[key] = getDescriptorFromSchema({
+        schema: item,
+        isRequired,
+      });
     });
   } else if (isListType(schema)) {
     result.type = 'array';
@@ -640,7 +643,7 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
       if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
         item.required = true;
       }
-      result.defaultField.fields[key] = getDscriptorFromSchema({
+      result.defaultField.fields[key] = getDescriptorFromSchema({
         schema: item,
         isRequired,
       });
@@ -688,7 +691,8 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
         result.type = schema.format;
         break;
       case 'image':
-        // TODO1: 补齐
+        result.pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
+        result.message = '${title}的类型不是image';
         break;
       default:
         break;

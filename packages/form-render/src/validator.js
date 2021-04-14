@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  getDscriptorFromSchema,
+  getDescriptorFromSchema,
   formatPathFromValidator,
   isPathRequired,
   generateDataSkeleton,
@@ -20,7 +20,7 @@ export const validateAll = ({
   locale = 'cn',
 }) => {
   if (Object.keys(schema).length === 0) return Promise.resolve();
-  const descriptor = getDscriptorFromSchema({
+  const descriptor = getDescriptorFromSchema({
     schema,
     isRequired,
   }).fields;

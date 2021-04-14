@@ -12,6 +12,7 @@ const schema = {
       bind: 'ttt',
       title: '简单输入框',
       type: 'string',
+      format: 'image',
     },
     listName: {
       bind: 'a.x',
