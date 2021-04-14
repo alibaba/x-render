@@ -112,7 +112,7 @@ const Wrapper = () => {
   };
   return (
     <TableProvider>
-       <Search schema={schema} api={searchApi}/>
+       <Search schema={schema} api={searchApi} />
        <Table headerTitle="最简表格" columns={columns} rowKey="id" />
     </TableProvider>
   );
@@ -144,6 +144,8 @@ export default Wrapper;
 | searchOnMount | 组件初次挂载时，是否默认执行查询动作  | `boolean` |   `true` |否 |
 | hidden          | 是否隐藏`<Search />`组件    | `boolean`  | `false` |否 |
 | searchBtnRender | 自定义表单查询按钮 | `(refresh,clearSearch) => ReactNode[]` | -      |否 |
+| searchBtnStyle | 自定义表单操作按钮组的样式 | `React.CSSProperties` | {}      |否 |
+| searchBtnClassName | 自定义表单操作按钮组的ClassName | `string` | ''      |否 |
 
 ### `<Table>` 参数
 
