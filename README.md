@@ -32,7 +32,7 @@
 
 ## 变化
 
-- FormRender 已升级到 XRender 1.0 版本，提供开箱即用的 表单 / 表格 / 图表解决方案，使用老版本可见<a href="http://x-components.gitee.io/form-render/" target="_blank_"> **0.x 文档** </a>。
+- FormRender 已升级到 XRender 1.0 版本，并提供开箱即用的 Form/Table/Chart 解决方案，原版本可见<a href="http://x-components.gitee.io/form-render/" target="_blank_"> **旧文档** </a>。
 - FormRender 0.x 版本直接升级到 1.0 需修改 API 才能正常运行，可见 [0.x 到 1.x](https://x-render.gitee.io/form-render/migrate)，很推荐升级。
 
 ## 谁在使用？
