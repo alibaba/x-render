@@ -379,7 +379,6 @@ export function isExpression(func) {
   return false;
 }
 
-// TODO: dataPath 是 array 的情况？
 export function parseSingleExpression(func, formData = {}, dataPath) {
   const parentPath = getParentPath(dataPath);
   const parent = getValueByPath(formData, parentPath) || {};
@@ -395,7 +394,6 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
       .replaceAll(match2, (v, m1) =>
         JSON.stringify(getValueByPath(parent, m1))
       )})`;
-    console.log(str, parent, formData);
     try {
       return Function(str)();
     } catch (error) {

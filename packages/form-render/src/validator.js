@@ -19,9 +19,6 @@ export const validateAll = ({
   touchedKeys = [],
   locale = 'cn',
 }) => {
-  // debugger;
-  // const formData = { ...generateDataSkeleton(schema), ..._formData };
-  // console.log(formData, '&&&& formData');
   if (Object.keys(schema).length === 0) return Promise.resolve();
   const descriptor = getDscriptorFromSchema({
     schema,
@@ -88,8 +85,6 @@ export const validateAll = ({
 };
 
 // useEffect(() => {
-//   const handleErrors = (a, b) => console.log(a, b);
-
 //   const descriptor = {
 //     roles: {
 //       type: 'array',
