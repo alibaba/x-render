@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/>
+  <a href="https://x-render.gitee.io/" target="_blank"><img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/></a>
 </p>
 <h1 align= "center">
 <a href="https://x-render.gitee.io/" target="_blank">XRender</a>
