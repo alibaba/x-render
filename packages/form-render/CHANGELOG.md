@@ -1,5 +1,11 @@
 # Changelog
 
+### 1.0.3
+
+- [!] fix 列表的 bind 无效的问题
+- [!] fix format: image 未校验的问题
+- [!] 默认列表样式微调
+
 ### 1.0.2
 
 - [+] 新增默认列表展示 card list。widget: list0
