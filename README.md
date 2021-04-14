@@ -28,7 +28,7 @@
 
 - <a href="https://x-render.gitee.io/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
 - <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
-- <a href="https://x-render.gitee.io/table-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
+- <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
 
 ## 变化
 
