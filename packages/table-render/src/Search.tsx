@@ -3,11 +3,11 @@ import { useTable } from './hooks';
 import { Button } from 'antd';
 import SearchForm, { useForm } from 'form-render';
 
-const SearchBtn = ({ clearSearch }: any) => {
+const SearchBtn = ({ clearSearch, style = {}, className = '' }: any) => {
   const { tableState = {}, refresh }: any = useTable();
   const { loading } = tableState;
   return (
-    <div className="flex justify-end w-100">
+    <div className={`flex justify-end w-100 ${className}`} style={style}>
       <Button
         loading={loading}
         className="mr"
@@ -22,7 +22,10 @@ const SearchBtn = ({ clearSearch }: any) => {
 };
 
 export interface SearchProps {
-  api: any;
+  searchBtnStyle?: React.CSSProperties;
+  searchBtnClassName?: string;
+  api?: any;
+  displayType?: any;
   propsSchema?: any;
   className?: string;
   style?: React.CSSProperties;
@@ -180,10 +183,13 @@ const Search = (props: SearchProps) => {
                       </div>
                     );
                   })}
-                {/* {props.searchBtnRender(refresh, clearSearch)} */}
               </div>
             ) : (
-              <SearchBtn clearSearch={clearSearch} />
+              <SearchBtn
+                clearSearch={clearSearch}
+                style={props.searchBtnStyle || {}}
+                className={props.searchBtnClassName || ''}
+              />
             ),
           ...props.widgets,
         }}
