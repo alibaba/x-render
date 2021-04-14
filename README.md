@@ -2,7 +2,7 @@
   <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/>
 </p>
 <h1 align= "center">
-XRender
+<a href="https://x-render.gitee.io/" target="_blank">XRender</a>
 </h1>
 
 <p align="center">
@@ -26,15 +26,14 @@ XRender
 
 ## 优势
 
-- FormRender：像写一个 input 一样写表单
-- TableRender：协议生成 & 高度灵活的搜索列表
-- ChartRender：傻瓜式的图表绘制库
+- <a href="https://x-render.gitee.io/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
+- <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
+- <a href="https://x-render.gitee.io/table-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
 
 ## 变化
 
-- FormRender 已升级到 XRender 1.0 版本，并对外提供中后台开箱即用的 表单 / 表格 / 图表方案，使用老版本可见<a href="http://x-components.gitee.io/form-render/" target="_blank_"> **0.x 文档** </a>。
+- FormRender 已升级到 XRender 1.0 版本，提供开箱即用的 表单 / 表格 / 图表解决方案，使用老版本可见<a href="http://x-components.gitee.io/form-render/" target="_blank_"> **0.x 文档** </a>。
 - FormRender 0.x 版本直接升级到 1.0 需修改 API 才能正常运行，可见 [0.x 到 1.x](https://x-render.gitee.io/form-render/migrate)，很推荐升级。
-
 
 ## 谁在使用？
 
