@@ -131,7 +131,9 @@
             "title": "单选",
             "type": "string",
             "enum": ["a", "b", "c"],
-            "enumNames": ["早", "中", "晚"]
+            "enumNames": ["早", "中", "晚"],
+            "default": "a",
+            "widget": "select"
           },
           "radio": {
             "title": "单选",
@@ -159,7 +161,8 @@
               "type": "string"
             },
             "enum": ["A", "B", "C", "D"],
-            "enumNames": ["杭州", "武汉", "湖州", "贵阳"]
+            "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
+            "widget": "checkboxes"
           },
           "cascade": {
             "title": "级联选择",
@@ -205,7 +208,7 @@
         }
       },
       "obj1": {
-        "title": "可折叠对象",
+        "title": "对象",
         "description": "这是个对象类型",
         "type": "object",
         "properties": {
