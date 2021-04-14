@@ -39,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alibaba/form-render.git",
+    "url": "git+https://github.com/alibaba/x-render.git",
     "branch": "master",
     "platform": "github"
   }
