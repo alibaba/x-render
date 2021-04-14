@@ -24,7 +24,7 @@ export const validateAll = ({
     schema,
     isRequired,
   }).fields;
-  // console.log(descriptor, '&&&& descriptor');
+  // console.log(descriptor, '&&&& descriptor', formData);
 
   let touchVerifyList = [];
 
