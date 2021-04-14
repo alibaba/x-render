@@ -19,7 +19,7 @@ features:
     title: ChartRender
     desc: 傻瓜式的图表绘制库
 footer: Please feel free to use and contribute to the development.
-translateHelp: FormRender 已升级到 XRender 1.0 版本，并提供开箱即用的 Form/Table/Chart 解决方案，原版本可见<a href="http://x-components.gitee.io/form-render/" target="_blank_"> **旧文档** </a>。
+translateHelp: FormRender 已升级到 XRender 1.0 版本，并提供开箱即用的 Form/Table/Chart 解决方案，原版本可见<a href="http://x-components.gitee.io/form-render/" target="_blank_"> 旧文档</a>。
 ---
 
 ## 谁在使用？
