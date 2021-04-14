@@ -1,23 +1,58 @@
 /*
   用于原有样式的覆盖
  */
-.fr-wrapper {
-  .fr-set {
-    padding: 12px 12px 0;
-    margin-bottom: 12px;
-    border-radius: 4px;
+.fr-container {
+  .fr-field {
+    font-size: 14px;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 1.5715;
+    /* font-variant: tabular-nums; */
   }
 
-  .fr-field {
-    margin-bottom: 24px;
+  .fr-field-column {
+    flex-direction: column;
   }
 
   .fr-field-object {
-    margin-bottom: 0;
+    flex-direction: column;
+  }
+
+  .fr-field-inline {
+    margin-bottom: 12px;
+  }
+
+  .fr-collapse-object {
+    margin-bottom: -1px;
+    overflow: hidden;
+    background: #f7f7f7;
+    border-radius: 2px;
+  }
+
+  .fr-collapse-object .ant-collapse-header {
+    padding-bottom: 4px !important;
+    padding-top: 4px !important;
+  }
+
+  .fr-collapse-object .ant-collapse-content-box {
+    padding: 8px 8px 4px 8px !important;
+  }
+  .fr-collapse-object .ant-collapse-arrow {
+    padding-top: 5px !important;
   }
 
   .fr-label {
     display: block;
+  }
+
+  .fr-label-row {
+    text-align: right;
+    flex-shrink: 0;
+    margin-top: 5px;
+  }
+
+  .fr-label-column {
+    margin-bottom: 4px;
   }
 
   .fr-label-title {
@@ -52,12 +87,24 @@
     color: #222;
   }
 
-  .fr-label-array .fr-label-title {
-    font-size: 16px;
-    color: #222;
+  .fr-label-list {
+    margin-bottom: 5px;
+  }
+
+  .fr-content {
+    // min-height: 32px;
+  }
+
+  .fr-content-row {
+    flex: 1;
+    position: relative;
+  }
+
+  .fr-content-column {
   }
 
   .fr-desc {
+    /* margin-top: 3px; */
     font-size: 12px;
     word-break: break-all;
     color: #888;
@@ -70,30 +117,10 @@
     color: #f5222d;
   }
 
-  .fr-field.fr-field-complex {
-    margin-bottom: 0;
-  }
-
   /* Row */
 
   .fr-validate-row {
     margin: 3px 0 0 0;
-  }
-
-  .fr-label-row {
-    text-align: right;
-    flex-shrink: 0;
-    margin-top: 5px;
-  }
-
-  .fr-children {
-    display: flex;
-    min-height: 30px;
-  }
-
-  .fr-field-row .fr-content {
-    flex: 1;
-    position: relative;
   }
 
   .fr-field-row .fr-tooltip-icon {
@@ -114,28 +141,14 @@
     padding-bottom: 12px;
   }
 
-  .fr-item-actions {
+  .fr-move-icon {
     position: absolute;
     top: 0;
     right: 0;
-    padding-right: 8px;
-    height: 28px;
-    font-size: 18px;
-    display: flex;
-    opacity: 0;
-  }
-
-  .fr-set:hover .fr-item-actions {
-    opacity: 1;
-  }
-
-  .fr-item-action-icon {
-    display: flex;
-    align-items: center;
-    width: 20px;
-    margin-left: 8px;
-    cursor: pointer;
-    user-select: none;
+    padding-top: 2px;
+    padding-right: 10px;
+    font-size: 24px;
+    font-weight: 300;
   }
 
   .fr-move-icon:hover {
@@ -154,7 +167,7 @@
 
   .fr-color-picker .rc-color-picker-trigger {
     margin-right: 12px;
-    height: 30px;
+    height: 32px;
     width: 60px;
     border: 1px solid #e5e5e5;
   }
@@ -258,7 +271,7 @@
   .fr-tooltip-icon {
     height: 14px;
     width: 14px;
-    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEDklEQVR42u2bPUscURSG5y8kBEMgkCD5gFRpQtogduqqK1vZJVnxowssNoH4C7JVUrilxELYTtBOCLKksBGb2PkLtFLL5DywgUXO2buj587sTPbCwXFn7jnve2buzJl730lit/n5+bG5ubkVsaZsb8nfffl7JHYmdomxzW/s4xiOpQ99kyK2arX6RMDXxfbE/tzR8FHHZxGIfxSwuwCPZLvEGDriAqwqdgDIjIxY1dyJyzh9J0DagMrJ2mDI41J/LMFbacBKn+Mu4G+y/bk7XKYxtvmNfRzDsSkT0QJTVpd7Tex0AFBXkBGrC7GnaePQh774wNcA8cBUi03+6wBAfvMIm5mZeeAVF1/4xHcoPhhjke8EAp8LyI2pqal7SaSGb2IQK4Cl40s+PL6/VyqVl0lGjVjEDOHyutP/CARaT3JqxO6HDex3DbAYOPOrSc4NDIETtHgrx7Ozs28D5N8kQ9LA0g8rXFI5rNVq98XpL9+xFb9ZeOECpzSOWn2cjQ9rAsDWr1hKUd6a5Ccdy+jX4vM9xrZjEiYt/AOVzVReRuclR5AV8XnR4/+C3xyTu2S9OwTf6qznvPNYPVTiHHrGsOqEvm+RxivtuWORw9PllXWJss+zWDIqxgNzMsO49L94V3FWAryrScpmLQ5ctYP3tRebGLU9839KrKMY7w7aCxRcb56VZ8bZX4n4zN7pibUTKw4cNG5w7gXTUA66loMeJhEbYx6LGQMOcFH4NXqz9FObjU1K0rTZaTj/u/k94gc1QyVpcNE4wp2da9rOhYWF52VJAFw0jnDn8m8qO04yOCuf5AzsY2xnEO9EGQZNdmxpJWNkMMtKzGX3QOESf0t9/jM9HRnMtgJmO2ZMOGn1gFqUMEdPp2xqgPi1AA1OavHFyqxWKpYqAXapfwaYS2XHdNkSACcl5uUoAaMh8L/fBK3HYLkSYD8GzUKoPAkIF0JNbS2/hEPgWCuFzQkD1ufLkgC4mBM+SNH4R7F6WRIAF4PjmDVhgLVLkQB7/O+FMnSFMqPoCYADXPpe4YgQrTFS8ASY9zg43wS1a02LFzMB9rQ4XNMsjGzknwD/hRHHpTH/BMRfGst/cXRTibOZ3+Jo+JGBrTsmYELxP5GBeKp9V4HEqiPIF+LvA8Z2FqIpuDlIZBRxVDHEUq20YujTsoik4AKn1KLogExuvCDiKKzmII72Fk3FF0VhcHATSXuJp9zFULZ1RmJpWkai6XP0RPnK5cMiaWfxtP3BhKe6BF/KBxNe4uj0ImpFR6zZdXeipXEbrQF96IsPfIXigQlsznRtMbVZLNl2MuhHUxyb0ncLTKPP5kYfTg7Bp7Oq4NLJ8E2MZAibJrxsIEVzII2PBj6TIrauDG8t7efz9KFvbHx/AcNTQFg55SpYAAAAAElFTkSuQmCC');
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAEnUlEQVR42u1bS0iUURT+zd4Y9KDosSihNhYUaBE9YKpFDKKOOmOLahtJ2SoxA2fUdUoQJK5qU0ib6LlxUYJpkY0LE3tQZkU7y7A0e1jnA4Of8pz//5373/+BF44Oc+/c853v3nOf5xpup0QiMZ9kD8mxeDzeTHKXPveSvKXP3+j/GP1/h++QhzIoW1ZWthu/NYKYysvLN5EhKZJ7ZMQEye8ZyjjJfZIk6vS10YWFhcvI4FoC2wfwLkkf6aiBLt8YHovFNhCoFnRlgNQkY9BJbrLeS9uzqFueYAzXJV9ITgKLVsvBPCnuAAifSIe23kBd7zApHHUI8D3JBfptFUlialbYSJIDweep7+Iog7L4jUMdn4HNzeksmxRcdgColyRZWlq6NQOd21AH6rKrFxiBVanxxcXFS6jSdpsAHtLYUODC1FqAum0S0Q7Mqlp+ESlO2zD8DUmJBhcsgS4bJDwBdhUKb1ko+kll6qLR6AJDU4IuuAZ0W2C7kWnrJy1a/QONvjsNjxLp32VjsEzO1OcOkoJJoeJuGuBWGB4nYCCcD4RGmiSJOm35PIup7kokEplr+CQBCzAJeEeJqC22V3jE2IBQWVd+fv48w2cJmAhbp4C7H7bZaf1KoZJBbET8vCEDRgF/pdXGZim1/ifGl344WtTIJJ//B+ggts+K6t4BrAwBH2GjNKo2CuxVqzJeGLDqFemoFnQ0sq0vDHyP4D+KwI1ILqZqpyqsGmFjznStX8tNIzQlbjYUJasVnCo9wAzsjE1npyPgFQPqJvKDRYC8ioWt/200BFD7FRMwIu0nFBNwgNMFm80Fz0mAFIOqVz4IyoS/ZvQ1mQv1MYBqkO8GCSDXTDRjvAoCznAHrH/X0qu4FqE99Voj2AkErOPsg+3w/wqmwDMjHAkkPGdsPITMBqb7t4SFANjCjTkgoI0ZJY+Hwnp5f9MGdtIMOxF35n1ZXDrG38fYmDa48zWcs4eFANxesUtv+jPMZC4PCwE4NWL0DRvcehkHjyEhACdGCxl9vwBwggEyxw0wXhCAOANG34TsAi4k37kA/RliMnND1ANyGX1DGAMe89Og+uSjaRDSAwKucgeIYSEAcQzc8T4ISDGZrSFygVaml6dAQILJfBEiAl4yy/0KZK6WtsMBJwD+v0bcDk/tlp4yveB0cAmQj8hhs7lQE1NoIAQEPGdsazZ3k+3SoahOAvQfisoDBeR2QAmArjvcsbi2i5FMQ+Ay0Jvn6GIE10VWV2MBIiALmKWrMfFylJsRgkIAsAp1NojX47hCZn74HdfjficAAzp3PY6rf9g4GyBhw3/6Axoi0yW48IDtcQwBRVIUOHaQfguSAiYpvB42Od1Cxiz8s5tkpdfGAwOwSFhhy0xXUnV+DpSEbmCwwFiXKcPXbYTKpnSHykIndFsYf01JsDRJTxCDpUGU7nB5SKcfwuWLiooWK38wQXLJwcOFtIoHE/Bh5v6SE2DMdvNN4BE3nszQ93szfTJDclTbU7lAP5pSGIxY5eWzOdL/lXrkKW6Fp7M3XPTi4SR0zz6dnX087fOEq2k8hTc/nydJm57Pj3v5fP4PSqRR6oYkTaUAAAAASUVORK5CYII=');
     background-size: cover;
     display: block;
     margin: 4px 0 0 4px;
@@ -273,7 +286,7 @@
     text-align: center;
     background: #2b222a;
     padding: 4px;
-    margin-left: -78px;
+    margin-left: -77px;
     border-radius: 4px;
     color: #efefef;
     font-size: 13px;
@@ -327,22 +340,12 @@
     display: flex;
     flex-wrap: wrap;
   }
-}
 
-/* 覆盖 antd 的样式 */
+  .fr-arrow-icon {
+    cursor: pointer;
+  }
 
-.fr-wrapper .ant-checkbox-wrapper + .ant-checkbox-wrapper {
-  margin-left: 0;
-}
-
-.fr-wrapper .ant-checkbox-wrapper {
-  margin-right: 8px;
-}
-
-.fr-wrapper .next-checkbox-wrapper + .next-checkbox-wrapper {
-  margin-left: 0;
-}
-
-.fr-wrapper .next-checkbox-wrapper {
-  margin: 4px 8px 4px 0;
+  .fr-row-error {
+    background-color: rgba(255, 77, 79, 0.2);
+  }
 }

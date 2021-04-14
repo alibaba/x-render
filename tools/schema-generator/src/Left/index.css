@@ -1,0 +1,12 @@
+.left-layout {
+  flex-shrink: 0;
+  padding: 16px 0 0 8px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.left-layout ul {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}

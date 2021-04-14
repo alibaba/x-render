@@ -1,16 +1,16 @@
-import commonjs from 'rollup-plugin-commonjs';
+import copy from 'rollup-plugin-copy';
 
 export default {
-  entry: ['src/index.js', 'src/antd.js', 'src/fusion.js'],
+  entry: ['src/index.js'],
   esm: 'rollup',
-  cjs: 'babel',
-  extraRollupPlugins: [
-    commonjs({
-      include: 'node_modules/**',
-    }),
-  ],
+  cjs: 'rollup',
   lessInBabelMode: true,
   lessInRollupMode: {},
+  extraRollupPlugins: [
+    copy({
+      targets: [{ src: 'src/index.d.ts', dest: 'dist/' }],
+    }),
+  ],
   extraBabelPlugins: [
     [
       'import',
@@ -20,14 +20,6 @@ export default {
         style: true,
       },
       'antd',
-    ],
-    [
-      'import',
-      {
-        libraryName: '@alifd/next',
-        libraryDirectory: 'lib',
-      },
-      '@alifd/next',
     ],
     [
       'import',

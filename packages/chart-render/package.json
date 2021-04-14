@@ -1,0 +1,43 @@
+{
+  "name": "chart-render",
+  "version": "0.1.5",
+  "scripts": {
+    "build": "father-build",
+    "prepare": "npm run build",
+    "postpublish": "git push --tags",
+    "beta": "npm publish --tag beta",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/form-render.git"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "dependencies": {
+    "@ant-design/charts": "1.1.1",
+    "ali-react-table": "^2.4.0",
+    "dvt-aggregation": "^0.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@umijs/test": "^3.0.5"
+  }
+}

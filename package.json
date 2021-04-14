@@ -3,7 +3,8 @@
   "private": true,
   "workspaces": [
     "packages/*",
-    "widgets/*"
+    "widgets/*",
+    "tools/schema-generator"
   ],
   "scripts": {
     "build": "lerna run build",
@@ -17,7 +18,7 @@
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access"
   },
   "devDependencies": {
-    "@alifd/next": "^1.x",
+    "@umijs/plugin-esbuild": "1.x",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.0.5",
     "antd": "^4.x",
@@ -33,6 +34,13 @@
     "prismjs": "^1.20.0",
     "react": "^16.12.0",
     "react-simple-code-editor": "^0.11.0",
+    "umi-plugin-hire": "^1.0.3",
     "yorkie": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/form-render.git",
+    "branch": "master",
+    "platform": "github"
   }
 }

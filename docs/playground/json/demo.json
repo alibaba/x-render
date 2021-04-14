@@ -8,6 +8,10 @@
         "pattern": "^[A-Za-z0-9]+$",
         "message": {
           "pattern": "请输入正确格式"
+        },
+        "ui:className": "input-with-px",
+        "ui:options": {
+          "addonAfter": "px"
         }
       },
       "numberDemo": {
@@ -20,7 +24,8 @@
       },
       "textareaDemo": {
         "title": "输入框",
-        "type": "string"
+        "type": "string",
+        "ui:widget": "textarea"
       },
 
       "imgDemo": {
@@ -32,12 +37,17 @@
       "uploadDemo": {
         "title": "文件上传",
         "type": "string",
-        "default": "https://img.alicdn.com/tfs/TB1P8p2uQyWBuNjy0FpXXassXXa-750-1334.png"
+        "default": "https://img.alicdn.com/tfs/TB1P8p2uQyWBuNjy0FpXXassXXa-750-1334.png",
+        "ui:widget": "upload",
+        "props": {
+          "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        }
       },
       "disabledDemo": {
         "title": "不可用",
         "type": "string",
-        "default": "我是一个被 disabled 的值"
+        "default": "我是一个被 disabled 的值",
+        "ui:disabled": true
       },
       "enumDemo": {
         "title": "枚举",
@@ -46,12 +56,15 @@
         "enumNames": [
           "养成",
           "<span style='background-color: black;display: inline-block;vertical-align: text-top;width: 48px;height: 24px;margin-top:-2px;color:white; border: 1px solid #ddd;'>试试</span>"
-        ]
+        ],
+        "ui:width": "50%"
       },
       "dateDemo": {
         "title": "时间",
         "format": "dateTime",
-        "type": "string"
+        "type": "string",
+        "ui:widget": "date",
+        "ui:width": "50%"
       },
       "objDemo": {
         "title": "单个对象",
@@ -67,18 +80,22 @@
             "title": "颜色选择",
             "description": "特殊面板",
             "format": "color",
-            "type": "string"
+            "type": "string",
+            "ui:hidden": "{{rootValue.isLike === false}}",
+            "ui:widget": "color"
           },
           "wayToTravel": {
             "title": "旅行方式",
             "type": "string",
             "enum": ["self", "group"],
-            "enumNames": ["自驾", "跟团"]
+            "enumNames": ["自驾", "跟团"],
+            "ui:widget": "radio"
           },
           "canDrive": {
             "title": "是否拥有驾照",
             "type": "boolean",
-            "default": false
+            "default": false,
+            "ui:hidden": "{{rootValue.wayToTravel !== 'self'}}"
           }
         },
         "required": ["background"]
@@ -91,7 +108,8 @@
           "type": "string"
         },
         "enum": ["A", "B", "C", "D"],
-        "enumNames": ["杭州", "武汉", "湖州", "贵阳"]
+        "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
+        "ui:widget": "multiSelect"
       },
       "custom": {
         "properties": {
@@ -127,76 +145,25 @@
               "title": "字符名称",
               "description": "string类型",
               "type": "string",
-              "pattern": "^[A-Za-z0-9]+$"
+              "pattern": "^[A-Za-z0-9]+$",
+              "ui:disabled": "{{rootValue.num === 3}}"
             }
           }
+        },
+        "ui:options": {
+          "foldable": true,
+          "hideDelete": "{{rootValue.arrDemo.length === 1}}",
+          "buttons": [
+            {
+              "text": "复制",
+              "icon": "CopyOutlined",
+              "callback": "copyLast"
+            }
+          ]
         }
       }
     },
     "required": ["textareaDemo", "dateDemo", "multiSelectDemo"]
-  },
-  "uiSchema": {
-    "inputDemo": {
-      "ui:className": "input-with-px",
-      "ui:options": {
-        "addonAfter": "px"
-      }
-    },
-    "textareaDemo": {
-      "ui:widget": "textarea",
-      "ui:button": {
-        "text": "测试",
-        "icon": "",
-        "callback": "clg"
-      }
-    },
-    "disabledDemo": {
-      "ui:disabled": true
-    },
-    "enumDemo": {
-      "ui:width": "50%"
-    },
-    "dateDemo": {
-      "ui:widget": "date",
-      "ui:width": "50%"
-    },
-    "uploadDemo": {
-      "ui:widget": "upload",
-      "ui:action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
-    },
-    "objDemo": {
-      "background": {
-        "ui:hidden": "{{rootValue.isLike === false}}",
-        "ui:widget": "color"
-      },
-      "wayToTravel": {
-        "ui:widget": "radio"
-      },
-      "canDrive": {
-        "ui:hidden": "{{rootValue.wayToTravel !== 'self'}}"
-      }
-    },
-    "multiSelectDemo": {
-      "ui:widget": "multiSelect"
-    },
-    "arrDemo": {
-      "ui:options": {
-        "foldable": true,
-        "hideDelete": "{{rootValue.arrDemo.length === 1}}",
-        "buttons": [
-          {
-            "text": "复制",
-            "icon": "CopyOutlined",
-            "callback": "copyLast"
-          }
-        ]
-      },
-      "items": {
-        "name": {
-          "ui:disabled": "{{rootValue.num === 3}}"
-        }
-      }
-    }
   },
   "formData": {
     "inputDemo": "750",

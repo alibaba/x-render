@@ -1,0 +1,10 @@
+{
+  "title": "JSON schema for formRender",
+  "$schema": "http://json-schema.org/schema",
+  "type": "object",
+  "required": [
+    "schema"
+  ],
+  "definitions": {},
+  "properties": {}
+}

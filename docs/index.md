@@ -1,119 +1,118 @@
 ---
-title: Form Render
+title: XRender
 hero:
-  title: FormRender
-  desc: 通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成
+  title: XRender
+  desc: 阿里巴巴 - 飞猪中后台开箱即用解决方案
   actions:
-    - text: playground
+    - text: Playground
       link: /playground
     - text: 开始使用
-      link: /guide/getting-started
+      link: /form-render
 features:
-  - icon: https://gw.alipayobjects.com/zos/bmw-prod/881dc458-f20b-407b-947a-95104b5ec82b/k79dm8ih_w144_h144.png
-    title: 开箱即用
-    desc: 像写一个input一样写整个表单
-  - icon: https://gw.alipayobjects.com/zos/bmw-prod/d60657df-0822-4631-9d7c-e7a869c2f21c/k79dmz3q_w126_h126.png
-    title: 自由定制
-    desc: 联动、自定义组件快速接入，满足定制化需求
-  - icon: https://gw.alipayobjects.com/zos/bmw-prod/d1ee0c6f-5aed-4a45-a507-339a4bfe076c/k7bjsocq_w144_h144.png
-    title: 海量示例
-    desc: 新版文档 code Demo & playground 一应俱全
-footer: Open-source MIT Licensed | Copyright © 2020<br />Powered by [dumi](https://d.umijs.org)
+  - icon: https://qpluspicture.oss-cn-beijing.aliyuncs.com/k21jAW/006-parade-5.png
+    title: FormRender
+    desc: 像写一个 input 一样写表单
+  - icon: https://qpluspicture.oss-cn-beijing.aliyuncs.com/DshEHq/026-drum-1.png
+    title: TableRender
+    desc: 协议生成 & 高度灵活的搜索列表
+  - icon: https://qpluspicture.oss-cn-beijing.aliyuncs.com/tDHL2H/028-xylophone.png
+    title: ChartRender
+    desc: 傻瓜式的图表绘制库
+footer: Please feel free to use and contribute to the development.
+translateHelp: FormRender 已升级到 1.0 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 老文档 </a>。
 ---
 
-## 安装
+## 谁在使用？
 
-```shell
-yarn add form-render
-# 或者
-npm i form-render
-```
+<table>
+  <tr>
+    <td width="160" align="center">
+      <img
+        src="https://gw.alicdn.com/bao/tfs/TB1mFZneMmH3KVjSZKzXXb2OXXa-748-467.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/xbUbPU/alipay-2.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://gw.alicdn.com/tfs/TB176rg4VP7gK0jSZFjXXc5aXXa-286-118.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://img.alicdn.com/tfs/TB13DzOjXP7gK0jSZFjXXc5aXXa-212-48.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/QFRKki/006PG13yly8fh2je18cv0j308c08caa2.jpg"
+        width="160"
+      />
+    </td>
+  </tr>
 
-同时安装依赖的组件库 (依赖哪个装哪个，天然支持 antd 和 fusion 两套。其他的组件库可通过 widgets 的方式传入，见[自定义组件](/guide/advanced/widget))
+  <tr>
+    <td width="160" align="center">
+      <img
+        src="https://www.agtech.com/public/asset/yabologo-6f9d76c5cbb0b954b9939a8cac3a0cb1.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/s0Bo8z/tower-logo.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/yosqel/Ic2iIh.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://img.alicdn.com/imgextra/i3/O1CN01xDuypG1V78PWpnnPz_!!6000000002605-2-tps-600-120.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/3GrqSz/unnamed.png"
+        width="160"
+      />
+    </td>
+  </tr>
+</table>
 
-```shell
-# 例如
-yarn add antd
-# 或者
-yarn add @alifd/next
-```
+更多可见[使用场景](https://github.com/alibaba/form-render/issues/94)，也很欢迎提交～
 
-注：一般来说，想使用 form-render 的 antd 主题的项目，dependencies 里肯定装了 antd。这里强调一下这步，主要是针对想尝试写个 demo 玩玩的同学，记得要安装对应的 ui 组件库
+## 支持
 
-## 使用
+- 如果你觉得 XRender 还不错，可以通过 [Star](https://github.com/alibaba/form-render/stargazers) 来表示你的喜欢
+- 在公司或个人项目中使用 XRender，并帮忙推广给伙伴使用
+- 加入钉钉聊天群帮忙解答使用问题
 
-```jsx
-import React, { useState } from 'react';
-// 使用 Ant Design 风格
-import FormRender from 'form-render/lib/antd';
-// 使用 Fusion 风格
-// import FormRender from 'form-render/lib/fusion';
-// import '@alifd/next/dist/next.min.css';
-
-const schema = {
-  type: 'object',
-  properties: {
-    string: {
-      title: '字符串',
-      type: 'string',
-    },
-    select: {
-      title: '单选',
-      type: 'number',
-      enum: [1, 2, 3],
-      enumNames: ['选项1', '选项2', '选项3'],
-    },
-  },
-};
-
-const Demo = () => {
-  const [formData, setFormData] = useState({});
-  const onSubmit = () => {
-    alert(JSON.stringify(formData));
-  };
-  return (
-    <div>
-      <FormRender schema={schema} formData={formData} onChange={setFormData} />
-      <button onClick={onSubmit}>提交</button>
-    </div>
-  );
-};
-
-export default Demo;
-```
-
-注：由于 fusion 的 css 无法按需引入，且在内部整个引入会造成样式覆盖，所以需要用户外部独立引入
-
-## schema 可以不用手写哦！
-
-使用 [表单设计器](https://x-render.gitee.io/schema-generator/)，拖拖拽拽导出 schema，丢到代码里生成可用表单
-
-<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="750px"/>
-
-<img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*FfTuRYjRd1AAAAAAAAAAAABkARQnAQ?raw=true" alt="schema编辑器" width='750px' />
-
-还可在 vscode 商店搜索 “formrender” 下载配套 [可视化插件](https://marketplace.visualstudio.com/items?itemName=F-loat.vscode-plugin-fr-schema)
-
-<img src="https://img.alicdn.com/tfs/TB1b53cmGNj0u4jSZFyXXXgMVXa-2740-1748.gif" alt="schema编辑器" width='750px' />
-
-## 理念
-
-[详见 form-render 的理念](/guide/design)
+  <img src=https://qpluspicture.oss-cn-beijing.aliyuncs.com/N5hVht/IMG_4485.JPG width=250/>
 
 ## 贡献
 
-想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)
+想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
 
-感谢给 FormRender 贡献代码的你们，以及 JetBrains 提供 Free 使用！
+感谢给 XRender 贡献代码的你们：
 
-<a href="https://github.com/alibaba/form-render/graphs/contributors"><img src="https://opencollective.com/form-render/contributors.svg?width=890&button=false"/></a><a href="https://www.jetbrains.com/?from=form-render"><img src="https://img.alicdn.com/tfs/TB1gPDDJKL2gK0jSZFmXXc7iXXa-2000-2168.png" width="100px" /></a>
+  <a href="https://github.com/alibaba/form-render/graphs/contributors">
+    <img src="https://contrib.rocks/image?repo=alibaba/form-render" />
+  </a>
 
-## 反馈与共建
+## 协议
 
-1. 欢迎 issue、pr 和点赞哦 [github](https://github.com/alibaba/form-render)
-
-2. 文档建议至少读一下 “开始使用”，有疑问、建议和讨论诉求的，请加入 FR 官方群：
-
-<img src="https://img.alicdn.com/tfs/TB1CprJg5pE_u4jSZKbXXbCUVXa-894-1087.jpg" width="300px" />
-
-<!-- <code src='./playground/index.jsx' className='hidden' /> -->
+- 遵循 MIT 协议
+- 请自由地享受和参与开源

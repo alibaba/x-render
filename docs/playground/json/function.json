@@ -13,12 +13,12 @@
           "x1": {
             "title": "输入框1",
             "type": "string",
-            "ui:hidden": "{{rootValue.showMore === false}}"
+            "ui:hidden": "{{!rootValue.showMore}}"
           },
           "x2": {
             "title": "输入框2",
             "type": "string",
-            "ui:hidden": "{{rootValue.showMore === false}}"
+            "ui:hidden": "{{!rootValue.showMore}}"
           }
         }
       },
@@ -36,9 +36,9 @@
             "title": "金额",
             "description": "{{rootValue.bi === 'dollar' ? '一次汇款不超过150美元':'一次汇款不超过1000元'}}",
             "type": "string",
-            "ui:options": {
-              "addonBefore": "{{rootValue.bi === 'rmb'? '￥':'$'}}",
-              "addonAfter": "{{rootValue.bi === 'rmb'? '元':'美元'}}"
+            "props": {
+              "addonBefore": "{{rootValue.bi === 'dollar'? '$':'￥'}}",
+              "addonAfter": "{{rootValue.bi === 'dollar'? '美元':'元'}}"
             }
           }
         }
@@ -56,14 +56,16 @@
                 "attr": {
                   "title": "标准",
                   "type": "string",
+                  "widget": "select",
                   "enum": ["goal", "league"],
                   "enumNames": ["入球数", "所在联盟"],
                   "ui:width": "40%"
                 },
                 "relation": {
-                  "title": "-",
+                  "title": "关系",
                   "type": "string",
                   "enum": [">", "<", "="],
+                  "widget": "select",
                   "ui:hidden": "{{rootValue.attr === 'league'}}",
                   "ui:width": "20%"
                 },
@@ -74,7 +76,7 @@
                   "message": {
                     "pattern": "输入正确得分"
                   },
-                  "ui:hidden": "{{rootValue.attr !== 'goal'}}",
+                  "ui:hidden": "{{rootValue.attr === 'league'}}",
                   "ui:width": "40%"
                 },
                 "league": {
@@ -82,6 +84,7 @@
                   "type": "string",
                   "enum": ["a", "b", "c"],
                   "enumNames": ["西甲", "英超", "中超"],
+                  "widget": "select",
                   "ui:hidden": "{{rootValue.attr !== 'league'}}",
                   "ui:width": "40%"
                 }
