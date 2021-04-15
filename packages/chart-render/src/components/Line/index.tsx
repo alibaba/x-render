@@ -103,6 +103,7 @@ const CRLine: React.FC<ILine | IArea | IDualAxes> = ({
   style,
   meta = [],
   data = [],
+  // @ts-ignore
   withArea,
   ...props
 }) => {
