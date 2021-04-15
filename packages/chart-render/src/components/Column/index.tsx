@@ -14,7 +14,7 @@ export interface ICRColumnProps
   /**
    * 是否倒置，倒置后柱形图会表现成条形图
    */
-  inverted: boolean;
+  inverted?: boolean;
 };
 
 export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['data']): ColumnConfig {
