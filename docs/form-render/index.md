@@ -196,7 +196,7 @@ export default Demo;
 import Form, { useForm, connectForm } from 'form-render';
 ```
 
-#### \<Form \/> (常用 props)
+### \<Form \/> (常用 props)
 
 | 参数         | 描述                                                           | 类型                                                               | 是否必填 | 默认值     |
 | ------------ | -------------------------------------------------------------- | ------------------------------------------------------------------ | -------- | ---------- |
@@ -207,19 +207,35 @@ import Form, { useForm, connectForm } from 'form-render';
 | displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排 | `string('column' / 'row' / 'inline')`                              | 否       | 'column'   |
 | widgets      | 自定义组件，当内置组件无法满足时使用                           | `object`                                                           | 否       | {}         |
 
-#### \<Form \/> (不常用 props)
+### \<Form \/> (不常用 props)
 
-| 参数           | 描述                                                             | 类型                | 默认值 |
-| -------------- | ---------------------------------------------------------------- | ------------------- | ------ |
-| column         | 一行展示多少列                                                   | `number`            | 1      |
-| mapping        | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
-| debug          | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
-| debugCss       | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
-| locale         | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
-| configProvider | antd 的 configProvider，配置透传                                 | `object`            | -      |
-| debounceInput  | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
+| 参数             | 描述                                                             | 类型                | 默认值 |
+| ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
+| column           | 一行展示多少列                                                   | `number`            | 1      |
+| mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
+| debug            | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
+| debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
+| locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
+| configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
+| debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
+| validateMessages | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
 
-#### useForm / connectForm
+#### validateMessages
+
+`Form` 为验证提供了[默认的错误提示信息](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/validateMessageCN.js)，你可以通过配置 `validateMessages` 属性，修改对应的提示模板。一种常见的使用方式，是配置国际化提示信息：
+
+```js
+const validateMessages = {
+  required: '${title}是必选字段',
+  // ...
+};
+
+<Form validateMessages={validateMessages} />;
+```
+
+目前可以用的转义字段为 `${title}`/`${min}`/`${max}`/`${len}`/`${pattern}`, 如果有更多需求请提 [issue](https://github.com/alibaba/x-render/issues/new/choose)
+
+### useForm / connectForm
 
 `useForm` / `connectForm` 用于创建表单实例，所有对表单的外部操作和回调函数全挂在其生产的实例上,例如表单提交是 `form.submit`。注意 `useForm` 是 hooks，而 `connectForm` 是高阶组件，所以前者只能在函数组件使用，后者可用于 class 组件。两者无其他区别。使用时需要创建实例，并通过 props 挂钩到与其对应的表单上：
 

@@ -18,6 +18,7 @@ export const validateAll = ({
   isRequired = true,
   touchedKeys = [],
   locale = 'cn',
+  validateMessages = {},
 }) => {
   if (Object.keys(schema).length === 0) return Promise.resolve();
   const descriptor = getDescriptorFromSchema({
@@ -29,12 +30,15 @@ export const validateAll = ({
   let touchVerifyList = [];
 
   // 如果是最后的校验，所有key都touch了，就不用算这个了
+  // 因为要整个构建validator在list的情况太复杂了，所以required单独拿出来处理，但是这边有不少单独处理逻辑，例如message
   if (!isRequired) {
     touchedKeys.forEach(key => {
       const keyRequired = isPathRequired(key, schema);
       const val = get(formData, key);
-      if (!val && keyRequired) {
-        touchVerifyList.push({ name: key, error: ['${title}必填'] });
+      if (!val && keyRequired.required) {
+        const _message =
+          keyRequired.message || validateMessages.required || '${title}必填';
+        touchVerifyList.push({ name: key, error: [_message] });
       }
     });
   }
@@ -49,7 +53,8 @@ export const validateAll = ({
   } catch (error) {
     return Promise.resolve([]);
   }
-  const messageFeed = locale === 'en' ? en : cn;
+  let messageFeed = locale === 'en' ? en : cn;
+  merge(messageFeed, validateMessages);
   validator.messages(messageFeed);
   return validator
     .validate(formData || {})

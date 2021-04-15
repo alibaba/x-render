@@ -52,7 +52,9 @@ export interface FRProps {
   labelWidth?: string;
   /** antd的全局config */
   configProvider?: any;
-  theme?: any;
+  theme?: string | number;
+  /** 覆盖默认的校验信息 */
+  validateMessages?: any;
   flatten?: any;
   /** 显示当前表单内部状态 */
   debug?: boolean;
