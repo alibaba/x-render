@@ -4,7 +4,7 @@ import { AreaConfig } from '@ant-design/charts/es/Area';
 import { LineConfig } from '@ant-design/charts/es/line';
 import { DualAxesConfig } from '@ant-design/charts/es/dualAxes';
 import { ICommonProps, IMetaItem } from '../../utils/types';
-import { splitMeta } from '../../utils';
+import { splitMeta, strip } from '../../utils';
 import ErrorTemplate from '../ErrorTemplate';
 
 export interface ILine extends ICommonProps, Omit<LineConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
@@ -34,7 +34,7 @@ export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['d
       yAxis: {
         label: {
           formatter: v => {
-            return yFieldMeta.isRate ? `${100 * Number(v)}%` : v;
+            return yFieldMeta.isRate ? `${strip(100 * Number(v))}%` : v;
           },
         },
       },
@@ -42,7 +42,7 @@ export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['d
         formatter: ({ [xField]: type, [yField]: value }) => {
           return {
             name: yFieldMeta.name,
-            value: yFieldMeta.isRate ? `${100 * Number(value)}%` : value,
+            value: yFieldMeta.isRate ? `${strip(100 * Number(value))}%` : value,
           }
         },
       },
@@ -52,11 +52,32 @@ export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['d
     };
   } else if (metaInd.length === 1 && metaDim.length === 2) {
     // case 2: 单指标、双维度 => 第一维度作为 x 轴，指标作为 y 轴，第二维度作为 系列
+    const xFieldMeta = metaDim.shift() as IMetaItem;
+    const yFieldMeta = metaInd.shift() as IMetaItem;
+    const seriesFieldMeta = metaDim.shift() as IMetaItem;
+    const xField = xFieldMeta.id;
+    const yField = yFieldMeta.id;
+    const seriesField = seriesFieldMeta.id;
     return {
       data,
-      xField: metaDim.shift()?.id as string,
-      yField: metaInd.shift()?.id as string,
-      seriesField: metaDim.shift()?.id,
+      xField,
+      yField,
+      seriesField,
+      yAxis: {
+        label: {
+          formatter: v => {
+            return yFieldMeta.isRate ? `${strip(100 * Number(v))}%` : v;
+          },
+        },
+      },
+      tooltip: {
+        formatter: ({ [seriesField]: type, [yField]: value }) => {
+          return {
+            name: type,
+            value: yFieldMeta.isRate ? `${strip(100 * Number(value))}%` : value,
+          }
+        },
+      },
     };
   } else if (metaInd.length === 2 && metaDim.length === 2) {
     // case 3: 双指标、双维度 => 第一维度作为 x 轴，第二维度作为 系列，第一指标作为左 y 轴，第二指标作为右 y 轴
