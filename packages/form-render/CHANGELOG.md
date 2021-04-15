@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.0.4
+
+- [+] 新增时间区间组件 timeRange。通过`{type: 'range', format: 'time'}` 渲染
+- [!] 完善 ts 声明文件。([#302](https://github.com/alibaba/x-render/pull/302))
+- [!] fix 了 rules 校验和 image 校验的冲突
+- [!] 修复了 tooltip、checkbox 等样式的问题
+
 ### 1.0.3
 
 - [!] fix 列表的 bind 无效的问题
