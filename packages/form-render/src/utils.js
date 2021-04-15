@@ -614,6 +614,7 @@ export const removeEmptyItemFromList = formData => {
 
 export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
   let result = {};
+  let singleResult = {};
   if (isObjType(schema)) {
     result.type = 'object';
     if (isRequired && schema.required === true) {
@@ -660,27 +661,20 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
       return item;
     };
     const { required, ...rest } = schema;
-    if (isRequired && schema.required === true) {
-      rest.required = true;
-    }
-    if (schema.rules) {
-      if (Array.isArray(schema.rules)) {
-        const _rules = schema.rules.map(item => {
-          return processRule(item);
-        });
-        result = [rest, ..._rules];
-      } else if (isObject(schema.rules)) {
-        result = [rest, processRule(schema.rules)];
-      } else {
-        result = rest;
+
+    ['type', 'pattern', 'min', 'max', 'len'].forEach(key => {
+      if (Object.keys(rest).indexOf(key) > -1) {
+        singleResult[key] = rest[key];
       }
-    } else {
-      result = rest;
-      // TODO1: 补齐
+    });
+
+    if (isRequired && schema.required === true) {
+      singleResult.required = true;
     }
+
     switch (schema.type) {
       case 'range':
-        result.type = 'array';
+        singleResult.type = 'array';
         break;
       default:
         break;
@@ -688,14 +682,41 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
     switch (schema.format) {
       case 'email':
       case 'url':
-        result.type = schema.format;
-        break;
-      case 'image':
-        result.pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
-        result.message = '${title}的类型不是image';
+        singleResult.type = schema.format;
         break;
       default:
         break;
+    }
+
+    if (schema.rules) {
+      if (Array.isArray(schema.rules)) {
+        const _rules = schema.rules.map(item => {
+          return processRule(item);
+        });
+        result = [singleResult, ..._rules];
+      } else if (isObject(schema.rules)) {
+        result = [singleResult, processRule(schema.rules)];
+      } else {
+        result = singleResult;
+      }
+    } else {
+      result = singleResult;
+    }
+
+    if (schema.format === 'image') {
+      const imgValidator = {
+        validator: (rule, value) => {
+          const pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
+          if (value === undefined) return true;
+          return pattern.exec(value) || isUrl(value);
+        },
+        message: '${title}的类型不是image',
+      };
+      if (Array.isArray(result)) {
+        result.push(imgValidator);
+      } else if (isObject(result)) {
+        result = [result, imgValidator];
+      }
     }
   }
   return result;
