@@ -39,6 +39,11 @@ const FrTextArea = createWidget(({ autoSize }) => ({
   autoSize: autoSize ? autoSize : { minRows: 3 },
 }))(TextArea);
 
+// TODO: 这个如果 size small可能会有问题
+const FrCheckbox = ({ style, ...rest }) => (
+  <Checkbox style={{ paddingTop: 4, paddingBottom: 4, ...style }} {...rest} />
+);
+
 const FrTreeSelect = ({ style, ...rest }) => (
   <TreeSelect style={{ width: '100%', ...style }} {...rest} />
 );
@@ -49,7 +54,7 @@ const FrCascader = ({ style, ...rest }) => (
 
 export const widgets = {
   input: Input,
-  checkbox: Checkbox,
+  checkbox: FrCheckbox,
   checkboxes, // checkbox多选
   color,
   date,
