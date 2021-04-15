@@ -650,9 +650,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
       });
     });
   } else {
-    // if (schema.type) {
-    //   result.type = schema.type;
-    // }
+    // 单个的逻辑
     const processRule = item => {
       if (schema.type) return { ...item, type: schema.type };
       if (item.pattern && typeof item.pattern === 'string') {
@@ -667,10 +665,6 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
         singleResult[key] = rest[key];
       }
     });
-
-    if (isRequired && schema.required === true) {
-      singleResult.required = true;
-    }
 
     switch (schema.type) {
       case 'range':
@@ -688,13 +682,26 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
         break;
     }
 
+    let requiredRule;
+    if (isRequired && schema.required === true) {
+      requiredRule = { required: true };
+    }
+
     if (schema.rules) {
       if (Array.isArray(schema.rules)) {
-        const _rules = schema.rules.map(item => {
-          return processRule(item);
+        const _rules = [];
+        schema.rules.forEach(item => {
+          if (item.required === true) {
+            if (isRequired) {
+              requiredRule = item;
+            }
+          } else {
+            _rules.push(processRule(item));
+          }
         });
         result = [singleResult, ..._rules];
       } else if (isObject(schema.rules)) {
+        // TODO: 规范上不允许rules是object，省一点事儿
         result = [singleResult, processRule(schema.rules)];
       } else {
         result = singleResult;
@@ -703,12 +710,20 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
       result = singleResult;
     }
 
+    if (requiredRule) {
+      if (Array.isArray(result)) {
+        result.push(requiredRule);
+      } else if (isObject(result)) {
+        result = [result, requiredRule];
+      }
+    }
+
     if (schema.format === 'image') {
       const imgValidator = {
         validator: (rule, value) => {
           const pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
           if (value === undefined) return true;
-          return pattern.exec(value) || isUrl(value);
+          return !!pattern.exec(value) || isUrl(value);
         },
         message: '${title}的类型不是image',
       };
@@ -758,7 +773,7 @@ export const formatPathFromValidator = err => {
 //   },
 // };
 // path = 'x.y'
-// return true
+// return {required: true, message?: 'xxxx'}
 export const isPathRequired = (path, schema) => {
   let pathArr = path.split('.');
   while (pathArr.length > 0) {
@@ -774,7 +789,19 @@ export const isPathRequired = (path, schema) => {
     if (childSchema) {
       return isPathRequired(rest.join('.'), childSchema);
     }
-    return !!schema.required; // 是否要这么干 TODO1: 意味着已经处理过了
+
+    // 单个的逻辑
+    let result = { required: false };
+    if (schema.required === true) {
+      result.required = true;
+    }
+    if (schema.rules) {
+      const requiredItem = schema.rules.find(item => item.required);
+      if (requiredItem) {
+        result = requiredItem;
+      }
+    }
+    return result;
   }
 };
 
@@ -884,7 +911,7 @@ export const updateSchemaToNewVersion = schema => {
 const updateSingleSchema = schema => {
   try {
     let _schema = clone(schema);
-    _schema.rules = [];
+    _schema.rules = _schema.rules || [];
     _schema.props = _schema.props || {};
     if (_schema['ui:options']) {
       _schema.props = _schema['ui:options'];
