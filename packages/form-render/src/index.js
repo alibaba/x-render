@@ -34,6 +34,7 @@ function App({
   schema,
   flatten: _flatten,
   debug,
+  debugCss,
   locale = 'cn', // 'cn'/'en'
   debounceInput = false,
   size,
@@ -145,7 +146,7 @@ function App({
                 <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
               </div>
             ) : null}
-            <Core />
+            <Core debugCss={debugCss} />
           </div>
         </Ctx.Provider>
       </StoreCtx.Provider>

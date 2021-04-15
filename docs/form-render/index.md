@@ -213,7 +213,8 @@ import Form, { useForm, connectForm } from 'form-render';
 | -------------- | ---------------------------------------------------------------- | ------------------- | ------ |
 | column         | 一行展示多少列                                                   | `number`            | 1      |
 | mapping        | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
-| debug          | 开启 debug 模式，提供更多信息                                    | `boolean`           | false  |
+| debug          | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
+| debugCss       | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
 | locale         | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
 | configProvider | antd 的 configProvider，配置透传                                 | `object`            | -      |
 | debounceInput  | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |

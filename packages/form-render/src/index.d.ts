@@ -54,7 +54,10 @@ export interface FRProps {
   configProvider?: any;
   theme?: any;
   flatten?: any;
+  /** 显示当前表单内部状态 */
   debug?: boolean;
+  /** 显示css布局提示线 */
+  debugCss?: boolean;
   locale?: string;
   column?: number;
   debounceInput?: boolean;
