@@ -3,41 +3,81 @@ import { Area, Line, DualAxes } from '@ant-design/charts';
 import { AreaConfig } from '@ant-design/charts/es/Area';
 import { LineConfig } from '@ant-design/charts/es/line';
 import { DualAxesConfig } from '@ant-design/charts/es/dualAxes';
-import { ICommonProps } from '../../utils/types';
-import { splitMeta } from '../../utils';
+import { ICommonProps, IMetaItem } from '../../utils/types';
+import { splitMeta, strip } from '../../utils';
 import ErrorTemplate from '../ErrorTemplate';
 
-export interface ICRLineProps extends ICommonProps, Omit<LineConfig | AreaConfig | DualAxesConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
+export interface ILine extends ICommonProps, Omit<LineConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {
   /**
    * 以面积图展示，默认 `false`
    * - 注意面积图默认堆叠展示，如不需要可以传入 `isStack={false}` 覆盖
    * - 开启面积图后方可使用 `areaStyle` `startOnZero` `isPercent` 属性
    */
-  withArea: boolean;
-};
+  withArea?: boolean;
+}
+export interface IArea extends ICommonProps, Omit<AreaConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {};
+export interface IDualAxes extends ICommonProps, Omit<DualAxesConfig, keyof ICommonProps | 'yField' | 'xField' | 'seriesField'> {};
 
 export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['data']): AreaConfig | LineConfig | DualAxesConfig {
   const { metaDim, metaInd } = splitMeta(meta);
 
   if (metaInd.length === 1 && metaDim.length === 1) {
     // case 1: 单指标、单维度 => 维度作为 x 轴，指标作为 y 轴
-    const xField = metaDim.shift()?.id as string;
-    const yField = metaInd.shift()?.id as string;
+    const xFieldMeta = metaDim.shift() as IMetaItem;
+    const yFieldMeta = metaInd.shift() as IMetaItem;
+    const xField = xFieldMeta.id;
+    const yField = yFieldMeta.id;
     return {
       data,
       xField,
       yField,
+      yAxis: {
+        label: {
+          formatter: v => {
+            return yFieldMeta.isRate ? `${strip(100 * Number(v))}%` : v;
+          },
+        },
+      },
+      tooltip: {
+        formatter: ({ [xField]: type, [yField]: value }) => {
+          return {
+            name: yFieldMeta.name,
+            value: yFieldMeta.isRate ? `${strip(100 * Number(value))}%` : value,
+          }
+        },
+      },
       meta: {
         [yField]: { alias: meta.find(({ id }) => id === yField)?.name }
       },
     };
   } else if (metaInd.length === 1 && metaDim.length === 2) {
     // case 2: 单指标、双维度 => 第一维度作为 x 轴，指标作为 y 轴，第二维度作为 系列
+    const xFieldMeta = metaDim.shift() as IMetaItem;
+    const yFieldMeta = metaInd.shift() as IMetaItem;
+    const seriesFieldMeta = metaDim.shift() as IMetaItem;
+    const xField = xFieldMeta.id;
+    const yField = yFieldMeta.id;
+    const seriesField = seriesFieldMeta.id;
     return {
       data,
-      xField: metaDim.shift()?.id as string,
-      yField: metaInd.shift()?.id as string,
-      seriesField: metaDim.shift()?.id,
+      xField,
+      yField,
+      seriesField,
+      yAxis: {
+        label: {
+          formatter: v => {
+            return yFieldMeta.isRate ? `${strip(100 * Number(v))}%` : v;
+          },
+        },
+      },
+      tooltip: {
+        formatter: ({ [seriesField]: type, [yField]: value }) => {
+          return {
+            name: type,
+            value: yFieldMeta.isRate ? `${strip(100 * Number(value))}%` : value,
+          }
+        },
+      },
     };
   } else if (metaInd.length === 2 && metaDim.length === 2) {
     // case 3: 双指标、双维度 => 第一维度作为 x 轴，第二维度作为 系列，第一指标作为左 y 轴，第二指标作为右 y 轴
@@ -79,11 +119,12 @@ export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['d
   return { data };
 };
 
-const CRLine: React.FC<ICRLineProps> = ({
+const CRLine: React.FC<ILine | IArea | IDualAxes> = ({
   className,
   style,
   meta = [],
   data = [],
+  // @ts-ignore
   withArea,
   ...props
 }) => {
