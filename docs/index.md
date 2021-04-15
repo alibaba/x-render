@@ -104,7 +104,7 @@ translateHelp: FormRender 已升级到 XRender 1.0 版本，并提供开箱即�
 
 ## 贡献
 
-想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
+想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 PR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
 
 感谢给 XRender 贡献代码的你们：
 
