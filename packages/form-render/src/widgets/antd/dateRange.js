@@ -3,37 +3,14 @@
  * 日历多选组件
  */
 import React from 'react';
-import { DatePicker, TimePicker } from 'antd';
+import { DatePicker } from 'antd';
 import moment from 'moment';
 import { getFormat } from '../../utils';
+const { RangePicker } = DatePicker;
 
-const { RangePicker: DateRange } = DatePicker;
-const { RangePicker: TimeRange } = TimePicker;
-
-export default function dateRange(p) {
-  const { format = 'dateTime' } = p && p.schema;
-  const onChange = (value, string) => p.onChange(string);
-  const RangeComponent = format === 'time' ? TimeRange : DateRange;
-  const hocProps = { ...p, onChange, RangeComponent };
-  return <RangeHoc {...hocProps} />;
-}
-
-const RangeHoc = ({
-  onChange,
-  RangeComponent,
-  value,
-  schema = {},
-  options,
-  disabled,
-  readOnly,
-}) => {
-  let { format = 'dateTime' } = schema;
-  if (options && options.format) {
-    format = options.format;
-  }
+const DateRange = ({ onChange, format, value, style, ...rest }) => {
   const dateFormat = getFormat(format);
   let [start, end] = Array.isArray(value) ? value : [];
-
   // week的时候会返回 2020-31周 quarter会返回 2020-Q2 需要处理之后才能被 moment
   if (typeof start === 'string' && typeof end === 'string') {
     if (format === 'week') {
@@ -49,18 +26,28 @@ const RangeHoc = ({
   const _value =
     start && end ? [moment(start, dateFormat), moment(end, dateFormat)] : [];
 
-  const dateParams = {
-    ...options,
-    value: _value,
-    style: { width: '100%' },
-    showTime: format === 'dateTime',
-    disabled: disabled || readOnly,
-    onChange,
+  const handleChange = (value, stringList) => {
+    onChange(stringList);
   };
+
+  let dateParams = {
+    value: _value,
+    style: { width: '100%', ...style },
+    onChange: handleChange,
+  };
+
+  // TODO: format是在options里自定义的情况，是否要判断一下要不要showTime
+  if (format === 'dateTime') {
+    dateParams.showTime = true;
+  }
 
   if (['week', 'month', 'quarter', 'year'].indexOf(format) > -1) {
     dateParams.picker = format;
   }
 
-  return <RangeComponent {...dateParams} />;
+  dateParams = { ...dateParams, ...rest };
+
+  return <RangePicker {...dateParams} />;
 };
+
+export default DateRange;

@@ -58,7 +58,7 @@ const ExtendedWidget = ({
     ...schema.props,
   };
 
-  ['title', 'placeholder', 'disabled'].forEach(key => {
+  ['title', 'placeholder', 'disabled', 'format'].forEach(key => {
     if (schema[key]) {
       widgetProps[key] = schema[key];
     }

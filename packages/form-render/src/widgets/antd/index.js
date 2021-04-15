@@ -1,7 +1,9 @@
 import checkboxes from './checkboxes';
 import color from './color';
 import date from './date';
+import time from './time';
 import dateRange from './dateRange';
+import timeRange from './timeRange';
 import list from './list';
 import map from './map';
 import multiSelect from './multiSelect';
@@ -51,7 +53,9 @@ export const widgets = {
   checkboxes, // checkbox多选
   color,
   date,
+  time,
   dateRange,
+  timeRange,
   imageInput: ImageInput,
   url: urlInput,
   list,
