@@ -3,7 +3,7 @@ import { Area, Line, DualAxes } from '@ant-design/charts';
 import { AreaConfig } from '@ant-design/charts/es/Area';
 import { LineConfig } from '@ant-design/charts/es/line';
 import { DualAxesConfig } from '@ant-design/charts/es/dualAxes';
-import { ICommonProps } from '../../utils/types';
+import { ICommonProps, IMetaItem } from '../../utils/types';
 import { splitMeta } from '../../utils';
 import ErrorTemplate from '../ErrorTemplate';
 
@@ -23,12 +23,29 @@ export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['d
 
   if (metaInd.length === 1 && metaDim.length === 1) {
     // case 1: 单指标、单维度 => 维度作为 x 轴，指标作为 y 轴
-    const xField = metaDim.shift()?.id as string;
-    const yField = metaInd.shift()?.id as string;
+    const xFieldMeta = metaDim.shift() as IMetaItem;
+    const yFieldMeta = metaInd.shift() as IMetaItem;
+    const xField = xFieldMeta.id;
+    const yField = yFieldMeta.id;
     return {
       data,
       xField,
       yField,
+      yAxis: {
+        label: {
+          formatter: v => {
+            return yFieldMeta.isRate ? `${100 * Number(v)}%` : v;
+          },
+        },
+      },
+      tooltip: {
+        formatter: ({ [xField]: type, [yField]: value }) => {
+          return {
+            name: yFieldMeta.name,
+            value: yFieldMeta.isRate ? `${100 * Number(value)}%` : value,
+          }
+        },
+      },
       meta: {
         [yField]: { alias: meta.find(({ id }) => id === yField)?.name }
       },
