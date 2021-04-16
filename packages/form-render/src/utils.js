@@ -250,9 +250,24 @@ export function getFormat(format) {
     case 'time':
       dateFormat = 'HH:mm:ss';
       break;
+    case 'dateTime':
+      dateFormat = 'YYYY-MM-DD HH:mm:ss';
+      break;
+    case 'week':
+      dateFormat = 'YYYY-w';
+      break;
+    case 'year':
+      dateFormat = 'YYYY';
+      break;
+    case 'quarter':
+      dateFormat = 'YYYY-Q';
+      break;
+    case 'month':
+      dateFormat = 'YYYY-MM';
+      break;
     default:
       // dateTime
-      dateFormat = 'YYYY-MM-DD HH:mm:ss';
+      dateFormat = 'YYYY-MM-DD';
   }
   return dateFormat;
 }
