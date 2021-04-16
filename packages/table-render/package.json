@@ -21,6 +21,7 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "homepage": "https://x-render.gitee.io/table-render",
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
       "prettier --write"
