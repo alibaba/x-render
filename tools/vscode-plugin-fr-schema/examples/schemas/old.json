@@ -1,7 +1,6 @@
 {
   "propsSchema": {
     "type": "object",
-    "required": [],
     "properties": {
       "number": {
         "title": "数字输入框",
