@@ -7,7 +7,7 @@
     padding: 0;
     color: rgba(0, 0, 0, 0.85);
     line-height: 1.5715;
-    /* font-variant: tabular-nums; */
+    margin-bottom: 0;
   }
 
   .fr-field-column {
@@ -280,13 +280,14 @@
   .fr-tooltip-container {
     position: absolute;
     width: 160px;
-    left: 50%;
     white-space: initial !important;
-    bottom: 30px;
-    text-align: center;
+    top: 0;
+    left: 0;
+    transform: translateY(-120%);
+    text-align: left;
     background: #2b222a;
     padding: 4px;
-    margin-left: -77px;
+    margin-left: -69px;
     border-radius: 4px;
     color: #efefef;
     font-size: 13px;

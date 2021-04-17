@@ -1,7 +1,9 @@
 import checkboxes from './checkboxes';
 import color from './color';
 import date from './date';
+import time from './time';
 import dateRange from './dateRange';
+import timeRange from './timeRange';
 import list from './list';
 import map from './map';
 import multiSelect from './multiSelect';
@@ -37,6 +39,11 @@ const FrTextArea = createWidget(({ autoSize }) => ({
   autoSize: autoSize ? autoSize : { minRows: 3 },
 }))(TextArea);
 
+// TODO: 这个如果 size small可能会有问题
+const FrCheckbox = ({ style, ...rest }) => (
+  <Checkbox style={{ paddingTop: 4, paddingBottom: 4, ...style }} {...rest} />
+);
+
 const FrTreeSelect = ({ style, ...rest }) => (
   <TreeSelect style={{ width: '100%', ...style }} {...rest} />
 );
@@ -47,11 +54,13 @@ const FrCascader = ({ style, ...rest }) => (
 
 export const widgets = {
   input: Input,
-  checkbox: Checkbox,
+  checkbox: FrCheckbox,
   checkboxes, // checkbox多选
   color,
   date,
+  time,
   dateRange,
+  timeRange,
   imageInput: ImageInput,
   url: urlInput,
   list,

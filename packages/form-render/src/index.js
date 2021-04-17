@@ -34,11 +34,13 @@ function App({
   schema,
   flatten: _flatten,
   debug,
+  debugCss,
   locale = 'cn', // 'cn'/'en'
   debounceInput = false,
   size,
   configProvider,
   theme,
+  validateMessages,
   ...rest
 }) {
   try {
@@ -67,7 +69,7 @@ function App({
   ]);
 
   useEffect(() => {
-    syncStuff({ schema, flatten, beforeFinish, locale });
+    syncStuff({ schema, flatten, beforeFinish, locale, validateMessages });
   }, [JSON.stringify(_flatten), JSON.stringify(schema)]);
 
   // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
@@ -145,7 +147,7 @@ function App({
                 <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
               </div>
             ) : null}
-            <Core />
+            <Core debugCss={debugCss} />
           </div>
         </Ctx.Provider>
       </StoreCtx.Provider>
