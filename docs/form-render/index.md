@@ -28,7 +28,7 @@ toc: content
 FormRender 1.0 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](/form-render/migrate)
 
 <Alert>
-  <span>FormRender 已升级到 v1.x 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本(v0.x)，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 老文档 </a></span>
+  <span>FormRender 已升级到 v1.x 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本(v0.x)，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 旧文档 </a></span>
 </Alert>
 
 ## 安装
@@ -196,7 +196,7 @@ export default Demo;
 import Form, { useForm, connectForm } from 'form-render';
 ```
 
-#### \<Form \/> (常用 props)
+### \<Form \/> (常用 props)
 
 | 参数         | 描述                                                           | 类型                                                               | 是否必填 | 默认值     |
 | ------------ | -------------------------------------------------------------- | ------------------------------------------------------------------ | -------- | ---------- |
@@ -207,18 +207,35 @@ import Form, { useForm, connectForm } from 'form-render';
 | displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排 | `string('column' / 'row' / 'inline')`                              | 否       | 'column'   |
 | widgets      | 自定义组件，当内置组件无法满足时使用                           | `object`                                                           | 否       | {}         |
 
-#### \<Form \/> (不常用 props)
+### \<Form \/> (不常用 props)
 
-| 参数           | 描述                                                             | 类型                | 默认值 |
-| -------------- | ---------------------------------------------------------------- | ------------------- | ------ |
-| column         | 一行展示多少列                                                   | `number`            | 1      |
-| mapping        | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
-| debug          | 开启 debug 模式，提供更多信息                                    | `boolean`           | false  |
-| locale         | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
-| configProvider | antd 的 configProvider，配置透传                                 | `object`            | -      |
-| debounceInput  | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
+| 参数             | 描述                                                             | 类型                | 默认值 |
+| ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
+| column           | 一行展示多少列                                                   | `number`            | 1      |
+| mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
+| debug            | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
+| debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
+| locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
+| configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
+| debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
+| validateMessages | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
 
-#### useForm / connectForm
+#### validateMessages
+
+`Form` 为验证提供了[默认的错误提示信息](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/validateMessageCN.js)，你可以通过配置 `validateMessages` 属性，修改对应的提示模板。一种常见的使用方式，是配置国际化提示信息：
+
+```js
+const validateMessages = {
+  required: '${title}是必选字段',
+  // ...
+};
+
+<Form validateMessages={validateMessages} />;
+```
+
+目前可以用的转义字段为 `${title}`/`${min}`/`${max}`/`${len}`/`${pattern}`, 如果有更多需求请提 [issue](https://github.com/alibaba/x-render/issues/new/choose)
+
+### useForm / connectForm
 
 `useForm` / `connectForm` 用于创建表单实例，所有对表单的外部操作和回调函数全挂在其生产的实例上,例如表单提交是 `form.submit`。注意 `useForm` 是 hooks，而 `connectForm` 是高阶组件，所以前者只能在函数组件使用，后者可用于 class 组件。两者无其他区别。使用时需要创建实例，并通过 props 挂钩到与其对应的表单上：
 
@@ -261,7 +278,7 @@ export default connectForm(Demo);
 **对于初学者来说记住 schema 所有的字段和使用方式并非易事。为了让大家能够快速上手，建议以以下的顺序尝试：**
 
 1. 去[playground](/playground) 逛逛，那里有从基础玩法、高级功能到完整样例的所有 schema 样例
-2. 玩转一下 [表单设计器](https://x-render.gitee.io/schema-generator/)，拖拖拽拽导出 schema，丢到代码里生成可用表单。本质上这是一个可视化的 schema 生成器，支持 schema 的导入 & 导出
+2. 玩转一下 [表单设计器](https://x-render.gitee.io/tools/generator)，拖拖拽拽导出 schema，丢到代码里生成可用表单。本质上这是一个可视化的 schema 生成器，支持 schema 的导入 & 导出
 
    <div>
       <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="500px"/>

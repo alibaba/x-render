@@ -1,11 +1,8 @@
 import copy from 'rollup-plugin-copy';
 
 export default {
-  entry: ['src/index.js'],
   esm: 'rollup',
   cjs: 'rollup',
-  lessInBabelMode: true,
-  lessInRollupMode: {},
   extraRollupPlugins: [
     copy({
       targets: [{ src: 'src/index.d.ts', dest: 'dist/' }],

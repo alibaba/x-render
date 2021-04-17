@@ -18,6 +18,7 @@ const Core = ({
   dataIndex = [], // 数据来源是数组的第几个index，上层每有一个list，就push一个index
   hideTitle = false,
   hideValidation = false,
+  debugCss,
   ...rest
 }) => {
   // console.log('<Core>');
@@ -186,7 +187,10 @@ const Core = ({
 
   // TODO: list 也要算进去
   return (
-    <div style={columnStyle} className={containerClass + ' '}>
+    <div
+      style={columnStyle}
+      className={`${containerClass} ${debugCss ? 'debug' : ''}`}
+    >
       <RenderField {...fieldProps}>
         {isObjType && objChildren}
         {isList && listChildren}

@@ -19,8 +19,11 @@ features:
     title: ChartRender
     desc: 傻瓜式的图表绘制库
 footer: Please feel free to use and contribute to the development.
-translateHelp: FormRender 已升级到 1.0 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 老文档 </a>。
 ---
+
+<Alert>
+  <span>FormRender 已升级到 v1.x 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本(v0.x)，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 旧文档 </a></span>
+</Alert>
 
 ## 谁在使用？
 
@@ -100,11 +103,11 @@ translateHelp: FormRender 已升级到 1.0 版本，并对外提供中后台开�
 - 在公司或个人项目中使用 XRender，并帮忙推广给伙伴使用
 - 加入钉钉聊天群帮忙解答使用问题
 
-  <img src=https://qpluspicture.oss-cn-beijing.aliyuncs.com/N5hVht/IMG_4485.JPG width=250/>
+  <img src=https://qpluspicture.oss-cn-beijing.aliyuncs.com/W1N59f/IMG_4637.JPG width=250/>
 
 ## 贡献
 
-想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
+想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 PR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
 
 感谢给 XRender 贡献代码的你们：
 

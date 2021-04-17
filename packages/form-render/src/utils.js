@@ -379,7 +379,6 @@ export function isExpression(func) {
   return false;
 }
 
-// TODO: dataPath 是 array 的情况？
 export function parseSingleExpression(func, formData = {}, dataPath) {
   const parentPath = getParentPath(dataPath);
   const parent = getValueByPath(formData, parentPath) || {};
@@ -395,7 +394,6 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
       .replaceAll(match2, (v, m1) =>
         JSON.stringify(getValueByPath(parent, m1))
       )})`;
-    console.log(str, parent, formData);
     try {
       return Function(str)();
     } catch (error) {
@@ -614,8 +612,9 @@ export const removeEmptyItemFromList = formData => {
   return result;
 };
 
-export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
+export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
   let result = {};
+  let singleResult = {};
   if (isObjType(schema)) {
     result.type = 'object';
     if (isRequired && schema.required === true) {
@@ -628,7 +627,10 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
       if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
         item.required = true;
       }
-      result.fields[key] = getDscriptorFromSchema({ schema: item, isRequired });
+      result.fields[key] = getDescriptorFromSchema({
+        schema: item,
+        isRequired,
+      });
     });
   } else if (isListType(schema)) {
     result.type = 'array';
@@ -642,15 +644,13 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
       if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
         item.required = true;
       }
-      result.defaultField.fields[key] = getDscriptorFromSchema({
+      result.defaultField.fields[key] = getDescriptorFromSchema({
         schema: item,
         isRequired,
       });
     });
   } else {
-    // if (schema.type) {
-    //   result.type = schema.type;
-    // }
+    // 单个的逻辑
     const processRule = item => {
       if (schema.type) return { ...item, type: schema.type };
       if (item.pattern && typeof item.pattern === 'string') {
@@ -659,27 +659,16 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
       return item;
     };
     const { required, ...rest } = schema;
-    if (isRequired && schema.required === true) {
-      rest.required = true;
-    }
-    if (schema.rules) {
-      if (Array.isArray(schema.rules)) {
-        const _rules = schema.rules.map(item => {
-          return processRule(item);
-        });
-        result = [rest, ..._rules];
-      } else if (isObject(schema.rules)) {
-        result = [rest, processRule(schema.rules)];
-      } else {
-        result = rest;
+
+    ['type', 'pattern', 'min', 'max', 'len'].forEach(key => {
+      if (Object.keys(rest).indexOf(key) > -1) {
+        singleResult[key] = rest[key];
       }
-    } else {
-      result = rest;
-      // TODO1: 补齐
-    }
+    });
+
     switch (schema.type) {
       case 'range':
-        result.type = 'array';
+        singleResult.type = 'array';
         break;
       default:
         break;
@@ -687,13 +676,62 @@ export const getDscriptorFromSchema = ({ schema, isRequired = true }) => {
     switch (schema.format) {
       case 'email':
       case 'url':
-        result.type = schema.format;
-        break;
-      case 'image':
-        // TODO1: 补齐
+        singleResult.type = schema.format;
         break;
       default:
         break;
+    }
+
+    let requiredRule;
+    if (isRequired && schema.required === true) {
+      requiredRule = { required: true };
+    }
+
+    if (schema.rules) {
+      if (Array.isArray(schema.rules)) {
+        const _rules = [];
+        schema.rules.forEach(item => {
+          if (item.required === true) {
+            if (isRequired) {
+              requiredRule = item;
+            }
+          } else {
+            _rules.push(processRule(item));
+          }
+        });
+        result = [singleResult, ..._rules];
+      } else if (isObject(schema.rules)) {
+        // TODO: 规范上不允许rules是object，省一点事儿
+        result = [singleResult, processRule(schema.rules)];
+      } else {
+        result = singleResult;
+      }
+    } else {
+      result = singleResult;
+    }
+
+    if (requiredRule) {
+      if (Array.isArray(result)) {
+        result.push(requiredRule);
+      } else if (isObject(result)) {
+        result = [result, requiredRule];
+      }
+    }
+
+    if (schema.format === 'image') {
+      const imgValidator = {
+        validator: (rule, value) => {
+          const pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
+          if (value === undefined) return true;
+          return !!pattern.exec(value) || isUrl(value);
+        },
+        message: '${title}的类型不是image',
+      };
+      if (Array.isArray(result)) {
+        result.push(imgValidator);
+      } else if (isObject(result)) {
+        result = [result, imgValidator];
+      }
     }
   }
   return result;
@@ -735,7 +773,7 @@ export const formatPathFromValidator = err => {
 //   },
 // };
 // path = 'x.y'
-// return true
+// return {required: true, message?: 'xxxx'}
 export const isPathRequired = (path, schema) => {
   let pathArr = path.split('.');
   while (pathArr.length > 0) {
@@ -751,7 +789,19 @@ export const isPathRequired = (path, schema) => {
     if (childSchema) {
       return isPathRequired(rest.join('.'), childSchema);
     }
-    return !!schema.required; // 是否要这么干 TODO1: 意味着已经处理过了
+
+    // 单个的逻辑
+    let result = { required: false };
+    if (schema.required === true) {
+      result.required = true;
+    }
+    if (schema.rules) {
+      const requiredItem = schema.rules.find(item => item.required);
+      if (requiredItem) {
+        result = requiredItem;
+      }
+    }
+    return result;
   }
 };
 
@@ -861,7 +911,7 @@ export const updateSchemaToNewVersion = schema => {
 const updateSingleSchema = schema => {
   try {
     let _schema = clone(schema);
-    _schema.rules = [];
+    _schema.rules = _schema.rules || [];
     _schema.props = _schema.props || {};
     if (_schema['ui:options']) {
       _schema.props = _schema['ui:options'];

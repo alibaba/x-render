@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/>
+  <a href="https://x-render.gitee.io/" target="_blank"><img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/></a>
 </p>
 <h1 align= "center">
-XRender
+<a href="https://x-render.gitee.io/" target="_blank">XRender</a>
 </h1>
 
 <p align="center">
@@ -26,9 +26,14 @@ XRender
 
 ## 优势
 
-- FormRender：像写一个 input 一样写表单
-- TableRender：协议生成 & 高度灵活的搜索列表
-- ChartRender：傻瓜式的图表绘制库
+- <a href="https://x-render.gitee.io/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
+- <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
+- <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
+
+## 变化
+
+- FormRender 已升级到 XRender 1.0 版本，并提供开箱即用的 Form/Table/Chart 解决方案，原版本可见<a style="font-weight: 500;" href="http://x-components.gitee.io/form-render/" target="_blank_">旧文档</a>。
+- FormRender 0.x 版本直接升级到 1.0 需修改 API 才能正常运行，可见 [0.x 到 1.x](https://x-render.gitee.io/form-render/migrate)，很推荐升级。
 
 ## 谁在使用？
 
@@ -116,11 +121,11 @@ XRender
 - 在公司或个人项目中使用 XRender，并帮忙推广给伙伴使用
 - 加入钉钉聊天群帮忙解答使用问题
 
-  <img src=https://qpluspicture.oss-cn-beijing.aliyuncs.com/N5hVht/IMG_4485.JPG width=250/>
+  <img src=https://qpluspicture.oss-cn-beijing.aliyuncs.com/W1N59f/IMG_4637.JPG width=250/>
 
 ## 贡献
 
-想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
+想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 PR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
 
 感谢给 XRender 贡献代码的你们：
 

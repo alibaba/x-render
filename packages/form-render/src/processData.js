@@ -24,52 +24,42 @@ export const transformDataWithBind = (data, flatten) => {
   Object.keys(flatten).forEach(key => {
     const bind =
       flatten[key] && flatten[key].schema && flatten[key].schema.bind;
+    const _key = key.replace('[]', '');
     if (bind === false) {
-      unbindKeys.push(key);
+      unbindKeys.push(_key);
     } else if (typeof bind === 'string') {
-      bindKeys.push({ key, bind });
+      bindKeys.push({ key: _key, bind });
     } else if (isMultiBind(bind)) {
-      bindArrKeys.push({ key, bind });
+      bindArrKeys.push({ key: _key, bind });
     }
   });
 
   const handleBindData = formData => {
     unbindKeys.forEach(key => {
-      if (key.indexOf('[]') === -1) {
-        unset(formData, key); // TODO: 光remove了一个key，如果遇到remove了那个key上层的object为空了，object是不是也要去掉。。。不过感觉是伪需求
-      } else {
-        // const keys = key.split('[]').filter(k => !!k);
-        // TODO: list里的元素要bind，贼复杂，而且基本上用不到，之后写吧
-      }
+      unset(formData, key); // TODO: 光remove了一个key，如果遇到remove了那个key上层的object为空了，object是不是也要去掉。。。不过感觉是伪需求
     });
     bindKeys.forEach(item => {
       const { key, bind } = item;
-      if (key.indexOf('[]') === -1) {
-        let temp = get(formData, key);
-        // 如果已经有值了，要和原来的值合并，而不是覆盖
-        const oldVal = get(formData, bind);
-        if (isObject(oldVal)) {
-          temp = { ...oldVal, ...temp };
-        }
-        set(formData, bind, temp);
-        unset(formData, key);
-      } else {
+      let temp = get(formData, key);
+      // 如果已经有值了，要和原来的值合并，而不是覆盖
+      const oldVal = get(formData, bind);
+      if (isObject(oldVal)) {
+        temp = { ...oldVal, ...temp };
       }
+      set(formData, bind, temp);
+      unset(formData, key);
     });
     bindArrKeys.forEach(item => {
       const { key, bind } = item;
-      if (key.indexOf('[]') === -1) {
-        const temp = get(formData, key);
-        if (Array.isArray(temp)) {
-          temp.forEach((t, i) => {
-            if (bind[i]) {
-              set(formData, bind[i], t);
-            }
-          });
-        }
-        unset(formData, key);
-      } else {
+      const temp = get(formData, key);
+      if (Array.isArray(temp)) {
+        temp.forEach((t, i) => {
+          if (bind[i]) {
+            set(formData, bind[i], t);
+          }
+        });
       }
+      unset(formData, key);
     });
   };
   handleBindData(_data);
@@ -90,10 +80,11 @@ export const transformDataWithBind2 = (data, flatten) => {
   Object.keys(flatten).forEach(key => {
     const bind =
       flatten[key] && flatten[key].schema && flatten[key].schema.bind;
+    const _key = key.replace('[]', '');
     if (typeof bind === 'string') {
-      bindKeys.push({ key, bind });
+      bindKeys.push({ key: _key, bind });
     } else if (isMultiBind(bind)) {
-      bindArrKeys.push({ key, bind });
+      bindArrKeys.push({ key: _key, bind });
     }
   });
 
