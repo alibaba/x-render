@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
-import _set from 'lodash.set';
 import FormRender, { useForm } from 'form-render';
 import { defaultGlobalSettings } from '../Settings';
-// import { widgets } from '../widgets/antd';
 import { useStore, useGlobal } from '../hooks';
 
 export default function ItemSettings() {
@@ -14,13 +12,10 @@ export default function ItemSettings() {
       ? userProps.globalSettings
       : defaultGlobalSettings;
 
-  const onDataChange = (path, value) => {
-    const newSchema = { ...form.getValues() };
-
-    _set(newSchema, path, value);
-
-    form.setValues(newSchema);
-    setGlobal({ frProps: newSchema });
+  const onDataChange = (value) => {
+    if (value.displayType) {
+      setGlobal({ frProps: value });
+    }
   };
 
   useEffect(() => {
@@ -32,7 +27,9 @@ export default function ItemSettings() {
       <FormRender
         form={form}
         schema={globalSettings}
-        onItemChange={onDataChange}
+        watch={{
+          '#': v => onDataChange(v)
+        }}
         widgets={widgets}
       />
     </div>

@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Generator from 'fr-generator';
-import './index.css';
+import './index.less';
 
 const defaultValue = {
   schema: {
@@ -17,11 +17,11 @@ const Demo = () => {
 
   const onClick = () => {
     ref.current.copyValue();
-    window.open('https://x-render.gitee.io/form-render/playground');
+    window.open('/playground');
   };
 
   return (
-    <div style={{ height: '80vh' }}>
+    <div class="fr-generator-playground" style={{ height: '80vh' }}>
       <Generator
         ref={ref}
         defaultValue={defaultValue}

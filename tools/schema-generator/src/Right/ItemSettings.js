@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import _set from 'lodash.set';
 import FormRender, { useForm } from 'form-render';
 import { useStore } from '../hooks';
 import { widgets as defaultWidgets } from 'form-render/src/widgets/antd';
@@ -12,7 +11,7 @@ import {
   advancedElements,
   layouts,
 } from '../Settings';
-import { getWidgetName } from '../mapping';
+import { getWidgetName } from 'form-render/src/mapping';
 import { isObject } from '../utils';
 
 export default function ItemSettings() {
@@ -39,18 +38,12 @@ export default function ItemSettings() {
     return widgetList;
   };
 
-  const onDataChange = (path, value) => {
-    const newSchema = { ...form.getValues() };
-
-    _set(newSchema, path, value);
-
-    form.setValues(newSchema);
-
-    if (selected) {
+  const onDataChange = (value) => {
+    if (selected && value.$id) {
       try {
         const item = flatten[selected];
         if (item && item.schema) {
-          onItemChange(selected, { ...item, schema: newSchema });
+          onItemChange(selected, { ...item, schema: value });
         }
       } catch (error) {
         console.log(error, 'catch');
@@ -82,11 +75,15 @@ export default function ItemSettings() {
         const schemaNow = element.setting;
         setSettingSchema({
           type: 'object',
+          displayType: 'column',
+          showDescIcon: false,
           properties: {
             ...schemaNow,
           },
         });
-        form.setValues(itemSelected.schema);
+        setTimeout(() => {
+          form.setValues(itemSelected.schema);
+        })
       }
     } catch (error) {
       console.log(error);
@@ -99,8 +96,9 @@ export default function ItemSettings() {
         form={form}
         schema={settingSchema}
         widgets={widgets}
-        onItemChange={onDataChange}
-        frProps={{ displayType: 'column', showDescIcon: false }}
+        watch={{
+          '#': v => onDataChange(v)
+        }}
       />
     </div>
   );
