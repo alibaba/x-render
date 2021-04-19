@@ -133,6 +133,9 @@ const RenderField = props => {
   };
 
   const _showTitle = !hideTitle && !!_schema.title;
+  if (hideTitle && _schema.title) {
+    _schema.placeholder = _schema.title;
+  }
 
   const widgetProps = {
     schema: _schema,
@@ -195,7 +198,10 @@ const RenderField = props => {
   return (
     <>
       {_showTitle && titleElement}
-      <div className={contentClass} style={contentStyle}>
+      <div
+        className={`${contentClass} ${hideTitle ? 'fr-content-no-title' : ''}`}
+        style={contentStyle}
+      >
         <ExtendedWidget {...widgetProps} />
         <ErrorMessage {...messageProps} />
       </div>

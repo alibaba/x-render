@@ -140,6 +140,7 @@ const Core = ({
   if (_displayType === 'inline') {
     labelStyle = { marginTop: 5, paddingLeft: 12 };
     labelClass = '';
+    contentClass += ' fr-content-inline';
     if (containerClass.indexOf('fr-field-object') === -1) {
       containerClass += ' fr-field-inline';
     }
@@ -168,6 +169,7 @@ const Core = ({
         dataIndex={dataIndex}
         errorFields={errorFields}
         displayType={_displayType}
+        hideTitle={hideTitle}
       >
         {item.children}
       </RenderObject>
@@ -180,6 +182,7 @@ const Core = ({
       dataIndex={dataIndex}
       errorFields={errorFields}
       displayType={_displayType}
+      hideTitle={hideTitle}
     >
       {item.children}
     </RenderList>

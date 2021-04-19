@@ -3,6 +3,7 @@ import React, { useEffect, useMemo } from 'react';
 import {
   flattenSchema,
   updateSchemaToNewVersion,
+  getValueByPath,
   // completeSchemaWithTheme,
 } from './utils';
 import Core from './core';
@@ -41,6 +42,7 @@ function App({
   configProvider,
   theme,
   validateMessages,
+  watch = {},
   ...rest
 }) {
   try {
@@ -130,6 +132,7 @@ function App({
     sizeCls = 'fr-form-large';
   }
 
+  const watchList = Object.keys(watch);
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
@@ -147,6 +150,18 @@ function App({
                 <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
               </div>
             ) : null}
+            {watchList.length > 0
+              ? watchList.map((item, idx) => {
+                  return (
+                    <Watcher
+                      key={idx.toString()}
+                      watchKey={item}
+                      watch={watch}
+                      formData={formData}
+                    />
+                  );
+                })
+              : null}
             <Core debugCss={debugCss} />
           </div>
         </Ctx.Provider>
@@ -163,9 +178,17 @@ const Wrapper = props => {
   // let _schema = completeSchemaWithTheme(schema, theme);
   if (isOldVersion) {
     _schema = updateSchemaToNewVersion(schema);
-    // console.log(_schema, 'schema');
   }
   return <App schema={_schema} {...rest} />;
 };
 
 export default Wrapper;
+
+const Watcher = ({ watchKey, watch, formData }) => {
+  const value = getValueByPath(formData, watchKey);
+  const callback = watch[watchKey];
+  useEffect(() => {
+    callback(value);
+  }, [JSON.stringify(value)]);
+  return null;
+};

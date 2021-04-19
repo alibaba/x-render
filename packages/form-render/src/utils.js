@@ -33,7 +33,11 @@ export function isUrl(string) {
 
 export function isCheckBoxType(schema, readOnly) {
   if (readOnly) return false;
-  return schema && schema.type === 'boolean' && schema['widget'] !== 'switch'; // TODO: 感觉有点不准
+  if (schema.widget === 'checkbox') return true;
+  if (schema && schema.type === 'boolean') {
+    if (schema.widget === undefined) return true;
+    return false;
+  }
 }
 
 // a[].b.c => a.b.c
@@ -59,7 +63,7 @@ export function getParentPath(path) {
 
 export function getValueByPath(formData, path) {
   if (path === '#') {
-    return formData;
+    return formData || {};
   } else if (typeof path === 'string') {
     return get(formData, path);
   }
@@ -250,9 +254,24 @@ export function getFormat(format) {
     case 'time':
       dateFormat = 'HH:mm:ss';
       break;
+    case 'dateTime':
+      dateFormat = 'YYYY-MM-DD HH:mm:ss';
+      break;
+    case 'week':
+      dateFormat = 'YYYY-w';
+      break;
+    case 'year':
+      dateFormat = 'YYYY';
+      break;
+    case 'quarter':
+      dateFormat = 'YYYY-Q';
+      break;
+    case 'month':
+      dateFormat = 'YYYY-MM';
+      break;
     default:
       // dateTime
-      dateFormat = 'YYYY-MM-DD HH:mm:ss';
+      dateFormat = 'YYYY-MM-DD';
   }
   return dateFormat;
 }

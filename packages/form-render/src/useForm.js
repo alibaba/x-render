@@ -244,6 +244,7 @@ export const useForm = props => {
 
   const resetFields = () => {
     _setData({});
+    _setErrors([]);
   };
 
   // const setValue = (id, value, dataIndex) => {

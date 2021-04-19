@@ -10,7 +10,7 @@ export default ({ onChange, format, value, style, ...rest }) => {
   let _value = value || undefined;
   if (typeof _value === 'string') {
     if (format === 'week') {
-      _value = _value.substring(0, _value.length - 1);
+      _value = _value ? _value.substring(0, _value.length - 1) : _value;
     }
     if (format === 'quarter') {
       _value = _value.replace('Q', '');

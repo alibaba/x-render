@@ -42,11 +42,13 @@ npm publish
 ```sh
 # 进入
 cd packages/form-render
-# 换版本号、打tag
-npm version 1.1.0
+# 换版本号、打tag。注意tag要打，便于release note的维护
+yarn version --new-version 1.1.0
 # 发布
 npm publish
 ```
+
+发布后记得到 [releases 页](https://github.com/alibaba/x-render/releases/) 补上最新的 release 信息
 
 6. 分支管理
 

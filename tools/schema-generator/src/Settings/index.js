@@ -4,7 +4,7 @@ export const defaultCommonSettings = {
     title: 'ID',
     description: '数据存储的名称/英文/必填',
     type: 'string',
-    'ui:widget': 'idInput',
+    widget: 'idInput',
   },
   title: {
     title: '标题',
@@ -14,18 +14,18 @@ export const defaultCommonSettings = {
     title: '说明',
     type: 'string',
   },
-  'ui:width': {
+  width: {
     title: '元素宽度',
     type: 'string',
-    'ui:widget': 'percentSlider',
+    widget: 'percentSlider',
   },
-  'ui:labelWidth': {
+  labelWidth: {
     title: '标签宽度',
     description: '默认值120',
     type: 'number',
-    'ui:widget': 'slider',
+    widget: 'slider',
     max: 400,
-    'ui:options': {
+    props: {
       hideNumber: true,
     },
   },
@@ -33,7 +33,7 @@ export const defaultCommonSettings = {
     title: '默认值',
     type: 'string',
   },
-  'ui:readonly': {
+  readOnly: {
     title: '置灰',
     type: 'boolean',
   },
@@ -55,10 +55,10 @@ export const elements = [
       type: 'string',
     },
     setting: {
-      'ui:options': {
+      props: {
         title: '选项',
         type: 'object',
-        'ui:labelWidth': 80,
+        labelWidth: 80,
         properties: {
           allowClear: {
             title: '是否带清除按钮',
@@ -94,7 +94,7 @@ export const elements = [
       pattern: {
         title: '校验正则表达式',
         type: 'string',
-        'ui:options': {
+        props: {
           placeholder: '填写正则表达式',
         },
       },
@@ -110,10 +110,10 @@ export const elements = [
       format: 'textarea',
     },
     setting: {
-      'ui:options': {
+      props: {
         title: '选项',
         type: 'object',
-        'ui:labelWidth': 80,
+        labelWidth: 80,
         properties: {
           autoSize: {
             title: '高度自动',
@@ -136,7 +136,7 @@ export const elements = [
       pattern: {
         title: '校验正则表达式',
         type: 'string',
-        'ui:options': {
+        props: {
           placeholder: '填写正则表达式',
         },
       },
@@ -193,7 +193,7 @@ export const elements = [
     schema: {
       title: '是否选择',
       type: 'boolean',
-      'ui:widget': 'switch',
+      widget: 'switch',
     },
     setting: {
       default: {
@@ -217,8 +217,8 @@ export const elements = [
         title: '选项字段',
         type: 'array',
         enum: [],
-        'ui:widget': 'select',
-        'ui:options': {
+        widget: 'select',
+        props: {
           mode: 'tags',
         },
       },
@@ -226,8 +226,8 @@ export const elements = [
         title: '选项名称',
         type: 'array',
         enum: [],
-        'ui:widget': 'select',
-        'ui:options': {
+        widget: 'select',
+        props: {
           mode: 'tags',
         },
       },
@@ -242,15 +242,15 @@ export const elements = [
       type: 'string',
       enum: ['a', 'b', 'c'],
       enumNames: ['早', '中', '晚'],
-      'ui:widget': 'radio',
+      widget: 'radio',
     },
     setting: {
       enum: {
         title: '选项字段',
         type: 'array',
         enum: [],
-        'ui:widget': 'select',
-        'ui:options': {
+        widget: 'select',
+        props: {
           mode: 'tags',
         },
       },
@@ -258,8 +258,8 @@ export const elements = [
         title: '选项名称',
         type: 'array',
         enum: [],
-        'ui:widget': 'select',
-        'ui:options': {
+        widget: 'select',
+        props: {
           mode: 'tags',
         },
       },
@@ -278,15 +278,15 @@ export const elements = [
       },
       enum: ['A', 'B', 'C', 'D'],
       enumNames: ['杭州', '武汉', '湖州', '贵阳'],
-      'ui:widget': 'multiSelect',
+      widget: 'multiSelect',
     },
     setting: {
       enum: {
         title: '选项字段',
         type: 'array',
         enum: [],
-        'ui:widget': 'select',
-        'ui:options': {
+        widget: 'select',
+        props: {
           mode: 'tags',
         },
       },
@@ -294,8 +294,8 @@ export const elements = [
         title: '选项名称',
         type: 'array',
         enum: [],
-        'ui:widget': 'select',
-        'ui:options': {
+        widget: 'select',
+        props: {
           mode: 'tags',
         },
       },
@@ -320,8 +320,8 @@ export const elements = [
         title: '选项字段',
         type: 'array',
         enum: [],
-        'ui:widget': 'select',
-        'ui:options': {
+        widget: 'select',
+        props: {
           mode: 'tags',
         },
       },
@@ -329,8 +329,8 @@ export const elements = [
         title: '选项名称',
         type: 'array',
         enum: [],
-        'ui:widget': 'select',
-        'ui:options': {
+        widget: 'select',
+        props: {
           mode: 'tags',
         },
       },
@@ -347,7 +347,7 @@ export const advancedElements = [
       title: '日期范围',
       type: 'range',
       format: 'dateTime',
-      'ui:options': {
+      props: {
         placeholder: ['开始时间', '结束时间'],
       },
     },
@@ -367,7 +367,7 @@ export const advancedElements = [
     schema: {
       title: '带滑动条',
       type: 'number',
-      'ui:widget': 'slider',
+      widget: 'slider',
     },
     setting: {},
   },
@@ -428,7 +428,7 @@ export const layouts = [
         title: '最大长度',
         type: 'number',
       },
-      'ui:options': {
+      props: {
         title: '选项',
         type: 'object',
         properties: {
@@ -477,7 +477,7 @@ const saves = [
                 title: '日期/时间范围',
                 type: 'range',
                 format: 'date',
-                'ui:options': {
+                props: {
                   placeholder: ['开始日期', '结束日期'],
                 },
               },
@@ -515,19 +515,19 @@ export const defaultGlobalSettings = {
   properties: {
     column: {
       title: '整体布局',
-      type: 'string',
+      type: 'number',
       enum: [1, 2, 3],
       enumNames: ['一行一列', '一行二列', '一行三列'],
-      'ui:options': {
+      props: {
         placeholder: '默认一行一列',
       },
     },
     labelWidth: {
       title: '标签宽度',
       type: 'number',
-      'ui:widget': 'slider',
+      widget: 'slider',
       max: 300,
-      'ui:options': {
+      props: {
         hideNumber: true,
       },
     },
@@ -536,7 +536,7 @@ export const defaultGlobalSettings = {
       type: 'string',
       enum: ['row', 'column'],
       enumNames: ['同行', '单独一行'],
-      'ui:widget': 'radio',
+      widget: 'radio',
     },
   },
 };

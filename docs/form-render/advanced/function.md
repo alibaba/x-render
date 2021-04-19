@@ -21,10 +21,10 @@ toc: false
 }
 ```
 
-注 1：rules 字段已经可以是用 validator 方法定制校验，详见 `async-validator` github 仓库文档。
-注 2：default 字段对应的是 Input 的 defaultValue，defaultValue 是不会根据值的后续变化而变化的，所以我们选择不允许 default 字段为函数表达式，需要修改指定字段的值，请使用自定义组件的 `onItemChange` 方法
+注 1：rules 字段暂不支持表达式，而是用 `validator` 方法写复杂校验，详见 [async-validator 文档](https://github.com/yiminghe/async-validator#type)。  
+注 2：default 字段对应的是 \<Input /\> 的 defaultValue，defaultValue 是不会根据值的后续变化而变化的，所以我们也不允许 default 字段使用函数表达式，遇到一个组件需要修改另一个组件的值的情况，请使用自定义组件内置的 `addons.onItemChange` 方法。
 
-3. 函数表达式可使用以下 2 关键字：
+函数表达式可使用以下 2 关键字：
 
 | 名称      |                                       说明                                        |
 | --------- | :-------------------------------------------------------------------------------: |
