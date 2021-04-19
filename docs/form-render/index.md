@@ -190,6 +190,13 @@ export default Demo;
 3. 通过 bind 字段，我们允许数据的双向绑定，数据展示和真实提交的数据可以根据开发需求不同（例如从服务端接口拿到不规则数据时，也能直接使用）
 4. 可以通过`displayType`,`labelWidth`等字段轻易修改展示
 
+## 高级用法
+
+1. [如何写表单间的联动关系](/form-render/advanced/function)
+2. [如何用自定义组件完成定制元素的展示](/form-render/advanced/widget)
+3. [如何写一个完整的服务端数据表单加载和提交](/form-render/advanced/form-methods)
+4. [常见问题 FAQ](/form-render/faq)
+
 ## 组件 Props
 
 ```js
@@ -286,10 +293,3 @@ export default connectForm(Demo);
    </div>
 
 3. 详细的 schema 规范见[schema 的文档](/form-render/schema)。同时在 vscode 上搜索“formrender”可以找到 snippets 插件，手熟起来一整页表单的 schema 弹指间完成
-
-## 高级用法
-
-1. [如何写表单间的联动关系](/form-render/advanced/function)
-2. [如何用自定义组件完成定制元素的展示](/form-render/advanced/widget)
-3. [如何写一个完整的服务端数据表单加载和提交](/form-render/advanced/form-methods)
-4. [常见问题 FAQ](/form-render/faq)
