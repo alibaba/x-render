@@ -31,6 +31,9 @@ const RenderList = ({
     renderWidget = flatten[parentId].schema.widget;
   } catch (error) {}
 
+  const item = flatten[parentId];
+  const schema = item && item.schema;
+
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
   let listData;
@@ -89,6 +92,7 @@ const RenderList = ({
 
   const displayProps = {
     displayList,
+    schema,
     dataPath,
     dataIndex,
     children,
@@ -120,6 +124,7 @@ const RenderList = ({
 export default RenderList;
 
 const SimpleList = ({
+  schema,
   displayList = [],
   dataIndex,
   children,
@@ -127,22 +132,33 @@ const SimpleList = ({
   addItem,
   copyItem,
 }) => {
+  let _schema = {
+    type: 'object',
+    // properties: (schema.items && schema.items.properties) || {},
+    properties: {},
+    props: schema.props || {},
+    $id: schema.$id,
+  };
   const _infoItem = {
-    schema: { type: 'object', properties: {} },
+    schema: _schema,
     rules: [],
     children,
   };
 
   return (
-    <div className="">
+    <div className="fr-list-1">
       {displayList.map((item, idx) => {
+        const fieldsProps = {
+          displayType: 'inline',
+          _item: _infoItem,
+          dataIndex: [...dataIndex, idx],
+        };
+        if (schema.props && schema.props.hideTitle) {
+          fieldsProps.hideTitle = true;
+        }
         return (
           <div key={idx} style={{ display: 'flex' }}>
-            <Core
-              displayType="inline"
-              _item={_infoItem}
-              dataIndex={[...dataIndex, idx]}
-            />
+            <Core {...fieldsProps} />
             <div style={{ marginTop: 6 }}>
               <Popconfirm
                 title="确定删除?"

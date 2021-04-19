@@ -63,7 +63,7 @@ export function getParentPath(path) {
 
 export function getValueByPath(formData, path) {
   if (path === '#') {
-    return formData;
+    return formData || {};
   } else if (typeof path === 'string') {
     return get(formData, path);
   }

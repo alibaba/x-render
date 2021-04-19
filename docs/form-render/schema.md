@@ -468,9 +468,10 @@ required
 
 **props**
 
-| props   | 类型  |     说明      |
-| ------- | :---: | :-----------: |
-| buttons | array | 下详 （注 1） |
+| props     | 类型  |                 说明                  |
+| --------- | :---: | :-----------------------------------: |
+| hideTitle | array | 只支持“list1”，隐藏 title，展示更紧凑 |
+| buttons   | array |             下详 （注 1）             |
 
 **itemProps**
 
