@@ -1,9 +1,9 @@
 ---
 order: 1
-title: Schema 编辑器
+title: 使用文档
 group:
   title: Schema 编辑器
-toc: menu
+toc: content
 ---
 
 ## 如何使用
