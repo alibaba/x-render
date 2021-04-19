@@ -5,7 +5,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
-  // displayType: 'row',
+  displayType: 'row',
   properties: {
     listName2: {
       title: '对象数组',
@@ -20,7 +20,7 @@ const schema = {
             type: 'string',
             required: true,
           },
-          selet1: {
+          select1: {
             title: '单选',
             type: 'string',
             enum: ['a', 'b', 'c'],
