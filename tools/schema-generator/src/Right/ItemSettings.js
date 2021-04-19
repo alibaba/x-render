@@ -1,7 +1,8 @@
-import React from 'react';
-import FRWrapper from '../FRWrapper';
+import React, { useState, useEffect } from 'react';
+import _set from 'lodash.set';
+import FormRender, { useForm } from 'form-render';
 import { useStore } from '../hooks';
-import { widgets } from '../widgets/antd';
+import { widgets as defaultWidgets } from 'form-render/src/widgets/antd';
 import IdInput from '../widgets/antd/idInput';
 import PercentSlider from '../widgets/antd/percentSlider';
 import {
@@ -15,10 +16,15 @@ import { getWidgetName } from '../mapping';
 import { isObject } from '../utils';
 
 export default function ItemSettings() {
+  const form = useForm();
   const { selected, flatten, onItemChange, userProps = {} } = useStore();
   const { settings, commonSettings } = userProps;
-  let settingSchema = {};
-  let settingData = {};
+  const [settingSchema, setSettingSchema] = useState({});
+  const widgets = {
+    ...defaultWidgets,
+    idInput: IdInput,
+    percentSlider: PercentSlider,
+  };
 
   const getWidgetList = (settings, commonSettings) => {
     let widgetList = [];
@@ -33,7 +39,13 @@ export default function ItemSettings() {
     return widgetList;
   };
 
-  const onDataChange = newSchema => {
+  const onDataChange = (path, value) => {
+    const newSchema = { ...form.getValues() };
+
+    _set(newSchema, path, value);
+
+    form.setValues(newSchema);
+
     if (selected) {
       try {
         const item = flatten[selected];
@@ -46,57 +58,48 @@ export default function ItemSettings() {
     }
   };
 
-  // 算widgetList
-  const _settings = Array.isArray(settings)
-    ? [...settings, { widgets: [...elements, ...advancedElements, ...layouts] }] // TODO: 不是最优解
-    : defaultSettings;
-  const _commonSettings = isObject(commonSettings)
-    ? commonSettings
-    : defaultCommonSettings;
-  const widgetList = getWidgetList(_settings, _commonSettings);
+  useEffect(() => {
+    // 算widgetList
+    const _settings = Array.isArray(settings)
+      ? [...settings, { widgets: [...elements, ...advancedElements, ...layouts] }] // TODO: 不是最优解
+      : defaultSettings;
+    const _commonSettings = isObject(commonSettings)
+      ? commonSettings
+      : defaultCommonSettings;
+    const widgetList = getWidgetList(_settings, _commonSettings);
 
-  // setting该显示什么的计算，要把选中组件的schema和它对应的widgets的整体schema进行拼接
-  let itemSelected;
-  let widgetName;
-  try {
-    itemSelected = flatten[selected];
-    if (itemSelected) {
-      widgetName = getWidgetName(itemSelected.schema);
-    }
-    if (widgetName) {
-      // const name = getKeyFromUniqueId(selected);
-      const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
-      const schemaNow = element.setting;
-      settingSchema = {
-        schema: {
+    // setting该显示什么的计算，要把选中组件的schema和它对应的widgets的整体schema进行拼接
+    let itemSelected;
+    let widgetName;
+    try {
+      itemSelected = flatten[selected];
+      if (itemSelected) {
+        widgetName = getWidgetName(itemSelected.schema);
+      }
+      if (widgetName) {
+        // const name = getKeyFromUniqueId(selected);
+        const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
+        const schemaNow = element.setting;
+        setSettingSchema({
           type: 'object',
           properties: {
             ...schemaNow,
           },
-        },
-      };
-      settingData = itemSelected.schema;
+        });
+        form.setValues(itemSelected.schema);
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
-  }
-
-  const _widgets = {
-    ...widgets,
-    idInput: IdInput,
-    percentSlider: PercentSlider,
-  };
-
-  // TODO2: 这边开放
+  }, [selected]);
 
   return (
     <div style={{ paddingRight: 24 }}>
-      <FRWrapper
+      <FormRender
+        form={form}
         schema={settingSchema}
-        formData={settingData}
-        onChange={onDataChange}
-        widgets={_widgets}
-        preview={true}
+        widgets={widgets}
+        onItemChange={onDataChange}
         frProps={{ displayType: 'column', showDescIcon: false }}
       />
     </div>

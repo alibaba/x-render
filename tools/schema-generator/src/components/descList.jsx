@@ -50,8 +50,8 @@ export const getDescription = ({ schema = {}, value = [], index }) => {
   let description = (value && value.length && value[index]) || {};
   const valueList = Object.values(description);
   const descList = titles.map((t, idx) => {
-    let hidden = t && t['ui:hidden'];
-    // ui:hidden为判断式时解析 TODO: 解析在外部集中做
+    let hidden = t && t['hidden'];
+    // hidden为判断式时解析 TODO: 解析在外部集中做
     if (hidden) return;
     const title = t.title;
     let text = valueList[idx];

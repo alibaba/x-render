@@ -139,7 +139,7 @@ class fieldList extends React.Component {
   render() {
     const { p, foldList = [], toggleFoldItem } = this.props;
     const { options = {}, extraButtons = {} } = p || {};
-    // prefer ui:options/buttons to ui:extraButtons, but keep both for backwards compatibility
+    // prefer props/buttons to extraButtons, but keep both for backwards compatibility
     const buttons = options.buttons || extraButtons || [];
     const { readonly, schema = {} } = p;
     const { maxItems } = schema;

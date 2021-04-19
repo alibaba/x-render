@@ -37,6 +37,7 @@
     "antd": "^4.4.2",
     "clone": "^2.1.2",
     "copy-text-to-clipboard": "^2.2.0",
+    "lodash.set": "^4.3.2",
     "moment": "^2.27.0",
     "nanoid": "^2.1.11",
     "rc-color-picker": "^1.2.6",
