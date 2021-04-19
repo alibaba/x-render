@@ -33,7 +33,11 @@ export function isUrl(string) {
 
 export function isCheckBoxType(schema, readOnly) {
   if (readOnly) return false;
-  return schema && schema.type === 'boolean' && schema['widget'] !== 'switch'; // TODO: 感觉有点不准
+  if (schema.widget === 'checkbox') return true;
+  if (schema && schema.type === 'boolean') {
+    if (schema.widget === undefined) return true;
+    return false;
+  }
 }
 
 // a[].b.c => a.b.c
