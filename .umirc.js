@@ -51,8 +51,8 @@ export default defineConfig({
       path: '/tools',
       children: [
         { title: 'Schema 编辑器', path: '/tools/generator' },
-        { title: 'VSCode 插件', path: '/tools/vscode' },
         { title: 'PropToSchema', path: '/tools/proptypes' },
+        { title: 'VSCode 插件', path: '/tools/vscode' },
       ],
     },
     {
