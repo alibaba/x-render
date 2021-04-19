@@ -34,7 +34,7 @@ export const mapping = {
 };
 
 export function getWidgetName(schema, _mapping = mapping) {
-  const { type, format, enum: enums, readOnly } = schema;
+  const { type, format, enum: enums, readOnly, widget } = schema;
 
   // 如果已经注明了渲染widget，那最好
   // if (schema['ui:widget']) {
@@ -61,8 +61,9 @@ export function getWidgetName(schema, _mapping = mapping) {
       list.push('*?enum');
     }
   }
-  if (format) {
-    list.push(`${type}:${format}`);
+  const _widget = widget || format;
+  if (_widget) {
+    list.push(`${type}:${_widget}`);
   }
   list.push(type); // 放在最后兜底，其他都不match时使用type默认的组件
   let found = '';
