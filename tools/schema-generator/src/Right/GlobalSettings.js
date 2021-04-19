@@ -19,6 +19,7 @@ export default function ItemSettings() {
 
     _set(newSchema, path, value);
 
+    form.setValues(newSchema);
     setGlobal({ frProps: newSchema });
   };
 
