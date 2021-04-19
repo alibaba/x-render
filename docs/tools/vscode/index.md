@@ -1,9 +1,8 @@
 ---
-order: 2
 title: VSCode 插件
 group:
   title: VSCode 插件
-toc: menu
+toc: content
 ---
 
 # vscode-plugin-fr-schema

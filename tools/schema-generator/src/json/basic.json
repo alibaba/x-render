@@ -15,7 +15,7 @@
           "input": {
             "title": "简单输入框",
             "type": "string",
-            "ui:options": {
+            "props": {
               "placeholder": "昵称"
             }
           },
@@ -55,7 +55,7 @@
           "number2": {
             "title": "带滑动条",
             "type": "number",
-            "ui:widget": "slider"
+            "widget": "slider"
           }
         }
       },
@@ -70,7 +70,7 @@
           "switch": {
             "title": "控件类使用switch",
             "type": "boolean",
-            "ui:widget": "switch"
+            "widget": "switch"
           }
         }
       },
@@ -82,7 +82,7 @@
             "title": "日期范围",
             "type": "range",
             "format": "dateTime",
-            "ui:options": {
+            "props": {
               "placeholder": ["开始时间", "结束时间"]
             }
           }
@@ -104,7 +104,7 @@
             "type": "string",
             "enum": ["a", "b", "c"],
             "enumNames": ["早", "中", "晚"],
-            "ui:widget": "radio"
+            "widget": "radio"
           },
           "multiSelect": {
             "title": "多选",
@@ -115,7 +115,7 @@
             },
             "enum": ["A", "B", "C", "D"],
             "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
-            "ui:widget": "multiSelect"
+            "widget": "multiSelect"
           },
           "boxes": {
             "title": "多选",

@@ -36,10 +36,10 @@ const transformFrom = (mySchema, parent = null) => {
     });
   }
   if (mySchema['x-component']) {
-    mySchema['ui:widget'] = mySchema['x-component'];
+    mySchema['widget'] = mySchema['x-component'];
   }
   if (mySchema['x-component-props']) {
-    mySchema['ui:options'] = mySchema['x-component-props'];
+    mySchema['props'] = mySchema['x-component-props'];
   }
   if (parent && mySchema.required) {
     if (parent.required && Array.isArray(parent.required)) {
@@ -102,14 +102,14 @@ const transformTo = (frSchema, parent = null, key = null) => {
       }
     });
   }
-  if (frSchema['ui:widget']) {
-    frSchema['x-component'] = frSchema['ui:widget'];
+  if (frSchema['widget']) {
+    frSchema['x-component'] = frSchema['widget'];
   }
-  if (frSchema['ui:options']) {
-    frSchema['x-component-props'] = frSchema['ui:options'];
+  if (frSchema['props']) {
+    frSchema['x-component-props'] = frSchema['props'];
   }
-  delete frSchema['ui:widget'];
-  delete frSchema['ui:options'];
+  delete frSchema['widget'];
+  delete frSchema['props'];
   delete frSchema['enumNames'];
   if (key) {
     frSchema.name = key;
