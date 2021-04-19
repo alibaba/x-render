@@ -205,14 +205,17 @@ import Form, { useForm, connectForm } from 'form-render';
 
 ### \<Form \/> (常用 props)
 
-| 参数         | 描述                                                           | 类型                                                               | 是否必填 | 默认值     |
-| ------------ | -------------------------------------------------------------- | ------------------------------------------------------------------ | -------- | ---------- |
-| schema       | 描述表单的 schema，详见                                        | `object`                                                           | 是       |            |
-| form         | `useForm`创建的表单实例，与 Form 一对一绑定                    | `FormInstance`                                                     | 是       |            |
-| onFinish     | 提交后的回调，执行 form.submit() 后触发                        | `function(formData, errorFields: Error[]) => void`                 | 否       | () => void |
-| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填                 | `function(formData, errorFields: Error[]) => errorFields: Error[]` | 否       | () => void |
-| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排 | `string('column' / 'row' / 'inline')`                              | 否       | 'column'   |
-| widgets      | 自定义组件，当内置组件无法满足时使用                           | `object`                                                           | 否       | {}         |
+| 参数         | 描述                                                                           | 类型                                          | 是否必填 | 默认值   |
+| ------------ | ------------------------------------------------------------------------------ | --------------------------------------------- | -------- | -------- |
+| schema       | 描述表单的 schema，详见                                                        | `object`                                      | 是       |          |
+| form         | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                | 是       |          |
+| onFinish     | 提交后的回调，执行 form.submit() 后触发                                        | `(formData, errorFields: Error[]) => void`    | 否       | () => {} |
+| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填                                 | `(formData, errorFields: Error[]) => Error[]` | 否       | () => {} |
+| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`         | 否       | 'column' |
+| widgets      | 自定义组件，当内置组件无法满足时使用                                           | `object`                                      | 否       | {}       |
+| watch        | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                      | 否       | {}       |
+
+注 1：
 
 ### \<Form \/> (不常用 props)
 
@@ -269,7 +272,8 @@ export default connectForm(Demo);
 
 | 参数             | 描述                                                | 类型                                 |
 | ---------------- | --------------------------------------------------- | ------------------------------------ |
-| submit           | 触发提交流程，一般在提交按钮上使用                  | `function`                           |
+| submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                         |
+| resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `() => void`                         |
 | errorFields      | Check if a field is touched                         | `array,[{name, error: []}]`          |
 | setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error | Error[]) => void`   |
 | setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`            |

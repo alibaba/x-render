@@ -25,12 +25,16 @@ const Demo = () => {
       <FormRender
         displayType="row"
         // debugCss
+        // mapping={{ '' }}
         form={form}
         schema={schema}
         widgets={{ mymy: Switch }}
       />
       <Button type="primary" onClick={openModal}>
         打开form
+      </Button>
+      <Button type="primary" onClick={form.resetFields}>
+        reset
       </Button>
     </div>
   );
