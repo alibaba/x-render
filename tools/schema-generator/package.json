@@ -29,9 +29,9 @@
     ]
   },
   "peerDependencies": {
-    "antd": "^4.1.0",
-    "react": "^16.8.0",
-    "react-dom": "^16.8.0"
+    "antd": "4.x",
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "dependencies": {
     "antd": "^4.4.2",
@@ -42,18 +42,9 @@
     "rc-color-picker": "^1.2.6",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",
-    "react-sortable-hoc": "^1.11.0"
+    "react-sortable-hoc": "^1.11.0",
+    "form-render": "1.x"
   },
   "devDependencies": {
-    "@umijs/preset-react": "1.x",
-    "@umijs/test": "^3.0.5",
-    "dumi": "^1.0.34",
-    "father-build": "^1.17.2",
-    "gh-pages": "^3.0.0",
-    "lint-staged": "^10.0.7",
-    "prettier": "^1.19.1",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-copy": "^3.4.0",
-    "yorkie": "^2.0.0"
   }
 }
