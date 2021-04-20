@@ -7,22 +7,18 @@ import { DeleteOutlined, CopyOutlined } from '@ant-design/icons';
 
 const CardList = ({
   displayList = [],
-  dataIndex,
-  children,
   deleteItem,
   copyItem,
   addItem,
   displayType,
+  getFieldsProps,
 }) => {
-  const _infoItem = {
-    schema: { type: 'object', properties: {} },
-    children,
-  };
-
   return (
     <>
       <div className="fr-card-list">
         {displayList.map((item, idx) => {
+          const fieldsProps = getFieldsProps(idx);
+          fieldsProps.displayType = displayType;
           return (
             <div
               className={`fr-card-item ${
@@ -31,11 +27,7 @@ const CardList = ({
               key={idx}
             >
               <div className="fr-card-index">{idx + 1}</div>
-              <Core
-                displayType={displayType}
-                _item={_infoItem}
-                dataIndex={[...dataIndex, idx]}
-              />
+              <Core {...fieldsProps} />
 
               <Space direction="horizontal" className="fr-card-toolbar">
                 <Popconfirm

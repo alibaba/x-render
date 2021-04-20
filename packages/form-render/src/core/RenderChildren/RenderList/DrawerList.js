@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useRef } from 'react';
 import Core from '../../index';
 import { useSet } from '../../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../utils';
@@ -22,12 +22,12 @@ const DrawerList = ({
   errorFields,
   getFieldsProps,
 }) => {
+  const currentIndex = useRef(-1);
   const [state, setState] = useSet({
     showDrawer: false,
-    currentIndex: -1,
   });
 
-  const { showDrawer, currentIndex } = state;
+  const { showDrawer } = state;
 
   const dataSource = displayList.map((item, index) => ({
     ...item,
@@ -77,7 +77,7 @@ const DrawerList = ({
           <a onClick={() => openDrawer(index)}>编辑</a>
           <Popconfirm
             title="确定删除?"
-            onConfirm={() => deleteItem(idx)}
+            onConfirm={() => deleteItem(index)}
             okText="确定"
             cancelText="取消"
           >
@@ -94,19 +94,19 @@ const DrawerList = ({
     },
   });
 
-  const fieldsProps = getFieldsProps(currentIndex);
+  const fieldsProps = getFieldsProps(currentIndex.current);
 
   const openDrawer = index => {
+    currentIndex.current = index;
     setState({
       showDrawer: true,
-      currentIndex: index,
     });
   };
 
   const closeDrawer = () => {
+    currentIndex.current = -1;
     setState({
       showDrawer: false,
-      currentIndex: -1,
     });
   };
 
@@ -128,6 +128,7 @@ const DrawerList = ({
         placement="right"
         onClose={closeDrawer}
         visible={showDrawer}
+        destroyOnClose // 必须要加，currentIndex不是一个state，Core不会重新渲染就跪了
       >
         <div className="fr-container">
           <Core {...fieldsProps} />
