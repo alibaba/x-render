@@ -2,14 +2,10 @@
   "name": "fr-generator",
   "version": "1.1.0",
   "scripts": {
-    "start": "dumi dev",
-    "docs:build": "dumi build",
     "build": "father-build",
     "prepare": "npm run build",
     "beta": "npm publish --tag beta",
     "postpublish": "git push --tags",
-    "predeploy": "npm run docs:build",
-    "deploy": "gh-pages -d docs-dist",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
