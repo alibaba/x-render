@@ -141,7 +141,6 @@ const SimpleList = ({
   };
   const _infoItem = {
     schema: _schema,
-    rules: [],
     children,
   };
 
@@ -169,7 +168,7 @@ const SimpleList = ({
                 <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
               </Popconfirm>
               <CopyOutlined
-                style={{ fontSize: 16, marginLeft: 8 }}
+                style={{ fontSize: 15, marginLeft: 8 }}
                 onClick={() => copyItem(idx)}
               />
             </div>
@@ -206,7 +205,6 @@ const DefaultList = ({
 
   const _infoItem = {
     schema: { type: 'object', properties: {} },
-    rules: [],
     children,
   };
 
@@ -428,7 +426,6 @@ const CardList = ({
 }) => {
   const _infoItem = {
     schema: { type: 'object', properties: {} },
-    rules: [],
     children,
   };
 
