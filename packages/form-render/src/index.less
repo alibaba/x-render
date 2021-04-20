@@ -33,16 +33,18 @@
     border-radius: 2px;
   }
 
-  .fr-collapse-object .ant-collapse-header {
-    padding-bottom: 4px !important;
-    padding-top: 4px !important;
-  }
-
-  .fr-collapse-object .ant-collapse-content-box {
-    padding: 8px 8px 4px 8px !important;
-  }
-  .fr-collapse-object .ant-collapse-arrow {
-    padding-top: 5px !important;
+  // collapse 组件的样式覆盖
+  .fr-collapse-object {
+    .ant-collapse-header {
+      padding-bottom: 4px !important;
+      padding-top: 4px !important;
+    }
+    .ant-collapse-content-box {
+      padding: 8px 8px 4px 8px !important;
+    }
+    .ant-collapse-arrow {
+      padding-top: 5px !important;
+    }
   }
 
   .fr-label {
@@ -100,24 +102,20 @@
     // min-height: 32px;
   }
 
-  .fr-content.fr-content-inline {
-    width: unset;
-  }
-
-  .fr-content.fr-content-inline.fr-content-no-title {
-    margin-right: 8px;
-  }
-
-  .fr-list-1 .fr-content {
-    min-width: 120px;
-  }
-
-  .fr-content-row {
-    flex: 1;
-    position: relative;
-  }
-
-  .fr-content-column {
+  .fr-list-1 {
+    .fr-content {
+      min-width: 140px;
+    }
+    .fr-content-row {
+      flex: 1;
+      position: relative;
+    }
+    .fr-content.fr-content-inline {
+      width: unset;
+    }
+    .fr-content.fr-content-inline.fr-content-no-title {
+      margin-right: 8px;
+    }
   }
 
   .fr-desc {

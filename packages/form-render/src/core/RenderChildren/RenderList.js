@@ -384,7 +384,7 @@ const TableList = ({
     key: '$action',
     fixed: 'right',
     width: 60,
-    render: (value, record, index) => {
+    render: (value, record, idx) => {
       return (
         <Popconfirm
           title="确定删除?"
