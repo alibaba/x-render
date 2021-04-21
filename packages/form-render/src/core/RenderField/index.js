@@ -8,9 +8,6 @@ import {
   isObjType,
   schemaContainsExpression,
   parseAllExpression,
-  parseSingleExpression,
-  isExpression,
-  isObject,
   clone,
 } from '../../utils';
 import ErrorMessage from './ErrorMessage';
@@ -48,7 +45,6 @@ const RenderField = props => {
   const snapShot = useRef();
   let dataPath = getDataPath($id, dataIndex);
   let _schema = clone(schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
-  let _rules = [...item.rules];
 
   // 节流部分逻辑，编辑时不执行
   if (isEditing && snapShot.current) {
@@ -59,16 +55,17 @@ const RenderField = props => {
     }
     snapShot.current = _schema;
 
-    _rules = _rules.map(rule => {
-      const newRule = {};
-      Object.keys(rule).forEach(key => {
-        const needParse = isExpression(rule[key]);
-        newRule[key] = needParse
-          ? parseSingleExpression(rule[key], formData, dataPath)
-          : rule[key];
-      });
-      return newRule;
-    });
+    // rules 还是放在 schema 里统一处理
+    // _rules = getArray(item.rules).map(rule => {
+    //   const newRule = {};
+    //   Object.keys(rule).forEach(key => {
+    //     const needParse = isExpression(rule[key]);
+    //     newRule[key] = needParse
+    //       ? parseSingleExpression(rule[key], formData, dataPath)
+    //       : rule[key];
+    //   });
+    //   return newRule;
+    // });
   }
 
   const errObj = errorFields.find(err => err.name === dataPath);
@@ -133,6 +130,10 @@ const RenderField = props => {
   };
 
   const _showTitle = !hideTitle && !!_schema.title;
+  // TODO: 这块最好能判断上一层是list1，
+  if (hideTitle && _schema.title) {
+    _schema.placeholder = _schema.placeholder || _schema.title;
+  }
 
   const widgetProps = {
     schema: _schema,
@@ -195,7 +196,10 @@ const RenderField = props => {
   return (
     <>
       {_showTitle && titleElement}
-      <div className={contentClass} style={contentStyle}>
+      <div
+        className={`${contentClass} ${hideTitle ? 'fr-content-no-title' : ''}`}
+        style={contentStyle}
+      >
         <ExtendedWidget {...widgetProps} />
         <ErrorMessage {...messageProps} />
       </div>

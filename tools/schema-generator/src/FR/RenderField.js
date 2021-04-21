@@ -17,7 +17,7 @@ const RenderField = ({
   const { type, title, description, required } = schema;
 
   let widgetName = getWidgetName(schema, mapping);
-  const customWidget = schema['ui:widget'];
+  const customWidget = schema['widget'];
   if (customWidget && widgets[customWidget]) {
     widgetName = customWidget;
   }
@@ -25,16 +25,16 @@ const RenderField = ({
   // 如果不存在，比如有外部的自定义组件名称，使用默认展示组件
   if (!Widget) {
     const defaultSchema = { ...schema };
-    delete defaultSchema['ui:widget'];
+    delete defaultSchema['widget'];
     widgetName = getWidgetName(defaultSchema, mapping);
     Widget = widgets[widgetName] || 'input';
   }
   // if (widgetName === 'multiSelect') {
-  //   console.log(schema['ui:widget'], customWidget, Widget);
+  //   console.log(schema['widget'], customWidget, Widget);
   // }
-  // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
+  // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 labelWidth
   const effectiveLabelWidth =
-    getParentProps('ui:labelWidth', $id, flatten) || labelWidth;
+    getParentProps('labelWidth', $id, flatten) || labelWidth;
   const _labelWidth = isLooselyNumber(effectiveLabelWidth)
     ? Number(effectiveLabelWidth)
     : isCssLength(effectiveLabelWidth)
@@ -61,12 +61,12 @@ const RenderField = ({
 
   // TODO: useMemo
   const usefulWidgetProps = {
-    disabled: schema['ui:disabled'],
-    readonly: schema['ui:readonly'],
-    hidden: schema['ui:hidden'],
-    options: schema['ui:options'],
-    labelWidth: schema['ui:labelWidth'],
-    width: schema['ui:width'],
+    disabled: schema['disabled'],
+    readonly: schema['readOnly'],
+    hidden: schema['hidden'],
+    options: schema['props'],
+    labelWidth: schema['labelWidth'],
+    width: schema['width'],
   };
 
   return (

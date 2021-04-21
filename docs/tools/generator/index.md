@@ -1,9 +1,9 @@
 ---
 order: 1
-title: Schema 编辑器
+title: 使用文档
 group:
   title: Schema 编辑器
-toc: menu
+toc: content
 ---
 
 ## 如何使用
@@ -69,7 +69,7 @@ export default Demo;
 | 事件名 | 说明 | 回调参数 |
 | --- | --- | --- |
 | onChange | 表单 data 变化回调 | 表单的 data |
-| onSchameChange | 表单 schema 变化回调 | 导出的 schema |
+| onSchemaChange | 表单 schema 变化回调 | 导出的 schema |
 
 ### Methods
 

@@ -66,7 +66,6 @@ const useTableRoot = props => {
         message.warning('api 不是函数，检查 <Search /> 的 props');
       }
     } else {
-      console.log(api.current);
       message.warning('api 不是函数，检查 <Search /> 的 props');
     }
 

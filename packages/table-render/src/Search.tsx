@@ -48,7 +48,6 @@ const Search = (props: SearchProps) => {
   const _schema = props.schema || props.propsSchema;
   let searchOnMount = true;
   if (!props.searchOnMount && props.searchOnMount !== undefined) {
-    console.log('props.searchOnMount', props.searchOnMount);
     searchOnMount = false;
   }
 

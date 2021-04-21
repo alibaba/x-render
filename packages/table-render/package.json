@@ -1,6 +1,6 @@
 {
   "name": "table-render",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "中后台表格解决方案",
   "scripts": {
     "start": "dumi dev",
@@ -21,6 +21,7 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
+  "homepage": "https://x-render.gitee.io/table-render",
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
       "prettier --write"

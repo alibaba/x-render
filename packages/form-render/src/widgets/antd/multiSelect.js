@@ -1,9 +1,8 @@
 import React from 'react';
 import { Select } from 'antd';
-import { createWidget } from '../../createWidget';
 import { getArray } from '../../utils';
 
-const mapProps = ({ schema, style, options: _options }) => {
+const MultiSelect = ({ schema, value, style, options: _options, ...rest }) => {
   let options;
   // 如果已经有外部注入的options了，内部的schema就会被忽略
   if (_options && Array.isArray(_options)) {
@@ -20,13 +19,16 @@ const mapProps = ({ schema, style, options: _options }) => {
     });
   }
 
-  return {
+  const selectProps = {
     options,
     mode: 'multiple',
     style: { width: '100%', ...style },
+    ...rest,
   };
+
+  const _value = Array.isArray(value) ? value : undefined;
+
+  return <Select value={_value} {...selectProps} />;
 };
 
-const Component = createWidget(mapProps)(Select);
-
-export default Component;
+export default MultiSelect;

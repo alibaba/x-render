@@ -615,7 +615,7 @@ export const flattenToData = (flatten, id = '#') => {
   }
 };
 
-// 例如当前item的id = '#/obj/input'  propName: 'ui:labelWidth' 往上一直找，直到找到第一个不是undefined的值
+// 例如当前item的id = '#/obj/input'  propName: 'labelWidth' 往上一直找，直到找到第一个不是undefined的值
 export const getParentProps = (propName, id, flatten) => {
   try {
     const item = flatten[id];

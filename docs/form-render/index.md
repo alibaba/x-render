@@ -190,35 +190,62 @@ export default Demo;
 3. 通过 bind 字段，我们允许数据的双向绑定，数据展示和真实提交的数据可以根据开发需求不同（例如从服务端接口拿到不规则数据时，也能直接使用）
 4. 可以通过`displayType`,`labelWidth`等字段轻易修改展示
 
+## 高级用法
+
+1. [如何写表单间的联动关系](/form-render/advanced/function)
+2. [如何用自定义组件完成定制元素的展示](/form-render/advanced/widget)
+3. [如何写一个完整的服务端数据表单加载和提交](/form-render/advanced/form-methods)
+4. [常见问题 FAQ](/form-render/faq)
+
 ## 组件 Props
 
 ```js
 import Form, { useForm, connectForm } from 'form-render';
 ```
 
-#### \<Form \/> (常用 props)
+### \<Form \/> (常用 props)
 
-| 参数         | 描述                                                           | 类型                                                               | 是否必填 | 默认值     |
-| ------------ | -------------------------------------------------------------- | ------------------------------------------------------------------ | -------- | ---------- |
-| schema       | 描述表单的 schema，详见                                        | `object`                                                           | 是       |            |
-| form         | `useForm`创建的表单实例，与 Form 一对一绑定                    | `FormInstance`                                                     | 是       |            |
-| onFinish     | 提交后的回调，执行 form.submit() 后触发                        | `function(formData, errorFields: Error[]) => void`                 | 否       | () => void |
-| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填                 | `function(formData, errorFields: Error[]) => errorFields: Error[]` | 否       | () => void |
-| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排 | `string('column' / 'row' / 'inline')`                              | 否       | 'column'   |
-| widgets      | 自定义组件，当内置组件无法满足时使用                           | `object`                                                           | 否       | {}         |
+| 参数         | 描述                                                                           | 类型                                          | 是否必填 | 默认值   |
+| ------------ | ------------------------------------------------------------------------------ | --------------------------------------------- | -------- | -------- |
+| schema       | 描述表单的 schema，详见                                                        | `object`                                      | 是       |          |
+| form         | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                | 是       |          |
+| onFinish     | 提交后的回调，执行 form.submit() 后触发                                        | `(formData, errorFields: Error[]) => void`    | 否       | () => {} |
+| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填                                 | `(formData, errorFields: Error[]) => Error[]` | 否       | () => {} |
+| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`         | 否       | 'column' |
+| widgets      | 自定义组件，当内置组件无法满足时使用                                           | `object`                                      | 否       | {}       |
+| watch        | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                      | 否       | {}       |
 
-#### \<Form \/> (不常用 props)
+注 1：
 
-| 参数           | 描述                                                             | 类型                | 默认值 |
-| -------------- | ---------------------------------------------------------------- | ------------------- | ------ |
-| column         | 一行展示多少列                                                   | `number`            | 1      |
-| mapping        | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
-| debug          | 开启 debug 模式，提供更多信息                                    | `boolean`           | false  |
-| locale         | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
-| configProvider | antd 的 configProvider，配置透传                                 | `object`            | -      |
-| debounceInput  | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
+### \<Form \/> (不常用 props)
 
-#### useForm / connectForm
+| 参数             | 描述                                                             | 类型                | 默认值 |
+| ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
+| column           | 一行展示多少列                                                   | `number`            | 1      |
+| mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
+| debug            | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
+| debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
+| locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
+| configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
+| debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
+| validateMessages | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
+
+#### validateMessages
+
+`Form` 为验证提供了[默认的错误提示信息](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/validateMessageCN.js)，你可以通过配置 `validateMessages` 属性，修改对应的提示模板。一种常见的使用方式，是配置国际化提示信息：
+
+```js
+const validateMessages = {
+  required: '${title}是必选字段',
+  // ...
+};
+
+<Form validateMessages={validateMessages} />;
+```
+
+目前可以用的转义字段为 `${title}`/`${min}`/`${max}`/`${len}`/`${pattern}`, 如果有更多需求请提 [issue](https://github.com/alibaba/x-render/issues/new/choose)
+
+### useForm / connectForm
 
 `useForm` / `connectForm` 用于创建表单实例，所有对表单的外部操作和回调函数全挂在其生产的实例上,例如表单提交是 `form.submit`。注意 `useForm` 是 hooks，而 `connectForm` 是高阶组件，所以前者只能在函数组件使用，后者可用于 class 组件。两者无其他区别。使用时需要创建实例，并通过 props 挂钩到与其对应的表单上：
 
@@ -245,7 +272,8 @@ export default connectForm(Demo);
 
 | 参数             | 描述                                                | 类型                                 |
 | ---------------- | --------------------------------------------------- | ------------------------------------ |
-| submit           | 触发提交流程，一般在提交按钮上使用                  | `function`                           |
+| submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                         |
+| resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `() => void`                         |
 | errorFields      | Check if a field is touched                         | `array,[{name, error: []}]`          |
 | setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error | Error[]) => void`   |
 | setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`            |
@@ -269,10 +297,3 @@ export default connectForm(Demo);
    </div>
 
 3. 详细的 schema 规范见[schema 的文档](/form-render/schema)。同时在 vscode 上搜索“formrender”可以找到 snippets 插件，手熟起来一整页表单的 schema 弹指间完成
-
-## 高级用法
-
-1. [如何写表单间的联动关系](/form-render/advanced/function)
-2. [如何用自定义组件完成定制元素的展示](/form-render/advanced/widget)
-3. [如何写一个完整的服务端数据表单加载和提交](/form-render/advanced/form-methods)
-4. [常见问题 FAQ](/form-render/faq)

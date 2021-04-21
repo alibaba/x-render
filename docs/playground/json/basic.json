@@ -21,11 +21,6 @@
             "type": "string",
             "format": "color"
           },
-          "date": {
-            "title": "日期选择",
-            "type": "string",
-            "format": "date"
-          },
           "image": {
             "title": "图片展示",
             "type": "string",
@@ -73,6 +68,58 @@
           }
         }
       },
+      "allDate": {
+        "title": "时间类",
+        "type": "object",
+        "properties": {
+          "date": {
+            "title": "日期选择",
+            "type": "string",
+            "format": "date"
+          },
+          "dateTime": {
+            "title": "日期时间选择",
+            "type": "string",
+            "format": "dateTime"
+          },
+          "time": {
+            "title": "时间选择",
+            "type": "string",
+            "format": "time"
+          },
+          "dateRange": {
+            "title": "日期范围",
+            "type": "range",
+            "format": "dateTime",
+            "placeholder": ["开始时间", "结束时间"]
+          },
+          "timeRange": {
+            "title": "时间范围",
+            "type": "range",
+            "format": "time"
+          },
+          "year": {
+            "title": "年份选择",
+            "type": "string",
+            "format": "year"
+          },
+          "month": {
+            "title": "月份选择",
+            "type": "string",
+            "format": "month"
+          },
+          "week": {
+            "title": "周选择",
+            "type": "string",
+            "format": "week"
+          },
+          "quarter": {
+            "title": "季度选择",
+            "type": "string",
+            "format": "quarter"
+          }
+        }
+      },
       "allNumber": {
         "title": "number类",
         "type": "object",
@@ -108,18 +155,6 @@
             "title": "开关控制",
             "type": "boolean",
             "widget": "switch"
-          }
-        }
-      },
-      "allRange": {
-        "title": "range类",
-        "type": "object",
-        "properties": {
-          "dateRange": {
-            "title": "日期范围",
-            "type": "range",
-            "format": "dateTime",
-            "placeholder": ["开始时间", "结束时间"]
           }
         }
       },
@@ -207,28 +242,12 @@
           }
         }
       },
-      "obj1": {
-        "title": "对象",
-        "description": "这是个对象类型",
-        "type": "object",
-        "properties": {
-          "input1": {
-            "title": "输入框1",
-            "type": "string"
-          },
-          "input2": {
-            "title": "输入框2",
-            "type": "string"
-          }
-        }
-      },
       "listName2": {
         "title": "对象数组",
         "description": "对象数组嵌套功能",
         "type": "array",
         "min": 1,
         "max": 3,
-        "displayType": "row",
         "items": {
           "type": "object",
           "properties": {
@@ -236,7 +255,7 @@
               "title": "简单输入框",
               "type": "string"
             },
-            "selet1": {
+            "select1": {
               "title": "单选",
               "type": "string",
               "enum": ["a", "b", "c"],
@@ -245,8 +264,7 @@
           }
         }
       }
-    },
-    "required": []
+    }
   },
   "formData": {
     "AllString": {

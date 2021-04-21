@@ -1,10 +1,10 @@
-import React from 'react';
-import FRWrapper from '../FRWrapper';
+import React, { useEffect } from 'react';
+import FormRender, { useForm } from 'form-render';
 import { defaultGlobalSettings } from '../Settings';
-// import { widgets } from '../widgets/antd';
 import { useStore, useGlobal } from '../hooks';
 
 export default function ItemSettings() {
+  const form = useForm();
   const { widgets, frProps, userProps } = useStore();
   const setGlobal = useGlobal();
   const globalSettings =
@@ -12,19 +12,25 @@ export default function ItemSettings() {
       ? userProps.globalSettings
       : defaultGlobalSettings;
 
-  const onDataChange = frProps => {
-    setGlobal({ frProps });
+  const onDataChange = (value) => {
+    if (value.displayType) {
+      setGlobal({ frProps: value });
+    }
   };
+
+  useEffect(() => {
+    form.setValues(frProps);
+  }, [frProps]);
 
   return (
     <div style={{ paddingRight: 24 }}>
-      <FRWrapper
-        schema={{ schema: globalSettings }}
-        formData={frProps}
-        onChange={onDataChange}
+      <FormRender
+        form={form}
+        schema={globalSettings}
+        watch={{
+          '#': v => onDataChange(v)
+        }}
         widgets={widgets}
-        preview={true}
-        frProps={{ displayType: 'column', showDescIcon: true }}
       />
     </div>
   );

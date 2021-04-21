@@ -14,7 +14,7 @@ const FR = ({ id = '#', preview = false }) => {
   const isObj = schema.type === 'object';
   const isList = schema.type === 'array' && schema.enum === undefined;
   const isComplex = isObj || isList;
-  const width = schema['ui:width'];
+  const width = schema['width'];
   let containerClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''}`;
   let labelClass = 'fr-label mb2';
   let contentClass = 'fr-content';
@@ -49,7 +49,7 @@ const FR = ({ id = '#', preview = false }) => {
       }
       break;
     case 'boolean':
-      if (schema['ui:widget'] !== 'switch') {
+      if (schema['widget'] !== 'switch') {
         if (schema.title) {
           labelClass += ' ml2';
           labelClass = labelClass.replace('mb2', 'mb0');
@@ -65,7 +65,7 @@ const FR = ({ id = '#', preview = false }) => {
   }
   // 横排时
   const isCheckBox =
-    schema.type === 'boolean' && schema['ui:widget'] !== 'switch';
+    schema.type === 'boolean' && schema['widget'] !== 'switch';
   if (displayType === 'row' && !isComplex && !isCheckBox) {
     containerClass += ' flex items-center';
     labelClass += ' flex-shrink-0 fr-label-row';

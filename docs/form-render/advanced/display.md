@@ -205,7 +205,7 @@ const schema = {
             type: 'string',
             required: true,
           },
-          selet1: {
+          select1: {
             title: '单选',
             type: 'string',
             enum: ['a', 'b', 'c'],
@@ -220,7 +220,7 @@ const schema = {
                 type: 'string',
                 required: true,
               },
-              selet1: {
+              select1: {
                 title: '单选',
                 type: 'string',
                 enum: ['a', 'b', 'c'],
@@ -263,7 +263,7 @@ const schema = {
             type: 'string',
             required: true,
           },
-          selet1: {
+          select1: {
             title: '单选',
             type: 'string',
             enum: ['a', 'b', 'c'],
@@ -312,7 +312,7 @@ const schema = {
             title: '简单输入框3',
             type: 'string',
           },
-          selet1: {
+          select1: {
             title: '单选',
             type: 'string',
             enum: ['a', 'b', 'c'],
@@ -354,7 +354,7 @@ const schema = {
             type: 'string',
             required: true,
           },
-          selet1: {
+          select1: {
             title: '单选',
             type: 'string',
             enum: ['a', 'b', 'c'],
@@ -373,7 +373,7 @@ const schema = {
                   type: 'string',
                   required: true,
                 },
-                selet1: {
+                select1: {
                   title: '单选',
                   type: 'string',
                   enum: ['a', 'b', 'c'],

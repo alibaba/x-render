@@ -19,8 +19,11 @@ features:
     title: ChartRender
     desc: 傻瓜式的图表绘制库
 footer: Please feel free to use and contribute to the development.
-translateHelp: FormRender 已升级到 XRender 1.0 版本，并提供开箱即用的 Form/Table/Chart 解决方案，原版本可见<a href="http://x-components.gitee.io/form-render/" target="_blank_"> 旧文档</a>。
 ---
+
+<Alert>
+  <span>FormRender 已升级到 v1.x 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本(v0.x)，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 旧文档 </a></span>
+</Alert>
 
 ## 谁在使用？
 
@@ -104,7 +107,7 @@ translateHelp: FormRender 已升级到 XRender 1.0 版本，并提供开箱即�
 
 ## 贡献
 
-想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 MR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
+想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 PR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
 
 感谢给 XRender 贡献代码的你们：
 

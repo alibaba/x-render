@@ -18,6 +18,7 @@ const Core = ({
   dataIndex = [], // 数据来源是数组的第几个index，上层每有一个list，就push一个index
   hideTitle = false,
   hideValidation = false,
+  debugCss,
   ...rest
 }) => {
   // console.log('<Core>');
@@ -139,6 +140,7 @@ const Core = ({
   if (_displayType === 'inline') {
     labelStyle = { marginTop: 5, paddingLeft: 12 };
     labelClass = '';
+    contentClass += ' fr-content-inline';
     if (containerClass.indexOf('fr-field-object') === -1) {
       containerClass += ' fr-field-inline';
     }
@@ -167,6 +169,7 @@ const Core = ({
         dataIndex={dataIndex}
         errorFields={errorFields}
         displayType={_displayType}
+        hideTitle={hideTitle}
       >
         {item.children}
       </RenderObject>
@@ -179,6 +182,7 @@ const Core = ({
       dataIndex={dataIndex}
       errorFields={errorFields}
       displayType={_displayType}
+      hideTitle={hideTitle}
     >
       {item.children}
     </RenderList>
@@ -186,7 +190,10 @@ const Core = ({
 
   // TODO: list 也要算进去
   return (
-    <div style={columnStyle} className={containerClass + ' '}>
+    <div
+      style={columnStyle}
+      className={`${containerClass} ${debugCss ? 'debug' : ''}`}
+    >
       <RenderField {...fieldProps}>
         {isObjType && objChildren}
         {isList && listChildren}

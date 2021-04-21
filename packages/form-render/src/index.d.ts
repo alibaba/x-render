@@ -52,9 +52,14 @@ export interface FRProps {
   labelWidth?: string;
   /** antd的全局config */
   configProvider?: any;
-  theme?: any;
+  theme?: string | number;
+  /** 覆盖默认的校验信息 */
+  validateMessages?: any;
   flatten?: any;
+  /** 显示当前表单内部状态 */
   debug?: boolean;
+  /** 显示css布局提示线 */
+  debugCss?: boolean;
   locale?: string;
   column?: number;
   debounceInput?: boolean;
@@ -69,6 +74,6 @@ declare const FR: React.FC<FRProps>;
 
 export declare function useForm(params?: FormParams): FormInstance;
 
-export declare function connectForm(): any;
+export declare function connectForm(component: React.FC<any>): any;
 
 export default FR;

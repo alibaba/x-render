@@ -4,7 +4,8 @@
   "workspaces": [
     "packages/*",
     "widgets/*",
-    "tools/schema-generator"
+    "tools/schema-generator",
+    "tools/form-render-excel"
   ],
   "scripts": {
     "build": "lerna run build",
