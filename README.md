@@ -22,7 +22,7 @@
     <img alt = "PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
 </p>
 
-> 阿里巴巴 - 飞猪中后台开箱即用解决方案
+> 阿里巴巴 - 飞猪中后台「表单/表格/图表」开箱即用解决方案
 
 ## 优势
 
