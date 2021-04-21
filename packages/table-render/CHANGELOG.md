@@ -1,3 +1,9 @@
+# Changelog
+
+### 1.0.5
+
+- [+] 更新 npm 包的文档信息以及补全对应的 package 信息
+
 ### 0.8.16
 
 - [+] `TableContainer`组件添加`onSearch`属性，用于点击查询按钮时，执行额外的操作
