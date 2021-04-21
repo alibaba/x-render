@@ -1,6 +1,6 @@
 <div style="display:flex;align-items:center;margin-bottom:24px">
   <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="48px"/>
-  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">ChartRender</span>
+  <h4 style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">ChartRender</span>
 </div>
 <p style="display:flex;justify-content:space-between;width:440px">
   <a href="https://www.npmjs.com/package/chart-render?_blank">
@@ -19,9 +19,9 @@
 
 > 易用的中后台**图表解决方案**，常用于**图表展示页**快速生成
 
-## 文档
+## 官网
 
-https://x-render.gitee.io/chart-render
+<https://x-render.gitee.io/chart-render>
 
 ## 优势
 
@@ -87,7 +87,7 @@ export default () => {
           交叉表
         </button>
       </div>
-      
+
       <ChartRender
         meta={[
           { id: 'date', name: '日期', isDim: true },
@@ -101,7 +101,7 @@ export default () => {
           { date: '20200104', pv: 160, uv: 80 },
         ]}
       />
-      
+
     </div>
   );
 };

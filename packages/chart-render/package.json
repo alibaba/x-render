@@ -1,6 +1,6 @@
 {
   "name": "chart-render",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "scripts": {
     "build": "father-build",
     "prepare": "npm run build",
@@ -39,5 +39,19 @@
   "devDependencies": {
     "@types/react": "^17.0.3",
     "@umijs/test": "^3.0.5"
+  },
+  "keywords": [
+    "Chart",
+    "ChartRender",
+    "Render",
+    "XRender",
+    "React",
+    "Json Schema",
+    "Ant Design"
+  ],
+  "homepage": "https://x-render.gitee.io/chart-render",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alibaba/x-render/issues"
   }
 }

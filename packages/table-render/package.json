@@ -1,6 +1,6 @@
 {
   "name": "table-render",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "中后台表格解决方案",
   "scripts": {
     "start": "dumi dev",
@@ -42,5 +42,18 @@
   },
   "devDependencies": {
     "umi-request": "^1.3.5"
+  },
+  "keywords": [
+    "TableRender",
+    "Render",
+    "XRender",
+    "React",
+    "Json Schema",
+    "Ant Design"
+  ],
+  "homepage": "https://x-render.gitee.io/table-render",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alibaba/x-render/issues"
   }
 }
