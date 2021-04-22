@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.1.2
+
+- [!] 修复 list 的删除无效的问题，并做了展示上的优化
+- [!] beforeFinish 现在能获取 (formData, schema, errors) 三个入参
+
 ### 1.1.1
 
 - [+] 更新 npm 包的文档信息以及补全对应的 package 信息
