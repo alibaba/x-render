@@ -46,7 +46,7 @@ const schema = {
 const Demo = () => {
   const form = useForm();
 
-  const beforeFinish = (formData, errorFields) => {
+  const beforeFinish = (formData, schema, errors) => {
     if (formData.objectName && formData.objectName.input1 === '123') return;
     return delay(1000).then(() => {
       return {
