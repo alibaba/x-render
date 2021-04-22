@@ -65,7 +65,12 @@ export interface FRProps {
   debounceInput?: boolean;
   size?: string;
   /** 表单提交前钩子 */
-  beforeFinish?: (formData: any, error: Error[]) => Error[] | Promise<Error[]>;
+  beforeFinish?: (
+    formData: any,
+    schema: any,
+    error: Error[],
+    config: any
+  ) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
   onFinish: (formData: any, error: Error[]) => void;
 }
