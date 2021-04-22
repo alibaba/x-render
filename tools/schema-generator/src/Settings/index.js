@@ -33,7 +33,7 @@ export const defaultCommonSettings = {
     title: '默认值',
     type: 'string',
   },
-  readOnly: {
+  disabled: { // 还是用disabled属性吧，不然表现有歧义
     title: '置灰',
     type: 'boolean',
   },

@@ -17,6 +17,7 @@ import {
 import { Ctx, StoreCtx } from './context';
 // import SCHEMA from './json/basic.json';
 import FR from './FR';
+import PreviewFR from './PreviewFR';
 import { Modal, Input, message } from 'antd';
 import { Button } from 'antd';
 
@@ -252,7 +253,10 @@ function Wrapper(
             </div>
             <div className="dnd-container">
               <div style={{ height: preview ? 33 : 0 }}></div>
-              <FR preview={preview} />
+              {/* <FR preview={preview} /> */}
+              {
+                preview ? <PreviewFR schema={displaySchema.schema} /> : <FR />
+              }
             </div>
           </div>
           <Right globalProps={frProps} />

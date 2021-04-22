@@ -60,13 +60,11 @@ const RenderField = ({
   }
 
   // TODO: useMemo
+  // 改为直接使用form-render内部自带组件后不需要再包一层options
   const usefulWidgetProps = {
-    disabled: schema['disabled'],
-    readonly: schema['readOnly'],
-    hidden: schema['hidden'],
-    options: schema['props'],
-    labelWidth: schema['labelWidth'],
-    width: schema['width'],
+    disabled: schema['disabled'] || schema['readOnly'],
+    readOnly: schema['readOnly'],
+    ...schema['props']
   };
 
   return (
@@ -110,11 +108,13 @@ const RenderField = ({
       <div className={contentClass} style={contentStyle}>
         <Widget
           value={data}
+          checked={data} // 异常警告处理：switch/checkbox 组件用的是checked控制不是value
           onChange={onChange}
           schema={schema}
           {...usefulWidgetProps}
-          children={children}
-        />
+        >
+          {children || null}
+        </Widget>
       </div>
     </>
   );

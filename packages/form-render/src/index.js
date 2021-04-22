@@ -22,6 +22,11 @@ const defaultFinish = (data, error) => {
   console.log(data, error);
 };
 
+export {
+  defaultWidgets as widgets,
+  defaultMapping as mapping,
+}
+
 export { useForm } from './useForm';
 export { connectForm } from './connectForm';
 
@@ -181,6 +186,9 @@ const Wrapper = props => {
   }
   return <App schema={_schema} {...rest} />;
 };
+
+Wrapper.widgets = defaultWidgets;
+Wrapper.mapping = defaultMapping;
 
 export default Wrapper;
 

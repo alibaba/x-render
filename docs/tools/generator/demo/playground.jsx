@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import Generator from 'fr-generator';
+import FormRender, { widgets } from 'form-render';
 import './index.less';
 
 const defaultValue = {
@@ -26,6 +27,7 @@ const Demo = () => {
         ref={ref}
         defaultValue={defaultValue}
         extraButtons={[{ text: '去playground验证', onClick }]}
+        // FormRender={FormRender} // 非必填，传入二次封装的fr实例，可能存在样式修改或是不用antd
       />
     </div>
   );
