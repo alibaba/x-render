@@ -64,6 +64,8 @@ export interface FRProps {
   column?: number;
   debounceInput?: boolean;
   size?: string;
+  // 数据会作为 beforeFinish 的第四个参数传入
+  config?: any;
   /** 表单提交前钩子 */
   beforeFinish?: (
     formData: any,
