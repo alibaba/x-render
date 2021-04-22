@@ -64,3 +64,81 @@
 .w-100 {
   width: 100%;
 }
+
+
+.ant-pro-table-column-setting {
+  width: auto;
+}
+
+.ant-pro-table-column-setting-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+}
+
+.ant-pro-table-column-setting-overlay .ant-popover-inner-content {
+  padding: 0px;
+  padding-bottom: 8px;
+}
+
+.ant-pro-table-column-setting-overlay .ant-tree-treenode {
+  align-items: center;
+}
+
+.ant-pro-table-column-setting-overlay .ant-tree-treenode:hover {
+  background-color: #e8f4ff;
+}
+
+.ant-pro-table-column-setting-overlay .ant-tree-treenode:hover .ant-pro-table-column-setting-list-item-option {
+  display: block;
+}
+
+.ant-pro-table-column-setting-overlay .ant-tree-treenode .ant-tree-checkbox {
+  top: 0;
+  margin: 0;
+  margin-right: 4px;
+}
+
+.ant-pro-table-column-setting-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 8px;
+  padding-left: 16px;
+}
+
+.ant-pro-table-column-setting-list.ant-pro-table-column-setting-list-group {
+  padding-top: 0;
+}
+
+.ant-pro-table-column-setting-list-title {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding-left: 24px;
+  color: rgba(0, 0, 0, 0.45);
+  font-size: 12px;
+}
+
+.ant-pro-table-column-setting-list-item {
+  display: flex;
+  align-items: center;
+}
+
+.ant-pro-table-column-setting-list-item-title {
+  flex: 1;
+}
+
+.ant-pro-table-column-setting-list-item-option {
+  display: none;
+  float: right;
+  cursor: pointer;
+}
+
+.ant-pro-table-column-setting-list-item-option > span > span.anticon {
+  color: #1890ff;
+}
+
+.ant-pro-table-column-setting-list-item-option > span + span {
+  margin-left: 8px;
+}

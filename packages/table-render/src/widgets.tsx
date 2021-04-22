@@ -1,8 +1,8 @@
 import React from 'react';
-import { Tag, Tooltip } from 'antd';
-import { getDateTime, getDate } from './utils';
+import {Tag, Tooltip} from 'antd';
+import {getDateTime, getDate} from './utils';
 
-const PrompText = ({ text = '', prompText }) => (
+const PrompText = ({text = '', prompText}) => (
   <Tooltip title={prompText || text}>
     <span>{text}</span>
   </Tooltip>
@@ -22,7 +22,7 @@ export default {
   ),
   dateTime: value => getDateTime(value),
   date: value => getDate(value),
-  tooltip: text => <PrompText text={text} />,
+  tooltip: text => <PrompText text={text} prompText={text}/>,
   status: value => {
     switch (value.status) {
       case 'Default':

@@ -13,4 +13,10 @@ export interface ProTableProps extends TableProps<any> {
   pageChangeWithRequest?: boolean;
 }
 
+export type ColumnsState = {
+  show?: boolean;
+  fixed?: 'right' | 'left' | undefined;
+  order?: number;
+};
+
 export interface CardListProps {}

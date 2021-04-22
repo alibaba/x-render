@@ -38,7 +38,8 @@
     "@ant-design/icons": "^4.2.2",
     "dayjs": "^1.8.29",
     "form-render": "1.x",
-    "lodash.get": "^4.4.2"
+    "lodash.get": "^4.4.2",
+    "omit.js": "^2.0.2"
   },
   "devDependencies": {
     "umi-request": "^1.3.5"

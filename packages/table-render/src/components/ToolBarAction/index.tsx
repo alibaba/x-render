@@ -1,5 +1,5 @@
 import React from 'react';
-import { Space } from 'antd';
+import {Space} from 'antd';
 import FullScreenIcon from './FullScreenIcon';
 import DensityIcon from './DensityIcon';
 import ReloadIcon from './ReloadIcon';
@@ -7,10 +7,10 @@ import SettingIcon from './ColumnSetting';
 
 const ToolBar = props => {
   return (
-    <Space size={14} style={{ fontSize: 16, cursor: 'pointer' }}>
-      <ReloadIcon />
-      <DensityIcon />
-      {/* <SettingIcon /> */}
+    <Space size={14} style={{fontSize: 16, cursor: 'pointer'}}>
+      <ReloadIcon/>
+      <DensityIcon/>
+      <SettingIcon columns={props.tableColumn} draggable={props.draggable} checkable={props.checkable}/>
       <FullScreenIcon {...props} />
     </Space>
   );

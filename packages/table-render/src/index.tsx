@@ -1,15 +1,17 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
-import { useSet, useTable } from './hooks';
-import { Ctx } from './context';
+import React, {useRef, forwardRef, useImperativeHandle} from 'react';
+import useMergedState from 'rc-util/lib/hooks/useMergedState';
+import {useSet, useTable} from './hooks';
+import {Ctx} from './context';
 import Search from './Search';
 import Table from './Table';
-import { message, ConfigProvider } from 'antd';
-import { isObj } from './utils';
+import {message, ConfigProvider} from 'antd';
+import {isObj} from './utils';
 import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
 
 import 'antd/dist/antd.less'; // 需要配置一下babel-plugins
 import './index.css';
+import {ColumnsState} from "@/typing";
 
 const useTableRoot = props => {
   const [state, set] = useSet({
@@ -31,8 +33,13 @@ const useTableRoot = props => {
   const api = useRef<any>();
   const onSearch = useRef<any>();
   const afterSearch = useRef<any>();
-
-  const { pagination, search, tab: currentTab, checkPassed } = state;
+  // 用于排序的数组
+  const sortKeyColumns = useRef<string[]>([]);
+  const setSortKeyColumns = (keys: string[]) => {
+    sortKeyColumns.current = keys;
+  }
+  
+  const {pagination, search, tab: currentTab, checkPassed} = state;
   const table = useTable();
 
   const doSearch = (
@@ -47,7 +54,7 @@ const useTableRoot = props => {
     }
     // console.log(checkPassed);
     if (!checkPassed) return;
-    const { current, pageSize, tab, ...extraSearch } = params || {};
+    const {current, pageSize, tab, ...extraSearch} = params || {};
     const _current = current || 1;
     const _pageSize = pageSize || 10;
     let _tab = currentTab;
@@ -55,7 +62,7 @@ const useTableRoot = props => {
       _tab = tab;
     }
     // console.log(params, { _current, _pageSize, _tab }, 'searchParams');
-    const _pagination = { current: _current, pageSize: _pageSize };
+    const _pagination = {current: _current, pageSize: _pageSize};
     if (typeof api.current === 'function') {
       basicSearch(api.current);
     } else if (Array.isArray(api.current)) {
@@ -70,7 +77,7 @@ const useTableRoot = props => {
     }
 
     function basicSearch(api: (arg0: any) => any) {
-      set({ loading: true });
+      set({loading: true});
       let _params = {
         ...search,
         ...customSearch,
@@ -79,12 +86,12 @@ const useTableRoot = props => {
       };
 
       if (Array.isArray(api)) {
-        _params = { ..._params, tab };
+        _params = {..._params, tab};
       }
       Promise.resolve(api(_params))
         .then(res => {
           // TODO：这里校验res是否规范
-          const { rows, total, pageSize, ...extraData } = res;
+          const {rows, total, pageSize, ...extraData} = res;
           set({
             loading: false,
             dataSource: rows,
@@ -95,10 +102,10 @@ const useTableRoot = props => {
               pageSize: pageSize || _pageSize,
             },
           });
-          afterSearch.current({ rows, total, pageSize, ...extraData });
+          afterSearch.current({rows, total, pageSize, ...extraData});
         })
         .catch(err => {
-          set({ loading: false });
+          set({loading: false});
         });
     }
   };
@@ -123,14 +130,14 @@ const useTableRoot = props => {
 
   const changeTab = (tab: string | number) => {
     if (['string', 'number'].indexOf(typeof tab) > -1) {
-      set({ tab });
-      refresh({ tab });
+      set({tab});
+      refresh({tab});
     } else {
       console.error('changeTab的入参必须是number或string');
     }
   };
 
-  const syncMethods = ({ searchApi, syncOnSearch, syncAfterSearch }) => {
+  const syncMethods = ({searchApi, syncOnSearch, syncAfterSearch}) => {
     api.current = searchApi;
     onSearch.current = syncOnSearch;
     afterSearch.current = syncAfterSearch;
@@ -138,6 +145,15 @@ const useTableRoot = props => {
       api: searchApi,
     });
   };
+
+  const [columnsMap, setColumnsMap] = useMergedState<Record<string, ColumnsState>>(
+    props.columnsStateMap || {},
+    {
+      value: props.columnsStateMap,
+      onChange: props.onColumnsStateChange,
+    },
+  );
+
 
   const context = {
     tableState: state,
@@ -152,6 +168,10 @@ const useTableRoot = props => {
     refresh,
     changeTab,
     syncMethods,
+    columnsMap,
+    setColumnsMap,
+    sortKeyColumns,
+    setSortKeyColumns
   };
   return context;
 };
@@ -171,11 +191,11 @@ const Container = (props, ref) => {
 
   return (
     <ConfigProvider locale={zh_CN}>
-      <Ctx.Provider {...props} value={context} />
+      <Ctx.Provider {...props} value={context}/>
     </ConfigProvider>
   );
 };
 
 const TableProvider = forwardRef(Container);
 
-export { Search, Table, TableProvider, useTable };
+export {Search, Table, TableProvider, useTable};
