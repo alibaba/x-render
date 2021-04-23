@@ -243,8 +243,12 @@ export const useForm = props => {
   };
 
   const resetFields = () => {
-    _setData({});
-    _setErrors([]);
+    setState({
+      formData: {},
+      errors: [],
+      touchedKeys: [],
+      allTouched: false,
+    });
   };
 
   // const setValue = (id, value, dataIndex) => {
