@@ -88,7 +88,7 @@ declare const FR: React.FC<FRProps>;
 
 export declare function useForm(params?: FormParams): FormInstance;
 
-type ConnectedForm<T> = T & {
+export type ConnectedForm<T> = T & {
   form: FormInstance;
 };
 
