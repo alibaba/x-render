@@ -11,7 +11,6 @@ import {ColumnsState} from "../../typing";
 import {genColumnKey} from "../../utils";
 import type {DataNode} from 'antd/lib/tree';
 import omit from 'omit.js';
-import classNames from 'classnames';
 
 type ColumnSettingProps<T = any> = {
   columns: TableColumnType<T>[];
@@ -224,11 +223,11 @@ const GroupCheckboxList: React.FC<{
 
   const showRight = rightList && rightList.length > 0;
   const showLeft = leftList && leftList.length > 0;
+  const showRightOrLeft = showRight || showLeft ? `${className}-list-group` : '';
+  const groupClassNameWrapper = `${className}-list  ${showRightOrLeft}`
   return (
     <div
-      className={classNames(`${className}-list`, {
-        [`${className}-list-group`]: showRight || showLeft,
-      })}
+      className={groupClassNameWrapper}
     >
       <CheckboxList
         title='固定在左侧'

@@ -1,11 +1,10 @@
 import React, {useRef, forwardRef, useImperativeHandle} from 'react';
-import useMergedState from 'rc-util/lib/hooks/useMergedState';
+import useMergedState from 'rc-util/es/hooks/useMergedState';
 import {useSet, useTable} from './hooks';
 import {Ctx} from './context';
 import Search from './Search';
 import Table from './Table';
 import {message, ConfigProvider} from 'antd';
-import {isObj} from './utils';
 import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
 
@@ -38,7 +37,7 @@ const useTableRoot = props => {
   const setSortKeyColumns = (keys: string[]) => {
     sortKeyColumns.current = keys;
   }
-  
+
   const {pagination, search, tab: currentTab, checkPassed} = state;
   const table = useTable();
 

@@ -1,6 +1,6 @@
 import {useReducer, useContext, useRef, useEffect, DependencyList} from 'react';
 import {Ctx, StoreCtx} from './context';
-import isDeepEqualReact from 'fast-deep-equal/es6/react';
+import {isDeepEqual} from "./utils";
 
 // 使用最顶层组件的 setState
 export const useTable = () => {
@@ -33,8 +33,6 @@ export const useSet = initState => {
   return [state, setStateWithActionName];
 };
 
-
-export const isDeepEqual: (a: any, b: any) => boolean = isDeepEqualReact;
 
 function useDeepCompareMemoize(value: any) {
   const ref = useRef();
