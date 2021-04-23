@@ -2,7 +2,13 @@
 
 ### 1.1.3
 
+- [+] html 组件支持多选的展示，更好支持 readOnly 下的展示
 - [!] beforeFinish 的入参为 object，现在能获取 {data, errors,schema} 三个入参, 更多入参可以通过 config 传入
+- [!] 修复了 object 和 list 的展示，并能正确的去判断 schema 使用了自定义组件 ([#319](https://github.com/alibaba/x-render/issues/319))
+- [!] 修复了 description 的展示兼容性 ([#323](https://github.com/alibaba/x-render/issues/323))
+- [!] 修复了 readOnly 判断优先级低于 widget 字段导致自定义组件在 readOnly 模式下展示无效的问题 ([#327](https://github.com/alibaba/x-render/issues/327))
+- [!] 修复了 html 组件报错的问题 ([#331](https://github.com/alibaba/x-render/issues/331))
+- [!] 修复了 resetFields 没有清除“用户是否触摸”的状态，导致校验展示的问题
 
 ### 1.1.2
 
