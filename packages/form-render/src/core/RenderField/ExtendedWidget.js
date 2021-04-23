@@ -4,7 +4,7 @@ import { defaultWidgetNameList } from '../../widgets/antd';
 import { useTools } from '../../hooks';
 import { transformProps } from '../../createWidget';
 
-// import { isObjType, isListType } from '../../utils';
+import { isObjType, isListType } from '../../utils';
 // import { Input } from 'antd';
 // import Map from '../../widgets/antd/map';
 
@@ -36,18 +36,14 @@ const ExtendedWidget = ({
   //   JSON.stringify(schema),
   // ]);
   let widgetName = getWidgetName(schema, mapping);
-  if (readOnly) {
-    if (['object', 'array'].indexOf(schema.type) === -1) {
-      widgetName = 'html';
-    }
-  }
-  let Widget = widgets[widgetName];
   const customName = schema.widget || schema['ui:widget'];
   if (customName && widgets[customName]) {
-    Widget = widgets[customName];
     widgetName = customName;
   }
-
+  if (readOnly && !isObjType(schema) && !isListType(schema)) {
+    widgetName = 'html';
+  }
+  const Widget = widgets[widgetName];
   const extraSchema = extraSchemaList[widgetName];
 
   let widgetProps = {
