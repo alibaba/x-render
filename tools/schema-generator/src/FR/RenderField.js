@@ -62,7 +62,7 @@ const RenderField = ({
   // TODO: useMemo
   // 改为直接使用form-render内部自带组件后不需要再包一层options
   const usefulWidgetProps = {
-    disabled: schema['disabled'] || schema['readOnly'],
+    disabled: schema['disabled'],
     readOnly: schema['readOnly'],
     ...schema['props']
   };

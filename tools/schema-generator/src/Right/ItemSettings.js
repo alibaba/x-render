@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'form-render';
+import FormRender, { useForm } from 'form-render';
 import { useStore } from '../hooks';
 import IdInput from '../widgets/antd/idInput';
 import PercentSlider from '../widgets/antd/percentSlider';
@@ -20,7 +20,6 @@ export default function ItemSettings() {
     flatten,
     onItemChange,
     userProps = {},
-    FormRender,
     widgets: defaultWidgets,
     mapping: defaultMapping
   } = useStore();

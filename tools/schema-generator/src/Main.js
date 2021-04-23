@@ -3,7 +3,7 @@ import { useSet } from './hooks';
 // import SCHEMA from './json/basic.json';
 import FRWrapper from './FRWrapper';
 import { fromFormRender, toFormRender } from './transformer/form-render';
-import FormRender from 'form-render';
+import { widgets as defaultWidgets, mapping as defaultMapping } from 'form-render';
 import listEditor from './widgets/antd/listEditor';
 import './atom.less';
 import './Main.less';
@@ -34,10 +34,6 @@ function App(props, ref) {
     mapping = {},
   } = props;
 
-  const {
-    widgets: defaultWidgets = {},
-    mapping: defaultMapping = {}
-  } = FormRender;
   let transformFrom = fromFormRender;
   let transformTo = toFormRender;
 
@@ -140,7 +136,6 @@ function App(props, ref) {
     ...rootState, // 顶层的state
     userProps, // 用户传入的props
     frProps: _frProps, // fr顶层的props
-    FormRender,
   };
 
   return <FRWrapper ref={frwRef} {...allProps} />;

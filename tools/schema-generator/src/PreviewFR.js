@@ -1,9 +1,7 @@
 import React from 'react';
-import { useForm } from 'form-render';
-import { useStore } from './hooks';
+import FormRender, { useForm } from 'form-render';
 
 export default function PreviewFR({ schema }){
-  const { FormRender } = useStore();
   const form = useForm();
 
   return <FormRender schema={schema} form={form} />;

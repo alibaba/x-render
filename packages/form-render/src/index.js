@@ -190,9 +190,6 @@ const Wrapper = props => {
   return <App schema={_schema} {...rest} />;
 };
 
-Wrapper.widgets = defaultWidgets;
-Wrapper.mapping = defaultMapping;
-
 export default Wrapper;
 
 const Watcher = ({ watchKey, watch, formData }) => {
