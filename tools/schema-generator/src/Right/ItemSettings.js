@@ -76,7 +76,7 @@ export default function ItemSettings() {
         setSettingSchema({
           type: 'object',
           displayType: 'column',
-          showDescIcon: false,
+          showDescIcon: true,
           properties: {
             ...schemaNow,
           },
