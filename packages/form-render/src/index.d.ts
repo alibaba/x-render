@@ -74,7 +74,7 @@ export interface FRProps {
     config: any
   ) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
-  onFinish: (formData: any, error: Error[]) => void;
+  onFinish?: (formData: any, error: Error[]) => void;
 }
 
 declare const FR: React.FC<FRProps>;
