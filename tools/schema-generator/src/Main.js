@@ -3,7 +3,7 @@ import { useSet } from './hooks';
 // import SCHEMA from './json/basic.json';
 import FRWrapper from './FRWrapper';
 import { fromFormRender, toFormRender } from './transformer/form-render';
-import FRInside from 'form-render';
+import FormRender from 'form-render';
 import listEditor from './widgets/antd/listEditor';
 import './atom.less';
 import './Main.less';
@@ -32,11 +32,8 @@ function App(props, ref) {
     globalSettings,
     widgets = {},
     mapping = {},
-    FormRender: FROutside,
   } = props;
 
-  // 外部没传，默认使用内部引入的
-  const FormRender = typeof FROutside === 'function' ? FROutside : FRInside;
   const {
     widgets: defaultWidgets = {},
     mapping: defaultMapping = {}
