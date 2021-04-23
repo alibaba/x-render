@@ -44,6 +44,11 @@ const ExtendedWidget = ({
     widgetName = 'html';
   }
   const Widget = widgets[widgetName];
+  if (!Widget) {
+    console.error(`不合法的 schema field type: "${widgetName}"`);
+    return null;
+  }
+
   const extraSchema = extraSchemaList[widgetName];
 
   let widgetProps = {
