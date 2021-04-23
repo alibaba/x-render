@@ -22,6 +22,11 @@ const defaultFinish = (data, error) => {
   console.log(data, error);
 };
 
+export {
+  defaultWidgets as widgets,
+  defaultMapping as mapping,
+}
+
 export { useForm } from './useForm';
 export { connectForm } from './connectForm';
 
