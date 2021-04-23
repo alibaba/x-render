@@ -1,4 +1,4 @@
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import deepClone from 'clone';
 
 function stringContains(str, text) {
