@@ -14,6 +14,47 @@ export const defaultCommonSettings = {
     title: '说明',
     type: 'string',
   },
+  format: {
+    title: '格式',
+    type: 'string',
+    enum: ['image', 'textarea', 'color', 'email', 'url', 'dateTime', 'date', 'time', 'upload']
+  },
+  default: {
+    title: '默认值',
+    type: 'string',
+  },
+  required: {
+    title: '必填',
+    type: 'boolean',
+  },
+  placeholder: {
+    title: '占位符',
+    type: 'string',
+  },
+  bind: {
+    title: 'Bind',
+    type: 'string'
+  },
+  min: {
+    title: '最小值',
+    type: 'number'
+  },
+  max: {
+    title: '最大值',
+    type: 'number'
+  },
+  disabled: {
+    title: '禁用',
+    type: 'boolean',
+  },
+  readOnly: {
+    title: '只读',
+    type: 'boolean',
+  },
+  hidden: {
+    title: '隐藏',
+    type: 'boolean',
+  },
   width: {
     title: '元素宽度',
     type: 'string',
@@ -28,18 +69,6 @@ export const defaultCommonSettings = {
     props: {
       hideNumber: true,
     },
-  },
-  default: {
-    title: '默认值',
-    type: 'string',
-  },
-  readOnly: {
-    title: '置灰',
-    type: 'boolean',
-  },
-  required: {
-    title: '必填',
-    type: 'boolean',
   },
 };
 

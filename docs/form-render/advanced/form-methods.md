@@ -126,7 +126,7 @@ const Demo = () => {
   };
 
   // 服务端校验在这里做
-  const beforeFinish = (data, schema, error) => {
+  const beforeFinish = ({ data, errors, schema, ...rest }) => {
     return fakeApi('xxx/validation').then(_ => {
       return { name: 'select1', error: ['外部校验错误'] };
     });

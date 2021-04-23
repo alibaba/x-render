@@ -46,8 +46,8 @@ const schema = {
 const Demo = () => {
   const form = useForm();
 
-  const beforeFinish = (formData, schema, errors) => {
-    if (formData.objectName && formData.objectName.input1 === '123') return;
+  const beforeFinish = ({ data, errors, schema }) => {
+    if (data.objectName && data.objectName.input1 === '123') return;
     return delay(1000).then(() => {
       return {
         name: 'objectName.select1',
@@ -56,11 +56,11 @@ const Demo = () => {
     });
   };
 
-  const onFinish = (formData, errorFields) => {
+  const onFinish = (formData, errors) => {
     console.group('onFinish');
-    console.log(formData, 'formData', errorFields, 'errors');
+    console.log(formData, 'formData', errors, 'errors');
     console.groupEnd();
-    if (errorFields.length > 0) return;
+    if (errors.length > 0) return;
     // alert('formData:' + JSON.stringify(formData, null, 2));
   };
 

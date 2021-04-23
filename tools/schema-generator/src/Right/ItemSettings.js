@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
 import { useStore } from '../hooks';
-import { widgets as defaultWidgets } from 'form-render/src/widgets/antd';
 import IdInput from '../widgets/antd/idInput';
 import PercentSlider from '../widgets/antd/percentSlider';
 import {
@@ -11,12 +10,20 @@ import {
   advancedElements,
   layouts,
 } from '../Settings';
-import { getWidgetName } from 'form-render/src/mapping';
+import { getWidgetName } from '../mapping';
 import { isObject } from '../utils';
 
 export default function ItemSettings() {
   const form = useForm();
-  const { selected, flatten, onItemChange, userProps = {} } = useStore();
+  const {
+    selected,
+    flatten,
+    onItemChange,
+    userProps = {},
+    widgets: defaultWidgets,
+    mapping: defaultMapping
+  } = useStore();
+
   const { settings, commonSettings } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
   const widgets = {
@@ -67,7 +74,7 @@ export default function ItemSettings() {
     try {
       itemSelected = flatten[selected];
       if (itemSelected) {
-        widgetName = getWidgetName(itemSelected.schema);
+        widgetName = getWidgetName(itemSelected.schema, defaultMapping);
       }
       if (widgetName) {
         // const name = getKeyFromUniqueId(selected);
@@ -76,7 +83,7 @@ export default function ItemSettings() {
         setSettingSchema({
           type: 'object',
           displayType: 'column',
-          showDescIcon: false,
+          showDescIcon: true,
           properties: {
             ...schemaNow,
           },

@@ -2,9 +2,9 @@ import React, { useEffect, useRef, forwardRef } from 'react';
 import { useSet } from './hooks';
 // import SCHEMA from './json/basic.json';
 import FRWrapper from './FRWrapper';
-import { widgets as defaultWidgets } from './widgets/antd';
 import { fromFormRender, toFormRender } from './transformer/form-render';
-import { mapping } from './mapping';
+import { widgets as defaultWidgets, mapping as defaultMapping } from 'form-render';
+import listEditor from './widgets/antd/listEditor';
 import './atom.less';
 import './Main.less';
 import 'antd/dist/antd.less';
@@ -31,7 +31,9 @@ function App(props, ref) {
     commonSettings,
     globalSettings,
     widgets = {},
+    mapping = {},
   } = props;
+
   let transformFrom = fromFormRender;
   let transformTo = toFormRender;
 
@@ -82,7 +84,7 @@ function App(props, ref) {
   } = state;
 
   const { displayType } = frProps;
-  const showDescIcon = displayType === 'row' ? true : false;
+  const showDescIcon = displayType === 'row';
   const _frProps = { ...frProps, showDescIcon };
 
   const onChange = data => {
@@ -102,13 +104,13 @@ function App(props, ref) {
     }
   };
 
-  const _mapping = { ...mapping, array: 'listEditor' };
+  const _mapping = { ...defaultMapping, ...mapping, array: 'listEditor' };
+  const _widgets = { ...defaultWidgets, ...widgets, listEditor };
 
   const rootState = {
     preview,
-    simple: false,
     mapping: _mapping,
-    widgets: { ...defaultWidgets, ...widgets },
+    widgets: _widgets,
     selected,
     hovering,
   };

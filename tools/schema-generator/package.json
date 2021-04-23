@@ -33,13 +33,13 @@
     "antd": "^4.4.2",
     "clone": "^2.1.2",
     "copy-text-to-clipboard": "^2.2.0",
+    "form-render": "1.x",
     "moment": "^2.27.0",
-    "nanoid": "^2.1.11",
+    "nanoid": "^3.1.22",
     "rc-color-picker": "^1.2.6",
     "react-dnd": "^11.1.3",
     "react-dnd-html5-backend": "^11.1.3",
-    "react-sortable-hoc": "^1.11.0",
-    "form-render": "1.x"
+    "react-sortable-hoc": "^1.11.0"
   },
   "devDependencies": {
     "rollup-plugin-commonjs": "^10.1.0",

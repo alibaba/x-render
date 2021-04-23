@@ -9,6 +9,7 @@ import {
   getParentProps,
   isListType,
   isCheckBoxType,
+  isObjType,
 } from '../utils';
 
 // rest: 允许在每层FR重新定义全局props，覆盖
@@ -38,9 +39,9 @@ const Core = ({
   // displayType 一层层网上找值
   const _displayType =
     schema.displayType || rest.displayType || displayType || 'column';
-  const isObjType = schema.type === 'object'; // TODO: 这个好像太笼统了，万一不是这样呢
   const isList = isListType(schema);
-  const isComplex = isObjType || isList;
+  const isObj = isObjType(schema);
+  const isComplex = isObj || isList;
   const isCheckBox = isCheckBoxType(schema, readOnly);
   const width = schema.width || schema['ui:width'];
   let containerClass = `fr-field ${
@@ -51,7 +52,7 @@ const Core = ({
   // common classNames dispite row or column
   switch (schema.type) {
     case 'object':
-      if (isObjType) {
+      if (isObj) {
         if (schema.title) {
           labelClass += ' fr-label-object';
         }
@@ -100,7 +101,7 @@ const Core = ({
       containerClass += '';
       labelClass += ' fr-label-row';
       contentClass += ' fr-content-row';
-      if (!isObjType && !isCheckBox) {
+      if (!isObj && !isCheckBox) {
         labelClass += ' flex-shrink-0 fr-label-row';
         contentClass += ' flex-grow-1 relative';
       }
@@ -109,7 +110,7 @@ const Core = ({
 
   // style part
   let columnStyle = {};
-  if (!isObjType) {
+  if (!isObj) {
     if (width) {
       columnStyle = {
         width,
@@ -195,7 +196,7 @@ const Core = ({
       className={`${containerClass} ${debugCss ? 'debug' : ''}`}
     >
       <RenderField {...fieldProps}>
-        {isObjType && objChildren}
+        {isObj && objChildren}
         {isList && listChildren}
       </RenderField>
     </div>

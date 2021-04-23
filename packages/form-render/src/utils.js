@@ -688,6 +688,8 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
     switch (schema.type) {
       case 'range':
         singleResult.type = 'array';
+      case 'html':
+        singleResult.type = 'string';
         break;
       default:
         break;

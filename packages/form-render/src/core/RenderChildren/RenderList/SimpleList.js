@@ -1,8 +1,6 @@
 import React from 'react';
 import Core from '../../index';
 import { Button, Popconfirm } from 'antd';
-import ArrowUp from '../../../components/ArrowUp';
-import ArrowDown from '../../../components/ArrowDown';
 import { DeleteOutlined, CopyOutlined } from '@ant-design/icons';
 
 const SimpleList = ({

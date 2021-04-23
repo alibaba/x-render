@@ -11,6 +11,12 @@ export interface FormParams {
   onValidate?: (valid: any) => void;
 }
 
+export interface ValidateParams {
+  formData: any;
+  schema: any;
+  error: Error[];
+  [k: string]: any;
+}
 export interface FormInstance {
   formData: any;
   schema: any;
@@ -67,12 +73,7 @@ export interface FRProps {
   // 数据会作为 beforeFinish 的第四个参数传入
   config?: any;
   /** 表单提交前钩子 */
-  beforeFinish?: (
-    formData: any,
-    schema: any,
-    error: Error[],
-    config: any
-  ) => Error[] | Promise<Error[]>;
+  beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
   onFinish?: (formData: any, error: Error[]) => void;
 }

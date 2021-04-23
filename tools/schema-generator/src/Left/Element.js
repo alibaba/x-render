@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGlobal, useStore } from '../hooks';
 import { addItem } from '../utils';
-import nanoid from 'nanoid';
+import { nanoid } from 'nanoid';
 import { useDrag } from 'react-dnd';
 import './Element.css';
 

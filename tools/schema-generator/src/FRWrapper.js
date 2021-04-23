@@ -17,6 +17,7 @@ import {
 import { Ctx, StoreCtx } from './context';
 // import SCHEMA from './json/basic.json';
 import FR from './FR';
+import PreviewFR from './PreviewFR';
 import { Modal, Input, message } from 'antd';
 import { Button } from 'antd';
 
@@ -41,7 +42,7 @@ function Wrapper(
     schemaForImport: '',
   });
 
-  const { simple = true, preview } = rootState;
+  const { preview } = rootState;
 
   const {
     transformFrom,
@@ -200,16 +201,6 @@ function Wrapper(
   );
   const _extraBtns = _extraButtons.filter(item => isObject(item) && item.text);
 
-  if (simple) {
-    return (
-      <Ctx.Provider value={setGlobal}>
-        <StoreCtx.Provider value={store}>
-          <FR preview={true} />
-        </StoreCtx.Provider>
-      </Ctx.Provider>
-    );
-  }
-
   return (
     <Ctx.Provider value={setGlobal}>
       <StoreCtx.Provider value={store}>
@@ -252,7 +243,10 @@ function Wrapper(
             </div>
             <div className="dnd-container">
               <div style={{ height: preview ? 33 : 0 }}></div>
-              <FR preview={preview} />
+              {/* <FR preview={preview} /> */}
+              {
+                preview ? <PreviewFR schema={displaySchema.schema} /> : <FR />
+              }
             </div>
           </div>
           <Right globalProps={frProps} />
