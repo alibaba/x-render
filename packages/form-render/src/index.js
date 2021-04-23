@@ -112,7 +112,12 @@ function App({
     // 需要外部校验的情况，此时 submitting 还是 false
     if (outsideValidating === true) {
       Promise.resolve(
-        beforeFinish(submitData, schema, errorFields, config)
+        beforeFinish({
+          data: submitData,
+          schema,
+          errors: errorFields,
+          ...config,
+        })
       ).then(error => {
         if (error) {
           setErrorFields(error);

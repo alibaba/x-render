@@ -1,9 +1,12 @@
 # Changelog
 
+### 1.1.3
+
+- [!] beforeFinish 的入参为 object，现在能获取 {data, errors,schema} 三个入参, 更多入参可以通过 config 传入
+
 ### 1.1.2
 
 - [!] 修复 list 的删除无效的问题，并做了展示上的优化
-- [!] beforeFinish 现在能获取 (formData, schema, errors) 三个入参
 
 ### 1.1.1
 
