@@ -58,11 +58,20 @@ export default Demo;
 | --- | --- | --- | --- |
 | defaultValue | 默认表单 schema | `object` | `DEFAULT_SCHEMA` |
 | transformer | schema 双向转换 | `object` | `{ fromFormRender, toFormRender }` |
-| extraButtons | 操作栏按钮 | `array` | `[]` |
+| extraButtons | 操作栏按钮 | `array` | `extraButton[]` |
 | settings | 左右侧栏配置 | `array` | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L513) |
 | commonSettings | 通用配置 | `object` | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L2) |
 | globalSettings | 全局配置 | `object` | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L513) |
 | widgets | 自定义组件 | `object` | `{}` |
+
+#### extraButton
+
+| 属性 | 说明 | 类型 |
+| --- | --- | --- |
+| text | 按钮文案 | `string` |
+| onClick | 按钮点击回调函数 | `(event) => void` |
+
+支持 antd 按钮组件的所有其他属性 https://ant.design/components/button-cn/#API
 
 ### Events
 

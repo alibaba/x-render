@@ -116,7 +116,6 @@ function App(props, ref) {
 
   const rootState = {
     preview,
-    simple: false,
     mapping: _mapping,
     widgets: _widgets,
     selected,

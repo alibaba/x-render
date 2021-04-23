@@ -42,7 +42,7 @@ function Wrapper(
     schemaForImport: '',
   });
 
-  const { simple = true, preview } = rootState;
+  const { preview } = rootState;
 
   const {
     transformFrom,
@@ -200,16 +200,6 @@ function Wrapper(
     item => item === true || item === false,
   );
   const _extraBtns = _extraButtons.filter(item => isObject(item) && item.text);
-
-  if (simple) {
-    return (
-      <Ctx.Provider value={setGlobal}>
-        <StoreCtx.Provider value={store}>
-          <FR preview={true} />
-        </StoreCtx.Provider>
-      </Ctx.Provider>
-    );
-  }
 
   return (
     <Ctx.Provider value={setGlobal}>

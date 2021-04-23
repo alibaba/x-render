@@ -1,33 +1,42 @@
-import React, { useRef } from 'react';
-import Generator from 'fr-generator';
-import FormRender, { widgets } from 'form-render';
+import React, { useState, useRef } from 'react';
+import { useHistory } from 'umi';
+import Generator, { toFormily, fromFormily } from 'fr-generator';
 import './index.less';
-
-const defaultValue = {
-  schema: {
-    type: 'object',
-    properties: {},
-  },
-  displayType: 'row',
-  showDescIcon: true,
-  labelWidth: 120,
-};
 
 const Demo = () => {
   const ref = useRef();
+  const { location, replace } = useHistory();
+  const [isFormily, setIsFormily] = useState(location.query.type === 'formily');
 
-  const onClick = () => {
+  const goToFrPlayground = () => {
     ref.current.copyValue();
     window.open('/playground');
+  };
+
+  const switchMode = () => {
+    if (isFormily) {
+      setIsFormily(false);
+      replace('/tools/generator/playground');
+    } else {
+      setIsFormily(true);
+      replace('/tools/generator/playground?type=formily');
+    }
   };
 
   return (
     <div className="fr-generator-playground" style={{ height: '80vh' }}>
       <Generator
         ref={ref}
-        defaultValue={defaultValue}
-        extraButtons={[{ text: '去playground验证', onClick }]}
-        // FormRender={FormRender} // 非必填，传入二次封装的fr实例，可能存在样式修改或是不用antd
+        transformer={isFormily && { to: toFormily, from: fromFormily }}
+        extraButtons={[
+          { text: '去playground验证', onClick: goToFrPlayground },
+          {
+            text: 'Formily',
+            shape: 'round',
+            type: isFormily && 'primary',
+            onClick: switchMode,
+          }
+        ]}
       />
     </div>
   );
