@@ -92,6 +92,8 @@ export type ConnectedForm<T> = T & {
   form: FormInstance;
 };
 
-export declare function connectForm<T extends {} = any>(component: React.ComponentType<T>): React.ComponentType<ConnectedForm<T>>;
+export declare function connectForm<T extends {} = any>(
+  component: React.ComponentType<ConnectedForm<T>>,
+): React.ComponentType<T>;
 
 export default FR;
