@@ -41,6 +41,10 @@ export interface FormInstance {
   syncStuff: (any) => void;
 }
 
+export interface WatchProperties {
+  [path: string]: (value: any) => any;
+}
+
 export interface FRProps {
   /** 表单 schema */
   schema: any;
@@ -76,12 +80,20 @@ export interface FRProps {
   beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
   onFinish?: (formData: any, error: Error[]) => void;
+  /** 表单监听 watchers */
+  watch?: WatchProperties;
 }
 
 declare const FR: React.FC<FRProps>;
 
 export declare function useForm(params?: FormParams): FormInstance;
 
-export declare function connectForm(component: React.FC<any>): any;
+export type ConnectedForm<T> = T & {
+  form: FormInstance;
+};
+
+export declare function connectForm<T extends {} = any>(
+  component: React.ComponentType<ConnectedForm<T>>,
+): React.ComponentType<T>;
 
 export default FR;
