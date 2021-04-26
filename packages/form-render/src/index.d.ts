@@ -72,6 +72,8 @@ export interface FRProps {
   size?: string;
   // 数据会作为 beforeFinish 的第四个参数传入
   config?: any;
+  // 类似于 vuejs 的 watch 的用法，监控值的变化，触发 callback
+  watch?: any;
   /** 表单提交前钩子 */
   beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
