@@ -1,5 +1,17 @@
 # Changelog
 
+### 1.2.0
+
+- [+] 支持 snowPacks 等新的打包工具的使用。改变了 esm 打包的一些细节
+- [+] `watch` 支持了 immediate 参数，且首次加载默认不会被调用，用法与 vue.js 完全相同
+- [!] 修复了 typesript 没有声明新 api `watch` 的问题
+- [!] 修复了 image 的判断过于严格的问题
+- [!] 优化了表达式计算逻辑，进一步减少计算
+- [!] submit 返回的数据中，所有的 undefined 的值会自动刨去
+- [!] 修复了元素 hidden 时，出现空白占位的问题
+- [!] 修复了 type 书写错误直接导致程序 crash 的问题，现在会给出一个提示
+- [!] 修复了 slider 组件对 min/max 支持有误的问题
+
 ### 1.1.3
 
 - [+] html 组件支持多选的展示，更好支持 readOnly 下的展示
