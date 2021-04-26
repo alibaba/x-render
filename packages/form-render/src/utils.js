@@ -421,16 +421,20 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
   } else return func;
 }
 
-export const schemaContainsExpression = schema => {
-  return Object.keys(schema).some(key => {
-    const value = schema[key];
-    if (typeof value === 'string') {
-      return isExpression(value);
-    } else if (isObject(value)) {
-      return schemaContainsExpression(value);
-    }
+export const schemaContainsExpression = (schema, shallow = true) => {
+  if (isObject(schema)) {
+    return Object.keys(schema).some(key => {
+      const value = schema[key];
+      if (typeof value === 'string') {
+        return isExpression(value);
+      } else if (!shallow && isObject(value)) {
+        return schemaContainsExpression(value, false);
+      }
+      return false;
+    });
+  } else {
     return false;
-  });
+  }
 };
 
 // TODO: 两个优化，1. 可以通过表达式的path来判断，避免一些重复计算
