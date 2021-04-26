@@ -1052,3 +1052,17 @@ export const completeSchemaWithTheme = (schema = {}, theme = {}) => {
   }
   return result;
 };
+
+export const cleanEmpty = obj => {
+  if (Array.isArray(obj)) {
+    return obj
+      .map(v => (v && isObject(v) ? cleanEmpty(v) : v))
+      .filter(v => !(v == undefined));
+  } else if (isObject(obj)) {
+    return Object.entries(obj)
+      .map(([k, v]) => [k, v && isObject(v) ? cleanEmpty(v) : v])
+      .reduce((a, [k, v]) => (v == undefined ? a : ((a[k] = v), a)), {});
+  } else {
+    return obj;
+  }
+};
