@@ -743,7 +743,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
       const imgValidator = {
         validator: (rule, value) => {
           const pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
-          if (value === undefined) return true;
+          if (!value) return true; // 这里判断宽一点，undefined、null、'' 都当做没有填写
           return !!pattern.exec(value) || isUrl(value);
         },
         message: '${title}的类型不是image',
