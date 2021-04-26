@@ -110,10 +110,6 @@ export const useForm = props => {
 
   // 这里导致第二次的渲染
   useEffect(() => {
-    if (clickSubmit.current) {
-      clickSubmit.current = false;
-      return;
-    }
     validateAll({
       formData: _data.current,
       schema: schemaRef.current,
@@ -191,7 +187,6 @@ export const useForm = props => {
   };
 
   const submit = () => {
-    clickSubmit.current = true;
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
     //  https://formik.org/docs/guides/form-submission
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
