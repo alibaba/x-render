@@ -189,7 +189,6 @@ const Core = ({
     </RenderList>
   ) : null;
 
-  // TODO: list 也要算进去
   return (
     <div
       style={columnStyle}

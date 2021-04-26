@@ -22,10 +22,7 @@ const defaultFinish = (data, error) => {
   console.log(data, error);
 };
 
-export {
-  defaultWidgets as widgets,
-  defaultMapping as mapping,
-}
+export { defaultWidgets as widgets, defaultMapping as mapping };
 
 export { useForm } from './useForm';
 export { connectForm } from './connectForm';
@@ -83,7 +80,7 @@ function App({
   // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
     return () => {
-      form.destroyForm();
+      form.resetFields();
     };
   }, []);
 
