@@ -15,7 +15,6 @@ export default function Wrapper({
   const [position, setPosition] = useState();
   const {
     flatten,
-    onItemChange,
     onFlattenChange,
     selected,
     hovering,
