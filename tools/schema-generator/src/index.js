@@ -6,7 +6,7 @@ import './index.less';
 
 const Root = (props, ref) => {
   return (
-    <DndProvider backend={HTML5Backend}>
+    <DndProvider backend={HTML5Backend} context={window}>
       <Main ref={ref} {...props} />
     </DndProvider>
   );

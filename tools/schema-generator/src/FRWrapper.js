@@ -18,8 +18,7 @@ import { Ctx, StoreCtx } from './context';
 // import SCHEMA from './json/basic.json';
 import FR from './FR';
 import PreviewFR from './PreviewFR';
-import { Modal, Input, message } from 'antd';
-import { Button } from 'antd';
+import { Modal, Input, Button, message } from 'antd';
 
 const { TextArea } = Input;
 
