@@ -153,7 +153,7 @@ const schema2 = {
 
 const schema1 = {
   displayType: 'column',
-  type: 'objext',
+  type: 'object',
   properties: {
     inputName1: {
       title: '简单输入框1',
@@ -165,6 +165,7 @@ const schema1 = {
       type: 'string',
       hidden: true,
       width: '33%',
+      default: 'sdf',
     },
     inputName3: {
       title: '简单输入框3',
@@ -188,9 +189,9 @@ const Demo = () => {
     <div>
       <FormRender
         debug
-        debugCss
+        // debugCss
         form={form}
-        schema={schema2}
+        schema={schema1}
         onFinish={onFinish}
         watch={{
           '#': {
