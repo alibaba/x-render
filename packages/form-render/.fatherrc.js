@@ -1,8 +1,11 @@
 import copy from 'rollup-plugin-copy';
 
 export default {
-  esm: 'rollup',
   cjs: 'rollup',
+  esm: {
+    type: 'rollup',
+    importLibToEs: true,
+  },
   extraRollupPlugins: [
     copy({
       targets: [{ src: 'src/index.d.ts', dest: 'dist/' }],
@@ -13,7 +16,7 @@ export default {
       'import',
       {
         libraryName: 'antd',
-        libraryDirectory: 'lib',
+        libraryDirectory: 'es',
         style: true,
       },
       'antd',
