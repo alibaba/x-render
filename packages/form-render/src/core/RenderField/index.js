@@ -6,9 +6,6 @@ import {
   getValueByPath,
   isCheckBoxType,
   isObjType,
-  schemaContainsExpression,
-  parseAllExpression,
-  clone,
 } from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import FieldTitle from './Title';
@@ -30,43 +27,18 @@ const RenderField = props => {
     displayType,
   } = props;
 
-  const { schema } = item;
+  const { schema: _schema } = item;
   const store = useStore();
   const {
     onItemChange,
     formData,
-    isEditing,
     setEditing,
     touchKey,
     debounceInput,
     readOnly,
   } = store;
   // console.log('<renderField>', $id);
-  const snapShot = useRef();
   let dataPath = getDataPath($id, dataIndex);
-  let _schema = clone(schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
-
-  // 节流部分逻辑，编辑时不执行
-  if (isEditing && snapShot.current) {
-    _schema = snapShot.current;
-  } else {
-    if (schemaContainsExpression(_schema)) {
-      _schema = parseAllExpression(_schema, formData, dataPath);
-    }
-    snapShot.current = _schema;
-
-    // rules 还是放在 schema 里统一处理
-    // _rules = getArray(item.rules).map(rule => {
-    //   const newRule = {};
-    //   Object.keys(rule).forEach(key => {
-    //     const needParse = isExpression(rule[key]);
-    //     newRule[key] = needParse
-    //       ? parseSingleExpression(rule[key], formData, dataPath)
-    //       : rule[key];
-    //   });
-    //   return newRule;
-    // });
-  }
 
   const errObj = errorFields.find(err => err.name === dataPath);
   const errorMessage = errObj && errObj.error; // 是一个list
@@ -155,10 +127,6 @@ const RenderField = props => {
   // if (_schema && _schema.default !== undefined) {
   //   widgetProps.value = _schema.default;
   // }
-
-  if (_schema.hidden) {
-    return null;
-  }
 
   // checkbox必须单独处理，布局太不同了
   if (isCheckBoxType(_schema, _readOnly)) {
