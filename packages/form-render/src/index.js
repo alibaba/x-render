@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import {
   flattenSchema,
   updateSchemaToNewVersion,
@@ -196,9 +196,27 @@ export default Wrapper;
 
 const Watcher = ({ watchKey, watch, formData }) => {
   const value = getValueByPath(formData, watchKey);
-  const callback = watch[watchKey];
+  const watchObj = watch[watchKey];
+  const firstMount = useRef(true);
+
   useEffect(() => {
-    callback(value);
+    const runWatcher = () => {
+      if (typeof watchObj === 'function') {
+        watchObj(value);
+      } else if (watchObj && typeof watchObj.handler === 'function') {
+        watchObj.handler(value);
+      }
+    };
+
+    if (firstMount.current) {
+      const immediate = watchObj && watchObj.immediate;
+      if (immediate) {
+        runWatcher();
+      }
+      firstMount.current = false;
+    } else {
+      runWatcher();
+    }
   }, [JSON.stringify(value)]);
   return null;
 };
