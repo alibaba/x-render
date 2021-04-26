@@ -1,4 +1,4 @@
-import { get, cloneDeep } from 'lodash';
+import { get, set, cloneDeep } from 'lodash';
 
 // 后面三个参数都是内部递归使用的，将schema的树形结构扁平化成一层, 每个item的结构
 // {
@@ -1065,4 +1065,14 @@ export const cleanEmpty = obj => {
   } else {
     return obj;
   }
+};
+
+export const removeHiddenFromResult = (data, flatten) => {
+  Object.keys(flatten).forEach(key => {
+    const hidden = flatten[key].schema && flatten[key].schema.hidden === true; // TODO: 有表达式的情况
+    if (get(data, key) !== undefined && hidden) {
+      set(data, key, undefined);
+    }
+  });
+  return data;
 };
