@@ -565,3 +565,15 @@ colorPicker 组件的 props，参考[rc-color-picker 文档](https://www.npmjs.c
 inputProps
 
 输入框 input 的 props，参考 antd/input
+
+### slider 拖动选择数字
+
+props
+
+1. slider 组件的主体 props，支持所有 slider 组件的 props，参考 [antd/slider 文档](https://ant.design/components/slider/)
+
+2. 还支持`hideInput`, 默认`false`，用于控制是否展示 Input
+
+inputProps
+
+用于控制 input 展示的 props，支持所有 input 组件的 props，参考 [antd/input 文档](https://ant.design/components/input/)
