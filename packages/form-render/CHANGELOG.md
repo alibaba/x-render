@@ -2,7 +2,7 @@
 
 ### 1.2.0
 
-- [+] 支持 snowPacks 等新的打包工具的使用。改变了 esm 打包的一些细节
+- [+] form-render 现在能完美支持 vite 等新的基于 esm 的开发工具了！
 - [+] `watch` 支持了 immediate 参数，且首次加载默认不会被调用，用法与 vue.js 完全相同
 - [+] 做了简单的 hidden = true 的元素提交时去掉的处理
 - [!] 修复了 typesript 没有声明新 api `watch` 的问题

@@ -51,6 +51,7 @@ npm i form-render --save
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { connectForm } from 'form-render';
+// import 'antd/dist/antd.css';    如果项目没有对antd、less做任何配置的话，需要加上
 
 const schema = {
   type: 'object',
