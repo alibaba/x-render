@@ -692,6 +692,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
     switch (schema.type) {
       case 'range':
         singleResult.type = 'array';
+        break;
       case 'html':
         singleResult.type = 'string';
         break;
@@ -839,7 +840,7 @@ export const generateDataSkeleton = schema => {
       result[key] = childResult;
     });
   } else if (schema.default !== undefined) {
-    result = schema.default;
+    result = clone(schema.default);
   } else if (schema.type === 'boolean') {
     result = false;
   } else {

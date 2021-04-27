@@ -73,10 +73,6 @@ const ExtendedWidget = ({
     }
   });
 
-  if (schema.default !== undefined) {
-    widgetProps.defaultValue = schema.default;
-  }
-
   if (schema.props) {
     widgetProps = { ...widgetProps, ...schema.props };
   }
