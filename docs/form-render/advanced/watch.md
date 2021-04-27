@@ -69,3 +69,21 @@ const Demo = () => {
 
 export default Demo;
 ```
+
+### Option: immediate
+
+`immediate: true` 会在首次加载时就执行一次 watch 的 handler
+
+```js
+const watch = {
+  // # 为全局
+  input1: {
+    handler: val => {
+      if (val !== undefined) {
+        form.onItemChange('input2', val);
+      }
+    },
+    immediate: true,
+  },
+};
+```
