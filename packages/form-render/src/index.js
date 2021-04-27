@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import {
   flattenSchema,
   updateSchemaToNewVersion,
@@ -13,7 +13,6 @@ import { mapping as defaultMapping } from './mapping';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
-import 'antd/dist/antd.less';
 import './index.less';
 
 // 其他入参 watch: {"a.b.c": (value) => { ... }, }
@@ -22,10 +21,7 @@ const defaultFinish = (data, error) => {
   console.log(data, error);
 };
 
-export {
-  defaultWidgets as widgets,
-  defaultMapping as mapping,
-}
+export { defaultWidgets as widgets, defaultMapping as mapping };
 
 export { useForm } from './useForm';
 export { connectForm } from './connectForm';
@@ -83,7 +79,7 @@ function App({
   // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
     return () => {
-      form.destroyForm();
+      form.resetFields();
     };
   }, []);
 
@@ -199,9 +195,27 @@ export default Wrapper;
 
 const Watcher = ({ watchKey, watch, formData }) => {
   const value = getValueByPath(formData, watchKey);
-  const callback = watch[watchKey];
+  const watchObj = watch[watchKey];
+  const firstMount = useRef(true);
+
   useEffect(() => {
-    callback(value);
+    const runWatcher = () => {
+      if (typeof watchObj === 'function') {
+        watchObj(value);
+      } else if (watchObj && typeof watchObj.handler === 'function') {
+        watchObj.handler(value);
+      }
+    };
+
+    if (firstMount.current) {
+      const immediate = watchObj && watchObj.immediate;
+      if (immediate) {
+        runWatcher();
+      }
+      firstMount.current = false;
+    } else {
+      runWatcher();
+    }
   }, [JSON.stringify(value)]);
   return null;
 };

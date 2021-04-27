@@ -1,5 +1,18 @@
 # Changelog
 
+### 1.2.0
+
+- [+] form-render 现在能完美支持 vite 等新的基于 esm 的开发工具了！
+- [+] `watch` 支持了 immediate 参数，且首次加载默认不会被调用，用法与 vue.js 完全相同
+- [+] 做了简单的 hidden = true 的元素提交时去掉的处理
+- [!] 修复了 typesript 没有声明新 api `watch` 的问题
+- [!] 修复了 image 的判断过于严格的问题
+- [!] 优化了表达式计算逻辑，进一步减少计算
+- [!] submit 返回的数据中，所有的 undefined 的值会自动刨去
+- [!] 修复了元素 hidden 时，出现空白占位的问题
+- [!] 修复了 type 书写错误直接导致程序 crash 的问题，现在会给出一个提示
+- [!] 修复了 slider 组件对 min/max 支持有误的问题
+
 ### 1.1.3
 
 - [+] html 组件支持多选的展示，更好支持 readOnly 下的展示

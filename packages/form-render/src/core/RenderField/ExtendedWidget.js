@@ -8,6 +8,15 @@ import { isObjType, isListType } from '../../utils';
 // import { Input } from 'antd';
 // import Map from '../../widgets/antd/map';
 
+const ErrorSchema = schema => {
+  return (
+    <div>
+      <div style={{ color: 'red' }}>schema未匹配到展示组件：</div>
+      <div>{JSON.stringify(schema)}</div>
+    </div>
+  );
+};
+
 const ExtendedWidget = ({
   schema,
   onChange,
@@ -42,6 +51,10 @@ const ExtendedWidget = ({
   }
   if (readOnly && !isObjType(schema) && !isListType(schema)) {
     widgetName = 'html';
+  }
+  if (!widgetName) {
+    widgetName = 'input';
+    return <ErrorSchema schema={schema} />;
   }
   const Widget = widgets[widgetName];
   const extraSchema = extraSchemaList[widgetName];

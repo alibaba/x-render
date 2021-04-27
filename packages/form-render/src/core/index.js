@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import RenderList from './RenderChildren/RenderList';
 import RenderObject from './RenderChildren/RenderObject';
 import RenderField from './RenderField';
@@ -10,6 +10,10 @@ import {
   isListType,
   isCheckBoxType,
   isObjType,
+  getDataPath,
+  clone,
+  schemaContainsExpression,
+  parseAllExpression,
 } from '../utils';
 
 // rest: 允许在每层FR重新定义全局props，覆盖
@@ -23,6 +27,8 @@ const Core = ({
   ...rest
 }) => {
   // console.log('<Core>');
+  const snapShot = useRef();
+
   const {
     displayType,
     column,
@@ -30,12 +36,30 @@ const Core = ({
     errorFields,
     labelWidth,
     readOnly,
+    isEditing,
+    formData,
   } = useStore();
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
-  const { schema } = item;
+  const { schema: _schema } = item;
 
+  let dataPath = getDataPath(id, dataIndex);
+  let schema = clone(_schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
+
+  // 节流部分逻辑，编辑时不执行
+  if (isEditing && snapShot.current) {
+    schema = snapShot.current;
+  } else {
+    if (schemaContainsExpression(schema)) {
+      schema = parseAllExpression(schema, formData, dataPath);
+    }
+    snapShot.current = schema;
+  }
+
+  if (schema.hidden) {
+    return null;
+  }
   // displayType 一层层网上找值
   const _displayType =
     schema.displayType || rest.displayType || displayType || 'column';
@@ -152,7 +176,7 @@ const Core = ({
   const fieldProps = {
     $id: id,
     dataIndex,
-    item,
+    item: { ...item, schema },
     labelClass,
     labelStyle,
     contentClass,
@@ -189,7 +213,6 @@ const Core = ({
     </RenderList>
   ) : null;
 
-  // TODO: list 也要算进去
   return (
     <div
       style={columnStyle}

@@ -6,8 +6,15 @@
 import React from 'react';
 import { InputNumber, Slider } from 'antd';
 
-const SliderWithNumber = p => {
-  const { max, min, step } = p.schema;
+const SliderWithNumber = ({
+  schema,
+  value,
+  onChange,
+  hideInput,
+  inputProps,
+  ...rest
+}) => {
+  const { max, min, step } = schema;
   let setting = {};
   if (max || max === 0) {
     setting = { max };
@@ -21,36 +28,24 @@ const SliderWithNumber = p => {
     setting = { ...setting, step };
   }
 
-  let hideNumber = false;
-  if (p.options && p.options.hideNumber) {
-    hideNumber = true;
-  }
-
-  const renderNumber = p.readonly ? (
-    <span style={{ width: '90px' }}>
-      {p.value === (undefined || '') ? '-' : p.value}
-    </span>
-  ) : (
-    <InputNumber
-      {...p.options}
-      {...setting}
-      style={{ width: '90px' }}
-      value={p.value}
-      disabled={p.disabled}
-      onChange={p.onChange}
-    />
-  );
-
   return (
     <div className="fr-slider">
       <Slider
-        style={{ flexGrow: 1, marginRight: hideNumber ? 0 : 12 }}
+        style={{ flexGrow: 1, marginRight: hideInput ? 0 : 12 }}
         {...setting}
-        onChange={p.onChange}
-        value={typeof p.value === 'number' ? p.value : min || 0}
-        disabled={p.disabled || p.readonly}
+        onChange={onChange}
+        value={typeof value === 'number' ? value : min || 0}
+        {...rest}
       />
-      {hideNumber ? null : renderNumber}
+      {hideInput ? null : (
+        <InputNumber
+          {...setting}
+          {...inputProps}
+          style={{ width: '90px' }}
+          value={value}
+          onChange={onChange}
+        />
+      )}
     </div>
   );
 };

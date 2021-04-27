@@ -11,10 +11,10 @@ const RenderField = ({
   isComplex,
   children,
 }) => {
-  const { schema, data } = item;
-  const { onItemChange, flatten, widgets, mapping, frProps = {} } = useStore();
+  const { schema } = item;
+  const { flatten, widgets, mapping, frProps = {} } = useStore();
   const { labelWidth, displayType, showDescIcon, showValidate } = frProps;
-  const { type, title, description, required } = schema;
+  const { title, description, required } = schema;
 
   let widgetName = getWidgetName(schema, mapping);
   const customWidget = schema['widget'];
@@ -48,11 +48,7 @@ const RenderField = ({
     labelStyle = { flexGrow: 1 };
   }
 
-  const onChange = value => {
-    const newItem = { ...item };
-    newItem.data = value;
-    onItemChange($id, newItem, 'data');
-  };
+  const onChange = () => {};
 
   let contentStyle = {};
   if (widgetName === 'checkbox' && displayType === 'row') {
@@ -107,8 +103,8 @@ const RenderField = ({
       ) : null}
       <div className={contentClass} style={contentStyle}>
         <Widget
-          value={data}
-          checked={data} // 异常警告处理：switch/checkbox 组件用的是checked控制不是value
+          // value={data}
+          // checked={data} // 异常警告处理：switch/checkbox 组件用的是checked控制不是value
           onChange={onChange}
           schema={schema}
           {...usefulWidgetProps}

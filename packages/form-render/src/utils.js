@@ -1,4 +1,4 @@
-import { get, cloneDeep } from 'lodash';
+import { get, set, cloneDeep } from 'lodash';
 
 // 后面三个参数都是内部递归使用的，将schema的树形结构扁平化成一层, 每个item的结构
 // {
@@ -421,16 +421,20 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
   } else return func;
 }
 
-export const schemaContainsExpression = schema => {
-  return Object.keys(schema).some(key => {
-    const value = schema[key];
-    if (typeof value === 'string') {
-      return isExpression(value);
-    } else if (isObject(value)) {
-      return schemaContainsExpression(value);
-    }
+export const schemaContainsExpression = (schema, shallow = true) => {
+  if (isObject(schema)) {
+    return Object.keys(schema).some(key => {
+      const value = schema[key];
+      if (typeof value === 'string') {
+        return isExpression(value);
+      } else if (!shallow && isObject(value)) {
+        return schemaContainsExpression(value, false);
+      }
+      return false;
+    });
+  } else {
     return false;
-  });
+  }
 };
 
 // TODO: 两个优化，1. 可以通过表达式的path来判断，避免一些重复计算
@@ -743,7 +747,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
       const imgValidator = {
         validator: (rule, value) => {
           const pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
-          if (value === undefined) return true;
+          if (!value) return true; // 这里判断宽一点，undefined、null、'' 都当做没有填写
           return !!pattern.exec(value) || isUrl(value);
         },
         message: '${title}的类型不是image',
@@ -1047,4 +1051,28 @@ export const completeSchemaWithTheme = (schema = {}, theme = {}) => {
     result = schema;
   }
   return result;
+};
+
+export const cleanEmpty = obj => {
+  if (Array.isArray(obj)) {
+    return obj
+      .map(v => (v && isObject(v) ? cleanEmpty(v) : v))
+      .filter(v => !(v == undefined));
+  } else if (isObject(obj)) {
+    return Object.entries(obj)
+      .map(([k, v]) => [k, v && isObject(v) ? cleanEmpty(v) : v])
+      .reduce((a, [k, v]) => (v == undefined ? a : ((a[k] = v), a)), {});
+  } else {
+    return obj;
+  }
+};
+
+export const removeHiddenFromResult = (data, flatten) => {
+  Object.keys(flatten).forEach(key => {
+    const hidden = flatten[key].schema && flatten[key].schema.hidden === true; // TODO: 有表达式的情况
+    if (get(data, key) !== undefined && hidden) {
+      set(data, key, undefined);
+    }
+  });
+  return data;
 };
