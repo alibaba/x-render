@@ -11,9 +11,9 @@ export default {
       targets: [{ src: 'src/index.d.ts', dest: 'dist/' }],
     }),
   ],
-  lessInRollupMode: {
-    paths: ['node_modules/**'],
-  },
+  // lessInRollupMode: {
+  //   paths: ['node_modules/**'],
+  // },
   lessInBabelMode: true,
   extraBabelPlugins: [
     [
