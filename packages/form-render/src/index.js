@@ -13,7 +13,6 @@ import { mapping as defaultMapping } from './mapping';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
-import 'antd/dist/antd.less';
 import './index.less';
 
 // 其他入参 watch: {"a.b.c": (value) => { ... }, }
