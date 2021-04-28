@@ -14,11 +14,6 @@ export const defaultCommonSettings = {
     title: '说明',
     type: 'string',
   },
-  format: {
-    title: '格式',
-    type: 'string',
-    enum: ['image', 'textarea', 'color', 'email', 'url', 'dateTime', 'date', 'time', 'upload']
-  },
   default: {
     title: '默认值',
     type: 'string',
@@ -240,6 +235,7 @@ export const elements = [
       type: 'string',
       enum: ['a', 'b', 'c'],
       enumNames: ['早', '中', '晚'],
+      widget: 'select',
     },
     setting: {
       enum: {
