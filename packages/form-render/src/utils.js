@@ -35,6 +35,7 @@ export function isCheckBoxType(schema, readOnly) {
   if (readOnly) return false;
   if (schema.widget === 'checkbox') return true;
   if (schema && schema.type === 'boolean') {
+    if (schema.enum) return false;
     if (schema.widget === undefined) return true;
     return false;
   }
