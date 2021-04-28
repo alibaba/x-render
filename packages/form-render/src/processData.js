@@ -3,7 +3,7 @@ import {
   cleanEmpty,
   removeHiddenFromResult,
 } from './utils';
-import { unset, get, set } from 'lodash';
+import { unset, get, set } from 'lodash-es';
 import { isObject, clone } from './utils';
 // 提交前需要先处理formData的逻辑
 export const processData = (data, flatten) => {

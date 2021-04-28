@@ -1,5 +1,5 @@
 import React from 'react';
-import { get, set } from 'lodash';
+import { get, set } from 'lodash-es';
 import clearAll from './method/clearAll';
 import importExcel from './method/importExcel';
 import exportExcel from './method/exportExcel';

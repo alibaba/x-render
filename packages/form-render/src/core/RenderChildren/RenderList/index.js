@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { get } from 'lodash';
+import { get } from 'lodash-es';
 import { useStore } from '../../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../utils';
 // import ArrowDown from '../../../components/ArrowDown';
