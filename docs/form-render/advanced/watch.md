@@ -70,7 +70,36 @@ const Demo = () => {
 export default Demo;
 ```
 
+### 语法说明
+
+`watch` 是一个对象，key 值为数据对应的“路径”，value 为 callback 函数，或者在复杂情况是个对象
+
+```js
+const watch = {
+  // # 为全局
+  '#': val => {
+    console.log('表单的时时数据为：', val);
+  },
+  input1: val => {
+    if (val !== undefined) {
+      form.onItemChange('input2', val);
+    }
+  },
+  'object1.select2': {
+    handler: val => {
+      if (val === 'option1') {
+        form.onItemChange('object1.input2', 'hello');
+      }
+    },
+    immediate: true,
+  },
+};
+```
+
 ### Option: immediate
+
+- 类型: boolean
+- 默认: false
 
 `immediate: true` 会在首次加载时就执行一次 watch 的 handler
 

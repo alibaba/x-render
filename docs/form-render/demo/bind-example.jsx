@@ -36,7 +36,7 @@ const schema = {
           type: 'string',
           enum: ['a', 'b', 'c'],
           enumNames: ['早', '中', '晚'],
-          'ui:widget': 'radio',
+          widget: 'radio',
         },
       },
     },
