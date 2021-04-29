@@ -81,4 +81,5 @@ export default () => <FR schema={expression} />;
 
 ### 最后
 
-更复杂和定制化的表单需求建议使用自定义组件。FormRender 的设计理念非常推崇组件的即插即用，详见[自定义组件](/form-render/advanced/widget)章节。
+1. 如果涉及到值的联动，或者极其复杂的表单展示联动，可以使用 [watch](/form-render/advanced/watch)
+2. 更复杂和定制化的表单需求建议使用自定义组件。FormRender 的设计理念非常推崇组件的即插即用，详见[自定义组件](/form-render/advanced/widget)章节。
