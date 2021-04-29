@@ -2,7 +2,7 @@
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
-import { set, sortedUniqBy, merge } from 'lodash';
+import { set, sortedUniqBy, merge } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
 import { generateDataSkeleton, flattenSchema, clone } from './utils';
 

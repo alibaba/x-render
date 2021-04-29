@@ -1,4 +1,4 @@
-import { get } from "lodash";
+import { get } from 'lodash-es';
 import XLSX from 'xlsx';
 import { generateSheetHeader, generateSheetData } from '../utils';
 
@@ -9,11 +9,8 @@ export default (arrayData, onChange, schema) => {
   // 生成数据
   const sheetData = generateSheetData(itemsProperties, arrayData);
   // 下载
-  const ws = XLSX.utils.aoa_to_sheet([
-    sheetHeader,
-    ...sheetData,
-  ]);
+  const ws = XLSX.utils.aoa_to_sheet([sheetHeader, ...sheetData]);
   const wb = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
-  XLSX.writeFile(wb, "export.xlsx")
+  XLSX.utils.book_append_sheet(wb, ws, 'SheetJS');
+  XLSX.writeFile(wb, 'export.xlsx');
 };

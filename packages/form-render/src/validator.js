@@ -9,7 +9,7 @@ import {
 import { defaultValidateMessagesCN } from './validateMessageCN';
 import { defaultValidateMessages } from './validateMessage';
 import Validator from 'async-validator';
-import { get, merge } from 'lodash';
+import { get, merge } from 'lodash-es';
 // export const validateAll = () => Promise.resolve([]);
 
 export const validateAll = ({

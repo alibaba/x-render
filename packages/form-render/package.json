@@ -47,7 +47,7 @@
     "@ant-design/icons": "^4.0.2",
     "async-validator": "^3.5.1",
     "color": "^3.1.2",
-    "lodash": "^4.17.20",
+    "lodash-es": "^4.17.21",
     "moment": "^2.24.0",
     "nanoid": "^3.1.20",
     "rc-color-picker": "^1.2.6",

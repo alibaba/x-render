@@ -1,4 +1,4 @@
-import { get, set, cloneDeep } from 'lodash';
+import { get, set, cloneDeep } from 'lodash-es';
 
 // 后面三个参数都是内部递归使用的，将schema的树形结构扁平化成一层, 每个item的结构
 // {
