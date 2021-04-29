@@ -1,5 +1,14 @@
 # Changelog
 
+### 1.3.0
+
+- [+] 新增了 onMount 的生命周期，在表单首次加载后触发
+- [+] 新增了 setSchemaByPath 方法，方便用户快速根据路径修改 schema
+- [+] 文档新增了生命周期。表单监听和表单方法文档大幅更新
+- [!] range 组件的校验和展示问题修复
+- [!] getValues 获取的值现在与 submit 时拿到的一致了
+- [!] 对是否是 checkbox 的 schema 的判断更为严格，避免误伤
+
 ### 1.2.0
 
 - [+] form-render 现在能完美支持 vite 等新的基于 esm 的开发工具了！
