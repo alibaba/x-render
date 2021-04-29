@@ -1,14 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useMemo } from 'react';
+import { useEffect, useRef, useMemo, useState } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy, merge } from 'lodash';
-import {
-  processData,
-  transformDataWithBind,
-  transformDataWithBind2,
-} from './processData';
-import { generateDataSkeleton } from './utils';
+import { processData, transformDataWithBind2 } from './processData';
+import { generateDataSkeleton, flattenSchema, clone } from './utils';
 
 export const useForm = props => {
   const {
@@ -17,6 +13,9 @@ export const useForm = props => {
     onChange: _onChange,
     onValidate: _onValidate,
   } = props || {};
+
+  const [renderCount, forceRender] = useState(0);
+  const didMount = useRef(false);
 
   const [state, setState] = useSet({
     formData: {},
@@ -28,15 +27,16 @@ export const useForm = props => {
     isEditing: false, // 是否在编辑状态。主要用于优化体验，用户编辑时减少不必要的运算
     allTouched: false, // 是否所有表单元素都被碰过了（一键开关，用于提交的时候，默认所有都被touch了）
     touchedKeys: [], // 碰过的key（用于submit之前，判断哪些被碰过了）
+    flatten: {}, // schema 的转换结构，便于处理
   });
 
   const schemaRef = useRef({});
-  const flattenRef = useRef({});
-  const clickSubmit = useRef(false); // 点击submit的那一下，不要执行useEffect里的validate
-  const beforeFinishRef = useRef();
+  const beforeFinishRef = useRef(() => {});
+  const onMountRef = useRef();
   const localeRef = useRef('cn');
   const validateMessagesRef = useRef();
   const _data = useRef({}); // 用ref是为了破除闭包的影响
+  const _flatten = useRef({}); // 用ref是为了破除闭包的影响
   const _touchedKeys = useRef([]); // 用ref是为了破除闭包的影响
 
   const {
@@ -49,6 +49,7 @@ export const useForm = props => {
     isEditing,
     allTouched,
     touchedKeys,
+    flatten,
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
@@ -63,6 +64,7 @@ export const useForm = props => {
   }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
 
   _touchedKeys.current = touchedKeys;
+  _flatten.current = flatten;
 
   // 两个兼容 0.x 的函数
   const _setData = data => {
@@ -122,6 +124,22 @@ export const useForm = props => {
     });
   }, [JSON.stringify(_data.current), allTouched]);
 
+  useEffect(() => {
+    const flatten = flattenSchema(schemaRef.current);
+    setState({ flatten });
+  }, [JSON.stringify(schemaRef.current), renderCount]);
+
+  useEffect(() => {
+    if (
+      didMount.current === false &&
+      flatten['#'] &&
+      typeof onMountRef.current === 'function'
+    ) {
+      onMountRef.current();
+      didMount.current = true;
+    }
+  }, [JSON.stringify(flatten)]);
+
   const setEditing = isEditing => {
     setState({ isEditing });
   };
@@ -143,16 +161,45 @@ export const useForm = props => {
 
   const syncStuff = ({
     schema,
-    flatten,
-    beforeFinish,
     locale,
     validateMessages,
+    beforeFinish,
+    onMount,
   }) => {
     schemaRef.current = schema;
-    flattenRef.current = flatten;
-    beforeFinishRef.current = beforeFinish;
     localeRef.current = locale;
     validateMessagesRef.current = validateMessages;
+    beforeFinishRef.current = beforeFinish;
+    onMountRef.current = onMount;
+    forceRender(renderCount + 1);
+  };
+
+  const setSchemaByPath = (path, newSchema) => {
+    if (!_flatten.current[path]) {
+      console.error(`path：'${path}' 不存在(form.setSchemaByPath)`);
+      return;
+    }
+    const newFlatten = clone(_flatten.current);
+
+    try {
+      const _newSchema =
+        typeof newSchema === 'function'
+          ? newSchema(newFlatten[path].schema)
+          : newSchema;
+      newFlatten[path].schema = { ...newFlatten[path].schema, ..._newSchema };
+      setState({ flatten: { ...newFlatten } });
+    } catch (error) {
+      console.error(error, 'setSchemaByPath');
+    }
+  };
+
+  const getSchemaByPath = path => {
+    try {
+      return flatten[path].schema;
+    } catch (error) {
+      console.error(error, 'getSchemaByPath');
+      return {};
+    }
   };
 
   // TODO: 外部校验的error要和本地的合并么？
@@ -178,10 +225,10 @@ export const useForm = props => {
     _setErrors(newError);
   };
 
-  const getValues = () => processData(_data.current, flattenRef.current);
+  const getValues = () => processData(_data.current, flatten);
 
   const setValues = newFormData => {
-    const newData = transformDataWithBind2(newFormData, flattenRef.current);
+    const newData = transformDataWithBind2(newFormData, flatten);
     _setData(newData);
   };
 
@@ -208,27 +255,23 @@ export const useForm = props => {
           });
         }
         if (typeof beforeFinishRef.current === 'function') {
-          Promise.resolve(processData(_data.current, flattenRef.current)).then(
-            res => {
-              setState({
-                isValidating: true,
-                isSubmitting: false,
-                outsideValidating: true,
-                submitData: res,
-              });
-            }
-          );
-          return;
-        }
-        Promise.resolve(processData(_data.current, flattenRef.current)).then(
-          res => {
+          Promise.resolve(processData(_data.current, flatten)).then(res => {
             setState({
-              isValidating: false,
-              isSubmitting: true,
+              isValidating: true,
+              isSubmitting: false,
+              outsideValidating: true,
               submitData: res,
             });
-          }
-        );
+          });
+          return;
+        }
+        Promise.resolve(processData(_data.current, flatten)).then(res => {
+          setState({
+            isValidating: false,
+            isSubmitting: true,
+            submitData: res,
+          });
+        });
       })
       .catch(err => {
         // 不应该走到这边的
@@ -272,12 +315,15 @@ export const useForm = props => {
     // state
     formData: _data.current,
     schema: schemaRef.current,
+    flatten,
     touchedKeys: _touchedKeys.current,
     allTouched,
     // methods
     touchKey,
     onItemChange,
-    // setValue, // 单个
+    setValueByPath: onItemChange, // 单个
+    getSchemaByPath,
+    setSchemaByPath,
     setValues,
     getValues,
     resetFields,
@@ -295,5 +341,6 @@ export const useForm = props => {
     setEditing,
     syncStuff,
   };
+
   return form;
 };

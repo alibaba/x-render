@@ -1,11 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef } from 'react';
-import {
-  flattenSchema,
-  updateSchemaToNewVersion,
-  getValueByPath,
-  // completeSchemaWithTheme,
-} from './utils';
+import { updateSchemaToNewVersion, getValueByPath } from './utils';
 import Core from './core';
 import { Ctx, StoreCtx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
@@ -34,7 +29,6 @@ function App({
   onFinish = defaultFinish,
   displayType = 'column',
   schema,
-  flatten: _flatten,
   debug,
   debugCss,
   locale = 'cn', // 'cn'/'en'
@@ -45,6 +39,7 @@ function App({
   validateMessages,
   watch = {},
   config,
+  onMount,
   ...rest
 }) {
   try {
@@ -65,16 +60,22 @@ function App({
     formData,
     isEditing,
     setErrorFields,
+    flatten,
   } = form;
 
-  const flatten = useMemo(() => _flatten || flattenSchema(schema), [
-    JSON.stringify(_flatten),
-    JSON.stringify(schema),
-  ]);
-
   useEffect(() => {
-    syncStuff({ schema, flatten, beforeFinish, locale, validateMessages });
-  }, [JSON.stringify(_flatten), JSON.stringify(schema)]);
+    // Schema最外层的type是object来判断，没有的话，认为schema没有传
+    if (schema.type) {
+      syncStuff({
+        schema,
+        locale,
+        validateMessages,
+        beforeFinish,
+        onMount,
+      });
+    } else {
+    }
+  }, [JSON.stringify(schema)]);
 
   // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
@@ -85,7 +86,6 @@ function App({
 
   const store = useMemo(
     () => ({
-      flatten,
       ...form,
       displayType,
       theme,
@@ -134,6 +134,7 @@ function App({
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
+  // TODO: 这段代码写了没用
   let sizeCls = '';
   if (size === 'small') {
     sizeCls = 'fr-form-small';
@@ -184,10 +185,13 @@ export { createWidget } from './createWidget';
 const Wrapper = props => {
   const { isOldVersion = true, schema, ...rest } = props;
   let _schema = schema;
-  // let _schema = completeSchemaWithTheme(schema, theme);
-  if (isOldVersion) {
-    _schema = updateSchemaToNewVersion(schema);
-  }
+
+  useEffect(() => {
+    if (isOldVersion) {
+      _schema = updateSchemaToNewVersion(schema);
+    }
+  }, [JSON.stringify(schema)]);
+
   return <App schema={_schema} {...rest} />;
 };
 
