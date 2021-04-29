@@ -20,9 +20,13 @@ export interface ValidateParams {
 export interface FormInstance {
   formData: any;
   schema: any;
+  flatten: any;
   touchedKeys: string[];
   touchKey: (key: string) => void;
   onItemChange: (path: string, value: any) => void;
+  setValueByPath: (path: string, value: any) => void;
+  getSchemaByPath: (path: string, value: any) => void;
+  setSchemaByPath: (path: string, value: any) => void;
   setValues: (formData: any) => void;
   getValues: () => void;
   resetFields: () => void;
@@ -61,7 +65,6 @@ export interface FRProps {
   theme?: string | number;
   /** 覆盖默认的校验信息 */
   validateMessages?: any;
-  flatten?: any;
   /** 显示当前表单内部状态 */
   debug?: boolean;
   /** 显示css布局提示线 */
@@ -74,6 +77,8 @@ export interface FRProps {
   config?: any;
   // 类似于 vuejs 的 watch 的用法，监控值的变化，触发 callback
   watch?: any;
+  /** 表单首次加载钩子 */
+  onmount?: () => void;
   /** 表单提交前钩子 */
   beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
