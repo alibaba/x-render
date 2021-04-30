@@ -202,6 +202,7 @@ export const elements = [
     schema: {
       title: '是否选择',
       type: 'boolean',
+      widget: 'checkbox',
     },
     setting: {
       default: {
