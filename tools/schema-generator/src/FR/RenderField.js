@@ -1,7 +1,6 @@
 import React from 'react';
-import { transformProps } from 'form-render/src/createWidget';
 import { useStore } from '../hooks';
-import { isLooselyNumber, isCssLength, getParentProps } from '../utils';
+import { isLooselyNumber, isCssLength, getParentProps, transformProps } from '../utils';
 import { getWidgetName } from '../mapping';
 
 const RenderField = ({
