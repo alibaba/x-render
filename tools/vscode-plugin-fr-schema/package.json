@@ -38,11 +38,11 @@
     "snippets": [
       {
         "language": "json",
-        "path": "./src/snippets/snippets.json"
+        "path": "./out/snippets/snippets.json"
       },
       {
         "language": "javascript",
-        "path": "./src/snippets/snippets.json"
+        "path": "./out/snippets/snippets.json"
       }
     ],
     "commands": [
@@ -164,7 +164,7 @@
     ]
   },
   "dependencies": {
-    "fr-generator": "^1.0.0",
+    "fr-generator": "^2.0.0-beta.1",
     "lodash-es": "^4.17.15",
     "proptypes-to-json-schema": "^0.1.1",
     "react": "^16.8.6",
@@ -180,6 +180,7 @@
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
     "babel-eslint": "^9.0.0",
+    "copy-webpack-plugin": "^8.1.1",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^1.4.0",
     "eslint-plugin-flowtype": "^2.50.0",
