@@ -180,7 +180,7 @@
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
     "babel-eslint": "^9.0.0",
-    "copy-webpack-plugin": "^8.1.1",
+    "copy-webpack-plugin": "^6.0.0",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^1.4.0",
     "eslint-plugin-flowtype": "^2.50.0",
