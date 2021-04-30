@@ -361,6 +361,22 @@ export const elements = [
       },
     },
   },
+  {
+    text: 'HTML',
+    name: 'html',
+    widget: 'html',
+    schema: {
+      title: 'HTML',
+      type: 'string',
+      widget: 'html',
+    },
+    setting: {
+      default: {
+        title: '展示内容',
+        type: 'string',
+      },
+    },
+  }
 ];
 
 export const advancedElements = [
