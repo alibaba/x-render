@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
-import { useGlobal, useStore } from './hooks';
-import { flattenToData } from './utils';
+import { useStore } from './hooks';
+import { flattenToData, dataToFlatten } from './utils';
 
 export default function PreviewFR({ schema }){
   const form = useForm();
-  const setGlobal = useGlobal();
-  const { flatten } = useStore();
+  const { flatten, onFlattenChange } = useStore();
 
   useEffect(() => {
     form.setValues(flattenToData(flatten));
@@ -17,7 +16,7 @@ export default function PreviewFR({ schema }){
     form={form}
     watch={{
       '#': (formData) => {
-        setGlobal({ formData });
+        onFlattenChange(dataToFlatten(flatten, formData), 'data');
       },
     }}
   />;

@@ -543,32 +543,6 @@ export const dropItem = ({ dragId, dragItem, dropId, position, flatten }) => {
 //   }
 // };
 
-// 解析函数字符串值
-// TODO: 没有考虑list的情况
-// export const getDataById = (data, idString) => {
-//   if (idString === '#') return data;
-//   try {
-//     const idConnectedByDots = idString
-//       .split('/')
-//       .filter(id => id !== '#')
-//       .map(id => `["${id}"]`)
-//       .join('');
-//     const string = `data${idConnectedByDots}`;
-//     const a = `"use strict";
-//     const data = ${JSON.stringify(data)};
-//     return ${string}`;
-//     return Function(a)();
-//     // TODO: can be better
-//     // let result = { ...data };
-//     // idConnectedByDots.forEach((item) => {
-//     //   result = result[item];
-//     // });
-//     // return result;
-//   } catch (error) {
-//     return undefined;
-//   }
-// };
-
 // TODO: 没有考虑list的情况
 export const dataToFlatten = (flatten, data) => {
   if (!flatten || !data) return {};
@@ -581,7 +555,6 @@ export const dataToFlatten = (flatten, data) => {
 
 export const onChangeById = onChange => (id, value) => {};
 
-// TODO: 没有考虑list的情况
 export const flattenToData = (flatten, id = '#') => {
   try {
     let result = flatten[id].data;
@@ -592,10 +565,13 @@ export const flattenToData = (flatten, id = '#') => {
       return item.indexOf(id) > -1 && lengthOfChild > lengthOfId;
     });
     if (childrenIds && childrenIds.length > 0) {
+      const { type } = flatten[id].schema;
       if (result === undefined) {
         // TODO: 这个是简化的逻辑，在编辑器模型下，list和object都是object结构
-        if (['object', 'array'].indexOf(flatten[id].schema.type) > -1) {
+        if (type === 'object') {
           result = {};
+        } else if (type === 'array') {
+          result = [{}]
         }
       }
       childrenIds.forEach(c => {
@@ -605,7 +581,12 @@ export const flattenToData = (flatten, id = '#') => {
         if (lengthOfChild === lengthOfId + 1) {
           const cData = flattenToData(flatten, c);
           const cKey = getKeyFromUniqueId(c);
-          result[cKey] = cData;
+          if (cData === undefined) return result;
+          if (type === 'array') {
+            result[0][cKey] = cData;
+          } else {
+            result[cKey] = cData;
+          }
         }
       });
     }
@@ -664,7 +645,6 @@ export function getChildren2(schema) {
 }
 
 // 解析函数字符串值
-// TODO: 没有考虑list的情况
 // getDataById(formData, '#/a/b/c')
 export function getDataById(object, path) {
   path = castPath(path, object);
@@ -674,8 +654,13 @@ export function getDataById(object, path) {
 
   while (object != null && index < length) {
     const key = toKey(path[index++]);
-    object = key ? object[key] : object;
+    if (Array.isArray(object) && typeof object[0] === 'object') {
+      object = key ? object[0][key] : object;
+    } else {
+      object = key ? object[key] : object;
+    }
   }
+
   return index && index == length ? object : undefined;
 }
 
