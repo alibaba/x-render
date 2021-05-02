@@ -98,6 +98,7 @@ function App(props, ref) {
     setState({ schema: result });
     if (props.onSchemaChange) {
       setTimeout(() => {
+        if (!frwRef.current) return;
         const pureSchema = frwRef.current.getValue();
         props.onSchemaChange(pureSchema);
       }, 0);

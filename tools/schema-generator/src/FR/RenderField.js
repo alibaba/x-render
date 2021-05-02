@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '../hooks';
-import { isLooselyNumber, isCssLength, getParentProps } from '../utils';
+import { isLooselyNumber, isCssLength, getParentProps, transformProps } from '../utils';
 import { getWidgetName } from '../mapping';
 
 const RenderField = ({
@@ -11,8 +11,8 @@ const RenderField = ({
   isComplex,
   children,
 }) => {
-  const { schema } = item;
-  const { flatten, widgets, mapping, frProps = {} } = useStore();
+  const { schema, data } = item;
+  const { onItemChange, flatten, widgets, mapping, frProps = {} } = useStore();
   const { labelWidth, displayType, showDescIcon, showValidate } = frProps;
   const { title, description, required } = schema;
 
@@ -48,7 +48,15 @@ const RenderField = ({
     labelStyle = { flexGrow: 1 };
   }
 
-  const onChange = () => {};
+  const onChange = (value) => {
+    const newItem = { ...item };
+    if (item.schema.type === 'boolean' && item.schema.widget === 'checkbox') {
+      newItem.data = !value;
+    } else {
+      newItem.data = value;
+    }
+    onItemChange($id, newItem, 'data');
+  };
 
   let contentStyle = {};
   if (widgetName === 'checkbox' && displayType === 'row') {
@@ -57,11 +65,15 @@ const RenderField = ({
 
   // TODO: useMemo
   // 改为直接使用form-render内部自带组件后不需要再包一层options
-  const usefulWidgetProps = {
+  const usefulWidgetProps = transformProps({
+    value: data || schema.default,
+    checked: data,
     disabled: schema['disabled'],
     readOnly: schema['readOnly'],
+    onChange,
+    schema,
     ...schema['props']
-  };
+  });
 
   return (
     <>
@@ -102,13 +114,7 @@ const RenderField = ({
         </div>
       ) : null}
       <div className={contentClass} style={contentStyle}>
-        <Widget
-          // value={data}
-          // checked={data} // 异常警告处理：switch/checkbox 组件用的是checked控制不是value
-          onChange={onChange}
-          schema={schema}
-          {...usefulWidgetProps}
-        >
+        <Widget {...usefulWidgetProps}>
           {children || null}
         </Widget>
       </div>
