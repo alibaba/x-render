@@ -108,7 +108,7 @@ const alphaHexMap = {
 };
 
 // "#ffffffFF" => 100
-const getDefaultAlphaFromHex = (hex = "#ffffffFF") => {
+const getAlphaFromHex = (hex = "#ffffffFF") => {
   const alphaHex = hex.slice(7) || 'FF';
   let alpha = 100;
   for (const key in alphaHexMap) {
@@ -137,7 +137,7 @@ export default function color(p) {
           type={format}
           animation="slide-up"
           color={p.value || '#ffffff'}
-          defaultAlpha={getDefaultAlphaFromHex(color)}
+          alpha={getAlphaFromHex(color)}
           onChange={onPickerChange}
         />
       }
