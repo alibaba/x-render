@@ -136,7 +136,7 @@ export default function color(p) {
         <ColorPicker
           type={format}
           animation="slide-up"
-          color={p.value || '#ffffff'}
+          color={p.value.slice(0, 7) || '#ffffff'}
           alpha={getAlphaFromHex(color)}
           onChange={onPickerChange}
         />
