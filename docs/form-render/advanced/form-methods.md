@@ -9,8 +9,9 @@ FormRender v1.x 使用了状态内置的模型，所以外部对表单的所有�
 本篇会 cover 以下这些常用 api：
 
 ```
-form.setValues
 form.submit
+form.setValues
+form.setValueByPath
 form.setSchemaByPath
 ```
 
@@ -23,7 +24,7 @@ onFinish
 
 我们写一个最常用的场景：加载一个已经填写完成的表单，从服务端异步获取数据（这里使用 mock）；修改表单并提交新数据给服务端
 
-### 例 1
+### 例 1: 表单与服务端的基本交互
 
 **异步加载表单 Schema, 服务端数据填充表单初始值, 提交校验通过后提交数据给服务端**
 
@@ -95,7 +96,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-### 例 2
+### 例 2：服务端校验
 
 **服务端校验，通过 `beforeFinish` 从外部回填 error 信息到表单，注意 `beforeFinish` 需返回要回填的 error**
 
@@ -164,7 +165,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-### 例 3
+### 例 3：bind
 
 **接口数据与展示经常会不符，例如 form 的交互是日期范围组件，服务端传的值是 startDate，endDate 两个字段。此时使用 bind 字段**
 
@@ -225,7 +226,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-### 例 4
+### 例 4：服务端加载选择框的选项
 
 **服务端获取数据后展示下拉选项的选项值，我们提供了 `form.setShemaByPath` 方法**
 
@@ -255,9 +256,7 @@ const schema = {
         select1: {
           title: '单选',
           type: 'string',
-          enum: ['a', 'b', 'c'],
-          enumNames: ['早', '中', '晚'],
-          widget: 'radio',
+          widget: 'select',
         },
       },
     },
@@ -267,27 +266,10 @@ const schema = {
 const Demo = () => {
   const form = useForm();
 
-  const watch = {
-    // # 为全局
-    '#': val => {
-      console.log('表单的时时数据为：', val);
-    },
-    input1: val => {
-      if (val.length > 2) {
-        form.setSchemaByPath('obj1.select1', ({ enumNames }) => {
-          return {
-            enumNames: enumNames.map(item => item + 'a'),
-          };
-        });
-      } else {
-        form.setSchemaByPath('obj1.select1', { enumNames: ['早', '中', '晚'] });
-      }
-    },
-  };
-
   const onMount = () => {
     form.setSchemaByPath('obj1.select1', {
-      enumNames: ['早2', '中2', '晚3'],
+      enum: ['nouth', 'south', 'east', 'west'],
+      enumNames: ['东', '南', '西', '北'],
     });
   };
 
@@ -306,7 +288,6 @@ const Demo = () => {
       <FormRender
         form={form}
         schema={schema}
-        watch={watch}
         onMount={onMount}
         onFinish={onFinish}
       />

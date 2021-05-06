@@ -1,5 +1,8 @@
 ---
-order: 2
+order: 1
+group:
+  order: 2
+  title: 协议
 toc: content
 ---
 
@@ -107,8 +110,8 @@ export const basic = {
 
 ```jsx
 import React from 'react';
-import FR from './demo/FR';
-import { basic } from './json/schema';
+import FR from '../demo/FR';
+import { basic } from '../json/schema';
 
 export default () => <FR schema={basic} />;
 ```
