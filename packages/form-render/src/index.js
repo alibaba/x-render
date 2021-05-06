@@ -65,7 +65,7 @@ function App({
 
   useEffect(() => {
     // Schema最外层的type是object来判断，没有的话，认为schema没有传
-    if (schema.type) {
+    if (schema && schema.type) {
       syncStuff({
         schema,
         locale,
@@ -184,15 +184,12 @@ export { createWidget } from './createWidget';
 
 const Wrapper = props => {
   const { isOldVersion = true, schema, ...rest } = props;
-  let _schema = schema;
+  let _schema = useRef(schema);
+  if (isOldVersion) {
+    _schema.current = updateSchemaToNewVersion(schema);
+  }
 
-  useEffect(() => {
-    if (isOldVersion) {
-      _schema = updateSchemaToNewVersion(schema);
-    }
-  }, [JSON.stringify(schema)]);
-
-  return <App schema={_schema} {...rest} />;
+  return <App schema={_schema.current} {...rest} />;
 };
 
 export default Wrapper;
