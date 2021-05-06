@@ -109,7 +109,7 @@ const alphaHexMap = {
 
 // Exp: "#ffffffA6" => algha: 65
 const getAlphaFromHex = (hex = "#ffffff") => {
-  const alphaHex = hex.slice(7) || "";
+  const alphaHex = hex.slice(7);
   let alpha = 100;
   for (const key in alphaHexMap) {
     if (alphaHexMap[key] === alphaHex.toUpperCase()) {
