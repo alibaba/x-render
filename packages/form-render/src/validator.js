@@ -35,7 +35,9 @@ export const validateAll = ({
     touchedKeys.forEach(key => {
       const keyRequired = isPathRequired(key, schema);
       const val = get(formData, key);
-      if (!val && keyRequired.required) {
+      const nullValue = [undefined, null].indexOf(val) > -1;
+      const isEmptyMultiSelect = Array.isArray(val) && val.length === 0;
+      if ((nullValue || isEmptyMultiSelect) && keyRequired.required) {
         const _message =
           keyRequired.message || validateMessages.required || '${title}必填';
         touchVerifyList.push({ name: key, error: [_message] });
