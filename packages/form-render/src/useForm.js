@@ -76,7 +76,7 @@ export const useForm = props => {
   };
   const _setErrors = errors => {
     if (typeof _onValidate === 'function') {
-      const oldFormatErrors = errors.map(item => item.name);
+      const oldFormatErrors = errors ? errors.map(item => item.name) : [];
       _onValidate(oldFormatErrors);
     }
     setState({ errorFields: errors });
@@ -91,24 +91,24 @@ export const useForm = props => {
   };
 
   // 为了兼容 0.x
-  useEffect(() => {
-    // 如果是外部数据，submit没有收束，无校验
-    if (dataFromOutside && typeof _onValidate === 'function') {
-      setTimeout(() => {
-        validateAll({
-          formData: _data.current,
-          schema: schemaRef.current,
-          isRequired: true,
-          touchedKeys: _touchedKeys.current,
-          locale: localeRef.current,
-          validateMessages: validateMessagesRef.current,
-        }).then(res => {
-          const oldFormatErrors = res.map(item => item.name);
-          _onValidate(oldFormatErrors);
-        });
-      }, 200);
-    }
-  }, []);
+  // useEffect(() => {
+  //   // 如果是外部数据，submit没有收束，无校验
+  //   if (dataFromOutside && typeof _onValidate === 'function') {
+  //     setTimeout(() => {
+  //       validateAll({
+  //         formData: _data.current,
+  //         schema: schemaRef.current,
+  //         isRequired: true,
+  //         touchedKeys: _touchedKeys.current,
+  //         locale: localeRef.current,
+  //         validateMessages: validateMessagesRef.current,
+  //       }).then(res => {
+  //         const oldFormatErrors = res.map(item => item.name);
+  //         _onValidate(oldFormatErrors);
+  //       });
+  //     }, 200);
+  //   }
+  // }, []);
 
   // 这里导致第二次的渲染
   useEffect(() => {
