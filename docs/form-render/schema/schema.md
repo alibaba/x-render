@@ -251,12 +251,12 @@ export default () => <FR schema={basic} />;
 2. 用户并不希望纯展示的字段也出现在表单中，此时，使用 bind: `false` 可避免字段在提交时出现
 3. 注意：请不要 bind 一个数组结构下面的字段，目前没有对此进行处理，所以会无效（在未来这个限制会解除）
 
-### min
+### min (0.x 版本 `min`,`minItem` 和 `minLength` 统一到 `min`)
 
 - 类型：int
 - 详细：最小值。type:string/array 时代表最小长度，type:number 时代表最小值
 
-### max
+### max (0.x 版本 `max`,`maxItem` 和 `maxLength` 统一到 `max`)
 
 - 类型：int
 - 详细：最大值。type:string/array 时代表最大长度，type:number 时代表最大值
