@@ -2,7 +2,7 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { updateSchemaToNewVersion, getValueByPath } from './utils';
 import Core from './core';
-import { Ctx, StoreCtx } from './hooks';
+import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
 import { ConfigProvider } from 'antd';
@@ -40,6 +40,8 @@ function App({
   watch = {},
   config,
   onMount,
+  labelWidth,
+  readOnly,
   ...rest
 }) {
   try {
@@ -87,11 +89,6 @@ function App({
   const store = useMemo(
     () => ({
       ...form,
-      displayType,
-      theme,
-      debounceInput,
-      debug,
-      isEditing,
       ...rest,
     }),
     [
@@ -99,6 +96,20 @@ function App({
       JSON.stringify(formData),
       JSON.stringify(errorFields),
     ]
+  );
+
+  // 不常用的context单独放一个地方
+  const store2 = useMemo(
+    () => ({
+      displayType,
+      theme,
+      debounceInput,
+      debug,
+      labelWidth,
+      locale,
+      readOnly,
+    }),
+    [displayType, theme, debounceInput, debug, labelWidth, locale, readOnly]
   );
 
   const tools = useMemo(
@@ -147,34 +158,40 @@ function App({
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
       <StoreCtx.Provider value={store}>
-        <Ctx.Provider value={tools}>
-          <div className={`fr-container ${sizeCls}`}>
-            {debug ? (
-              <div className="mv2 bg-black-05 pa2 br2">
-                <div>{'formData:' + JSON.stringify(form.formData)}</div>
-                <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
-                <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
-                <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
-                <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
-                <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
-                <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
-              </div>
-            ) : null}
-            {watchList.length > 0
-              ? watchList.map((item, idx) => {
-                  return (
-                    <Watcher
-                      key={idx.toString()}
-                      watchKey={item}
-                      watch={watch}
-                      formData={formData}
-                    />
-                  );
-                })
-              : null}
-            <Core debugCss={debugCss} />
-          </div>
-        </Ctx.Provider>
+        <Store2Ctx.Provider value={store2}>
+          <Ctx.Provider value={tools}>
+            <div className={`fr-container ${sizeCls}`}>
+              {debug ? (
+                <div className="mv2 bg-black-05 pa2 br2">
+                  <div>{'formData:' + JSON.stringify(form.formData)}</div>
+                  <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
+                  <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
+                  <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
+                  <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
+                  <div>
+                    {'isValidating:' + JSON.stringify(form.isValidating)}
+                  </div>
+                  <div>
+                    {'isSubmitting:' + JSON.stringify(form.isSubmitting)}
+                  </div>
+                </div>
+              ) : null}
+              {watchList.length > 0
+                ? watchList.map((item, idx) => {
+                    return (
+                      <Watcher
+                        key={idx.toString()}
+                        watchKey={item}
+                        watch={watch}
+                        formData={formData}
+                      />
+                    );
+                  })
+                : null}
+              <Core debugCss={debugCss} />
+            </div>
+          </Ctx.Provider>
+        </Store2Ctx.Provider>
       </StoreCtx.Provider>
     </ConfigProvider>
   );

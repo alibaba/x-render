@@ -9,6 +9,7 @@ import {
 
 export const Ctx = createContext(() => {});
 export const StoreCtx = createContext({});
+export const Store2Ctx = createContext({}); // 放不常用的属性
 
 // 使用最顶层组件的 setState
 export const useTools = () => {
@@ -18,6 +19,11 @@ export const useTools = () => {
 // 组件最顶层传入的所有props
 export const useStore = () => {
   return useContext(StoreCtx);
+};
+
+// 组件最顶层传入的所有props
+export const useStore2 = () => {
+  return useContext(Store2Ctx);
 };
 
 // export default logger;

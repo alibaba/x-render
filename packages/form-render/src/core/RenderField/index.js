@@ -1,12 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { useStore } from '../../hooks';
+import { useStore, useStore2 } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
-import {
-  getDataPath,
-  getValueByPath,
-  isCheckBoxType,
-  isObjType,
-} from '../../utils';
+import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import FieldTitle from './Title';
 import ExtendedWidget from './ExtendedWidget';
@@ -14,9 +9,10 @@ import ExtendedWidget from './ExtendedWidget';
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
 const RenderField = props => {
   const {
-    $id,
     dataIndex,
-    item,
+    dataPath,
+    _value,
+    _schema,
     labelClass,
     labelStyle,
     contentClass: _contentClass,
@@ -26,18 +22,9 @@ const RenderField = props => {
     displayType,
   } = props;
 
-  const { schema: _schema } = item;
-  const store = useStore();
-  const {
-    onItemChange,
-    formData,
-    setEditing,
-    touchKey,
-    debounceInput,
-    readOnly,
-  } = store;
+  const { onItemChange, formData, setEditing, touchKey } = useStore();
+  const { debounceInput, readOnly } = useStore2();
   // console.log('<renderField>', $id);
-  let dataPath = getDataPath($id, dataIndex);
 
   const errObj = errorFields.find(err => err.name === dataPath);
   const errorMessage = errObj && errObj.error; // 是一个list
@@ -46,8 +33,6 @@ const RenderField = props => {
   const contentClass = hasError
     ? _contentClass + ' ant-form-item-has-error'
     : _contentClass;
-
-  const _value = getValueByPath(formData, dataPath);
 
   let contentStyle = {};
 
