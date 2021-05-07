@@ -101,7 +101,7 @@ const areEqual = (prev, current) => {
     return false;
   }
   if (
-    prev.value === current.value &&
+    JSON.stringify(prev.value) === JSON.stringify(current.value) &&
     JSON.stringify(prev.schema) === JSON.stringify(current.schema)
   ) {
     return true;
