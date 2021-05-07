@@ -35,7 +35,7 @@ export const validateAll = ({
     touchedKeys.forEach(key => {
       const keyRequired = isPathRequired(key, schema);
       const val = get(formData, key);
-      const nullValue = [undefined, null].indexOf(val) > -1;
+      const nullValue = [undefined, null, ''].indexOf(val) > -1; // 注意 0 不是
       const isEmptyMultiSelect = Array.isArray(val) && val.length === 0;
       if ((nullValue || isEmptyMultiSelect) && keyRequired.required) {
         const _message =
