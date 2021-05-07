@@ -10,13 +10,13 @@ import {
   isListType,
   isCheckBoxType,
   isObjType,
+  getValueByPath,
   getDataPath,
   clone,
   schemaContainsExpression,
   parseAllExpression,
 } from '../utils';
 
-// rest: 允许在每层FR重新定义全局props，覆盖
 const Core = ({
   id = '#',
   _item, // 如果直接传了item，就不用id去取item, 暂时是内部属性，不外用
@@ -38,14 +38,14 @@ const Core = ({
     readOnly,
     isEditing,
     formData,
+    allTouched,
   } = useStore();
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
-  const { schema: _schema } = item;
-
   let dataPath = getDataPath(id, dataIndex);
-  let schema = clone(_schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
+  const _value = getValueByPath(formData, dataPath);
+  let schema = clone(item.schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
 
   // 节流部分逻辑，编辑时不执行
   if (isEditing && snapShot.current) {
@@ -57,9 +57,55 @@ const Core = ({
     snapShot.current = schema;
   }
 
+  // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
+  const effectiveLabelWidth =
+    getParentProps('labelWidth', id, flatten) || labelWidth;
+
+  const dataProps = {
+    id,
+    item, // 如果直接传了item，就不用id去取item, 暂时是内部属性，不外用
+    dataIndex, // 数据来源是数组的第几个index，上层每有一个list，就push一个index
+    dataPath,
+    _value,
+    hideTitle,
+    hideValidation,
+    debugCss,
+    schema,
+    displayType,
+    column,
+    labelWidth,
+    readOnly,
+    errorFields,
+    effectiveLabelWidth,
+    allTouched,
+    ...rest,
+  };
+
+  return <MCore {...dataProps} />;
+};
+
+const CoreRender = ({
+  id,
+  item,
+  dataIndex,
+  dataPath,
+  hideTitle,
+  hideValidation,
+  debugCss,
+  schema,
+  _value,
+  displayType,
+  column,
+  labelWidth,
+  readOnly,
+  errorFields,
+  effectiveLabelWidth,
+  ...rest
+}) => {
   if (schema.hidden) {
     return null;
   }
+  // 样式的逻辑全放在这层
   // displayType 一层层网上找值
   const _displayType =
     schema.displayType || rest.displayType || displayType || 'column';
@@ -148,9 +194,6 @@ const Core = ({
     }
   }
 
-  // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
-  const effectiveLabelWidth =
-    getParentProps('labelWidth', id, flatten) || labelWidth;
   const _labelWidth = isLooselyNumber(effectiveLabelWidth)
     ? Number(effectiveLabelWidth)
     : isCssLength(effectiveLabelWidth)
@@ -176,7 +219,9 @@ const Core = ({
   const fieldProps = {
     $id: id,
     dataIndex,
-    item: { ...item, schema },
+    dataPath,
+    _value,
+    _schema: schema,
     labelClass,
     labelStyle,
     contentClass,
@@ -234,9 +279,20 @@ const Core = ({
   );
 };
 
-export default Core;
+const areEqual = (prev, current) => {
+  if (prev.allTouched !== current.allTouched) {
+    return false;
+  }
+  if (
+    JSON.stringify(prev._value) === JSON.stringify(current._value) &&
+    JSON.stringify(prev.schema) === JSON.stringify(current.schema) &&
+    JSON.stringify(prev.errorFields) === JSON.stringify(current.errorFields)
+  ) {
+    return true;
+  }
+  return false;
+};
 
-// const FieldWrapper = ({ children, ...rest }) => {
-//   const fieldProps = { ...rest };
-//   return React.cloneElement(children, fieldProps);
-// };
+const MCore = React.memo(CoreRender, areEqual);
+
+export default Core;
