@@ -20,7 +20,6 @@ const RenderField = props => {
     labelClass,
     labelStyle,
     contentClass: _contentClass,
-    hasChildren,
     children,
     errorFields = [],
     hideTitle,
@@ -49,16 +48,6 @@ const RenderField = props => {
     : _contentClass;
 
   const _value = getValueByPath(formData, dataPath);
-
-  const _getValue = path => {
-    if (path === '#' || !path) {
-      return formData;
-    } else if (typeof path === 'string') {
-      return getValueByPath(formData, path);
-    } else {
-      console.error('path has to be a string');
-    }
-  };
 
   let contentStyle = {};
 
@@ -111,19 +100,15 @@ const RenderField = props => {
     schema: _schema,
     readOnly: _readOnly,
     onChange,
-    getValue: _getValue,
+    getValue: getValueByPath,
     formData,
     value: _value,
     onItemChange,
     dataIndex,
     dataPath,
+    children,
   };
 
-  widgetProps.children = hasChildren
-    ? children
-    : isCheckBoxType(_schema, _readOnly)
-    ? _schema.title
-    : null;
   // if (_schema && _schema.default !== undefined) {
   //   widgetProps.value = _schema.default;
   // }

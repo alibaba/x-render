@@ -63,10 +63,12 @@ export function getParentPath(path) {
 }
 
 export function getValueByPath(formData, path) {
-  if (path === '#') {
+  if (path === '#' || !path) {
     return formData || {};
   } else if (typeof path === 'string') {
     return get(formData, path);
+  } else {
+    console.error('path has to be a string');
   }
 }
 

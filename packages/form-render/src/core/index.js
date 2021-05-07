@@ -181,14 +181,13 @@ const Core = ({
     labelStyle,
     contentClass,
     errorFields,
-    hasChildren,
     // 层级间可使用的字段
     displayType: _displayType,
     hideTitle,
     hideValidation,
   };
 
-  const objChildren = hasChildren ? (
+  const objChildren = (
     <div className={`flex flex-wrap`}>
       <RenderObject
         dataIndex={dataIndex}
@@ -199,9 +198,9 @@ const Core = ({
         {item.children}
       </RenderObject>
     </div>
-  ) : null;
+  );
 
-  const listChildren = hasChildren ? (
+  const listChildren = (
     <RenderList
       parentId={id}
       dataIndex={dataIndex}
@@ -211,17 +210,26 @@ const Core = ({
     >
       {item.children}
     </RenderList>
-  ) : null;
+  );
+
+  // 计算 children
+  let _children = null;
+  if (hasChildren) {
+    if (isObj) {
+      _children = objChildren;
+    } else if (isList) {
+      _children = listChildren;
+    }
+  } else if (isCheckBox) {
+    _children = schema.title;
+  }
 
   return (
     <div
       style={columnStyle}
       className={`${containerClass} ${debugCss ? 'debug' : ''}`}
     >
-      <RenderField {...fieldProps}>
-        {isObj && objChildren}
-        {isList && listChildren}
-      </RenderField>
+      <RenderField {...fieldProps}>{_children}</RenderField>
     </div>
   );
 };
