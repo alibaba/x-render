@@ -193,10 +193,15 @@ export default Demo;
 
 ## 高级用法
 
-1. [如何写表单间的联动关系](/form-render/advanced/function)
-2. [如何用自定义组件完成定制元素的展示](/form-render/advanced/widget)
-3. [如何写一个完整的服务端数据表单加载和提交](/form-render/advanced/form-methods)
-4. [常见问题 FAQ](/form-render/faq)
+- [如何写表单间的简单联动关系？](/form-render/advanced/function)
+- [如何通过监听实现复杂联动？](/form-render/advanced/watch)
+- [如何用自定义组件完成定制元素的展示？](/form-render/advanced/widget)
+- [如何写一个完整的服务端数据表单加载和提交？](/form-render/advanced/form-methods)
+- 想要一个多选组件，该怎么写它的 schema？
+
+  很多同学阅读 schema 文档的目的只是如此，建议打开 [playground](/playground), 点击“基础控件”。这里有所有 FormRender 支持的展示以及对于的 schema
+
+- [其他常见问题 FAQ](/form-render/faq)
 
 ## 组件 Props
 

@@ -1,123 +1,172 @@
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React, { useState, useEffect } from 'react';
+import { Button, Space, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
+import { fakeApi, delay } from './advanced/utils';
 
-const delay = ms => new Promise(res => setTimeout(res, ms));
+const Demo = () => {
+  const form = useForm();
+  const [schema, setSchema] = useState({});
 
-const schema = {
-  type: 'object',
-  properties: {
-    range1: {
-      bind: ['startDate', 'endDate'],
-      title: '日期',
-      type: 'range',
-      format: 'date',
+  const getRemoteData = () => {
+    fakeApi('xxx/getForm').then(_ => {
+      form.setValues({ input1: 'hello world', select1: 'c' });
+    });
+  };
+
+  const test = {
+    type: 'object',
+    properties: {
+      input1: {
+        title: '简单输入框',
+        type: 'string',
+        required: true,
+      },
+      input2: {
+        title: '简单输入框',
+        type: 'string',
+        format: 'color',
+        required: true,
+      },
+      b1: {
+        title: '判断',
+        type: 'boolean',
+      },
+      multiSelect: {
+        title: '多选',
+        description: '下拉多选',
+        type: 'array',
+        required: true,
+        items: {
+          type: 'string',
+        },
+        enum: ['A', 'B', 'C'],
+        enumNames: ['杭州', '武汉', '湖州'],
+        widget: 'multiSelect',
+      },
+      select1: {
+        title: '单选',
+        type: 'string',
+        enum: ['a', 'b', 'c'],
+        enumNames: ['早', '中', '晚'],
+      },
     },
-    obj2: {
-      title: '对象',
-      bind: 'obj',
-      description: '这是一个对象类型',
-      type: 'object',
-      properties: {
-        input1: {
-          bind: 'a.b.c',
-          title: '简单输入框',
-          description: '输入‘123’，避免外部校验错误',
-          type: 'string',
-          required: true,
-        },
-        input2: {
-          title: '简单输入框2',
-          type: 'string',
-          required: true,
-        },
-        select1: {
-          title: '单选',
-          bind: false,
-          type: 'string',
-          enum: ['a', 'b', 'c'],
-          enumNames: ['早', '中', '晚'],
-          'ui:widget': 'radio',
+  };
+
+  const test1 = {
+    displayType: 'column',
+    type: 'object',
+    properties: {
+      dateName: {
+        title: '时间选择',
+        type: 'string',
+        format: 'date',
+        required: true,
+      },
+      selectName: {
+        title: '单选',
+        type: 'string',
+        enum: ['a', 'b', 'c'],
+        enumNames: ['早', '中', '晚'],
+        widget: 'select',
+      },
+      inputName: {
+        title: '简单输入框',
+        type: 'string',
+        required: true,
+      },
+      inputName2: {
+        title: '简单输入框',
+        type: 'string',
+      },
+      inputName3: {
+        title: '简单输入框',
+        type: 'string',
+      },
+      listName: {
+        title: '对象数组',
+        description: '对象数组嵌套功能',
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            selectName: {
+              title: '单选',
+              type: 'string',
+              enum: ['a', 'b', 'c'],
+              enumNames: ['早', '中', '晚'],
+              widget: 'select',
+            },
+            inputName: {
+              title: '简单输入框',
+              type: 'string',
+            },
+            objectName: {
+              title: '对象',
+              description: '这是一个对象类型',
+              type: 'object',
+              properties: {
+                radioName: {
+                  title: '单选radio',
+                  type: 'string',
+                  enum: ['a', 'b', 'c'],
+                  enumNames: ['早', '中', '晚'],
+                  widget: 'radio',
+                },
+                dateName: {
+                  title: '时间选择',
+                  type: 'string',
+                  format: 'date',
+                },
+                inputName: {
+                  title: '简单输入框',
+                  type: 'string',
+                },
+              },
+            },
+          },
         },
       },
     },
-  },
-};
+  };
 
-const Demo = () => {
-  const [sc, set] = useState({});
-  const form = useForm();
+  // const onMount = () => {
+  //   setSchema(test);
+  // };
 
   useEffect(() => {
-    // side effects
-    delay(500).then(res => {
-      set(schema);
-    });
+    setSchema(test1);
   }, []);
 
-  const beforeFinish = ({ data, errors, schema }) => {
-    if (data.objectName && data.objectName.input1 === '123') return;
-    return delay(1000).then(() => {
-      return {
-        name: 'objectName.select1',
-        error: ['外部校验错误'],
-      };
-    });
-  };
-
-  const onFinish = (formData, errors) => {
-    console.group('onFinish');
-    console.log(formData, 'formData', errors, 'errors');
-    console.groupEnd();
-    if (errors.length > 0) return;
-    // alert('formData:' + JSON.stringify(formData, null, 2));
-  };
-
-  const onMount = () => {
-    form.setSchemaByPath('obj2.select1', { enumNames: ['早2', '中2', '晚2'] });
-  };
-
-  const watch = {
-    'obj2.input1': val => {
-      form.onItemChange('obj2.input2', val);
-      if (val === '123') {
-        form.setSchemaByPath('obj2.select1', {
-          enumNames: [Math.random().toString(), '中2', '晚2'],
-        });
-      }
-    },
+  const onFinish = (data, errors) => {
+    if (errors.length > 0) {
+      message.error(
+        '校验未通过：' + JSON.stringify(errors.map(item => item.name))
+      );
+    } else {
+      fakeApi('xxx/submit', data).then(_ => message.success('提交成功！'));
+    }
   };
 
   return (
     <div>
-      <button
-        onClick={() => {
-          console.log(form.getValues());
-        }}
-      >
-        取值
-      </button>
-      <button
-        onClick={() => {
-          form.setValues({
-            a: { b: { c: '23434' } },
-            startDate: '2021-03-10',
-            endDate: '2021-04-08',
-            obj: { input2: 'heelo' },
-          });
-        }}
-      >
-        赋值
-      </button>
-      <button onClick={form.submit}>提交</button>
       <FormRender
-        watch={watch}
         form={form}
-        schema={sc}
-        beforeFinish={beforeFinish}
-        onFinish={onFinish} // 如果beforeFinish返回一个promise，onFinish会等promise resolve之后执行
-        debug={true}
-        onMount={onMount}
+        schema={schema}
+        debug
+        theme="1"
+        // onMount={onMount}
+        onFinish={onFinish}
       />
+      <Space>
+        <Button onClick={getRemoteData}>加载服务端数据</Button>
+        <Button type="primary" onClick={form.submit}>
+          提交（见console）
+        </Button>
+      </Space>
     </div>
   );
 };

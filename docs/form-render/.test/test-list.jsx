@@ -122,7 +122,7 @@ const Demo = () => {
 
   return (
     <div>
-      <FormRender debug form={form} schema={schema} onFinish={onFinish} />
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
       <Button type="primary" onClick={form.submit}>
         提交
       </Button>

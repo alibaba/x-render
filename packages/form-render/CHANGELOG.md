@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.3.1
+
+- [!] 解决包体积大小问题 lodash -> lodash-es ([#341](https://github.com/alibaba/x-render/issues/341))
+- [!] 修复颜色选择器无法选中透明度的问题 ([#349](https://github.com/alibaba/x-render/issues/349))
+
 ### 1.3.0
 
 - [+] 新增了 onMount 的生命周期，在表单首次加载后触发

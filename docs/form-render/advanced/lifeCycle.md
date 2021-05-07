@@ -12,6 +12,7 @@ toc: false
 1. 由于 React 组件的 `componentDidMount`(或者 useEffect) 很多时候并不能准确监听到“表单加载完成”这个时间点，所以 FormRender 提供了 props `onMount`，在表单首次加载时执行。
    表单首次加载的定义是：当非空的 schema 首次传入 FormRender 完成表单渲染之后。其中 undefined、null、{} 都视为“空”的 schema。
 2. `onMount` 常用于加载初始数据，或是根据服务端接口获取数据进一步补充 schema（例如下拉选框的选项）
+3. 如果 schema 来自服务端接口，注意不要使用`onMount`来加载 schema，而使用`componentDidMount`，因为`onMount`的触发机制是判断非空 schema 已经传入 FormRender
 
 ```jsx
 /**
