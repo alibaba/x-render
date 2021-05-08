@@ -261,6 +261,18 @@ export function idToSchema(flatten, id = '#', final = false) {
           schema.items.properties[key] = idToSchema(flatten, child, final);
         }
       });
+    } else {
+      if (schema.type === 'object' && !schema.properties) {
+        schema.properties = {};
+      }
+      if (
+        schema.type === 'array' &&
+        schema.items &&
+        schema.items.type === 'object' &&
+        !schema.items.properties
+      ) {
+        schema.items.properties = {};
+      }
     }
   }
   return schema;
