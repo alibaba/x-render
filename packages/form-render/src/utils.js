@@ -115,12 +115,13 @@ export function getDataPath(id, dataIndex) {
   return removeBrackets(_id);
 }
 
-export function isListType(schema) {
-  return schema.type === 'array' && schema.items && schema.enum === undefined;
-}
-
 export function isObjType(schema) {
   return schema.type === 'object' && schema.properties;
+}
+
+// TODO: 支持非对象类型数组项
+export function isListType(schema) {
+  return schema.type === 'array' && isObjType(schema.items) && schema.enum === undefined;
 }
 
 // TODO: 检验是否丢进去各种schema都能兜底不会crash
