@@ -12,12 +12,13 @@ const SimpleList = ({
   copyItem,
   getFieldsProps,
 }) => {
+  const { props = {} } = schema;
   return (
     <div className="fr-list-1">
       {displayList.map((item, idx) => {
         const fieldsProps = getFieldsProps(idx);
         fieldsProps.displayType = 'inline';
-        if (schema.props && schema.props.hideTitle) {
+        if (props.hideTitle) {
           fieldsProps.hideTitle = true;
         }
         return (

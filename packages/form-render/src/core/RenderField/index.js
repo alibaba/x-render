@@ -22,9 +22,9 @@ const RenderField = props => {
     displayType,
   } = props;
 
-  const { onItemChange, formData, setEditing, touchKey } = useStore();
+  const { formData } = useStore();
   const { debounceInput, readOnly } = useStore2();
-  const { onValuesChange } = useTools();
+  const { onValuesChange, onItemChange, setEditing, touchKey } = useTools();
   // console.log('<renderField>', $id);
 
   const errObj = errorFields.find(err => err.name === dataPath);

@@ -43,6 +43,7 @@ function App({
   labelWidth,
   readOnly,
   onValuesChange,
+  column,
   ...rest
 }) {
   try {
@@ -52,18 +53,33 @@ function App({
   }
 
   const {
+    onItemChange,
+    setEditing,
+    touchKey,
+    setValueByPath,
+    getSchemaByPath,
+    setSchemaByPath,
+    setValues,
+    getValues,
+    resetFields,
+    submit,
+    endValidating,
+    endSubmitting,
+    setErrorFields,
+    removeErrorField,
+    syncStuff,
+    ...valuesThatWillChange
+  } = form;
+
+  const {
     submitData,
     errorFields,
     isValidating,
     outsideValidating,
     isSubmitting,
-    endValidating,
-    endSubmitting,
-    syncStuff,
     formData,
-    setErrorFields,
     flatten,
-  } = form;
+  } = valuesThatWillChange;
 
   useEffect(() => {
     // Schema最外层的type是object来判断，没有的话，认为schema没有传
@@ -88,7 +104,7 @@ function App({
 
   const store = useMemo(
     () => ({
-      ...form,
+      ...valuesThatWillChange,
       ...rest,
     }),
     [
@@ -103,6 +119,7 @@ function App({
     () => ({
       displayType,
       theme,
+      column,
       debounceInput,
       debug,
       labelWidth,
@@ -117,6 +134,12 @@ function App({
       widgets: { ...defaultWidgets, ...widgets },
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
+      onItemChange,
+      setEditing,
+      touchKey,
+      resetFields,
+      setErrorFields,
+      removeErrorField,
     }),
     []
   );

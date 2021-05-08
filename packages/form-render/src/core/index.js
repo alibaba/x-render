@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import RenderList from './RenderChildren/RenderList';
 import RenderObject from './RenderChildren/RenderObject';
 import RenderField from './RenderField';
-import { useStore } from '../hooks';
+import { useStore, useStore2 } from '../hooks';
 import {
   isLooselyNumber,
   isCssLength,
@@ -29,17 +29,8 @@ const Core = ({
   // console.log('<Core>');
   const snapShot = useRef();
 
-  const {
-    displayType,
-    column,
-    flatten,
-    errorFields,
-    labelWidth,
-    readOnly,
-    isEditing,
-    formData,
-    allTouched,
-  } = useStore();
+  const { flatten, errorFields, isEditing, formData, allTouched } = useStore();
+  const { displayType, column, labelWidth, readOnly } = useStore2();
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
@@ -248,6 +239,7 @@ const CoreRender = ({
   const listChildren = (
     <RenderList
       parentId={id}
+      schema={schema}
       dataIndex={dataIndex}
       errorFields={errorFields}
       displayType={_displayType}

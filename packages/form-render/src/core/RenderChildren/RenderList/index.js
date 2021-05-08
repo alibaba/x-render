@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { get } from 'lodash-es';
-import { useStore } from '../../../hooks';
+import { useStore, useTools } from '../../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../utils';
 // import ArrowDown from '../../../components/ArrowDown';
 import './list.less';
@@ -12,20 +12,19 @@ import DrawerList from './DrawerList';
 
 const RenderList = ({
   parentId,
+  schema = {},
   dataIndex = [],
   children = [],
   errorFields,
   displayType,
 }) => {
-  const { formData, flatten, onItemChange, removeErrorField } = useStore();
+  const { formData, flatten } = useStore();
+  const { onItemChange, removeErrorField } = useTools();
 
   let renderWidget = 'list';
   try {
-    renderWidget = flatten[parentId].schema.widget;
+    renderWidget = schema.widget;
   } catch (error) {}
-
-  const item = flatten[parentId];
-  const schema = item && item.schema;
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
