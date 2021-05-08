@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useStore, useStore2 } from '../../hooks';
+import { useStore, useStore2, useTools } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
 import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
@@ -24,6 +24,7 @@ const RenderField = props => {
 
   const { onItemChange, formData, setEditing, touchKey } = useStore();
   const { debounceInput, readOnly } = useStore2();
+  const { onValuesChange } = useTools();
   // console.log('<renderField>', $id);
 
   const errObj = errorFields.find(err => err.name === dataPath);
@@ -42,7 +43,7 @@ const RenderField = props => {
 
   // TODO: 优化一下，只有touch还是false的时候，setTouched
   const onChange = value => {
-    // 动过的key，算被touch了
+    // 动过的key，算被touch了, 这里之后要考虑动的来源
     touchKey(dataPath);
     // 开始编辑，节流
     if (debounceInput) {
@@ -51,6 +52,10 @@ const RenderField = props => {
     }
     if (typeof dataPath === 'string') {
       onItemChange(dataPath, value);
+    }
+    // 先不暴露给外部，这个api
+    if (typeof onValuesChange === 'function') {
+      onValuesChange({ [dataPath]: value }, formData);
     }
   };
 

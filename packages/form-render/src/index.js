@@ -42,6 +42,7 @@ function App({
   onMount,
   labelWidth,
   readOnly,
+  onValuesChange,
   ...rest
 }) {
   try {
@@ -60,7 +61,6 @@ function App({
     endSubmitting,
     syncStuff,
     formData,
-    isEditing,
     setErrorFields,
     flatten,
   } = form;
@@ -116,6 +116,7 @@ function App({
     () => ({
       widgets: { ...defaultWidgets, ...widgets },
       mapping: { ...defaultMapping, ...mapping },
+      onValuesChange,
     }),
     []
   );

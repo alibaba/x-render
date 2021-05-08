@@ -87,6 +87,8 @@ export interface FRProps {
   beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
   onFinish?: (formData: any, error: Error[]) => void;
+  /** 时时与外部更新同步的钩子 */
+  onValuesChange: (changedValues: any, formData: any) => void;
 }
 
 declare const FR: React.FC<FRProps>;

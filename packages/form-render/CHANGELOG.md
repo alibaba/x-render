@@ -4,6 +4,7 @@
 
 - [!] 解决包体积大小问题 lodash -> lodash-es ([#341](https://github.com/alibaba/x-render/issues/341))
 - [!] 修复颜色选择器无法选中透明度的问题 ([#349](https://github.com/alibaba/x-render/issues/349))
+- [+] 添加了 `onValuesChange` 方法，用于时时更新的钩子，暂时不放文档，内部试验一下性能
 
 ### 1.3.0
 
