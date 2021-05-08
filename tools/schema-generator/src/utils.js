@@ -8,15 +8,6 @@ function stringContains(str, text) {
 export const isObject = a =>
   stringContains(Object.prototype.toString.call(a), 'Object');
 
-// 克隆对象
-export function clone(data) {
-  try {
-    return JSON.parse(JSON.stringify(data));
-  } catch (e) {
-    return data;
-  }
-}
-
 // '3' => true, 3 => true, undefined => false
 export function isLooselyNumber(num) {
   if (typeof num === 'number') return true;
@@ -63,30 +54,6 @@ export function isDeepEqual(param1, param2) {
     return param1 === param2;
   }
   return true;
-}
-
-// 时间组件
-export function getFormat(format) {
-  let dateFormat;
-  switch (format) {
-    case 'date':
-      dateFormat = 'YYYY-MM-DD';
-      break;
-    case 'time':
-      dateFormat = 'HH:mm:ss';
-      break;
-    default:
-      // dateTime
-      dateFormat = 'YYYY-MM-DD HH:mm:ss';
-  }
-  return dateFormat;
-}
-
-export function hasRepeat(list) {
-  return list.find(
-    (x, i, self) =>
-      i !== self.findIndex(y => JSON.stringify(x) === JSON.stringify(y)),
-  );
 }
 
 // ----------------- schema 相关
@@ -162,20 +129,6 @@ function getChildren(schema) {
     name,
   }));
 }
-
-// 合并多个schema树，比如一个schema的树节点是另一个schema
-export function combine() {}
-
-// 代替eval的函数
-export const parseString = string =>
-  Function('"use strict";return (' + string + ')')();
-
-// 解析函数字符串值
-export const evaluateString = (string, formData, rootValue) =>
-  Function(`"use strict";
-    const rootValue = ${JSON.stringify(rootValue)};
-    const formData = ${JSON.stringify(formData)};
-    return (${string})`)();
 
 // 判断schema的值是是否是“函数”
 // JSON无法使用函数值的参数，所以使用"{{...}}"来标记为函数，也可使用@标记，不推荐。
@@ -261,15 +214,6 @@ export const changeKeyFromUniqueId = (uniqueId = '#', key = 'something') => {
   return arr.join('/');
 };
 
-const copyFlattenItem = _item => {
-  return {
-    parent: _item.parent,
-    schema: { ..._item.schema },
-    data: _item.data,
-    children: _item.children,
-  };
-};
-
 // final = true 用于最终的导出的输出
 // 几种特例：
 // 1. 删除时值删除了item，没有删除和parent的关联，也没有删除children，所以要在解析这步来兜住 (所有的解析都是)
@@ -322,50 +266,6 @@ export function idToSchema(flatten, id = '#', final = false) {
   return schema;
 }
 
-// 删除对应id的schema（以及所有它的子schema）
-export const deleteSchema = (id, schema) => {
-  const flatten = flattenSchema(schema);
-  if (id in flatten) {
-    delete flatten[id];
-  }
-  return idToSchema(flatten);
-};
-
-// 复制对应id的schema
-// export const copySchema = (id, schema) => {
-//   const flatten = flattenSchema(schema);
-//   let newId = id + '$$' + nanoid(10);
-//   if (id && typeof id === 'string' && id.split('$$').length > 1) {
-//     newId = id.split('$$')[0] + '$$' + nanoid(10);
-//   }
-//   if (id in flatten) {
-//     // 将创建的新id注入到parent的children array
-//     const parent = flatten[id].parent;
-//     if (parent && parent in flatten) {
-//       const children = flatten[parent].children;
-//       try {
-//         const idx = children.findIndex((x) => x === id);
-//         children.splice(idx + 1, 0, newId);
-//       } catch (error) {
-//         console.error(error.message);
-//       }
-//     }
-
-//     try {
-//       // 简单的实现一下拷贝
-//       flatten[newId] = {
-//         parent: flatten[id].parent,
-//         schema: { ...flatten[id].schema },
-//         children: flatten[id].children,
-//       };
-//       flatten[newId].schema.$id = newId;
-//     } catch (error) {
-//       console.error(error.message);
-//     }
-//   }
-//   return [idToSchema(flatten), newId];
-// };
-
 export const copyItem = (flatten, $id) => {
   let newFlatten = { ...flatten };
   try {
@@ -381,40 +281,6 @@ export const copyItem = (flatten, $id) => {
     console.error(error, 'catcherror');
     return [flatten, $id];
   }
-};
-
-// schema的某个id位置后面添加一个名字是key的subSchema，生成新的schema
-// TODO: 如果没有任何选中，或者选中的是object，逻辑要变
-
-export const addSchema = ({ id, key, schema, subSchema }) => {
-  const flatten = flattenSchema(schema);
-  let newId = changeKeyFromUniqueId(id, key) + '$$' + nanoid(10);
-  if (id in flatten) {
-    // 生成新id，并将其放置于parent节点的children属性中
-    const parent = flatten[id].parent;
-    if (parent && parent in flatten) {
-      const children = flatten[parent].children;
-      try {
-        const idx = children.findIndex(x => x === id);
-        children.splice(idx + 1, 0, newId);
-      } catch (error) {
-        console.error(error.message);
-      }
-    }
-    // 生成新节点
-    try {
-      flatten[newId] = {
-        parent: flatten[id].parent,
-        schema: subSchema,
-        children: [],
-      };
-      flatten[newId].schema.$id = newId;
-    } catch (error) {
-      console.error(error.message);
-    }
-  }
-  // 将id也返回，用于ui展示显示
-  return [idToSchema(flatten), newId];
 };
 
 // Left 点击添加 item
@@ -531,17 +397,6 @@ export const dropItem = ({ dragId, dragItem, dropId, position, flatten }) => {
   _dragItem.parent = dropParent.$id;
   return [newFlatten, newId];
 };
-// TODO: 是不是要考虑如果drag前，已经有id和schema.id不一致的情况，会不会有问题？
-
-// export const changeSubSchema = ({ id, schema, subSchema }) => {
-//   const flatten = flattenSchema(schema);
-//   if (id in flatten) {
-//     const oldSchema = flatten[id];
-//     const newId = subSchema.$id;
-//     if (oldSchema.$id !== subSchema.$id) {
-//     }
-//   }
-// };
 
 // TODO: 没有考虑list的情况
 export const dataToFlatten = (flatten, data) => {
@@ -552,8 +407,6 @@ export const dataToFlatten = (flatten, data) => {
   });
   return flatten;
 };
-
-export const onChangeById = onChange => (id, value) => {};
 
 export const flattenToData = (flatten, id = '#') => {
   try {
