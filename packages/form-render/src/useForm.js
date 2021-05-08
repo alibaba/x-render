@@ -53,6 +53,9 @@ export const useForm = props => {
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
+  const _errorFields = useRef();
+  _errorFields.current = errorFields;
+
   const dataFromOutside = props && props.hasOwnProperty('formData');
 
   const formData = dataFromOutside ? _formData : innerData;
@@ -88,6 +91,13 @@ export const useForm = props => {
     }
     const newKeyList = [..._touchedKeys.current, key];
     setState({ touchedKeys: newKeyList });
+  };
+
+  const removeTouched = key => {
+    let newTouch = _touchedKeys.current.filter(item => {
+      return item.indexOf(key) === -1;
+    });
+    setState({ touchedKeys: newTouch });
   };
 
   // 为了兼容 0.x
@@ -207,9 +217,9 @@ export const useForm = props => {
   const setErrorFields = error => {
     let newErrorFields = [];
     if (Array.isArray(error)) {
-      newErrorFields = [...error, ...errorFields];
+      newErrorFields = [...error, ..._errorFields.current];
     } else if (error && error.name) {
-      newErrorFields = [error, ...errorFields];
+      newErrorFields = [error, ..._errorFields.current];
     } else {
       console.log('error format is wrong');
     }
@@ -219,13 +229,13 @@ export const useForm = props => {
   // TODO: 提取出来，重新写一份，注意要处理async
 
   const removeErrorField = path => {
-    let newError = errorFields.map(item => {
+    let newError = _errorFields.current.filter(item => {
       return item.name.indexOf(path) === -1;
     });
     _setErrors(newError);
   };
 
-  const getValues = () => processData(_data.current, flatten);
+  const getValues = () => processData(_data.tt, flatten);
 
   const setValues = newFormData => {
     const newData = transformDataWithBind2(newFormData, flatten);
@@ -320,6 +330,7 @@ export const useForm = props => {
     allTouched,
     // methods
     touchKey,
+    removeTouched,
     onItemChange,
     setValueByPath: onItemChange, // 单个
     getSchemaByPath,

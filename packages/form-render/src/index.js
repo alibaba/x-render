@@ -67,6 +67,7 @@ function App({
     endSubmitting,
     setErrorFields,
     removeErrorField,
+    removeTouched,
     syncStuff,
     ...valuesThatWillChange
   } = form;
@@ -140,6 +141,7 @@ function App({
       resetFields,
       setErrorFields,
       removeErrorField,
+      removeTouched,
     }),
     []
   );

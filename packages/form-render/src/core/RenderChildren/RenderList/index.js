@@ -19,7 +19,7 @@ const RenderList = ({
   displayType,
 }) => {
   const { formData, flatten } = useStore();
-  const { onItemChange, removeErrorField } = useTools();
+  const { onItemChange, removeTouched } = useTools();
 
   let renderWidget = 'list';
   try {
@@ -58,7 +58,7 @@ const RenderList = ({
     // remark: 删除时，不存在的item需要补齐，用null
     const newList = displayList.filter((item, kdx) => kdx !== idx);
     onItemChange(dataPath, newList);
-    removeErrorField(`${dataPath}[${idx}]`);
+    removeTouched(`${dataPath}[${idx}]`);
   };
 
   //TODO1: 上线翻页要正确！！现在是错的
