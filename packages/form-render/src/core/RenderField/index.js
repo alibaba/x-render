@@ -1,12 +1,7 @@
 import React, { useEffect, useRef } from 'react';
-import { useStore } from '../../hooks';
+import { useStore, useStore2, useTools } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
-import {
-  getDataPath,
-  getValueByPath,
-  isCheckBoxType,
-  isObjType,
-} from '../../utils';
+import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import FieldTitle from './Title';
 import ExtendedWidget from './ExtendedWidget';
@@ -14,31 +9,23 @@ import ExtendedWidget from './ExtendedWidget';
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
 const RenderField = props => {
   const {
-    $id,
     dataIndex,
-    item,
+    dataPath,
+    _value,
+    _schema,
     labelClass,
     labelStyle,
     contentClass: _contentClass,
-    hasChildren,
     children,
     errorFields = [],
     hideTitle,
     displayType,
   } = props;
 
-  const { schema: _schema } = item;
-  const store = useStore();
-  const {
-    onItemChange,
-    formData,
-    setEditing,
-    touchKey,
-    debounceInput,
-    readOnly,
-  } = store;
+  const { formData } = useStore();
+  const { debounceInput, readOnly } = useStore2();
+  const { onValuesChange, onItemChange, setEditing, touchKey } = useTools();
   // console.log('<renderField>', $id);
-  let dataPath = getDataPath($id, dataIndex);
 
   const errObj = errorFields.find(err => err.name === dataPath);
   const errorMessage = errObj && errObj.error; // 是一个list
@@ -48,18 +35,6 @@ const RenderField = props => {
     ? _contentClass + ' ant-form-item-has-error'
     : _contentClass;
 
-  const _value = getValueByPath(formData, dataPath);
-
-  const _getValue = path => {
-    if (path === '#' || !path) {
-      return formData;
-    } else if (typeof path === 'string') {
-      return getValueByPath(formData, path);
-    } else {
-      console.error('path has to be a string');
-    }
-  };
-
   let contentStyle = {};
 
   const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
@@ -68,7 +43,7 @@ const RenderField = props => {
 
   // TODO: 优化一下，只有touch还是false的时候，setTouched
   const onChange = value => {
-    // 动过的key，算被touch了
+    // 动过的key，算被touch了, 这里之后要考虑动的来源
     touchKey(dataPath);
     // 开始编辑，节流
     if (debounceInput) {
@@ -77,6 +52,10 @@ const RenderField = props => {
     }
     if (typeof dataPath === 'string') {
       onItemChange(dataPath, value);
+    }
+    // 先不暴露给外部，这个api
+    if (typeof onValuesChange === 'function') {
+      onValuesChange({ [dataPath]: value }, formData);
     }
   };
 
@@ -111,19 +90,15 @@ const RenderField = props => {
     schema: _schema,
     readOnly: _readOnly,
     onChange,
-    getValue: _getValue,
+    getValue: getValueByPath,
     formData,
     value: _value,
     onItemChange,
     dataIndex,
     dataPath,
+    children,
   };
 
-  widgetProps.children = hasChildren
-    ? children
-    : isCheckBoxType(_schema, _readOnly)
-    ? _schema.title
-    : null;
   // if (_schema && _schema.default !== undefined) {
   //   widgetProps.value = _schema.default;
   // }

@@ -20,9 +20,13 @@ export interface ValidateParams {
 export interface FormInstance {
   formData: any;
   schema: any;
+  flatten: any;
   touchedKeys: string[];
   touchKey: (key: string) => void;
   onItemChange: (path: string, value: any) => void;
+  setValueByPath: (path: string, value: any) => void;
+  getSchemaByPath: (path: string, value: any) => void;
+  setSchemaByPath: (path: string, value: any) => void;
   setValues: (formData: any) => void;
   getValues: () => void;
   resetFields: () => void;
@@ -36,6 +40,7 @@ export interface FormInstance {
   endSubmitting: () => void;
   setErrorFields: (error: Error[]) => void;
   removeErrorField: (path: string) => void;
+  removeTouched: (path: string) => void;
   isEditing: boolean;
   setEditing: (status: boolean) => void;
   syncStuff: (any) => void;
@@ -65,7 +70,6 @@ export interface FRProps {
   theme?: string | number;
   /** 覆盖默认的校验信息 */
   validateMessages?: any;
-  flatten?: any;
   /** 显示当前表单内部状态 */
   debug?: boolean;
   /** 显示css布局提示线 */
@@ -77,13 +81,15 @@ export interface FRProps {
   // 数据会作为 beforeFinish 的第四个参数传入
   config?: any;
   // 类似于 vuejs 的 watch 的用法，监控值的变化，触发 callback
-  watch?: any;
+  watch?: WatchProperties;
+  /** 表单首次加载钩子 */
+  onmount?: () => void;
   /** 表单提交前钩子 */
   beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
   onFinish?: (formData: any, error: Error[]) => void;
-  /** 表单监听 watchers */
-  watch?: WatchProperties;
+  /** 时时与外部更新同步的钩子 */
+  onValuesChange: (changedValues: any, formData: any) => void;
 }
 
 declare const FR: React.FC<FRProps>;
@@ -95,7 +101,7 @@ export type ConnectedForm<T> = T & {
 };
 
 export declare function connectForm<T extends {} = any>(
-  component: React.ComponentType<ConnectedForm<T>>,
+  component: React.ComponentType<ConnectedForm<T>>
 ): React.ComponentType<T>;
 
 export default FR;

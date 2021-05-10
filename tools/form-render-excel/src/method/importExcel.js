@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Input } from 'antd';
 import { flatProperties, toBoolean, enumNamesToEnum } from '../utils';
-import { get, set } from 'lodash';
+import { get, set } from 'lodash-es';
 
 export default (arrayData, onChange, schema) => {
   let excelText = '';

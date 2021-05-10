@@ -9,7 +9,7 @@ import {
 import { defaultValidateMessagesCN } from './validateMessageCN';
 import { defaultValidateMessages } from './validateMessage';
 import Validator from 'async-validator';
-import { get, merge } from 'lodash';
+import { get, merge } from 'lodash-es';
 // export const validateAll = () => Promise.resolve([]);
 
 export const validateAll = ({
@@ -35,7 +35,9 @@ export const validateAll = ({
     touchedKeys.forEach(key => {
       const keyRequired = isPathRequired(key, schema);
       const val = get(formData, key);
-      if (!val && keyRequired.required) {
+      const nullValue = [undefined, null, ''].indexOf(val) > -1; // 注意 0 不是
+      const isEmptyMultiSelect = Array.isArray(val) && val.length === 0;
+      if ((nullValue || isEmptyMultiSelect) && keyRequired.required) {
         const _message =
           keyRequired.message || validateMessages.required || '${title}必填';
         touchVerifyList.push({ name: key, error: [_message] });

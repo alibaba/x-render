@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { get } from 'lodash';
-import { useStore } from '../../../hooks';
+import { get } from 'lodash-es';
+import { useStore, useTools } from '../../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../utils';
 // import ArrowDown from '../../../components/ArrowDown';
 import './list.less';
@@ -12,20 +12,19 @@ import DrawerList from './DrawerList';
 
 const RenderList = ({
   parentId,
+  schema = {},
   dataIndex = [],
   children = [],
   errorFields,
   displayType,
 }) => {
-  const { formData, flatten, onItemChange, removeErrorField } = useStore();
+  const { formData, flatten } = useStore();
+  const { onItemChange, removeTouched } = useTools();
 
   let renderWidget = 'list';
   try {
-    renderWidget = flatten[parentId].schema.widget;
+    renderWidget = schema.widget;
   } catch (error) {}
-
-  const item = flatten[parentId];
-  const schema = item && item.schema;
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
@@ -36,6 +35,10 @@ const RenderList = ({
   }
 
   const displayList = Array.isArray(listData) ? listData : [{}];
+
+  const changeList = newList => {
+    onItemChange(dataPath, newList);
+  };
 
   const addItem = () => {
     const newList = [...displayList, {}];
@@ -59,7 +62,7 @@ const RenderList = ({
     // remark: 删除时，不存在的item需要补齐，用null
     const newList = displayList.filter((item, kdx) => kdx !== idx);
     onItemChange(dataPath, newList);
-    removeErrorField(`${dataPath}[${idx}]`);
+    removeTouched(`${dataPath}[${idx}]`);
   };
 
   //TODO1: 上线翻页要正确！！现在是错的
@@ -105,6 +108,7 @@ const RenderList = ({
 
   const displayProps = {
     displayList,
+    changeList,
     schema,
     dataPath,
     dataIndex,

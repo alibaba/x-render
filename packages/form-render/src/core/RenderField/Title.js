@@ -1,9 +1,9 @@
 import React from 'react';
-import { useStore } from '../../hooks';
+import { useStore2 } from '../../hooks';
 import { isCheckBoxType } from '../../utils';
 
 const Title = ({ labelClass, labelStyle, schema, displayType }) => {
-  const { displayType: globalDisplayType, readOnly } = useStore();
+  const { displayType: globalDisplayType, readOnly } = useStore2();
   const { title, description, required, type } = schema;
   const isObjType = type === 'object';
 

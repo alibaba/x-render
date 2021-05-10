@@ -14,11 +14,6 @@ export const defaultCommonSettings = {
     title: '说明',
     type: 'string',
   },
-  format: {
-    title: '格式',
-    type: 'string',
-    enum: ['image', 'textarea', 'color', 'email', 'url', 'dateTime', 'date', 'time', 'upload']
-  },
   default: {
     title: '默认值',
     type: 'string',
@@ -207,6 +202,7 @@ export const elements = [
     schema: {
       title: '是否选择',
       type: 'boolean',
+      widget: 'checkbox',
     },
     setting: {
       default: {
@@ -240,6 +236,7 @@ export const elements = [
       type: 'string',
       enum: ['a', 'b', 'c'],
       enumNames: ['早', '中', '晚'],
+      widget: 'select',
     },
     setting: {
       enum: {
@@ -365,6 +362,22 @@ export const elements = [
       },
     },
   },
+  {
+    text: 'HTML',
+    name: 'html',
+    widget: 'html',
+    schema: {
+      title: 'HTML',
+      type: 'string',
+      widget: 'html',
+    },
+    setting: {
+      default: {
+        title: '展示内容',
+        type: 'string',
+      },
+    },
+  }
 ];
 
 export const advancedElements = [
@@ -437,7 +450,7 @@ export const layouts = [
     setting: {},
   },
   {
-    text: '列表',
+    text: '常规列表',
     name: 'list',
     widget: 'list',
     schema: {
@@ -466,6 +479,48 @@ export const layouts = [
             type: 'boolean',
           },
         },
+      },
+    },
+  },
+  {
+    text: '简单列表',
+    name: 'list',
+    widget: 'list1',
+    schema: {
+      title: '数组',
+      type: 'array',
+      widget: 'list1',
+      items: {
+        type: 'object',
+        properties: {},
+      },
+    },
+  },
+  {
+    text: '表格列表',
+    name: 'list',
+    widget: 'list2',
+    schema: {
+      title: '数组',
+      type: 'array',
+      widget: 'list2',
+      items: {
+        type: 'object',
+        properties: {},
+      },
+    },
+  },
+  {
+    text: '复杂表格列表',
+    name: 'list',
+    widget: 'list3',
+    schema: {
+      title: '数组',
+      type: 'array',
+      widget: 'list3',
+      items: {
+        type: 'object',
+        properties: {},
       },
     },
   },

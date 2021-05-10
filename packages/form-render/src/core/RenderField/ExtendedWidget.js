@@ -67,15 +67,15 @@ const ExtendedWidget = ({
     ...schema.props,
   };
 
+  if (schema.type === 'string' && typeof schema.max === 'number') {
+    widgetProps.maxLength = schema.max;
+  }
+
   ['title', 'placeholder', 'disabled', 'format'].forEach(key => {
     if (schema[key]) {
       widgetProps[key] = schema[key];
     }
   });
-
-  if (schema.default !== undefined) {
-    widgetProps.defaultValue = schema.default;
-  }
 
   if (schema.props) {
     widgetProps = { ...widgetProps, ...schema.props };
@@ -101,11 +101,11 @@ const areEqual = (prev, current) => {
   if (prev.schema && prev.schema.$id === '#') {
     return false;
   }
-  if (prev.schema && prev.schema.type === 'object') {
-    return false;
-  }
+  // if (prev.schema && prev.schema.type === 'object') {
+  //   return false;
+  // }
   if (
-    prev.value === current.value &&
+    JSON.stringify(prev.value) === JSON.stringify(current.value) &&
     JSON.stringify(prev.schema) === JSON.stringify(current.schema)
   ) {
     return true;

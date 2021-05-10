@@ -1,7 +1,6 @@
 import React from 'react';
 import Core from '../index';
 
-// TODO: nanoId 好像没啥用
 const RenderObject = ({
   children = [],
   dataIndex = [],

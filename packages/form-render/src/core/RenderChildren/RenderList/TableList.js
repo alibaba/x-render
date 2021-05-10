@@ -13,7 +13,11 @@ const TableList = ({
   deleteItem,
   addItem,
   flatten,
+  schema,
+  listData,
+  changeList,
 }) => {
+  const { props = {}, itemProps } = schema;
   const dataSource = displayList.map((item, idx) => {
     return { index: idx };
   });
@@ -73,6 +77,37 @@ const TableList = ({
         <Button type="primary" size="small" onClick={addItem}>
           新增
         </Button>
+        {Array.isArray(props.buttons)
+          ? props.buttons.map((item, idx) => {
+              const { callback, text, html } = item;
+              let onClick = () => {
+                console.log({
+                  value: listData,
+                  onChange: changeList,
+                  schema,
+                });
+              };
+              if (typeof window[callback] === 'function') {
+                onClick = () => {
+                  window[callback]({
+                    value: listData,
+                    onChange: changeList,
+                    schema,
+                  });
+                };
+              }
+              return (
+                <Button
+                  key={idx.toString()}
+                  style={{ marginLeft: 8 }}
+                  size="small"
+                  onClick={onClick}
+                >
+                  <span dangerouslySetInnerHTML={{ __html: html || text }} />
+                </Button>
+              );
+            })
+          : null}
       </div>
       <Table
         scroll={{ x: 'max-content' }}

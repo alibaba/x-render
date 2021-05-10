@@ -52,7 +52,6 @@ export const transformProps = props => {
     disabled: schema.disabled || schema['ui:disabled'],
     readOnly: schema.readOnly || schema['ui:readonly'],
     hidden: schema.hidden || schema['ui:hidden'],
-    // $options: schema.options || schema['ui:options'],
   };
 
   const _props = {

@@ -23,10 +23,13 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
     }
   }
 
-  const _value =
-    start && end ? [moment(start, dateFormat), moment(end, dateFormat)] : [];
+  let _value = [];
 
-  const handleChange = (value, stringList) => {
+  if (start && end) {
+    _value = [moment(start, dateFormat), moment(end, dateFormat)];
+  }
+
+  const handleChange = (val, stringList) => {
     onChange(stringList);
   };
 

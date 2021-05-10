@@ -1,13 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef } from 'react';
-import {
-  flattenSchema,
-  updateSchemaToNewVersion,
-  getValueByPath,
-  // completeSchemaWithTheme,
-} from './utils';
+import { updateSchemaToNewVersion, getValueByPath } from './utils';
 import Core from './core';
-import { Ctx, StoreCtx } from './hooks';
+import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
 import { ConfigProvider } from 'antd';
@@ -34,7 +29,6 @@ function App({
   onFinish = defaultFinish,
   displayType = 'column',
   schema,
-  flatten: _flatten,
   debug,
   debugCss,
   locale = 'cn', // 'cn'/'en'
@@ -45,6 +39,11 @@ function App({
   validateMessages,
   watch = {},
   config,
+  onMount,
+  labelWidth,
+  readOnly,
+  onValuesChange,
+  column,
   ...rest
 }) {
   try {
@@ -54,27 +53,48 @@ function App({
   }
 
   const {
+    onItemChange,
+    setEditing,
+    touchKey,
+    setValueByPath,
+    getSchemaByPath,
+    setSchemaByPath,
+    setValues,
+    getValues,
+    resetFields,
+    submit,
+    endValidating,
+    endSubmitting,
+    setErrorFields,
+    removeErrorField,
+    removeTouched,
+    syncStuff,
+    ...valuesThatWillChange
+  } = form;
+
+  const {
     submitData,
     errorFields,
     isValidating,
     outsideValidating,
     isSubmitting,
-    endValidating,
-    endSubmitting,
-    syncStuff,
     formData,
-    isEditing,
-    setErrorFields,
-  } = form;
-
-  const flatten = useMemo(() => _flatten || flattenSchema(schema), [
-    JSON.stringify(_flatten),
-    JSON.stringify(schema),
-  ]);
+    flatten,
+  } = valuesThatWillChange;
 
   useEffect(() => {
-    syncStuff({ schema, flatten, beforeFinish, locale, validateMessages });
-  }, [JSON.stringify(_flatten), JSON.stringify(schema)]);
+    // Schema最外层的type是object来判断，没有的话，认为schema没有传
+    if (schema && schema.type) {
+      syncStuff({
+        schema,
+        locale,
+        validateMessages,
+        beforeFinish,
+        onMount,
+      });
+    } else {
+    }
+  }, [JSON.stringify(schema)]);
 
   // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
@@ -85,13 +105,7 @@ function App({
 
   const store = useMemo(
     () => ({
-      flatten,
-      ...form,
-      displayType,
-      theme,
-      debounceInput,
-      debug,
-      isEditing,
+      ...valuesThatWillChange,
       ...rest,
     }),
     [
@@ -101,10 +115,33 @@ function App({
     ]
   );
 
+  // 不常用的context单独放一个地方
+  const store2 = useMemo(
+    () => ({
+      displayType,
+      theme,
+      column,
+      debounceInput,
+      debug,
+      labelWidth,
+      locale,
+      readOnly,
+    }),
+    [displayType, theme, debounceInput, debug, labelWidth, locale, readOnly]
+  );
+
   const tools = useMemo(
     () => ({
       widgets: { ...defaultWidgets, ...widgets },
       mapping: { ...defaultMapping, ...mapping },
+      onValuesChange,
+      onItemChange,
+      setEditing,
+      touchKey,
+      resetFields,
+      setErrorFields,
+      removeErrorField,
+      removeTouched,
     }),
     []
   );
@@ -134,6 +171,7 @@ function App({
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
+  // TODO: 这段代码写了没用
   let sizeCls = '';
   if (size === 'small') {
     sizeCls = 'fr-form-small';
@@ -146,34 +184,40 @@ function App({
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
       <StoreCtx.Provider value={store}>
-        <Ctx.Provider value={tools}>
-          <div className={`fr-container ${sizeCls}`}>
-            {debug ? (
-              <div className="mv2 bg-black-05 pa2 br2">
-                <div>{'formData:' + JSON.stringify(form.formData)}</div>
-                <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
-                <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
-                <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
-                <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
-                <div>{'isValidating:' + JSON.stringify(form.isValidating)}</div>
-                <div>{'isSubmitting:' + JSON.stringify(form.isSubmitting)}</div>
-              </div>
-            ) : null}
-            {watchList.length > 0
-              ? watchList.map((item, idx) => {
-                  return (
-                    <Watcher
-                      key={idx.toString()}
-                      watchKey={item}
-                      watch={watch}
-                      formData={formData}
-                    />
-                  );
-                })
-              : null}
-            <Core debugCss={debugCss} />
-          </div>
-        </Ctx.Provider>
+        <Store2Ctx.Provider value={store2}>
+          <Ctx.Provider value={tools}>
+            <div className={`fr-container ${sizeCls}`}>
+              {debug ? (
+                <div className="mv2 bg-black-05 pa2 br2">
+                  <div>{'formData:' + JSON.stringify(form.formData)}</div>
+                  <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
+                  <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
+                  <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
+                  <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
+                  <div>
+                    {'isValidating:' + JSON.stringify(form.isValidating)}
+                  </div>
+                  <div>
+                    {'isSubmitting:' + JSON.stringify(form.isSubmitting)}
+                  </div>
+                </div>
+              ) : null}
+              {watchList.length > 0
+                ? watchList.map((item, idx) => {
+                    return (
+                      <Watcher
+                        key={idx.toString()}
+                        watchKey={item}
+                        watch={watch}
+                        formData={formData}
+                      />
+                    );
+                  })
+                : null}
+              <Core debugCss={debugCss} />
+            </div>
+          </Ctx.Provider>
+        </Store2Ctx.Provider>
       </StoreCtx.Provider>
     </ConfigProvider>
   );
@@ -183,12 +227,12 @@ export { createWidget } from './createWidget';
 
 const Wrapper = props => {
   const { isOldVersion = true, schema, ...rest } = props;
-  let _schema = schema;
-  // let _schema = completeSchemaWithTheme(schema, theme);
+  let _schema = useRef(schema);
   if (isOldVersion) {
-    _schema = updateSchemaToNewVersion(schema);
+    _schema.current = updateSchemaToNewVersion(schema);
   }
-  return <App schema={_schema} {...rest} />;
+
+  return <App schema={_schema.current} {...rest} />;
 };
 
 export default Wrapper;
