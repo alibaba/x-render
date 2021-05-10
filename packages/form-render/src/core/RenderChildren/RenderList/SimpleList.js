@@ -6,13 +6,14 @@ import { DeleteOutlined, CopyOutlined } from '@ant-design/icons';
 const SimpleList = ({
   schema,
   displayList = [],
-  dataIndex,
+  listData,
+  changeList,
   deleteItem,
   addItem,
   copyItem,
   getFieldsProps,
 }) => {
-  const { props = {} } = schema;
+  const { props = {}, itemProps } = schema;
   return (
     <div className="fr-list-1">
       {displayList.map((item, idx) => {
@@ -41,13 +42,42 @@ const SimpleList = ({
           </div>
         );
       })}
-      <Button
-        style={{ marginTop: displayList.length > 0 ? 0 : 8 }}
-        type="dashed"
-        onClick={addItem}
-      >
-        新增一条
-      </Button>
+      <div style={{ marginTop: displayList.length > 0 ? 0 : 8 }}>
+        <Button type="dashed" onClick={addItem}>
+          新增一条
+        </Button>
+        {Array.isArray(props.buttons)
+          ? props.buttons.map((item, idx) => {
+              const { callback, text, html } = item;
+              let onClick = () => {
+                console.log({
+                  value: listData,
+                  onChange: changeList,
+                  schema,
+                });
+              };
+              if (typeof window[callback] === 'function') {
+                onClick = () => {
+                  window[callback]({
+                    value: listData,
+                    onChange: changeList,
+                    schema,
+                  });
+                };
+              }
+              return (
+                <Button
+                  key={idx.toString()}
+                  style={{ marginLeft: 8 }}
+                  type="dashed"
+                  onClick={onClick}
+                >
+                  <span dangerouslySetInnerHTML={{ __html: html || text }} />
+                </Button>
+              );
+            })
+          : null}
+      </div>
     </div>
   );
 };

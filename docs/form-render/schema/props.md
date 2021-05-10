@@ -49,8 +49,7 @@ toc: content
   "props": {
     "buttons": [
       {
-        "text": "Excel导入",
-        "icon": "copy",
+        "html": "Excel导入",
         "callback": "someCallback"
       }
     ]
@@ -58,21 +57,38 @@ toc: content
 }
 ```
 
-FormRender 会到 `window.someCallback` 上寻找回调函数，此回调函数可接受参数 `value`和 `schema`。返回值会作为新的列表值
+1. FormRender 会到 `window.someCallback` 上寻找回调函数，此回调函数可接受参数 `value`和 `schema`。返回值会作为新的列表值
+2. html 字段可使用正常的 string 值，或者任何 html 片段，例如
+
+```json
+"arrDemo": {
+  ...
+  "props": {
+    "buttons": [
+      {
+        "html": "<span style='color: red'>拉取数据</span>",
+        "callback": "someCallback"
+      }
+    ]
+  }
+}
+```
 
 ```js
 // value: 整个数组的值，onChange: 传入改变后的数组值，触发state更新
 // 使用Object入参，为了将来好扩展
-window.someCallback = ({ value, schema }) => {
-  return [];
+window.someCallback = ({ value, onChange, schema }) => {
+  onChange([...value, { a: 'hello' }]);
 };
 ```
 
-如上的 someCallback 会清空整个列表。
+如上的 someCallback 会在原有的 list 值基础上添加一个新的 item: `{ a: 'hello' }`
 
 **注 2：**
 
 itemProps.buttons 用于扩展列表里每个 item 的更多操作
+
+注：itemProps.buttons 目前还未在代码层面实现。主要原因在于 itemProps.buttons 在不同展示下可能是 icon，而 form-render 并不想引入整个`@ant-design/icons`，大家有好的想法欢迎钉钉群讨论，或者使用 issue/feature
 
 ```json
 "arrDemo": {
@@ -80,8 +96,7 @@ itemProps.buttons 用于扩展列表里每个 item 的更多操作
   "itemProps": {
     "buttons": [
       {
-        "text": "复制",
-        "icon": "copy",
+        "html": "复制",
         "callback": "copyMe"
       }
     ]
@@ -142,33 +157,33 @@ colorPicker 组件的 props，参考[rc-color-picker 文档](https://www.npmjs.c
 
 当用户手写自定义组件是复合组件（由多个自然组件组合而成）时，推荐做法是 props 中放置一些全局需要使用的 props，会直接透传给组件，而其中单个元素的定制 props 使用 props1，props2，... 这样的命名。凡是包含 props（不区分大小写）的 schema 的 key 值，都会原样传递给自定义组件，例如
 
-      ```js
-        percentInput: {
-          title: "百分比输入",
-          type: "number",
-          props: {
-            showInput: false
-          },
-          inputProps: {
-            suffix: '%'
-          },
-          percentProps: {
-            step: 10
-          }
-        }
-      ```
+```js
+  percentInput: {
+    title: "百分比输入",
+    type: "number",
+    props: {
+      showInput: false
+    },
+    inputProps: {
+      suffix: '%'
+    },
+    percentProps: {
+      step: 10
+    }
+  }
+```
 
 传递给自定义组件的 props 为
 
-      ```js
-      {
-        type: 'number',
-        showInput: false,
-        inputProps: {
-          suffix: '%'
-        },
-        percentProps: {
-          step: 10
-        }
-      }
-      ```
+```js
+{
+  type: 'number',
+  showInput: false,
+  inputProps: {
+    suffix: '%'
+  },
+  percentProps: {
+    step: 10
+  }
+}
+```

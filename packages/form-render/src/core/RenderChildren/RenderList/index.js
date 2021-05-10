@@ -36,6 +36,10 @@ const RenderList = ({
 
   const displayList = Array.isArray(listData) ? listData : [{}];
 
+  const changeList = newList => {
+    onItemChange(dataPath, newList);
+  };
+
   const addItem = () => {
     const newList = [...displayList, {}];
     const newIndex = newList.length - 1;
@@ -104,6 +108,7 @@ const RenderList = ({
 
   const displayProps = {
     displayList,
+    changeList,
     schema,
     dataPath,
     dataIndex,
