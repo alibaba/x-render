@@ -103,6 +103,15 @@
       />
     </td>
   </tr>
+  
+  <tr>
+    <td width="160" align="center">
+      <img
+        src="https://www.agtech.com/public/asset/yabologo-6f9d76c5cbb0b954b9939a8cac3a0cb1.png"
+        width="160"
+      />
+    </td>
+  </tr>
 </table>
 
 更多可见[使用场景](https://github.com/alibaba/form-render/issues/94)，也很欢迎提交～
