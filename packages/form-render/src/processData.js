@@ -19,7 +19,6 @@ export const processData = (data, flatten) => {
   // 3. 去掉所有的 undefined
   _data = cleanEmpty(_data);
 
-  console.log(_data, 'asdgghrth');
   return _data;
 };
 
