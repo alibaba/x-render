@@ -641,6 +641,7 @@ export const removeEmptyItemFromList = formData => {
 export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
   let result = {};
   let singleResult = {};
+  if (schema.hidden === true) return result;
   if (isObjType(schema)) {
     result.type = 'object';
     if (isRequired && schema.required === true) {
