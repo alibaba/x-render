@@ -2,9 +2,15 @@
 
 ### 1.3.1
 
+- [+] 列表支持 props/buttons 属性，用于添加更多的自定义操作按钮 ([#343](https://github.com/alibaba/x-render/issues/343))
+- [+] 添加了 `onValuesChange` 方法，用于时时更新的钩子，暂时不放文档，内部试验一下性能
+- [+] 添加了 `className` 这个基础属性，用于样式覆盖特定的表单元素
 - [!] 解决包体积大小问题 lodash -> lodash-es ([#341](https://github.com/alibaba/x-render/issues/341))
 - [!] 修复颜色选择器无法选中透明度的问题 ([#349](https://github.com/alibaba/x-render/issues/349))
-- [+] 添加了 `onValuesChange` 方法，用于时时更新的钩子，暂时不放文档，内部试验一下性能
+- [!] 列表的 min/max 属性能正常被校验
+- [!] 修复了隐藏的字段（hidden = true），还是会去执行校验的 bug ([#348](https://github.com/alibaba/x-render/issues/348))
+- [!] 在 React profiler 的帮助下，减少了重复渲染，提升性能 ([#344](https://github.com/alibaba/x-render/issues/344))
+- [!] 修复了 number 类型 0 无法通过必填校验的 bug ([#347](https://github.com/alibaba/x-render/issues/347))
 
 ### 1.3.0
 
