@@ -7,8 +7,8 @@ import './Element.css';
 
 const Element = ({ text, name, schema, icon }) => {
   const [{ isDragging }, dragRef] = useDrag({
+    type: 'box',
     item: {
-      type: 'box',
       dragItem: {
         parent: '#',
         schema,
