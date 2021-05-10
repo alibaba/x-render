@@ -292,6 +292,28 @@ export default () => <FR schema={basic} />;
 - 默认值：110
 - 详细：label 的宽度，数字值单位为 px，也可使用'20%'/'2rem'等
 
+### className (0.x 版本 `ui:className`)
+
+- 类型：string
+- 详细：指明单个表单元素的 className，方便自定义样式
+
+例如如下的 schema 会在生成元素的 `fr-field` 这层添加上用户定义的 `my-className`
+
+```js
+audio_on_mic_limit: {
+  className: 'my-className',
+  title: '同时支持连麦人数',
+  default: '1',
+  enum: ['1', '2', '3'],
+  enumNames: ['1人', '2人', '3人'],
+  type: 'string',
+  widget: 'radio',
+  labelWidth: 145,
+}
+```
+
+<img src='https://img.alicdn.com/imgextra/i2/O1CN01iUmLkw1pyzJYsV2fM_!!6000000005430-2-tps-541-119.png' width='600px' />
+
 ### widget (0.x 版本 `ui:widget`)
 
 - 类型：string

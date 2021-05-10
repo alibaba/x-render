@@ -110,6 +110,11 @@ const CoreRender = ({
   } flex`;
   let labelClass = `fr-label`;
   let contentClass = `fr-content`;
+
+  if (typeof schema.className === 'string') {
+    containerClass += ' ' + schema.className;
+  }
+
   // common classNames dispite row or column
   switch (schema.type) {
     case 'object':
