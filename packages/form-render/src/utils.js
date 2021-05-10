@@ -663,6 +663,12 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
     if (isRequired && schema.required === true) {
       result.required = true;
     }
+    if (schema.min) {
+      result.min = schema.min;
+    }
+    if (schema.max) {
+      result.max = schema.max;
+    }
     result.defaultField = { type: 'object', fields: {} }; // 目前就默认只有object类型的 TODO:
     Object.keys(schema.items.properties).forEach(key => {
       const item = schema.items.properties[key];
@@ -939,83 +945,71 @@ export const updateSchemaToNewVersion = schema => {
 
 const updateSingleSchema = schema => {
   try {
-    let _schema = clone(schema);
-    _schema.rules = _schema.rules || [];
-    _schema.props = _schema.props || {};
-    if (_schema['ui:options']) {
-      _schema.props = _schema['ui:options'];
-      delete _schema['ui:options'];
+    schema.rules = schema.rules || [];
+    schema.props = schema.props || {};
+    if (schema['ui:options']) {
+      schema.props = schema['ui:options'];
+      delete schema['ui:options'];
     }
-    if (_schema.pattern) {
-      const validItem = { pattern: _schema.pattern };
-      if (_schema.message && _schema.message.pattern) {
-        validItem.message = _schema.message.pattern;
+    if (schema.pattern) {
+      const validItem = { pattern: schema.pattern };
+      if (schema.message && schema.message.pattern) {
+        validItem.message = schema.message.pattern;
       }
-      _schema.rules.push(validItem);
-      delete _schema.pattern;
-      delete _schema.message;
+      schema.rules.push(validItem);
+      delete schema.pattern;
+      delete schema.message;
     }
-    if (_schema.minLength) {
-      _schema.rules.push({ min: _schema.minLength });
-      delete _schema.minLength;
+    // min / max
+    if (schema.minLength) {
+      schema.min = schema.minLength;
+      delete schema.minLength;
     }
-    if (_schema.maxLength) {
-      _schema.rules.push({ max: _schema.maxLength });
-      _schema.props.maxLength = _schema.maxLength;
-      delete _schema.maxLength;
+    if (schema.maxLength) {
+      schema.max = schema.maxLength;
+      delete schema.maxLength;
     }
-    if (_schema.min) {
-      _schema.rules.push({ min: _schema.min });
-      _schema.props.min = _schema.min;
-      delete _schema.min;
+    if (schema.minItems) {
+      schema.min = schema.minItems;
+      delete schema.minItems;
     }
-    if (_schema.max) {
-      _schema.rules.push({ max: _schema.max });
-      _schema.props.max = _schema.max;
-      delete _schema.max;
+    if (schema.maxItems) {
+      schema.max = schema.maxItems;
+      delete schema.maxItems;
     }
-    if (_schema.step) {
-      _schema.props.step = _schema.step;
-      delete _schema.step;
+    if (schema.step) {
+      schema.props.step = schema.step;
+      delete schema.step;
     }
-    if (_schema.minItems) {
-      _schema.props.minItems = _schema.minItems;
-      delete _schema.minItems;
+    // ui:xxx
+    if (schema['ui:className']) {
+      schema.className = schema['ui:className'];
+      delete schema['ui:className'];
     }
-    if (_schema.maxItems) {
-      _schema.props.maxItems = _schema.maxItems;
-      delete _schema.maxItems;
+    if (schema['ui:hidden']) {
+      schema.hidden = schema['ui:hidden'];
+      delete schema['ui:hidden'];
     }
-
-    //
-    if (_schema['ui:className']) {
-      _schema.className = _schema['ui:className'];
-      delete _schema['ui:className'];
+    if (schema['ui:readonly']) {
+      schema.readOnly = schema['ui:readonly']; // 改成驼峰了
+      delete schema['ui:readonly'];
     }
-    if (_schema['ui:hidden']) {
-      _schema.hidden = _schema['ui:hidden'];
-      delete _schema['ui:hidden'];
+    if (schema['ui:disabled']) {
+      schema.disabled = schema['ui:disabled'];
+      delete schema['ui:disabled'];
     }
-    if (_schema['ui:readonly']) {
-      _schema.readOnly = _schema['ui:readonly']; // 改成驼峰了
-      delete _schema['ui:readonly'];
+    if (schema['ui:width']) {
+      schema.width = schema['ui:width'];
+      delete schema['ui:width'];
     }
-    if (_schema['ui:disabled']) {
-      _schema.disabled = _schema['ui:disabled'];
-      delete _schema['ui:disabled'];
+    if (schema['ui:labelWidth']) {
+      schema.labelWidth = schema['ui:labelWidth'];
+      delete schema['ui:labelWidth'];
     }
-    if (_schema['ui:width']) {
-      _schema.width = _schema['ui:width'];
-      delete _schema['ui:width'];
+    if (schema.rules && schema.rules.length === 0) {
+      delete schema.rules;
     }
-    if (_schema['ui:labelWidth']) {
-      _schema.labelWidth = _schema['ui:labelWidth'];
-      delete _schema['ui:labelWidth'];
-    }
-    if (_schema.rules && _schema.rules.length === 0) {
-      delete _schema.rules;
-    }
-    return _schema;
+    return schema;
   } catch (error) {
     console.error('旧schema转换失败！', error);
     return schema;
