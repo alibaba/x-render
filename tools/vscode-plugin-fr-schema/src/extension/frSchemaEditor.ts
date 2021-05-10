@@ -14,7 +14,7 @@ export class frSchemaEditorProvider implements vscode.CustomTextEditorProvider {
       {
         webviewOptions: {
           retainContextWhenHidden: true,
-          enableFindWidget: true,
+          enableFindWidget: false,
         },
       },
     );

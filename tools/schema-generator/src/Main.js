@@ -4,7 +4,7 @@ import { useSet } from './hooks';
 import FRWrapper from './FRWrapper';
 import { fromFormRender, toFormRender } from './transformer/form-render';
 import { widgets as defaultWidgets, mapping as defaultMapping } from 'form-render';
-import listEditor from './widgets/antd/listEditor';
+import list from './widgets/antd/list';
 import './atom.less';
 import './Main.less';
 import 'antd/dist/antd.less';
@@ -105,8 +105,8 @@ function App(props, ref) {
     }
   };
 
-  const _mapping = { ...defaultMapping, ...mapping, array: 'listEditor' };
-  const _widgets = { ...defaultWidgets, ...widgets, listEditor };
+  const _mapping = { ...defaultMapping, ...mapping };
+  const _widgets = { ...defaultWidgets, ...widgets, list };
 
   const rootState = {
     preview,
