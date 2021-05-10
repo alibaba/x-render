@@ -67,6 +67,10 @@ const ExtendedWidget = ({
     ...schema.props,
   };
 
+  if (schema.type === 'string' && typeof schema.max === 'number') {
+    widgetProps.maxLength = schema.max;
+  }
+
   ['title', 'placeholder', 'disabled', 'format'].forEach(key => {
     if (schema[key]) {
       widgetProps[key] = schema[key];
