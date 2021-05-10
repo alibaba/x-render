@@ -24,7 +24,8 @@
           "image": {
             "title": "图片展示",
             "type": "string",
-            "format": "image"
+            "format": "image",
+            "default": "http://placekitten.com/200/300"
           },
           "uploader": {
             "title": "上传文件",
@@ -264,11 +265,6 @@
           }
         }
       }
-    }
-  },
-  "formData": {
-    "AllString": {
-      "image": "http://placekitten.com/200/300"
     }
   }
 }

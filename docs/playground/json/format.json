@@ -1,6 +1,5 @@
 {
   "schema": {
-    "ui:labelWidth": 130,
     "type": "object",
     "properties": {
       "inputName": {

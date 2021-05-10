@@ -5,12 +5,10 @@
       "inputDemo": {
         "title": "长度",
         "type": "string",
-        "pattern": "^[A-Za-z0-9]+$",
-        "message": {
-          "pattern": "请输入正确格式"
-        },
-        "ui:className": "input-with-px",
-        "ui:options": {
+        "default": "750",
+        "rules": [{ "pattern": "^[A-Za-z0-9]+$", "message": "请输入正确格式" }],
+        "className": "input-with-px",
+        "props": {
           "addonAfter": "px"
         }
       },
@@ -25,7 +23,9 @@
       "textareaDemo": {
         "title": "输入框",
         "type": "string",
-        "ui:widget": "textarea"
+        "widget": "textarea",
+        "default": "FormRender\nHello World!",
+        "required": true
       },
 
       "imgDemo": {
@@ -38,7 +38,7 @@
         "title": "文件上传",
         "type": "string",
         "default": "https://img.alicdn.com/tfs/TB1P8p2uQyWBuNjy0FpXXassXXa-750-1334.png",
-        "ui:widget": "upload",
+        "widget": "upload",
         "props": {
           "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
         }
@@ -47,7 +47,7 @@
         "title": "不可用",
         "type": "string",
         "default": "我是一个被 disabled 的值",
-        "ui:disabled": true
+        "disabled": true
       },
       "enumDemo": {
         "title": "枚举",
@@ -57,14 +57,16 @@
           "养成",
           "<span style='background-color: black;display: inline-block;vertical-align: text-top;width: 48px;height: 24px;margin-top:-2px;color:white; border: 1px solid #ddd;'>试试</span>"
         ],
-        "ui:width": "50%"
+        "width": "50%"
       },
       "dateDemo": {
         "title": "时间",
         "format": "dateTime",
         "type": "string",
-        "ui:widget": "date",
-        "ui:width": "50%"
+        "widget": "date",
+        "width": "50%",
+        "default": "2018-11-22",
+        "required": true
       },
       "objDemo": {
         "title": "单个对象",
@@ -81,21 +83,21 @@
             "description": "特殊面板",
             "format": "color",
             "type": "string",
-            "ui:hidden": "{{rootValue.isLike === false}}",
-            "ui:widget": "color"
+            "hidden": "{{rootValue.isLike === false}}",
+            "default": "#ffff00"
           },
           "wayToTravel": {
             "title": "旅行方式",
             "type": "string",
             "enum": ["self", "group"],
             "enumNames": ["自驾", "跟团"],
-            "ui:widget": "radio"
+            "widget": "radio"
           },
           "canDrive": {
             "title": "是否拥有驾照",
             "type": "boolean",
             "default": false,
-            "ui:hidden": "{{rootValue.wayToTravel !== 'self'}}"
+            "hidden": "{{rootValue.wayToTravel !== 'self'}}"
           }
         },
         "required": ["background"]
@@ -109,7 +111,8 @@
         },
         "enum": ["A", "B", "C", "D"],
         "enumNames": ["杭州", "武汉", "湖州", "贵阳"],
-        "ui:widget": "multiSelect"
+        "widget": "multiSelect",
+        "required": true
       },
       "custom": {
         "properties": {
@@ -131,8 +134,8 @@
         "title": "对象数组",
         "description": "对象数组嵌套功能",
         "type": "array",
-        "minItems": 1,
-        "maxItems": 3,
+        "min": 1,
+        "max": 3,
         "items": {
           "type": "object",
           "properties": {
@@ -145,12 +148,12 @@
               "title": "字符名称",
               "description": "string类型",
               "type": "string",
-              "pattern": "^[A-Za-z0-9]+$",
-              "ui:disabled": "{{rootValue.num === 3}}"
+              "rules": [{ "pattern": "^[A-Za-z0-9]+$" }],
+              "disabled": "{{rootValue.num === 3}}"
             }
           }
         },
-        "ui:options": {
+        "props": {
           "foldable": true,
           "hideDelete": "{{rootValue.arrDemo.length === 1}}",
           "buttons": [
@@ -162,27 +165,6 @@
           ]
         }
       }
-    },
-    "required": ["textareaDemo", "dateDemo", "multiSelectDemo"]
-  },
-  "formData": {
-    "inputDemo": "750",
-    "textareaDemo": "FormRender\nHello World!",
-    "imgDemo": "https://img.alicdn.com/tfs/TB1P8p2uQyWBuNjy0FpXXassXXa-750-1334.png",
-    "enumDemo": "A",
-    "dateDemo": "2018-11-22",
-    "isLike": true,
-    "objDemo": {
-      "isLike": true,
-      "background": "#ffff00"
-    },
-    "multiSelectDemo": ["C", "D"],
-    "arrDemo": [
-      {
-        "name": "表单渲染",
-        "num": 10
-      },
-      {}
-    ]
+    }
   }
 }

@@ -12,12 +12,12 @@ const { TabPane } = Tabs;
 const schema2str = obj => JSON.stringify(obj, null, 2) || '';
 
 const Demo = ({ schemaName, theme, ...formProps }) => {
-  const [schemaStr, set1] = useState(schema2str(DefaultSchema));
+  const [schemaStr, set1] = useState(() => schema2str(DefaultSchema.schema));
   const [error, set2] = useState('');
 
   useEffect(() => {
     const schema = require(`./json/${schemaName}.json`);
-    set1(schema2str(schema));
+    set1(schema2str(schema.schema));
   }, [schemaName]);
 
   const tryParse = schemaStr => {
@@ -40,25 +40,14 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
     tryParse(schemaStr);
   };
 
-  const handleDataChange = data => {
-    let schema = tryParse(schemaStr);
-    if (schema && typeof data === 'object') {
-      if (!deepEqual(schema.formData, data)) {
-        schema = { ...schema, formData: data };
-        set1(schema2str(schema));
-      }
-    }
-  };
-
   let schema = {};
   try {
     schema = parseJson(schemaStr);
   } catch (error) {
     console.log(error);
   }
-  const { formData = {} } = schema;
 
-  const form = useForm({ formData, onChange: handleDataChange });
+  const form = useForm();
 
   return (
     <div className="flex-auto flex">
@@ -73,7 +62,7 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
             <CodeBlock value={schemaStr} onChange={handleCodeChange} />
           </TabPane>
           <TabPane tab="Data" key="2">
-            <CodeBlock value={schema2str(formData)} readOnly />
+            <CodeBlock value={schema2str(form.getValues())} readOnly />
           </TabPane>
         </Tabs>
       </div>
@@ -87,7 +76,7 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
           ) : (
             <FormRender
               form={form}
-              schema={schema.schema}
+              schema={schema}
               {...formProps}
               widgets={{ asyncSelect: AsyncSelect }}
             />
