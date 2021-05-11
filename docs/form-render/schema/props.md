@@ -30,7 +30,11 @@ toc: content
 
 | props     | 类型  |                 说明                  |
 | --------- | :---: | :-----------------------------------: |
-| hideTitle | array | 只支持“list1”，隐藏 title，展示更紧凑 |
+| hideTitle | boolean | 只支持“list1”，隐藏 title，展示更紧凑 |
+| hideDelete | boolean | 隐藏删除按钮 |
+| hideCopy | boolean | 隐藏复制按钮 |
+| hideAdd | boolean | 隐藏新增按钮 |
+| hideEdit | boolean | 只支持“list3”，隐藏编辑按钮 |
 | buttons   | array |             下详 （注 1）             |
 
 **itemProps**
