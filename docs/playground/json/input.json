@@ -42,10 +42,12 @@
       "string5": {
         "title": "前后缀",
         "type": "string",
-        "pattern": "^[0-9]+$",
-        "message": {
-          "pattern": "请输入数字"
-        },
+        "rules": [
+          {
+            "pattern": "^[0-9]+$",
+            "message": "请输入数字"
+          }
+        ],
         "props": {
           "prefix": "￥",
           "suffix": "RMB"

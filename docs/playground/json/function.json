@@ -72,10 +72,12 @@
                 "goal": {
                   "title": "入球数",
                   "type": "string",
-                  "pattern": "^[0-9]+$",
-                  "message": {
-                    "pattern": "输入正确得分"
-                  },
+                  "rules": [
+                    {
+                      "pattern": "^[0-9]+$",
+                      "message": "输入正确得分"
+                    }
+                  ],
                   "hidden": "{{rootValue.attr === 'league'}}",
                   "width": "40%"
                 },
