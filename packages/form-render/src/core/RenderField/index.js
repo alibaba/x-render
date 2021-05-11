@@ -86,11 +86,15 @@ const RenderField = props => {
     _schema.placeholder = _schema.placeholder || _schema.title;
   }
 
+  const _getValue = path => {
+    return getValueByPath(formData, path);
+  };
+
   const widgetProps = {
     schema: _schema,
     readOnly: _readOnly,
     onChange,
-    getValue: getValueByPath,
+    getValue: _getValue,
     formData,
     value: _value,
     onItemChange,
