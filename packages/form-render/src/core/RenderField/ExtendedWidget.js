@@ -101,9 +101,9 @@ const areEqual = (prev, current) => {
   if (prev.schema && prev.schema.$id === '#') {
     return false;
   }
-  // if (prev.schema && prev.schema.type === 'object') {
-  //   return false;
-  // }
+  if (prev.readOnly !== current.readOnly) {
+    return false;
+  }
   if (
     JSON.stringify(prev.value) === JSON.stringify(current.value) &&
     JSON.stringify(prev.schema) === JSON.stringify(current.schema)

@@ -235,7 +235,7 @@ export const useForm = props => {
     _setErrors(newError);
   };
 
-  const getValues = () => processData(_data.tt, flatten);
+  const getValues = () => processData(_data.current, flatten);
 
   const setValues = newFormData => {
     const newData = transformDataWithBind2(newFormData, flatten);

@@ -127,7 +127,16 @@ function App({
       locale,
       readOnly,
     }),
-    [displayType, theme, debounceInput, debug, labelWidth, locale, readOnly]
+    [
+      displayType,
+      theme,
+      column,
+      debounceInput,
+      debug,
+      labelWidth,
+      locale,
+      readOnly,
+    ]
   );
 
   const tools = useMemo(

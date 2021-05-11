@@ -1,6 +1,5 @@
 {
   "schema": {
-    "ui:labelWidth": 130,
     "type": "object",
     "properties": {
       "inputName": {
@@ -22,10 +21,11 @@
         "title": "正则校验字符串",
         "description": "a-z",
         "type": "string",
-        "pattern": "^[a-z]+$",
-        "message": {
-          "pattern": "格式不对哦~"
-        }
+        "rules": [
+          {
+            "pattern": "^[a-z]+$"
+          }
+        ]
       }
     }
   }

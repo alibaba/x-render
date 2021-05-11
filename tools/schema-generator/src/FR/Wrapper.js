@@ -25,7 +25,8 @@ export default function Wrapper({
   const boxRef = useRef(null);
 
   const [{ isDragging }, dragRef, dragPreview] = useDrag({
-    item: { type: 'box', $id: inside ? 0 + $id : $id },
+    type: 'box',
+    item: { $id: inside ? 0 + $id : $id },
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult();
       if (item && dropResult) {

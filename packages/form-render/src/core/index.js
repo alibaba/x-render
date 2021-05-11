@@ -280,6 +280,15 @@ const areEqual = (prev, current) => {
   if (prev.allTouched !== current.allTouched) {
     return false;
   }
+  if (prev.displayType !== current.displayType) {
+    return false;
+  }
+  if (prev.column !== current.column) {
+    return false;
+  }
+  if (prev.labelWidth !== current.labelWidth) {
+    return false;
+  }
   if (
     JSON.stringify(prev._value) === JSON.stringify(current._value) &&
     JSON.stringify(prev.schema) === JSON.stringify(current.schema) &&

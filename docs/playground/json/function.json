@@ -13,12 +13,12 @@
           "x1": {
             "title": "输入框1",
             "type": "string",
-            "ui:hidden": "{{!rootValue.showMore}}"
+            "hidden": "{{!rootValue.showMore}}"
           },
           "x2": {
             "title": "输入框2",
             "type": "string",
-            "ui:hidden": "{{!rootValue.showMore}}"
+            "hidden": "{{!rootValue.showMore}}"
           }
         }
       },
@@ -59,25 +59,27 @@
                   "widget": "select",
                   "enum": ["goal", "league"],
                   "enumNames": ["入球数", "所在联盟"],
-                  "ui:width": "40%"
+                  "width": "40%"
                 },
                 "relation": {
                   "title": "关系",
                   "type": "string",
                   "enum": [">", "<", "="],
                   "widget": "select",
-                  "ui:hidden": "{{rootValue.attr === 'league'}}",
-                  "ui:width": "20%"
+                  "hidden": "{{rootValue.attr === 'league'}}",
+                  "width": "20%"
                 },
                 "goal": {
                   "title": "入球数",
                   "type": "string",
-                  "pattern": "^[0-9]+$",
-                  "message": {
-                    "pattern": "输入正确得分"
-                  },
-                  "ui:hidden": "{{rootValue.attr === 'league'}}",
-                  "ui:width": "40%"
+                  "rules": [
+                    {
+                      "pattern": "^[0-9]+$",
+                      "message": "输入正确得分"
+                    }
+                  ],
+                  "hidden": "{{rootValue.attr === 'league'}}",
+                  "width": "40%"
                 },
                 "league": {
                   "title": "名称",
@@ -85,8 +87,8 @@
                   "enum": ["a", "b", "c"],
                   "enumNames": ["西甲", "英超", "中超"],
                   "widget": "select",
-                  "ui:hidden": "{{rootValue.attr !== 'league'}}",
-                  "ui:width": "40%"
+                  "hidden": "{{rootValue.attr !== 'league'}}",
+                  "width": "40%"
                 }
               }
             }

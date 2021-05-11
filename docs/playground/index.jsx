@@ -1,36 +1,17 @@
 import React, { Component } from 'react';
 // import GithubCorner from 'react-github-corner';
 import Demo from './main';
-import { Radio, Select, Switch, Collapse, Slider } from 'antd';
+import { Radio, Select, Switch, Slider } from 'antd';
 import './index.css';
 
-window.copyMe = (list, index) => {
-  const item = list[index];
-  list.splice(index, 0, item);
-  return list;
-};
-
 const Option = Select.Option;
-const RadioGroup = Radio.Group;
-const { Panel } = Collapse;
-// constant
-const themeList = [
-  { label: 'antd主题', value: 'antd' },
-  { label: 'fusion主题', value: 'fusion' },
-];
 class Root extends Component {
   state = {
     schemaName: 'simplest',
-    theme: 'antd',
     column: 1,
     displayType: 'column',
-    showDescIcon: false,
     readOnly: false,
     labelWidth: 110,
-  };
-
-  onThemeChange = e => {
-    this.setState({ theme: e.target.value });
   };
 
   onColumnNumberChange = value => {
@@ -42,10 +23,6 @@ class Root extends Component {
       displayType: value,
       showDescIcon: value === 'row',
     });
-  };
-
-  onShowDescChange = value => {
-    this.setState({ showDescIcon: value });
   };
 
   onReadOnlyChange = value => this.setState({ readOnly: value });
@@ -84,17 +61,11 @@ class Root extends Component {
             <Radio value="function">复杂联动</Radio>
             <Radio value="input">个性输入框</Radio>
             <Radio value="select">个性选择框</Radio>
-            <Radio value="date">日期</Radio>
             <Radio value="demo">完整例子</Radio>
           </Radio.Group>
           <div className="w-50 flex items-center flex-wrap z-999">
-            <RadioGroup
-              options={themeList}
-              value={this.state.theme}
-              onChange={this.onThemeChange}
-            />
             <Select
-              style={{ marginRight: 8 }}
+              style={{ marginRight: 8, marginLeft: 24 }}
               onChange={this.onColumnNumberChange}
               defaultValue="1"
             >
@@ -112,19 +83,12 @@ class Root extends Component {
             </Select>
             <Switch
               style={{ marginRight: 8 }}
-              checkedChildren="关描述"
-              onChange={this.onShowDescChange}
-              unCheckedChildren="开描述"
-              checked={showDescIcon}
-            />
-            <Switch
-              style={{ marginRight: 8 }}
               checkedChildren="编辑"
               onChange={this.onReadOnlyChange}
               unCheckedChildren="只读"
               checked={readOnly}
             />
-            <div style={{ width: 42 }}>标签：</div>
+            <div style={{ width: 70 }}>标签宽度：</div>
             <Slider
               style={{ width: 80 }}
               max={200}
@@ -134,17 +98,6 @@ class Root extends Component {
             />
           </div>
         </div>
-        {/* <Collapse defaultActiveKey={['1']} onChange={() => {}}>
-          <Panel
-            header={
-              <div className="flex justify-between items-center">
-                <div className="b f3">FormRender</div>
-              </div>
-            }
-            key="1"
-          >
-            </Panel>
-        </Collapse> */}
         <Demo {...this.state} />
       </div>
     );

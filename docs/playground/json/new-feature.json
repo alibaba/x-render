@@ -11,20 +11,15 @@
             "type": "html",
             "default": "hello world"
           },
-          "html2": {
-            "title": "使用formData",
-            "type": "html",
-            "default": "hello world"
-          },
           "input": {
             "title": "放在尾部",
             "type": "string",
-            "ui:width": "70%"
+            "width": "70%"
           },
           "html3": {
             "type": "html",
             "default": "<a>注意事项</a>",
-            "ui:width": "30%"
+            "width": "30%"
           }
         }
       },
@@ -45,17 +40,16 @@
             "c": {
               "title": "开关",
               "type": "boolean",
-              "ui:widget": "switch"
+              "widget": "switch"
             }
           }
         },
         "default": [{ "a": "happy", "b": false, "c": false }, {}],
-        "ui:options": {
+        "props": {
           "foldable": true,
           "itemButtons": [
             {
-              "text": "复制",
-              "icon": "UpCircleOutlined",
+              "html": "复制",
               "callback": "copyMe"
             }
           ]
@@ -65,7 +59,7 @@
         "title": "标签长度自定义",
         "description": "在object上定义labelWidth会影响所有子元素",
         "type": "object",
-        "ui:labelWidth": 200,
+        "labelWidth": 200,
         "properties": {
           "inputName": {
             "title": "简单输入框",
@@ -80,7 +74,7 @@
             "title": "颜色选择",
             "type": "string",
             "format": "color",
-            "ui:labelWidth": 80
+            "labelWidth": 80
           }
         }
       },
@@ -92,12 +86,11 @@
           "inputDemo": {
             "title": "前后缀",
             "type": "string",
-            "pattern": "^[A-Za-z0-9]+$",
-            "message": {
-              "pattern": "请输入正确格式"
-            },
-            "ui:width": "50%",
-            "ui:options": {
+            "rules": [
+              { "pattern": "^[A-Za-z0-9]+$", "message": "请输入数字或英文字母" }
+            ],
+            "width": "50%",
+            "props": {
               "addonBefore": "画布长度",
               "addonAfter": "px"
             }
@@ -109,16 +102,14 @@
             "min": 10,
             "max": 100,
             "step": 10,
-            "ui:width": "50%",
-            "ui:widget": "slider"
+            "width": "50%",
+            "widget": "slider"
           },
           "dateRange": {
             "title": "日期范围",
             "type": "range",
             "format": "dateTime",
-            "ui:options": {
-              "placeholder": ["开始", "结束"]
-            }
+            "placeholder": ["开始", "结束"]
           }
         }
       },
@@ -129,11 +120,9 @@
           "asyncSelect": {
             "title": "异步加载的下拉框",
             "type": "string",
-            "ui:labelWidth": 130,
-            "ui:widget": "asyncSelect",
-            "ui:options": {
-              "placeholder": "搜索淘宝商品"
-            }
+            "labelWidth": 130,
+            "widget": "asyncSelect",
+            "placeholder": "搜索淘宝商品"
           }
         }
       },
@@ -141,7 +130,7 @@
         "title": "复杂结构数组",
         "description": "数组item中含有数组等",
         "type": "array",
-        "ui:options": {
+        "props": {
           "foldable": true,
           "hideIndex": true
         },
@@ -151,7 +140,7 @@
             "age": {
               "title": "填写年龄",
               "type": "number",
-              "ui:hidden": "{{rootValue.movieType === 'a' || rootValue.movieType === 'c'}}"
+              "hidden": "{{rootValue.movieType === 'a' || rootValue.movieType === 'c'}}"
             },
             "movieType": {
               "title": "短片类型",

@@ -1,5 +1,14 @@
 # Changelog
 
+### 1.3.2
+
+- [!] playground 完全翻新
+- [!] 文档补充了更多的使用方
+- [!] 修复了 onValuesChange 在声明文件里声明成必填的问题
+- [!] 修复了文档链接带锚点不会自动滚动到的问题
+- [!] 修复了 `addons.getValues` 返回错误的问题
+- [!] 修复上一个版本不慎引入的了 `getValues` 返回错误的问题
+
 ### 1.3.1
 
 - [+] 列表支持 props/buttons 属性，用于添加更多的自定义操作按钮 ([#343](https://github.com/alibaba/x-render/issues/343))
