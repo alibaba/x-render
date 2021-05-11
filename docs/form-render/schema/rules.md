@@ -36,7 +36,7 @@ toc: content
    }
    ```
 
-2. 当常规字段不能满足时，可使用 `validator` 动态校验。详见 `async-validator` 文档](https://github.com/yiminghe/async-validator#validate)
+2. 当常规字段不能满足时，可使用 `validator` 动态校验。详见 [`async-validator` 文档](https://github.com/yiminghe/async-validator#validate)
 
    ```js
    name: {
