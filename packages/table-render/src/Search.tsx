@@ -1,23 +1,58 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTable } from './hooks';
 import { Button } from 'antd';
-import SearchForm, { useForm } from 'form-render';
+import SearchForm from 'form-render';
 
-const SearchBtn = ({ clearSearch, style = {}, className = '' }: any) => {
-  const { tableState = {}, refresh }: any = useTable();
+const SearchBtn = ({
+  clearSearch,
+  submit,
+  style = {},
+  className = '',
+}: any) => {
+  const { tableState = {} }: any = useTable();
   const { loading } = tableState;
   return (
     <div className={`flex justify-end w-100 ${className}`} style={style}>
-      <Button
-        loading={loading}
-        className="mr"
-        type="primary"
-        onClick={() => refresh()} // 必须要这么写，否则会把 e 作为 params 传入
-      >
+      <Button loading={loading} className="mr" type="primary" onClick={submit}>
         查询
       </Button>
       <Button onClick={clearSearch}>重置</Button>
     </div>
+  );
+};
+
+const MySearchBtn = ({
+  searchBtnRender,
+  searchBtnStyle,
+  searchBtnClassName,
+  form,
+}: any) => {
+  const clearSearch = form.resetFields;
+  const searchBtnArr =
+    typeof searchBtnRender === 'function'
+      ? searchBtnRender(form.submit, clearSearch)
+      : [];
+  if (searchBtnRender) {
+    return (
+      <div className="flex justify-end w-100">
+        {Array.isArray(searchBtnArr) &&
+          searchBtnArr.map((ui, idx) => {
+            return (
+              <div key={idx.toString()} style={{ marginLeft: 8 }}>
+                {ui}
+              </div>
+            );
+          })}
+      </div>
+    );
+  }
+  return (
+    <SearchBtn
+      submit={form.submit}
+      clearSearch={clearSearch}
+      style={searchBtnStyle || {}}
+      className={searchBtnClassName || ''}
+    />
   );
 };
 
@@ -33,7 +68,7 @@ export interface SearchProps {
   hidden?: boolean;
   searchOnMount?: boolean | unknown;
   searchBtnRender?: (
-    refresh: Function,
+    submit: Function,
     clearSearch: Function
   ) => React.ReactNode[];
   onSearch?: (search: any) => any;
@@ -42,9 +77,9 @@ export interface SearchProps {
 }
 
 const Search = (props: SearchProps) => {
+  const { searchBtnRender, searchBtnStyle, searchBtnClassName } = props;
   const [formSchema, setSchema] = useState({});
-  const { tableState, setTable, refresh, syncMethods }: any = useTable();
-  const { search } = tableState;
+  const { refresh, syncMethods, setTable, form }: any = useTable();
   const _schema = props.schema || props.propsSchema;
   let searchOnMount = true;
   if (!props.searchOnMount && props.searchOnMount !== undefined) {
@@ -53,9 +88,6 @@ const Search = (props: SearchProps) => {
 
   const modifiedSchema = useRef();
 
-  const onChange = (newSearch: any) => {
-    setTable({ search: newSearch });
-  };
   // TODO: 重新检查一下这个逻辑
   const calcWidth = (schema: {
     properties: { [s: string]: unknown } | ArrayLike<unknown>;
@@ -100,6 +132,7 @@ const Search = (props: SearchProps) => {
           type: 'string',
           widget: 'searchBtn',
           className: 'search-btn',
+          bind: false,
           width: calcWidth(_schema),
         };
         setSchema(curSchema);
@@ -113,24 +146,6 @@ const Search = (props: SearchProps) => {
     }
   };
 
-  const onValidate = valid => {
-    if (valid.length) {
-      setTable({
-        checkPassed: false,
-      });
-      return;
-    }
-    setTable({
-      checkPassed: true,
-    });
-  };
-
-  const form = useForm({ formData: search, onChange, onValidate });
-
-  const clearSearch = () => {
-    form.setValues({});
-  };
-
   useEffect(() => {
     if (!props.hidden) {
       modifySchema();
@@ -140,20 +155,28 @@ const Search = (props: SearchProps) => {
   useEffect(() => {
     syncMethods({
       searchApi: props.api,
-      syncOnSearch: props.onSearch,
       syncAfterSearch: props.afterSearch,
     });
     if (props.hidden || searchOnMount) {
-      refresh();
+      form.submit();
     }
   }, []);
 
+  const btnProps = {
+    searchBtnRender,
+    searchBtnStyle,
+    searchBtnClassName,
+    form,
+  };
+
   if (props.hidden) return null;
 
-  const searchBtnArr =
-    typeof props.searchBtnRender === 'function'
-      ? props.searchBtnRender(refresh, clearSearch)
-      : [];
+  const onFinish = (data, errors) => {
+    if (typeof props.onSearch === 'function') {
+      props.onSearch(data);
+    }
+    refresh(data);
+  };
 
   return (
     <div
@@ -161,37 +184,20 @@ const Search = (props: SearchProps) => {
       style={props.style}
       onKeyDown={e => {
         if (e.keyCode === 13) {
-          refresh();
+          form.submit();
         }
       }}
     >
       <SearchForm
         form={form}
+        displayType="row"
         {...props}
         schema={formSchema}
-        displayType="row"
         widgets={{
-          searchBtn: () =>
-            props.searchBtnRender ? (
-              <div className="flex justify-end w-100">
-                {Array.isArray(searchBtnArr) &&
-                  searchBtnArr.map((ui, idx) => {
-                    return (
-                      <div key={idx.toString()} style={{ marginLeft: 8 }}>
-                        {ui}
-                      </div>
-                    );
-                  })}
-              </div>
-            ) : (
-              <SearchBtn
-                clearSearch={clearSearch}
-                style={props.searchBtnStyle || {}}
-                className={props.searchBtnClassName || ''}
-              />
-            ),
+          searchBtn: () => <MySearchBtn {...btnProps} />,
           ...props.widgets,
         }}
+        onFinish={onFinish}
       />
     </div>
   );
