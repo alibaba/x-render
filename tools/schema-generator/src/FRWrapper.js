@@ -15,7 +15,6 @@ import {
   newSchemaToOld,
 } from './utils';
 import { Ctx, StoreCtx } from './context';
-// import SCHEMA from './json/basic.json';
 import FR from './FR';
 import PreviewFR from './PreviewFR';
 import { Modal, Input, Button, message } from 'antd';

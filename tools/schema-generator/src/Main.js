@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, forwardRef } from 'react';
 import { useSet } from './hooks';
-// import SCHEMA from './json/basic.json';
 import FRWrapper from './FRWrapper';
 import { fromFormRender, toFormRender } from './transformer/form-render';
 import { widgets as defaultWidgets, mapping as defaultMapping } from 'form-render';
