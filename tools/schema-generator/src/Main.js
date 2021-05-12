@@ -11,12 +11,8 @@ import 'antd/dist/antd.less';
 import { oldSchemaToNew } from './utils';
 
 const DEFAULT_SCHEMA = {
-  schema: {
-    type: 'object',
-    properties: {},
-  },
-  uiSchema: {},
-  formData: {},
+  type: 'object',
+  properties: {},
 };
 
 // TODO: formData 不存在的时候会报错：can't find # of undefined
@@ -93,9 +89,7 @@ function App(props, ref) {
   };
 
   const onSchemaChange = newSchema => {
-    const result = { ...schema };
-    result.schema = newSchema;
-    setState({ schema: result });
+    setState({ schema: newSchema });
     if (props.onSchemaChange) {
       setTimeout(() => {
         if (!frwRef.current) return;

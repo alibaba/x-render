@@ -25,12 +25,7 @@ export class frSchemaGenProvider {
       const document = await vscode.workspace.openTextDocument(uri);
       const editor = await vscode.window.showTextDocument(document);
       const val = JSON.parse(document.getText());
-      const schema = {
-        schema: frSchemaGenProvider.recurseTree({ val }),
-        displayType: 'row',
-        showDescIcon: true,
-        labelWidth: 120
-      };
+      const schema = frSchemaGenProvider.recurseTree({ val });
 
       editor.edit((editBuilder) => {
         editBuilder.replace(

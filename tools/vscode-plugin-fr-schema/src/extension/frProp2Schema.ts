@@ -30,14 +30,7 @@ export class frProp2SchemaProvider {
         docgen.resolver.findExportedComponentDefinition,
         docgen.defaultHandlers
       );
-      const schema = {
-        schema: toSchema(info, {
-          shouldAddUi: false
-        }),
-        displayType: 'row',
-        showDescIcon: true,
-        labelWidth: 120
-      };
+      const schema = toSchema(info, { shouldAddUi: false });
       const schemaUri = vscode.Uri.joinPath(uri, '../schema.json');
 
       await vscode.workspace.fs.writeFile(

@@ -57,10 +57,7 @@ const transformFrom = (mySchema, parent = null) => {
 };
 
 export const fromFormily = schema => {
-  const frSchema = transformFrom(schema);
-  return {
-    schema: frSchema,
-  };
+  return transformFrom(schema);
 };
 
 // FRG schema => formily Schema
@@ -124,6 +121,5 @@ const transformTo = (frSchema, parent = null, key = null) => {
 };
 
 export const toFormily = schema => {
-  const frSchema = schema.schema;
-  return transformTo(frSchema);
+  return transformTo(schema);
 };

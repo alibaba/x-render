@@ -567,6 +567,9 @@ export const oldSchemaToNew = schema => {
     const { propsSchema, ...rest } = schema;
     return { schema: propsSchema, ...rest };
   }
+  if (schema && schema.schema) {
+    return schema.schema;
+  }
   return schema;
 };
 

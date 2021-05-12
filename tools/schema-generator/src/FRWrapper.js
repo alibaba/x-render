@@ -52,7 +52,7 @@ function Wrapper(
 
   let _schema = {};
   if (schema) {
-    _schema = combineSchema(schema.schema, schema.uiSchema); // TODO: 要不要判断是否都是object
+    _schema = combineSchema(schema); // TODO: 要不要判断是否都是object
   }
   const flatten = flattenSchema(_schema);
   const flattenWithData = dataToFlatten(flatten, formData);
@@ -79,9 +79,8 @@ function Wrapper(
   const clearSchema = () => {
     setGlobal({
       schema: {
-        schema: {
-          type: 'object',
-        },
+        type: 'object',
+        properties: {},
       },
       formData: {},
       selected: undefined,
@@ -102,16 +101,13 @@ function Wrapper(
       if (info && info.propsSchema) {
         _isNewVersion = false;
       }
-      const _info = oldSchemaToNew(info);
-      const { schema, ...rest } = _info;
+      const schema = oldSchemaToNew(info);
       setGlobal(state => ({
-        schema: {
-          schema,
-        },
+        schema,
         formData: {},
         selected: undefined,
         isNewVersion: _isNewVersion,
-        frProps: { ...state.frProps, ...rest },
+        frProps: { ...state.frProps },
       }));
     } catch (error) {
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
@@ -156,7 +152,7 @@ function Wrapper(
     try {
       // TODO: 这里默认使用setValue的同学不使用ui:Schema
       const { schema, propsSchema, uiSchema, ...rest } = value;
-      let _schema = { schema: schema || propsSchema };
+      let _schema = schema || propsSchema;
       let _isNewVersion = true;
       if (!schema && propsSchema) {
         _isNewVersion = false;
@@ -243,7 +239,7 @@ function Wrapper(
             <div className="dnd-container">
               <div style={{ height: preview ? 33 : 0 }}></div>
               {
-                preview ? <PreviewFR schema={displaySchema.schema} /> : <FR />
+                preview ? <PreviewFR schema={displaySchema} /> : <FR />
               }
             </div>
           </div>
