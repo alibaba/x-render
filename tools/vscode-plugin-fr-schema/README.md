@@ -34,19 +34,9 @@
 
 ```json
 {
-  "schema": {
-    "type": "object",
-    "properties": {
-      
-    },
-    "required": []
-  },
-  "uiSchema": {
-
-  },
-  "formData": {
-    
-  }
+  "type": "object",
+  "properties": {},
+  "required": []
 }
 ```
 
