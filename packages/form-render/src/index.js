@@ -10,10 +10,12 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
 import './index.less';
 
-// 其他入参 watch: {"a.b.c": (value) => { ... }, }
+const defaultBeforeFinish = props => {
+  console.log('beforeFinish:', props);
+};
 
-const defaultFinish = (data, error) => {
-  console.log(data, error);
+const defaultFinish = (data, errors) => {
+  console.log('onFinish:', { data, errors });
 };
 
 export { defaultWidgets as widgets, defaultMapping as mapping };
@@ -25,7 +27,7 @@ function App({
   widgets,
   mapping,
   form,
-  beforeFinish = defaultFinish,
+  beforeFinish = defaultBeforeFinish,
   onFinish = defaultFinish,
   displayType = 'column',
   schema,
