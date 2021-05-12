@@ -76,9 +76,11 @@ const TableList = ({
   return (
     <>
       <div className="w-100 mb2 tr">
-        {!props.hideAdd && <Button type="primary" size="small" onClick={addItem}>
-          新增
-        </Button>}
+        {!props.hideAdd && (
+          <Button type="primary" size="small" onClick={addItem}>
+            新增
+          </Button>
+        )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
