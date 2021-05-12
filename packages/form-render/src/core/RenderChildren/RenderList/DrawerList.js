@@ -68,36 +68,36 @@ const DrawerList = ({
     };
   });
 
-  if (!props.hideEdit || !props.hideDelete) {
-    columns.push({
-      title: '操作',
-      key: '$action',
-      fixed: 'right',
-      width: 80,
-      render: (value, record, idx) => {
-        const index = (value && value.$idx) || 0;
-        return (
-          <Space>
-            {!props.hideEdit && <a onClick={() => openDrawer(index)}>编辑</a>}
-            {!props.hideDelete && <Popconfirm
+  columns.push({
+    title: '操作',
+    key: '$action',
+    fixed: 'right',
+    width: 80,
+    render: (value, record, idx) => {
+      const index = (value && value.$idx) || 0;
+      return (
+        <Space>
+          <a onClick={() => openDrawer(index)}>编辑</a>
+          {!props.hideDelete && (
+            <Popconfirm
               title="确定删除?"
               onConfirm={() => deleteItem(index)}
               okText="确定"
               cancelText="取消"
             >
               <a>删除</a>
-            </Popconfirm>}
-            {/* <ArrowUp height={18} width={24} onClick={() => moveItemUp(index)} />
+            </Popconfirm>
+          )}
+          {/* <ArrowUp height={18} width={24} onClick={() => moveItemUp(index)} />
             <ArrowDown
               height={18}
               width={24}
               onClick={() => moveItemDown(index)}
             /> */}
-          </Space>
-        );
-      },
-    });
-  }
+        </Space>
+      );
+    },
+  });
 
   const fieldsProps = getFieldsProps(currentIndex.current);
 
@@ -123,9 +123,11 @@ const DrawerList = ({
   return (
     <>
       <div className="w-100 mb2 tr">
-        {!props.hideAdd && <Button type="primary" size="small" onClick={handleAdd}>
-          新增
-        </Button>}
+        {!props.hideAdd && (
+          <Button type="primary" size="small" onClick={handleAdd}>
+            新增
+          </Button>
+        )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
