@@ -4,7 +4,6 @@ import { Ctx } from './context';
 import Search from './Search';
 import Table from './Table';
 import { message, ConfigProvider } from 'antd';
-import { isObj } from './utils';
 import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
 
@@ -29,7 +28,6 @@ const useTableRoot = props => {
   });
 
   const api = useRef<any>();
-  const onSearch = useRef<any>();
   const afterSearch = useRef<any>();
 
   const { pagination, search, tab: currentTab, checkPassed } = state;
@@ -39,14 +37,8 @@ const useTableRoot = props => {
     params: { current?: any; tab?: any; pageSize?: any },
     customSearch?: any
   ) => {
-    // 删除自定义组件的参数名
-    delete search.searchBtn;
-
-    if (onSearch.current) {
-      onSearch.current(search);
-    }
     // console.log(checkPassed);
-    if (!checkPassed) return;
+    // if (!checkPassed) return;
     const { current, pageSize, tab, ...extraSearch } = params || {};
     const _current = current || 1;
     const _pageSize = pageSize || 10;
@@ -130,9 +122,8 @@ const useTableRoot = props => {
     }
   };
 
-  const syncMethods = ({ searchApi, syncOnSearch, syncAfterSearch }) => {
+  const syncMethods = ({ searchApi, syncAfterSearch }) => {
     api.current = searchApi;
-    onSearch.current = syncOnSearch;
     afterSearch.current = syncAfterSearch;
     set({
       api: searchApi,
