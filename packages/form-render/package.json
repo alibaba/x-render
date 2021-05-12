@@ -51,7 +51,9 @@
     "moment": "^2.24.0",
     "nanoid": "^3.1.20",
     "rc-color-picker": "^1.2.6",
-    "react-sortable-hoc": "^1.11.0"
+    "react-sortable-hoc": "^1.11.0",
+    "react-window": "^1.8.6",
+    "rc-resize-observer": "^1.0.0"
   },
   "peerDependencies": {
     "antd": "4.x",
