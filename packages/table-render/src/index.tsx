@@ -4,17 +4,18 @@ import { Ctx } from './context';
 import Search from './Search';
 import Table from './Table';
 import { message, ConfigProvider } from 'antd';
-import { isObj } from './utils';
 import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
+import { useForm } from 'form-render';
 
 import 'antd/dist/antd.less'; // 需要配置一下babel-plugins
 import './index.css';
 
 const useTableRoot = props => {
+  const form = useForm();
+
   const [state, set] = useSet({
     loading: false,
-    search: {}, // 选项data
     api: null,
     tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
     dataSource: [],
@@ -29,24 +30,17 @@ const useTableRoot = props => {
   });
 
   const api = useRef<any>();
-  const onSearch = useRef<any>();
   const afterSearch = useRef<any>();
 
-  const { pagination, search, tab: currentTab, checkPassed } = state;
+  const { pagination, tab: currentTab, checkPassed } = state;
   const table = useTable();
 
   const doSearch = (
     params: { current?: any; tab?: any; pageSize?: any },
     customSearch?: any
   ) => {
-    // 删除自定义组件的参数名
-    delete search.searchBtn;
-
-    if (onSearch.current) {
-      onSearch.current(search);
-    }
     // console.log(checkPassed);
-    if (!checkPassed) return;
+    // if (!checkPassed) return;
     const { current, pageSize, tab, ...extraSearch } = params || {};
     const _current = current || 1;
     const _pageSize = pageSize || 10;
@@ -72,7 +66,7 @@ const useTableRoot = props => {
     function basicSearch(api: (arg0: any) => any) {
       set({ loading: true });
       let _params = {
-        ...search,
+        ...form.getValues(),
         ...customSearch,
         ...extraSearch,
         ..._pagination,
@@ -105,11 +99,11 @@ const useTableRoot = props => {
 
   const refresh = (
     params?: { tab: string | number; stay?: boolean },
-    search?: any
+    moreSearch?: any
   ) => {
     const _stay = (params && params.stay) || false;
     const _tab = params && params.tab;
-    const _search = search || {};
+    const _search = moreSearch || {};
     doSearch(
       {
         ...params,
@@ -130,9 +124,8 @@ const useTableRoot = props => {
     }
   };
 
-  const syncMethods = ({ searchApi, syncOnSearch, syncAfterSearch }) => {
+  const syncMethods = ({ searchApi, syncAfterSearch }) => {
     api.current = searchApi;
-    onSearch.current = syncOnSearch;
     afterSearch.current = syncAfterSearch;
     set({
       api: searchApi,
@@ -140,7 +133,7 @@ const useTableRoot = props => {
   };
 
   const context = {
-    tableState: state,
+    tableState: { ...state, search: form.getValues() },
     // setTable: (newState: any, fn?: Function) => {
     //   set(newState);
     //   if (fn && typeof fn == 'function') {
@@ -152,6 +145,7 @@ const useTableRoot = props => {
     refresh,
     changeTab,
     syncMethods,
+    form,
   };
   return context;
 };

@@ -132,7 +132,7 @@ function Wrapper(
     if (frProps && frProps.showDescIcon) {
       _schema['showDescIcon'] = frProps.showDescIcon;
     }
-    displaySchema = transformTo({ schema: _schema, ...frProps });
+    displaySchema = transformTo(_schema);
     if (!isNewVersion) {
       displaySchema = newSchemaToOld(displaySchema);
     }

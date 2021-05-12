@@ -46,7 +46,7 @@ export default function ItemSettings() {
   };
 
   const onDataChange = (value) => {
-    if (selected && value.$id) {
+    if (selected === value.$id) {
       try {
         const item = flatten[selected];
         if (item && item.schema) {

@@ -34,27 +34,33 @@ const CardList = ({
               <Core {...fieldsProps} />
 
               <Space direction="horizontal" className="fr-card-toolbar">
-                <Popconfirm
-                  title="确定删除?"
-                  onConfirm={() => deleteItem(idx)}
-                  okText="确定"
-                  cancelText="取消"
-                >
-                  <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
-                </Popconfirm>
-                <CopyOutlined
-                  style={{ fontSize: 16, marginLeft: 8 }}
-                  onClick={() => copyItem(idx)}
-                />
+                {!props.hideDelete && (
+                  <Popconfirm
+                    title="确定删除?"
+                    onConfirm={() => deleteItem(idx)}
+                    okText="确定"
+                    cancelText="取消"
+                  >
+                    <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
+                  </Popconfirm>
+                )}
+                {!props.hideAdd && (
+                  <CopyOutlined
+                    style={{ fontSize: 16, marginLeft: 8 }}
+                    onClick={() => copyItem(idx)}
+                  />
+                )}
               </Space>
             </div>
           );
         })}
       </div>
       <div style={{ marginTop: displayList.length > 0 ? 0 : 8 }}>
-        <Button type="dashed" onClick={addItem}>
-          新增一条
-        </Button>
+        {!props.hideAdd && (
+          <Button type="dashed" onClick={addItem}>
+            新增一条
+          </Button>
+        )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;

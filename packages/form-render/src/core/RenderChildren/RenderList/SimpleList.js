@@ -26,26 +26,32 @@ const SimpleList = ({
           <div key={idx} style={{ display: 'flex' }}>
             <Core {...fieldsProps} />
             <div style={{ marginTop: 6 }}>
-              <Popconfirm
-                title="确定删除?"
-                onConfirm={() => deleteItem(idx)}
-                okText="确定"
-                cancelText="取消"
-              >
-                <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
-              </Popconfirm>
-              <CopyOutlined
-                style={{ fontSize: 15, marginLeft: 8 }}
-                onClick={() => copyItem(idx)}
-              />
+              {!props.hideDelete && (
+                <Popconfirm
+                  title="确定删除?"
+                  onConfirm={() => deleteItem(idx)}
+                  okText="确定"
+                  cancelText="取消"
+                >
+                  <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
+                </Popconfirm>
+              )}
+              {!props.hideAdd && (
+                <CopyOutlined
+                  style={{ fontSize: 15, marginLeft: 8 }}
+                  onClick={() => copyItem(idx)}
+                />
+              )}
             </div>
           </div>
         );
       })}
       <div style={{ marginTop: displayList.length > 0 ? 0 : 8 }}>
-        <Button type="dashed" onClick={addItem}>
-          新增一条
-        </Button>
+        {!props.hideAdd && (
+          <Button type="dashed" onClick={addItem}>
+            新增一条
+          </Button>
+        )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;

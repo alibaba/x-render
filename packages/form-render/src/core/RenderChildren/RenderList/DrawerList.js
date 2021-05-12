@@ -78,20 +78,22 @@ const DrawerList = ({
       return (
         <Space>
           <a onClick={() => openDrawer(index)}>编辑</a>
-          <Popconfirm
-            title="确定删除?"
-            onConfirm={() => deleteItem(index)}
-            okText="确定"
-            cancelText="取消"
-          >
-            <a>删除</a>
-          </Popconfirm>
+          {!props.hideDelete && (
+            <Popconfirm
+              title="确定删除?"
+              onConfirm={() => deleteItem(index)}
+              okText="确定"
+              cancelText="取消"
+            >
+              <a>删除</a>
+            </Popconfirm>
+          )}
           {/* <ArrowUp height={18} width={24} onClick={() => moveItemUp(index)} />
-          <ArrowDown
-            height={18}
-            width={24}
-            onClick={() => moveItemDown(index)}
-          /> */}
+            <ArrowDown
+              height={18}
+              width={24}
+              onClick={() => moveItemDown(index)}
+            /> */}
         </Space>
       );
     },
@@ -121,9 +123,11 @@ const DrawerList = ({
   return (
     <>
       <div className="w-100 mb2 tr">
-        <Button type="primary" size="small" onClick={handleAdd}>
-          新增
-        </Button>
+        {!props.hideAdd && (
+          <Button type="primary" size="small" onClick={handleAdd}>
+            新增
+          </Button>
+        )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;

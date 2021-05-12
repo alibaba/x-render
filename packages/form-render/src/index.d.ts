@@ -28,7 +28,7 @@ export interface FormInstance {
   getSchemaByPath: (path: string, value: any) => void;
   setSchemaByPath: (path: string, value: any) => void;
   setValues: (formData: any) => void;
-  getValues: () => void;
+  getValues: () => any;
   resetFields: () => void;
   submit: () => void;
   submitData: any;
@@ -64,7 +64,7 @@ export interface FRProps {
   /** 只读模式 */
   readOnly?: boolean;
   /** 标签宽度 */
-  labelWidth?: string;
+  labelWidth?: string | number;
   /** antd的全局config */
   configProvider?: any;
   theme?: string | number;
