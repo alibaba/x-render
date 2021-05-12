@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.1.0
+
+- [!] 重构了 search，正式接入最新的 form-render 特性
+- [+] useTable 拿到的 context 现添加了 `form`，用于获取搜索表单的实例以及所有方法（具体方法列表参加 form-render 文档）
+
 ### 1.0.5
 
 - [+] 更新 npm 包的文档信息以及补全对应的 package 信息
