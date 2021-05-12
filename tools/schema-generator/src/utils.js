@@ -570,7 +570,13 @@ export const oldSchemaToNew = schema => {
   if (schema && schema.schema) {
     return schema.schema;
   }
-  return schema;
+  if (schema && schema.type === 'object') {
+    return schema;
+  }
+  return {
+    type: 'object',
+    properties: {},
+  };
 };
 
 export const newSchemaToOld = setting => {

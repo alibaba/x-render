@@ -95,12 +95,12 @@ function Wrapper(
   // TODO2: 导入这边看看会不会传一个乱写的schema就crash
   const importSchema = () => {
     try {
-      const info = transformFrom(looseJsonParse(local.schemaForImport));
+      const value = transformFrom(looseJsonParse(local.schemaForImport));
       let _isNewVersion = true;
-      if (info && info.propsSchema) {
+      if (value && value.propsSchema) {
         _isNewVersion = false;
       }
-      const schema = oldSchemaToNew(info);
+      const schema = oldSchemaToNew(value);
       setGlobal(state => ({
         schema,
         formData: {},
@@ -150,15 +150,14 @@ function Wrapper(
   const setValue = value => {
     try {
       // TODO: 这里默认使用setValue的同学不使用ui:Schema
-      const { schema, propsSchema } = value;
-      let _schema = schema || propsSchema || value;
       let _isNewVersion = true;
-      if (!schema && propsSchema) {
+      if (value && value.propsSchema) {
         _isNewVersion = false;
       }
+      const schema = oldSchemaToNew(value);
       setGlobal(state => ({
         ...state,
-        schema: _schema,
+        schema,
         formData: {},
         selected: undefined,
         isNewVersion: _isNewVersion,
