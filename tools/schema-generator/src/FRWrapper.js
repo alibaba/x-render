@@ -150,8 +150,8 @@ function Wrapper(
   const setValue = value => {
     try {
       // TODO: 这里默认使用setValue的同学不使用ui:Schema
-      const { schema, propsSchema, uiSchema, ...rest } = value;
-      let _schema = schema || propsSchema;
+      const { schema, propsSchema } = value;
+      let _schema = schema || propsSchema || value;
       let _isNewVersion = true;
       if (!schema && propsSchema) {
         _isNewVersion = false;
@@ -162,7 +162,6 @@ function Wrapper(
         formData: {},
         selected: undefined,
         isNewVersion: _isNewVersion,
-        frProps: { ...state.frProps, ...rest },
       }));
     } catch (error) {
       console.error(error);
