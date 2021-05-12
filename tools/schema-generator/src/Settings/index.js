@@ -462,11 +462,11 @@ export const layouts = [
       },
     },
     setting: {
-      minItems: {
+      min: {
         title: '最小长度',
         type: 'number',
       },
-      maxItems: {
+      max: {
         title: '最大长度',
         type: 'number',
       },
@@ -477,6 +477,14 @@ export const layouts = [
           foldable: {
             title: '是否可折叠',
             type: 'boolean',
+          },
+          hideDelete: {
+            title: '隐藏删除按钮',
+            type: 'string',
+          },
+          hideAdd: {
+            title: '隐藏新增/复制按钮',
+            type: 'string',
           },
         },
       },
@@ -495,6 +503,38 @@ export const layouts = [
         properties: {},
       },
     },
+    setting: {
+      min: {
+        title: '最小长度',
+        type: 'number',
+      },
+      max: {
+        title: '最大长度',
+        type: 'number',
+      },
+      props: {
+        title: '选项',
+        type: 'object',
+        properties: {
+          foldable: {
+            title: '是否可折叠',
+            type: 'boolean',
+          },
+          hideTitle: {
+            title: '隐藏标题',
+            type: 'boolean',
+          },
+          hideDelete: {
+            title: '隐藏删除按钮',
+            type: 'string',
+          },
+          hideAdd: {
+            title: '隐藏新增/复制按钮',
+            type: 'string',
+          },
+        },
+      },
+    },
   },
   {
     text: '表格列表',
@@ -509,6 +549,34 @@ export const layouts = [
         properties: {},
       },
     },
+    setting: {
+      min: {
+        title: '最小长度',
+        type: 'number',
+      },
+      max: {
+        title: '最大长度',
+        type: 'number',
+      },
+      props: {
+        title: '选项',
+        type: 'object',
+        properties: {
+          foldable: {
+            title: '是否可折叠',
+            type: 'boolean',
+          },
+          hideDelete: {
+            title: '隐藏删除按钮',
+            type: 'string',
+          },
+          hideAdd: {
+            title: '隐藏新增/复制按钮',
+            type: 'string',
+          },
+        },
+      },
+    },
   },
   {
     text: '复杂表格列表',
@@ -521,6 +589,34 @@ export const layouts = [
       items: {
         type: 'object',
         properties: {},
+      },
+    },
+    setting: {
+      min: {
+        title: '最小长度',
+        type: 'number',
+      },
+      max: {
+        title: '最大长度',
+        type: 'number',
+      },
+      props: {
+        title: '选项',
+        type: 'object',
+        properties: {
+          foldable: {
+            title: '是否可折叠',
+            type: 'boolean',
+          },
+          hideDelete: {
+            title: '隐藏删除按钮',
+            type: 'string',
+          },
+          hideAdd: {
+            title: '隐藏新增/复制按钮',
+            type: 'string',
+          },
+        },
       },
     },
   },
