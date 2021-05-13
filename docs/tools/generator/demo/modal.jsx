@@ -4,18 +4,13 @@ import { Button, Modal, Input } from 'antd';
 const { TextArea } = Input;
 
 const defaultValue = {
-  schema: {
-    type: 'object',
-    properties: {
-      inputName: {
-        title: '简单输入框',
-        type: 'string',
-      },
+  type: 'object',
+  properties: {
+    inputName: {
+      title: '简单输入框',
+      type: 'string',
     },
   },
-  displayType: 'row',
-  showDescIcon: true,
-  labelWidth: 120,
 };
 
 const templates = [

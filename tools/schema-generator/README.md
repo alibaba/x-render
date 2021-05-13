@@ -17,18 +17,13 @@ import React from 'react';
 import Generator from 'fr-generator';
 
 const defaultValue = {
-  schema: {
-    type: 'object',
-    properties: {
-      inputName: {
-        title: '简单输入框',
-        type: 'string',
-      },
+  type: 'object',
+  properties: {
+    inputName: {
+      title: '简单输入框',
+      type: 'string',
     },
   },
-  displayType: 'row',
-  showDescIcon: true,
-  labelWidth: 120,
 };
 
 const Demo = () => {
