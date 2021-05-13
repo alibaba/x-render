@@ -82,13 +82,6 @@ const VirtualList = ({
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
-              let onClick = () => {
-                console.log({
-                  value: listData,
-                  onChange: changeList,
-                  schema,
-                });
-              };
               if (typeof window[callback] === 'function') {
                 onClick = () => {
                   window[callback]({
@@ -118,16 +111,6 @@ const VirtualList = ({
         dataSource={dataSource}
         scroll={{ y: 300, x: '100vw' }}
         options={props}
-        onRow={(record) => {
-          return {
-            onClick: (e) => {
-              console.log('点击行：', record)
-              // if (typeof window[onRowClickCallback] === 'function') {
-              //   (window as any)[onRowClickCallback](record);
-              // }
-            } // 点击行
-          };
-        }}
       />
     </>
   );

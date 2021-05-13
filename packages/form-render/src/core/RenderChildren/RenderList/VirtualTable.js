@@ -34,7 +34,7 @@ const VirtualTable = (props) => {
         width
       };
     });
-  }, [tableWidth]);
+  }, [tableWidth, columns]);
 
   const [connectObject] = useState(() => {
     const obj = {};
@@ -93,15 +93,13 @@ const VirtualTable = (props) => {
           if ('render' in mergedColumns[columnIndex]) {
             content = mergedColumns[columnIndex].render(content, record, rowIndex);
           }
+
+          let clz = 'virtual-table-cell';
+          if (columnIndex === mergedColumns.length - 1) {
+            clz = `${clz} virtual-table-cell-last`
+          }
           return (
-            <div
-              // className={classNames("virtual-table-cell", {
-              //   "virtual-table-cell-last":
-              //     columnIndex === mergedColumns.length - 1
-              // })}
-              className="virtual-table-cell"
-              style={style}
-            >
+            <div className={clz} style={style}>
               {content}
             </div>
           );
