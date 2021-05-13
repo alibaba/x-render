@@ -67,13 +67,11 @@ export const defaultCommonSettings = {
   },
 };
 
-// widget 用于schema中每个元素对应的右侧配置知道用哪个setting
-
+// widget 用于指定 schema 右侧配置对应的 setting
 export const elements = [
   {
     text: '输入框',
     name: 'input',
-    widget: 'input',
     schema: {
       title: '输入框',
       type: 'string',
@@ -127,7 +125,6 @@ export const elements = [
   {
     text: '大输入框',
     name: 'textarea',
-    widget: 'textarea',
     schema: {
       title: '编辑框',
       type: 'string',
@@ -166,11 +163,9 @@ export const elements = [
       },
     },
   },
-
   {
     text: '日期选择',
     name: 'date',
-    widget: 'date',
     schema: {
       title: '日期选择',
       type: 'string',
@@ -188,7 +183,6 @@ export const elements = [
   {
     text: '数字输入框',
     name: 'number',
-    widget: 'number',
     schema: {
       title: '数字输入框',
       type: 'number',
@@ -198,7 +192,6 @@ export const elements = [
   {
     text: '是否选择',
     name: 'checkbox',
-    widget: 'checkbox',
     schema: {
       title: '是否选择',
       type: 'boolean',
@@ -214,7 +207,6 @@ export const elements = [
   {
     text: '是否switch',
     name: 'switch',
-    widget: 'switch',
     schema: {
       title: '是否选择',
       type: 'boolean',
@@ -230,7 +222,6 @@ export const elements = [
   {
     text: '下拉单选',
     name: 'select',
-    widget: 'select',
     schema: {
       title: '单选',
       type: 'string',
@@ -262,7 +253,6 @@ export const elements = [
   {
     text: '点击单选',
     name: 'radio',
-    widget: 'radio',
     schema: {
       title: '单选',
       type: 'string',
@@ -294,7 +284,6 @@ export const elements = [
   {
     text: '下拉多选',
     name: 'multiSelect',
-    widget: 'multiSelect',
     schema: {
       title: '多选',
       description: '下拉多选',
@@ -330,11 +319,11 @@ export const elements = [
   {
     text: '点击多选',
     name: 'checkboxes',
-    widget: 'checkboxes',
     schema: {
       title: '多选',
       description: '点击多选',
       type: 'array',
+      widget: 'checkboxes',
       items: {
         type: 'string',
       },
@@ -365,7 +354,6 @@ export const elements = [
   {
     text: 'HTML',
     name: 'html',
-    widget: 'html',
     schema: {
       title: 'HTML',
       type: 'string',
@@ -384,7 +372,6 @@ export const advancedElements = [
   {
     text: '日期范围',
     name: 'dateRange',
-    widget: 'dateRange',
     schema: {
       title: '日期范围',
       type: 'range',
@@ -405,7 +392,6 @@ export const advancedElements = [
   {
     text: '数字（slider）',
     name: 'slider',
-    widget: 'slider',
     schema: {
       title: '带滑动条',
       type: 'number',
@@ -416,7 +402,6 @@ export const advancedElements = [
   {
     text: '图片展示',
     name: 'image',
-    // widget: 'input',
     schema: {
       title: '图片展示',
       type: 'string',
@@ -427,7 +412,6 @@ export const advancedElements = [
   {
     text: '颜色选择',
     name: 'color',
-    widget: 'color',
     schema: {
       title: '颜色选择',
       type: 'string',
@@ -446,13 +430,11 @@ export const layouts = [
       type: 'object',
       properties: {},
     },
-    widget: 'map',
     setting: {},
   },
   {
     text: '常规列表',
     name: 'list',
-    widget: 'list',
     schema: {
       title: '数组',
       type: 'array',
@@ -492,8 +474,7 @@ export const layouts = [
   },
   {
     text: '简单列表',
-    name: 'list',
-    widget: 'list1',
+    name: 'list1',
     schema: {
       title: '数组',
       type: 'array',
@@ -538,8 +519,7 @@ export const layouts = [
   },
   {
     text: '表格列表',
-    name: 'list',
-    widget: 'list2',
+    name: 'list2',
     schema: {
       title: '数组',
       type: 'array',
@@ -580,8 +560,7 @@ export const layouts = [
   },
   {
     text: '复杂表格列表',
-    name: 'list',
-    widget: 'list3',
+    name: 'list3',
     schema: {
       title: '数组',
       type: 'array',

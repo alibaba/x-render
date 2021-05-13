@@ -38,8 +38,11 @@ export default function ItemSettings() {
       // TODO: 这里要判断一下否则会crash
       const _widgets = setting.widgets;
       const basicWidgets = _widgets
-        .filter(item => item.widget)
-        .map(b => ({ ...b, setting: { ...commonSettings, ...b.setting } }));
+        .map(item => ({
+          ...item,
+          widget: item.widget || item.schema.widget || getWidgetName(item.schema, defaultMapping),
+          setting: { ...commonSettings, ...item.setting }
+        }));
       widgetList = [...widgetList, ...basicWidgets];
     });
     return widgetList;
@@ -59,7 +62,7 @@ export default function ItemSettings() {
   };
 
   useEffect(() => {
-    // 算widgetList
+    // 算 widgetList
     const _settings = Array.isArray(settings)
       ? [...settings, { widgets: [...elements, ...advancedElements, ...layouts] }] // TODO: 不是最优解
       : defaultSettings;
@@ -68,7 +71,7 @@ export default function ItemSettings() {
       : defaultCommonSettings;
     const widgetList = getWidgetList(_settings, _commonSettings);
 
-    // setting该显示什么的计算，要把选中组件的schema和它对应的widgets的整体schema进行拼接
+    // setting 该显示什么的计算，要把选中组件的 schema 和它对应的 widgets 的整体 schema 进行拼接
     let itemSelected;
     let widgetName;
     try {
@@ -77,7 +80,6 @@ export default function ItemSettings() {
         widgetName = getWidgetName(itemSelected.schema, defaultMapping);
       }
       if (widgetName) {
-        // const name = getKeyFromUniqueId(selected);
         const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
         const schemaNow = element.setting;
         setSettingSchema({
@@ -90,7 +92,7 @@ export default function ItemSettings() {
         });
         setTimeout(() => {
           form.setValues(itemSelected.schema);
-        })
+        }, 0);
       }
     } catch (error) {
       console.log(error);
