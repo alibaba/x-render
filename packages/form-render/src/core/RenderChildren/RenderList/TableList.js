@@ -2,7 +2,6 @@
 import React from 'react';
 import Core from '../../index';
 import { Button, Table, Popconfirm } from 'antd';
-import { isObject } from '../../../utils';
 // import ArrowDown from '../../../components/ArrowDown';
 
 const FIELD_LENGTH = 120;
@@ -21,11 +20,10 @@ const TableList = ({
   const { props = {}, itemProps } = schema;
   const { pagination = {}} = props;
 
-  let paginationConfig = { size: 'small', hideOnSinglePage: true};
-  if (pagination === false) {
-    paginationConfig = pagination;
-  } else if (isObject(pagination)) {
-    paginationConfig = { ...paginationConfig, ...pagination };
+  const paginationConfig = pagination && {
+    size: 'small',
+    hideOnSinglePage: true,
+    ...pagination
   }
 
   const dataSource = displayList.map((item, idx) => {
