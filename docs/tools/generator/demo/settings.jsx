@@ -25,7 +25,7 @@ const Demo = () => {
                 name: 'asyncSelect',
                 schema: {
                   title: '计数器',
-                  type: 'string',
+                  type: 'number',
                   widget: 'NewWidget',
                 },
                 setting: {
