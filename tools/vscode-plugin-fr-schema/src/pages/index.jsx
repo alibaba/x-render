@@ -32,7 +32,7 @@ const App = () => {
         ref={generator}
         extraButtons={[
           true,
-          true,
+          !preview,
           false,
           false,
           !preview && {

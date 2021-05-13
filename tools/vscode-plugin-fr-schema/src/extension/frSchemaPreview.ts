@@ -16,7 +16,7 @@ const initWebview = (editor: vscode.TextEditor, context: vscode.ExtensionContext
     {
       enableScripts: true,
       retainContextWhenHidden: true,
-      enableFindWidget: true,
+      enableFindWidget: false,
     }
   );
 
