@@ -23,12 +23,12 @@ const App = () => {
   vsemit('init');
 
   return (
-    <div className={isPreview && 'preview-mode'}>
+    <div className={`theme ${isPreview && 'preview-mode'}`} style={{ height: '100vh' }}>
       <Generator
         ref={generator}
         extraButtons={[
           true,
-          false,
+          true,
           false,
           false,
           !isPreview && {
