@@ -18,6 +18,8 @@ const TableList = ({
   changeList,
 }) => {
   const { props = {}, itemProps } = schema;
+  const { pagination = { size: 'small', hideOnSinglePage: true }} = props;
+
   const dataSource = displayList.map((item, idx) => {
     return { index: idx };
   });
@@ -119,7 +121,7 @@ const TableList = ({
         dataSource={dataSource}
         rowKey="index"
         size="small"
-        pagination={{ size: 'small', hideOnSinglePage: true }}
+        pagination={pagination}
       />
     </>
   );
