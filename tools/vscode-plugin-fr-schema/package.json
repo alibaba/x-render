@@ -161,7 +161,18 @@
         ],
         "url": "./src/validation/schema.json"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "FormRender generator",
+      "properties": {
+        "vscode-plugin-fr-schema.theme": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用主题"
+        }
+      }
+    }
   },
   "dependencies": {
     "fr-generator": "^2.0.2",

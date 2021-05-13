@@ -21,6 +21,7 @@ const initWebview = (editor: vscode.TextEditor, context: vscode.ExtensionContext
   );
 
   const root = vscode.Uri.joinPath(context.extensionUri, 'media');
+  const theme: any = vscode.workspace.getConfiguration().get('vscode-plugin-fr-schema.theme');
   webviewPanel.iconPath = {
     light: vscode.Uri.joinPath(root, 'preview-light.svg'),
     dark: vscode.Uri.joinPath(root, 'preview-dark.svg'),
@@ -28,7 +29,7 @@ const initWebview = (editor: vscode.TextEditor, context: vscode.ExtensionContext
   webviewPanel.webview.html = getHtmlForWebview(
     webviewPanel.webview,
     context.extensionPath,
-    true,
+    { theme, preview: true },
   );
 
   const updateWebview = () => {

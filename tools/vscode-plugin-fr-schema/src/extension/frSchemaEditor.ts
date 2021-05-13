@@ -37,10 +37,11 @@ export class frSchemaEditorProvider implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
   ): Promise<void> {
     // Setup initial content for the webview
+    const theme: any = vscode.workspace.getConfiguration().get('vscode-plugin-fr-schema.theme');
     webviewPanel.webview.options = {
       enableScripts: true,
     };
-    webviewPanel.webview.html = getHtmlForWebview(webviewPanel.webview, this.context.extensionPath);
+    webviewPanel.webview.html = getHtmlForWebview(webviewPanel.webview, this.context.extensionPath, { theme });
 
     function updateWebview() {
       webviewPanel.webview.postMessage({

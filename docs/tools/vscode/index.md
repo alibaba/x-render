@@ -81,6 +81,14 @@ snippets 基本分为三类：
 
    <img alt="preview" width="80%" src="https://img.alicdn.com/imgextra/i3/O1CN01BbcGi71vDFhN4cwcA_!!6000000006138-2-tps-2295-1224.png" />
 
+## 配置
+
+> Settings -> Extensions -> FormRender generator
+
+* 启用主题
+
+是否适配 vscode 主题，关闭后显示默认样式
+
 ## 插件开发
 
 - 克隆项目

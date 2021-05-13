@@ -2,9 +2,10 @@ import React, { useRef } from 'react';
 import Generator from 'fr-generator';
 import { vsemit, vson } from './utils';
 
+const { preview, theme = true } = window.pluginConfig;
+
 const App = () => {
   const generator = useRef(null);
-  const isPreview = window.mode === 'preview';
 
   const handleClose = () => {
     const schema = generator.current.getValue();
@@ -23,7 +24,10 @@ const App = () => {
   vsemit('init');
 
   return (
-    <div className={`theme ${isPreview && 'preview-mode'}`} style={{ height: '100vh' }}>
+    <div
+      style={{ height: '100vh' }}
+      className={`${theme && 'theme'} ${preview && 'preview-mode'}`}
+    >
       <Generator
         ref={generator}
         extraButtons={[
@@ -31,7 +35,7 @@ const App = () => {
           true,
           false,
           false,
-          !isPreview && {
+          !preview && {
             text: '保存',
             onClick: handleClose,
           }
