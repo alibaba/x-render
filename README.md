@@ -31,7 +31,7 @@
 - <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
 
 <Alert>
-  <span>🎉🎉🎉 FormRender 品牌已升级到 XRender，提供中后台中 「表单 / 表格 / 图表」 很易用的解决方案， 原<a href="http://x-components.gitee.io/form-render/" target="_blank_"> 0.X 版本 </a> 建议快速 <a href="https://x-render.gitee.io/form-render/migrate" target="_blank_"> 升级到 1.X </a> </span>
+  <span>🎉🎉🎉 FormRender 品牌已升级到 XRender，提供中后台中 「表单 / 表格 / 图表」 很易用的解决方案， 原 0.X 版本可快速 <a href="https://x-render.gitee.io/form-render/migrate" target="_blank_"> 升级到 1.X </a> </span>
 </Alert>
 
 ## 谁在使用？
