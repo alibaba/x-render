@@ -26,6 +26,9 @@ export default function ItemSettings() {
 
   const { settings, commonSettings } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
+  // 避免切换选中项时 schema 对应出错
+  const [ready, setReady] = useState({});
+
   const widgets = {
     ...defaultWidgets,
     idInput: IdInput,
@@ -47,6 +50,7 @@ export default function ItemSettings() {
 
   const onDataChange = (value) => {
     try {
+      if (!ready) return;
       const item = flatten[selected];
       if (item && item.schema) {
         onItemChange(selected, {
@@ -64,6 +68,7 @@ export default function ItemSettings() {
     try {
       const item = flatten[selected];
       if (!item) return;
+      setReady(false);
       // 算 widgetList
       const _settings = Array.isArray(settings)
         ? [...settings, { widgets: [...elements, ...advancedElements, ...layouts] }] // TODO: 不是最优解
@@ -72,16 +77,14 @@ export default function ItemSettings() {
       const widgetList = getWidgetList(_settings, _commonSettings);
       const widgetName = getWidgetName(item.schema, defaultMapping);
       const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
-      const schemaNow = element.setting;
       form.setValues(item.schema);
       setSettingSchema({
         type: 'object',
         displayType: 'column',
         showDescIcon: true,
-        properties: {
-          ...schemaNow,
-        },
+        properties: element.setting,
       });
+      setTimeout(() => setReady(true), 0);
     } catch (error) {
       console.log(error);
     }
