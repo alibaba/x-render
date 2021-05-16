@@ -81,7 +81,6 @@ export default function ItemSettings() {
       setSettingSchema({
         type: 'object',
         displayType: 'column',
-        showDescIcon: true,
         properties: element.setting,
       });
       setTimeout(() => setReady(true), 0);

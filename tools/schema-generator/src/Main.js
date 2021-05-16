@@ -57,14 +57,20 @@ function App(props, ref) {
   // 收口点 propsSchema 到 schema 的转换 (一共3处，其他两个是 importSchema 和 setValue，在 FRWrapper 文件)
   useEffect(() => {
     const schema = defaultValue ? transformFrom(defaultValue) : DEFAULT_SCHEMA;
-    if (schema && schema.propsSchema) {
+    if (!schema) return;
+    if (schema.propsSchema) {
       setState({ isNewVersion: false });
     } else {
       setState({ isNewVersion: true });
     }
     setState({
       schema: oldSchemaToNew(schema), // 旧的转新的，新的不变
-      formData: (schema && schema.formData) || {},
+      formData: schema.formData || {},
+      frProps: {
+        column: schema.column,
+        displayType: schema.displayType,
+        labelWidth: schema.labelWidth,
+      },
     });
   }, [defaultValue]);
 
@@ -77,10 +83,6 @@ function App(props, ref) {
     schema,
     selected,
   } = state;
-
-  const { displayType } = frProps;
-  const showDescIcon = displayType === 'row';
-  const _frProps = { ...frProps, showDescIcon };
 
   const onChange = data => {
     setState({ formData: data });
@@ -129,7 +131,7 @@ function App(props, ref) {
     onSchemaChange,
     ...rootState, // 顶层的state
     userProps, // 用户传入的props
-    frProps: _frProps, // fr顶层的props
+    frProps, // fr顶层的props
   };
 
   return <FRWrapper ref={frwRef} {...allProps} />;

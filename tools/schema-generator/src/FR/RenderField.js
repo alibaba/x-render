@@ -13,7 +13,7 @@ const RenderField = ({
 }) => {
   const { schema, data } = item;
   const { onItemChange, flatten, widgets, mapping, frProps = {} } = useStore();
-  const { labelWidth, displayType, showDescIcon, showValidate } = frProps;
+  const { labelWidth, displayType, showValidate } = frProps;
   const { title, description, required } = schema;
 
   let widgetName = getWidgetName(schema, mapping);
@@ -95,18 +95,7 @@ const RenderField = ({
             >
               {title}
             </span>
-            {description &&
-              (showDescIcon ? (
-                <span className="fr-tooltip-toggle" aria-label={description}>
-                  <i className="fr-tooltip-icon" />
-                  <div className="fr-tooltip-container">
-                    <i className="fr-tooltip-triangle" />
-                    {description}
-                  </div>
-                </span>
-              ) : (
-                <span className="fr-desc ml2">(&nbsp;{description}&nbsp;)</span>
-              ))}
+            {description && <span className="fr-desc ml2">(&nbsp;{description}&nbsp;)</span>}
             {displayType !== 'row' && showValidate && (
               <span className="fr-validate">validation</span>
             )}

@@ -3,7 +3,7 @@ import FormRender, { useForm } from 'form-render';
 import { defaultGlobalSettings } from '../Settings';
 import { useStore, useGlobal } from '../hooks';
 
-export default function ItemSettings() {
+export default function GlobalSettings() {
   const form = useForm();
   const { widgets, frProps, userProps } = useStore();
   const setGlobal = useGlobal();

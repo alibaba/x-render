@@ -106,7 +106,12 @@ function Wrapper(
         formData: {},
         selected: undefined,
         isNewVersion: _isNewVersion,
-        frProps: { ...state.frProps },
+        frProps: {
+          ...state.frProps,
+          column: schema.column,
+          displayType: schema.displayType,
+          labelWidth: schema.labelWidth
+        },
       }));
     } catch (error) {
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
@@ -123,9 +128,6 @@ function Wrapper(
     }
     if (frProps && frProps.displayType) {
       _schema['displayType'] = frProps.displayType;
-    }
-    if (frProps && frProps.showDescIcon) {
-      _schema['showDescIcon'] = frProps.showDescIcon;
     }
     displaySchema = transformTo(_schema);
     if (!isNewVersion) {
@@ -161,6 +163,12 @@ function Wrapper(
         formData: {},
         selected: undefined,
         isNewVersion: _isNewVersion,
+        frProps: {
+          ...state.frProps,
+          column: schema.column,
+          displayType: schema.displayType,
+          labelWidth: schema.labelWidth,
+        },
       }));
     } catch (error) {
       console.error(error);
