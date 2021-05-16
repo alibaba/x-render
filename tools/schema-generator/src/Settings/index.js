@@ -2,9 +2,10 @@
 export const defaultCommonSettings = {
   $id: {
     title: 'ID',
-    description: '数据存储的名称/英文/必填',
+    description: '字段名称/英文',
     type: 'string',
     widget: 'idInput',
+    required: true
   },
   title: {
     title: '标题',

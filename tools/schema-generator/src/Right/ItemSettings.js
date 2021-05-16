@@ -45,16 +45,19 @@ export default function ItemSettings() {
     }, []);
   };
 
-  const onDataChange = (value) => {
-    if (selected === value.$id) {
-      try {
-        const item = flatten[selected];
-        if (item && item.schema) {
-          onItemChange(selected, { ...item, schema: value });
-        }
-      } catch (error) {
-        console.log(error, 'catch');
+  const onDataChange = (value, key) => {
+    try {
+      const isIdChange = key === '$id';
+      if (!isIdChange && selected !== value.$id) return;
+      const item = flatten[selected];
+      if (item && item.schema) {
+        const schema = isIdChange
+          ? { ...item.schema, $id: value }
+          : value;
+        onItemChange(selected, { ...item, schema });
       }
+    } catch (error) {
+      console.log(error, 'catch');
     }
   };
 
@@ -93,7 +96,8 @@ export default function ItemSettings() {
         schema={settingSchema}
         widgets={widgets}
         watch={{
-          '#': v => onDataChange(v)
+          '#': v => onDataChange(v),
+          '$id': v => onDataChange(v, '$id'),
         }}
       />
     </div>
