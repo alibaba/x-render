@@ -45,16 +45,14 @@ export default function ItemSettings() {
     }, []);
   };
 
-  const onDataChange = (value, key) => {
+  const onDataChange = (value) => {
     try {
-      const isIdChange = key === '$id';
-      if (!isIdChange && selected !== value.$id) return;
       const item = flatten[selected];
       if (item && item.schema) {
-        const schema = isIdChange
-          ? { ...item.schema, $id: value }
-          : value;
-        onItemChange(selected, { ...item, schema });
+        onItemChange(selected, {
+          ...item,
+          schema: value,
+        });
       }
     } catch (error) {
       console.log(error, 'catch');
@@ -64,17 +62,18 @@ export default function ItemSettings() {
   useEffect(() => {
     // setting 该显示什么的计算，要把选中组件的 schema 和它对应的 widgets 的整体 schema 进行拼接
     try {
-      const itemSelected = flatten[selected];
-      if (!itemSelected) return;
+      const item = flatten[selected];
+      if (!item) return;
       // 算 widgetList
       const _settings = Array.isArray(settings)
         ? [...settings, { widgets: [...elements, ...advancedElements, ...layouts] }] // TODO: 不是最优解
         : defaultSettings;
       const _commonSettings = isObject(commonSettings) ? commonSettings : defaultCommonSettings;
       const widgetList = getWidgetList(_settings, _commonSettings);
-      const widgetName = getWidgetName(itemSelected.schema, defaultMapping);
+      const widgetName = getWidgetName(item.schema, defaultMapping);
       const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
       const schemaNow = element.setting;
+      form.setValues(item.schema);
       setSettingSchema({
         type: 'object',
         displayType: 'column',
@@ -83,7 +82,6 @@ export default function ItemSettings() {
           ...schemaNow,
         },
       });
-      setTimeout(() => form.setValues(itemSelected.schema), 0);
     } catch (error) {
       console.log(error);
     }
@@ -97,7 +95,6 @@ export default function ItemSettings() {
         widgets={widgets}
         watch={{
           '#': v => onDataChange(v),
-          '$id': v => onDataChange(v, '$id'),
         }}
       />
     </div>
