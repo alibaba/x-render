@@ -54,6 +54,7 @@ function App({
     console.error('form 为必填 props，<FormRender /> 没有接收到 form 属性!');
   }
 
+  const _column = schema.column || column;
   const {
     onItemChange,
     setEditing,
@@ -122,7 +123,7 @@ function App({
     () => ({
       displayType,
       theme,
-      column,
+      column: _column,
       debounceInput,
       debug,
       labelWidth,
@@ -132,7 +133,7 @@ function App({
     [
       displayType,
       theme,
-      column,
+      _column,
       debounceInput,
       debug,
       labelWidth,
