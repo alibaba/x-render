@@ -10,16 +10,16 @@ const App = () => {
   const handleClose = () => {
     const schema = generator.current.getValue();
     vsemit('close', JSON.stringify(schema, null, 2));
-  }
+  };
 
-  vson('update', (body) => {
+  vson('update', body => {
     try {
       const obj = JSON.parse(body) || {};
       generator.current.setValue(obj);
     } catch (err) {
       console.log(err);
     }
-  })
+  });
 
   vsemit('init');
 
@@ -38,7 +38,7 @@ const App = () => {
           !preview && {
             text: '保存',
             onClick: handleClose,
-          }
+          },
         ]}
       />
     </div>

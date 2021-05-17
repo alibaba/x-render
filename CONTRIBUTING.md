@@ -5,7 +5,7 @@
 #### 2. 如何跑起来（以下操作全在根目录）
 
 ```sh
-# 安装依赖，请使用yarn，会去重的安装所有 node_modules
+# 安装依赖，请使用yarn，会去重的安装所有 node_modules (注意安装必须用 yarn，其他命令无所谓)
 yarn
 # 首次开发需要 build 一下，否则有些仓库的 import 在 dumi 里会找不到
 npm run build
@@ -15,8 +15,14 @@ npm start
 
 #### 3. 进入文档网站了，如何开发呢？
 
-例如要开发 form-render 在 /docs/form-render/guide 目录下写一个 test.md 文件, 参考 /docs/form-render/guide/new-feature.md 的写法即可。发布前把
-test.md 干掉，或者放到不会被展示的文件目录下
+- 例如要开发 form-render 在 /docs/form-render/guide 目录下写一个 test.md 文件, 参考 /docs/form-render/guide/new-feature.md 的写法即可。发布前把
+  test.md 干掉，或者放到不会被展示的文件目录下
+
+- 提交前注意必须**格式化**。提交前注意必须**格式化**。提交前注意必须**格式化**。请安装 prettier 插件，或者在提交前执行
+
+```sh
+npm run prettier
+```
 
 #### 4. 重新安装依赖
 
@@ -31,8 +37,8 @@ yarn
 
 #### 5. 发布
 
-此操作只针对有npm发布权限的贡献，进入相应项目的文件夹，例如 form-render，执行 publish
- 
+此操作只针对有 npm 发布权限的贡献，进入相应项目的文件夹，例如 form-render，执行 publish
+
 ```sh
 # 进入
 cd packages/form-render

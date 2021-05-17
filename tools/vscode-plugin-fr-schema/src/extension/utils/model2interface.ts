@@ -6,14 +6,17 @@
 
 import * as _ from 'lodash-es';
 
-
 // TODO: convert schema to interface directly
 class Json2Interface {
   convert(jsonContent: any, schema?: any): string {
     return this.convertObjectToTsInterfaces(jsonContent, 'FormData', schema);
   }
 
-  private convertObjectToTsInterfaces(jsonContent: any, objectName: string = 'FormData', schema?: any): string {
+  private convertObjectToTsInterfaces(
+    jsonContent: any,
+    objectName: string = 'FormData',
+    schema?: any
+  ): string {
     let optionalKeys: string[] = [];
     let objectResult: string[] = [];
 
@@ -22,7 +25,13 @@ class Json2Interface {
 
       if (_.isObject(value) && !_.isArray(value)) {
         let childObjectName = this.toUpperFirstLetter(key);
-        objectResult.push(this.convertObjectToTsInterfaces(value, childObjectName, schema?.properties?.[key]));
+        objectResult.push(
+          this.convertObjectToTsInterfaces(
+            value,
+            childObjectName,
+            schema?.properties?.[key]
+          )
+        );
         jsonContent[key] = this.removeMajority(childObjectName) + ';';
       } else if (_.isArray(value)) {
         let arrayTypes: any = this.detectMultiArrayTypes(value);
@@ -37,12 +46,17 @@ class Json2Interface {
           }
         } else if (value.length > 0 && _.isObject(value[0])) {
           let childObjectName = this.toUpperFirstLetter(key);
-          objectResult.push(this.convertObjectToTsInterfaces(value[0], childObjectName, schema?.properties?.[key]?.items));
+          objectResult.push(
+            this.convertObjectToTsInterfaces(
+              value[0],
+              childObjectName,
+              schema?.properties?.[key]?.items
+            )
+          );
           jsonContent[key] = this.removeMajority(childObjectName) + '[];';
         } else {
           jsonContent[key] = arrayTypes[0];
         }
-
       } else if (_.isDate(value)) {
         jsonContent[key] = 'Date;';
       } else if (_.isString(value)) {
@@ -57,17 +71,24 @@ class Json2Interface {
       }
 
       if (schema?.properties?.[key]?.title) {
-        jsonContent[key] += ` // ${schema.properties[key].title}`
+        jsonContent[key] += ` // ${schema.properties[key].title}`;
       }
     }
 
-    let result = this.formatCharsToTypeScript(jsonContent, objectName, optionalKeys);
+    let result = this.formatCharsToTypeScript(
+      jsonContent,
+      objectName,
+      optionalKeys
+    );
     objectResult.push(result);
 
     return objectResult.join('\n\n');
   }
 
-  private detectMultiArrayTypes(value: any, valueType: string[] = []): string[] {
+  private detectMultiArrayTypes(
+    value: any,
+    valueType: string[] = []
+  ): string[] {
     if (_.isArray(value)) {
       if (value.length === 0) {
         valueType.push('any[];');
@@ -117,18 +138,28 @@ class Json2Interface {
     return brackets;
   }
 
-  private formatCharsToTypeScript(jsonContent: any, objectName: string, optionalKeys: string[]): string {
+  private formatCharsToTypeScript(
+    jsonContent: any,
+    objectName: string,
+    optionalKeys: string[]
+  ): string {
     let result = JSON.stringify(jsonContent, null, '\t')
-      .replace(new RegExp('\"', 'g'), '')
+      .replace(new RegExp('"', 'g'), '')
       .replace(new RegExp(',', 'g'), '');
 
     let allKeys = _.keys(jsonContent);
     for (let index = 0, length = allKeys.length; index < length; index++) {
       let key = allKeys[index];
       // keys of formData always optional
-      result = result.replace(new RegExp(key + ':', 'g'), this.toLowerFirstLetter(key) + '?:');
+      result = result.replace(
+        new RegExp(key + ':', 'g'),
+        this.toLowerFirstLetter(key) + '?:'
+      );
       // optimize comments format for code prompt
-      result = result.replace(new RegExp('(.*) \/\/ (.*)'), (match, $1, $2) => `  /** ${$2} */\n${$1}`);
+      result = result.replace(
+        new RegExp('(.*) // (.*)'),
+        (match, $1, $2) => `  /** ${$2} */\n${$1}`
+      );
       // if (_.includes(optionalKeys, key)) {
       //   result = result.replace(new RegExp(key + ':', 'g'), this.toLowerFirstLetter(key) + '?:');
       // } else {
@@ -155,11 +186,11 @@ class Json2Interface {
 
   private toUpperFirstLetter(text: string) {
     return text.charAt(0).toUpperCase() + text.slice(1);
-  };
+  }
 
   private toLowerFirstLetter(text: string) {
     return text.charAt(0).toLowerCase() + text.slice(1);
-  };
+  }
 }
 
 const getInterfaceFromModel = new Json2Interface();

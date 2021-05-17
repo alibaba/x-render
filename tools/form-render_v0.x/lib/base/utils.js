@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 exports.clone = clone;
 exports.isUrl = isUrl;
@@ -20,13 +20,73 @@ exports.baseGet = baseGet;
 exports.funcfySchema = funcfySchema;
 exports.isEmail = exports.getArray = exports.getEnum = exports.convertValue2 = exports.convertValue = exports.isObj = exports.isNumber = exports.evaluateString2 = exports.evaluateString = exports.parseString = exports.isValidVariableName = void 0;
 
-function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+function _typeof(obj) {
+  '@babel/helpers - typeof';
+  if (typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol') {
+    _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    _typeof = function _typeof(obj) {
+      return obj &&
+        typeof Symbol === 'function' &&
+        obj.constructor === Symbol &&
+        obj !== Symbol.prototype
+        ? 'symbol'
+        : typeof obj;
+    };
+  }
+  return _typeof(obj);
+}
 
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+function ownKeys(object, enumerableOnly) {
+  var keys = Object.keys(object);
+  if (Object.getOwnPropertySymbols) {
+    var symbols = Object.getOwnPropertySymbols(object);
+    if (enumerableOnly)
+      symbols = symbols.filter(function(sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+    keys.push.apply(keys, symbols);
+  }
+  return keys;
+}
 
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+function _objectSpread(target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i] != null ? arguments[i] : {};
+    if (i % 2) {
+      ownKeys(Object(source), true).forEach(function(key) {
+        _defineProperty(target, key, source[key]);
+      });
+    } else if (Object.getOwnPropertyDescriptors) {
+      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+    } else {
+      ownKeys(Object(source)).forEach(function(key) {
+        Object.defineProperty(
+          target,
+          key,
+          Object.getOwnPropertyDescriptor(source, key)
+        );
+      });
+    }
+  }
+  return target;
+}
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    });
+  } else {
+    obj[key] = value;
+  }
+  return obj;
+}
 
 /**
  * Created by Tw93 on 2018-09-26.
@@ -41,14 +101,12 @@ function clone(data) {
   }
 } // 做一个url的弱判断，就判断有没有 “//”
 
-
 function isUrl(string) {
   var protocolRE = /^(?:\w+:)?\/\/(\S+)$/; // const domainRE = /^[^\s\.]+\.\S{2,}$/;
 
   if (typeof string !== 'string') return false;
   return protocolRE.test(string);
 } // '3' => true, 3 => true, undefined => false
-
 
 function isLooselyNumber(num) {
   if (typeof num === 'number') return true;
@@ -65,10 +123,12 @@ function isCssLength(str) {
   return str.match(/^([0-9])*(%|px|rem|em)$/i);
 } // 深度对比
 
-
 function isDeepEqual(param1, param2) {
-  if (param1 === undefined && param2 === undefined) return true;else if (param1 === undefined || param2 === undefined) return false;
-  if (param1 === null && param2 === null) return true;else if (param1 === null || param2 === null) return false;else if (param1.constructor !== param2.constructor) return false;
+  if (param1 === undefined && param2 === undefined) return true;
+  else if (param1 === undefined || param2 === undefined) return false;
+  if (param1 === null && param2 === null) return true;
+  else if (param1 === null || param2 === null) return false;
+  else if (param1.constructor !== param2.constructor) return false;
 
   if (param1.constructor === Array) {
     if (param1.length !== param2.length) return false;
@@ -84,7 +144,12 @@ function isDeepEqual(param1, param2) {
     for (var _i = 0; _i < Object.keys(param1).length; _i++) {
       var key = Object.keys(param1)[_i];
 
-      if (param1[key] && typeof param1[key] !== 'number' && (param1[key].constructor === Array || param1[key].constructor === Object)) {
+      if (
+        param1[key] &&
+        typeof param1[key] !== 'number' &&
+        (param1[key].constructor === Array ||
+          param1[key].constructor === Object)
+      ) {
         if (!isDeepEqual(param1[key], param2[key])) return false;
       } else if (param1[key] !== param2[key]) return false;
     }
@@ -94,7 +159,6 @@ function isDeepEqual(param1, param2) {
 
   return true;
 } // fusion 的时间 format
-
 
 function getFormatForFusion(format) {
   var dateFormat;
@@ -134,12 +198,10 @@ function getFormatForFusion(format) {
       if (format && typeof format === 'string') {
         dateFormat = format;
       }
-
   }
 
   return dateFormat;
 } // 时间组件
-
 
 function getFormat(format) {
   var dateFormat;
@@ -182,31 +244,32 @@ function getFormat(format) {
       if (format && typeof format === 'string') {
         dateFormat = format;
       }
-
   }
 
   return dateFormat;
 }
 
 function hasRepeat(list) {
-  return list.find(function (x, i, self) {
-    return i !== self.findIndex(function (y) {
-      return JSON.stringify(x) === JSON.stringify(y);
-    });
+  return list.find(function(x, i, self) {
+    return (
+      i !==
+      self.findIndex(function(y) {
+        return JSON.stringify(x) === JSON.stringify(y);
+      })
+    );
   });
 } // ----------------- schema 相关
 // 合并propsSchema和UISchema。由于两者的逻辑相关性，合并为一个大schema能简化内部处理
 
-
 function combineSchema(propsSchema, uiSchema) {
   var propList = getChildren(propsSchema);
-  var newList = propList.map(function (p) {
+  var newList = propList.map(function(p) {
     var name = p.name;
     var _p$schema = p.schema,
-        type = _p$schema.type,
-        options = _p$schema.enum,
-        properties = _p$schema.properties,
-        items = _p$schema.items;
+      type = _p$schema.type,
+      options = _p$schema.enum,
+      properties = _p$schema.properties,
+      items = _p$schema.items;
     var isObj = type === 'object' && properties;
     var isArr = type === 'array' && items && !options; // enum + array 代表的多选框，没有sub
 
@@ -216,34 +279,48 @@ function combineSchema(propsSchema, uiSchema) {
       return p;
     } // 如果是list，递归合并items
 
-
     if (isArr) {
       var newItems = combineSchema(items, ui.items || {});
-      return _objectSpread(_objectSpread({}, p), {}, {
-        schema: _objectSpread(_objectSpread(_objectSpread({}, p.schema), ui), {}, {
-          items: newItems
-        })
-      });
+      return _objectSpread(
+        _objectSpread({}, p),
+        {},
+        {
+          schema: _objectSpread(
+            _objectSpread(_objectSpread({}, p.schema), ui),
+            {},
+            {
+              items: newItems,
+            }
+          ),
+        }
+      );
     } // object递归合并整个schema
-
 
     if (isObj) {
       var newSchema = combineSchema(p.schema, ui);
-      return _objectSpread(_objectSpread({}, p), {}, {
-        schema: newSchema
-      });
+      return _objectSpread(
+        _objectSpread({}, p),
+        {},
+        {
+          schema: newSchema,
+        }
+      );
     }
 
-    return _objectSpread(_objectSpread({}, p), {}, {
-      schema: _objectSpread(_objectSpread({}, p.schema), ui)
-    });
+    return _objectSpread(
+      _objectSpread({}, p),
+      {},
+      {
+        schema: _objectSpread(_objectSpread({}, p.schema), ui),
+      }
+    );
   });
   var newObj = {};
-  newList.forEach(function (s) {
+  newList.forEach(function(s) {
     newObj[s.name] = s.schema;
   });
   var topLevelUi = {};
-  Object.keys(uiSchema).forEach(function (key) {
+  Object.keys(uiSchema).forEach(function(key) {
     if (typeof key === 'string' && key.substring(0, 3) === 'ui:') {
       topLevelUi[key] = uiSchema[key];
     }
@@ -253,20 +330,23 @@ function combineSchema(propsSchema, uiSchema) {
     return _objectSpread(_objectSpread({}, propsSchema), topLevelUi);
   }
 
-  return _objectSpread(_objectSpread(_objectSpread({}, propsSchema), topLevelUi), {}, {
-    properties: newObj
-  });
+  return _objectSpread(
+    _objectSpread(_objectSpread({}, propsSchema), topLevelUi),
+    {},
+    {
+      properties: newObj,
+    }
+  );
 }
 
 function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 } // 获得propsSchema的children
 
-
 function getChildren(schema) {
   var properties = schema.properties,
-      items = schema.items,
-      type = schema.type;
+    items = schema.items,
+    type = schema.type;
 
   if (!properties && !items) {
     return [];
@@ -282,14 +362,13 @@ function getChildren(schema) {
     schemaSubs = items;
   }
 
-  return Object.keys(schemaSubs).map(function (name) {
+  return Object.keys(schemaSubs).map(function(name) {
     return {
       schema: schemaSubs[name],
-      name: name
+      name: name,
     };
   });
 } // 合并多个schema树，比如一个schema的树节点是另一个schema
-
 
 function combine() {}
 
@@ -309,33 +388,38 @@ var isValidVariableName = function isValidVariableName(param) {
 //   return Function(`${safeContextStr} "use strict";  ${code}`)();
 // }
 
-
 exports.isValidVariableName = isValidVariableName;
 
 function safeEval(code) {
-  return Function("\"use strict\"; ".concat(code))();
+  return Function('"use strict"; '.concat(code))();
 } // 代替eval的函数
 
-
 var parseString = function parseString(string) {
-  return safeEval("return (".concat(string, ")"));
+  return safeEval('return ('.concat(string, ')'));
 }; // 解析函数字符串值
-
 
 exports.parseString = parseString;
 
 var evaluateString = function evaluateString(string, formData, rootValue) {
-  return safeEval("\n  const rootValue =".concat(JSON.stringify(rootValue), ";\n  const formData = ").concat(JSON.stringify(formData), ";\n  return (").concat(string, ")\n  "));
+  return safeEval(
+    '\n  const rootValue ='
+      .concat(JSON.stringify(rootValue), ';\n  const formData = ')
+      .concat(JSON.stringify(formData), ';\n  return (')
+      .concat(string, ')\n  ')
+  );
 }; // 解析函数字符串值(用于validator，入参只有value)
-
 
 exports.evaluateString = evaluateString;
 
 var evaluateString2 = function evaluateString2(string, value, formData) {
-  return safeEval("\n  const value =".concat(JSON.stringify(value), ";\n  const formData = ").concat(JSON.stringify(formData), ";\n  return (").concat(string, ")\n  "));
+  return safeEval(
+    '\n  const value ='
+      .concat(JSON.stringify(value), ';\n  const formData = ')
+      .concat(JSON.stringify(formData), ';\n  return (')
+      .concat(string, ')\n  ')
+  );
 }; // 判断schema的值是是否是“函数”
 // JSON无法使用函数值的参数，所以使用"{{...}}"来标记为函数，也可使用@标记，不推荐。
-
 
 exports.evaluateString2 = evaluateString2;
 
@@ -348,7 +432,11 @@ function isFunction(func) {
     return func.substring(1);
   }
 
-  if (typeof func === 'string' && func.substring(0, 2) === '{{' && func.substring(func.length - 2, func.length) === '}}') {
+  if (
+    typeof func === 'string' &&
+    func.substring(0, 2) === '{{' &&
+    func.substring(func.length - 2, func.length) === '}}'
+  ) {
     return func.substring(2, func.length - 2);
   }
 
@@ -356,9 +444,8 @@ function isFunction(func) {
 } // 判断schema中是否有属性值是函数表达式
 // TODO: 这个util，没有考虑schema是array的情况，不过目前没有被用到
 
-
 function isFunctionSchema(schema) {
-  return Object.keys(schema).some(function (key) {
+  return Object.keys(schema).some(function(key) {
     if (typeof schema[key] === 'function') {
       return true;
     } else if (typeof schema[key] === 'string') {
@@ -385,7 +472,6 @@ var isObj = function isObj(a) {
   return stringContains(Object.prototype.toString.call(a), 'Object');
 }; // 函数表达式转换成值
 
-
 exports.isObj = isObj;
 
 var convertValue = function convertValue(item, formData, rootValue) {
@@ -398,14 +484,13 @@ var convertValue = function convertValue(item, formData, rootValue) {
       return evaluateString(_item, formData, rootValue);
     } catch (error) {
       console.error(error.message);
-      console.error("happen at ".concat(item));
+      console.error('happen at '.concat(item));
       return item;
     }
   }
 
   return item;
 }; // 用于validator的求值，入参只有value
-
 
 exports.convertValue = convertValue;
 
@@ -419,14 +504,13 @@ var convertValue2 = function convertValue2(item, value, formData) {
       return evaluateString2(_item, value, formData);
     } catch (error) {
       console.error(error.message);
-      console.error("happen at ".concat(item));
+      console.error('happen at '.concat(item));
       return item;
     }
   }
 
   return item;
 }; // getValueByKey(formData, 'a.b.c')
-
 
 exports.convertValue2 = convertValue2;
 
@@ -455,7 +539,7 @@ function toKey(value) {
     return value;
   }
 
-  var result = "".concat(value);
+  var result = ''.concat(value);
   return result == '0' && 1 / value == -INFINITY ? '-0' : result;
 }
 
@@ -473,19 +557,22 @@ function isKey(value, object) {
     return true;
   }
 
-  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) || object != null && value in Object(object);
+  return (
+    reIsPlainProp.test(value) ||
+    !reIsDeepProp.test(value) ||
+    (object != null && value in Object(object))
+  );
 } // 将schema内所有的 {{ ... }} 转换为正常函数，我们试着一次性在外部做好这件事，而不是在内部每次去计算，优化性能
-
 
 function funcfySchema(schema) {
   var _schema = clone(schema);
 
   if (isObj(_schema)) {
-    Object.keys(_schema).forEach(function (key) {
+    Object.keys(_schema).forEach(function(key) {
       _schema[key] = funcfySchema(_schema[key]);
     });
   } else if (Array.isArray(_schema)) {
-    _schema = _schema.map(function (item) {
+    _schema = _schema.map(function(item) {
       return funcfySchema(item);
     });
   } else {
@@ -493,7 +580,11 @@ function funcfySchema(schema) {
 
     if (typeof funcBody === 'string') {
       try {
-        _schema = new Function('formData', 'rootValue', "return ".concat(funcBody));
+        _schema = new Function(
+          'formData',
+          'rootValue',
+          'return '.concat(funcBody)
+        );
       } catch (error) {
         console.error('funcfySchema', error);
       }
@@ -513,7 +604,8 @@ var getEnum = function getEnum(schema) {
 exports.getEnum = getEnum;
 
 var getArray = function getArray(arr) {
-  var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
+  var defaultValue =
+    arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : [];
   if (Array.isArray(arr)) return arr;
   return defaultValue;
 };

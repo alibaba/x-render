@@ -1,5 +1,5 @@
 import React from 'react';
-import Loading from "@alife/loading";
+import Loading from '@alife/loading';
 
 import './index.scss';
 // import { glodLog } from './utils';
@@ -12,7 +12,8 @@ const { Component, PropTypes } = React;
  */
 
 export default class FpDemo extends Component {
-  static propTypes = { // eslint-disable-line
+  static propTypes = {
+    // eslint-disable-line
     /**
      * @title 标题
      * @description 输入标题
@@ -42,22 +43,24 @@ export default class FpDemo extends Component {
      * @title 描述
      * @description 这里是一个数组格式
      **/
-    desArr: PropTypes.arrayOf(PropTypes.shape({
-      /**
-       * @title 姓名
-       */
-      name: PropTypes.string,
-      /**
-       * @title 年份
-       * @pattern ^[0-9]+$
-       */
-      year: PropTypes.number,
-      /**
-       * @title 正确答案(必填，L: 左边答案正确，R: 右边答案正确)
-       * @enumNames ['养成系','动作类']
-       */
-      answerSide: PropTypes.oneOf(['L', 'R']),
-    })),
+    desArr: PropTypes.arrayOf(
+      PropTypes.shape({
+        /**
+         * @title 姓名
+         */
+        name: PropTypes.string,
+        /**
+         * @title 年份
+         * @pattern ^[0-9]+$
+         */
+        year: PropTypes.number,
+        /**
+         * @title 正确答案(必填，L: 左边答案正确，R: 右边答案正确)
+         * @enumNames ['养成系','动作类']
+         */
+        answerSide: PropTypes.oneOf(['L', 'R']),
+      })
+    ),
 
     /**
      * @title 是否喜欢
@@ -104,8 +107,8 @@ export default class FpDemo extends Component {
     styleObj: {
       width: 20,
       height: 20,
-      background: '#ffffff'
-    }
+      background: '#ffffff',
+    },
   };
 
   componentDidMount() {
@@ -114,7 +117,16 @@ export default class FpDemo extends Component {
   }
 
   render() {
-    const { bgImage, title, upDate, type, isLike, desArr, num, styleObj } = this.props;
+    const {
+      bgImage,
+      title,
+      upDate,
+      type,
+      isLike,
+      desArr,
+      num,
+      styleObj,
+    } = this.props;
     return (
       <div className="page-wrap">
         <img src={bgImage} className="image-bg" />
@@ -123,18 +135,22 @@ export default class FpDemo extends Component {
         <ul className="desc">
           <li>类型：{type === 'A' ? '养成类' : '动作类'}</li>
           <li>
-            描述：{desArr && desArr.length > 0 && desArr.map((item, i) => {
-            return (
-              <span className="desc-item" key={i}>
-                  {item.name}-{item.year}
-                </span>
-            );
-          })}
+            描述：
+            {desArr &&
+              desArr.length > 0 &&
+              desArr.map((item, i) => {
+                return (
+                  <span className="desc-item" key={i}>
+                    {item.name}-{item.year}
+                  </span>
+                );
+              })}
           </li>
           <li>玩了：{num}</li>
           <li>是否喜欢：{isLike ? '喜欢' : '不喜欢'}</li>
           <li>更新时间：{upDate}</li>
-          <li>区域点：
+          <li>
+            区域点：
             <div style={styleObj} />
           </li>
         </ul>

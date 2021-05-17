@@ -12,7 +12,7 @@ export default function GlobalSettings() {
       ? userProps.globalSettings
       : defaultGlobalSettings;
 
-  const onDataChange = (value) => {
+  const onDataChange = value => {
     if (value.displayType) {
       setGlobal({ frProps: value });
     }
@@ -28,7 +28,7 @@ export default function GlobalSettings() {
         form={form}
         schema={globalSettings}
         watch={{
-          '#': v => onDataChange(v)
+          '#': v => onDataChange(v),
         }}
         widgets={widgets}
       />

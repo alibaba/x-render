@@ -1,45 +1,47 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 exports.mapping = exports.widgets = void 0;
 
-var _checkbox = _interopRequireDefault(require("./checkbox"));
+var _checkbox = _interopRequireDefault(require('./checkbox'));
 
-var _checkboxes = _interopRequireDefault(require("./checkboxes"));
+var _checkboxes = _interopRequireDefault(require('./checkboxes'));
 
-var _color = _interopRequireDefault(require("./color"));
+var _color = _interopRequireDefault(require('./color'));
 
-var _date = _interopRequireDefault(require("./date"));
+var _date = _interopRequireDefault(require('./date'));
 
-var _dateRange = _interopRequireDefault(require("./dateRange"));
+var _dateRange = _interopRequireDefault(require('./dateRange'));
 
-var _input = _interopRequireDefault(require("./input"));
+var _input = _interopRequireDefault(require('./input'));
 
-var _list = _interopRequireDefault(require("./list"));
+var _list = _interopRequireDefault(require('./list'));
 
-var _map = _interopRequireDefault(require("./map"));
+var _map = _interopRequireDefault(require('./map'));
 
-var _multiSelect = _interopRequireDefault(require("./multiSelect"));
+var _multiSelect = _interopRequireDefault(require('./multiSelect'));
 
-var _number = _interopRequireDefault(require("./number"));
+var _number = _interopRequireDefault(require('./number'));
 
-var _radio = _interopRequireDefault(require("./radio"));
+var _radio = _interopRequireDefault(require('./radio'));
 
-var _select = _interopRequireDefault(require("./select"));
+var _select = _interopRequireDefault(require('./select'));
 
-var _slider = _interopRequireDefault(require("./slider"));
+var _slider = _interopRequireDefault(require('./slider'));
 
-var _switch = _interopRequireDefault(require("./switch"));
+var _switch = _interopRequireDefault(require('./switch'));
 
-var _textarea = _interopRequireDefault(require("./textarea"));
+var _textarea = _interopRequireDefault(require('./textarea'));
 
-var _upload = _interopRequireDefault(require("./upload"));
+var _upload = _interopRequireDefault(require('./upload'));
 
-var _html = _interopRequireDefault(require("./html"));
+var _html = _interopRequireDefault(require('./html'));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var widgets = {
   checkbox: _checkbox.default,
@@ -61,7 +63,7 @@ var widgets = {
   switch: _switch.default,
   textarea: _textarea.default,
   upload: _upload.default,
-  html: _html.default
+  html: _html.default,
 }; // 默认映射关系
 
 exports.widgets = widgets;
@@ -84,7 +86,6 @@ var mapping = {
   'range:date': 'dateRange',
   'range:dateTime': 'dateRange',
   '*?enum': 'select',
-  'array?enum': 'checkboxes' // '*?readOnly': 'text', // TODO: 只读模式
-
+  'array?enum': 'checkboxes', // '*?readOnly': 'text', // TODO: 只读模式
 };
 exports.mapping = mapping;

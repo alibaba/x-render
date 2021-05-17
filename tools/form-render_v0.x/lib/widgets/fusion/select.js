@@ -1,15 +1,17 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 exports.default = void 0;
 
-var _select = _interopRequireDefault(require("@alifd/next/lib/select"));
+var _select = _interopRequireDefault(require('@alifd/next/lib/select'));
 
-var _selectHoc = _interopRequireDefault(require("../../components/selectHoc"));
+var _selectHoc = _interopRequireDefault(require('../../components/selectHoc'));
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var _default = (0, _selectHoc.default)(_select.default);
 

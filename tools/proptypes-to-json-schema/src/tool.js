@@ -5,7 +5,7 @@
 
 const doctrine = require('doctrine');
 
-const type2format = (type) => {
+const type2format = type => {
   let format;
   switch (type) {
     case 'bool':
@@ -29,7 +29,7 @@ const getValueByType = (value, type) => {
   let data;
   switch (type) {
     case 'bool':
-      data = (value === 'true' || value === true);
+      data = value === 'true' || value === true;
       break;
     case 'number':
       data = value * 1;
@@ -58,10 +58,10 @@ const getValueByType = (value, type) => {
   return data;
 };
 
-const parse = (doc) => {
+const parse = doc => {
   const { tags } = doctrine.parse(doc);
   const result = {};
-  ['title', 'description', 'format', 'pattern', 'enumNames'].forEach((item) => {
+  ['title', 'description', 'format', 'pattern', 'enumNames'].forEach(item => {
     const tag = tags.find(t => t.title === item);
     if (tag && tag.description) {
       result[tag.title] = tag.description;
@@ -80,7 +80,7 @@ const parse = (doc) => {
   return result;
 };
 
-const getColumn = (doc) => {
+const getColumn = doc => {
   const { tags } = doctrine.parse(doc);
   const tag = tags.find(t => t.title === 'column');
   if (tag && tag.description && !isNaN(tag.description)) {
@@ -89,54 +89,55 @@ const getColumn = (doc) => {
   return 2;
 };
 
-const getProp = props => Object.keys(props).reduce((ret, propName) => {
-  const { description, type = {}, defaultValue } = props[propName];
-  const { name, value } = type;
-  // 只处理有注释的 prop
-  if (description) {
-    const result = {};
-    result.type = type2format(name);
-    if (name === 'arrayOf') {
-      const obj = parse(description);
-      result.items = {
-        type: type2format(value.name),
-      };
-      if (obj && obj.format) {
-        result.items = Object.assign(result.items, {
-          format: obj.format,
-        });
+const getProp = props =>
+  Object.keys(props).reduce((ret, propName) => {
+    const { description, type = {}, defaultValue } = props[propName];
+    const { name, value } = type;
+    // 只处理有注释的 prop
+    if (description) {
+      const result = {};
+      result.type = type2format(name);
+      if (name === 'arrayOf') {
+        const obj = parse(description);
+        result.items = {
+          type: type2format(value.name),
+        };
+        if (obj && obj.format) {
+          result.items = Object.assign(result.items, {
+            format: obj.format,
+          });
+        }
+        if (value && value.name === 'shape' && value.value) {
+          result.items = Object.assign(result.items, getObjProp(value.value));
+        }
       }
-      if (value && value.name === 'shape' && value.value) {
-        result.items = Object.assign(result.items, getObjProp(value.value));
+
+      if (name === 'enum') {
+        result.enum = value.map(item => item.value.replace(/'|"/g, ''));
       }
+
+      if (defaultValue && defaultValue.value) {
+        result.default = getValueByType(defaultValue.value, name);
+      }
+
+      let prop = Object.assign(parse(description), result);
+      if (prop && prop.type === 'array' && prop.format) {
+        delete prop.format;
+      }
+
+      if (name === 'shape') {
+        prop = Object.assign(prop, getObjProp(value));
+      }
+
+      ret[propName] = prop;
     }
 
-    if (name === 'enum') {
-      result.enum = value.map(item => item.value.replace(/'|"/g, ''));
-    }
+    return ret;
+  }, {});
 
-    if (defaultValue && defaultValue.value) {
-      result.default = getValueByType(defaultValue.value, name);
-    }
-
-    let prop = Object.assign(parse(description), result);
-    if (prop && prop.type === 'array' && prop.format) {
-      delete prop.format;
-    }
-
-    if (name === 'shape') {
-      prop = Object.assign(prop, getObjProp(value));
-    }
-
-    ret[propName] = prop;
-  }
-
-  return ret;
-}, {});
-
-const getRequired = (props) => {
+const getRequired = props => {
   const result = [];
-  Object.keys(props).forEach((propName) => {
+  Object.keys(props).forEach(propName => {
     const prop = props[propName];
     if (prop.required) {
       result.push(propName);
@@ -145,7 +146,7 @@ const getRequired = (props) => {
   return result.length > 0 ? { required: result } : {};
 };
 
-const getObjProp = (props) => {
+const getObjProp = props => {
   const { required } = getRequired(props);
   const properties = Object.keys(props).reduce((ret, propName) => {
     const result = {};
@@ -183,26 +184,27 @@ const getObjProp = (props) => {
 };
 
 // 根据 props 的类型生成默认的
-const getUiWidgets = props => Object.keys(props).reduce((ret, propName) => {
-  const prop = props[propName];
-  const { description, type = {} } = prop;
-  const { name, value } = type;
-  // 只处理有注释的 prop
-  if (description) {
-    const desc = parse(description);
-    if (desc && desc.format && desc.format !== 'image') {
-      ret[propName] = { 'ui:widget': desc.format };
-    }
-    if (name === 'shape' && value) {
-      const widget = getUiWidgets(value);
-      // 防止为空
-      if ((widget && JSON.stringify(widget) !== '{}')) {
-        ret[propName] = widget;
+const getUiWidgets = props =>
+  Object.keys(props).reduce((ret, propName) => {
+    const prop = props[propName];
+    const { description, type = {} } = prop;
+    const { name, value } = type;
+    // 只处理有注释的 prop
+    if (description) {
+      const desc = parse(description);
+      if (desc && desc.format && desc.format !== 'image') {
+        ret[propName] = { 'ui:widget': desc.format };
+      }
+      if (name === 'shape' && value) {
+        const widget = getUiWidgets(value);
+        // 防止为空
+        if (widget && JSON.stringify(widget) !== '{}') {
+          ret[propName] = widget;
+        }
       }
     }
-  }
-  return ret;
-}, {});
+    return ret;
+  }, {});
 
 // 喜码错误纠正
 exports.parse = parse;

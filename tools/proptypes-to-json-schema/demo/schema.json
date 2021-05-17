@@ -20,14 +20,8 @@
       "type": {
         "title": "游戏类型",
         "description": "A 养成系，B 动作类",
-        "enumNames": [
-          "养成系",
-          "动作类"
-        ],
-        "enum": [
-          "A",
-          "B"
-        ],
+        "enumNames": ["养成系", "动作类"],
+        "enum": ["A", "B"],
         "default": "A"
       },
       "num": {
@@ -53,14 +47,8 @@
             },
             "answerSide": {
               "title": "正确答案(必填，L: 左边答案正确，R: 右边答案正确)",
-              "enumNames": [
-                "养成系",
-                "动作类"
-              ],
-              "enum": [
-                "L",
-                "R"
-              ]
+              "enumNames": ["养成系", "动作类"],
+              "enum": ["L", "R"]
             }
           }
         }
@@ -105,9 +93,7 @@
         }
       }
     },
-    "required": [
-      "upDate"
-    ]
+    "required": ["upDate"]
   },
   "uiSchema": {
     "upDate": {

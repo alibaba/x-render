@@ -5,7 +5,7 @@ export const defaultCommonSettings = {
     description: '字段名称/英文',
     type: 'string',
     widget: 'idInput',
-    required: true
+    required: true,
   },
   title: {
     title: '标题',
@@ -29,15 +29,15 @@ export const defaultCommonSettings = {
   },
   bind: {
     title: 'Bind',
-    type: 'string'
+    type: 'string',
   },
   min: {
     title: '最小值',
-    type: 'number'
+    type: 'number',
   },
   max: {
     title: '最大值',
-    type: 'number'
+    type: 'number',
   },
   disabled: {
     title: '禁用',
@@ -366,7 +366,7 @@ export const elements = [
         type: 'string',
       },
     },
-  }
+  },
 ];
 
 export const advancedElements = [

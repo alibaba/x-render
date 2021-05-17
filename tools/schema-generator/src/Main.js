@@ -2,7 +2,10 @@ import React, { useEffect, useRef, forwardRef } from 'react';
 import { useSet } from './hooks';
 import FRWrapper from './FRWrapper';
 import { fromFormRender, toFormRender } from './transformer/form-render';
-import { widgets as defaultWidgets, mapping as defaultMapping } from 'form-render';
+import {
+  widgets as defaultWidgets,
+  mapping as defaultMapping,
+} from 'form-render';
 import list from './widgets/antd/list';
 import './atom.less';
 import './Main.less';

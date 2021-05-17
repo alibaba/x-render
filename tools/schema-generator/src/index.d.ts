@@ -80,5 +80,5 @@ export {
   toFormily,
   fromFormRender,
   toFormRender,
-}
+};
 export default FRGenerator;

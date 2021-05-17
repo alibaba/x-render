@@ -436,7 +436,7 @@ export const flattenToData = (flatten, id = '#') => {
         if (type === 'object') {
           result = {};
         } else if (type === 'array') {
-          result = [{}]
+          result = [{}];
         }
       }
       childrenIds.forEach(c => {
@@ -593,7 +593,7 @@ export function defaultGetValueFromEvent(valuePropName, ...args) {
     return event.target[valuePropName];
   }
   return event;
-};
+}
 
 export const transformProps = props => {
   const { onChange, value, defaultValue, schema: ownSchema, ...rest } = props;

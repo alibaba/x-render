@@ -8,7 +8,7 @@ export const vsemit = (type, body) => {
 };
 
 export const vson = (type, callback) => {
-  window.addEventListener('message', (event) => {
+  window.addEventListener('message', event => {
     const message = event.data;
 
     if (message.type === type) {

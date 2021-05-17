@@ -7,11 +7,13 @@ const getHtmlForWebview = (
   webview: vscode.Webview,
   extensionPath: string,
   pluginConfig?: {
-    preview?: boolean,
-    theme?: boolean,
-  },
+    preview?: boolean;
+    theme?: boolean;
+  }
 ): string => {
-  const baseUri = `${webview.asWebviewUri(vscode.Uri.file(extensionPath))}/out/webview`;
+  const baseUri = `${webview.asWebviewUri(
+    vscode.Uri.file(extensionPath)
+  )}/out/webview`;
 
   return `
     <!DOCTYPE html>
@@ -32,6 +34,6 @@ const getHtmlForWebview = (
         <script src="${baseUri}/umi.js"></script>
       </body>
     </html>`;
-}
+};
 
 export default getHtmlForWebview;

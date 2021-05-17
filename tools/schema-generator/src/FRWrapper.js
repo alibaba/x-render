@@ -32,7 +32,7 @@ function Wrapper(
     frProps = {},
     ...rootState
   },
-  ref,
+  ref
 ) {
   const [local, setState] = useSet({
     showModal: false,
@@ -110,7 +110,7 @@ function Wrapper(
           ...state.frProps,
           column: schema.column,
           displayType: schema.displayType,
-          labelWidth: schema.labelWidth
+          labelWidth: schema.labelWidth,
         },
       }));
     } catch (error) {
@@ -197,7 +197,7 @@ function Wrapper(
 
   const _extraButtons = Array.isArray(extraButtons) ? extraButtons : [];
   const _showDefaultBtns = _extraButtons.filter(
-    item => item === true || item === false,
+    item => item === true || item === false
   );
   const _extraBtns = _extraButtons.filter(item => isObject(item) && item.text);
 
@@ -243,9 +243,7 @@ function Wrapper(
             </div>
             <div className="dnd-container">
               <div style={{ height: preview ? 33 : 0 }}></div>
-              {
-                preview ? <PreviewFR schema={displaySchema} /> : <FR />
-              }
+              {preview ? <PreviewFR schema={displaySchema} /> : <FR />}
             </div>
           </div>
           <Right globalProps={frProps} />

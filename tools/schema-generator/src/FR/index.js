@@ -64,8 +64,7 @@ const FR = ({ id = '#', preview = false }) => {
       }
   }
   // 横排时
-  const isCheckBox =
-    schema.type === 'boolean' && schema['widget'] !== 'switch';
+  const isCheckBox = schema.type === 'boolean' && schema['widget'] !== 'switch';
   if (displayType === 'row' && !isComplex && !isCheckBox) {
     containerClass += ' flex items-center';
     labelClass += ' flex-shrink-0 fr-label-row';

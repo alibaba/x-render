@@ -21,7 +21,7 @@ export default function ItemSettings() {
     onItemChange,
     userProps = {},
     widgets: defaultWidgets,
-    mapping: defaultMapping
+    mapping: defaultMapping,
   } = useStore();
 
   const { settings, commonSettings } = userProps;
@@ -38,17 +38,19 @@ export default function ItemSettings() {
   const getWidgetList = (settings, commonSettings) => {
     return settings.reduce((widgetList, setting) => {
       if (!Array.isArray(setting.widgets)) return widgetList;
-      const basicWidgets = setting.widgets
-        .map(item => ({
-          ...item,
-          widget: item.widget || item.schema.widget || getWidgetName(item.schema, defaultMapping),
-          setting: { ...commonSettings, ...item.setting }
-        }));
+      const basicWidgets = setting.widgets.map(item => ({
+        ...item,
+        widget:
+          item.widget ||
+          item.schema.widget ||
+          getWidgetName(item.schema, defaultMapping),
+        setting: { ...commonSettings, ...item.setting },
+      }));
       return [...widgetList, ...basicWidgets];
     }, []);
   };
 
-  const onDataChange = (value) => {
+  const onDataChange = value => {
     try {
       if (!ready) return;
       const item = flatten[selected];
@@ -71,9 +73,14 @@ export default function ItemSettings() {
       setReady(false);
       // 算 widgetList
       const _settings = Array.isArray(settings)
-        ? [...settings, { widgets: [...elements, ...advancedElements, ...layouts] }] // TODO: 不是最优解
+        ? [
+            ...settings,
+            { widgets: [...elements, ...advancedElements, ...layouts] },
+          ] // TODO: 不是最优解
         : defaultSettings;
-      const _commonSettings = isObject(commonSettings) ? commonSettings : defaultCommonSettings;
+      const _commonSettings = isObject(commonSettings)
+        ? commonSettings
+        : defaultCommonSettings;
       const widgetList = getWidgetList(_settings, _commonSettings);
       const widgetName = getWidgetName(item.schema, defaultMapping);
       const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到

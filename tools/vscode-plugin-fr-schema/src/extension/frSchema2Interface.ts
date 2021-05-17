@@ -7,16 +7,19 @@ import { getInterfaceFromModel, getModelFromSchema } from './utils';
 
 export class frSchema2InterfaceProvider {
   public static register(): vscode.Disposable {
-    return vscode.commands.registerCommand(frSchema2InterfaceProvider.viewType, (uri: vscode.Uri) => {
-      let resource = uri;
-      if (!(resource instanceof vscode.Uri)) {
-        if (vscode.window.activeTextEditor) {
-          resource = vscode.window.activeTextEditor.document.uri;
+    return vscode.commands.registerCommand(
+      frSchema2InterfaceProvider.viewType,
+      (uri: vscode.Uri) => {
+        let resource = uri;
+        if (!(resource instanceof vscode.Uri)) {
+          if (vscode.window.activeTextEditor) {
+            resource = vscode.window.activeTextEditor.document.uri;
+          }
         }
-      }
 
-      frSchema2InterfaceProvider.generate(resource);
-    });
+        frSchema2InterfaceProvider.generate(resource);
+      }
+    );
   }
 
   private static readonly viewType = 'frSchema.s2i';

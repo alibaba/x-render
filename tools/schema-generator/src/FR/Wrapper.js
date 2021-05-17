@@ -13,12 +13,7 @@ export default function Wrapper({
   style,
 }) {
   const [position, setPosition] = useState();
-  const {
-    flatten,
-    onFlattenChange,
-    selected,
-    hovering,
-  } = useStore();
+  const { flatten, onFlattenChange, selected, hovering } = useStore();
   const setGlobal = useGlobal();
   const { schema } = item;
   const { type } = schema;

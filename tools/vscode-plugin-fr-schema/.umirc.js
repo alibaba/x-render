@@ -1,4 +1,4 @@
-const config =  {
+const config = {
   publicPath: './',
   outputPath: 'out/webview',
   exportStatic: {
@@ -6,9 +6,9 @@ const config =  {
     dynamicRoot: true,
   },
   devServer: {
-    writeToDisk: true
+    writeToDisk: true,
   },
-  devtool: false
-}
+  devtool: false,
+};
 
 export default config;

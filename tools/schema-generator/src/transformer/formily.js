@@ -30,7 +30,7 @@ const transformFrom = (mySchema, parent = null) => {
       if (isList) {
         mySchema.items.properties[item.name] = transformFrom(
           item.schema,
-          mySchema,
+          mySchema
         );
       }
     });
@@ -87,14 +87,14 @@ const transformTo = (frSchema, parent = null, key = null) => {
         frSchema.properties[item.name] = transformTo(
           item.schema,
           frSchema,
-          item.name,
+          item.name
         );
       }
       if (isList) {
         frSchema.items.properties[item.name] = transformTo(
           item.schema,
           frSchema,
-          item.name,
+          item.name
         );
       }
     });
