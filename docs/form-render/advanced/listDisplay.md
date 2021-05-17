@@ -225,8 +225,8 @@ export default Demo;
 import React from 'react';
 import Form from '../demo/display';
 
-window.hello = (...args) => {
-  console.log(args);
+window.hello = ({ value }) => {
+  console.log(value);
 };
 
 const schema = {
@@ -237,9 +237,6 @@ const schema = {
       description: '对象数组嵌套功能',
       type: 'array',
       widget: 'list4',
-      props: {
-        height: 66,
-      },
       itemProps: {
         buttons: [
           {

@@ -4,6 +4,8 @@ import Core from '../../index';
 import { Button, Popconfirm, Table } from 'antd';
 import { useVT } from 'virtualizedtableforantd4';
 
+const FIELD_LENGTH = 120;
+
 const VirtualList = ({
   displayList = [],
   dataIndex,
@@ -29,14 +31,15 @@ const VirtualList = ({
     const schema = (item && item.schema) || {};
     return {
       dataIndex: child,
+      width: FIELD_LENGTH,
       title: schema.required ? (
         <>
           <span className="fr-label-required"> *</span>
           <span>{schema.title}</span>
         </>
       ) : (
-          schema.title
-        ),
+        schema.title
+      ),
       render: (value, record, index) => {
         // Check: record.index 似乎是antd自己会给的，不错哦
         const childIndex = [...dataIndex, record.index];
@@ -62,18 +65,61 @@ const VirtualList = ({
         return (
           <>
             {!props.hideDelete && (
-              <Button
-                style={{ marginLeft: 8 }}
-                size="small"
-                onClick={() => deleteItem(idx)}
+              <Popconfirm
+                title="确定删除?"
+                onConfirm={() => deleteItem(idx)}
+                okText="确定"
+                cancelText="取消"
               >
-                删除
-              </Button>
+                <a>删除</a>
+              </Popconfirm>
             )}
-            {Array.isArray(itemProps.buttons) ? itemProps.buttons.map((item, idx) => {
+            {Array.isArray(itemProps.buttons)
+              ? itemProps.buttons.map((item, idx) => {
+                  const { callback, text, html } = item;
+                  let onClick = () => {};
+                  if (typeof window[callback] === 'function') {
+                    onClick = () => {
+                      window[callback]({
+                        value: listData,
+                        onChange: changeList,
+                        schema,
+                      });
+                    };
+                  }
+                  return (
+                    <a
+                      key={idx.toString()}
+                      style={{ marginLeft: 8 }}
+                      size="small"
+                      onClick={onClick}
+                    >
+                      <span
+                        dangerouslySetInnerHTML={{ __html: html || text }}
+                      />
+                    </a>
+                  );
+                })
+              : null}
+          </>
+        );
+      },
+    });
+  }
+
+  return (
+    <>
+      <div className="w-100 mb2 tr">
+        {!props.hideAdd && (
+          <Button type="primary" size="small" onClick={addItem}>
+            新增
+          </Button>
+        )}
+        {Array.isArray(props.buttons)
+          ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
 
-              let onClick = () => { };
+              let onClick = () => {};
               if (typeof window[callback] === 'function') {
                 onClick = () => {
                   window[callback]({
@@ -94,53 +140,14 @@ const VirtualList = ({
                 </Button>
               );
             })
-              : null}
-          </>
-        );
-      },
-    });
-  }
-
-  return (
-    <>
-      <div className="w-100 mb2 tr">
-        {!props.hideAdd && (
-          <Button type="primary" size="small" onClick={addItem}>
-            新增
-          </Button>
-        )}
-        {Array.isArray(props.buttons)
-          ? props.buttons.map((item, idx) => {
-            const { callback, text, html } = item;
-
-            let onClick = () => { };
-            if (typeof window[callback] === 'function') {
-              onClick = () => {
-                window[callback]({
-                  value: listData,
-                  onChange: changeList,
-                  schema,
-                });
-              };
-            }
-            return (
-              <Button
-                key={idx.toString()}
-                style={{ marginLeft: 8 }}
-                size="small"
-                onClick={onClick}
-              >
-                <span dangerouslySetInnerHTML={{ __html: html || text }} />
-              </Button>
-            );
-          })
           : null}
       </div>
 
       <Table
         rowKey="index"
-        scroll={{ y: scrollY }}
+        scroll={{ y: scrollY, x: 'max-content' }}
         components={vt}
+        size="small"
         columns={columns}
         dataSource={dataSource}
         pagination={false}
