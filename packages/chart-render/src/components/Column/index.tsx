@@ -7,17 +7,20 @@ import ErrorTemplate from '../ErrorTemplate';
 
 export interface ICRColumnProps
   extends ICommonProps,
-  Omit<
-  ColumnConfig,
-  keyof ICommonProps | 'xField' | 'yField' | 'seriesField'
-  > {
+    Omit<
+      ColumnConfig,
+      keyof ICommonProps | 'xField' | 'yField' | 'seriesField'
+    > {
   /**
    * 是否倒置，倒置后柱形图会表现成条形图
    */
   inverted?: boolean;
-};
+}
 
-export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['data']): ColumnConfig {
+export function generateConfig(
+  meta: ICommonProps['meta'],
+  data: ICommonProps['data'],
+): ColumnConfig {
   const { metaDim, metaInd } = splitMeta(meta);
 
   if (metaInd.length >= 1 && metaDim.length === 0) {
@@ -39,11 +42,15 @@ export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['d
         .flat(),
       meta: {
         [xField]: {
-          formatter: label => meta.find(({ id }) => label === id)?.name || label,
+          formatter: label =>
+            meta.find(({ id }) => label === id)?.name || label,
         },
       },
       tooltip: {
-        formatter: ({ [xField]: type, [yField]: value }) => ({ name: meta.find(({ id }) => type === id)?.name as string, value }),
+        formatter: ({ [xField]: type, [yField]: value }) => ({
+          name: meta.find(({ id }) => type === id)?.name as string,
+          value,
+        }),
       },
     };
   } else if (metaInd.length === 1 && metaDim.length === 1) {
@@ -55,7 +62,7 @@ export function generateConfig(meta: ICommonProps['meta'], data: ICommonProps['d
       xField,
       yField,
       meta: {
-        [yField]: { alias: meta.find(({ id }) => id === yField)?.name }
+        [yField]: { alias: meta.find(({ id }) => id === yField)?.name },
       },
     };
   } else if (metaInd.length > 1 && metaDim.length === 1) {

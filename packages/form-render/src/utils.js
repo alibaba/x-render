@@ -436,7 +436,10 @@ export const schemaContainsExpression = (schema, shallow = true) => {
       const value = schema[key];
       if (typeof value === 'string') {
         return isExpression(value);
-      } else if (typeof key === 'string' && key.toLowerCase().indexOf('props') > -1) {
+      } else if (
+        typeof key === 'string' &&
+        key.toLowerCase().indexOf('props') > -1
+      ) {
         const propsObj = schema[key];
         if (isObject(propsObj)) {
           return Object.keys(propsObj).some(k => {

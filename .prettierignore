@@ -1,9 +1,56 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 **/*.svg
+**/**/*.svg
 **/*.ejs
+**/**/*.ejs
 **/*.html
-package.json
+**/**/*.html
+
+# dependencies
+/node_modules
+/npm-debug.log*
+/yarn-error.log
+/yarn.lock
+/package-lock.json
+
+
+# production
+/dist
+/lib
+/docs-dist
+# misc
+.idea
+.DS_Store
+.idea
+.vscode
+
+# umi
 .umi
 .umi-production
 .umi-test
-/packages/*/node_modules
-/node_modules
+.env.local
+
+# lerna
+node_modules
+
+/.local
+
+/packages/*/es
+/packages/*/lib
+/packages/*/.local
+/packages/*/dist
+
+/widgets/*/es
+/widgets/*/lib
+/widgets/*/.local
+/widgets/*/dist
+
+/tools/*/es
+/tools/*/lib
+/tools/*/.local
+/tools/*/dist
+
+# custom
+old-doc
+test.json
+/docs/guide/.test

@@ -183,7 +183,7 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
           }
           // 正常渲染
           if (metaInd.find(({ id }) => id === topNode.code)?.isRate) {
-            return `${strip((value * 100)).toFixed(2)}%`;
+            return `${strip(value * 100).toFixed(2)}%`;
           } else {
             return value;
           }
