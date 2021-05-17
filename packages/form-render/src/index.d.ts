@@ -85,7 +85,7 @@ export interface FRProps {
   /** 对象组件是否折叠（全局的控制） */
   allCollapsed?: boolean;
   /** 表单首次加载钩子 */
-  onmount?: () => void;
+  onMount?: () => void;
   /** 表单提交前钩子 */
   beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
