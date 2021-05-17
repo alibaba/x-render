@@ -22,7 +22,7 @@
     <img alt = "PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
 </p>
 
-> 阿里巴巴 - 飞猪中后台「表单/表格/图表」开箱即用解决方案
+> 阿里飞猪 - 中后台 「表单 / 表格 / 图表」 很易用的解决方案
 
 ## 优势
 
@@ -30,10 +30,9 @@
 - <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
 - <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
 
-## 变化
-
-- FormRender 已升级到 XRender 1.0 版本，并提供开箱即用的 Form/Table/Chart 解决方案，原版本可见<a style="font-weight: 500;" href="http://x-components.gitee.io/form-render/" target="_blank_">旧文档</a>。
-- FormRender 0.x 版本直接升级到 1.0 需修改 API 才能正常运行，可见 [0.x 到 1.x](https://x-render.gitee.io/form-render/migrate)，很推荐升级。
+<Alert>
+  <span>🎉🎉🎉 FormRender 品牌已升级到 XRender，提供中后台中 「表单 / 表格 / 图表」 很易用的解决方案， 原 0.X 版本可快速 <a href="https://x-render.gitee.io/form-render/migrate" target="_blank_"> 升级到 1.X </a> </span>
+</Alert>
 
 ## 谁在使用？
 
@@ -65,16 +64,15 @@
     </td>
     <td width="160" align="center">
       <img
-        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/QFRKki/006PG13yly8fh2je18cv0j308c08caa2.jpg"
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/3GrqSz/unnamed.png"
         width="160"
       />
     </td>
   </tr>
-
   <tr>
     <td width="160" align="center">
       <img
-        src="https://www.agtech.com/public/asset/yabologo-6f9d76c5cbb0b954b9939a8cac3a0cb1.png"
+        src="https://img.alicdn.com/imgextra/i4/O1CN01SUv7rt1gMfdYr2Bnc_!!6000000004128-0-tps-800-373.jpg"
         width="160"
       />
     </td>
@@ -98,12 +96,11 @@
     </td>
     <td width="160" align="center">
       <img
-        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/3GrqSz/unnamed.png"
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/QFRKki/006PG13yly8fh2je18cv0j308c08caa2.jpg"
         width="160"
       />
     </td>
   </tr>
-  
   <tr>
     <td width="160" align="center">
       <img
@@ -111,18 +108,16 @@
         width="160"
       />
     </td>
+    <td width="160" align="center">
+      <img
+        src="https://img.alicdn.com/imgextra/i1/O1CN01K3AD1b1WZMSHolALT_!!6000000002802-0-tps-700-207.jpg"
+        width="160"
+      />
+    </td>
   </tr>
 </table>
 
 更多可见[使用场景](https://github.com/alibaba/form-render/issues/94)，也很欢迎提交～
-
-## 调试
-
-```shell
-> git clone https://github.com/alibaba/x-render.git
-> npm i
-> npm start
-```
 
 ## 支持
 
