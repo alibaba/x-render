@@ -44,6 +44,7 @@ function App({
   onMount,
   labelWidth,
   readOnly,
+  disabled,
   allCollapsed = false,
   onValuesChange,
   column,
@@ -130,6 +131,7 @@ function App({
       labelWidth,
       locale,
       readOnly,
+      disabled,
       allCollapsed,
     }),
     [
@@ -141,6 +143,7 @@ function App({
       labelWidth,
       locale,
       readOnly,
+      disabled,
       allCollapsed,
     ]
   );

@@ -63,6 +63,8 @@ export interface FRProps {
   displayType?: string;
   /** 只读模式 */
   readOnly?: boolean;
+  /** 禁用模式 */
+  disabled?: boolean;
   /** 标签宽度 */
   labelWidth?: string | number;
   /** antd的全局config */

@@ -27,6 +27,7 @@ const ExtendedWidget = ({
   getValue,
   readOnly,
   dataPath,
+  disabled,
   dataIndex,
 }) => {
   const { widgets, mapping } = useTools();
@@ -65,6 +66,7 @@ const ExtendedWidget = ({
     onChange,
     value,
     children,
+    disabled,
     ...schema.props,
   };
 

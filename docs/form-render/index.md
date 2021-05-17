@@ -230,6 +230,8 @@ import Form, { useForm, connectForm } from 'form-render';
 | ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
 | column           | 一行展示多少列                                                   | `number`            | 1      |
 | mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
+| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                       | `boolean`           | false  |
+| disabled         | 禁用模式，全部表单元素禁用                                       | `boolean`           | false  |
 | debug            | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
 | debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
 | locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
