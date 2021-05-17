@@ -82,6 +82,8 @@ export interface FRProps {
   config?: any;
   // 类似于 vuejs 的 watch 的用法，监控值的变化，触发 callback
   watch?: WatchProperties;
+  /** 对象组件是否折叠（全局的控制） */
+  allCollapsed?: boolean;
   /** 表单首次加载钩子 */
   onmount?: () => void;
   /** 表单提交前钩子 */

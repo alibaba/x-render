@@ -234,6 +234,7 @@ import Form, { useForm, connectForm } from 'form-render';
 | debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
 | locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
 | configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
+| allCollapsed     | 对象组件是否默认折叠（全局）                                     | `boolean`           | false  |
 | debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
 | validateMessages | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
 

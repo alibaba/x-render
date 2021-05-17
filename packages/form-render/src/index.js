@@ -44,6 +44,7 @@ function App({
   onMount,
   labelWidth,
   readOnly,
+  allCollapsed = false,
   onValuesChange,
   column,
   ...rest
@@ -129,6 +130,7 @@ function App({
       labelWidth,
       locale,
       readOnly,
+      allCollapsed,
     }),
     [
       displayType,
@@ -139,6 +141,7 @@ function App({
       labelWidth,
       locale,
       readOnly,
+      allCollapsed,
     ]
   );
 
