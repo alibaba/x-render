@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
 import { defaultGlobalSettings } from '../Settings';
 import { useStore, useGlobal } from '../hooks';
 
 export default function GlobalSettings() {
   const form = useForm();
+  const [innerUpdate, setInnerUpdate] = useState(false);
   const { widgets, frProps, userProps } = useStore();
   const setGlobal = useGlobal();
   const globalSettings =
@@ -13,13 +14,16 @@ export default function GlobalSettings() {
       : defaultGlobalSettings;
 
   const onDataChange = value => {
-    if (value.displayType) {
-      setGlobal({ frProps: value });
-    }
+    setInnerUpdate(true);
+    setGlobal({ frProps: value });
   };
 
   useEffect(() => {
-    form.setValues(frProps);
+    if (innerUpdate) {
+      setInnerUpdate(false);
+    } else {
+      form.setValues(frProps);
+    }
   }, [frProps]);
 
   return (

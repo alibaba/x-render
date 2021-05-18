@@ -1,13 +1,17 @@
 import React, { forwardRef } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
 import Main from './Main';
 import './index.less';
 
 const Root = (props, ref) => {
   return (
     <DndProvider backend={HTML5Backend} context={window}>
-      <Main ref={ref} {...props} />
+      <ConfigProvider locale={zhCN}>
+        <Main ref={ref} {...props} />
+      </ConfigProvider>
     </DndProvider>
   );
 };

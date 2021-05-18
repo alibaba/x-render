@@ -576,6 +576,7 @@ export const oldSchemaToNew = schema => {
   return {
     type: 'object',
     properties: {},
+    ...schema,
   };
 };
 

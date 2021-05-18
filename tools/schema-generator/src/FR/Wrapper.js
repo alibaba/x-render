@@ -37,7 +37,7 @@ export default function Wrapper({
   const [{ canDrop, isOver }, dropRef] = useDrop({
     accept: 'box',
     drop: (item, monitor) => {
-      // 如果children已经作为了drop target，不处理
+      // 如果 children 已经作为了 drop target，不处理
       const didDrop = monitor.didDrop();
       if (didDrop) {
         return;
@@ -186,6 +186,7 @@ export default function Wrapper({
       ...overwriteStyle,
       outline: '2px solid #409eff',
       borderColor: '#fff',
+      zIndex: 1,
     };
   }
   if (style && typeof style === 'object') {
@@ -226,44 +227,40 @@ export default function Wrapper({
     >
       {children}
 
-      {!inside && $id !== '#' && (
-        <>
-          {!hideId && (
-            <div className="absolute top-0 right-1 blue f7">{shownId}</div>
+      {!inside && $id !== '#' && !hideId && (
+        <div className="absolute top-0 right-1 blue f7">{shownId}</div>
+      )}
+
+      {!inside && $id !== '#' && isSelected && (
+        <div className="pointer-move" ref={dragRef}>
+          <DragOutlined />
+        </div>
+      )}
+
+      {!inside && $id !== '#' && isSelected && _numOfBtns > 0 && (
+        <div className="pointer-wrapper">
+          {_showDefaultBtns[0] !== false && (
+            <div className="pointer" onClick={deleteItem}>
+              <DeleteOutlined />
+            </div>
           )}
-          {isSelected && (
-            <>
-              <div className="pointer-move" ref={dragRef}>
-                <DragOutlined />
+          {_showDefaultBtns[1] !== false && (
+            <div className="pointer" onClick={handleItemCopy}>
+              <CopyOutlined />
+            </div>
+          )}
+          {_extraBtns.map((item, idx) => {
+            return (
+              <div
+                key={idx.toString()}
+                className="pointer"
+                onClick={e => item.onClick && item.onClick(e, schema)}
+              >
+                {item.text}
               </div>
-              {_numOfBtns > 0 && (
-                <div className="pointer-wrapper">
-                  {_showDefaultBtns[0] && (
-                    <div className="pointer" onClick={deleteItem}>
-                      <DeleteOutlined />
-                    </div>
-                  )}
-                  {_showDefaultBtns[1] && (
-                    <div className="pointer" onClick={handleItemCopy}>
-                      <CopyOutlined />
-                    </div>
-                  )}
-                  {_extraBtns.map((item, idx) => {
-                    return (
-                      <div
-                        key={idx.toString()}
-                        className="pointer"
-                        onClick={e => item.onClick && item.onClick(e, schema)}
-                      >
-                        {item.text}
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-            </>
-          )}
-        </>
+            );
+          })}
+        </div>
       )}
     </div>
   );

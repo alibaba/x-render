@@ -124,7 +124,7 @@ function Wrapper(
   try {
     const _schema = {
       ...idToSchema(flattenWithData, '#', true),
-      ...frProps
+      ...frProps,
     };
     displaySchema = transformTo(_schema);
     if (!isNewVersion) {
