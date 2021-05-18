@@ -21,10 +21,11 @@ const DEFAULT_SCHEMA = {
 function App(props, ref) {
   const {
     defaultValue,
-    templates,
     submit,
     transformer,
     extraButtons,
+    controlButtons,
+    hideId,
     settings,
     commonSettings,
     globalSettings,
@@ -115,12 +116,13 @@ function App(props, ref) {
   };
 
   const userProps = {
-    templates,
     submit,
     transformFrom,
     transformTo,
     isNewVersion,
     extraButtons,
+    controlButtons,
+    hideId,
     settings,
     commonSettings,
     globalSettings,

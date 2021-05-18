@@ -41,15 +41,18 @@ export default Demo;
 
 ### Props
 
-| 参数           | 说明            | 类型     | 默认值                                                                                                                          |
-| -------------- | --------------- | -------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| defaultValue   | 默认表单 schema | `object` | `DEFAULT_SCHEMA`                                                                                                                |
-| transformer    | schema 双向转换 | `object` | `{ fromFormRender, toFormRender }`                                                                                              |
-| extraButtons   | 操作栏按钮      | `array`  | `extraButton[]`                                                                                                                 |
-| settings       | 左右侧栏配置    | `array`  | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L513)       |
-| commonSettings | 通用配置        | `object` | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L2)   |
-| globalSettings | 全局配置        | `object` | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L513) |
-| widgets        | 自定义组件      | `object` | `{}`                                                                                                                            |
+| 参数           | 说明                     | 类型      | 默认值                                                                                                                          |
+| -------------- | ------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| hideId         | 隐藏组件 ID              | `boolean` | `false`                                                                                                                         |
+| defaultValue   | 默认表单 schema          | `object`  | `DEFAULT_SCHEMA`                                                                                                                |
+| transformer    | schema 双向转换          | `object`  | `{ fromFormRender, toFormRender }`                                                                                              |
+| extraButtons   | 操作栏按钮               | `array`   | `extraButton[]`                                                                                                                 |
+| controlButtons | 选中项操作按钮           | `array`   | `controlButton[]`                                                                                                               |
+| settings       | 左右侧栏配置             | `array`   | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L651)       |
+| commonSettings | 通用配置                 | `object`  | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L2)   |
+| globalSettings | 全局配置                 | `object`  | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L672) |
+| widgets        | 自定义组件               | `object`  | `{}`                                                                                                                            |
+| mapping        | 组件和 schema 的映射规则 | `object`  | `{}`                                                                                                                            |
 
 #### extraButton
 
@@ -58,7 +61,17 @@ export default Demo;
 | text    | 按钮文案         | `string`          |
 | onClick | 按钮点击回调函数 | `(event) => void` |
 
+数组前四项为布尔值，决定默认按钮是否展示。
 支持 antd 按钮组件的所有其他属性 https://ant.design/components/button-cn/#API
+
+#### controlButton
+
+| 属性    | 说明             | 类型                      |
+| ------- | ---------------- | ------------------------- |
+| text    | 按钮文案         | `string`                  |
+| onClick | 按钮点击回调函数 | `(event, schema) => void` |
+
+数组前两项为布尔值或函数，决定默认按钮是否展示，函数入参为选中项 schema。
 
 ### Events
 
