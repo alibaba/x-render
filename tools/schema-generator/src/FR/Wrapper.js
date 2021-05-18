@@ -20,7 +20,7 @@ export default function Wrapper({
     hovering,
     userProps,
   } = useStore();
-  const { controlButtons = [], hideId } = userProps;
+  const { controlButtons, hideId } = userProps;
   const setGlobal = useGlobal();
   const { schema } = item;
   const { type } = schema;
@@ -201,7 +201,9 @@ export default function Wrapper({
   const shownId = getKeyFromUniqueId(schema.$id);
 
   // 操作按钮
-  const _controlButtons = Array.isArray(controlButtons) ? controlButtons : [];
+  const _controlButtons = Array.isArray(controlButtons)
+    ? controlButtons
+    : [true, true];
   const _showDefaultBtns = _controlButtons
     .filter(item => ['boolean', 'function'].includes(typeof item))
     .map(item => {
