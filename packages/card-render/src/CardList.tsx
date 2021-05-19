@@ -1,6 +1,15 @@
 import React from 'react';
 import { useTable } from './hooks';
-import { Skeleton, Typography, Radio, Card, Empty, Pagination, Row, Col } from 'antd';
+import {
+  Skeleton,
+  Typography,
+  Radio,
+  Card,
+  Empty,
+  Pagination,
+  Row,
+  Col,
+} from 'antd';
 import './card.css';
 
 import ErrorBoundary from './components/ErrorBoundary';
@@ -10,7 +19,7 @@ const { Meta } = Card;
 const CardList = props => {
   if (props.dataSource) {
     console.error(
-      '设置table-render的数据请使用searchApi，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo',
+      '设置table-render的数据请使用searchApi，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
     );
   }
   const { tableState, setTable, doSearch }: any = useTable();
@@ -37,13 +46,16 @@ const CardList = props => {
 
   const { type, style, cover, header, content, footer } = cardRender;
 
-  const toolbarArray = typeof toolbarRender === 'function' ? toolbarRender() : [];
+  const toolbarArray =
+    typeof toolbarRender === 'function' ? toolbarRender() : [];
   const showTableTop = headerTitle || toolbarRender || Array.isArray(searchApi);
   return (
     <ErrorBoundary>
       <div className="tr-table-wrapper">
         {
-          <div className={showTableTop ? 'tr-table-top' : 'tr-table-top-nohead'}>
+          <div
+            className={showTableTop ? 'tr-table-top' : 'tr-table-top-nohead'}
+          >
             <div className="tr-table-title">
               <TableTitle title={headerTitle} />
             </div>
@@ -77,20 +89,30 @@ const CardList = props => {
                     e.stopPropagation();
                     onCardClick(card, index);
                   }}
-                  extra={!cover ? header && header.extra && header.extra(card, index) : null}
+                  extra={
+                    !cover
+                      ? header && header.extra && header.extra(card, index)
+                      : null
+                  }
                   actions={footer && footer(card, index)}
                   cover={cover && renderCover(cover, card)}
                   style={cardStyle}
                   className={cardClassName}
                 >
                   <Meta
-                    title={header && header.title && headerRender(header.title, card, index)}
+                    title={
+                      header &&
+                      header.title &&
+                      headerRender(header.title, card, index)
+                    }
                     description={
                       (content &&
                         content.description &&
-                        descriptionRender(content.description, card, index)) || (
-                        <div style={{ height: 22 }} />
-                      )
+                        descriptionRender(
+                          content.description,
+                          card,
+                          index
+                        )) || <div style={{ height: 22 }} />
                     }
                   />
                   {content && content.list && renderList(card, content.list)}
@@ -158,7 +180,9 @@ const renderList = (card, content) => {
             </Col>
           )}
           <Col>
-            <span>{typeof item === 'string' ? card[item] : card[item.dataIndex]}</span>
+            <span>
+              {typeof item === 'string' ? card[item] : card[item.dataIndex]}
+            </span>
           </Col>
         </Row>
       </div>
@@ -169,7 +193,12 @@ const renderList = (card, content) => {
 // 封面渲染逻辑
 const renderCover = (cover, card): React.ReactNode => {
   if (typeof cover === 'string') return <img src={card[cover]} />;
-  return <img style={{ width: cover.width, height: cover.height }} src={card[cover.dataIndex]} />;
+  return (
+    <img
+      style={{ width: cover.width, height: cover.height }}
+      src={card[cover.dataIndex]}
+    />
+  );
 };
 
 // header渲染逻辑
@@ -197,9 +226,11 @@ const TableTitle = ({ title }) => {
     doSearch({ tab: _tab });
   };
 
-  if (typeof searchApi === 'function') return <div className="tr-single-tab">{title}</div>;
+  if (typeof searchApi === 'function')
+    return <div className="tr-single-tab">{title}</div>;
   if (searchApi && Array.isArray(searchApi)) {
-    if (searchApi.length === 1) return <div className="tr-single-tab">{searchApi[0].name}</div>;
+    if (searchApi.length === 1)
+      return <div className="tr-single-tab">{searchApi[0].name}</div>;
     return (
       <Radio.Group onChange={onTabChange} value={_tab}>
         {searchApi.map((item, i) => {

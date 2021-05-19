@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
-import './Wrapper.css';
-import { useGlobal, useStore } from '../hooks';
-import { copyItem, getKeyFromUniqueId, dropItem } from '../utils';
 import { DeleteOutlined, CopyOutlined, DragOutlined } from '@ant-design/icons';
 import { useDrag, useDrop } from 'react-dnd';
+import { useGlobal, useStore } from '../hooks';
+import { copyItem, getKeyFromUniqueId, dropItem, isObject } from '../utils';
+import './Wrapper.less';
 
 export default function Wrapper({
   $id,
@@ -18,7 +18,9 @@ export default function Wrapper({
     onFlattenChange,
     selected,
     hovering,
+    userProps,
   } = useStore();
+  const { controlButtons, hideId } = userProps;
   const setGlobal = useGlobal();
   const { schema } = item;
   const { type } = schema;
@@ -27,12 +29,6 @@ export default function Wrapper({
   const [{ isDragging }, dragRef, dragPreview] = useDrag({
     type: 'box',
     item: { $id: inside ? 0 + $id : $id },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult();
-      if (item && dropResult) {
-        // alert(`You dropped into ${dropResult.name}!`);
-      }
-    },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -41,12 +37,11 @@ export default function Wrapper({
   const [{ canDrop, isOver }, dropRef] = useDrop({
     accept: 'box',
     drop: (item, monitor) => {
-      // 如果children已经作为了drop target，不处理
+      // 如果 children 已经作为了 drop target，不处理
       const didDrop = monitor.didDrop();
       if (didDrop) {
         return;
       }
-      console.log(item.dragItem, 'tems');
       const [newFlatten, newId] = dropItem({
         dragId: item.$id, // 内部拖拽用dragId
         dragItem: item.dragItem, // 从左边栏过来的，用dragItem
@@ -56,7 +51,6 @@ export default function Wrapper({
       });
       onFlattenChange(newFlatten);
       setGlobal({ selected: newId });
-      return;
     },
     hover: (item, monitor) => {
       // 只检查被hover的最小元素
@@ -137,20 +131,6 @@ export default function Wrapper({
     setGlobal({ selected: newId });
   };
 
-  const handleMouseEnter = () => {
-    // setGlobal({ hovering: inside ? '0' + $id : $id });
-  };
-
-  const handleMouseLeave = () => {
-    // TODO: 如何写hoverLeave
-    // let hoverItem = '';
-    // if (hovering && hovering[0] === '0') {
-    //   hoverItem = $id;
-    // } else {
-    //   hoverItem = $id.split;
-    // }
-  };
-
   // 一些computed
   let isSelected = selected === $id && !inside;
   if (selected && selected[0] === '0') {
@@ -206,6 +186,7 @@ export default function Wrapper({
       ...overwriteStyle,
       outline: '2px solid #409eff',
       borderColor: '#fff',
+      zIndex: 1,
     };
   }
   if (style && typeof style === 'object') {
@@ -218,76 +199,67 @@ export default function Wrapper({
   if ($id === '#' && inside) return children;
 
   // 展示的id
-  let shownId = schema && schema.$id && getKeyFromUniqueId(schema.$id);
-  if (shownId === '#') shownId = ''; // 根元素不展示了
+  const shownId = getKeyFromUniqueId(schema.$id);
+
+  // 操作按钮
+  const _controlButtons = Array.isArray(controlButtons)
+    ? controlButtons
+    : [true, true];
+  const _showDefaultBtns = _controlButtons
+    .filter(item => ['boolean', 'function'].includes(typeof item))
+    .map(item => {
+      if (typeof item === 'boolean') return item;
+      return item(schema);
+    });
+  const _extraBtns = _controlButtons.filter(
+    item => isObject(item) && item.text
+  );
+  const { length: _numOfBtns } = _showDefaultBtns
+    .concat(_extraBtns)
+    .filter(Boolean);
 
   return (
     <div
       ref={boxRef}
       style={overwriteStyle}
-      className={`field-wrapper relative w-100`}
+      className="field-wrapper relative w-100"
       onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
-      {!inside && isSelected && $id !== '#' && (
-        <div
-          style={{
-            position: 'absolute',
-            top: -2,
-            left: -2,
-            height: 24,
-            width: 24,
-            backgroundColor: '#409eff',
-            padding: '2px 0 0 4px',
-            cursor: 'move',
-          }}
-          ref={dragRef}
-        >
-          <DragOutlined style={{ color: '#fff' }} />
-        </div>
-      )}
-      {!inside && (
-        <div className="absolute top-0 right-1 blue f7">{shownId}</div>
-      )}
       {children}
 
-      {isSelected && !inside && $id !== '#' && (
-        <div
-          style={{
-            position: 'absolute',
-            zIndex: 20,
-            bottom: -2,
-            right: -2,
-            height: 24,
-            width: 54,
-            borderTopLeftRadius: 8,
-            background: '#409eff',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <div className="pointer" onClick={deleteItem}>
-            <DeleteOutlined
-              style={{
-                height: 16,
-                width: 16,
-                margin: '0 8px 0 12px',
-                color: '#fff',
-              }}
-            />
-          </div>
-          <div className="pointer" onClick={handleItemCopy}>
-            <CopyOutlined
-              style={{
-                height: 16,
-                width: 16,
-                marginRight: 12,
-                color: '#fff',
-              }}
-            />
-          </div>
+      {!inside && $id !== '#' && !hideId && (
+        <div className="absolute top-0 right-1 blue f7">{shownId}</div>
+      )}
+
+      {!inside && $id !== '#' && isSelected && (
+        <div className="pointer-move" ref={dragRef}>
+          <DragOutlined />
+        </div>
+      )}
+
+      {!inside && $id !== '#' && isSelected && _numOfBtns > 0 && (
+        <div className="pointer-wrapper">
+          {_showDefaultBtns[0] !== false && (
+            <div className="pointer" onClick={deleteItem}>
+              <DeleteOutlined />
+            </div>
+          )}
+          {_showDefaultBtns[1] !== false && (
+            <div className="pointer" onClick={handleItemCopy}>
+              <CopyOutlined />
+            </div>
+          )}
+          {_extraBtns.map((item, idx) => {
+            return (
+              <div
+                key={idx.toString()}
+                className="pointer"
+                onClick={e => item.onClick && item.onClick(e, schema)}
+              >
+                {item.text}
+              </div>
+            );
+          })}
         </div>
       )}
     </div>

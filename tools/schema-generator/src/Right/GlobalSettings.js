@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
 import { defaultGlobalSettings } from '../Settings';
 import { useStore, useGlobal } from '../hooks';
 
-export default function ItemSettings() {
+export default function GlobalSettings() {
   const form = useForm();
+  const [innerUpdate, setInnerUpdate] = useState(false);
   const { widgets, frProps, userProps } = useStore();
   const setGlobal = useGlobal();
   const globalSettings =
@@ -12,14 +13,17 @@ export default function ItemSettings() {
       ? userProps.globalSettings
       : defaultGlobalSettings;
 
-  const onDataChange = (value) => {
-    if (value.displayType) {
-      setGlobal({ frProps: value });
-    }
+  const onDataChange = value => {
+    setInnerUpdate(true);
+    setGlobal({ frProps: value });
   };
 
   useEffect(() => {
-    form.setValues(frProps);
+    if (innerUpdate) {
+      setInnerUpdate(false);
+    } else {
+      form.setValues(frProps);
+    }
   }, [frProps]);
 
   return (
@@ -28,7 +32,7 @@ export default function ItemSettings() {
         form={form}
         schema={globalSettings}
         watch={{
-          '#': v => onDataChange(v)
+          '#': v => onDataChange(v),
         }}
         widgets={widgets}
       />

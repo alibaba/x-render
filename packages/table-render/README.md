@@ -75,7 +75,7 @@ const schema = {
       format: 'date',
       'ui:width': '30%',
     },
-  }
+  },
 };
 
 // 配置完全透传 antd table
@@ -92,9 +92,7 @@ const columns = [
   },
   {
     title: '操作',
-    render: (row, record) => (
-     <a onClick={()=>alert(row.title)}>编辑</a>
-    ),
+    render: (row, record) => <a onClick={() => alert(row.title)}>编辑</a>,
   },
 ];
 
@@ -107,8 +105,8 @@ const Wrapper = () => {
   };
   return (
     <TableProvider>
-       <Search schema={schema} api={searchApi} />
-       <Table headerTitle="最简表格" columns={columns} rowKey="id" />
+      <Search schema={schema} api={searchApi} />
+      <Table headerTitle="最简表格" columns={columns} rowKey="id" />
     </TableProvider>
   );
 };
@@ -116,53 +114,50 @@ const Wrapper = () => {
 export default Wrapper;
 ```
 
-
 ## API
 
 ### `<TableProvider>` 参数
 
 **TableProvider 本质就是一个 React Context，将对应的 `<Search>` 和 `<Table>` 包裹起来，可以很方便在里面插入一些其他东西，不需要任何入参**
 
-
 ### `<Search>` 参数
 
 **我们将搜索相关的能力放到 `<Search>` 上面配置，包括对应的搜索筛选表单的渲染**
 
-| 属性            | 描述      | 类型                                   | 默认值 | 必填 |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------ |------ |
-| schema| 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](https://x-render.gitee.io/form-render/config/schema) | `object` | - |是 |
-| api | 初始化&点击查询时执行的函数     | `Function` or `Array`   | -      |是 |
-| onSearch      | 在表格查询时执行一些额外的操作 | `Function`           | -      |否 |
-| afterSearch   | 在表格查询结束后执行一些额外的操作 | `Function`           | -      |否 |
-| searchOnMount | 组件初次挂载时，是否默认执行查询动作  | `boolean` |   `true` |否 |
-| hidden          | 是否隐藏`<Search />`组件    | `boolean`  | `false` |否 |
-| searchBtnRender | 自定义表单查询按钮 | `(refresh,clearSearch) => ReactNode[]` | -      |否 |
-| searchBtnStyle | 自定义表单操作按钮组的样式 | `React.CSSProperties` | {}      |否 |
-| searchBtnClassName | 自定义表单操作按钮组的ClassName | `string` | ''      |否 |
+| 属性               | 描述                                                                                                           | 类型                                   | 默认值  | 必填 |
+| ------------------ | -------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------- | ---- |
+| schema             | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](https://x-render.gitee.io/form-render/config/schema) | `object`                               | -       | 是   |
+| api                | 初始化&点击查询时执行的函数                                                                                    | `Function` or `Array`                  | -       | 是   |
+| onSearch           | 在表格查询时执行一些额外的操作                                                                                 | `Function`                             | -       | 否   |
+| afterSearch        | 在表格查询结束后执行一些额外的操作                                                                             | `Function`                             | -       | 否   |
+| searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                                           | `boolean`                              | `true`  | 否   |
+| hidden             | 是否隐藏`<Search />`组件                                                                                       | `boolean`                              | `false` | 否   |
+| searchBtnRender    | 自定义表单查询按钮                                                                                             | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
+| searchBtnStyle     | 自定义表单操作按钮组的样式                                                                                     | `React.CSSProperties`                  | {}      | 否   |
+| searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                                               | `string`                               | ''      | 否   |
 
 ### `<Table>` 参数
 
 **支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写，最基本的使用就需要填写`columns`**
 
-| 属性       | 描述                          | 类型                    | 默认值 |
-| --------- | --------------------------- | ----------------------- | ------ |
-| headerTitle | 表格标题     | `string` | `ReactNode`  | -      |
-| toolbarRender    | 表格主体右上方的控件，例如“添加”按钮  | `() => ReactNode[]`     | `false`      |
-| toolbarAction   | 显示在表格主体右上方的 Icon 列表，内置了`刷新、调整密度、全屏显示` 等功能 | `boolean` | `false`  |
-| pageChangeWithRequest | 切换分页时是否需要请求接口  | `boolean` | `true`  |
-| columns   | 列定义  | `object` | `false`  |
-
+| 属性                  | 描述                                                                      | 类型                | 默认值      |
+| --------------------- | ------------------------------------------------------------------------- | ------------------- | ----------- |
+| headerTitle           | 表格标题                                                                  | `string`            | `ReactNode` | - |
+| toolbarRender         | 表格主体右上方的控件，例如“添加”按钮                                      | `() => ReactNode[]` | `false`     |
+| toolbarAction         | 显示在表格主体右上方的 Icon 列表，内置了`刷新、调整密度、全屏显示` 等功能 | `boolean`           | `false`     |
+| pageChangeWithRequest | 切换分页时是否需要请求接口                                                | `boolean`           | `true`      |
+| columns               | 列定义                                                                    | `object`            | `false`     |
 
 #### `<Table>` 参数 中 Columns 列定义
 
 **columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns](https://ant.design/components/table-cn/#Column) 的配置，同时也提供了一些更方便的 api，加快书写**
 
-| 属性      | 描述                                               | 类型                                      | 默认值 |
-| --------- | -------------------------------------------------- | ----------------------------------------- | ------ |
-| ellipsis  | 是否自动缩略                                       | boolean                                   | -      |
-| copyable  | 是否支持复制                                       | boolean                                   | -      |
-| valueType | 值的类型，详见下方 `valueType 配置`                | `string`（`text` \| `money` \| `date` \| `dateTime`） | `text` |
-| enum      | 当前列值的枚举，详见[高级用法](https://x-render.gitee.io/table-render/demo) | `object`                                    | -      |
+| 属性      | 描述                                                                        | 类型                                                  | 默认值 |
+| --------- | --------------------------------------------------------------------------- | ----------------------------------------------------- | ------ |
+| ellipsis  | 是否自动缩略                                                                | boolean                                               | -      |
+| copyable  | 是否支持复制                                                                | boolean                                               | -      |
+| valueType | 值的类型，详见下方 `valueType 配置`                                         | `string`（`text` \| `money` \| `date` \| `dateTime`） | `text` |
+| enum      | 当前列值的枚举，详见[高级用法](https://x-render.gitee.io/table-render/demo) | `object`                                              | -      |
 
 - **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [案例代码](https://x-render.gitee.io/table-render/demo)：
 
@@ -177,8 +172,8 @@ export default Wrapper;
 
 **可通过 `useTable` 获取 `table-render` 的 context，例如: `refresh`、`tableState`、`setTable` 等属性**
 
-| 属性        | 描述                                                                                            | 类型     |
-| ----------- | ----------------------------------------------------------------------------------------------- | -------- |
+| 属性        | 描述                                                                                            | 类型       |
+| ----------- | ----------------------------------------------------------------------------------------------- | ---------- |
 | tableState  | 这些是全局的状态，根据需要使用                                                                  | `object`   |
 | refresh     | 刷新表格数据                                                                                    | `function` |
 | clearSearch | 重置筛选项                                                                                      | `function` |
@@ -186,6 +181,7 @@ export default Wrapper;
 | changeTab   | 手动切换 tab 的函数，例如目前两个搜索 tab： “我的活动”，“全部活动” （分别对应 tab 值为 0 和 1） | `function` |
 
 - **导出 useTable 以及对应的方法**
+
   ```js
   import { useTable } from 'table-render';
   const { refresh, tableState, setTable } = useTable();
@@ -211,21 +207,21 @@ export default Wrapper;
 
 - **refresh 用法**
 
-    | 入参 | 类型    | 说明                                                                            |
-    | ---- | ------- | ------------------------------------------------------------------------------- |
-    | stay | `boolean` | 刷新是否保留在现在的页码上，默认 false，回到第一页                              |
-    | tab  | `number`  | 0,1,2.. 如果 searchApi 是数组会出现的搜索选择 tab，用于强制搜索某个 tab，不常用 |
+  | 入参 | 类型      | 说明                                                                            |
+  | ---- | --------- | ------------------------------------------------------------------------------- |
+  | stay | `boolean` | 刷新是否保留在现在的页码上，默认 false，回到第一页                              |
+  | tab  | `number`  | 0,1,2.. 如果 searchApi 是数组会出现的搜索选择 tab，用于强制搜索某个 tab，不常用 |
 
-    1. 直接用：refresh()
-    2. 刷新数据，但停留在现有的页码：refresh({ stay: true })
+  1. 直接用：refresh()
+  2. 刷新数据，但停留在现有的页码：refresh({ stay: true })
 
 - **changeTab 用法**
 
-    ```js
-    //以下代码将手动切换到“全部活动”（tab = 1）
-    const { changeTab } = useTable()
-    //...
-    const onClick = () => {
-      changeTab(1)
-    }
-    ```
+  ```js
+  //以下代码将手动切换到“全部活动”（tab = 1）
+  const { changeTab } = useTable();
+  //...
+  const onClick = () => {
+    changeTab(1);
+  };
+  ```

@@ -52,7 +52,10 @@ const useTableRoot = (props: RootProps) => {
 
   const { pagination, search, searchApi, tab: currentTab, checkPassed } = state;
 
-  const doSearch = (params: { current?: any; tab?: any; pageSize?: any }, customSearch?: any) => {
+  const doSearch = (
+    params: { current?: any; tab?: any; pageSize?: any },
+    customSearch?: any
+  ) => {
     // 删除自定义组件的参数名
     delete search.searchBtn;
 
@@ -113,7 +116,10 @@ const useTableRoot = (props: RootProps) => {
     }
   };
 
-  const refresh = (params?: { tab: string | number; stay?: boolean }, search?: any) => {
+  const refresh = (
+    params?: { tab: string | number; stay?: boolean },
+    search?: any
+  ) => {
     const _stay = (params && params.stay) || false;
     const _tab = params && params.tab;
     const _search = search || {};
@@ -123,7 +129,7 @@ const useTableRoot = (props: RootProps) => {
         tab: _tab,
         pageSize: pagination.pageSize,
       },
-      _search,
+      _search
     );
   };
 
@@ -154,7 +160,11 @@ const useTableRoot = (props: RootProps) => {
 
 const Container = (
   props: RootProps,
-  ref?: ((instance: unknown) => void) | React.RefObject<unknown> | null | undefined,
+  ref?:
+    | ((instance: unknown) => void)
+    | React.RefObject<unknown>
+    | null
+    | undefined
 ) => {
   const context = useTableRoot(props);
 

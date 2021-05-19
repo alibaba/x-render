@@ -16,14 +16,14 @@ const defaultValue: any = {
 const getModelFromSchema: (schema: Schema) => any = ({
   type = 'string',
   properties = {},
-  items = {}
+  items = {},
 }) => {
   if (type === 'object') {
     return Object.keys(properties).reduce((result, key) => {
       return {
         ...result,
-        [key]: getModelFromSchema(properties[key])
-      }
+        [key]: getModelFromSchema(properties[key]),
+      };
     }, {});
   }
 
@@ -35,6 +35,6 @@ const getModelFromSchema: (schema: Schema) => any = ({
   }
 
   return defaultValue[type];
-}
+};
 
 export default getModelFromSchema;

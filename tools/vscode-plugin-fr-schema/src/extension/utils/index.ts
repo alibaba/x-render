@@ -8,4 +8,4 @@ export {
   getModelFromSchema,
   getSchemaFromCode,
   getHtmlForWebview,
-}
+};

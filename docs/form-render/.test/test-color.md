@@ -13,7 +13,7 @@ const schema = {
       type: 'string',
       format: 'color',
       default: '#00000080',
-    }
+    },
   },
   displayType: 'column',
 };

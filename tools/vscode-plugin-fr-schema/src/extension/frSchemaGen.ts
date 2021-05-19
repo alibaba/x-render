@@ -6,16 +6,19 @@ import * as vscode from 'vscode';
 
 export class frSchemaGenProvider {
   public static register(): vscode.Disposable {
-    return vscode.commands.registerCommand(frSchemaGenProvider.viewType, (uri: vscode.Uri) => {
-      let resource = uri;
-      if (!(resource instanceof vscode.Uri)) {
-        if (vscode.window.activeTextEditor) {
-          resource = vscode.window.activeTextEditor.document.uri;
+    return vscode.commands.registerCommand(
+      frSchemaGenProvider.viewType,
+      (uri: vscode.Uri) => {
+        let resource = uri;
+        if (!(resource instanceof vscode.Uri)) {
+          if (vscode.window.activeTextEditor) {
+            resource = vscode.window.activeTextEditor.document.uri;
+          }
         }
-      }
 
-      frSchemaGenProvider.generate(resource);
-    });
+        frSchemaGenProvider.generate(resource);
+      }
+    );
   }
 
   private static readonly viewType = 'frSchema.gen';
@@ -25,17 +28,12 @@ export class frSchemaGenProvider {
       const document = await vscode.workspace.openTextDocument(uri);
       const editor = await vscode.window.showTextDocument(document);
       const val = JSON.parse(document.getText());
-      const schema = {
-        schema: frSchemaGenProvider.recurseTree({ val }),
-        displayType: 'row',
-        showDescIcon: true,
-        labelWidth: 120
-      };
+      const schema = frSchemaGenProvider.recurseTree({ val });
 
-      editor.edit((editBuilder) => {
+      editor.edit(editBuilder => {
         editBuilder.replace(
           new vscode.Range(0, 0, document.lineCount, 0),
-          JSON.stringify(schema, null, 2),
+          JSON.stringify(schema, null, 2)
         );
       });
     } catch (err) {
@@ -72,16 +70,21 @@ export class frSchemaGenProvider {
         break;
       case 'object': {
         item.type = type;
-        Object.keys(val).forEach((subkey) => {
+        Object.keys(val).forEach(subkey => {
           const subval = val[subkey];
-          const result = frSchemaGenProvider.recurseTree({ key: subkey, val: subval });
+          const result = frSchemaGenProvider.recurseTree({
+            key: subkey,
+            val: subval,
+          });
           item.properties = { ...item.properties, [subkey]: result };
         });
         if (key) item.title = key;
         break;
       }
       default: {
-        vscode.window.showWarningMessage(`The existed type ${type} is no allowed.`);
+        vscode.window.showWarningMessage(
+          `The existed type ${type} is no allowed.`
+        );
       }
     }
     return item;

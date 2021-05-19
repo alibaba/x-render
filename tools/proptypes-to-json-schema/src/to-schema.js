@@ -2,7 +2,13 @@
  * Created by Tw93<tw93@qq.con> on 2019-11-11.
  * 将解析好的字段转换成 json schema
  */
-const { getProp, getRequired, getUiWidgets, getColumn, parse } = require('./tool');
+const {
+  getProp,
+  getRequired,
+  getUiWidgets,
+  getColumn,
+  parse,
+} = require('./tool');
 
 module.exports = function(componentInfo, options) {
   const { props, description, displayName } = componentInfo;
@@ -19,7 +25,10 @@ module.exports = function(componentInfo, options) {
   // schema 第一层节点对应这里的模块名
   const topProp = Object.assign(parseInfo, { type: 'object' });
   const propsSchema = Object.assign(topProp, { properties }, required);
-  const schemaJson = Object.assign({ name: displayName, column }, { propsSchema }, { uiSchema });
+  const schemaJson = Object.assign(
+    { name: displayName, column },
+    { propsSchema },
+    { uiSchema }
+  );
   return shouldAddUi ? schemaJson : propsSchema;
 };
-

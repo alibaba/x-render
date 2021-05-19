@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Collapse } from 'antd';
 import { useStore2 } from '../../hooks';
 const { Panel } = Collapse;
 
 export default function map({ children, title, ...rest }) {
-  const { theme, displayType } = useStore2();
+  const { theme, displayType, allCollapsed } = useStore2();
+  const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    setCollapsed(allCollapsed);
+  }, [allCollapsed]);
+
   if (!title) {
     return <div className="w-100">{children}</div>;
   }
@@ -28,9 +34,18 @@ export default function map({ children, title, ...rest }) {
       </div>
     );
   }
+
+  const toggle = keyList => {
+    if (keyList.length > 0) {
+      setCollapsed(false);
+    } else {
+      setCollapsed(true);
+    }
+  };
+
   return (
     <div className="w-100">
-      <Collapse defaultActiveKey={['1']}>
+      <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
         <Panel
           header={<div style={{ fontSize: 16, fontWeight: 500 }}>{title}</div>}
           key="1"

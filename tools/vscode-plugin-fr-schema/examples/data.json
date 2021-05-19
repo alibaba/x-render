@@ -10,8 +10,5 @@
       "cityId": 2
     }
   ],
-  "tags": [
-    "react",
-    "admin"
-  ]
+  "tags": ["react", "admin"]
 }

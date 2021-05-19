@@ -66,7 +66,11 @@ const columns = [
   {
     title: '操作',
     render: row => (
-      <a href="https://x-render.gitee.io/form-render/" target="_blank" rel="noopener noreferrer">
+      <a
+        href="https://x-render.gitee.io/form-render/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         查看
       </a>
     ),

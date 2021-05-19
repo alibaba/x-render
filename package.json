@@ -16,7 +16,8 @@
     "size": "ANALYZE=1 dumi build",
     "clean": "lerna clean -y",
     "changelog": "lerna-changelog",
-    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access"
+    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
+    "prettier": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\""
   },
   "devDependencies": {
     "@umijs/plugin-esbuild": "1.x",

@@ -436,7 +436,7 @@ export const flattenToData = (flatten, id = '#') => {
         if (type === 'object') {
           result = {};
         } else if (type === 'array') {
-          result = [{}]
+          result = [{}];
         }
       }
       childrenIds.forEach(c => {
@@ -567,7 +567,17 @@ export const oldSchemaToNew = schema => {
     const { propsSchema, ...rest } = schema;
     return { schema: propsSchema, ...rest };
   }
-  return schema;
+  if (schema && schema.schema) {
+    return schema.schema;
+  }
+  if (schema && schema.type === 'object') {
+    return schema;
+  }
+  return {
+    type: 'object',
+    properties: {},
+    ...schema,
+  };
 };
 
 export const newSchemaToOld = setting => {
@@ -584,7 +594,7 @@ export function defaultGetValueFromEvent(valuePropName, ...args) {
     return event.target[valuePropName];
   }
   return event;
-};
+}
 
 export const transformProps = props => {
   const { onChange, value, defaultValue, schema: ownSchema, ...rest } = props;

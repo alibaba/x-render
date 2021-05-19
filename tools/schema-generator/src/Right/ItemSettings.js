@@ -21,11 +21,14 @@ export default function ItemSettings() {
     onItemChange,
     userProps = {},
     widgets: defaultWidgets,
-    mapping: defaultMapping
+    mapping: defaultMapping,
   } = useStore();
 
-  const { settings, commonSettings } = userProps;
+  const { settings, commonSettings, hideId } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
+  // 避免切换选中项时 schema 对应出错
+  const [ready, setReady] = useState({});
+
   const widgets = {
     ...defaultWidgets,
     idInput: IdInput,
@@ -33,65 +36,65 @@ export default function ItemSettings() {
   };
 
   const getWidgetList = (settings, commonSettings) => {
-    let widgetList = [];
-    settings.forEach(setting => {
-      // TODO: 这里要判断一下否则会crash
-      const _widgets = setting.widgets;
-      const basicWidgets = _widgets
-        .filter(item => item.widget)
-        .map(b => ({ ...b, setting: { ...commonSettings, ...b.setting } }));
-      widgetList = [...widgetList, ...basicWidgets];
-    });
-    return widgetList;
+    return settings.reduce((widgetList, setting) => {
+      if (!Array.isArray(setting.widgets)) return widgetList;
+      const basicWidgets = setting.widgets.map(item => ({
+        ...item,
+        widget:
+          item.widget ||
+          item.schema.widget ||
+          getWidgetName(item.schema, defaultMapping),
+        setting: { ...commonSettings, ...item.setting },
+      }));
+      return [...widgetList, ...basicWidgets];
+    }, []);
   };
 
-  const onDataChange = (value) => {
-    if (selected === value.$id) {
-      try {
-        const item = flatten[selected];
-        if (item && item.schema) {
-          onItemChange(selected, { ...item, schema: value });
-        }
-      } catch (error) {
-        console.log(error, 'catch');
+  const onDataChange = value => {
+    try {
+      if (!ready) return;
+      const item = flatten[selected];
+      if (item && item.schema) {
+        onItemChange(selected, {
+          ...item,
+          schema: value,
+        });
       }
+    } catch (error) {
+      console.log(error, 'catch');
     }
   };
 
   useEffect(() => {
-    // 算widgetList
-    const _settings = Array.isArray(settings)
-      ? [...settings, { widgets: [...elements, ...advancedElements, ...layouts] }] // TODO: 不是最优解
-      : defaultSettings;
-    const _commonSettings = isObject(commonSettings)
-      ? commonSettings
-      : defaultCommonSettings;
-    const widgetList = getWidgetList(_settings, _commonSettings);
-
-    // setting该显示什么的计算，要把选中组件的schema和它对应的widgets的整体schema进行拼接
-    let itemSelected;
-    let widgetName;
+    // setting 该显示什么的计算，要把选中组件的 schema 和它对应的 widgets 的整体 schema 进行拼接
     try {
-      itemSelected = flatten[selected];
-      if (itemSelected) {
-        widgetName = getWidgetName(itemSelected.schema, defaultMapping);
-      }
-      if (widgetName) {
-        // const name = getKeyFromUniqueId(selected);
-        const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
-        const schemaNow = element.setting;
-        setSettingSchema({
-          type: 'object',
-          displayType: 'column',
-          showDescIcon: true,
-          properties: {
-            ...schemaNow,
-          },
-        });
-        setTimeout(() => {
-          form.setValues(itemSelected.schema);
-        })
-      }
+      const item = flatten[selected];
+      if (!item) return;
+      setReady(false);
+      // 算 widgetList
+      const _settings = Array.isArray(settings)
+        ? [
+            ...settings,
+            { widgets: [...elements, ...advancedElements, ...layouts] },
+          ] // TODO: 不是最优解
+        : defaultSettings;
+      const _commonSettings = isObject(commonSettings)
+        ? commonSettings
+        : defaultCommonSettings;
+      const widgetList = getWidgetList(_settings, _commonSettings);
+      const widgetName = getWidgetName(item.schema, defaultMapping);
+      const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
+      const properties = { ...element.setting };
+
+      if (hideId) delete properties.$id;
+
+      form.setValues(item.schema);
+      setSettingSchema({
+        type: 'object',
+        displayType: 'column',
+        properties,
+      });
+      setTimeout(() => setReady(true), 0);
     } catch (error) {
       console.log(error);
     }
@@ -104,7 +107,7 @@ export default function ItemSettings() {
         schema={settingSchema}
         widgets={widgets}
         watch={{
-          '#': v => onDataChange(v)
+          '#': v => onDataChange(v),
         }}
       />
     </div>

@@ -23,7 +23,11 @@ const RichTextEditor = ({ name, onChange, value, ...rest }) => {
     // Pressing ctrl + s when the editor has focus will execute this method
     // Before the editor content is submitted to the server, you can directly call editorState.toHTML () to get the HTML content
     const htmlContent = editor.toHTML();
-    onChange(name, htmlContent);
+    if (name) {
+      onChange(name, htmlContent);
+    } else {
+      onChange(htmlContent);
+    }
   };
 
   return (

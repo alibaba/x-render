@@ -1,5 +1,18 @@
 # Changelog
 
+### 1.3.3
+
+- [+] Form 添加全局的 disabled 属性，用于全局禁用
+- [+] Form 添加全局的 allCollapsed 属性，用于全局控制对象的展开/收起
+- [+] 新增虚拟列表展示，对应 widget: list4，可无限滚动代替了翻页
+- [+] 列表组件现在放开了页码配置支持
+- [+] 列表支持隐藏“复制”、“新增”、“删除”等按钮（hideAdd/hideDelete）
+- [+] 列表组件新增 props/button 属性，用于添加更多的操作按钮
+- [!] 修复了 range 组件的必填校验无效的问题
+- [!] 修复了 onMount 时，bind 字段无效的问题
+- [!] 新增 readOnlyWidget 字段，用于定制化只读模式的组件渲染
+- [!] 修复了 onMount/getValues 等 TS 声明有误的问题
+
 ### 1.3.2
 
 - [!] playground 完全翻新

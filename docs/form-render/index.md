@@ -230,10 +230,13 @@ import Form, { useForm, connectForm } from 'form-render';
 | ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
 | column           | 一行展示多少列                                                   | `number`            | 1      |
 | mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
+| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                       | `boolean`           | false  |
+| disabled         | 禁用模式，全部表单元素禁用                                       | `boolean`           | false  |
 | debug            | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
 | debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
 | locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
 | configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
+| allCollapsed     | 对象组件是否默认折叠（全局）                                     | `boolean`           | false  |
 | debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
 | validateMessages | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
 
@@ -281,7 +284,7 @@ export default connectForm(Demo);
 | ---------------- | --------------------------------------------------- | ------------------------------------ |
 | submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                         |
 | resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `() => void`                         |
-| errorFields      | Check if a field is touched                         | `array,[{name, error: []}]`          |
+| errorFields      | 表单校验错误的数组                                  | `array,[{name, error: []}]`          |
 | setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error | Error[]) => void`   |
 | setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`            |
 | setValueByPath   | 外部修改指定单个 field 的数据(原名 onItemChange)    | `(path: string, value: any) => void` |

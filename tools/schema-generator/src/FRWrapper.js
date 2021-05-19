@@ -15,7 +15,6 @@ import {
   newSchemaToOld,
 } from './utils';
 import { Ctx, StoreCtx } from './context';
-// import SCHEMA from './json/basic.json';
 import FR from './FR';
 import PreviewFR from './PreviewFR';
 import { Modal, Input, Button, message } from 'antd';
@@ -33,7 +32,7 @@ function Wrapper(
     frProps = {},
     ...rootState
   },
-  ref,
+  ref
 ) {
   const [local, setState] = useSet({
     showModal: false,
@@ -52,7 +51,7 @@ function Wrapper(
 
   let _schema = {};
   if (schema) {
-    _schema = combineSchema(schema.schema, schema.uiSchema); // TODO: 要不要判断是否都是object
+    _schema = combineSchema(schema); // TODO: 要不要判断是否都是object
   }
   const flatten = flattenSchema(_schema);
   const flattenWithData = dataToFlatten(flatten, formData);
@@ -79,9 +78,8 @@ function Wrapper(
   const clearSchema = () => {
     setGlobal({
       schema: {
-        schema: {
-          type: 'object',
-        },
+        type: 'object',
+        properties: {},
       },
       formData: {},
       selected: undefined,
@@ -97,21 +95,23 @@ function Wrapper(
   // TODO2: 导入这边看看会不会传一个乱写的schema就crash
   const importSchema = () => {
     try {
-      const info = transformFrom(looseJsonParse(local.schemaForImport));
+      const value = transformFrom(looseJsonParse(local.schemaForImport));
       let _isNewVersion = true;
-      if (info && info.propsSchema) {
+      if (value && value.propsSchema) {
         _isNewVersion = false;
       }
-      const _info = oldSchemaToNew(info);
-      const { schema, ...rest } = _info;
+      const schema = oldSchemaToNew(value);
       setGlobal(state => ({
-        schema: {
-          schema,
-        },
+        schema,
         formData: {},
         selected: undefined,
         isNewVersion: _isNewVersion,
-        frProps: { ...state.frProps, ...rest },
+        frProps: {
+          ...state.frProps,
+          column: schema.column,
+          displayType: schema.displayType,
+          labelWidth: schema.labelWidth,
+        },
       }));
     } catch (error) {
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
@@ -122,16 +122,10 @@ function Wrapper(
   let displaySchema = {};
   let displaySchemaString = '';
   try {
-    const _schema = idToSchema(flattenWithData, '#', true);
-    if (frProps && frProps.column) {
-      _schema['column'] = frProps.column;
-    }
-    if (frProps && frProps.displayType) {
-      _schema['displayType'] = frProps.displayType;
-    }
-    if (frProps && frProps.showDescIcon) {
-      _schema['showDescIcon'] = frProps.showDescIcon;
-    }
+    const _schema = {
+      ...idToSchema(flattenWithData, '#', true),
+      ...frProps,
+    };
     displaySchema = transformTo(_schema);
     if (!isNewVersion) {
       displaySchema = newSchemaToOld(displaySchema);
@@ -145,9 +139,7 @@ function Wrapper(
     toggleModal();
   };
 
-  const getValue = () => {
-    return displaySchema;
-  };
+  const getValue = () => displaySchema;
 
   // 收口点 propsSchema 到 schema
   // setValue 外部用于修改大schema，叫setSchema比较合适
@@ -155,19 +147,23 @@ function Wrapper(
   const setValue = value => {
     try {
       // TODO: 这里默认使用setValue的同学不使用ui:Schema
-      const { schema, propsSchema, uiSchema, ...rest } = value;
-      let _schema = { schema: schema || propsSchema };
       let _isNewVersion = true;
-      if (!schema && propsSchema) {
+      if (value && value.propsSchema) {
         _isNewVersion = false;
       }
+      const schema = oldSchemaToNew(value);
       setGlobal(state => ({
         ...state,
-        schema: _schema,
+        schema,
         formData: {},
         selected: undefined,
         isNewVersion: _isNewVersion,
-        frProps: { ...state.frProps, ...rest },
+        frProps: {
+          ...state.frProps,
+          column: schema.column,
+          displayType: schema.displayType,
+          labelWidth: schema.labelWidth,
+        },
       }));
     } catch (error) {
       console.error(error);
@@ -196,7 +192,7 @@ function Wrapper(
 
   const _extraButtons = Array.isArray(extraButtons) ? extraButtons : [];
   const _showDefaultBtns = _extraButtons.filter(
-    item => item === true || item === false,
+    item => item === true || item === false
   );
   const _extraBtns = _extraButtons.filter(item => isObject(item) && item.text);
 
@@ -242,9 +238,7 @@ function Wrapper(
             </div>
             <div className="dnd-container">
               <div style={{ height: preview ? 33 : 0 }}></div>
-              {
-                preview ? <PreviewFR schema={displaySchema.schema} /> : <FR />
-              }
+              {preview ? <PreviewFR schema={displaySchema} /> : <FR />}
             </div>
           </div>
           <Right globalProps={frProps} />

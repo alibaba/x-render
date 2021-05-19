@@ -4,7 +4,8 @@ function stringContains(str, text) {
   return str.indexOf(text) > -1;
 }
 
-export const isObj = a => stringContains(Object.prototype.toString.call(a), 'Object');
+export const isObj = a =>
+  stringContains(Object.prototype.toString.call(a), 'Object');
 
 const isApiString = str => {
   if (typeof str !== 'string') return false;
@@ -49,7 +50,8 @@ export const getDateTime = time => dayjs(time).format('YYYY-MM-DD HH:mm');
 export const getDate = time => dayjs(time).format('YYYY-MM-DD');
 
 // 格式化千分符
-export const getMoneyType = num => `¥${num}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+export const getMoneyType = num =>
+  `¥${num}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 
 // 如果是函数，则解析，如果不是，直接返回值
 export const parseFunctionValue = (value, params, cb) => {
