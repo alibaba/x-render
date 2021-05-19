@@ -35,7 +35,7 @@ const Demo = () => {
             shape: 'round',
             type: isFormily && 'primary',
             onClick: switchMode,
-          }
+          },
         ]}
         onChange={data => console.log('data:change', data)}
         onSchemaChange={schema => console.log('schema:change', schema)}

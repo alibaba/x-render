@@ -15,7 +15,7 @@ import { ProTableProps } from './typing';
 const ProTable = (props: ProTableProps) => {
   if (props.dataSource) {
     console.error(
-      '设置table-render的数据请使用searchApi，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo',
+      '设置table-render的数据请使用searchApi，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
     );
   }
   const { tableState, setTable, doSearch }: any = useTable();
@@ -79,9 +79,12 @@ const ProTable = (props: ProTableProps) => {
     size: tableSize,
   };
 
-  const toolbarArray = typeof toolbarRender === 'function' ? toolbarRender() : [];
+  const toolbarArray =
+    typeof toolbarRender === 'function' ? toolbarRender() : [];
   const showTableTop =
-    headerTitle || (toolbarArray && toolbarArray.length) || Array.isArray(searchApi);
+    headerTitle ||
+    (toolbarArray && toolbarArray.length) ||
+    Array.isArray(searchApi);
 
   const fullScreen = () => {
     return Promise.resolve(rootRef.current?.requestFullscreen());
@@ -95,9 +98,15 @@ const ProTable = (props: ProTableProps) => {
 
   return (
     <ErrorBoundary>
-      <div className={`tr-table-wrapper ${className}`} style={style} ref={rootRef}>
+      <div
+        className={`tr-table-wrapper ${className}`}
+        style={style}
+        ref={rootRef}
+      >
         {
-          <div className={showTableTop ? 'tr-table-top' : 'tr-table-top-nohead'}>
+          <div
+            className={showTableTop ? 'tr-table-top' : 'tr-table-top-nohead'}
+          >
             <div className="tr-table-title">
               <TableTitle title={headerTitle} />
             </div>
@@ -137,9 +146,11 @@ const TableTitle = ({ title }: any) => {
     doSearch({ tab: _tab });
   };
 
-  if (typeof searchApi === 'function') return <div className="tr-single-tab">{title}</div>;
+  if (typeof searchApi === 'function')
+    return <div className="tr-single-tab">{title}</div>;
   if (searchApi && Array.isArray(searchApi)) {
-    if (searchApi.length === 1) return <div className="tr-single-tab">{searchApi[0].name}</div>;
+    if (searchApi.length === 1)
+      return <div className="tr-single-tab">{searchApi[0].name}</div>;
     return (
       <>
         <Radio.Group onChange={onTabChange} value={_tab}>

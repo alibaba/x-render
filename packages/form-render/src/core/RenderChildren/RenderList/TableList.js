@@ -18,13 +18,13 @@ const TableList = ({
   changeList,
 }) => {
   const { props = {}, itemProps } = schema;
-  const { pagination = {}} = props;
+  const { pagination = {} } = props;
 
   const paginationConfig = pagination && {
     size: 'small',
     hideOnSinglePage: true,
-    ...pagination
-  }
+    ...pagination,
+  };
 
   const dataSource = displayList.map((item, idx) => {
     return { index: idx };
@@ -65,7 +65,6 @@ const TableList = ({
       title: '操作',
       key: '$action',
       fixed: 'right',
-      width: 60,
       render: (value, record, idx) => {
         return (
           <Popconfirm

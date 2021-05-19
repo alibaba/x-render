@@ -72,7 +72,6 @@ const DrawerList = ({
     title: '操作',
     key: '$action',
     fixed: 'right',
-    width: 80,
     render: (value, record, idx) => {
       const index = (value && value.$idx) || 0;
       return (
@@ -173,6 +172,7 @@ const DrawerList = ({
         </div>
       </Drawer>
       <Table
+        size="small"
         scroll={{ x: 'max-content' }}
         columns={columns}
         dataSource={dataSource}

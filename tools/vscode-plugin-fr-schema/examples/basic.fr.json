@@ -1,22 +1,17 @@
 {
-  "schema": {
-    "type": "object",
-    "properties": {
-      "name": {
-        "type": "string",
-        "title": "姓名"
-      },
-      "email": {
-        "type": "string",
-        "title": "邮箱"
-      },
-      "age": {
-        "type": "integer",
-        "title": "年龄"
-      }
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "姓名"
+    },
+    "email": {
+      "type": "string",
+      "title": "邮箱"
+    },
+    "age": {
+      "type": "integer",
+      "title": "年龄"
     }
-  },
-  "displayType": "row",
-  "showDescIcon": true,
-  "labelWidth": 120
+  }
 }

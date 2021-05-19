@@ -16,3 +16,7 @@ toc: false
 ### 3、FormRender 1.0 是否将 antd 作为了强依赖，还有没有保留原先纯粹的表单核心包，然后通过自定义组件注册第三方组件库的能力？
 
 FormRender 1.0 与之前一样，对组件库的口子都是开着的，外部使用可以通过 widgets & mapping 两个 props 注入，内部可以也可以方便的提 pr。对 antd 的依赖是 peerdependency，form-render 本身还是纯净的，只是写了非常薄一层对 antd 组件的 wrapper，没有必要特地分出去。之后组件库接入也是同样模式：wrapper 直接内置于核心代码，组件库本身 peerdependency。
+
+### 4、下拉选择框的选项希望从服务端拿到。是否有简单实现方法？
+
+可以在 `onMount` 中使用 `form.setSchemaByPath` 来实现，见[文档样例](/advanced/form-methods#%E4%BE%8B-4%EF%BC%9A%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8A%A0%E8%BD%BD%E9%80%89%E6%8B%A9%E6%A1%86%E7%9A%84%E9%80%89%E9%A1%B9)

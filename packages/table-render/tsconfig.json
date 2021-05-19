@@ -17,5 +17,15 @@
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false
   },
-  "exclude": ["node_modules", "lib", "es", "dist", "typings", "**/__test__", "test", "tests", "docs"]
+  "exclude": [
+    "node_modules",
+    "lib",
+    "es",
+    "dist",
+    "typings",
+    "**/__test__",
+    "test",
+    "tests",
+    "docs"
+  ]
 }

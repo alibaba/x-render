@@ -22,4 +22,4 @@ snippets 基本分为三类：
 2. 生成部分常用选项的 schema（例如 ui:options, ui:width, format 等）
 3. 生成骨架和 demo。fr-init 生成骨架，fr-demo 生成一个包含所有可用组件以及一个联动显隐的样例
 
-注意不需要输入完整的 `fr-number-complex `来唤起一个 snippet 哦，只需要输入 `number` 或者甚至 `fnc` 就能智能联想了。
+注意不需要输入完整的 `fr-number-complex`来唤起一个 snippet 哦，只需要输入 `number` 或者甚至 `fnc` 就能智能联想了。

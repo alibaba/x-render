@@ -333,6 +333,22 @@ FR 默认支持的内置组件，以及详细匹配规则见[内置组件](/form
 
 `widget`也可以用于匹配“自定义”的组件，如何使用 `widget` 字段和 `widgets` props 来做定制化表单元素渲染，参见[自定义组件](/form-render/advanced/widget)
 
+### readOnlyWidget
+
+- 类型：string
+- 详细：指定只读模式下用哪个自定义组件渲染
+
+readOnly=true 的情况，FormRender 默认使用 html 组件渲染。特殊情况 html 组件无法满足需求，此时通过指明 readOnlyWidget 的方式自定义渲染
+
+```json
+{
+  "title": "单选",
+  "type": "string",
+  "widget": "myWidget", // 指明使用 myWidget 来渲染
+  "readOnlyWidget": "myReadOnlyWidget" // 指明在只读模式使用 myReadOnlyWidget 来渲染
+}
+```
+
 ### properties
 
 只在对象组件（type: object）中使用，`properties` 用于包裹对象的子属性：

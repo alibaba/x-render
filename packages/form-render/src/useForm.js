@@ -205,7 +205,7 @@ export const useForm = props => {
 
   const getSchemaByPath = path => {
     try {
-      return flatten[path].schema;
+      return _flatten.current[path].schema;
     } catch (error) {
       console.error(error, 'getSchemaByPath');
       return {};
@@ -235,10 +235,10 @@ export const useForm = props => {
     _setErrors(newError);
   };
 
-  const getValues = () => processData(_data.current, flatten);
+  const getValues = () => processData(_data.current, _flatten.current);
 
   const setValues = newFormData => {
-    const newData = transformDataWithBind2(newFormData, flatten);
+    const newData = transformDataWithBind2(newFormData, _flatten.current);
     _setData(newData);
   };
 

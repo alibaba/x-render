@@ -20,11 +20,11 @@ export interface IMetaItem {
    * 是否是百分数，如果是，数据展示时会自动处理：0.5 => 50%
    */
   isRate?: boolean;
-};
+}
 
 export interface IDataItem {
   [k: string]: number | string;
-};
+}
 
 export interface ICommonProps {
   /**
@@ -40,10 +40,10 @@ export interface ICommonProps {
   /**
    * 元数据描述信息
    */
-   meta: IMetaItem[];
+  meta: IMetaItem[];
 
-   /**
-    * 数据
-    */
-   data: IDataItem[];
+  /**
+   * 数据
+   */
+  data: IDataItem[];
 }

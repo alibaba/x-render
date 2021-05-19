@@ -14,16 +14,16 @@ toc: content
 <code src='./demo/card.jsx' />
 
 ## API
-`TableContainer`与`table-render`的api相同，这里仅介绍`<CardList />`的api
+
+`TableContainer`与`table-render`的 api 相同，这里仅介绍`<CardList />`的 api
 
 ### Props
-
 
 | 属性              | 描述                         | 类型 | 默认值   |
 | ----------------- | ---------------------------- | ---- | -------- |
 | onCardClick       | 卡片的点击事件               | -    | Function |
 | cardRender        | 渲染 card 组件的 schema 协议 | -    | object   |
-| paginationOptions | 设置分页属性                       | -    | object   |
+| paginationOptions | 设置分页属性                 | -    | object   |
 
 ### cardRender
 

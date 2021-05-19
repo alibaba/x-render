@@ -104,11 +104,11 @@ const alphaHexMap = {
   '0.03': '08',
   '0.02': '05',
   '0.01': '03',
-  '0.00': '00'
+  '0.00': '00',
 };
 
 // Exp: "#ffffffA6" => algha: 65
-const getAlphaFromHex = (hex = "#ffffff") => {
+const getAlphaFromHex = (hex = '#ffffff') => {
   const alphaHex = hex.slice(7);
   let alpha = 100;
   for (const key in alphaHexMap) {
@@ -123,7 +123,7 @@ export default function color(p) {
   const { format } = p.schema;
   const onPickerChange = e => {
     if (p.disabled || p.readonly) return;
-    const alphaHex = alphaHexMap[(e.alpha / 100).toFixed(2)]
+    const alphaHex = alphaHexMap[(e.alpha / 100).toFixed(2)];
     const hex = e.color + (e.alpha === 100 ? '' : alphaHex);
     p.onChange(hex);
   };
@@ -137,7 +137,7 @@ export default function color(p) {
         <ColorPicker
           type={format}
           animation="slide-up"
-          color={p.value && p.value.slice(0, 7) || '#ffffff'}
+          color={(p.value && p.value.slice(0, 7)) || '#ffffff'}
           alpha={getAlphaFromHex(p.value)}
           onChange={onPickerChange}
         />

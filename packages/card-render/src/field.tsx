@@ -1,14 +1,21 @@
 import React from 'react';
 import { message, Tooltip, Typography } from 'antd';
 
-export const renderEllipsis = (dom: {} | null | undefined, text: any, item: { ellipsis: any }) => {
+export const renderEllipsis = (
+  dom: {} | null | undefined,
+  text: any,
+  item: { ellipsis: any }
+) => {
   if (!item.ellipsis) {
     return <span>{dom}</span>;
   }
   return <Tooltip title={getEnumValue(text, item)}>{dom}</Tooltip>;
 };
 
-export const renderCopyable = (text: any, item: { copyable: any; ellipsis: any }) => {
+export const renderCopyable = (
+  text: any,
+  item: { copyable: any; ellipsis: any }
+) => {
   if (item.copyable || item.ellipsis) {
     return (
       <Typography.Text
@@ -36,7 +43,7 @@ export const renderCopyable = (text: any, item: { copyable: any; ellipsis: any }
 
 export const getEnumValue = (
   text: React.ReactText,
-  item: { ellipsis?: any; copyable?: any; enum?: any },
+  item: { ellipsis?: any; copyable?: any; enum?: any }
 ) => {
   const valueEnum = item.enum || undefined;
   return valueEnum && valueEnum[text] ? valueEnum[text] : text;

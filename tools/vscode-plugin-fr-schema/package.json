@@ -2,7 +2,7 @@
   "name": "vscode-plugin-fr-schema",
   "displayName": "FormRender generator",
   "description": "form-render 的表单设计器",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "publisher": "F-loat",
   "engines": {
     "vscode": "^1.46.0"
@@ -13,7 +13,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/alibaba/form-render.git"
+    "url": "https://github.com/alibaba/x-render.git"
   },
   "icon": "media/icon.png",
   "main": "./out/extension/index.js",
@@ -161,10 +161,21 @@
         ],
         "url": "./src/validation/schema.json"
       }
-    ]
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "FormRender generator",
+      "properties": {
+        "vscode-plugin-fr-schema.theme": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用主题"
+        }
+      }
+    }
   },
   "dependencies": {
-    "fr-generator": "^2.0.1",
+    "fr-generator": "^2.0.2",
     "lodash-es": "^4.17.15",
     "proptypes-to-json-schema": "^0.1.1",
     "react": "^16.8.6",

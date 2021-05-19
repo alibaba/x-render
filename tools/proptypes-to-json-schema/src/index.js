@@ -21,4 +21,3 @@ module.exports = (filePath, options = {}) => {
   }
   return toSchema(info, options);
 };
-

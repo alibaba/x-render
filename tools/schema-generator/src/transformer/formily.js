@@ -30,7 +30,7 @@ const transformFrom = (mySchema, parent = null) => {
       if (isList) {
         mySchema.items.properties[item.name] = transformFrom(
           item.schema,
-          mySchema,
+          mySchema
         );
       }
     });
@@ -57,10 +57,7 @@ const transformFrom = (mySchema, parent = null) => {
 };
 
 export const fromFormily = schema => {
-  const frSchema = transformFrom(schema);
-  return {
-    schema: frSchema,
-  };
+  return transformFrom(schema);
 };
 
 // FRG schema => formily Schema
@@ -90,14 +87,14 @@ const transformTo = (frSchema, parent = null, key = null) => {
         frSchema.properties[item.name] = transformTo(
           item.schema,
           frSchema,
-          item.name,
+          item.name
         );
       }
       if (isList) {
         frSchema.items.properties[item.name] = transformTo(
           item.schema,
           frSchema,
-          item.name,
+          item.name
         );
       }
     });
@@ -124,6 +121,5 @@ const transformTo = (frSchema, parent = null, key = null) => {
 };
 
 export const toFormily = schema => {
-  const frSchema = schema.schema;
-  return transformTo(frSchema);
+  return transformTo(schema);
 };

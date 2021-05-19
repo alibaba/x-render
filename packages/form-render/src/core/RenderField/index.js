@@ -23,7 +23,7 @@ const RenderField = props => {
   } = props;
 
   const { formData } = useStore();
-  const { debounceInput, readOnly } = useStore2();
+  const { debounceInput, readOnly, disabled } = useStore2();
   const { onValuesChange, onItemChange, setEditing, touchKey } = useTools();
   // console.log('<renderField>', $id);
 
@@ -40,6 +40,7 @@ const RenderField = props => {
   const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
 
   const _readOnly = readOnly !== undefined ? readOnly : _schema.readOnly;
+  const _disabled = disabled !== undefined ? disabled : _schema.disabled;
 
   // TODO: 优化一下，只有touch还是false的时候，setTouched
   const onChange = value => {
@@ -93,6 +94,7 @@ const RenderField = props => {
   const widgetProps = {
     schema: _schema,
     readOnly: _readOnly,
+    disabled: _disabled,
     onChange,
     getValue: _getValue,
     formData,

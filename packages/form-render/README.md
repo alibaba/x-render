@@ -203,7 +203,7 @@ export default connectForm(Demo);
 | ---------------- | --------------------------------------------------- | ------------------------------------ |
 | submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                         |
 | resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `() => void`                         |
-| errorFields      | Check if a field is touched                         | `array,[{name, error: []}]`          |
+| errorFields      | 表单校验错误的数组                                  | `array,[{name, error: []}]`          |
 | setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error | Error[]) => void`   |
 | setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`            |
 | onItemChange     | 外部修改指定单个 field 的数据                       | `(path: string, value: any) => void` |

@@ -1,8 +1,8 @@
 {
-	"frSchema.gen.title": "转换数据为表单配置",
-	"frSchema.p2s.title": "解析组件为表单配置",
-	"frSchema.edit.title": "可视化编辑表单配置",
-	"frSchema.preview.title": "预览表单",
-	"frSchema.s2i.title": "解析表单配置为接口",
-	"frSchema.c2i.title": "解析所选对象为接口"
+  "frSchema.gen.title": "转换数据为表单配置",
+  "frSchema.p2s.title": "解析组件为表单配置",
+  "frSchema.edit.title": "可视化编辑表单配置",
+  "frSchema.preview.title": "预览表单",
+  "frSchema.s2i.title": "解析表单配置为接口",
+  "frSchema.c2i.title": "解析所选对象为接口"
 }

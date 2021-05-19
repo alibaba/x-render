@@ -44,6 +44,8 @@ function App({
   onMount,
   labelWidth,
   readOnly,
+  disabled,
+  allCollapsed = false,
   onValuesChange,
   column,
   ...rest
@@ -54,6 +56,7 @@ function App({
     console.error('form 为必填 props，<FormRender /> 没有接收到 form 属性!');
   }
 
+  const _column = schema.column || column;
   const {
     onItemChange,
     setEditing,
@@ -122,22 +125,26 @@ function App({
     () => ({
       displayType,
       theme,
-      column,
+      column: _column,
       debounceInput,
       debug,
       labelWidth,
       locale,
       readOnly,
+      disabled,
+      allCollapsed,
     }),
     [
       displayType,
       theme,
-      column,
+      _column,
       debounceInput,
       debug,
       labelWidth,
       locale,
       readOnly,
+      disabled,
+      allCollapsed,
     ]
   );
 

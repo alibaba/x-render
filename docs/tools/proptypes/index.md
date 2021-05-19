@@ -5,51 +5,52 @@ group:
 toc: content
 ---
 
-# PropToSchema   &nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/proptypes-to-json-schema.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/proptypes-to-json-schema?_blank)
+# PropToSchema &nbsp;&nbsp;[![npm](https://img.shields.io/npm/v/proptypes-to-json-schema.svg?maxAge=3600&style=flat-square)](https://www.npmjs.com/package/proptypes-to-json-schema?_blank)
 
 > 将 React PropTypes 转换生成 [JSON Schema](https://spacetelescope.github.io/understanding-json-schema/index.html)，常用于 React 模块的可视化配置参数。
 
 ## 安装
 
-``` sh
+```sh
 npm i proptypes-to-json-schema
 ```
 
 ## 使用
 
-``` js
+```js
 const fs = require('fs');
 const path = require('path');
 const propToSchema = require('proptypes-to-json-schema');
 
 // 参数为目标文件地址
 const apiInfo = propToSchema(`${__dirname}/index.jsx`);
-fs.writeFileSync(path.join(__dirname, 'schema.json'), JSON.stringify(apiInfo, null, 2));
+fs.writeFileSync(
+  path.join(__dirname, 'schema.json'),
+  JSON.stringify(apiInfo, null, 2)
+);
 ```
 
 ## 说明
 
-| 名称 | 类型 | 默认值 | 备注 |
-| --- | --- | --- | --- |
-| path | string | 必填 | 需要转换的jsx目录地址 |
-| options | object | `{}` | 目前支持参数shouldAddUi,true会自动生成带 ui 配置的 schema |
+| 名称    | 类型   | 默认值 | 备注                                                        |
+| ------- | ------ | ------ | ----------------------------------------------------------- |
+| path    | string | 必填   | 需要转换的 jsx 目录地址                                     |
+| options | object | `{}`   | 目前支持参数 shouldAddUi,true 会自动生成带 ui 配置的 schema |
 
 ### 目前支持
 
-| 类型 | PropTypes | prop schema type  | 默认 ui setting  | 可选 ui setting |
-| --- | --- | --- | --- | --- |
-| 布尔值 | bool | boolean | checkbox | 无 |
-| 字符串 | string | string | input[type=text] | textarea、password、color、date、date-time、image |
-| 数字 | number | number | input[type=text] | updown(步进器，搭配min、max、step使用) |
-| 单选项 | oneOf | enum | select box | 无 |
-| 数组项 | arrayOf | array | 组展示(*1) | 同左 |
-| 对象 | shape | object | 对象展示(*2) | 同左 |
+| 类型   | PropTypes | prop schema type | 默认 ui setting  | 可选 ui setting                                   |
+| ------ | --------- | ---------------- | ---------------- | ------------------------------------------------- |
+| 布尔值 | bool      | boolean          | checkbox         | 无                                                |
+| 字符串 | string    | string           | input[type=text] | textarea、password、color、date、date-time、image |
+| 数字   | number    | number           | input[type=text] | updown(步进器，搭配 min、max、step 使用)          |
+| 单选项 | oneOf     | enum             | select box       | 无                                                |
+| 数组项 | arrayOf   | array            | 组展示(\*1)      | 同左                                              |
+| 对象   | shape     | object           | 对象展示(\*2)    | 同左                                              |
 
-
-1. 子元素展示依赖于arrayOf的设置，类似这样设置 `PropTypes.arrayOf(PropTypes.xxx)`,其实xxx为前3种基本类型,不设置默认是字符串形式
+1. 子元素展示依赖于 arrayOf 的设置，类似这样设置 `PropTypes.arrayOf(PropTypes.xxx)`,其实 xxx 为前 3 种基本类型,不设置默认是字符串形式
 
 2. 目前对象形式必须通过 PropTypes.shape 来指明类型，目前不支持嵌套对象，只支持嵌套基础类型！
-
 
 ### 使用规范
 
@@ -61,7 +62,7 @@ fs.writeFileSync(path.join(__dirname, 'schema.json'), JSON.stringify(apiInfo, nu
    - @description 参数的描述，对应 schema 中的 title 字段 description 字段，用于可视化中的输入提示
    - @format 特殊类型(不必须)，一般不填入，表单默认通过 input 进行输入，一般只有 string 类型才可以设置 format，目前支持 format 字段如下可见上表
    - @pattern 正则校验表达式(不必须)，主要用于字符串和数字类型的校验，假如长度限制不满足时候，可以使用和这个
-   - @enumNames oneOf 场景中会渲染成一个选择的场景，可以通过enumNames数组字段来描述里key对应的title
+   - @enumNames oneOf 场景中会渲染成一个选择的场景，可以通过 enumNames 数组字段来描述里 key 对应的 title
 5. 顶部可以设置 column 字段用来表示表单展示形式为 1 排 N
 
    <img src="https://img.alicdn.com/tfs/TB1ZoBaPNjaK1RjSZFAXXbdLFXa-1472-622.png" width="300"/>

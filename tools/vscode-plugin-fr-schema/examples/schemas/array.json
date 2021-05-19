@@ -1,23 +1,18 @@
 {
-  "schema": {
-    "type": "object",
-    "properties": {
-      "list": {
-        "title": "数组",
-        "type": "array",
-        "items": {
-          "type": "object",
-          "properties": {
-            "input": {
-              "title": "输入框",
-              "type": "string"
-            }
+  "type": "object",
+  "properties": {
+    "list": {
+      "title": "数组",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "title": "输入框",
+            "type": "string"
           }
         }
       }
     }
-  },
-  "displayType": "row",
-  "showDescIcon": true,
-  "labelWidth": 120
+  }
 }

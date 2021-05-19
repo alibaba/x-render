@@ -5,7 +5,7 @@ const basicExprType = [
   'LiteralStringExpression',
   'LiteralNumericExpression',
   'LiteralBooleanExpression',
-  'LiteralNullExpression'
+  'LiteralNullExpression',
 ];
 
 const convert = (expression: any) => {
@@ -15,7 +15,10 @@ const convert = (expression: any) => {
 
     if (basicExprType.includes(type)) {
       return { ...rst, [key]: value };
-    } else if (cur.expression.type === 'IdentifierExpression' && name !== 'undefined') {
+    } else if (
+      cur.expression.type === 'IdentifierExpression' &&
+      name !== 'undefined'
+    ) {
       return { ...rst, [key]: name };
     } else if (cur.expression.type === 'ObjectExpression') {
       return { ...rst, [key]: convert(cur.expression) };
@@ -26,10 +29,13 @@ const convert = (expression: any) => {
 };
 
 const getSchemaFromCode = (code: string) => {
-  const pureObject = code.replace(/^[\s\S]*?=/, '').replace(/;$/, '').replace(/\?\./g, '.');
+  const pureObject = code
+    .replace(/^[\s\S]*?=/, '')
+    .replace(/;$/, '')
+    .replace(/\?\./g, '.');
   const ast = parse(`(${pureObject})`);
   const result = convert(ast.statements[0].expression);
   return result;
-}
+};
 
 export default getSchemaFromCode;

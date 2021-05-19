@@ -1,4 +1,4 @@
-import { IMetaItem } from "./types";
+import { IMetaItem } from './types';
 
 /**
  * 把元数据信息按照 isDim 字段拆分成维度元数据和指标元数据
@@ -8,7 +8,7 @@ import { IMetaItem } from "./types";
 export function splitMeta(meta: IMetaItem[]) {
   const metaDim: IMetaItem[] = [];
   const metaInd: IMetaItem[] = [];
-  meta.forEach((item) => {
+  meta.forEach(item => {
     if (item.isDim) {
       metaDim.push(item);
     } else {

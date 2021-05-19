@@ -21,14 +21,13 @@ const Demo = () => {
             title: '个人信息',
             widgets: [
               {
-                text: '服务端下拉选框',
+                text: '计数器',
                 name: 'asyncSelect',
                 schema: {
-                  title: '来自服务端',
-                  type: 'string',
-                  'ui:widget': 'NewWidget',
+                  title: '计数器',
+                  type: 'number',
+                  widget: 'NewWidget',
                 },
-                widget: 'NewWidget',
                 setting: {
                   api: { title: 'api', type: 'string' },
                 },
@@ -41,7 +40,6 @@ const Demo = () => {
                   type: 'object',
                   properties: {},
                 },
-                widget: 'map',
                 setting: {},
               },
               {

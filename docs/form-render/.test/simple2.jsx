@@ -6,6 +6,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Space, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
 import { fakeApi, delay } from './advanced/utils';
+import RichTextEditor from '../../widgets/RichText/src';
 
 const Demo = () => {
   const form = useForm();
@@ -111,6 +112,12 @@ const Demo = () => {
               title: '简单输入框',
               type: 'string',
             },
+            activityDesc: {
+              title: '活动简介',
+              type: 'string',
+              format: 'textarea',
+              widget: 'richText',
+            },
             objectName: {
               title: '对象',
               description: '这是一个对象类型',
@@ -162,7 +169,7 @@ const Demo = () => {
   // };
 
   useEffect(() => {
-    setSchema(test);
+    setSchema(test1);
   }, []);
 
   const onFinish = (data, errors) => {
@@ -184,6 +191,9 @@ const Demo = () => {
       <FormRender
         form={form}
         schema={schema}
+        widgets={{
+          richText: RichTextEditor,
+        }}
         debug
         theme="1"
         // onMount={onMount}

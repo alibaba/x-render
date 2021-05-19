@@ -1,29 +1,35 @@
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, '__esModule', {
+  value: true,
 });
 exports.default = date;
 
-var _timePicker = _interopRequireDefault(require("@alifd/next/lib/time-picker"));
+var _timePicker = _interopRequireDefault(
+  require('@alifd/next/lib/time-picker')
+);
 
-var _datePicker = _interopRequireDefault(require("@alifd/next/lib/date-picker"));
+var _datePicker = _interopRequireDefault(
+  require('@alifd/next/lib/date-picker')
+);
 
-var _moment = _interopRequireDefault(require("moment"));
+var _moment = _interopRequireDefault(require('moment'));
 
-var _dateHoc = _interopRequireDefault(require("../../components/dateHoc"));
+var _dateHoc = _interopRequireDefault(require('../../components/dateHoc'));
 
-var _utils = require("../../base/utils");
+var _utils = require('../../base/utils');
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : { default: obj };
+}
 
 var MonthPicker = _datePicker.default.MonthPicker,
-    YearPicker = _datePicker.default.YearPicker,
-    WeekPicker = _datePicker.default.WeekPicker;
+  YearPicker = _datePicker.default.YearPicker,
+  WeekPicker = _datePicker.default.WeekPicker;
 
 function date(p) {
   var _p$schema$format = p.schema.format,
-      format = _p$schema$format === void 0 ? 'dateTime' : _p$schema$format;
+    format = _p$schema$format === void 0 ? 'dateTime' : _p$schema$format;
 
   if (p.options.format) {
     format = p.options.format;
