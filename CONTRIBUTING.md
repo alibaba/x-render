@@ -50,6 +50,17 @@ npm publish
 
 发布后记得到 [releases 页](https://github.com/alibaba/x-render/releases/) 补上最新发布日志
 
-#### 6. 分支管理
+#### 6. 发布 beta 版本
+
+beta 版本的版本号规范为 x.x.x-beta.x，一般用于大功能上线前的真实测试，不会被正常 npm i 安装。发布流程如下
+
+```sh
+# 换版本号、打tag。注意tag要打，便于release note的维护
+yarn version --new-version 1.1.0-beta.0
+# 发布
+npm run beta
+```
+
+#### 7. 分支管理
 
 外部同学请 fork，内部同学请在 dev 分支开发，然后都发 pull-request 到 master 分支，由负责同学审核后合并，master 分支请勿人为去动
