@@ -52,7 +52,11 @@ npm publish
 
 #### 6. 发布 beta 版本
 
-beta 版本的版本号规范为 x.x.x-beta.x，一般用于大功能上线前的真实测试，不会被正常 npm i 安装。发布流程如下
+beta 版本的版本号规范为 x.x.x-beta.x，一般用于大功能上线前的真实测试，不会被正常 npm i 安装。发布流程如下：
+
+1. 进入 package/form-render 文件夹
+
+2. 执行
 
 ```sh
 # 换版本号、打tag。注意tag要打，便于release note的维护
