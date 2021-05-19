@@ -122,13 +122,10 @@ function Wrapper(
   let displaySchema = {};
   let displaySchemaString = '';
   try {
-    const _schema = idToSchema(flattenWithData, '#', true);
-    if (frProps && frProps.column) {
-      _schema['column'] = frProps.column;
-    }
-    if (frProps && frProps.displayType) {
-      _schema['displayType'] = frProps.displayType;
-    }
+    const _schema = {
+      ...idToSchema(flattenWithData, '#', true),
+      ...frProps,
+    };
     displaySchema = transformTo(_schema);
     if (!isNewVersion) {
       displaySchema = newSchemaToOld(displaySchema);
@@ -142,9 +139,7 @@ function Wrapper(
     toggleModal();
   };
 
-  const getValue = () => {
-    return displaySchema;
-  };
+  const getValue = () => displaySchema;
 
   // 收口点 propsSchema 到 schema
   // setValue 外部用于修改大schema，叫setSchema比较合适

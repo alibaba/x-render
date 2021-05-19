@@ -24,7 +24,7 @@ export default function ItemSettings() {
     mapping: defaultMapping,
   } = useStore();
 
-  const { settings, commonSettings } = userProps;
+  const { settings, commonSettings, hideId } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
   // 避免切换选中项时 schema 对应出错
   const [ready, setReady] = useState({});
@@ -84,11 +84,15 @@ export default function ItemSettings() {
       const widgetList = getWidgetList(_settings, _commonSettings);
       const widgetName = getWidgetName(item.schema, defaultMapping);
       const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
+      const properties = { ...element.setting };
+
+      if (hideId) delete properties.$id;
+
       form.setValues(item.schema);
       setSettingSchema({
         type: 'object',
         displayType: 'column',
-        properties: element.setting,
+        properties,
       });
       setTimeout(() => setReady(true), 0);
     } catch (error) {
