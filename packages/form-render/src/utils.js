@@ -412,21 +412,35 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
   const parent = getValueByPath(formData, parentPath) || {};
   if (typeof func === 'string') {
     const funcBody = func.substring(2, func.length - 2);
-    const match1 = /formData.([a-zA-Z0-9.$_\[\]]+)/g;
-    const match2 = /rootValue.([a-zA-Z0-9.$_\[\]]+)/g;
     const str = `
-    return (${funcBody
-      .replaceAll(match1, (v, m1) =>
-        JSON.stringify(getValueByPath(formData, m1))
-      )
-      .replaceAll(match2, (v, m1) =>
-        JSON.stringify(getValueByPath(parent, m1))
-      )})`;
+    return ${funcBody
+      .replaceAll('formData', JSON.stringify(formData))
+      .replaceAll('rootValue', JSON.stringify(parent))}`;
+
     try {
       return Function(str)();
     } catch (error) {
+      console.log(error);
       return func;
     }
+    // const funcBody = func.substring(2, func.length - 2);
+    // //TODO: 这样有问题，例如 a.b.indexOf(), 会把 a.b.indexOf 当做值
+    // const match1 = /formData.([a-zA-Z0-9.$_\[\]]+)/g;
+    // const match2 = /rootValue.([a-zA-Z0-9.$_\[\]]+)/g;
+    // const str = `
+    // return (${funcBody
+    //   .replaceAll(match1, (v, m1) =>
+    //     JSON.stringify(getValueByPath(formData, m1))
+    //   )
+    //   .replaceAll(match2, (v, m1) =>
+    //     JSON.stringify(getValueByPath(parent, m1))
+    //   )})`;
+    // try {
+    //   return Function(str)();
+    // } catch (error) {
+    //   console.log(error);
+    //   return func;
+    // }
   } else return func;
 }
 
@@ -463,6 +477,11 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
     const value = schema[key];
     if (isExpression(value)) {
       schema[key] = parseSingleExpression(value, formData, dataPath);
+      console.log(
+        formData.materialType,
+        dataPath,
+        parseSingleExpression(value, formData, dataPath)
+      );
     }
     // 有可能叫 xxxProps
     if (typeof key === 'string' && key.toLowerCase().indexOf('props') > -1) {
