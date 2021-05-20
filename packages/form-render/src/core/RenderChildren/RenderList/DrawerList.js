@@ -7,7 +7,7 @@ import { Button, Table, Drawer, Space, Popconfirm } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
 import ErrorMessage from '../../RenderField/ErrorMessage';
 
-const FIELD_LENGTH = 120;
+const FIELD_LENGTH = 170;
 
 const DrawerList = ({
   displayList = [],
@@ -72,6 +72,7 @@ const DrawerList = ({
     title: '操作',
     key: '$action',
     fixed: 'right',
+    width: 60,
     render: (value, record, idx) => {
       const index = (value && value.$idx) || 0;
       return (
