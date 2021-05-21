@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Core from '../../index';
-import { Button, Table, Popconfirm } from 'antd';
+import { Button, Table, Popconfirm, Space } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
 
 const FIELD_LENGTH = 120;
@@ -11,6 +11,7 @@ const TableList = ({
   dataIndex,
   children,
   deleteItem,
+  copyItem,
   addItem,
   flatten,
   schema,
@@ -67,14 +68,17 @@ const TableList = ({
       fixed: 'right',
       render: (value, record, idx) => {
         return (
-          <Popconfirm
-            title="确定删除?"
-            onConfirm={() => deleteItem(idx)}
-            okText="确定"
-            cancelText="取消"
-          >
-            <a>删除</a>
-          </Popconfirm>
+          <Space>
+            {!props.hideCopy && <a onClick={() => copyItem(idx)}>复制</a>}
+            <Popconfirm
+              title="确定删除?"
+              onConfirm={() => deleteItem(idx)}
+              okText="确定"
+              cancelText="取消"
+            >
+              <a>删除</a>
+            </Popconfirm>
+          </Space>
         );
       },
     });
