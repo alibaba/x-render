@@ -22,7 +22,7 @@
     <img alt = "PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square"></a>
 </p>
 
-> 阿里飞猪 - 中后台 「表单 / 表格 / 图表」 很易用的解决方案
+> 阿里飞猪 - 很易用的中后台「表单 / 表格 / 图表」解决方案
 
 ## 优势
 

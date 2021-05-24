@@ -4,7 +4,7 @@ import Core from '../../index';
 import { Button, Table, Popconfirm, Space } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
 
-const FIELD_LENGTH = 120;
+const FIELD_LENGTH = 170;
 
 const TableList = ({
   displayList = [],
@@ -66,6 +66,7 @@ const TableList = ({
       title: '操作',
       key: '$action',
       fixed: 'right',
+      width: 60,
       render: (value, record, idx) => {
         return (
           <Space>
