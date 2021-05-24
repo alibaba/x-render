@@ -46,9 +46,16 @@ export interface FormInstance {
   syncStuff: (any) => void;
 }
 
-export interface WatchProperties {
-  [path: string]: (value: any) => any;
-}
+export type WatchProperties =
+  | {
+      [path: string]: (value: any) => any;
+    }
+  | {
+      [path: string]: {
+        handler: (value: any) => void;
+        immediate?: boolean;
+      };
+    };
 
 export interface FRProps {
   /** 表单 schema */
