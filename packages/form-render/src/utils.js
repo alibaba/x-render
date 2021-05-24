@@ -414,8 +414,8 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
     const funcBody = func.substring(2, func.length - 2);
     const str = `
     return ${funcBody
-      .replaceAll('formData', JSON.stringify(formData))
-      .replaceAll('rootValue', JSON.stringify(parent))}`;
+      .replace(/formData/g, JSON.stringify(formData))
+      .replace(/rootValue/g, JSON.stringify(parent))}`;
 
     try {
       return Function(str)();
