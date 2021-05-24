@@ -61,6 +61,7 @@ const VirtualList = ({
       title: '操作',
       key: '$action',
       fixed: 'right',
+      width: 80,
       render: (value, record, idx) => {
         return (
           <>

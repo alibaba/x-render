@@ -207,7 +207,18 @@ function App({
             <div className={`fr-container ${sizeCls}`}>
               {debug ? (
                 <div className="mv2 bg-black-05 pa2 br2">
-                  <div>{'formData:' + JSON.stringify(form.formData)}</div>
+                  <div style={{ display: 'flex' }}>
+                    <span>formData:</span>
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        wordBreak: 'break-all',
+                        maxWidth: 600,
+                      }}
+                    >
+                      {JSON.stringify(form.formData)}
+                    </span>
+                  </div>
                   <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
                   <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
                   <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
