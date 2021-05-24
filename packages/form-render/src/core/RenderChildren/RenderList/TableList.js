@@ -69,7 +69,7 @@ const TableList = ({
       render: (value, record, idx) => {
         return (
           <Space>
-            {!props.hideCopy && <a onClick={() => copyItem(idx)}>复制</a>}
+            {!props.hideAdd && <a onClick={() => copyItem(idx)}>复制</a>}
             <Popconfirm
               title="确定删除?"
               onConfirm={() => deleteItem(idx)}
