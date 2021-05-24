@@ -477,11 +477,11 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
     const value = schema[key];
     if (isExpression(value)) {
       schema[key] = parseSingleExpression(value, formData, dataPath);
-      console.log(
-        formData.materialType,
-        dataPath,
-        parseSingleExpression(value, formData, dataPath)
-      );
+      // console.log(
+      //   formData.materialType,
+      //   dataPath,
+      //   parseSingleExpression(value, formData, dataPath)
+      // );
     }
     // 有可能叫 xxxProps
     if (typeof key === 'string' && key.toLowerCase().indexOf('props') > -1) {
