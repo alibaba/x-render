@@ -20,3 +20,7 @@ FormRender 1.0 与之前一样，对组件库的口子都是开着的，外部�
 ### 4、下拉选择框的选项希望从服务端拿到。是否有简单实现方法？
 
 可以在 `onMount` 中使用 `form.setSchemaByPath` 来实现，见[文档样例](/advanced/form-methods#%E4%BE%8B-4%EF%BC%9A%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8A%A0%E8%BD%BD%E9%80%89%E6%8B%A9%E6%A1%86%E7%9A%84%E9%80%89%E9%A1%B9)
+
+### 5、 只读模式下，默认的渲染不能满足要求我想定制怎么办？
+
+参见[只读模式下的自定义组件](/advanced/widget#%E5%8F%AA%E8%AF%BB%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6)

@@ -65,6 +65,7 @@ const schema = {
 };
 
 const SiteInput = props => {
+  console.log('widget props:', props);
   return <Input addonBefore="http://" addonAfter=".com" {...props} />;
 };
 
@@ -74,6 +75,7 @@ const Demo = () => {
   return (
     <div>
       <Form
+        readOnly
         form={form}
         schema={schema}
         widgets={{ site: SiteInput }}
@@ -91,9 +93,7 @@ export default Demo;
 
 可以看到自定义组件的写法十分直观，事实上很多 antd 的组件都是可以直接拿来作为自定义组件使用（内置组件中就有 Input, InputNumber, Checkbox 和 Switch）
 
-## createWidget
-
-自定义组件接收以下 Props：
+## 自定义组件收到的 props
 
 - **disabled**：是否禁止输入
 - **readOnly**：是否只读
@@ -106,20 +106,63 @@ export default Demo;
 - **addons.dataPath**: 目前数据所在的 path，例如"a.b[2].c[0].d"，string 类型。
 - **addons.dataIndex**: 如果 dataPath 不包含数组，则为 [], 如果 dataPath 包含数组，例如"a.b[2].c[0].d"，则为 [2,0]。是自上到下所有经过的数组的 index 按顺序存放的一个数组类型
 
-对高阶组件熟悉的同学，`form-render` 内置了 `createWidget` 方法，支持用类似于 `redux` 的 `connect` 的语法快速生产自定义组件：
+## antd 组件改造成自定义组件
+
+大多数情况下，antd 的组件可以拿来即用。但有时组件的 props 并不是约定的 value/onChange, 例如 Checkbox 的情况，value 值对应的是 checked，此时只需要少量改动即可：
 
 ```js
 import { Checkbox } from 'antd';
 import { createWidget } from 'form-render';
 
-const MyCheckBox = createWidget(({ value }) => {
-  return {
-    checked: value,
-  };
-})(Checkbox);
+const MyCheckBox = (({ value, ...rest }) => {
+  return <Checkbox checked={value} {...rest} />
+}
 ```
 
-`createWidget` 是一个高阶组件，它接收组件 props，允许用户对齐做修改并返回真正需要的 props。使用 `createWidget` 与直接写自定义组件的工作量基本是一样的，只是一个语法糖，喜欢的同学可以使用
+## 只读模式下的自定义组件
+
+只读模式下，默认会渲染内置的 html 组件，但有时 html 组件并不能满足一个自定义组件在只读模式下需要的展示，此时可使用`readOnlyWidget`字段来指定只读模式下的展示。
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "string": {
+      "title": "网址输入自定义组件",
+      "type": "string",
+      "widget": "site",
+      "readOnlyWidget": "siteText"
+    }
+  }
+}
+```
+
+如果你打算在一个自定义组件里通过 readOnly 参数判断条件展示，既是说，site 组件已经写了只读和非只读情况下的渲染
+
+```js
+const SiteInput = ({ readOnly, value, ...rest }) => {
+  if (readOnly) return <div>{`https://${value}.com`}</div>;
+  return (
+    <Input addonBefore="http://" addonAfter=".com" value={value} {...rest} />
+  );
+};
+```
+
+此时可以指定 `readOnlyWidget` 和 `widget` 为同一个组件：
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "string": {
+      "title": "网址输入自定义组件",
+      "type": "string",
+      "widget": "site",
+      "readOnlyWidget": "site"
+    }
+  }
+}
+```
 
 ## 最佳实践
 

@@ -25,7 +25,14 @@ export const createWidget = (mapProps, extraSchema) => Component => props => {
 };
 
 export const transformProps = props => {
-  const { onChange, value, defaultValue, schema: ownSchema, ...rest } = props;
+  const {
+    onChange,
+    value,
+    defaultValue,
+    schema: ownSchema,
+    readOnly,
+    ...rest
+  } = props;
   const schema = { ...ownSchema };
   const { trigger, valuePropName } = schema || {};
   const controlProps = {};
@@ -50,7 +57,7 @@ export const transformProps = props => {
   // TODO: 之后 ui:xx 会舍去
   const usefulPropsFromSchema = {
     disabled: schema.disabled || schema['ui:disabled'],
-    readOnly: schema.readOnly || schema['ui:readonly'],
+    readOnly: schema.readOnly || schema['ui:readonly'] || readOnly,
     hidden: schema.hidden || schema['ui:hidden'],
   };
 
