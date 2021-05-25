@@ -785,8 +785,8 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
         });
         result = [singleResult, ..._rules];
       } else if (isObject(schema.rules)) {
-        // TODO: 规范上不允许rules是object，省一点事儿
-        result = [singleResult, processRule(schema.rules)];
+        // 保持对象类型-主要防止在进行数组中的字段校验出现问题
+        result = Object.assign(singleResult, schema.rules);
       } else {
         result = singleResult;
       }
@@ -798,7 +798,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
       if (Array.isArray(result)) {
         result.push(requiredRule);
       } else if (isObject(result)) {
-        result = [result, requiredRule];
+        Object.assign(result, requiredRule);
       }
     }
 
@@ -814,7 +814,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
       if (Array.isArray(result)) {
         result.push(imgValidator);
       } else if (isObject(result)) {
-        result = [result, imgValidator];
+        Object.assign(result, imgValidator);
       }
     }
   }
