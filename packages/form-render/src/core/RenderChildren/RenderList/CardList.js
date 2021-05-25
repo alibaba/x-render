@@ -3,7 +3,12 @@ import React from 'react';
 import Core from '../../index';
 import { Button, Space, Popconfirm } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
-import { DeleteOutlined, CopyOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  CopyOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+} from '@ant-design/icons';
 
 const CardList = ({
   displayList = [],
@@ -13,6 +18,8 @@ const CardList = ({
   deleteItem,
   copyItem,
   addItem,
+  moveItemUp,
+  moveItemDown,
   displayType,
   getFieldsProps,
 }) => {
@@ -49,6 +56,18 @@ const CardList = ({
                     style={{ fontSize: 16, marginLeft: 8 }}
                     onClick={() => copyItem(idx)}
                   />
+                )}
+                {!props.hideMove && (
+                  <>
+                    <ArrowUpOutlined
+                      style={{ fontSize: 16, marginLeft: 8 }}
+                      onClick={() => moveItemUp(idx)}
+                    />
+                    <ArrowDownOutlined
+                      style={{ fontSize: 16, marginLeft: 8 }}
+                      onClick={() => moveItemDown(idx)}
+                    />
+                  </>
                 )}
               </Space>
             </div>

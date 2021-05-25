@@ -73,6 +73,7 @@ function App({
     setErrorFields,
     removeErrorField,
     removeTouched,
+    changeTouchedKeys,
     syncStuff,
     ...valuesThatWillChange
   } = form;
@@ -160,6 +161,7 @@ function App({
       setErrorFields,
       removeErrorField,
       removeTouched,
+      changeTouchedKeys,
     }),
     []
   );

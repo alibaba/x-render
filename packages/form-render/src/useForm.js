@@ -100,6 +100,10 @@ export const useForm = props => {
     setState({ touchedKeys: newTouch });
   };
 
+  const changeTouchedKeys = newTouchedKeys => {
+    setState({ touchedKeys: newTouchedKeys });
+  };
+
   // 为了兼容 0.x
   // useEffect(() => {
   //   // 如果是外部数据，submit没有收束，无校验
@@ -265,24 +269,28 @@ export const useForm = props => {
           });
         }
         if (typeof beforeFinishRef.current === 'function') {
-          return Promise.resolve(processData(_data.current, flatten)).then(res => {
+          return Promise.resolve(processData(_data.current, flatten)).then(
+            res => {
+              setState({
+                isValidating: true,
+                isSubmitting: false,
+                outsideValidating: true,
+                submitData: res,
+              });
+              return errors;
+            }
+          );
+        }
+        return Promise.resolve(processData(_data.current, flatten)).then(
+          res => {
             setState({
-              isValidating: true,
-              isSubmitting: false,
-              outsideValidating: true,
+              isValidating: false,
+              isSubmitting: true,
               submitData: res,
             });
             return errors;
-          });
-        }
-        return Promise.resolve(processData(_data.current, flatten)).then(res => {
-          setState({
-            isValidating: false,
-            isSubmitting: true,
-            submitData: res,
-          });
-          return errors;
-        });
+          }
+        );
       })
       .catch(err => {
         // 不应该走到这边的
@@ -333,6 +341,7 @@ export const useForm = props => {
     // methods
     touchKey,
     removeTouched,
+    changeTouchedKeys,
     onItemChange,
     setValueByPath: onItemChange, // 单个
     getSchemaByPath,
