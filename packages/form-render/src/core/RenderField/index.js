@@ -3,6 +3,7 @@ import { useStore, useStore2, useTools } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
 import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
+import Extra from './Extra';
 import FieldTitle from './Title';
 import ExtendedWidget from './ExtendedWidget';
 
@@ -116,6 +117,7 @@ const RenderField = props => {
         {_showTitle && <div {...placeholderTitleProps} />}
         <div className={contentClass} style={contentStyle}>
           <ExtendedWidget {...widgetProps} />
+          <Extra {...widgetProps} />
           <ErrorMessage {...messageProps} />
         </div>
       </>
@@ -138,6 +140,7 @@ const RenderField = props => {
           message={errorMessage}
           title={_showTitle ? titleElement : undefined}
         />
+        <Extra {...widgetProps} />
       </div>
     );
   }
@@ -150,6 +153,7 @@ const RenderField = props => {
         style={contentStyle}
       >
         <ExtendedWidget {...widgetProps} />
+        <Extra {...widgetProps} />
         <ErrorMessage {...messageProps} />
       </div>
     </>
