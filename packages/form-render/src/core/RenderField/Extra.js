@@ -3,12 +3,12 @@ import { useTools } from '../../hooks';
 import './Extra.less';
 
 const Extra = ({ schema }) => {
-  const extra = schema.props?.extra;
+  const { extra } = schema;
 
   if(!extra) return null;
 
   const { widgets } = useTools();
-  const widgetName = extra?.widget;
+  const widgetName = extra.widget;
   const Widget = widgets[widgetName];
 
   if(Widget) return <Widget schema={schema}/>;
@@ -18,7 +18,7 @@ const Extra = ({ schema }) => {
   if(typeof extra === 'string') {
     __html = extra;
   }
-  if(typeof extra?.text === 'string') {
+  if(typeof extra === 'object' && extra.text) {
     __html = extra.text;
   }
   return __html && <div className="fr-form-item-extra" dangerouslySetInnerHTML={{ __html }}></div>
