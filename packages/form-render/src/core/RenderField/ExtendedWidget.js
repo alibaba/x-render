@@ -29,6 +29,7 @@ const ExtendedWidget = ({
   dataPath,
   disabled,
   dataIndex,
+  ...rest,
 }) => {
   const { widgets, mapping } = useTools();
 
@@ -67,6 +68,7 @@ const ExtendedWidget = ({
     value,
     children,
     disabled,
+    ...rest,
     ...schema.props,
   };
 

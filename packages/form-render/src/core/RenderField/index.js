@@ -20,6 +20,7 @@ const RenderField = props => {
     errorFields = [],
     hideTitle,
     displayType,
+    ...rest,
   } = props;
 
   const { formData } = useStore();
@@ -103,6 +104,7 @@ const RenderField = props => {
     dataIndex,
     dataPath,
     children,
+    ...rest,
   };
 
   // if (_schema && _schema.default !== undefined) {
