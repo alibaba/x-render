@@ -268,7 +268,7 @@ const Demo = () => {
 
   const onMount = () => {
     form.setSchemaByPath('obj1.select1', {
-      enum: ['nouth', 'south', 'east', 'west'],
+      enum: ['east', 'south', 'west', 'north'],
       enumNames: ['东', '南', '西', '北'],
     });
   };
