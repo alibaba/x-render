@@ -20,7 +20,7 @@ const RenderField = props => {
     errorFields = [],
     hideTitle,
     displayType,
-    ...rest,
+    ...rest
   } = props;
 
   const { formData } = useStore();
