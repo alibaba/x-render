@@ -82,7 +82,7 @@ const RenderField = props => {
     style: labelStyle,
   };
 
-  const _showTitle = !hideTitle && !!_schema.title;
+  const _showTitle = !hideTitle && typeof _schema.title === 'string';
   // TODO: 这块最好能判断上一层是list1，
   if (hideTitle && _schema.title) {
     _schema.placeholder = _schema.placeholder || _schema.title;
