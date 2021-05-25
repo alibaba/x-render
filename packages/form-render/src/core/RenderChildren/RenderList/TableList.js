@@ -2,6 +2,7 @@
 import React from 'react';
 import Core from '../../index';
 import { Button, Table, Popconfirm, Space } from 'antd';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 // import ArrowDown from '../../../components/ArrowDown';
 
 const FIELD_LENGTH = 170;
@@ -13,9 +14,12 @@ const TableList = ({
   deleteItem,
   copyItem,
   addItem,
+  moveItemUp,
+  moveItemDown,
   flatten,
   schema,
   listData,
+
   changeList,
 }) => {
   const { props = {}, itemProps } = schema;
@@ -66,19 +70,33 @@ const TableList = ({
       title: '操作',
       key: '$action',
       fixed: 'right',
-      width: 60,
+      width: 120,
       render: (value, record, idx) => {
         return (
           <Space>
             {!props.hideAdd && <a onClick={() => copyItem(idx)}>复制</a>}
-            <Popconfirm
-              title="确定删除?"
-              onConfirm={() => deleteItem(idx)}
-              okText="确定"
-              cancelText="取消"
-            >
-              <a>删除</a>
-            </Popconfirm>
+            {!props.hideDelete && (
+              <Popconfirm
+                title="确定删除?"
+                onConfirm={() => deleteItem(idx)}
+                okText="确定"
+                cancelText="取消"
+              >
+                <a>删除</a>
+              </Popconfirm>
+            )}
+            {!props.hideMove && (
+              <>
+                <ArrowUpOutlined
+                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 4 }}
+                  onClick={() => moveItemUp(idx)}
+                />
+                <ArrowDownOutlined
+                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 4 }}
+                  onClick={() => moveItemDown(idx)}
+                />
+              </>
+            )}
           </Space>
         );
       },

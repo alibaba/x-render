@@ -60,11 +60,11 @@ const CardList = ({
                 {!props.hideMove && (
                   <>
                     <ArrowUpOutlined
-                      style={{ fontSize: 16, marginLeft: 8 }}
+                      style={{ fontSize: 16, marginLeft: 4 }}
                       onClick={() => moveItemUp(idx)}
                     />
                     <ArrowDownOutlined
-                      style={{ fontSize: 16, marginLeft: 8 }}
+                      style={{ fontSize: 16, marginLeft: 4 }}
                       onClick={() => moveItemDown(idx)}
                     />
                   </>

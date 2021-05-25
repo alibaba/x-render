@@ -1,7 +1,12 @@
 import React from 'react';
 import Core from '../../index';
 import { Button, Popconfirm } from 'antd';
-import { DeleteOutlined, CopyOutlined } from '@ant-design/icons';
+import {
+  DeleteOutlined,
+  CopyOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
+} from '@ant-design/icons';
 
 const SimpleList = ({
   schema,
@@ -11,6 +16,8 @@ const SimpleList = ({
   deleteItem,
   addItem,
   copyItem,
+  moveItemUp,
+  moveItemDown,
   getFieldsProps,
 }) => {
   const { props = {}, itemProps } = schema;
@@ -41,6 +48,18 @@ const SimpleList = ({
                   style={{ fontSize: 15, marginLeft: 8 }}
                   onClick={() => copyItem(idx)}
                 />
+              )}
+              {!props.hideMove && (
+                <>
+                  <ArrowUpOutlined
+                    style={{ fontSize: 16, marginLeft: 8 }}
+                    onClick={() => moveItemUp(idx)}
+                  />
+                  <ArrowDownOutlined
+                    style={{ fontSize: 16, marginLeft: 8 }}
+                    onClick={() => moveItemDown(idx)}
+                  />
+                </>
               )}
             </div>
           </div>
