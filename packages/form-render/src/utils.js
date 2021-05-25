@@ -699,10 +699,10 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
     if (isRequired && schema.required === true) {
       result.required = true;
     }
-    if (schema.min) {
+    if (typeof schema.min === 'number') {
       result.min = schema.min;
     }
-    if (schema.max) {
+    if (typeof schema.max === 'number') {
       result.max = schema.max;
     }
     result.defaultField = { type: 'object', fields: {} }; // 目前就默认只有object类型的 TODO:
@@ -915,10 +915,10 @@ export const translateMessage = (msg, schema) => {
   msg = msg.replace('${title}', schema.title);
   msg = msg.replace('${type}', schema.format || schema.type);
   // 兼容代码
-  if (schema.min) {
+  if (typeof schema.min === 'number') {
     msg = msg.replace('${min}', schema.min);
   }
-  if (schema.max) {
+  if (typeof schema.max === 'number') {
     msg = msg.replace('${max}', schema.max);
   }
   if (schema.rules) {

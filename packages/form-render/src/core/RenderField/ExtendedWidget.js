@@ -108,6 +108,9 @@ const areEqual = (prev, current) => {
   if (prev.readOnly !== current.readOnly) {
     return false;
   }
+  if (prev.disabled !== current.disabled) {
+    return false;
+  }
   if (
     JSON.stringify(prev.value) === JSON.stringify(current.value) &&
     JSON.stringify(prev.schema) === JSON.stringify(current.schema)
