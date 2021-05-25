@@ -29,7 +29,7 @@ const Core = ({
   // console.log('<Core>');
   const snapShot = useRef();
 
-  const { flatten, errorFields, isEditing, formData, allTouched } = useStore();
+  const { flatten, errorFields, isEditing, formData, allTouched, ...restProps } = useStore();
   const { displayType, column, labelWidth, readOnly } = useStore2();
   const item = _item ? _item : flatten[id];
   if (!item) return null;
@@ -70,6 +70,7 @@ const Core = ({
     effectiveLabelWidth,
     allTouched,
     ...rest,
+    ...restProps,
   };
 
   return <MCore {...dataProps} />;
@@ -226,6 +227,7 @@ const CoreRender = ({
     displayType: _displayType,
     hideTitle,
     hideValidation,
+    ...rest,
   };
 
   const objChildren = (
