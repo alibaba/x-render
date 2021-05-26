@@ -775,7 +775,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
 
     let requiredRule;
     if (isRequired && schema.required === true) {
-      requiredRule = { required: true };
+      requiredRule = { required: true, type: singleResult.type };
     }
 
     if (schema.rules) {
