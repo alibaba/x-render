@@ -740,7 +740,11 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
           validator: (rule, value) => {
             if (!value) return true;
             if (Array.isArray(value)) {
-              if (value[0] && value[1]) {
+              // range组件点击clear，会变成 ['','']
+              if (
+                typeof value[0] === 'string' &&
+                typeof value[1] === 'string'
+              ) {
                 return true;
               }
               return false;
