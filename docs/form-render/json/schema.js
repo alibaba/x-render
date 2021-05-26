@@ -79,3 +79,21 @@ export const expression = {
   },
   required: [],
 };
+
+export const titleTrick = {
+  displayType: 'row',
+  type: 'object',
+  properties: {
+    inputName1: {
+      title: '简单输入框',
+      type: 'string',
+      width: '50%',
+    },
+    desc: {
+      type: 'html',
+      bind: false,
+      default: "补充说明 <span style='color:red'>hello<span>",
+      width: '50%',
+    },
+  },
+};

@@ -41,6 +41,7 @@ export interface FormInstance {
   setErrorFields: (error: Error[]) => void;
   removeErrorField: (path: string) => void;
   removeTouched: (path: string) => void;
+  changeTouchedKeys: (pathArray: string[]) => void;
   isEditing: boolean;
   setEditing: (status: boolean) => void;
   syncStuff: (any) => void;

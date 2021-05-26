@@ -33,6 +33,7 @@ toc: content
 | hideTitle  | boolean | 只支持“list1”，隐藏 title，展示更紧凑 |
 | hideDelete | boolean |             隐藏删除按钮              |
 | hideAdd    | boolean |           隐藏新增/复制按钮           |
+| hideMove   | boolean |       隐藏上下移动 item 的按钮        |
 | buttons    |  array  |             下详 （注 1）             |
 
 **itemProps**
