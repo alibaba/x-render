@@ -67,14 +67,15 @@ function App(props, ref) {
     } else {
       setState({ isNewVersion: true });
     }
+    const newSchema = oldSchemaToNew(schema);
+    const newFrProps = Object.keys(newSchema).reduce((rst, cur) => {
+      if (['type', 'properties'].includes(cur)) return rst;
+      return { ...rst, [cur]: newSchema[cur] };
+    }, {});
     setState({
-      schema: oldSchemaToNew(schema), // 旧的转新的，新的不变
+      schema: newSchema, // 旧的转新的，新的不变
       formData: schema.formData || {},
-      frProps: {
-        column: schema.column,
-        displayType: schema.displayType,
-        labelWidth: schema.labelWidth,
-      },
+      frProps: newFrProps,
     });
   }, [defaultValue]);
 

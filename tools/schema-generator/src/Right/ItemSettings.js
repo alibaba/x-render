@@ -88,13 +88,16 @@ export default function ItemSettings() {
 
       if (hideId) delete properties.$id;
 
-      form.setValues(item.schema);
       setSettingSchema({
         type: 'object',
         displayType: 'column',
         properties,
       });
-      setTimeout(() => setReady(true), 0);
+      form.setValues(item.schema);
+      setTimeout(() => {
+        setReady(true);
+        onDataChange(form.getValues());
+      }, 0);
     } catch (error) {
       console.log(error);
     }
