@@ -495,6 +495,9 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
           );
         });
       }
+    } else if (isObject(value)) {
+      // TODO: dataPath 这边要处理一下，否则rootValue类的没有效果
+      schema[key] = parseAllExpression(value, formData, dataPath);
     }
   });
   return schema;
