@@ -2,7 +2,7 @@
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
-import { set, sortedUniqBy, merge } from 'lodash-es';
+import { set, sortedUniqBy } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
 import { generateDataSkeleton, flattenSchema, clone } from './utils';
 
@@ -61,9 +61,8 @@ export const useForm = props => {
   const formData = dataFromOutside ? _formData : innerData;
 
   // 生成一个基础结构，确保对象内的必填元素也被校验。
-  // _data.current = merge(generateDataSkeleton(schemaRef.current), formData);
   _data.current = useMemo(() => {
-    return merge(generateDataSkeleton(schemaRef.current), formData);
+    return generateDataSkeleton(schemaRef.current, formData);
   }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
 
   _touchedKeys.current = touchedKeys;

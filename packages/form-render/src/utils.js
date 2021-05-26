@@ -889,20 +889,34 @@ export const isPathRequired = (path, schema) => {
   }
 };
 
-export const generateDataSkeleton = schema => {
+// _path 只供内部递归使用
+export const generateDataSkeleton = (schema, formData, _path = '') => {
   let result = {};
+  let _formData = clone(formData);
   if (isObjType(schema)) {
+    if (_formData === undefined || typeof _formData !== 'object') {
+      _formData = {};
+    }
     Object.keys(schema.properties).forEach(key => {
       const childSchema = schema.properties[key];
-      const childResult = generateDataSkeleton(childSchema);
+      const childData = _formData[key];
+      const childResult = generateDataSkeleton(
+        childSchema,
+        childData,
+        `${_path}.${key}`
+      );
       result[key] = childResult;
     });
-  } else if (schema.default !== undefined) {
-    result = clone(schema.default);
-  } else if (schema.type === 'boolean') {
-    result = false;
+  } else if (_formData !== undefined) {
+    result = clone(_formData);
   } else {
-    result = undefined;
+    if (schema.default !== undefined) {
+      result = clone(schema.default);
+    } else if (schema.type === 'boolean') {
+      result = false;
+    } else {
+      result = undefined;
+    }
   }
   return result;
 };
