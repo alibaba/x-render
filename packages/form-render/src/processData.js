@@ -13,10 +13,10 @@ export const processData = (data, flatten) => {
   // 2. 去掉list里面所有的空值
   _data = removeEmptyItemFromList(_data);
 
-  // 3. 去掉hidden的元素
+  // 3. 去掉 hidden = true 的元素
   _data = removeHiddenFromResult(_data, flatten);
 
-  // 3. 去掉所有的 undefined
+  // 4. 去掉所有的 undefined
   _data = cleanEmpty(_data);
 
   return _data;

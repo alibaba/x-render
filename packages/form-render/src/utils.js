@@ -1137,7 +1137,7 @@ export const cleanEmpty = obj => {
 
 export const removeHiddenFromResult = (data, flatten) => {
   Object.keys(flatten).forEach(key => {
-    const hidden = flatten[key].schema && flatten[key].schema.hidden === true; // TODO: 有表达式的情况
+    const hidden = flatten[key].schema && flatten[key].schema.hidden === true; // Remark: 有表达式的情况, 暂时不去掉了（有业务反而是希望留下的），就去掉 hidden = true 的
     if (get(data, key) !== undefined && hidden) {
       set(data, key, undefined);
     }
