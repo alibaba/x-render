@@ -5,6 +5,7 @@ import {
   isPathRequired,
   generateDataSkeleton,
   parseAllExpression,
+  schemaContainsExpression,
   getArray,
 } from './utils';
 import { defaultValidateMessagesCN } from './validateMessageCN';
@@ -22,7 +23,10 @@ export const validateAll = ({
   validateMessages = {},
 }) => {
   // Check: 添加了这个逻辑，不知道性能是否会变坏
-  const _schema = parseAllExpression(schema, formData, '#');
+  let _schema = schema;
+  if (schemaContainsExpression(schema)) {
+    _schema = parseAllExpression(schema, formData, '#');
+  }
   if (Object.keys(_schema).length === 0) return Promise.resolve();
   const descriptor = getDescriptorFromSchema({
     schema: _schema,
