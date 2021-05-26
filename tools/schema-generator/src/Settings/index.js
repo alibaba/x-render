@@ -11,6 +11,21 @@ export const defaultCommonSettings = {
     title: '标题',
     type: 'string',
   },
+  type: {
+    title: '类型',
+    type: 'string',
+    hidden: '{{true}}',
+  },
+  widget: {
+    title: '组件',
+    type: 'string',
+    hidden: '{{true}}',
+  },
+  format: {
+    title: '格式',
+    type: 'string',
+    hidden: '{{true}}',
+  },
   description: {
     title: '说明',
     type: 'string',
@@ -694,6 +709,7 @@ export const defaultGlobalSettings = {
     displayType: {
       title: '标签展示模式',
       type: 'string',
+      default: 'row',
       enum: ['row', 'column'],
       enumNames: ['同行', '单独一行'],
       widget: 'radio',

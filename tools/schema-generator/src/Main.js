@@ -48,9 +48,7 @@ function App(props, ref) {
   const frwRef = ref || useRef();
   const [state, setState] = useSet({
     formData: {},
-    frProps: {
-      displayType: 'row',
-    }, // form-render 的全局props等
+    frProps: {}, // form-render 的全局 props 等
     hovering: undefined, // 目前没有用到
     isNewVersion: true, // 用schema字段，还是用propsSchema字段，这是一个问题
     preview: false, // preview = false 是编辑模式
