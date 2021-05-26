@@ -73,8 +73,9 @@ const RenderField = ({
   const usefulWidgetProps = transformProps({
     value: data || schema.default,
     checked: data,
-    disabled: schema['disabled'],
-    readOnly: schema['readOnly'],
+    disabled: schema.disabled,
+    readOnly: schema.readOnly,
+    format: schema.format,
     onChange,
     schema,
     ...schema['props'],
