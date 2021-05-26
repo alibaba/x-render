@@ -127,6 +127,7 @@ const schema = {
             title: '简单输入框',
             type: 'string',
             required: true,
+            width: 300,
           },
           input2: {
             title: '简单输入框2',
@@ -177,6 +178,7 @@ const schema = {
             title: '简单输入框',
             type: 'string',
             required: true,
+            width: 300,
           },
           select1: {
             title: '单选',
@@ -252,6 +254,7 @@ const schema = {
             title: '简单输入框',
             type: 'string',
             required: true,
+            width: 300,
           },
           input2: {
             title: '简单输入框2',

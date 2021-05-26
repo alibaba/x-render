@@ -31,15 +31,15 @@ const VirtualList = ({
     const schema = (item && item.schema) || {};
     return {
       dataIndex: child,
-      width: FIELD_LENGTH,
+      width: schema.width || FIELD_LENGTH,
       title: schema.required ? (
         <>
           <span className="fr-label-required"> *</span>
           <span>{schema.title}</span>
         </>
       ) : (
-        schema.title
-      ),
+          schema.title
+        ),
       render: (value, record, index) => {
         // Check: record.index 似乎是antd自己会给的，不错哦
         const childIndex = [...dataIndex, record.index];

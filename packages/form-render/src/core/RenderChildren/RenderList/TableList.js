@@ -42,9 +42,9 @@ const TableList = ({
           <span>{schema.title}</span>
         </>
       ) : (
-        schema.title
-      ),
-      width: FIELD_LENGTH,
+          schema.title
+        ),
+      width: schema.width || FIELD_LENGTH,
       render: (value, record, index) => {
         // Check: record.index 似乎是antd自己会给的，不错哦
         const childIndex = [...dataIndex, record.index];

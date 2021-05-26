@@ -49,9 +49,9 @@ const DrawerList = ({
           <span>{schema.title}</span>
         </>
       ) : (
-        schema.title
-      ),
-      width: FIELD_LENGTH,
+          schema.title
+        ),
+      width: schema.width || FIELD_LENGTH,
       render: (value, record) => {
         const childPath = getDataPath(child, [record.$idx]);
         const errorObj = errorFields.find(item => item.name == childPath) || {};
