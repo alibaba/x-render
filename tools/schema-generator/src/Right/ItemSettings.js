@@ -69,7 +69,7 @@ export default function ItemSettings() {
     // setting 该显示什么的计算，要把选中组件的 schema 和它对应的 widgets 的整体 schema 进行拼接
     try {
       const item = flatten[selected];
-      if (!item) return;
+      if (!item || selected === '#') return;
       setReady(false);
       // 算 widgetList
       const _settings = Array.isArray(settings)

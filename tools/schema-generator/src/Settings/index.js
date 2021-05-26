@@ -337,7 +337,6 @@ export const elements = [
     name: 'checkboxes',
     schema: {
       title: '多选',
-      description: '点击多选',
       type: 'array',
       widget: 'checkboxes',
       items: {
@@ -460,6 +459,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -501,6 +504,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -546,6 +553,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -587,6 +598,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
