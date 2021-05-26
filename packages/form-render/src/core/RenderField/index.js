@@ -82,7 +82,7 @@ const RenderField = props => {
     style: labelStyle,
   };
 
-  const _showTitle = !hideTitle && !!_schema.title;
+  const _showTitle = !hideTitle && typeof _schema.title === 'string';
   // TODO: 这块最好能判断上一层是list1，
   if (hideTitle && _schema.title) {
     _schema.placeholder = _schema.placeholder || _schema.title;
@@ -130,7 +130,6 @@ const RenderField = props => {
     titleElement = (
       <div style={{ display: 'flex' }}>
         {titleElement}
-        <Extra {...widgetProps} />
         <ErrorMessage {...messageProps} />
       </div>
     );
@@ -141,6 +140,7 @@ const RenderField = props => {
           message={errorMessage}
           title={_showTitle ? titleElement : undefined}
         />
+        <Extra {...widgetProps} />
       </div>
     );
   }

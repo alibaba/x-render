@@ -6,7 +6,7 @@ group:
 toc: content
 ---
 
-# 书写规范
+# schema 规范
 
 ## 概述
 
@@ -120,6 +120,16 @@ export default () => <FR schema={basic} />;
 
 - 类型：`string`
 - 详细：表单的标题信息，作为 label 展示，注意 title 为""时占位，title 不写时不占位
+
+如下例，通过选择性不使用 title，达到展示效果
+
+```jsx
+import React from 'react';
+import FR from '../demo/FR';
+import { titleTrick } from '../json/schema';
+
+export default () => <FR schema={titleTrick} />;
+```
 
 ### description
 
@@ -346,6 +356,19 @@ readOnly=true 的情况，FormRender 默认使用 html 组件渲染。特殊情�
   "type": "string",
   "widget": "myWidget", // 指明使用 myWidget 来渲染
   "readOnlyWidget": "myReadOnlyWidget" // 指明在只读模式使用 myReadOnlyWidget 来渲染
+}
+```
+
+### extra
+
+- 类型：string
+- 详细：用于在元素下展示更多说明信息，extra 可以是 html string，也可以是纯文案，会展示在元素下面一行紧贴
+
+```json
+{
+  "title": "单选",
+  "type": "string",
+  "extra": "<a href='xxx'>详细规范</a>"
 }
 ```
 

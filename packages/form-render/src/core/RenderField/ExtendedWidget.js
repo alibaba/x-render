@@ -67,6 +67,7 @@ const ExtendedWidget = ({
     value,
     children,
     disabled,
+    readOnly,
     ...schema.props,
   };
 

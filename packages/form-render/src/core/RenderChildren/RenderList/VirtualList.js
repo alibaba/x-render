@@ -3,8 +3,9 @@ import React from 'react';
 import Core from '../../index';
 import { Button, Popconfirm, Table } from 'antd';
 import { useVT } from 'virtualizedtableforantd4';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
-const FIELD_LENGTH = 120;
+const FIELD_LENGTH = 170;
 
 const VirtualList = ({
   displayList = [],
@@ -12,6 +13,8 @@ const VirtualList = ({
   children,
   deleteItem,
   addItem,
+  moveItemUp,
+  moveItemDown,
   flatten,
   schema,
   listData,
@@ -61,7 +64,7 @@ const VirtualList = ({
       title: '操作',
       key: '$action',
       fixed: 'right',
-      width: 80,
+      width: 120,
       render: (value, record, idx) => {
         return (
           <>
@@ -74,6 +77,18 @@ const VirtualList = ({
               >
                 <a>删除</a>
               </Popconfirm>
+            )}
+            {!props.hideMove && (
+              <>
+                <ArrowUpOutlined
+                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 4 }}
+                  onClick={() => moveItemUp(idx)}
+                />
+                <ArrowDownOutlined
+                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 4 }}
+                  onClick={() => moveItemDown(idx)}
+                />
+              </>
             )}
             {Array.isArray(itemProps.buttons)
               ? itemProps.buttons.map((item, idx) => {

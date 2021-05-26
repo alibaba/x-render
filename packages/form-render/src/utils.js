@@ -414,8 +414,8 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
     const funcBody = func.substring(2, func.length - 2);
     const str = `
     return ${funcBody
-      .replaceAll('formData', JSON.stringify(formData))
-      .replaceAll('rootValue', JSON.stringify(parent))}`;
+      .replace(/formData/g, JSON.stringify(formData))
+      .replace(/rootValue/g, JSON.stringify(parent))}`;
 
     try {
       return Function(str)();
@@ -477,11 +477,11 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
     const value = schema[key];
     if (isExpression(value)) {
       schema[key] = parseSingleExpression(value, formData, dataPath);
-      console.log(
-        formData.materialType,
-        dataPath,
-        parseSingleExpression(value, formData, dataPath)
-      );
+      // console.log(
+      //   formData.materialType,
+      //   dataPath,
+      //   parseSingleExpression(value, formData, dataPath)
+      // );
     }
     // 有可能叫 xxxProps
     if (typeof key === 'string' && key.toLowerCase().indexOf('props') > -1) {
@@ -495,6 +495,9 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
           );
         });
       }
+    } else if (isObject(value)) {
+      // TODO: dataPath 这边要处理一下，否则rootValue类的没有效果
+      schema[key] = parseAllExpression(value, formData, dataPath);
     }
   });
   return schema;
@@ -740,7 +743,11 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
           validator: (rule, value) => {
             if (!value) return true;
             if (Array.isArray(value)) {
-              if (value[0] && value[1]) {
+              // range组件点击clear，会变成 ['','']
+              if (
+                typeof value[0] === 'string' &&
+                typeof value[1] === 'string'
+              ) {
                 return true;
               }
               return false;
@@ -768,7 +775,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
 
     let requiredRule;
     if (isRequired && schema.required === true) {
-      requiredRule = { required: true };
+      requiredRule = { required: true, type: singleResult.type };
     }
 
     if (schema.rules) {
@@ -889,20 +896,34 @@ export const isPathRequired = (path, schema) => {
   }
 };
 
-export const generateDataSkeleton = schema => {
+// _path 只供内部递归使用
+export const generateDataSkeleton = (schema, formData, _path = '') => {
   let result = {};
+  let _formData = clone(formData);
   if (isObjType(schema)) {
+    if (_formData === undefined || typeof _formData !== 'object') {
+      _formData = {};
+    }
     Object.keys(schema.properties).forEach(key => {
       const childSchema = schema.properties[key];
-      const childResult = generateDataSkeleton(childSchema);
+      const childData = _formData[key];
+      const childResult = generateDataSkeleton(
+        childSchema,
+        childData,
+        `${_path}.${key}`
+      );
       result[key] = childResult;
     });
-  } else if (schema.default !== undefined) {
-    result = clone(schema.default);
-  } else if (schema.type === 'boolean') {
-    result = false;
+  } else if (_formData !== undefined) {
+    result = clone(_formData);
   } else {
-    result = undefined;
+    if (schema.default !== undefined) {
+      result = clone(schema.default);
+    } else if (schema.type === 'boolean') {
+      result = false;
+    } else {
+      result = undefined;
+    }
   }
   return result;
 };
