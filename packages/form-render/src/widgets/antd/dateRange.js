@@ -48,7 +48,7 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
     dateParams.picker = format;
   }
 
-  dateParams = { ...dateParams, ...rest };
+  dateParams = { ...dateParams, format, ...rest };
 
   return <RangePicker {...dateParams} />;
 };

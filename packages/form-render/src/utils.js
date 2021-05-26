@@ -280,7 +280,11 @@ export function getFormat(format) {
       break;
     default:
       // dateTime
-      dateFormat = 'YYYY-MM-DD';
+      if (typeof format === 'string') {
+        dateFormat = format;
+      } else {
+        dateFormat = 'YYYY-MM-DD';
+      }
   }
   return dateFormat;
 }
