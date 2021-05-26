@@ -11,8 +11,8 @@ import {
   flattenToData,
   looseJsonParse,
   isObject,
-  oldSchemaToNew,
   newSchemaToOld,
+  schemaToState,
 } from './utils';
 import { Ctx, StoreCtx } from './context';
 import FR from './FR';
@@ -90,28 +90,12 @@ function Wrapper(
     setState({ schemaForImport: e.target.value });
   };
 
-  // 收口点 propsSchema 到 schema 的转换（一共就3个入口：defaultValue，importSchema，setValue）
-  // TODO: 3个入口可能还是太多了，是不是考虑在外面裹一层
-  // TODO2: 导入这边看看会不会传一个乱写的schema就crash
   const importSchema = () => {
     try {
       const value = transformFrom(looseJsonParse(local.schemaForImport));
-      let _isNewVersion = true;
-      if (value && value.propsSchema) {
-        _isNewVersion = false;
-      }
-      const schema = oldSchemaToNew(value);
-      setGlobal(state => ({
-        schema,
-        formData: {},
+      setGlobal(() => ({
         selected: undefined,
-        isNewVersion: _isNewVersion,
-        frProps: {
-          ...state.frProps,
-          column: schema.column,
-          displayType: schema.displayType,
-          labelWidth: schema.labelWidth,
-        },
+        ...schemaToState(value),
       }));
     } catch (error) {
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
@@ -141,29 +125,12 @@ function Wrapper(
 
   const getValue = () => displaySchema;
 
-  // 收口点 propsSchema 到 schema
-  // setValue 外部用于修改大schema，叫setSchema比较合适
-  // TODO: 这次顶层的props传递改动和整理后，确保这个api还是正确的
   const setValue = value => {
     try {
-      // TODO: 这里默认使用setValue的同学不使用ui:Schema
-      let _isNewVersion = true;
-      if (value && value.propsSchema) {
-        _isNewVersion = false;
-      }
-      const schema = oldSchemaToNew(value);
       setGlobal(state => ({
         ...state,
-        schema,
-        formData: {},
         selected: undefined,
-        isNewVersion: _isNewVersion,
-        frProps: {
-          ...state.frProps,
-          column: schema.column,
-          displayType: schema.displayType,
-          labelWidth: schema.labelWidth,
-        },
+        ...schemaToState(value),
       }));
     } catch (error) {
       console.error(error);
