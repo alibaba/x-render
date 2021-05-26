@@ -1,5 +1,12 @@
 # Changelog
 
+### 1.4.1
+
+- [!] 去掉了 1.4.0 版本带来的一堆 error 的 console.log
+- [!] antd 升级 4.16.0 Collapse.Panel 样式变更导致对象展示奇怪，修复兼容性
+- [!] 日期组件的 format 可以在 props 里自定义设置，例如 props: {format: 'YY/MM/DD'}
+- [!] 修复了几个声明文件上的类型注释错误
+
 ### 1.4.0
 
 #### 新功能
@@ -22,7 +29,6 @@
 
 - [!] fix 了 watch 的声明类型错误的问题
 - [!] fix 了部分情况 disabled 状态变化后展示无反馈的问题
-- [!] antd 升级 4.16.0 Collapse.Panel 样式变更导致对象展示奇怪，修复兼容性
 
 ### 1.3.4
 
