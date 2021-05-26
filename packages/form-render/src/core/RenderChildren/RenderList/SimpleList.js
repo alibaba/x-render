@@ -21,6 +21,16 @@ const SimpleList = ({
   getFieldsProps,
 }) => {
   const { props = {}, itemProps } = schema;
+
+  let addBtnProps = {
+    type: 'dashed',
+    children: '新增一条',
+  };
+
+  if (props.addBtnProps && typeof props.addBtnProps === 'object') {
+    addBtnProps = { ...addBtnProps, ...props.addBtnProps };
+  }
+
   return (
     <div className="fr-list-1">
       {displayList.map((item, idx) => {
@@ -66,11 +76,7 @@ const SimpleList = ({
         );
       })}
       <div style={{ marginTop: displayList.length > 0 ? 0 : 8 }}>
-        {!props.hideAdd && (
-          <Button type="dashed" onClick={addItem}>
-            新增一条
-          </Button>
-        )}
+        {!props.hideAdd && <Button onClick={addItem} {...addBtnProps} />}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
