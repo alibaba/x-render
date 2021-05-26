@@ -47,7 +47,9 @@ export default function map({ children, title, ...rest }) {
     <div className="w-100">
       <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
         <Panel
-          header={<span style={{ fontSize: 16, fontWeight: 500 }}>{title}</span>}
+          header={
+            <span style={{ fontSize: 16, fontWeight: 500 }}>{title}</span>
+          }
           key="1"
           className="fr-collapse-object"
         >
