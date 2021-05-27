@@ -424,7 +424,7 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
     try {
       return Function(str)();
     } catch (error) {
-      console.log(error);
+      console.log(error, func, dataPath);
       return func;
     }
     // const funcBody = func.substring(2, func.length - 2);
@@ -479,16 +479,21 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
   const schema = clone(_schema);
   Object.keys(schema).forEach(key => {
     const value = schema[key];
-    if (isExpression(value)) {
+    if (isObject(value)) {
+      // TODO: dataPath 这边要处理一下，否则rootValue类的没有效果
+      schema[key] = parseAllExpression(value, formData, dataPath);
+    } else if (isExpression(value)) {
       schema[key] = parseSingleExpression(value, formData, dataPath);
       // console.log(
       //   formData.materialType,
       //   dataPath,
       //   parseSingleExpression(value, formData, dataPath)
       // );
-    }
-    // 有可能叫 xxxProps
-    if (typeof key === 'string' && key.toLowerCase().indexOf('props') > -1) {
+    } else if (
+      typeof key === 'string' &&
+      key.toLowerCase().indexOf('props') > -1
+    ) {
+      // 有可能叫 xxxProps
       const propsObj = schema[key];
       if (isObject(propsObj)) {
         Object.keys(propsObj).forEach(k => {
@@ -499,9 +504,6 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
           );
         });
       }
-    } else if (isObject(value)) {
-      // TODO: dataPath 这边要处理一下，否则rootValue类的没有效果
-      schema[key] = parseAllExpression(value, formData, dataPath);
     }
   });
   return schema;
