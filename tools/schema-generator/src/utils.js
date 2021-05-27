@@ -588,6 +588,22 @@ export const newSchemaToOld = setting => {
   return setting;
 };
 
+export const schemaToState = value => {
+  const schema = oldSchemaToNew(value);
+  const frProps = Object.keys(schema).reduce((rst, cur) => {
+    if (['type', 'properties'].includes(cur)) return rst;
+    return { ...rst, [cur]: schema[cur] };
+  }, {});
+  const isNewVersion = !(value && value.propsSchema);
+
+  return {
+    schema,
+    frProps,
+    formData: schema.formData || {},
+    isNewVersion,
+  };
+};
+
 export function defaultGetValueFromEvent(valuePropName, ...args) {
   const event = args[0];
   if (event && event.target && valuePropName in event.target) {

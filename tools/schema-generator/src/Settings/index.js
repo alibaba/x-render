@@ -11,6 +11,21 @@ export const defaultCommonSettings = {
     title: '标题',
     type: 'string',
   },
+  type: {
+    title: '类型',
+    type: 'string',
+    hidden: '{{true}}',
+  },
+  widget: {
+    title: '组件',
+    type: 'string',
+    hidden: '{{true}}',
+  },
+  format: {
+    title: '格式',
+    type: 'string',
+    hidden: '{{true}}',
+  },
   description: {
     title: '说明',
     type: 'string',
@@ -322,7 +337,6 @@ export const elements = [
     name: 'checkboxes',
     schema: {
       title: '多选',
-      description: '点击多选',
       type: 'array',
       widget: 'checkboxes',
       items: {
@@ -445,6 +459,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -486,6 +504,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -531,6 +553,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -572,6 +598,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -694,6 +724,7 @@ export const defaultGlobalSettings = {
     displayType: {
       title: '标签展示模式',
       type: 'string',
+      default: 'row',
       enum: ['row', 'column'],
       enumNames: ['同行', '单独一行'],
       widget: 'radio',
