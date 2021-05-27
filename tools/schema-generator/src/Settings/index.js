@@ -445,7 +445,7 @@ export const advancedElements = [
 
 export const layouts = [
   {
-    text: 'object',
+    text: '对象',
     name: 'object',
     schema: {
       title: '对象',

@@ -39,14 +39,28 @@ export default function ItemSettings() {
   const getWidgetList = (settings, commonSettings) => {
     return settings.reduce((widgetList, setting) => {
       if (!Array.isArray(setting.widgets)) return widgetList;
-      const basicWidgets = setting.widgets.map(item => ({
-        ...item,
-        widget:
-          item.widget ||
-          item.schema.widget ||
-          getWidgetName(item.schema, defaultMapping),
-        setting: { ...commonSettings, ...item.setting },
-      }));
+      const basicWidgets = setting.widgets.map(item => {
+        const baseItemSettings = {};
+        if (item.schema.type === 'array') {
+          baseItemSettings.items = {
+            type: 'object',
+            hidden: '{{true}}',
+          };
+        }
+        return {
+          ...item,
+          widget:
+            item.widget ||
+            item.schema.widget ||
+            getWidgetName(item.schema, defaultMapping),
+          setting: {
+            ...baseCommonSettings,
+            ...commonSettings,
+            ...baseItemSettings,
+            ...item.setting,
+          },
+        };
+      });
       return [...widgetList, ...basicWidgets];
     }, []);
   };
@@ -82,9 +96,7 @@ export default function ItemSettings() {
       const _commonSettings = isObject(commonSettings)
         ? commonSettings
         : defaultCommonSettings;
-      // 补全基础属性
-      const _fixedCommonSettings = { ...baseCommonSettings, ..._commonSettings };
-      const widgetList = getWidgetList(_settings, _fixedCommonSettings);
+      const widgetList = getWidgetList(_settings, _commonSettings);
       const widgetName = getWidgetName(item.schema, defaultMapping);
       const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
       const properties = { ...element.setting };
