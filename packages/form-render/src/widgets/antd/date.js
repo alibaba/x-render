@@ -39,7 +39,11 @@ export default ({ onChange, format, value, style, ...rest }) => {
     dateParams.picker = format;
   }
 
-  dateParams = { ...dateParams, format, ...rest };
+  dateParams = { ...dateParams, ...rest };
+
+  if (dateFormat === format) {
+    dateParams.format = format;
+  }
 
   return <DatePicker {...dateParams} />;
 };
