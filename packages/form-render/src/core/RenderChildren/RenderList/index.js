@@ -55,7 +55,7 @@ const RenderList = ({
       newItem,
       ...displayList.slice(idx),
     ];
-    onItemChange(dataPath, newList);
+    onItemChange(dataPath, JSON.parse(JSON.stringify(newList)));
   };
 
   const deleteItem = idx => {
