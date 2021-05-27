@@ -758,6 +758,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
             }
             return false;
           },
+          type: 'array',
           message: '${title}必填',
         };
         singleResult = rangeValidator;
@@ -779,7 +780,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
 
     let requiredRule;
     if (isRequired && schema.required === true) {
-      requiredRule = { required: true, type: singleResult.type };
+      requiredRule = { required: true, type: singleResult.type || 'string' };
     }
 
     if (schema.rules) {
