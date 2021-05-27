@@ -32,6 +32,7 @@ export const validateAll = ({
     schema: _schema,
     isRequired,
   }).fields;
+  window.descriptor = descriptor;
   // console.log(descriptor, '&&&& descriptor', formData);
 
   let touchVerifyList = [];

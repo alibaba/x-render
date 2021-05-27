@@ -224,13 +224,7 @@ function App({
                   <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
                   <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
                   <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
-                  <div>{'isEditting:' + JSON.stringify(form.isEditing)}</div>
-                  <div>
-                    {'isValidating:' + JSON.stringify(form.isValidating)}
-                  </div>
-                  <div>
-                    {'isSubmitting:' + JSON.stringify(form.isSubmitting)}
-                  </div>
+                  <div>{'descriptor:' + JSON.stringify(window.descriptor)}</div>
                 </div>
               ) : null}
               {watchList.length > 0
