@@ -5,6 +5,7 @@ import IdInput from '../widgets/antd/idInput';
 import PercentSlider from '../widgets/antd/percentSlider';
 import {
   defaultSettings,
+  baseCommonSettings,
   defaultCommonSettings,
   elements,
   advancedElements,
@@ -38,14 +39,28 @@ export default function ItemSettings() {
   const getWidgetList = (settings, commonSettings) => {
     return settings.reduce((widgetList, setting) => {
       if (!Array.isArray(setting.widgets)) return widgetList;
-      const basicWidgets = setting.widgets.map(item => ({
-        ...item,
-        widget:
-          item.widget ||
-          item.schema.widget ||
-          getWidgetName(item.schema, defaultMapping),
-        setting: { ...commonSettings, ...item.setting },
-      }));
+      const basicWidgets = setting.widgets.map(item => {
+        const baseItemSettings = {};
+        if (item.schema.type === 'array') {
+          baseItemSettings.items = {
+            type: 'object',
+            hidden: '{{true}}',
+          };
+        }
+        return {
+          ...item,
+          widget:
+            item.widget ||
+            item.schema.widget ||
+            getWidgetName(item.schema, defaultMapping),
+          setting: {
+            ...baseCommonSettings,
+            ...commonSettings,
+            ...baseItemSettings,
+            ...item.setting,
+          },
+        };
+      });
       return [...widgetList, ...basicWidgets];
     }, []);
   };

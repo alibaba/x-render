@@ -1,12 +1,5 @@
 // 只需写配置，方便可扩展
-export const defaultCommonSettings = {
-  $id: {
-    title: 'ID',
-    description: '字段名称/英文',
-    type: 'string',
-    widget: 'idInput',
-    required: true,
-  },
+export const baseCommonSettings = {
   title: {
     title: '标题',
     type: 'string',
@@ -25,6 +18,20 @@ export const defaultCommonSettings = {
     title: '格式',
     type: 'string',
     hidden: '{{true}}',
+  },
+};
+
+export const defaultCommonSettings = {
+  $id: {
+    title: 'ID',
+    description: '字段名称/英文',
+    type: 'string',
+    widget: 'idInput',
+    required: true,
+  },
+  title: {
+    title: '标题',
+    type: 'string',
   },
   description: {
     title: '说明',
@@ -438,7 +445,7 @@ export const advancedElements = [
 
 export const layouts = [
   {
-    text: 'object',
+    text: '对象',
     name: 'object',
     schema: {
       title: '对象',
