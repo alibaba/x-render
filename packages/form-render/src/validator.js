@@ -24,7 +24,7 @@ export const validateAll = ({
 }) => {
   // Check: 添加了这个逻辑，不知道性能是否会变坏
   let _schema = schema;
-  if (schemaContainsExpression(schema)) {
+  if (schemaContainsExpression(schema, false)) {
     _schema = parseAllExpression(schema, formData, '#');
   }
   if (Object.keys(_schema).length === 0) return Promise.resolve();
