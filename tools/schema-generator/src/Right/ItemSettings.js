@@ -5,6 +5,7 @@ import IdInput from '../widgets/antd/idInput';
 import PercentSlider from '../widgets/antd/percentSlider';
 import {
   defaultSettings,
+  baseCommonSettings,
   defaultCommonSettings,
   elements,
   advancedElements,
@@ -81,7 +82,9 @@ export default function ItemSettings() {
       const _commonSettings = isObject(commonSettings)
         ? commonSettings
         : defaultCommonSettings;
-      const widgetList = getWidgetList(_settings, _commonSettings);
+      // 补全基础属性
+      const _fixedCommonSettings = { ...baseCommonSettings, ..._commonSettings };
+      const widgetList = getWidgetList(_settings, _fixedCommonSettings);
       const widgetName = getWidgetName(item.schema, defaultMapping);
       const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
       const properties = { ...element.setting };
