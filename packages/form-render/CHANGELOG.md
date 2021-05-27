@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.4.2
+
+- [!] 修复日期使用 props/format 造成校验不通过的问题
+
 ### 1.4.1
 
 - [!] 去掉了 1.4.0 版本带来的一堆 error 的 console.log
