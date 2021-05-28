@@ -4,7 +4,7 @@ import { defaultWidgetNameList } from '../../widgets/antd';
 import { useTools } from '../../hooks';
 import { transformProps } from '../../createWidget';
 
-import { isObjType, isListType } from '../../utils';
+import { isObjType, isListType, isObject } from '../../utils';
 // import { Input } from 'antd';
 // import Map from '../../widgets/antd/map';
 
@@ -87,7 +87,7 @@ const ExtendedWidget = ({
   }
 
   // 支持 addonAfter 为自定义组件的情况
-  if(typeof widgetProps.addonAfter === 'object' && widgetProps.addonAfter.widget) {
+  if(isObject(widgetProps.addonAfter) && widgetProps.addonAfter.widget) {
     const AddonAfterWidget = widgets[widgetProps.addonAfter.widget];
     widgetProps.addonAfter = <AddonAfterWidget {...schema}/>;
   }
