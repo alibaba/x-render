@@ -71,6 +71,7 @@ const ExtendedWidget = ({
     ...schema.props,
   };
 
+
   if (schema.type === 'string' && typeof schema.max === 'number') {
     widgetProps.maxLength = schema.max;
   }
@@ -83,6 +84,12 @@ const ExtendedWidget = ({
 
   if (schema.props) {
     widgetProps = { ...widgetProps, ...schema.props };
+  }
+
+  // 支持 addonAfter 为自定义组件的情况
+  if(typeof widgetProps.addonAfter === 'object' && widgetProps.addonAfter.widget) {
+    const AddonAfterWidget = widgets[widgetProps.addonAfter.widget];
+    widgetProps.addonAfter = <AddonAfterWidget {...schema}/>;
   }
 
   // 避免传组件不接受的props，按情况传多余的props
