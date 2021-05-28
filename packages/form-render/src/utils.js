@@ -280,7 +280,11 @@ export function getFormat(format) {
       break;
     default:
       // dateTime
-      dateFormat = 'YYYY-MM-DD';
+      if (typeof format === 'string') {
+        dateFormat = format;
+      } else {
+        dateFormat = 'YYYY-MM-DD';
+      }
   }
   return dateFormat;
 }
@@ -420,7 +424,7 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
     try {
       return Function(str)();
     } catch (error) {
-      console.log(error);
+      console.log(error, func, dataPath);
       return func;
     }
     // const funcBody = func.substring(2, func.length - 2);
@@ -475,16 +479,21 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
   const schema = clone(_schema);
   Object.keys(schema).forEach(key => {
     const value = schema[key];
-    if (isExpression(value)) {
+    if (isObject(value)) {
+      // TODO: dataPath 这边要处理一下，否则rootValue类的没有效果
+      schema[key] = parseAllExpression(value, formData, dataPath);
+    } else if (isExpression(value)) {
       schema[key] = parseSingleExpression(value, formData, dataPath);
       // console.log(
       //   formData.materialType,
       //   dataPath,
       //   parseSingleExpression(value, formData, dataPath)
       // );
-    }
-    // 有可能叫 xxxProps
-    if (typeof key === 'string' && key.toLowerCase().indexOf('props') > -1) {
+    } else if (
+      typeof key === 'string' &&
+      key.toLowerCase().indexOf('props') > -1
+    ) {
+      // 有可能叫 xxxProps
       const propsObj = schema[key];
       if (isObject(propsObj)) {
         Object.keys(propsObj).forEach(k => {
@@ -495,9 +504,6 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
           );
         });
       }
-    } else if (isObject(value)) {
-      // TODO: dataPath 这边要处理一下，否则rootValue类的没有效果
-      schema[key] = parseAllExpression(value, formData, dataPath);
     }
   });
   return schema;
@@ -679,7 +685,7 @@ export const removeEmptyItemFromList = formData => {
 export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
   let result = {};
   let singleResult = {};
-  if (schema.hidden === true) return result;
+  if (schema.hidden === true) return { validator: () => true };
   if (isObjType(schema)) {
     result.type = 'object';
     if (isRequired && schema.required === true) {
@@ -754,6 +760,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
             }
             return false;
           },
+          type: 'array',
           message: '${title}必填',
         };
         singleResult = rangeValidator;
@@ -775,7 +782,7 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
 
     let requiredRule;
     if (isRequired && schema.required === true) {
-      requiredRule = { required: true, type: singleResult.type };
+      requiredRule = { required: true, type: singleResult.type || 'string' };
     }
 
     if (schema.rules) {
@@ -1137,7 +1144,7 @@ export const cleanEmpty = obj => {
 
 export const removeHiddenFromResult = (data, flatten) => {
   Object.keys(flatten).forEach(key => {
-    const hidden = flatten[key].schema && flatten[key].schema.hidden === true; // TODO: 有表达式的情况
+    const hidden = flatten[key].schema && flatten[key].schema.hidden === true; // Remark: 有表达式的情况, 暂时不去掉了（有业务反而是希望留下的），就去掉 hidden = true 的
     if (get(data, key) !== undefined && hidden) {
       set(data, key, undefined);
     }

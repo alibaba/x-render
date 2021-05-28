@@ -10,7 +10,7 @@ import list from './widgets/antd/list';
 import './atom.less';
 import './Main.less';
 import 'antd/dist/antd.less';
-import { oldSchemaToNew } from './utils';
+import { schemaToState } from './utils';
 
 const DEFAULT_SCHEMA = {
   type: 'object',
@@ -48,9 +48,7 @@ function App(props, ref) {
   const frwRef = ref || useRef();
   const [state, setState] = useSet({
     formData: {},
-    frProps: {
-      displayType: 'row',
-    }, // form-render 的全局props等
+    frProps: {}, // form-render 的全局 props 等
     hovering: undefined, // 目前没有用到
     isNewVersion: true, // 用schema字段，还是用propsSchema字段，这是一个问题
     preview: false, // preview = false 是编辑模式
@@ -61,21 +59,7 @@ function App(props, ref) {
   // 收口点 propsSchema 到 schema 的转换 (一共3处，其他两个是 importSchema 和 setValue，在 FRWrapper 文件)
   useEffect(() => {
     const schema = defaultValue ? transformFrom(defaultValue) : DEFAULT_SCHEMA;
-    if (!schema) return;
-    if (schema.propsSchema) {
-      setState({ isNewVersion: false });
-    } else {
-      setState({ isNewVersion: true });
-    }
-    setState({
-      schema: oldSchemaToNew(schema), // 旧的转新的，新的不变
-      formData: schema.formData || {},
-      frProps: {
-        column: schema.column,
-        displayType: schema.displayType,
-        labelWidth: schema.labelWidth,
-      },
-    });
+    if (schema) setState(schemaToState(schema));
   }, [defaultValue]);
 
   const {
