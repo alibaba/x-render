@@ -1,21 +1,52 @@
 import React from 'react';
-import Editor from 'react-simple-code-editor';
-import { languages, highlight } from 'prismjs/components/prism-core';
-import 'prismjs/components/prism-clike';
-import 'prismjs/components/prism-javascript';
-import './theme.css';
+import MonacoEditor from 'react-monaco-editor';
+import { valueMap, keySuggestions } from './suggestionsMap';
 
-const Demo = ({ value, onChange }) => {
+const Demo = ({ value, onChange, options }) => {
+
+  const editorWillMount = (monaco) => {
+    monaco.languages.registerCompletionItemProvider('json', {
+      provideCompletionItems: (model, position) => {
+
+        // 得到冒号之前的文本
+        var textUntilPosition = model.getValueInRange({
+          startLineNumber: position.lineNumber,
+          startColumn: 1,
+          endLineNumber: position.lineNumber,
+          endColumn: position.column
+        });
+
+        const word = model.getWordUntilPosition(position);
+        const range = {
+          startLineNumber: position.lineNumber,
+          endLineNumber: position.lineNumber,
+          startColumn: word.startColumn,
+          endColumn: word.endColumn
+        };
+
+        let propKey = '';
+        const match = textUntilPosition.match(/[a-z]+(?=["][:])/)
+        if (match && match.length) {
+          propKey = match[0];
+        }
+
+        const suggestions = propKey ? (valueMap(range)[propKey] || []) : keySuggestions(range)
+
+        return { suggestions }
+
+      },
+      triggerCharacters: ['"']
+    });
+  }
+
   return (
-    <Editor
+    <MonacoEditor
+      height="800px"
+      language="json"
       value={value}
-      onValueChange={onChange}
-      highlight={code => highlight(code, languages.js)}
-      padding={10}
-      style={{
-        fontFamily: '"Fira code", "Fira Mono", monospace',
-        fontSize: 16,
-      }}
+      onChange={onChange}
+      editorWillMount={editorWillMount}
+      options={options}
     />
   );
 };

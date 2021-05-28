@@ -1,4 +1,5 @@
 import { defineConfig } from 'dumi';
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 import path from 'path';
 
 export default defineConfig({
@@ -109,5 +110,8 @@ export default defineConfig({
       '@alifd/next',
     ],
   ],
+  chainWebpack(config, { webpack }) {
+    config.plugin('monaco-editor').use(MonacoWebpackPlugin);
+  },
   // more config: https://d.umijs.org/config
 });
