@@ -33,6 +33,17 @@ const Demo = () => {
                 },
               },
               {
+                text: '姓名',
+                name: 'name',
+                schema: {
+                  title: '输入框',
+                  type: 'string',
+                },
+                setting: {
+                  maxLength: { title: '最长字数', type: 'number' },
+                },
+              },
+              {
                 text: 'object',
                 name: 'object',
                 schema: {
@@ -43,15 +54,17 @@ const Demo = () => {
                 setting: {},
               },
               {
-                text: '姓名',
-                name: 'name',
+                text: 'array',
+                name: 'array',
                 schema: {
-                  title: '输入框',
-                  type: 'string',
+                  title: '数组',
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {},
+                  },
                 },
-                setting: {
-                  maxLength: { title: '最长字数', type: 'number' },
-                },
+                setting: {},
               },
             ],
           },

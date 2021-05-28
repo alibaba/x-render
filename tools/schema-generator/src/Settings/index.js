@@ -1,4 +1,26 @@
 // 只需写配置，方便可扩展
+export const baseCommonSettings = {
+  title: {
+    title: '标题',
+    type: 'string',
+  },
+  type: {
+    title: '类型',
+    type: 'string',
+    hidden: '{{true}}',
+  },
+  widget: {
+    title: '组件',
+    type: 'string',
+    hidden: '{{true}}',
+  },
+  format: {
+    title: '格式',
+    type: 'string',
+    hidden: '{{true}}',
+  },
+};
+
 export const defaultCommonSettings = {
   $id: {
     title: 'ID',
@@ -322,7 +344,6 @@ export const elements = [
     name: 'checkboxes',
     schema: {
       title: '多选',
-      description: '点击多选',
       type: 'array',
       widget: 'checkboxes',
       items: {
@@ -424,7 +445,7 @@ export const advancedElements = [
 
 export const layouts = [
   {
-    text: 'object',
+    text: '对象',
     name: 'object',
     schema: {
       title: '对象',
@@ -445,6 +466,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -486,6 +511,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -531,6 +560,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -572,6 +605,10 @@ export const layouts = [
       },
     },
     setting: {
+      items: {
+        type: 'object',
+        hidden: '{{true}}',
+      },
       min: {
         title: '最小长度',
         type: 'number',
@@ -694,6 +731,7 @@ export const defaultGlobalSettings = {
     displayType: {
       title: '标签展示模式',
       type: 'string',
+      default: 'row',
       enum: ['row', 'column'],
       enumNames: ['同行', '单独一行'],
       widget: 'radio',
