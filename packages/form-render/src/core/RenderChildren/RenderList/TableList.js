@@ -61,7 +61,7 @@ const TableList = ({
     };
   });
 
-  if (!props.hideDelete) {
+  if (!props.hideDelete || !props.hideAdd) {
     columns.push({
       title: '操作',
       key: '$action',
@@ -71,14 +71,16 @@ const TableList = ({
         return (
           <Space>
             {!props.hideAdd && <a onClick={() => copyItem(idx)}>复制</a>}
-            <Popconfirm
-              title="确定删除?"
-              onConfirm={() => deleteItem(idx)}
-              okText="确定"
-              cancelText="取消"
-            >
-              <a>删除</a>
-            </Popconfirm>
+            {!props.hideDelete && (
+              <Popconfirm
+                title="确定删除?"
+                onConfirm={() => deleteItem(idx)}
+                okText="确定"
+                cancelText="取消"
+              >
+                <a>删除</a>
+              </Popconfirm>
+            )}
           </Space>
         );
       },
