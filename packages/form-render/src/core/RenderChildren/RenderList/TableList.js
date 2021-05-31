@@ -65,7 +65,7 @@ const TableList = ({
     };
   });
 
-  if (!props.hideDelete) {
+  if (!props.hideDelete || !props.hideAdd || !props.hideMove) {
     columns.push({
       title: '操作',
       key: '$action',
