@@ -3,6 +3,7 @@ import { useStore, useStore2, useTools } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
 import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
+import Extra from './Extra';
 import FieldTitle from './Title';
 import ExtendedWidget from './ExtendedWidget';
 
@@ -81,7 +82,7 @@ const RenderField = props => {
     style: labelStyle,
   };
 
-  const _showTitle = !hideTitle && !!_schema.title;
+  const _showTitle = !hideTitle && typeof _schema.title === 'string';
   // TODO: 这块最好能判断上一层是list1，
   if (hideTitle && _schema.title) {
     _schema.placeholder = _schema.placeholder || _schema.title;
@@ -116,6 +117,7 @@ const RenderField = props => {
         {_showTitle && <div {...placeholderTitleProps} />}
         <div className={contentClass} style={contentStyle}>
           <ExtendedWidget {...widgetProps} />
+          <Extra {...widgetProps} />
           <ErrorMessage {...messageProps} />
         </div>
       </>
@@ -138,6 +140,7 @@ const RenderField = props => {
           message={errorMessage}
           title={_showTitle ? titleElement : undefined}
         />
+        <Extra {...widgetProps} />
       </div>
     );
   }
@@ -150,6 +153,7 @@ const RenderField = props => {
         style={contentStyle}
       >
         <ExtendedWidget {...widgetProps} />
+        <Extra {...widgetProps} />
         <ErrorMessage {...messageProps} />
       </div>
     </>

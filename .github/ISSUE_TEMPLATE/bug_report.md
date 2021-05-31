@@ -16,7 +16,6 @@ assignees: FateRiddle, siyi98
 - react：
 - form-render：
 - antd：
-- funsion（如果用的是fusion）：
 
 **2.问题描述**：
 

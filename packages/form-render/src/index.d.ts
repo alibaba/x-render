@@ -25,7 +25,7 @@ export interface FormInstance {
   touchKey: (key: string) => void;
   onItemChange: (path: string, value: any) => void;
   setValueByPath: (path: string, value: any) => void;
-  getSchemaByPath: (path: string, value: any) => void;
+  getSchemaByPath: (path: string) => object;
   setSchemaByPath: (path: string, value: any) => void;
   setValues: (formData: any) => void;
   getValues: () => any;
@@ -41,14 +41,20 @@ export interface FormInstance {
   setErrorFields: (error: Error[]) => void;
   removeErrorField: (path: string) => void;
   removeTouched: (path: string) => void;
+  changeTouchedKeys: (pathArray: string[]) => void;
   isEditing: boolean;
   setEditing: (status: boolean) => void;
   syncStuff: (any) => void;
 }
 
-export interface WatchProperties {
-  [path: string]: (value: any) => any;
-}
+export type WatchProperties = {
+  [path: string]:
+    | {
+        handler: (value: any) => void;
+        immediate?: boolean;
+      }
+    | ((value: any) => void);
+};
 
 export interface FRProps {
   /** 表单 schema */

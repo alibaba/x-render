@@ -4,7 +4,7 @@ import { defaultWidgetNameList } from '../../widgets/antd';
 import { useTools } from '../../hooks';
 import { transformProps } from '../../createWidget';
 
-import { isObjType, isListType } from '../../utils';
+import { isObjType, isListType, isObject } from '../../utils';
 // import { Input } from 'antd';
 // import Map from '../../widgets/antd/map';
 
@@ -67,8 +67,10 @@ const ExtendedWidget = ({
     value,
     children,
     disabled,
+    readOnly,
     ...schema.props,
   };
+
 
   if (schema.type === 'string' && typeof schema.max === 'number') {
     widgetProps.maxLength = schema.max;
@@ -82,6 +84,12 @@ const ExtendedWidget = ({
 
   if (schema.props) {
     widgetProps = { ...widgetProps, ...schema.props };
+  }
+
+  // 支持 addonAfter 为自定义组件的情况
+  if(isObject(widgetProps.addonAfter) && widgetProps.addonAfter.widget) {
+    const AddonAfterWidget = widgets[widgetProps.addonAfter.widget];
+    widgetProps.addonAfter = <AddonAfterWidget {...schema}/>;
   }
 
   // 避免传组件不接受的props，按情况传多余的props
@@ -105,6 +113,9 @@ const areEqual = (prev, current) => {
     return false;
   }
   if (prev.readOnly !== current.readOnly) {
+    return false;
+  }
+  if (prev.disabled !== current.disabled) {
     return false;
   }
   if (

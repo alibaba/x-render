@@ -55,7 +55,7 @@ const RenderList = ({
       newItem,
       ...displayList.slice(idx),
     ];
-    onItemChange(dataPath, newList);
+    onItemChange(dataPath, JSON.parse(JSON.stringify(newList)));
   };
 
   const deleteItem = idx => {
@@ -75,6 +75,8 @@ const RenderList = ({
     newList[idx] = itemAbove;
     newList[idx - 1] = currentItem;
     onItemChange(dataPath, newList);
+    // TODO: 这块懒了，之后要处理一下
+    removeTouched(`${dataPath}[${idx}]`);
   };
 
   const moveItemDown = idx => {
@@ -85,6 +87,8 @@ const RenderList = ({
     newList[idx] = itemBelow;
     newList[idx + 1] = currentItem;
     onItemChange(dataPath, newList);
+    // TODO: 这块懒了，之后要处理一下
+    removeTouched(`${dataPath}[${idx}]`);
   };
 
   let itemSchema = {

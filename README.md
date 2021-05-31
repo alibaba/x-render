@@ -104,7 +104,7 @@
   <tr>
     <td width="160" align="center">
       <img
-        src="https://www.agtech.com/public/asset/yabologo-6f9d76c5cbb0b954b9939a8cac3a0cb1.png"
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/up/hU257o.png"
         width="160"
       />
     </td>

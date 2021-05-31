@@ -2,7 +2,7 @@
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
-import { set, sortedUniqBy, merge } from 'lodash-es';
+import { set, sortedUniqBy } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
 import { generateDataSkeleton, flattenSchema, clone } from './utils';
 
@@ -61,9 +61,8 @@ export const useForm = props => {
   const formData = dataFromOutside ? _formData : innerData;
 
   // 生成一个基础结构，确保对象内的必填元素也被校验。
-  // _data.current = merge(generateDataSkeleton(schemaRef.current), formData);
   _data.current = useMemo(() => {
-    return merge(generateDataSkeleton(schemaRef.current), formData);
+    return generateDataSkeleton(schemaRef.current, formData);
   }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
 
   _touchedKeys.current = touchedKeys;
@@ -98,6 +97,10 @@ export const useForm = props => {
       return item.indexOf(key) === -1;
     });
     setState({ touchedKeys: newTouch });
+  };
+
+  const changeTouchedKeys = newTouchedKeys => {
+    setState({ touchedKeys: newTouchedKeys });
   };
 
   // 为了兼容 0.x
@@ -265,24 +268,28 @@ export const useForm = props => {
           });
         }
         if (typeof beforeFinishRef.current === 'function') {
-          return Promise.resolve(processData(_data.current, flatten)).then(res => {
+          return Promise.resolve(processData(_data.current, flatten)).then(
+            res => {
+              setState({
+                isValidating: true,
+                isSubmitting: false,
+                outsideValidating: true,
+                submitData: res,
+              });
+              return errors;
+            }
+          );
+        }
+        return Promise.resolve(processData(_data.current, flatten)).then(
+          res => {
             setState({
-              isValidating: true,
-              isSubmitting: false,
-              outsideValidating: true,
+              isValidating: false,
+              isSubmitting: true,
               submitData: res,
             });
             return errors;
-          });
-        }
-        return Promise.resolve(processData(_data.current, flatten)).then(res => {
-          setState({
-            isValidating: false,
-            isSubmitting: true,
-            submitData: res,
-          });
-          return errors;
-        });
+          }
+        );
       })
       .catch(err => {
         // 不应该走到这边的
@@ -333,6 +340,7 @@ export const useForm = props => {
     // methods
     touchKey,
     removeTouched,
+    changeTouchedKeys,
     onItemChange,
     setValueByPath: onItemChange, // 单个
     getSchemaByPath,

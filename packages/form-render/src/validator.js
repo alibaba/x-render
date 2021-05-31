@@ -4,6 +4,8 @@ import {
   formatPathFromValidator,
   isPathRequired,
   generateDataSkeleton,
+  parseAllExpression,
+  schemaContainsExpression,
   getArray,
 } from './utils';
 import { defaultValidateMessagesCN } from './validateMessageCN';
@@ -20,11 +22,17 @@ export const validateAll = ({
   locale = 'cn',
   validateMessages = {},
 }) => {
-  if (Object.keys(schema).length === 0) return Promise.resolve();
+  // Check: 添加了这个逻辑，不知道性能是否会变坏
+  let _schema = schema;
+  if (schemaContainsExpression(schema, false)) {
+    _schema = parseAllExpression(schema, formData, '#');
+  }
+  if (Object.keys(_schema).length === 0) return Promise.resolve();
   const descriptor = getDescriptorFromSchema({
-    schema,
+    schema: _schema,
     isRequired,
   }).fields;
+  window.descriptor = descriptor;
   // console.log(descriptor, '&&&& descriptor', formData);
 
   let touchVerifyList = [];
@@ -33,7 +41,7 @@ export const validateAll = ({
   // 因为要整个构建validator在list的情况太复杂了，所以required单独拿出来处理，但是这边有不少单独处理逻辑，例如message
   if (!isRequired) {
     touchedKeys.forEach(key => {
-      const keyRequired = isPathRequired(key, schema);
+      const keyRequired = isPathRequired(key, _schema);
       const val = get(formData, key);
       const nullValue = [undefined, null, ''].indexOf(val) > -1; // 注意 0 不是
       const isEmptyMultiSelect = Array.isArray(val) && val.length === 0;

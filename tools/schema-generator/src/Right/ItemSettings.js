@@ -5,6 +5,7 @@ import IdInput from '../widgets/antd/idInput';
 import PercentSlider from '../widgets/antd/percentSlider';
 import {
   defaultSettings,
+  baseCommonSettings,
   defaultCommonSettings,
   elements,
   advancedElements,
@@ -38,14 +39,28 @@ export default function ItemSettings() {
   const getWidgetList = (settings, commonSettings) => {
     return settings.reduce((widgetList, setting) => {
       if (!Array.isArray(setting.widgets)) return widgetList;
-      const basicWidgets = setting.widgets.map(item => ({
-        ...item,
-        widget:
-          item.widget ||
-          item.schema.widget ||
-          getWidgetName(item.schema, defaultMapping),
-        setting: { ...commonSettings, ...item.setting },
-      }));
+      const basicWidgets = setting.widgets.map(item => {
+        const baseItemSettings = {};
+        if (item.schema.type === 'array') {
+          baseItemSettings.items = {
+            type: 'object',
+            hidden: '{{true}}',
+          };
+        }
+        return {
+          ...item,
+          widget:
+            item.widget ||
+            item.schema.widget ||
+            getWidgetName(item.schema, defaultMapping),
+          setting: {
+            ...baseCommonSettings,
+            ...commonSettings,
+            ...baseItemSettings,
+            ...item.setting,
+          },
+        };
+      });
       return [...widgetList, ...basicWidgets];
     }, []);
   };
@@ -69,7 +84,7 @@ export default function ItemSettings() {
     // setting 该显示什么的计算，要把选中组件的 schema 和它对应的 widgets 的整体 schema 进行拼接
     try {
       const item = flatten[selected];
-      if (!item) return;
+      if (!item || selected === '#') return;
       setReady(false);
       // 算 widgetList
       const _settings = Array.isArray(settings)
@@ -88,13 +103,16 @@ export default function ItemSettings() {
 
       if (hideId) delete properties.$id;
 
-      form.setValues(item.schema);
       setSettingSchema({
         type: 'object',
         displayType: 'column',
         properties,
       });
-      setTimeout(() => setReady(true), 0);
+      form.setValues(item.schema);
+      setTimeout(() => {
+        setReady(true);
+        onDataChange(form.getValues());
+      }, 0);
     } catch (error) {
       console.log(error);
     }

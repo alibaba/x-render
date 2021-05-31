@@ -6,12 +6,9 @@ import { useStore, useGlobal } from '../hooks';
 export default function GlobalSettings() {
   const form = useForm();
   const [innerUpdate, setInnerUpdate] = useState(false);
-  const { widgets, frProps, userProps } = useStore();
+  const { widgets, frProps, userProps = {} } = useStore();
   const setGlobal = useGlobal();
-  const globalSettings =
-    userProps && userProps.globalSettings
-      ? userProps.globalSettings
-      : defaultGlobalSettings;
+  const globalSettings = userProps.globalSettings || defaultGlobalSettings;
 
   const onDataChange = value => {
     setInnerUpdate(true);
