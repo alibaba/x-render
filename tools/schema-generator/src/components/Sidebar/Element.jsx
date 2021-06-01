@@ -31,9 +31,8 @@ const Element = ({ text, name, schema, icon }) => {
 
   const handleElementClick = () => {
     const { newId, newFlatten } = addItem({ selected, name, schema, flatten });
-    console.log(newFlatten)
     onFlattenChange(newFlatten);
-    // setGlobal({ selected: newId });
+    setGlobal({ selected: newId });
   };
 
   return (
