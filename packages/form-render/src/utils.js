@@ -927,7 +927,8 @@ export const generateDataSkeleton = (schema, formData, _path = '') => {
     if (schema.default !== undefined) {
       result = clone(schema.default);
     } else if (schema.type === 'boolean') {
-      result = false;
+      // result = false;
+      result = undefined;
     } else {
       result = undefined;
     }

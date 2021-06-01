@@ -4,11 +4,11 @@ import './Extra.less';
 
 const Extra = ({ schema }) => {
   const { extra } = schema;
+  const { widgets } = useTools();
 
   if (!extra) return null;
 
   // widget 这个api也可以不对外
-  const { widgets } = useTools();
   const widgetName = extra.widget;
   const Widget = widgets[widgetName];
   if (Widget) return <Widget schema={schema} />;

@@ -68,3 +68,10 @@ npm run beta
 #### 7. 分支管理
 
 外部同学请 fork，内部同学请在 dev 分支开发，然后都发 pull-request 到 master 分支，由负责同学审核后合并，master 分支请勿人为去动
+
+#### 8. 如何检验一个 pull request
+
+```
+# ID 为 pr 的 id
+git fetch origin pull/ID/head && git checkout FETCH_HEAD
+```

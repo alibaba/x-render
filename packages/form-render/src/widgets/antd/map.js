@@ -3,7 +3,7 @@ import { Collapse } from 'antd';
 import { useStore2 } from '../../hooks';
 const { Panel } = Collapse;
 
-export default function map({ children, title, ...rest }) {
+export default function Map({ children, title, ...rest }) {
   const { theme, displayType, allCollapsed } = useStore2();
   const [collapsed, setCollapsed] = useState(false);
 
