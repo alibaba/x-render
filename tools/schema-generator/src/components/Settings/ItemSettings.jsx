@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
-import { useStore } from '../hooks';
-import IdInput from '../widgets/antd/idInput';
-import PercentSlider from '../widgets/antd/percentSlider';
+import { useStore } from '../../hooks';
+import IdInput from '../../widgets/idInput';
+import PercentSlider from '../../widgets/percentSlider';
 import {
   defaultSettings,
   baseCommonSettings,
@@ -10,9 +10,9 @@ import {
   elements,
   advancedElements,
   layouts,
-} from '../Settings';
-import { getWidgetName } from '../mapping';
-import { isObject } from '../utils';
+} from '../../settings';
+import { getWidgetName } from '../../mapping';
+import { isObject } from '../../utils';
 
 export default function ItemSettings() {
   const form = useForm();

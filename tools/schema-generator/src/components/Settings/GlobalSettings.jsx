@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
-import { defaultGlobalSettings } from '../Settings';
-import { useStore, useGlobal } from '../hooks';
+import { defaultGlobalSettings } from '../../settings';
+import { useStore, useGlobal } from '../../hooks';
 
 export default function GlobalSettings() {
   const form = useForm();

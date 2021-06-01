@@ -1,6 +1,6 @@
 import React from 'react';
 import { Input } from 'antd';
-import { getKeyFromUniqueId, changeKeyFromUniqueId } from '../../utils';
+import { getKeyFromUniqueId, changeKeyFromUniqueId } from '../utils';
 
 export default function IdInput({
   onChange,

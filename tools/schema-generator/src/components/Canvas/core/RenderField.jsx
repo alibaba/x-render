@@ -1,12 +1,12 @@
 import React from 'react';
-import { useStore } from '../hooks';
+import { useStore } from '../../../hooks';
 import {
   isLooselyNumber,
   isCssLength,
   getParentProps,
   transformProps,
-} from '../utils';
-import { getWidgetName } from '../mapping';
+} from '../../../utils';
+import { getWidgetName } from '../../../mapping';
 
 const RenderField = ({
   $id,

@@ -3,12 +3,12 @@ import { Tabs } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import ItemSettings from './ItemSettings';
 import GlobalSettings from './GlobalSettings';
-import { useStore, useSet } from '../hooks';
+import { useStore, useSet } from '../../hooks';
 import './index.less';
 
 const { TabPane } = Tabs;
 
-export default function Right() {
+export default function Settings() {
   const [state, setState] = useSet({
     showRight: true,
     showItemSettings: false,

@@ -1,8 +1,8 @@
 import React from 'react';
-import { useGlobal, useStore } from '../hooks';
-import { addItem } from '../utils';
 import { nanoid } from 'nanoid';
 import { useDrag } from 'react-dnd';
+import { useGlobal, useStore } from '../../hooks';
+import { addItem } from '../../utils';
 import './Element.css';
 
 const Element = ({ text, name, schema, icon }) => {
@@ -31,8 +31,9 @@ const Element = ({ text, name, schema, icon }) => {
 
   const handleElementClick = () => {
     const { newId, newFlatten } = addItem({ selected, name, schema, flatten });
+    console.log(newFlatten)
     onFlattenChange(newFlatten);
-    setGlobal({ selected: newId });
+    // setGlobal({ selected: newId });
   };
 
   return (
