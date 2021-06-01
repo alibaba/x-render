@@ -18,7 +18,7 @@ const PreviewFR = ({ schema }) => {
     <FormRender
       schema={schema}
       form={form}
-      widgets={ widgets }
+      widgets={widgets}
       mapping={mapping}
       watch={{
         '#': formData => {
@@ -33,7 +33,7 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   const { flatten, frProps = {} } = useStore();
 
   if (preview) {
-    return <PreviewFR schema={displaySchema} />
+    return <PreviewFR schema={displaySchema} />;
   }
 
   const { displayType, column } = frProps;

@@ -229,9 +229,9 @@ export function idToSchema(flatten, id = '#', final = false) {
       schema.$id && delete schema.$id;
     }
     if (schema.type === 'array') {
-      if (!schema.items) schema.items = {}
+      if (!schema.items) schema.items = {};
       if (!schema.items.type) {
-        schema.items.type = 'object'
+        schema.items.type = 'object';
       }
     }
     if (item.children.length > 0) {

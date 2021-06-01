@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useHistory } from 'umi';
 import Generator, { toFormily, fromFormily } from 'fr-generator';
 import './index.less';
-console.log(Generator)
+
 const Demo = () => {
   const ref = useRef();
   const { location, replace } = useHistory();

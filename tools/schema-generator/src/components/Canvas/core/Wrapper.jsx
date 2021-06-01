@@ -2,7 +2,12 @@ import React, { useRef, useState } from 'react';
 import { DeleteOutlined, CopyOutlined, DragOutlined } from '@ant-design/icons';
 import { useDrag, useDrop } from 'react-dnd';
 import { useGlobal, useStore } from '../../../hooks';
-import { copyItem, getKeyFromUniqueId, dropItem, isObject } from '../../../utils';
+import {
+  copyItem,
+  getKeyFromUniqueId,
+  dropItem,
+  isObject,
+} from '../../../utils';
 import './Wrapper.less';
 
 export default function Wrapper({

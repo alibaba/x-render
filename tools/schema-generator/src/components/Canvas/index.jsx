@@ -2,22 +2,14 @@ import React from 'react';
 import { Modal, Input, Button, message } from 'antd';
 import copyTOClipboard from 'copy-text-to-clipboard';
 import FR from './core';
-import {
-  looseJsonParse,
-  isObject,
-  schemaToState,
-} from '../../utils';
+import { looseJsonParse, isObject, schemaToState } from '../../utils';
 import { useSet, useGlobal, useStore } from '../../hooks';
 
 const { TextArea } = Input;
 
 const Canvas = () => {
   const setGlobal = useGlobal();
-  const {
-    userProps,
-    displaySchema,
-    displaySchemaString
-  } = useStore();
+  const { userProps, displaySchema, displaySchemaString } = useStore();
   const [local, setState] = useSet({
     preview: false,
     showModal: false,
@@ -26,10 +18,7 @@ const Canvas = () => {
   });
   const { preview } = local;
 
-  const {
-    transformFrom,
-    extraButtons = [],
-  } = userProps;
+  const { transformFrom, extraButtons = [] } = userProps;
 
   const toggleModal = () => setState({ showModal: !local.showModal });
   const toggleModal2 = () => setState({ showModal2: !local.showModal2 });
@@ -81,7 +70,7 @@ const Canvas = () => {
           <Button
             className="mr2 mb1"
             onClick={() => {
-              setState({ preview: !preview })
+              setState({ preview: !preview });
               setGlobal({ selected: '#' });
             }}
           >

@@ -1,4 +1,9 @@
-import React, { useEffect, useRef, forwardRef, useImperativeHandle } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ConfigProvider } from 'antd';
@@ -199,13 +204,11 @@ function Provider(props, ref) {
     <DndProvider backend={HTML5Backend} context={window}>
       <ConfigProvider locale={zhCN}>
         <Ctx.Provider value={setState}>
-          <StoreCtx.Provider value={store}>
-            {children}
-          </StoreCtx.Provider>
+          <StoreCtx.Provider value={store}>{children}</StoreCtx.Provider>
         </Ctx.Provider>
       </ConfigProvider>
     </DndProvider>
-  )
+  );
 }
 
 export default forwardRef(Provider);
