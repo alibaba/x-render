@@ -3,10 +3,10 @@ import FormRender, { useForm } from 'form-render';
 import { defaultGlobalSettings } from '../../settings';
 import { useStore, useGlobal } from '../../hooks';
 
-export default function GlobalSettings() {
+export default function GlobalSettings({ widgets }) {
   const form = useForm();
   const [innerUpdate, setInnerUpdate] = useState(false);
-  const { widgets, frProps, userProps = {} } = useStore();
+  const { widgets: globalWidgets, frProps, userProps = {} } = useStore();
   const setGlobal = useGlobal();
   const globalSettings = userProps.globalSettings || defaultGlobalSettings;
 
@@ -31,7 +31,7 @@ export default function GlobalSettings() {
         watch={{
           '#': v => onDataChange(v),
         }}
-        widgets={widgets}
+        widgets={{ ...globalWidgets, ...widgets }}
       />
     </div>
   );

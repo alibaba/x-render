@@ -14,15 +14,15 @@ import {
 import { getWidgetName } from '../../mapping';
 import { isObject } from '../../utils';
 
-export default function ItemSettings() {
+export default function ItemSettings({ widgets }) {
   const form = useForm();
   const {
     selected,
     flatten,
     onItemChange,
     userProps = {},
-    widgets: defaultWidgets,
-    mapping: defaultMapping,
+    widgets: globalWidgets,
+    mapping: globalMapping,
   } = useStore();
 
   const { settings, commonSettings, hideId } = userProps;
@@ -30,8 +30,8 @@ export default function ItemSettings() {
   // 避免切换选中项时 schema 对应出错
   const [ready, setReady] = useState({});
 
-  const widgets = {
-    ...defaultWidgets,
+  const _widgets = {
+    ...globalWidgets,
     idInput: IdInput,
     percentSlider: PercentSlider,
   };
@@ -52,7 +52,7 @@ export default function ItemSettings() {
           widget:
             item.widget ||
             item.schema.widget ||
-            getWidgetName(item.schema, defaultMapping),
+            getWidgetName(item.schema, globalMapping),
           setting: {
             ...baseCommonSettings,
             ...commonSettings,
@@ -97,7 +97,7 @@ export default function ItemSettings() {
         ? commonSettings
         : defaultCommonSettings;
       const widgetList = getWidgetList(_settings, _commonSettings);
-      const widgetName = getWidgetName(item.schema, defaultMapping);
+      const widgetName = getWidgetName(item.schema, globalMapping);
       const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
       const properties = { ...element.setting };
 
@@ -123,7 +123,7 @@ export default function ItemSettings() {
       <FormRender
         form={form}
         schema={settingSchema}
-        widgets={widgets}
+        widgets={{ ..._widgets, ...widgets }}
         watch={{
           '#': v => onDataChange(v),
         }}

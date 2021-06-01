@@ -8,7 +8,7 @@ import './index.less';
 
 const { TabPane } = Tabs;
 
-export default function Settings() {
+export default function Settings({ widgets }) {
   const [state, setState] = useSet({
     showRight: true,
     showItemSettings: false,
@@ -52,11 +52,11 @@ export default function Settings() {
       <Tabs defaultActiveKey="1" onChange={() => {}}>
         {showItemSettings && (
           <TabPane tab="组件配置" key="1">
-            <ItemSettings />
+            <ItemSettings widgets={widgets} />
           </TabPane>
         )}
         <TabPane tab="表单配置" key={showItemSettings ? '2' : '1'}>
-          <GlobalSettings />
+          <GlobalSettings widgets={widgets} />
         </TabPane>
       </Tabs>
     </div>
