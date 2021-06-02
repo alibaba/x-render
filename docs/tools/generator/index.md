@@ -118,6 +118,10 @@ export default Demo;
 
 <code src='./demo/settings.jsx' />
 
+### 自定义布局
+
+<code src='./demo/layout.jsx' />
+
 ## 常见问题
 
 **1、如何控制编辑器高度**
