@@ -73,6 +73,10 @@ export const defaultCommonSettings = {
     title: '隐藏',
     type: 'boolean',
   },
+  readOnlyWidget: {
+    title: '只读组件',
+    type: 'string',
+  },
   width: {
     title: '元素宽度',
     type: 'string',
