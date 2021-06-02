@@ -100,7 +100,7 @@ const Canvas = () => {
           );
         })}
       </div>
-      <div className="dnd-container">
+      <div className={`dnd-container ${preview ? 'preview' : 'edit'}`}>
         <div style={{ height: preview ? 33 : 0 }}></div>
         <FR preview={preview} displaySchema={displaySchema} />
       </div>

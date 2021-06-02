@@ -5,7 +5,7 @@ import Canvas from './components/Canvas';
 import Settings from './components/Settings';
 import './styles/index.less';
 
-const Root = forwardRef((props, ref) => {
+const Generator = forwardRef((props, ref) => {
   return (
     <Provider ref={ref} {...props}>
       <div className="fr-generator-container">
@@ -17,10 +17,10 @@ const Root = forwardRef((props, ref) => {
   );
 });
 
-Root.Provider = Provider;
-Root.Sidebar = Sidebar;
-Root.Canvas = Canvas;
-Root.Settings = Settings;
+Generator.Provider = Provider;
+Generator.Sidebar = Sidebar;
+Generator.Canvas = Canvas;
+Generator.Settings = Settings;
 
 export {
   defaultSettings,
@@ -29,4 +29,4 @@ export {
 } from './settings';
 export { fromFormily, toFormily } from './transformer/formily';
 export { fromFormRender, toFormRender } from './transformer/form-render';
-export default Root;
+export default Generator;
