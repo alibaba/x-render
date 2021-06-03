@@ -31,7 +31,6 @@
   },
   "peerDependencies": {
     "antd": "4.x",
-    "form-render": "1.x",
     "react": ">=16.8.0"
   },
   "dependencies": {
