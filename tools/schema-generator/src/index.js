@@ -27,6 +27,4 @@ export {
   defaultCommonSettings,
   defaultGlobalSettings,
 } from './settings';
-export { fromFormily, toFormily } from './transformer/formily';
-export { fromFormRender, toFormRender } from './transformer/form-render';
 export default Generator;

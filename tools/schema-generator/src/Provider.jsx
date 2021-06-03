@@ -23,7 +23,6 @@ import {
 } from './utils';
 import { Ctx, StoreCtx } from './context';
 import { useSet } from './hooks';
-import { fromFormRender, toFormRender } from './transformer/form-render';
 import list from './widgets/list';
 
 const DEFAULT_SCHEMA = {
@@ -48,8 +47,8 @@ function Provider(props, ref) {
     children,
   } = props;
 
-  let transformFrom = fromFormRender;
-  let transformTo = toFormRender;
+  let transformFrom = schema => schema;
+  let transformTo = schema => schema;
 
   if (transformer) {
     if (typeof transformer.from === 'function') {

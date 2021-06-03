@@ -489,7 +489,7 @@ export function looseJsonParse(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
 
-// 获得propsSchema的children
+// 获得 propsSchema 的 children
 export function getChildren2(schema) {
   if (!schema) return [];
   const {
