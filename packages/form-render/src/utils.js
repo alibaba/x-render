@@ -1080,6 +1080,18 @@ const updateSingleSchema = schema => {
       schema.width = schema['ui:width'];
       delete schema['ui:width'];
     }
+    if (schema['ui:displayType']) {
+      schema.displayType = schema['ui:displayType'];
+      delete schema['ui:displayType'];
+    }
+    if (schema['ui:column']) {
+      schema.column = schema['ui:column'];
+      delete schema['ui:column'];
+    }
+    if (schema['ui:widget']) {
+      schema.widget = schema['ui:widget'];
+      delete schema['ui:widget'];
+    }
     if (schema['ui:labelWidth']) {
       schema.labelWidth = schema['ui:labelWidth'];
       delete schema['ui:labelWidth'];
@@ -1087,9 +1099,12 @@ const updateSingleSchema = schema => {
     if (schema.rules && schema.rules.length === 0) {
       delete schema.rules;
     }
+    if (JSON.stringify(schema.props) === '{}') {
+      delete schema.props;
+    }
     return schema;
   } catch (error) {
-    console.error('旧schema转换失败！', error);
+    console.error('schema转换失败！', error);
     return schema;
   }
 };
