@@ -8,7 +8,8 @@ import Wrapper from './Wrapper';
 
 const PreviewFR = ({ schema }) => {
   const form = useForm();
-  const { flatten, widgets, mapping, onFlattenChange } = useStore();
+  const { flatten, widgets, mapping, userProps, onFlattenChange } = useStore();
+  const renderSchema = userProps.transformFrom(schema);
 
   useEffect(() => {
     form.setValues(flattenToData(flatten));
@@ -16,7 +17,7 @@ const PreviewFR = ({ schema }) => {
 
   return (
     <FormRender
-      schema={schema}
+      schema={renderSchema}
       form={form}
       widgets={widgets}
       mapping={mapping}
