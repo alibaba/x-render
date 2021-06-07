@@ -1,10 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, Suspense } from 'react';
 import { updateSchemaToNewVersion, getValueByPath } from './utils';
 import Core from './core';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
+import useForm from './useForm';
+import connectForm from './connectForm';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
@@ -18,10 +20,12 @@ const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
 };
 
-export { defaultWidgets as widgets, defaultMapping as mapping };
-
-export { useForm } from './useForm';
-export { connectForm } from './connectForm';
+export {
+  defaultWidgets as widgets,
+  defaultMapping as mapping,
+  useForm,
+  connectForm,
+};
 
 function App({
   widgets,
@@ -202,49 +206,57 @@ function App({
   const watchList = Object.keys(watch);
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
-    <ConfigProvider locale={zhCN} {...configProvider}>
-      <StoreCtx.Provider value={store}>
-        <Store2Ctx.Provider value={store2}>
-          <Ctx.Provider value={tools}>
-            <div className={`fr-container ${sizeCls}`}>
-              {debug ? (
-                <div className="mv2 bg-black-05 pa2 br2">
-                  <div style={{ display: 'flex' }}>
-                    <span>formData:</span>
-                    <span
-                      style={{
-                        display: 'inline-block',
-                        wordBreak: 'break-all',
-                        maxWidth: 600,
-                      }}
-                    >
-                      {JSON.stringify(form.formData)}
-                    </span>
+    <Suspense fallback={<div></div>}>
+      <ConfigProvider locale={zhCN} {...configProvider}>
+        <StoreCtx.Provider value={store}>
+          <Store2Ctx.Provider value={store2}>
+            <Ctx.Provider value={tools}>
+              <div className={`fr-container ${sizeCls}`}>
+                {debug ? (
+                  <div className="mv2 bg-black-05 pa2 br2">
+                    <div style={{ display: 'flex' }}>
+                      <span>formData:</span>
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          wordBreak: 'break-all',
+                          maxWidth: 600,
+                        }}
+                      >
+                        {JSON.stringify(form.formData)}
+                      </span>
+                    </div>
+                    <div>
+                      {'errorFields:' + JSON.stringify(form.errorFields)}
+                    </div>
+                    <div>
+                      {'touchedKeys:' + JSON.stringify(form.touchedKeys)}
+                    </div>
+                    <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
+                    <div>
+                      {'descriptor:' + JSON.stringify(window.descriptor)}
+                    </div>
                   </div>
-                  <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
-                  <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
-                  <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
-                  <div>{'descriptor:' + JSON.stringify(window.descriptor)}</div>
-                </div>
-              ) : null}
-              {watchList.length > 0
-                ? watchList.map((item, idx) => {
-                    return (
-                      <Watcher
-                        key={idx.toString()}
-                        watchKey={item}
-                        watch={watch}
-                        formData={formData}
-                      />
-                    );
-                  })
-                : null}
-              <Core debugCss={debugCss} />
-            </div>
-          </Ctx.Provider>
-        </Store2Ctx.Provider>
-      </StoreCtx.Provider>
-    </ConfigProvider>
+                ) : null}
+                {watchList.length > 0
+                  ? watchList.map((item, idx) => {
+                      return (
+                        <Watcher
+                          key={idx.toString()}
+                          watchKey={item}
+                          watch={watch}
+                          formData={formData}
+                        />
+                      );
+                    })
+                  : null}
+                <Core debugCss={debugCss} />
+              </div>
+            </Ctx.Provider>
+          </Store2Ctx.Provider>
+        </StoreCtx.Provider>
+      </ConfigProvider>
+    </Suspense>
   );
 }
 
