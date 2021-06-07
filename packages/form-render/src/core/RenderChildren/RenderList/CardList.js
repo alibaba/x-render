@@ -61,7 +61,7 @@ const CardList = ({
                     <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
                   </Popconfirm>
                 )}
-                {!props.hideAdd && (
+                {!props.hideAdd && !props.hideCopy && (
                   <CopyOutlined
                     style={{ fontSize: 16, marginLeft: 8 }}
                     onClick={() => copyItem(idx)}
