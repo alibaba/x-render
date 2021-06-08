@@ -78,18 +78,9 @@ declare const defaultSettings: Setting;
 declare const defaultCommonSettings: any;
 declare const defaultGlobalSettings: any;
 
-declare const fromFormily: (schema: any) => any;
-declare const toFormily: (schema: any) => any;
-declare const fromFormRender: (schema: any) => any;
-declare const toFormRender: (schema: any) => any;
-
 export {
   defaultSettings,
   defaultCommonSettings,
   defaultGlobalSettings,
-  fromFormily,
-  toFormily,
-  fromFormRender,
-  toFormRender,
 };
 export default FRGenerator;

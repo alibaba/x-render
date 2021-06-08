@@ -1,26 +1,30 @@
 import React, { forwardRef } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { ConfigProvider } from 'antd';
-import zhCN from 'antd/lib/locale/zh_CN';
-import Main from './Main';
-import './index.less';
+import Provider from './Provider';
+import Sidebar from './components/Sidebar';
+import Canvas from './components/Canvas';
+import Settings from './components/Settings';
+import './styles/index.less';
 
-const Root = (props, ref) => {
+const Generator = forwardRef((props, ref) => {
   return (
-    <DndProvider backend={HTML5Backend} context={window}>
-      <ConfigProvider locale={zhCN}>
-        <Main ref={ref} {...props} />
-      </ConfigProvider>
-    </DndProvider>
+    <Provider ref={ref} {...props}>
+      <div className="fr-generator-container">
+        <Sidebar />
+        <Canvas />
+        <Settings />
+      </div>
+    </Provider>
   );
-};
+});
+
+Generator.Provider = Provider;
+Generator.Sidebar = Sidebar;
+Generator.Canvas = Canvas;
+Generator.Settings = Settings;
 
 export {
   defaultSettings,
   defaultCommonSettings,
   defaultGlobalSettings,
-} from './Settings';
-export { fromFormily, toFormily } from './transformer/formily';
-export { fromFormRender, toFormRender } from './transformer/form-render';
-export default forwardRef(Root);
+} from './settings';
+export default Generator;

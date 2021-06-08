@@ -73,6 +73,10 @@ export const defaultCommonSettings = {
     title: '隐藏',
     type: 'boolean',
   },
+  readOnlyWidget: {
+    title: '只读组件',
+    type: 'string',
+  },
   width: {
     title: '元素宽度',
     type: 'string',
@@ -724,6 +728,7 @@ export const defaultGlobalSettings = {
       type: 'number',
       widget: 'slider',
       max: 300,
+      default: 120,
       props: {
         hideNumber: true,
       },
