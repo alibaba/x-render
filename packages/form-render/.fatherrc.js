@@ -1,9 +1,14 @@
 import copy from 'rollup-plugin-copy';
 
 export default {
-  cjs: 'rollup',
+  // cjs: 'rollup',
+  cjs: 'babel',
+  // esm: {
+  //   type: 'rollup',
+  //   importLibToEs: true,
+  // },
   esm: {
-    type: 'rollup',
+    type: 'babel',
     importLibToEs: true,
   },
   extraRollupPlugins: [
