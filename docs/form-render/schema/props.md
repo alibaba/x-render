@@ -127,7 +127,7 @@ window.copyMe = ({ value, index, schema }) => {
 
 ### upload 上传
 
-**props**
+**uploadProps**
 
 upload 组件的主体 props，参考 [antd/upload 文档](https://ant.design/components/upload/)
 

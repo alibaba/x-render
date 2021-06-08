@@ -24,3 +24,7 @@ FormRender 1.0 与之前一样，对组件库的口子都是开着的，外部�
 ### 5、 只读模式下，默认的渲染不能满足要求我想定制怎么办？
 
 参见[只读模式下的自定义组件](/advanced/widget#%E5%8F%AA%E8%AF%BB%E6%A8%A1%E5%BC%8F%E4%B8%8B%E7%9A%84%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6)
+
+### 6、 我试着使用 form.setValues, 但是被 set 的值还是空的？
+
+form-render 有生命周期的概念，请在 onMount 这个钩子里 set。

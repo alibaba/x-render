@@ -750,10 +750,12 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
             if (!value) return true;
             if (Array.isArray(value)) {
               // range组件点击clear，会变成 ['','']
-              if (
-                typeof value[0] === 'string' &&
-                typeof value[1] === 'string'
-              ) {
+              // range组件对应的值bind的时候，会变成 [null,null]
+              const validValue =
+                typeof value[0] === 'string' && typeof value[1] === 'string';
+              const validValue2 =
+                value[0] === undefined && value[1] === undefined;
+              if (validValue || validValue2) {
                 return true;
               }
               return false;
