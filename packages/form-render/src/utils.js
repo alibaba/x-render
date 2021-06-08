@@ -907,9 +907,11 @@ export const isPathRequired = (path, schema) => {
 export const generateDataSkeleton = (schema, formData, _path = '') => {
   let result = {};
   let _formData = clone(formData);
+  result = _formData;
   if (isObjType(schema)) {
     if (_formData === undefined || typeof _formData !== 'object') {
       _formData = {};
+      result = {};
     }
     Object.keys(schema.properties).forEach(key => {
       const childSchema = schema.properties[key];
@@ -922,7 +924,7 @@ export const generateDataSkeleton = (schema, formData, _path = '') => {
       result[key] = childResult;
     });
   } else if (_formData !== undefined) {
-    result = clone(_formData);
+    // result = _formData;
   } else {
     if (schema.default !== undefined) {
       result = clone(schema.default);
