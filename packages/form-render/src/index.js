@@ -5,8 +5,6 @@ import Core from './core';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
 import { mapping as defaultMapping } from './mapping';
-import useForm from './useForm';
-import connectForm from './connectForm';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
@@ -20,12 +18,10 @@ const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
 };
 
-export {
-  defaultWidgets as widgets,
-  defaultMapping as mapping,
-  useForm,
-  connectForm,
-};
+export { defaultWidgets as widgets, defaultMapping as mapping };
+
+export { default as useForm } from './useForm';
+export { default as connectForm } from './connectForm';
 
 function App({
   widgets,
