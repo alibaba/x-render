@@ -1,5 +1,15 @@
 # Changelog
 
+### 1.5.0
+
+- [+] 内部使用了 tree-shaking，减少首次加载，避免未用到的组件被加载
+- [+] 全新的 playground，类似 vscode 的更好的体验，以及代码输入提示等
+- [!] 修复了 hideDelete 会隐藏整个操作栏的问题（list2）
+  TODO:
+- [!] 解决了 schema 不存在的字段会在初始化中被去掉的问题
+- [!] 添加了旧版 schema 到新 schema 的转换器
+- [!] list 的复制按钮可以单独隐藏，使用 `hideCopy`
+
 ### 1.4.4
 
 - [!] 修复了 hidden = true 是做了多余的对类型的判断的问题
