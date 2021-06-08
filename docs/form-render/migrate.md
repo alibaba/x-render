@@ -212,7 +212,7 @@ const Translator = () => {
 
   const handleClick = () => {
     try {
-      const _newSchema = updateSchemaToNewVersion(old);
+      const _newSchema = updateSchemaToNewVersion(JSON.parse(oldSchema));
       setNew(_newSchema);
     } catch (err) {
       console.log(err);
