@@ -1,11 +1,42 @@
-import React from 'react';
-import { useStore } from '../hooks';
+import React, { useEffect } from 'react';
+import FormRender, { useForm } from 'form-render';
+import { flattenToData, dataToFlatten } from '../../../utils';
+import { useStore } from '../../../hooks';
 import RenderChildren from './RenderChildren';
 import RenderField from './RenderField';
 import Wrapper from './Wrapper';
 
-const FR = ({ id = '#', preview = false }) => {
+const PreviewFR = ({ schema }) => {
+  const form = useForm();
+  const { flatten, widgets, mapping, userProps, onFlattenChange } = useStore();
+  const renderSchema = userProps.transformFrom(schema);
+
+  useEffect(() => {
+    form.setValues(flattenToData(flatten));
+  }, []);
+
+  return (
+    <FormRender
+      schema={renderSchema}
+      form={form}
+      widgets={widgets}
+      mapping={mapping}
+      watch={{
+        '#': formData => {
+          onFlattenChange(dataToFlatten(flatten, formData), 'data');
+        },
+      }}
+    />
+  );
+};
+
+const FR = ({ id = '#', preview, displaySchema }) => {
   const { flatten, frProps = {} } = useStore();
+
+  if (preview) {
+    return <PreviewFR schema={displaySchema} />;
+  }
+
   const { displayType, column } = frProps;
   const item = flatten[id];
   if (!item) return null;
@@ -84,28 +115,13 @@ const FR = ({ id = '#', preview = false }) => {
     contentClass,
     isComplex,
   };
-  const childrenProps = {
-    children: item.children,
-    preview,
-  };
 
   const childrenElement =
     item.children && item.children.length > 0 ? (
       <ul className={`flex flex-wrap pl0`}>
-        <RenderChildren {...childrenProps} />
+        <RenderChildren children={item.children} />
       </ul>
     ) : null;
-
-  // TODO: list 也要算进去
-  if (preview) {
-    return (
-      <div style={columnStyle} className={containerClass}>
-        <RenderField {...fieldProps}>
-          {(isObj || isList) && childrenElement}
-        </RenderField>
-      </div>
-    );
-  }
 
   const isEmpty = Object.keys(flatten).length < 2; // 只有一个根元素 # 的情况
   if (isEmpty) {

@@ -11,7 +11,7 @@ export const useStore = () => {
   return useContext(StoreCtx);
 };
 
-// 类似于class component的setState
+// 类似于 class component 的 setState
 export const useSet = initState => {
   const [state, setState] = useReducer((state, newState) => {
     let action = newState;

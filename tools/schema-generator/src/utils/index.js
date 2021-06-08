@@ -229,9 +229,9 @@ export function idToSchema(flatten, id = '#', final = false) {
       schema.$id && delete schema.$id;
     }
     if (schema.type === 'array') {
-      if (!schema.items) schema.items = {}
+      if (!schema.items) schema.items = {};
       if (!schema.items.type) {
-        schema.items.type = 'object'
+        schema.items.type = 'object';
       }
     }
     if (item.children.length > 0) {
@@ -489,7 +489,7 @@ export function looseJsonParse(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
 
-// 获得propsSchema的children
+// 获得 propsSchema 的 children
 export function getChildren2(schema) {
   if (!schema) return [];
   const {

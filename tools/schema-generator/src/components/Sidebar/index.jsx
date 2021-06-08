@@ -1,10 +1,10 @@
 import React from 'react';
-import { defaultSettings } from '../Settings';
-import { useStore } from '../hooks';
+import { defaultSettings } from '../../settings';
+import { useStore } from '../../hooks';
 import './index.css';
 import Element from './Element';
 
-const Left = props => {
+const Sidebar = props => {
   const { userProps = {} } = useStore();
   const { settings } = userProps;
   const _settings = Array.isArray(settings) ? settings : defaultSettings;
@@ -40,4 +40,4 @@ const Left = props => {
   );
 };
 
-export default Left;
+export default Sidebar;
