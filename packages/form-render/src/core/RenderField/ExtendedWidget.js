@@ -5,8 +5,6 @@ import { useTools } from '../../hooks';
 import { transformProps } from '../../createWidget';
 
 import { isObjType, isListType, isObject } from '../../utils';
-// import { Input } from 'antd';
-// import Map from '../../widgets/antd/map';
 
 const ErrorSchema = schema => {
   return (
@@ -61,6 +59,43 @@ const ExtendedWidget = ({
   const Widget = widgets[widgetName];
   const extraSchema = extraSchemaList[widgetName];
 
+  // import()语法不支持传入的路径是变量，所以只好
+  // switch (widgetName) {
+  //   case 'date':
+  //     Widget = React.lazy(() => import('../../widgets/antd/date'));
+  //     break;
+  //   case 'rate':
+  //     Widget = React.lazy(() => import('antd/es/rate'));
+  //     break;
+  //   case 'treeSelect':
+  //     Widget = React.lazy(() => import('antd/es/tree-select'));
+  //     break;
+  //   case 'cascader':
+  //     Widget = React.lazy(() => import('antd/es/cascader'));
+  //     break;
+  //   case 'color':
+  //     Widget = React.lazy(() => import('../../widgets/antd/color'));
+  //     break;
+  //   case 'time':
+  //     Widget = React.lazy(() => import('../../widgets/antd/time'));
+  //     break;
+  //   case 'dateRange':
+  //     Widget = React.lazy(() => import('../../widgets/antd/dateRange'));
+  //     break;
+  //   case 'timeRange':
+  //     Widget = React.lazy(() => import('../../widgets/antd/timeRange'));
+  //     break;
+  //   case 'slider':
+  //     Widget = React.lazy(() => import('../../widgets/antd/slider'));
+  //     break;
+  //   case 'upload':
+  //     Widget = React.lazy(() => import('../../widgets/antd/upload'));
+  //     break;
+  //   default:
+  //     Widget = widgets[widgetName];
+  //     break;
+  // }
+
   let widgetProps = {
     schema: { ...schema, ...extraSchema },
     onChange,
@@ -70,7 +105,6 @@ const ExtendedWidget = ({
     readOnly,
     ...schema.props,
   };
-
 
   if (schema.type === 'string' && typeof schema.max === 'number') {
     widgetProps.maxLength = schema.max;
@@ -87,9 +121,9 @@ const ExtendedWidget = ({
   }
 
   // 支持 addonAfter 为自定义组件的情况
-  if(isObject(widgetProps.addonAfter) && widgetProps.addonAfter.widget) {
+  if (isObject(widgetProps.addonAfter) && widgetProps.addonAfter.widget) {
     const AddonAfterWidget = widgets[widgetProps.addonAfter.widget];
-    widgetProps.addonAfter = <AddonAfterWidget {...schema}/>;
+    widgetProps.addonAfter = <AddonAfterWidget {...schema} />;
   }
 
   // 避免传组件不接受的props，按情况传多余的props
