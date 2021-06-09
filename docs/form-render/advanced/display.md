@@ -365,6 +365,9 @@ const schema = {
             description: '对象数组嵌套功能',
             type: 'array',
             widget: 'list1',
+            props: {
+              hideMove: true,
+            },
             items: {
               type: 'object',
               properties: {

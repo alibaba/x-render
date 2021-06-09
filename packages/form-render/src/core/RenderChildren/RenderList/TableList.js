@@ -19,11 +19,11 @@ const TableList = ({
   flatten,
   schema,
   listData,
-
   changeList,
 }) => {
-  const { props = {}, itemProps } = schema;
-  const { pagination = {} } = props;
+  const { props = {}, itemProps = {} } = schema;
+  const { buttons, ...columnProps } = itemProps;
+  const { pagination = {}, ...rest } = props;
 
   const paginationConfig = pagination && {
     size: 'small',
@@ -62,10 +62,16 @@ const TableList = ({
           />
         );
       },
+      ...columnProps,
     };
   });
 
-  if (!props.hideDelete || !props.hideAdd || !props.hideCopy || !props.hideMove) {
+  if (
+    !props.hideDelete ||
+    !props.hideAdd ||
+    !props.hideCopy ||
+    !props.hideMove
+  ) {
     columns.push({
       title: '操作',
       key: '$action',
@@ -152,6 +158,7 @@ const TableList = ({
         rowKey="index"
         size="small"
         pagination={paginationConfig}
+        {...rest}
       />
     </>
   );
