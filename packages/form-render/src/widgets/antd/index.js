@@ -1,6 +1,6 @@
 import list from './list';
 import map from './map';
-import { InputNumber, Checkbox, Input, Switch } from 'antd';
+import { InputNumber, Checkbox, Input, Switch, Rate } from 'antd';
 import { createWidget } from '../../createWidget';
 import ImageInput from './imageInput';
 import urlInput from './urlInput';
@@ -9,15 +9,14 @@ import select from './select';
 import checkboxes from './checkboxes';
 import multiSelect from './multiSelect';
 import radio from './radio';
+import time from './time';
+import date from './date';
+import dateRange from './dateRange';
+import timeRange from './timeRange';
 
-const Rate = React.lazy(() => import('antd/es/rate'));
 const TreeSelect = React.lazy(() => import('antd/es/tree-select'));
 const Cascader = React.lazy(() => import('antd/es/cascader'));
 const color = React.lazy(() => import('./color'));
-const date = React.lazy(() => import('./date'));
-const time = React.lazy(() => import('./time'));
-const dateRange = React.lazy(() => import('./dateRange'));
-const timeRange = React.lazy(() => import('./timeRange'));
 const slider = React.lazy(() => import('./slider'));
 const upload = React.lazy(() => import('./upload'));
 
