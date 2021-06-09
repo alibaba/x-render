@@ -11,6 +11,7 @@ export default {
     type: 'babel',
     importLibToEs: true,
   },
+  lessInBabelMode: true,
   extraRollupPlugins: [
     copy({
       targets: [{ src: 'src/index.d.ts', dest: 'dist/' }],
