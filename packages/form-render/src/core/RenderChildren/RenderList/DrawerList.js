@@ -25,7 +25,16 @@ const DrawerList = ({
   changeList,
   listData,
 }) => {
-  const { props = {}, itemProps } = schema;
+  const { props = {}, itemProps = {} } = schema;
+  const { buttons, ...columnProps } = itemProps;
+  const { pagination = {}, ...rest } = props;
+
+  const paginationConfig = pagination && {
+    size: 'small',
+    hideOnSinglePage: true,
+    ...pagination,
+  };
+
   const currentIndex = useRef(-1);
   const [state, setState] = useSet({
     showDrawer: false,
@@ -66,6 +75,7 @@ const DrawerList = ({
           </div>
         );
       },
+      ...columnProps,
     };
   });
 
@@ -193,7 +203,8 @@ const DrawerList = ({
         }}
         rowKey="$idx"
         size="small"
-        pagination={{ size: 'small', hideOnSinglePage: true }}
+        pagination={paginationConfig}
+        {...rest}
       />
     </>
   );

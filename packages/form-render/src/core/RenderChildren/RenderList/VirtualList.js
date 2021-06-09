@@ -21,7 +21,7 @@ const VirtualList = ({
   changeList,
 }) => {
   const { props = {}, itemProps = {} } = schema;
-  const { scrollY = 600 } = props;
+  const { scrollY = 600, ...rest } = props;
 
   const [vt, set_components] = useVT(() => ({ scroll: { y: scrollY } }), []);
 
@@ -167,6 +167,7 @@ const VirtualList = ({
         columns={columns}
         dataSource={dataSource}
         pagination={false}
+        {...rest}
       />
     </>
   );

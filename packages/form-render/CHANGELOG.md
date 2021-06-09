@@ -1,5 +1,24 @@
 # Changelog
 
+### 1.5.2
+
+- [+] 展示是 table 的 list 类组件（list2，list3，list4）的 props 和 itemProps 分别透传 table 的 props 和 columns 的 props 到 antd，便于用户定制化配置
+- [!] 优化了异步加载，只有需要异步加载的部分 Suspense 渲染，且分析并只异步加载体积大的组件
+- [!] 修复了只读模式下 range 组件数据未展示的问题
+
+### 1.5.1
+
+- [!] 修复了 1.5.0 切换打包方式到 babel 引入的安装报错问题，以及 less -> css 转换未开启的问题
+
+### 1.5.0 (这个版本有问题，请勿安装)
+
+- [+] 内部使用了 tree-shaking，减少首次加载，避免未用到的组件被加载
+- [+] 全新的 playground，类似 vscode 的更好的体验，以及代码输入提示等
+- [!] 修复了 hideDelete 会隐藏整个操作栏的问题（list2）
+- [!] 解决了 schema 不存在的字段会在初始化中被去掉的问题
+- [!] 添加了旧版 schema 到新 schema 的转换器
+- [!] list 的复制按钮可以单独隐藏，使用 `hideCopy`
+
 ### 1.4.4
 
 - [!] 修复了 hidden = true 是做了多余的对类型的判断的问题

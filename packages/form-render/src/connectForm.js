@@ -1,9 +1,11 @@
 import React from 'react';
-import { useForm } from './useForm';
+import useForm from './useForm';
 
-export const connectForm = Component => {
+const connectForm = Component => {
   return props => {
     const form = useForm();
     return <Component {...props} form={form} />;
   };
 };
+
+export default connectForm;

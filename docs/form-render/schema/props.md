@@ -37,11 +37,29 @@ toc: content
 | hideMove   | boolean |       隐藏上下移动 item 的按钮        |
 | buttons    |  array  |             下详 （注 1）             |
 
+注：对于展示是 table 类型的 list（list2、list3、list4），所有 antd table 支持的 props 都可以透传，例如
+
+```json
+"props": {
+  "scrollX": 2000
+}
+```
+
 **itemProps**
 
 | props   | 类型  |     说明      |
 | ------- | :---: | :-----------: |
 | buttons | array | 下详 （注 2） |
+
+注：对于展示是 table 类型的 list（list2、list3、list4），所有 columns 的单个配置都可以透传，会作用到 clumns 的所有 item，例如
+
+```json
+"itemProps": {
+  "width": 200
+}
+```
+
+则 table 的所有单元格（除了“操作”那一列）都会宽度 200 px
 
 **注 1：**
 
@@ -127,7 +145,7 @@ window.copyMe = ({ value, index, schema }) => {
 
 ### upload 上传
 
-**props**
+**uploadProps**
 
 upload 组件的主体 props，参考 [antd/upload 文档](https://ant.design/components/upload/)
 

@@ -20,8 +20,8 @@ const defaultFinish = (data, errors) => {
 
 export { defaultWidgets as widgets, defaultMapping as mapping };
 
-export { useForm } from './useForm';
-export { connectForm } from './connectForm';
+export { default as useForm } from './useForm';
+export { default as connectForm } from './connectForm';
 
 function App({
   widgets,

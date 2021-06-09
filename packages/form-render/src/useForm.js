@@ -6,7 +6,7 @@ import { set, sortedUniqBy } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
 import { generateDataSkeleton, flattenSchema, clone } from './utils';
 
-export const useForm = props => {
+const useForm = props => {
   const {
     // 为了更平滑兼容 0.x，如果外部传入状态，那么使用外部的状态
     formData: _formData,
@@ -365,3 +365,5 @@ export const useForm = props => {
 
   return form;
 };
+
+export default useForm;

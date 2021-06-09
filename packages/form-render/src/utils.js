@@ -750,10 +750,12 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
             if (!value) return true;
             if (Array.isArray(value)) {
               // range组件点击clear，会变成 ['','']
-              if (
-                typeof value[0] === 'string' &&
-                typeof value[1] === 'string'
-              ) {
+              // range组件对应的值bind的时候，会变成 [null,null]
+              const validValue =
+                typeof value[0] === 'string' && typeof value[1] === 'string';
+              const validValue2 =
+                value[0] === undefined && value[1] === undefined;
+              if (validValue || validValue2) {
                 return true;
               }
               return false;
@@ -907,9 +909,11 @@ export const isPathRequired = (path, schema) => {
 export const generateDataSkeleton = (schema, formData, _path = '') => {
   let result = {};
   let _formData = clone(formData);
+  result = _formData;
   if (isObjType(schema)) {
     if (_formData === undefined || typeof _formData !== 'object') {
       _formData = {};
+      result = {};
     }
     Object.keys(schema.properties).forEach(key => {
       const childSchema = schema.properties[key];
@@ -922,12 +926,13 @@ export const generateDataSkeleton = (schema, formData, _path = '') => {
       result[key] = childResult;
     });
   } else if (_formData !== undefined) {
-    result = clone(_formData);
+    // result = _formData;
   } else {
     if (schema.default !== undefined) {
       result = clone(schema.default);
     } else if (schema.type === 'boolean') {
-      result = false;
+      // result = false;
+      result = undefined;
     } else {
       result = undefined;
     }
@@ -1079,6 +1084,18 @@ const updateSingleSchema = schema => {
       schema.width = schema['ui:width'];
       delete schema['ui:width'];
     }
+    if (schema['ui:displayType']) {
+      schema.displayType = schema['ui:displayType'];
+      delete schema['ui:displayType'];
+    }
+    if (schema['ui:column']) {
+      schema.column = schema['ui:column'];
+      delete schema['ui:column'];
+    }
+    if (schema['ui:widget']) {
+      schema.widget = schema['ui:widget'];
+      delete schema['ui:widget'];
+    }
     if (schema['ui:labelWidth']) {
       schema.labelWidth = schema['ui:labelWidth'];
       delete schema['ui:labelWidth'];
@@ -1086,9 +1103,12 @@ const updateSingleSchema = schema => {
     if (schema.rules && schema.rules.length === 0) {
       delete schema.rules;
     }
+    if (JSON.stringify(schema.props) === '{}') {
+      delete schema.props;
+    }
     return schema;
   } catch (error) {
-    console.error('旧schema转换失败！', error);
+    console.error('schema转换失败！', error);
     return schema;
   }
 };
