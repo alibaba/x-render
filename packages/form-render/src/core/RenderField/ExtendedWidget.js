@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { Suspense } from 'react';
 import { getWidgetName, extraSchemaList } from '../../mapping';
-import { defaultWidgetNameList } from '../../widgets/antd';
 import { useTools } from '../../hooks';
 import { transformProps } from '../../createWidget';
 
@@ -59,43 +58,6 @@ const ExtendedWidget = ({
   const Widget = widgets[widgetName];
   const extraSchema = extraSchemaList[widgetName];
 
-  // import()语法不支持传入的路径是变量，所以只好
-  // switch (widgetName) {
-  //   case 'date':
-  //     Widget = React.lazy(() => import('../../widgets/antd/date'));
-  //     break;
-  //   case 'rate':
-  //     Widget = React.lazy(() => import('antd/es/rate'));
-  //     break;
-  //   case 'treeSelect':
-  //     Widget = React.lazy(() => import('antd/es/tree-select'));
-  //     break;
-  //   case 'cascader':
-  //     Widget = React.lazy(() => import('antd/es/cascader'));
-  //     break;
-  //   case 'color':
-  //     Widget = React.lazy(() => import('../../widgets/antd/color'));
-  //     break;
-  //   case 'time':
-  //     Widget = React.lazy(() => import('../../widgets/antd/time'));
-  //     break;
-  //   case 'dateRange':
-  //     Widget = React.lazy(() => import('../../widgets/antd/dateRange'));
-  //     break;
-  //   case 'timeRange':
-  //     Widget = React.lazy(() => import('../../widgets/antd/timeRange'));
-  //     break;
-  //   case 'slider':
-  //     Widget = React.lazy(() => import('../../widgets/antd/slider'));
-  //     break;
-  //   case 'upload':
-  //     Widget = React.lazy(() => import('../../widgets/antd/upload'));
-  //     break;
-  //   default:
-  //     Widget = widgets[widgetName];
-  //     break;
-  // }
-
   let widgetProps = {
     schema: { ...schema, ...extraSchema },
     onChange,
@@ -127,7 +89,6 @@ const ExtendedWidget = ({
   }
 
   // 避免传组件不接受的props，按情况传多余的props
-  // const isExternalWidget = defaultWidgetNameList.indexOf(widgetName) === -1; // 是否是外部组件
   widgetProps.addons = {
     onItemChange,
     setValue: onItemChange,
@@ -139,7 +100,11 @@ const ExtendedWidget = ({
 
   const finalProps = transformProps(widgetProps);
 
-  return <Widget {...finalProps} />;
+  return (
+    <Suspense fallback={<div></div>}>
+      <Widget {...finalProps} />
+    </Suspense>
+  );
 };
 
 const areEqual = (prev, current) => {
