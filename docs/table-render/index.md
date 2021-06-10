@@ -72,13 +72,13 @@ const schema = {
     string: {
       title: '标题',
       type: 'string',
-      'ui:width': '30%',
+      width: '30%',
     },
     created_at: {
       title: '创建时间',
       type: 'string',
       format: 'date',
-      'ui:width': '30%',
+      width: '30%',
     },
   },
 };

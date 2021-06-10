@@ -17,7 +17,7 @@ const schema = {
       type: 'string',
       enum: ['open', 'closed'],
       enumNames: ['营业中', '已打烊'],
-      'ui:width': '25%',
+      width: '25%',
       widget: 'select',
     },
     labels: {

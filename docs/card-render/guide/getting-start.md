@@ -32,7 +32,7 @@ const searchSchema = {
       title: '创建时间',
       type: 'string',
       format: 'date',
-      'ui:width': '25%',
+      width: '25%',
     },
   },
 };
