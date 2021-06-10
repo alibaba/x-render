@@ -116,10 +116,15 @@ export const transformDataWithBind2 = (data, flatten) => {
       const { key, bind } = item;
       const temp = [];
       bind.forEach(b => {
-        temp.push(get(newData, b));
+        const bindValue = get(newData, b);
+        if (bindValue !== undefined) {
+          temp.push(bindValue);
+        }
         unset(newData, b);
       });
-      set(newData, key, temp);
+      if (temp.length > 0) {
+        set(newData, key, temp);
+      }
     });
   };
   handleBindData2(_data);
