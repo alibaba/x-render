@@ -48,6 +48,7 @@ function App({
   allCollapsed = false,
   onValuesChange,
   column,
+  removeHiddenData = false,
   ...rest
 }) {
   try {
@@ -97,6 +98,7 @@ function App({
         validateMessages,
         beforeFinish,
         onMount,
+        removeHiddenData,
       });
     } else {
     }

@@ -100,6 +100,8 @@ export interface FRProps {
   onFinish?: (formData: any, error: Error[]) => void;
   /** 时时与外部更新同步的钩子 */
   onValuesChange?: (changedValues: any, formData: any) => void;
+  /** 隐藏的数据是否去掉，默认不去掉（false） */
+  removeHiddenData?: boolean;
 }
 
 declare const FR: React.FC<FRProps>;

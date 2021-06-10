@@ -211,16 +211,19 @@ import Form, { useForm, connectForm } from 'form-render';
 
 ### \<Form \/> (常用 props)
 
-| 参数         | 描述                                                                           | 类型                                                              | 是否必填 | 默认值   |
-| ------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------- | -------- | -------- |
-| schema       | 描述表单的 schema，详见                                                        | `object`                                                          | 是       |          |
-| form         | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                                    | 是       |          |
-| onFinish     | 提交后的回调，执行 form.submit() 后触发                                        | `(data, errors: Error[]) => void`                                 | 否       | () => {} |
-| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填，入参是个对象，便于扩展         | `({ data, errors, schema, ...rest }) => Error[]|Promise<Error[]>` | 否       | () => {} |
-| onMount      | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)           | `() => void`                                                      | 否       | () => {} |
-| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`                             | 否       | 'column' |
-| widgets      | 自定义组件，当内置组件无法满足时使用                                           | `object`                                                          | 否       | {}       |
-| watch        | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                                          | 否       | {}       |
+| 参数             | 描述                                                                           | 类型                                                              | 是否必填 | 默认值   |
+| ---------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------- | -------- | -------- |
+| schema           | 描述表单的 schema，详见                                                        | `object`                                                          | 是       |          |
+| form             | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                                    | 是       |          |
+| onFinish         | 提交后的回调，执行 form.submit() 后触发                                        | `(data, errors: Error[]) => void`                                 | 否       | () => {} |
+| beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填，入参是个对象，便于扩展         | `({ data, errors, schema, ...rest }) => Error[]|Promise<Error[]>` | 否       | () => {} |
+| onMount          | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)           | `() => void`                                                      | 否       | () => {} |
+| displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`                             | 否       | 'column' |
+| widgets          | 自定义组件，当内置组件无法满足时使用                                           | `object`                                                          | 否       | {}       |
+| watch            | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                                          | 否       | {}       |
+| removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                       | `boolean`                                                         | 否       | false    |
+| debug            | 开启 debug 模式，时时显示表单内部状态，**开发的时候强烈建议打开**              | `boolean`                                                         | 否       | false    |
+| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                                     | `boolean`                                                         | 否       | false    |
 
 注 1：
 
@@ -230,9 +233,7 @@ import Form, { useForm, connectForm } from 'form-render';
 | ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
 | column           | 一行展示多少列                                                   | `number`            | 1      |
 | mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
-| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                       | `boolean`           | false  |
 | disabled         | 禁用模式，全部表单元素禁用                                       | `boolean`           | false  |
-| debug            | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
 | debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
 | locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
 | configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
