@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.5.3
+
+- [+] Form 的 props 添加 `removeHiddenData` 用于选择提交的时候是否去掉已经被隐藏的元素的数据，默认 false 不隐藏
+
 ### 1.5.2
 
 - [+] 展示是 table 的 list 类组件（list2，list3，list4）的 props 和 itemProps 分别透传 table 的 props 和 columns 的 props 到 antd，便于用户定制化配置
