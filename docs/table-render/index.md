@@ -121,9 +121,36 @@ export default Wrapper;
 
 ## API
 
-### `<TableProvider>` 参数
+### `withTable` 和 `<TableProvider>`
 
-**TableProvider 本质就是一个 React Context，将对应的 `<Search>` 和 `<Table>` 包裹起来，可以很方便在里面插入一些其他东西，不需要任何入参**
+TableRender 的书写能够很简洁，在底层使用了 Context。而 TableProvider 事实上就是 Context Provider，withTable 则是其高阶组件形式的语法糖。书写上，所有表格代码通过 `withTable` 包一下即可：
+
+使用 withTable 的写法
+
+```js
+import { withTable, TableProvider } from 'table-render';
+
+const Page = () => {...}
+
+export default withTable(Page)
+```
+
+使用 TableProvider 的写法
+
+```js
+import { withTable, TableProvider } from 'table-render';
+
+const Page = () => {...}
+
+const WrappedPage = () =>
+  <TableProvider>
+    <Page />
+  </TableProvider>
+
+export default WrappedPage
+```
+
+可以看到 `withTable` 更为简洁，是推荐的使用方法
 
 ### `<Search>` 参数
 
