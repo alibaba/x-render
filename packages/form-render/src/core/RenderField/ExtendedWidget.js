@@ -82,6 +82,16 @@ const ExtendedWidget = ({
     widgetProps = { ...widgetProps, ...schema.props };
   }
 
+  Object.keys(schema).forEach(key => {
+    if (
+      typeof key === 'string' &&
+      key.toLowerCase().indexOf('props') > -1 &&
+      key.length > 5
+    ) {
+      widgetProps[key] = schema[key];
+    }
+  });
+
   // 支持 addonAfter 为自定义组件的情况
   if (isObject(widgetProps.addonAfter) && widgetProps.addonAfter.widget) {
     const AddonAfterWidget = widgets[widgetProps.addonAfter.widget];
