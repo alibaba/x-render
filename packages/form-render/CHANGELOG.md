@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.5.4
+
+- [!] 修复了涉及到数组 bind 的场景下，外部更新表单数据后，range 元素会通过必填校验的问题
+- [!] 修复了 upload 等多元素组件的 xxprops 没有透传的问题
+
 ### 1.5.3
 
 - [+] Form 的 props 添加 `removeHiddenData` 用于选择提交的时候是否去掉已经被隐藏的元素的数据，默认 false 不隐藏
