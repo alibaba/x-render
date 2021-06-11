@@ -151,6 +151,7 @@ function App({
 
   const tools = useMemo(
     () => ({
+      _form: form,
       widgets: { ...defaultWidgets, ...widgets },
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,

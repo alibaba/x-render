@@ -27,7 +27,7 @@ const ExtendedWidget = ({
   disabled,
   dataIndex,
 }) => {
-  const { widgets, mapping } = useTools();
+  const { widgets, mapping, _form } = useTools();
 
   // TODO1: 需要查一下卡顿的源头
   // if (isObjType(schema)) {
@@ -59,6 +59,7 @@ const ExtendedWidget = ({
   const extraSchema = extraSchemaList[widgetName];
 
   let widgetProps = {
+    _form,
     schema: { ...schema, ...extraSchema },
     onChange,
     value,
@@ -99,6 +100,8 @@ const ExtendedWidget = ({
   };
 
   const finalProps = transformProps(widgetProps);
+
+  console.log('===> finalProps', finalProps)
 
   return (
     <Suspense fallback={<div></div>}>
