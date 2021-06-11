@@ -23,7 +23,7 @@ const Sidebar = props => {
                 {Array.isArray(item.widgets) ? (
                   item.widgets.map((widget, idx) => {
                     return (
-                      <Element key={idx.toString()} {...widget} {...props} />
+                      <Element key={idx.toString()} {...props} {...widget} />
                     );
                   })
                 ) : (
