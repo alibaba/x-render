@@ -181,7 +181,7 @@ function Provider(props, ref) {
     copyTOClipboard(displaySchemaString);
   };
 
-  useImperativeHandle(ref, () => ({
+  useImperativeHandle(frwRef, () => ({
     getValue,
     setValue,
     copyValue,
