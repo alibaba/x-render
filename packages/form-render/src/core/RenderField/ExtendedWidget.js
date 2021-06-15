@@ -59,7 +59,6 @@ const ExtendedWidget = ({
   const extraSchema = extraSchemaList[widgetName];
 
   let widgetProps = {
-    _form,
     schema: { ...schema, ...extraSchema },
     onChange,
     value,
@@ -97,6 +96,9 @@ const ExtendedWidget = ({
     formData,
     dataPath,
     dataIndex,
+    setErrorFields: _form.setErrorFields,
+    removeErrorField: _form.removeErrorField,
+    setSchemaByPath: _form.setSchemaByPath,
   };
 
   const finalProps = transformProps(widgetProps);
