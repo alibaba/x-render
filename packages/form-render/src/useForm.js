@@ -196,6 +196,30 @@ const useForm = props => {
     forceRender(renderCount + 1);
   };
 
+  const setSchema = settings => {
+    const newFlatten = clone(_flatten.current);
+    try {
+      Object.keys(settings).forEach(path => {
+        if (!_flatten.current[path]) {
+          console.error(`path：'${path}' 不存在(form.setSchemaByPath)`);
+        } else {
+          const newSchema = settings[path];
+          const _newSchema =
+            typeof newSchema === 'function'
+              ? newSchema(newFlatten[path].schema)
+              : newSchema;
+          newFlatten[path].schema = {
+            ...newFlatten[path].schema,
+            ..._newSchema,
+          };
+        }
+      });
+      setState({ flatten: { ...newFlatten } });
+    } catch (error) {
+      console.error(error, 'setSchema');
+    }
+  };
+
   const setSchemaByPath = (path, newSchema) => {
     if (!_flatten.current[path]) {
       console.error(`path：'${path}' 不存在(form.setSchemaByPath)`);
@@ -365,6 +389,7 @@ const useForm = props => {
     setValueByPath: onItemChange, // 单个
     getSchemaByPath,
     setSchemaByPath,
+    setSchema,
     setValues,
     getValues,
     resetFields,

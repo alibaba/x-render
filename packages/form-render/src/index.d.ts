@@ -27,6 +27,7 @@ export interface FormInstance {
   setValueByPath: (path: string, value: any) => void;
   getSchemaByPath: (path: string) => object;
   setSchemaByPath: (path: string, value: any) => void;
+  setSchema: (settings: any) => void;
   setValues: (formData: any) => void;
   getValues: () => any;
   resetFields: () => void;
