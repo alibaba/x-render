@@ -71,8 +71,21 @@ export interface FRGeneratorProps {
   onSchemaChange?: (schema: any) => void;
 }
 
-declare const FRGenerator: React.ForwardRefExoticComponent<FRGeneratorProps &
-  React.RefAttributes<unknown>>;
+export interface SettingsProps {
+  /** 自定义组件 */
+  widgets?: any;
+}
+export interface CanvasProps {}
+export interface SidebarProps {
+  /** 固定 id */
+  fixedName?: boolean;
+}
+
+export interface FRGenerator extends React.ForwardRefExoticComponent<FRGeneratorProps & React.RefAttributes<HTMLElement>> {
+  Settings: React.FC<SettingsProps>;
+  Canvas: React.FC<CanvasProps>;
+  Sidebar: React.FC<SidebarProps>;
+}
 
 declare const defaultSettings: Setting;
 declare const defaultCommonSettings: any;
