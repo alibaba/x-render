@@ -81,19 +81,19 @@ export interface SidebarProps {
   fixedName?: boolean;
 }
 
-export interface FRGenerator extends React.ForwardRefExoticComponent<FRGeneratorProps & React.RefAttributes<HTMLElement>> {
+export interface Generator
+  extends React.ForwardRefExoticComponent<
+    FRGeneratorProps & React.RefAttributes<HTMLElement>
+  > {
   Settings: React.FC<SettingsProps>;
   Canvas: React.FC<CanvasProps>;
   Sidebar: React.FC<SidebarProps>;
 }
 
+declare const FRGenerator: Generator;
 declare const defaultSettings: Setting;
 declare const defaultCommonSettings: any;
 declare const defaultGlobalSettings: any;
 
-export {
-  defaultSettings,
-  defaultCommonSettings,
-  defaultGlobalSettings,
-};
+export { defaultSettings, defaultCommonSettings, defaultGlobalSettings };
 export default FRGenerator;
