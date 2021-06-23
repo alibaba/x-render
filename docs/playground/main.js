@@ -84,6 +84,8 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
               schema={schema}
               {...formProps}
               widgets={{ asyncSelect: AsyncSelect }}
+              theme="2"
+              displayType="row"
             />
           )}
         </div>
