@@ -76,12 +76,20 @@ const useForm = props => {
       setState({ formData: data });
     }
   };
+
+  const _getErrorFields = (errors = []) => {
+    const oldErrorFields = errorFields.filter((item) => item._type);
+    const newErrorFields = sortedUniqBy([...oldErrorFields, ...errors], item => item.name);
+    return newErrorFields;
+  }
+
   const _setErrors = errors => {
     if (typeof _onValidate === 'function') {
       const oldFormatErrors = errors ? errors.map(item => item.name) : [];
       _onValidate(oldFormatErrors);
     }
-    setState({ errorFields: errors });
+
+    setState({ errorFields: _getErrorFields(errors) });
   };
 
   const touchKey = key => {
@@ -226,7 +234,10 @@ const useForm = props => {
     } else {
       console.log('error format is wrong');
     }
-    newErrorFields = sortedUniqBy(newErrorFields, item => item.name);
+    newErrorFields = sortedUniqBy(newErrorFields, item => item.name).map((item) => {
+      item._type = 'custom';
+      return item;
+    });
     _setErrors(newErrorFields);
   };
   // TODO: 提取出来，重新写一份，注意要处理async
@@ -260,11 +271,12 @@ const useForm = props => {
       validateMessages: validateMessagesRef.current,
     })
       .then(errors => {
+        const formErrors = _getErrorFields(errors);
         // 如果有错误，也不停止校验和提交，在onFinish里让用户自己搞
         if (errors && errors.length > 0) {
           console.log('submit:', _data.current, errors);
           setState({
-            errorFields: errors,
+            errorFields: formErrors,
           });
         }
         if (typeof beforeFinishRef.current === 'function') {
@@ -276,7 +288,7 @@ const useForm = props => {
                 outsideValidating: true,
                 submitData: res,
               });
-              return errors;
+              return formErrors;
             }
           );
         }
@@ -287,7 +299,7 @@ const useForm = props => {
               isSubmitting: true,
               submitData: res,
             });
-            return errors;
+            return formErrors;
           }
         );
       })

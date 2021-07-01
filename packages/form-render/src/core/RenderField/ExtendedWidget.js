@@ -27,7 +27,13 @@ const ExtendedWidget = ({
   disabled,
   dataIndex,
 }) => {
-  const { widgets, mapping } = useTools();
+  const { 
+    widgets, 
+    mapping,
+    setErrorFields,
+    removeErrorField,
+    removeTouched, 
+  } = useTools();
 
   // TODO1: 需要查一下卡顿的源头
   // if (isObjType(schema)) {
@@ -96,6 +102,9 @@ const ExtendedWidget = ({
     formData,
     dataPath,
     dataIndex,
+    setErrorFields,
+    removeErrorField,
+    removeTouched,
   };
 
   const finalProps = transformProps(widgetProps);
