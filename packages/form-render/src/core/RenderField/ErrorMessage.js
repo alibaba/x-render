@@ -2,7 +2,7 @@ import React from 'react';
 import { translateMessage } from '../../utils';
 import './ErrorMessage.less';
 
-const ErrorMessage = ({ message, schema, hideValidation }) => {
+const ErrorMessage = ({ message, schema, softHidden, hardHidden }) => {
   let msg = '';
   if (typeof message === 'string') msg = message;
   if (Array.isArray(message)) {
@@ -11,7 +11,9 @@ const ErrorMessage = ({ message, schema, hideValidation }) => {
 
   msg = translateMessage(msg, schema);
 
-  return !msg && hideValidation ? null : (
+  if (hardHidden) return <div className={`error-message`}></div>;
+
+  return !msg && softHidden ? null : (
     <div className={`error-message`}>{msg}</div>
   );
 };

@@ -9,6 +9,7 @@ export interface FormParams {
   formData?: any;
   onChange?: (data: any) => void;
   onValidate?: (valid: any) => void;
+  showValidate?: boolean;
 }
 
 export interface ValidateParams {
@@ -46,6 +47,8 @@ export interface FormInstance {
   isEditing: boolean;
   setEditing: (status: boolean) => void;
   syncStuff: (any) => void;
+  /** 折中升级方案中使用到，正常用不到 */
+  init: () => void;
 }
 
 export type WatchProperties = {

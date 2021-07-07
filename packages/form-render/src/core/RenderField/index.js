@@ -24,7 +24,7 @@ const RenderField = props => {
   } = props;
 
   const { formData } = useStore();
-  const { debounceInput, readOnly, disabled } = useStore2();
+  const { debounceInput, readOnly, disabled, showValidate } = useStore2();
   const { onValuesChange, onItemChange, setEditing, touchKey } = useTools();
   // console.log('<renderField>', $id);
 
@@ -32,9 +32,10 @@ const RenderField = props => {
   const errorMessage = errObj && errObj.error; // 是一个list
   const hasError = Array.isArray(errorMessage) && errorMessage.length > 0;
   // 补上这个class，会自动让下面所有的展示ui变红！
-  const contentClass = hasError
-    ? _contentClass + ' ant-form-item-has-error'
-    : _contentClass;
+  const contentClass =
+    hasError && showValidate
+      ? _contentClass + ' ant-form-item-has-error'
+      : _contentClass;
 
   let contentStyle = {};
 
@@ -68,13 +69,12 @@ const RenderField = props => {
     displayType,
   };
 
-  const hideValidation = displayType === 'inline' || _readOnly === true;
-
   const messageProps = {
     message: errorMessage,
     schema: _schema,
     displayType,
-    hideValidation: hideValidation,
+    softHidden: displayType === 'inline', // 这个是如果没有校验信息时，展示与否
+    hardHidden: !showValidate || _readOnly === true, // 这个是强制的展示与否
   };
 
   const placeholderTitleProps = {
