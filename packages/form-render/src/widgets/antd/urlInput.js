@@ -2,20 +2,33 @@ import React from 'react';
 import { Input } from 'antd';
 import { isUrl } from '../../utils';
 
-const TestNode = ({ value }) => {
+const UrlNode = ({ value, prefix = '', suffix = '', label = '链接' }) => {
   const useUrl = isUrl(value);
+
   if (useUrl) {
     return (
-      <a target="_blank" href={value}>
-        测试链接
+      <a target="_blank" href={`${prefix}${value}${suffix}`}>
+        {label}
       </a>
     );
   }
-  return <div>测试链接</div>;
+
+  return <div>{label}</div>;
 };
 
-export default function imageInput({ value, ...rest }) {
+export default function UrlInput({ value, urlPrefix, urlSuffix, urlLable, ...rest }) {
   return (
-    <Input value={value} addonAfter={<TestNode value={value} />} {...rest} />
+    <Input
+      value={value}
+      addonAfter={(
+        <UrlNode
+          value={value}
+          prefix={urlPrefix}
+          suffix={urlSuffix}
+          label={urlLable}
+        />
+      )}
+      {...rest}
+    />
   );
 }
