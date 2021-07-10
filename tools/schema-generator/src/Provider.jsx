@@ -23,6 +23,7 @@ import {
 } from './utils';
 import { Ctx, StoreCtx } from './context';
 import { useSet } from './hooks';
+import { fromSetting, toSetting } from './transformer/form-render';
 import list from './widgets/list';
 
 const DEFAULT_SCHEMA = {
@@ -35,7 +36,7 @@ function Provider(props, ref) {
   const {
     defaultValue,
     submit,
-    transformer,
+    transformer: _transformer,
     extraButtons,
     controlButtons,
     hideId,
@@ -47,16 +48,12 @@ function Provider(props, ref) {
     children,
   } = props;
 
-  let transformFrom = schema => schema;
-  let transformTo = schema => schema;
-
-  if (transformer) {
-    if (typeof transformer.from === 'function') {
-      transformFrom = transformer.from;
-    }
-    if (typeof transformer.to === 'function') {
-      transformTo = transformer.to;
-    }
+  const transformer = {
+    from: schema => schema,
+    to: schema => schema,
+    fromSetting,
+    toSetting,
+    ..._transformer
   }
 
   const frwRef = ref || useRef();
@@ -72,7 +69,7 @@ function Provider(props, ref) {
 
   // 收口点 propsSchema 到 schema 的转换 (一共3处，其他两个是 importSchema 和 setValue，在 FRWrapper 文件)
   useEffect(() => {
-    const schema = defaultValue ? transformFrom(defaultValue) : DEFAULT_SCHEMA;
+    const schema = defaultValue ? transformer.from(defaultValue) : DEFAULT_SCHEMA;
     if (schema) setState(schemaToState(schema));
   }, [defaultValue]);
 
@@ -115,8 +112,7 @@ function Provider(props, ref) {
 
   const userProps = {
     submit,
-    transformFrom,
-    transformTo,
+    transformer,
     isNewVersion,
     extraButtons,
     controlButtons,
@@ -131,7 +127,7 @@ function Provider(props, ref) {
     _schema = combineSchema(schema); // TODO: 要不要判断是否都是object
   }
   const flatten = flattenSchema(_schema);
-  const flattenWithData = dataToFlatten(flatten, formData);
+  const flattenWithData = transformer.from(dataToFlatten(flatten, formData));
 
   const onFlattenChange = (newFlatten, changeSource = 'schema') => {
     const newSchema = idToSchema(newFlatten);
@@ -156,7 +152,7 @@ function Provider(props, ref) {
       ...idToSchema(flattenWithData, '#', true),
       ...frProps,
     };
-    displaySchema = transformTo(_schema);
+    displaySchema = transformer.to(_schema);
     if (!isNewVersion) {
       displaySchema = newSchemaToOld(displaySchema);
     }
@@ -170,7 +166,7 @@ function Provider(props, ref) {
       setState(state => ({
         ...state,
         selected: undefined,
-        ...schemaToState(value),
+        ...schemaToState(transformer.from(value)),
       }));
     } catch (error) {
       console.error(error);

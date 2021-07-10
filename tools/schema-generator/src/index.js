@@ -27,4 +27,8 @@ export {
   defaultCommonSettings,
   defaultGlobalSettings,
 } from './settings';
+export {
+  fromSetting,
+  toSetting,
+} from './transformer/form-render';
 export default Generator;

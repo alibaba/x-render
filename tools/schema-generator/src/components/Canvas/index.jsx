@@ -18,7 +18,7 @@ const Canvas = () => {
   });
   const { preview } = local;
 
-  const { transformFrom, extraButtons = [] } = userProps;
+  const { transformer, extraButtons = [] } = userProps;
 
   const toggleModal = () => setState({ showModal: !local.showModal });
   const toggleModal2 = () => setState({ showModal2: !local.showModal2 });
@@ -29,12 +29,13 @@ const Canvas = () => {
 
   const importSchema = () => {
     try {
-      const value = transformFrom(looseJsonParse(local.schemaForImport));
+      const value = transformer.from(looseJsonParse(local.schemaForImport));
       setGlobal(() => ({
         selected: undefined,
         ...schemaToState(value),
       }));
     } catch (error) {
+      console.log(error)
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
     }
     toggleModal2();

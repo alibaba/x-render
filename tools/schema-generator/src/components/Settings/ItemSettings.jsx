@@ -25,7 +25,7 @@ export default function ItemSettings({ widgets }) {
     mapping: globalMapping,
   } = useStore();
 
-  const { settings, commonSettings, hideId } = userProps;
+  const { settings, commonSettings, hideId, transformer } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
   // 避免切换选中项时 schema 对应出错
   const [ready, setReady] = useState({});
@@ -72,7 +72,7 @@ export default function ItemSettings({ widgets }) {
       if (item && item.schema) {
         onItemChange(selected, {
           ...item,
-          schema: value,
+          schema: transformer.fromSetting(value),
         });
       }
     } catch (error) {
@@ -108,7 +108,7 @@ export default function ItemSettings({ widgets }) {
         displayType: 'column',
         properties,
       });
-      form.setValues(item.schema);
+      form.setValues(transformer.toSetting(item.schema));
       setTimeout(() => {
         setReady(true);
         onDataChange(form.getValues());
