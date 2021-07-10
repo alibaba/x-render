@@ -9,8 +9,8 @@ const transformFrom = (schema) => {
 
   if (!hasChildren) {
     if (Array.isArray(schema.enumList)) {
-      schema.enum = schema.enumList.map(item => item.value);
-      schema.enumNames = schema.enumList.map(item => item.label);
+      schema.enum = schema.enumList.filter(item => item.value).map(item => item.value);
+      schema.enumNames = schema.enumList.filter(item => item.value).map(item => item.label || item.value);
     }
     delete schema.enumList;
   } else {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { useStore } from '../../../hooks';
 import {
   isLooselyNumber,
@@ -111,7 +111,9 @@ const RenderField = ({
         </div>
       ) : null}
       <div className={contentClass} style={contentStyle}>
-        <Widget {...usefulWidgetProps}>{children || null}</Widget>
+        <Suspense fallback={<div></div>}>
+          <Widget {...usefulWidgetProps}>{children || null}</Widget>
+        </Suspense>
       </div>
     </>
   );
