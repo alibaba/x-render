@@ -76,7 +76,7 @@ export default function ItemSettings({ widgets }) {
         });
       }
     } catch (error) {
-      console.log(error, 'catch');
+      console.log('catch', error);
     }
   };
 

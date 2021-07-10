@@ -35,7 +35,7 @@ const Canvas = () => {
         ...schemaToState(value),
       }));
     } catch (error) {
-      console.log(error)
+      console.log('catch', error)
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
     }
     toggleModal2();
