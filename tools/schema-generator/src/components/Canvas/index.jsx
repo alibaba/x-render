@@ -3,7 +3,7 @@ import { Modal, Input, Button, message } from 'antd';
 import copyTOClipboard from 'copy-text-to-clipboard';
 import FR from './core';
 import { looseJsonParse, isObject, schemaToState } from '../../utils';
-import { useSet, useGlobal, useStore } from '../../hooks';
+import { useSet, useGlobal, useStore } from '../../utils/hooks';
 
 const { TextArea } = Input;
 

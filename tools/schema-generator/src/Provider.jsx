@@ -21,8 +21,8 @@ import {
   newSchemaToOld,
   schemaToState,
 } from './utils';
-import { Ctx, StoreCtx } from './context';
-import { useSet } from './hooks';
+import { Ctx, StoreCtx } from './utils/context';
+import { useSet } from './utils/hooks';
 import { fromSetting, toSetting } from './transformer/form-render';
 import list from './widgets/list';
 

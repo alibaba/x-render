@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
 import { flattenToData, dataToFlatten } from '../../../utils';
-import { useStore } from '../../../hooks';
+import { useStore } from '../../../utils/hooks';
 import RenderChildren from './RenderChildren';
 import RenderField from './RenderField';
 import Wrapper from './Wrapper';

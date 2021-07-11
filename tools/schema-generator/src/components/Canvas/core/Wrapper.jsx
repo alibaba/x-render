@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { DeleteOutlined, CopyOutlined, DragOutlined } from '@ant-design/icons';
 import { useDrag, useDrop } from 'react-dnd';
-import { useGlobal, useStore } from '../../../hooks';
+import { useGlobal, useStore } from '../../../utils/hooks';
 import {
   copyItem,
   getKeyFromUniqueId,

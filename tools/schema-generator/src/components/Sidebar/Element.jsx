@@ -1,8 +1,8 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import { useDrag } from 'react-dnd';
-import { useGlobal, useStore } from '../../hooks';
 import { addItem } from '../../utils';
+import { useGlobal, useStore } from '../../utils/hooks';
 import './Element.css';
 
 const Element = ({ text, name, schema, icon, fixedName }) => {

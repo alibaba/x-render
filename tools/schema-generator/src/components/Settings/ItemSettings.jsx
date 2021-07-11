@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
-import { useStore } from '../../hooks';
 import IdInput from '../../widgets/idInput';
 import PercentSlider from '../../widgets/percentSlider';
 import {
@@ -11,8 +10,9 @@ import {
   advancedElements,
   layouts,
 } from '../../settings';
-import { getWidgetName } from '../../mapping';
 import { isObject } from '../../utils';
+import { getWidgetName } from '../../utils/mapping';
+import { useStore } from '../../utils/hooks';
 
 export default function ItemSettings({ widgets }) {
   const form = useForm();
