@@ -49,7 +49,7 @@ npm i table-render --save
 
 ```jsx
 import React from 'react';
-import { Table, Search, TableProvider } from 'table-render';
+import { Table, Search, withTable } from 'table-render';
 
 const dataSource = [];
 for (let i = 0; i < 6; i++) {
@@ -104,14 +104,14 @@ const Wrapper = () => {
     };
   };
   return (
-    <TableProvider>
+    <>
       <Search schema={schema} api={searchApi} />
       <Table headerTitle="最简表格" columns={columns} rowKey="id" />
-    </TableProvider>
+    </>
   );
 };
 
-export default Wrapper;
+export default withTable(Wrapper);
 ```
 
 ## API

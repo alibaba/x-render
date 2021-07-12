@@ -54,7 +54,7 @@ npm i table-render --save
  * defaultShowCode: true
  */
 import React from 'react';
-import { Table, Search, TableProvider } from 'table-render';
+import { Table, Search, withTable } from 'table-render';
 
 const dataSource = [];
 for (let i = 0; i < 6; i++) {
@@ -109,33 +109,35 @@ const Wrapper = () => {
     };
   };
   return (
-    <TableProvider>
+    <>
       <Search schema={schema} api={searchApi} />
       <Table headerTitle="最简表格" columns={columns} rowKey="id" />
-    </TableProvider>
+    </>
   );
 };
 
-export default Wrapper;
+export default withTable(Wrapper);
 ```
 
 ## API
 
-### `withTable` 和 `<TableProvider>`
+### `withTable`
 
-TableRender 的书写能够很简洁，在底层使用了 Context。而 TableProvider 事实上就是 Context Provider，withTable 则是其高阶组件形式的语法糖。书写上，所有表格代码通过 `withTable` 包一下即可：
+TableRender 的书写能够很简洁，在底层使用了 Context，withTable 则是 Context Provider 高阶组件形式的语法糖。书写上用户不再需要额外添加 Provider 包裹表格组件，所有表格代码通过 `withTable` 包一下即可：
 
 使用 withTable 的写法
 
 ```js
-import { withTable, TableProvider } from 'table-render';
+import { withTable，useTable } from 'table-render';
 
-const Page = () => {...}
+const Page = () => {
+  const { refresh } = useTable();
+}
 
 export default withTable(Page)
 ```
 
-使用 TableProvider 的写法
+<!-- 使用 TableProvider 的写法
 
 ```js
 import { withTable, TableProvider } from 'table-render';
@@ -150,7 +152,7 @@ const WrappedPage = () =>
 export default WrappedPage
 ```
 
-可以看到 `withTable` 更为简洁，是推荐的使用方法
+可以看到 `withTable` 更为简洁，是推荐的使用方法 -->
 
 ### `<Search>` 参数
 

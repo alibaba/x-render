@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Table, Search, TableProvider, useTable } from 'table-render';
+import { Table, Search, withTable, useTable } from 'table-render';
 import { Tag, Space, Menu, message, Tooltip, Button } from 'antd';
 import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import request from 'umi-request';
@@ -36,14 +36,6 @@ const schema = {
 };
 
 const Demo = () => {
-  return (
-    <TableProvider>
-      <TableBody />
-    </TableProvider>
-  );
-};
-
-const TableBody = () => {
   const { refresh, tableState }: any = useTable();
 
   const searchApi = params => {
@@ -201,4 +193,4 @@ const TableBody = () => {
   );
 };
 
-export default Demo;
+export default withTable(Demo);
