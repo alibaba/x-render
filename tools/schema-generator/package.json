@@ -1,6 +1,6 @@
 {
   "name": "fr-generator",
-  "version": "2.4.5",
+  "version": "2.4.6",
   "scripts": {
     "build": "father-build",
     "prepare": "npm run build",
