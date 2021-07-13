@@ -26,6 +26,8 @@ const RenderField = props => {
   const { formData } = useStore();
   const { debounceInput, readOnly, disabled, showValidate } = useStore2();
   const { onValuesChange, onItemChange, setEditing, touchKey } = useTools();
+  const formDataRef = useRef();
+  formDataRef.current = formData;
   // console.log('<renderField>', $id);
 
   const errObj = errorFields.find(err => err.name === dataPath);
@@ -58,7 +60,7 @@ const RenderField = props => {
     }
     // 先不暴露给外部，这个api
     if (typeof onValuesChange === 'function') {
-      onValuesChange({ [dataPath]: value }, formData);
+      onValuesChange({ [dataPath]: value }, formDataRef.current);
     }
   };
 
@@ -74,7 +76,7 @@ const RenderField = props => {
     schema: _schema,
     displayType,
     softHidden: displayType === 'inline', // 这个是如果没有校验信息时，展示与否
-    hardHidden: !showValidate || _readOnly === true, // 这个是强制的展示与否
+    hardHidden: showValidate === false || _readOnly === true, // 这个是强制的展示与否
   };
 
   const placeholderTitleProps = {
