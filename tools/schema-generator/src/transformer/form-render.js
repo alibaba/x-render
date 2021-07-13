@@ -43,8 +43,8 @@ const transformTo = (schema) => {
         label: schema.enumNames[idx],
       }));
       schema.enumList = list;
-      delete schema.enum;
-      delete schema.enumNames;
+      schema.enum;
+      schema.enumNames;
     }
   } else {
     const childrenList = getChildren2(schema);
