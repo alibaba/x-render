@@ -51,6 +51,8 @@ export interface Setting {
 export interface FRGeneratorProps {
   /** 隐藏组件 ID */
   hideId?: boolean;
+  /** 固定 id */
+  fixedName?: boolean;
   /** 默认一进入编辑器展示的表单对应的 schema */
   defaultValue?: any;
   /** 自定义 schema 到 form-render 的 schema 的双向转换函数 */
@@ -73,13 +75,19 @@ export interface FRGeneratorProps {
   onChange?: (data: any) => void;
   /** 表单 schema 变化回调 */
   onSchemaChange?: (schema: any) => void;
+  /** 画布组件选择回调 */
+  onCanvasSelect?: (schema: any) => void;
 }
 
 export interface SettingsProps {
   /** 自定义组件 */
   widgets?: any;
 }
-export interface CanvasProps {}
+export interface CanvasProps {
+  /** 画布组件选择回调 */
+  onCanvasSelect?: (schema: any) => void;
+}
+
 export interface SidebarProps {
   /** 固定 id */
   fixedName?: boolean;

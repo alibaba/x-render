@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Input, Button, message } from 'antd';
 import copyTOClipboard from 'copy-text-to-clipboard';
 import FR from './core';
-import { looseJsonParse, isObject, schemaToState } from '../../utils';
+import { looseJsonParse, isObject, schemaToState, idToSchema } from '../../utils';
 import { useSet, useGlobal, useStore } from '../../utils/hooks';
 
 const { TextArea } = Input;
 
-const Canvas = () => {
+const Canvas = ({ onSelect }) => {
   const setGlobal = useGlobal();
-  const { userProps, displaySchema, displaySchemaString } = useStore();
+  const { userProps, displaySchema, displaySchemaString, selected, flatten } = useStore();
   const [local, setState] = useSet({
     preview: false,
     showModal: false,
@@ -57,6 +57,11 @@ const Canvas = () => {
       selected: undefined,
     });
   };
+
+  useEffect(() => {
+    if (!onSelect) return;
+    onSelect(idToSchema(flatten, selected));
+  }, [selected])
 
   const _extraButtons = Array.isArray(extraButtons) ? extraButtons : [];
   const _showDefaultBtns = _extraButtons.filter(

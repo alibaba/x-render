@@ -5,13 +5,18 @@ import Canvas from './components/Canvas';
 import Settings from './components/Settings';
 import './styles/index.less';
 
-const Generator = forwardRef((props, ref) => {
+const Generator = forwardRef(({
+  fixedName,
+  settingsWidgets,
+  onCanvasSelect,
+  ...props
+}, ref) => {
   return (
     <Provider ref={ref} {...props}>
       <div className="fr-generator-container">
-        <Sidebar />
-        <Canvas />
-        <Settings />
+        <Sidebar fixedName={fixedName} />
+        <Canvas onSelect={onCanvasSelect} />
+        <Settings widgets={settingsWidgets} />
       </div>
     </Provider>
   );
