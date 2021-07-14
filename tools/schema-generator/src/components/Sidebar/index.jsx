@@ -1,8 +1,8 @@
 import React from 'react';
 import { defaultSettings } from '../../settings';
 import { useStore } from '../../utils/hooks';
-import './index.css';
 import Element from './Element';
+import './index.less';
 
 const Sidebar = props => {
   const { userProps = {} } = useStore();

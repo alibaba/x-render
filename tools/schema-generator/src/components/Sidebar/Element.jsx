@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { useDrag } from 'react-dnd';
 import { addItem } from '../../utils';
 import { useGlobal, useStore } from '../../utils/hooks';
-import './Element.css';
+import './Element.less';
 
 const Element = ({ text, name, schema, icon, fixedName }) => {
   const [{ isDragging }, dragRef] = useDrag({
