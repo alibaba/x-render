@@ -23,14 +23,12 @@ const Demo = () => {
     properties: {
       select1: {
         title: '单选',
-        description: '尝试选择“显示输入框”',
         type: 'string',
         enum: ['a', 'b'],
-        enumNames: ['隐藏输入框', '显示输入框'],
+        enumNames: ['haha', 'hehe'],
       },
       input1: {
         title: '输入框',
-        description: '尝试输入超过5个字符',
         type: 'string',
       },
       StayTime: {
