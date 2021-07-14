@@ -19,7 +19,7 @@ const Demo = () => {
         <div className="fr-generator-container">
           <Settings />
           <Canvas />
-          <Sidebar />
+          <Sidebar fixedName />
         </div>
       </Provider>
     </div>

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
 import { flattenToData, dataToFlatten } from '../../../utils';
-import { useStore } from '../../../hooks';
+import { useStore } from '../../../utils/hooks';
 import RenderChildren from './RenderChildren';
 import RenderField from './RenderField';
 import Wrapper from './Wrapper';
@@ -9,7 +9,7 @@ import Wrapper from './Wrapper';
 const PreviewFR = ({ schema }) => {
   const form = useForm();
   const { flatten, widgets, mapping, userProps, onFlattenChange } = useStore();
-  const renderSchema = userProps.transformFrom(schema);
+  const renderSchema = userProps.transformer.to(schema);
 
   useEffect(() => {
     form.setValues(flattenToData(flatten));
@@ -46,7 +46,7 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   const isList = schema.type === 'array' && schema.enum === undefined;
   const isComplex = isObj || isList;
   const width = schema['width'];
-  let containerClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''}`;
+  let containerClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''} ${schema.className || ''}`;
   let labelClass = 'fr-label mb2';
   let contentClass = 'fr-content';
 

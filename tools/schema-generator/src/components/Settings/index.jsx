@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
 import ItemSettings from './ItemSettings';
 import GlobalSettings from './GlobalSettings';
-import { useStore, useSet } from '../../hooks';
+import { useStore, useSet } from '../../utils/hooks';
 import './index.less';
 
 const { TabPane } = Tabs;

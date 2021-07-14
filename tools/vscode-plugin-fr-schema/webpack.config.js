@@ -50,7 +50,10 @@ const config = {
   },
   plugins: [
     new CopyPlugin({
-      patterns: [{ from: 'src/snippets', to: '../snippets' }],
+      patterns: [
+        { from: 'src/snippets', to: '../snippets' },
+        { from: 'src/validation', to: '../validation' },
+      ],
     }),
   ],
 };
