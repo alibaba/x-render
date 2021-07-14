@@ -28,3 +28,7 @@ FormRender 1.0 与之前一样，对组件库的口子都是开着的，外部�
 ### 6、 我试着使用 form.setValues, 但是被 set 的值还是空的？
 
 form-render 有生命周期的概念，请在 onMount 这个钩子里 set。
+
+### 7、 自定义组件的数据为 JSON 数据，当类型指定为 string 时，校验提示"xxx 的类型不是 string"，如果类型改为"object", UI 展示又会有变化，咋办？
+
+{ type: 'any' }
