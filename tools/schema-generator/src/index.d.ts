@@ -69,6 +69,8 @@ export interface FRGeneratorProps {
   globalSettings?: any;
   /** 自定义组件 */
   widgets?: any;
+  /** 配置栏自定义组件 */
+  settingsWidgets?: any;
   /** 组件和 schema 的映射规则 */
   mapping?: any;
   /** 表单 data 变化回调 */
