@@ -1,4 +1,3 @@
-@import '~antd/dist/antd.less';
 @import './atom.less';
 
 /*
@@ -336,5 +335,25 @@
   .fr-map {
     display: flex;
     flex-wrap: wrap;
+  }
+}
+
+.frg-options-list {
+  .fr-list-1 {
+    .fr-field.fr-field-object {
+      flex: 1;
+    }
+    .fr-field.fr-field-inline > div:first-child {
+      display: none;
+    }
+  }
+  .frg-options-input {
+    &:first-child {
+      margin-right: 6px;
+    }
+    .fr-content.fr-content-inline  {
+      max-width: 96px;
+      min-width: 96px;
+    }
   }
 }

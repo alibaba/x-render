@@ -1,11 +1,11 @@
 import React from 'react';
 import { nanoid } from 'nanoid';
 import { useDrag } from 'react-dnd';
-import { useGlobal, useStore } from '../../hooks';
 import { addItem } from '../../utils';
+import { useGlobal, useStore } from '../../utils/hooks';
 import './Element.css';
 
-const Element = ({ text, name, schema, icon }) => {
+const Element = ({ text, name, schema, icon, fixedName }) => {
   const [{ isDragging }, dragRef] = useDrag({
     type: 'box',
     item: {
@@ -30,7 +30,11 @@ const Element = ({ text, name, schema, icon }) => {
   const { selected, flatten, onFlattenChange } = useStore();
 
   const handleElementClick = () => {
-    const { newId, newFlatten } = addItem({ selected, name, schema, flatten });
+    if (selected && !flatten[selected]) {
+      setGlobal({ selected: '#' });
+      return;
+    }
+    const { newId, newFlatten } = addItem({ selected, name, schema, flatten, fixedName });
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
   };

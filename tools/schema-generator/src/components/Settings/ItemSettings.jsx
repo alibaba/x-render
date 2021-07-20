@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
-import { useStore } from '../../hooks';
 import IdInput from '../../widgets/idInput';
 import PercentSlider from '../../widgets/percentSlider';
 import {
@@ -11,8 +10,9 @@ import {
   advancedElements,
   layouts,
 } from '../../settings';
-import { getWidgetName } from '../../mapping';
 import { isObject } from '../../utils';
+import { getWidgetName } from '../../utils/mapping';
+import { useStore } from '../../utils/hooks';
 
 export default function ItemSettings({ widgets }) {
   const form = useForm();
@@ -25,7 +25,7 @@ export default function ItemSettings({ widgets }) {
     mapping: globalMapping,
   } = useStore();
 
-  const { settings, commonSettings, hideId } = userProps;
+  const { settings, commonSettings, hideId, transformer } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
   // 避免切换选中项时 schema 对应出错
   const [ready, setReady] = useState({});
@@ -72,11 +72,11 @@ export default function ItemSettings({ widgets }) {
       if (item && item.schema) {
         onItemChange(selected, {
           ...item,
-          schema: value,
+          schema: transformer.fromSetting(value),
         });
       }
     } catch (error) {
-      console.log(error, 'catch');
+      console.log('catch', error);
     }
   };
 
@@ -108,7 +108,7 @@ export default function ItemSettings({ widgets }) {
         displayType: 'column',
         properties,
       });
-      form.setValues(item.schema);
+      form.setValues(transformer.toSetting(item.schema));
       setTimeout(() => {
         setReady(true);
         onDataChange(form.getValues());

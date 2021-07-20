@@ -257,22 +257,33 @@ export const elements = [
       widget: 'select',
     },
     setting: {
-      enum: {
-        title: '选项字段',
+      enumList: {
+        title: '选项',
         type: 'array',
-        enum: [],
-        widget: 'select',
-        props: {
-          mode: 'tags',
+        widget: 'list1',
+        className: 'frg-options-list',
+        items: {
+          type: 'object',
+          properties: {
+            value: {
+              title: '',
+              type: 'string',
+              className: 'frg-options-input',
+              props: {},
+              placeholder: '字段',
+            },
+            label: {
+              title: '',
+              type: 'string',
+              className: 'frg-options-input',
+              props: {},
+              placeholder: '名称',
+            },
+          },
         },
-      },
-      enumNames: {
-        title: '选项名称',
-        type: 'array',
-        enum: [],
-        widget: 'select',
         props: {
-          mode: 'tags',
+          hideMove: true,
+          hideCopy: true
         },
       },
     },
@@ -288,22 +299,33 @@ export const elements = [
       widget: 'radio',
     },
     setting: {
-      enum: {
-        title: '选项字段',
+      enumList: {
+        title: '选项',
         type: 'array',
-        enum: [],
-        widget: 'select',
-        props: {
-          mode: 'tags',
+        widget: 'list1',
+        className: 'frg-options-list',
+        items: {
+          type: 'object',
+          properties: {
+            value: {
+              title: '',
+              type: 'string',
+              className: 'frg-options-input',
+              props: {},
+              placeholder: '字段',
+            },
+            label: {
+              title: '',
+              type: 'string',
+              className: 'frg-options-input',
+              props: {},
+              placeholder: '名称',
+            },
+          },
         },
-      },
-      enumNames: {
-        title: '选项名称',
-        type: 'array',
-        enum: [],
-        widget: 'select',
         props: {
-          mode: 'tags',
+          hideMove: true,
+          hideCopy: true
         },
       },
     },
@@ -323,22 +345,33 @@ export const elements = [
       widget: 'multiSelect',
     },
     setting: {
-      enum: {
-        title: '选项字段',
+      enumList: {
+        title: '选项',
         type: 'array',
-        enum: [],
-        widget: 'select',
-        props: {
-          mode: 'tags',
+        widget: 'list1',
+        className: 'frg-options-list',
+        items: {
+          type: 'object',
+          properties: {
+            value: {
+              title: '',
+              type: 'string',
+              className: 'frg-options-input',
+              props: {},
+              placeholder: '字段',
+            },
+            label: {
+              title: '',
+              type: 'string',
+              className: 'frg-options-input',
+              props: {},
+              placeholder: '名称',
+            },
+          },
         },
-      },
-      enumNames: {
-        title: '选项名称',
-        type: 'array',
-        enum: [],
-        widget: 'select',
         props: {
-          mode: 'tags',
+          hideMove: true,
+          hideCopy: true
         },
       },
     },
@@ -357,22 +390,33 @@ export const elements = [
       enumNames: ['杭州', '武汉', '湖州', '贵阳'],
     },
     setting: {
-      enum: {
-        title: '选项字段',
+      enumList: {
+        title: '选项',
         type: 'array',
-        enum: [],
-        widget: 'select',
-        props: {
-          mode: 'tags',
+        widget: 'list1',
+        className: 'frg-options-list',
+        items: {
+          type: 'object',
+          properties: {
+            value: {
+              title: '',
+              type: 'string',
+              className: 'frg-options-input',
+              props: {},
+              placeholder: '字段',
+            },
+            label: {
+              title: '',
+              type: 'string',
+              className: 'frg-options-input',
+              props: {},
+              placeholder: '名称',
+            },
+          },
         },
-      },
-      enumNames: {
-        title: '选项名称',
-        type: 'array',
-        enum: [],
-        widget: 'select',
         props: {
-          mode: 'tags',
+          hideMove: true,
+          hideCopy: true
         },
       },
     },

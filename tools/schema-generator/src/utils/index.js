@@ -288,7 +288,7 @@ export const copyItem = (flatten, $id) => {
   let newFlatten = { ...flatten };
   try {
     const item = flatten[$id];
-    const newId = $id + nanoid(6);
+    const newId = `${$id}_${nanoid(6)}`;
     const siblings = newFlatten[item.parent].children;
     const idx = siblings.findIndex(x => x === $id);
     siblings.splice(idx + 1, 0, newId);
@@ -302,7 +302,7 @@ export const copyItem = (flatten, $id) => {
 };
 
 // Left 点击添加 item
-export const addItem = ({ selected, name, schema, flatten }) => {
+export const addItem = ({ selected, name, schema, flatten, fixedName }) => {
   let _selected = selected || '#';
   let newId;
   // string第一个是0，说明点击了object、list的里侧
@@ -310,9 +310,11 @@ export const addItem = ({ selected, name, schema, flatten }) => {
     const newFlatten = { ...flatten };
     try {
       let oldId = _selected.substring(1);
-      newId = oldId + '/' + name + '_' + nanoid(6);
+      newId = _selected === '#' ? `#/${name}` : `${oldId}/${name}`;
+      if (!fixedName) {
+        newId += `_${nanoid(6)}`;
+      }
       if (_selected === '#') {
-        newId = '#/' + name + '_' + nanoid(6);
         oldId = '#';
       }
       const siblings = newFlatten[oldId].children;
@@ -329,7 +331,10 @@ export const addItem = ({ selected, name, schema, flatten }) => {
     }
     return { newId, newFlatten };
   }
-  let _name = name + '_' + nanoid(6);
+  let _name = name;
+  if (!fixedName) {
+    _name += `_${nanoid(6)}`;
+  }
   const idArr = selected.split('/');
   idArr.pop();
   idArr.push(_name);
