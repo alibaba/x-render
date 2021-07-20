@@ -108,8 +108,8 @@ declare const FRGenerator: Generator;
 declare const defaultSettings: Setting;
 declare const defaultCommonSettings: any;
 declare const defaultGlobalSettings: any;
-declare const fromSetting: (schema: any) => any;;
-declare const toSetting: (schema: any) => any;;
+declare const fromSetting: (schema: any) => any;
+declare const toSetting: (schema: any) => any;
 
 export { defaultSettings, defaultCommonSettings, defaultGlobalSettings };
 export { fromSetting, toSetting };
