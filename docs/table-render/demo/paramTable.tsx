@@ -3,11 +3,12 @@
  * defaultShowCode: true
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Table, Search, withTable, useTable } from 'table-render';
-import { Tag, Space, Menu, message, Tooltip, Button } from 'antd';
+import { Tag, Space, message, Tooltip, Button } from 'antd';
 import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import request from 'umi-request';
+import { history } from 'umi';
 
 const schema = {
   type: 'object',
@@ -36,27 +37,16 @@ const schema = {
 };
 
 const Demo = () => {
-  const { refresh, tableState }: any = useTable();
-
-  const searchApi = params => {
-    console.log('params >>> ', params);
-    return request
-      .get(
-        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
-        { params }
-      )
-      .then(res => {
-        // console.log('response:', res);
-        if (res && res.data) {
-          return {
-            rows: res.data,
-            total: res.data.length,
-            extraData: res.status,
-          }; // 注意一定要返回 rows 和 total
-        }
-      })
-      .catch(e => console.log('Oops, error', e));
-  };
+  const { refresh, tableState, form }: any = useTable();
+  useEffect(() => {
+    // 实际使用时queryParam为url上取下来的有效参数
+    // const queryParam = { state: 'open' };
+    const queryParam = history.location.query;
+    if (queryParam) {
+      // form具体api参考form-render文档
+      form.setValues(queryParam);
+    }
+  }, []);
 
   // 配置完全透传antd table
   const columns = [
@@ -133,51 +123,52 @@ const Demo = () => {
     },
   ];
 
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <div onClick={() => message.success('复制成功！')}>复制</div>
-      </Menu.Item>
-      <Menu.Item>
-        <div onClick={() => message.warning('确定删除吗？')}>删除</div>
-      </Menu.Item>
-    </Menu>
-  );
-
   const showData = () => {
     refresh(null, { extra: 1 });
   };
-
+  const searchApi = params => {
+    console.log('params >>> ', params);
+    return request
+      .get(
+        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+        { params }
+      )
+      .then(res => {
+        // console.log('response:', res);
+        if (res && res.data) {
+          return {
+            rows: res.data,
+            total: res.data.length,
+            extraData: res.status,
+          }; // 注意一定要返回 rows 和 total
+        }
+      })
+      .catch(e => console.log('Oops, error', e));
+  };
+  const onSearch = search => {
+    console.log('onSearch', search);
+  };
+  const afterSearch = params => {
+    const formData = form.getValues();
+    history.replace({
+      pathname: '/table-render/demo',
+      query: formData,
+    });
+  };
   return (
     <div style={{ background: 'rgb(245,245,245)' }}>
       <Search
         schema={schema}
         displayType="row"
-        onSearch={search => console.log('onSearch', search)}
-        afterSearch={params => console.log('afterSearch', params)}
-        api={[
-          {
-            name: '全部数据',
-            api: searchApi,
-          },
-          {
-            name: '我的数据',
-            api: searchApi,
-          },
-        ]}
+        onSearch={onSearch}
+        afterSearch={afterSearch}
+        api={searchApi}
       />
       <Table
-        // size="small"
         columns={columns}
-        // headerTitle="高级表单"
+        headerTitle="url带参查询"
         rowKey="id"
         toolbarRender={() => [
-          <Button key="show" onClick={showData}>
-            查看日志
-          </Button>,
-          <Button key="out" onClick={showData}>
-            导出数据
-          </Button>,
           <Button
             key="primary"
             type="primary"

@@ -61,7 +61,7 @@ export default defineConfig({
       title: '更新日志',
       children: [
         {
-          title: 'FormTender',
+          title: 'FormRender',
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
         },

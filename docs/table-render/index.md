@@ -54,7 +54,7 @@ npm i table-render --save
  * defaultShowCode: true
  */
 import React from 'react';
-import { Table, Search, TableProvider } from 'table-render';
+import { Table, Search, withTable } from 'table-render';
 
 const dataSource = [];
 for (let i = 0; i < 6; i++) {
@@ -109,48 +109,33 @@ const Wrapper = () => {
     };
   };
   return (
-    <TableProvider>
+    <>
       <Search schema={schema} api={searchApi} />
       <Table headerTitle="最简表格" columns={columns} rowKey="id" />
-    </TableProvider>
+    </>
   );
 };
 
-export default Wrapper;
+export default withTable(Wrapper);
 ```
 
 ## API
 
-### `withTable` 和 `<TableProvider>`
+### `withTable`
 
-TableRender 的书写能够很简洁，在底层使用了 Context。而 TableProvider 事实上就是 Context Provider，withTable 则是其高阶组件形式的语法糖。书写上，所有表格代码通过 `withTable` 包一下即可：
+TableRender 的书写能够很简洁，在底层使用了 Context，withTable 则是 Context Provider 高阶组件形式的语法糖。书写上用户不再需要额外添加 Provider 包裹表格组件，所有表格代码通过 `withTable` 包一下即可：
 
 使用 withTable 的写法
 
 ```js
-import { withTable, TableProvider } from 'table-render';
+import { withTable，useTable } from 'table-render';
 
-const Page = () => {...}
+const Page = () => {
+  const { refresh } = useTable();
+}
 
 export default withTable(Page)
 ```
-
-使用 TableProvider 的写法
-
-```js
-import { withTable, TableProvider } from 'table-render';
-
-const Page = () => {...}
-
-const WrappedPage = () =>
-  <TableProvider>
-    <Page />
-  </TableProvider>
-
-export default WrappedPage
-```
-
-可以看到 `withTable` 更为简洁，是推荐的使用方法
 
 ### `<Search>` 参数
 
@@ -167,6 +152,7 @@ export default WrappedPage
 | searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
 | searchBtnStyle     | 自定义表单操作按钮组的样式                                                            | `React.CSSProperties`                  | {}      | 否   |
 | searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                      | `string`                               | ''      | 否   |
+| debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                         | `boolean`                              | `false` | 否   |
 
 ### `<Table>` 参数
 
@@ -179,6 +165,7 @@ export default WrappedPage
 | toolbarAction         | 显示在表格主体右上方的 Icon 列表，内置了`刷新、调整密度、全屏显示` 等功能 | `boolean`           | `false`     |
 | pageChangeWithRequest | 切换分页时是否需要请求接口                                                | `boolean`           | `true`      |
 | columns               | 列定义                                                                    | `object`            | `false`     |
+| debug                 | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**             | `boolean`           | `false`     |
 
 #### `<Table>` 参数 中 Columns 列定义
 

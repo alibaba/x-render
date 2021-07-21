@@ -5,7 +5,7 @@
 
 import React from 'react';
 import { Table, Search, withTable, useTable } from 'table-render';
-import { Tag, Space, Menu, message, Tooltip, Button } from 'antd';
+import { Tag, Space, message, Tooltip, Button } from 'antd';
 import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import request from 'umi-request';
 
@@ -23,12 +23,6 @@ const schema = {
     labels: {
       title: '酒店星级',
       type: 'string',
-      width: '25%',
-    },
-    created_at: {
-      title: '成立时间',
-      type: 'string',
-      format: 'date',
       width: '25%',
     },
   },
@@ -110,12 +104,6 @@ const Demo = () => {
       valueType: 'money',
     },
     {
-      title: '成立时间',
-      key: 'created_at',
-      dataIndex: 'created_at',
-      valueType: 'date',
-    },
-    {
       title: '操作',
       render: row => (
         <Space>
@@ -133,17 +121,6 @@ const Demo = () => {
     },
   ];
 
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <div onClick={() => message.success('复制成功！')}>复制</div>
-      </Menu.Item>
-      <Menu.Item>
-        <div onClick={() => message.warning('确定删除吗？')}>删除</div>
-      </Menu.Item>
-    </Menu>
-  );
-
   const showData = () => {
     refresh(null, { extra: 1 });
   };
@@ -151,43 +128,16 @@ const Demo = () => {
   return (
     <div style={{ background: 'rgb(245,245,245)' }}>
       <Search
+        hidden
         schema={schema}
         displayType="row"
         onSearch={search => console.log('onSearch', search)}
         afterSearch={params => console.log('afterSearch', params)}
-        api={[
-          {
-            name: '全部数据',
-            api: searchApi,
-          },
-          {
-            name: '我的数据',
-            api: searchApi,
-          },
-        ]}
+        api={searchApi}
       />
       <Table
-        // size="small"
         columns={columns}
-        // headerTitle="高级表单"
         rowKey="id"
-        toolbarRender={() => [
-          <Button key="show" onClick={showData}>
-            查看日志
-          </Button>,
-          <Button key="out" onClick={showData}>
-            导出数据
-          </Button>,
-          <Button
-            key="primary"
-            type="primary"
-            onClick={() => alert('table-render！')}
-          >
-            <PlusOutlined />
-            创建
-          </Button>,
-        ]}
-        toolbarAction
       />
     </div>
   );

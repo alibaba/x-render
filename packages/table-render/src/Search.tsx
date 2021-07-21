@@ -27,7 +27,10 @@ const MySearchBtn = ({
   searchBtnClassName,
   form,
 }: any) => {
-  const clearSearch = form.resetFields;
+  const clearSearch = () => {
+    form.resetFields();
+    form.submit();
+  };
   const searchBtnArr =
     typeof searchBtnRender === 'function'
       ? searchBtnRender(form.submit, clearSearch)
@@ -57,6 +60,7 @@ const MySearchBtn = ({
 };
 
 export interface SearchProps {
+  debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
   api?: any;
@@ -157,8 +161,12 @@ const Search = (props: SearchProps) => {
       searchApi: props.api,
       syncAfterSearch: props.afterSearch,
     });
-    if (props.hidden || searchOnMount) {
+    if (!props.hidden && searchOnMount) {
       form.submit();
+    }
+    // 隐藏search组件时，不会触发form.submit
+    if (props.hidden) {
+      refresh();
     }
   }, []);
 
