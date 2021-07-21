@@ -1,12 +1,12 @@
-import React from 'react';
-import { useStore } from '../../../hooks';
+import React, { Suspense } from 'react';
+import { useStore } from '../../../utils/hooks';
 import {
   isLooselyNumber,
   isCssLength,
   getParentProps,
   transformProps,
 } from '../../../utils';
-import { getWidgetName } from '../../../mapping';
+import { getWidgetName } from '../../../utils/mapping';
 
 const RenderField = ({
   $id,
@@ -111,7 +111,9 @@ const RenderField = ({
         </div>
       ) : null}
       <div className={contentClass} style={contentStyle}>
-        <Widget {...usefulWidgetProps}>{children || null}</Widget>
+        <Suspense fallback={<div></div>}>
+          <Widget {...usefulWidgetProps}>{children || null}</Widget>
+        </Suspense>
       </div>
     </>
   );

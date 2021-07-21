@@ -88,6 +88,7 @@ function App({
     isSubmitting,
     formData,
     flatten,
+    showValidate, // 旧版折中升级方案里，旧的api的软兼容
   } = valuesThatWillChange;
 
   useEffect(() => {
@@ -137,6 +138,7 @@ function App({
       readOnly,
       disabled,
       allCollapsed,
+      showValidate,
     }),
     [
       displayType,
@@ -149,6 +151,7 @@ function App({
       readOnly,
       disabled,
       allCollapsed,
+      showValidate,
     ]
   );
 

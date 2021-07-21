@@ -169,6 +169,7 @@ export default WrappedPage
 | searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
 | searchBtnStyle     | 自定义表单操作按钮组的样式                                                            | `React.CSSProperties`                  | {}      | 否   |
 | searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                      | `string`                               | ''      | 否   |
+| debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                     | `boolean`                              | `false` | 否   |
 
 ### `<Table>` 参数
 
@@ -181,6 +182,7 @@ export default WrappedPage
 | toolbarAction         | 显示在表格主体右上方的 Icon 列表，内置了`刷新、调整密度、全屏显示` 等功能 | `boolean`           | `false`     |
 | pageChangeWithRequest | 切换分页时是否需要请求接口                                                | `boolean`           | `true`      |
 | columns               | 列定义                                                                    | `object`            | `false`     |
+| debug                 | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**         | `boolean`           | `false`     |
 
 #### `<Table>` 参数 中 Columns 列定义
 

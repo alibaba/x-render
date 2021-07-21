@@ -2,16 +2,20 @@ import * as React from 'react';
 
 export interface Transformer {
   /** 正向的转换函数 */
-  from: (schema: any) => any;
+  from?: (schema: any) => any;
   /** 反向的转换函数 */
-  to: (schema: any) => any;
+  to?: (schema: any) => any;
+  /** 反向的转换函数 */
+  fromSetting?: (schema: any) => any;
+  /** 反向的转换函数 */
+  toSetting?: (schema: any) => any;
 }
 
 export interface ExtraButton {
   /** 按钮文案 */
   text: string;
   /** 点击回调 */
-  onClick?: () => void;
+  onClick?: (event: any) => void;
   [key: string]: any;
 }
 
@@ -19,7 +23,7 @@ export interface ControlButton {
   /** 按钮文案 */
   text?: string;
   /** 点击回调 */
-  onClick?: () => void;
+  onClick?: (event: any, schema: any) => void;
 }
 
 export interface SettingWidget {
@@ -71,16 +75,32 @@ export interface FRGeneratorProps {
   onSchemaChange?: (schema: any) => void;
 }
 
-declare const FRGenerator: React.ForwardRefExoticComponent<FRGeneratorProps &
-  React.RefAttributes<unknown>>;
+export interface SettingsProps {
+  /** 自定义组件 */
+  widgets?: any;
+}
+export interface CanvasProps {}
+export interface SidebarProps {
+  /** 固定 id */
+  fixedName?: boolean;
+}
 
+export interface Generator
+  extends React.ForwardRefExoticComponent<
+    FRGeneratorProps & React.RefAttributes<HTMLElement>
+  > {
+  Settings: React.FC<SettingsProps>;
+  Canvas: React.FC<CanvasProps>;
+  Sidebar: React.FC<SidebarProps>;
+}
+
+declare const FRGenerator: Generator;
 declare const defaultSettings: Setting;
 declare const defaultCommonSettings: any;
 declare const defaultGlobalSettings: any;
+declare const fromSetting: (schema: any) => any;;
+declare const toSetting: (schema: any) => any;;
 
-export {
-  defaultSettings,
-  defaultCommonSettings,
-  defaultGlobalSettings,
-};
+export { defaultSettings, defaultCommonSettings, defaultGlobalSettings };
+export { fromSetting, toSetting };
 export default FRGenerator;

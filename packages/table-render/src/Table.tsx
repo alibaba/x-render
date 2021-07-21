@@ -32,6 +32,7 @@ const ProTable = (props: ProTableProps) => {
   };
 
   const {
+    debug,
     headerTitle,
     toolbarRender,
     columns,
@@ -105,6 +106,12 @@ const ProTable = (props: ProTableProps) => {
         style={style}
         ref={rootRef}
       >
+        {debug ? (
+          <div className="mv2 bg-black-05 pa2 br2">
+            <div>{'dataSource:' + JSON.stringify(dataSource)}</div>
+            {/* <div>{'pagination:' + JSON.stringify(pagination)}</div> */}
+          </div>
+        ) : null}
         {
           <div
             className={showTableTop ? 'tr-table-top' : 'tr-table-top-nohead'}

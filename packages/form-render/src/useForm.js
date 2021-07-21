@@ -18,6 +18,7 @@ const useForm = props => {
     formData: _formData,
     onChange: _onChange,
     onValidate: _onValidate,
+    showValidate: _showValidate,
   } = props || {};
 
   const [renderCount, forceRender] = useState(0);
@@ -394,6 +395,7 @@ const useForm = props => {
     getValues,
     resetFields,
     submit,
+    init: submit, // 简版的迁移方案里用，正常用不到，换个名字迁移的时候大家更好接受点
     submitData,
     errorFields,
     isValidating,
@@ -406,6 +408,7 @@ const useForm = props => {
     isEditing,
     setEditing,
     syncStuff,
+    showValidate: _showValidate,
   };
 
   return form;
