@@ -9,6 +9,8 @@ title: 常见问题
 
 可以，`<Search hidden />` 添加 `hidden` 属性即可。
 
-### 2、嵌套表格内部的 Table 该怎么写？
+### 2、出现引入同名 Table 组件该如何解决?
 
-import { Table as AntTable } from 'antd',内部嵌套表格写为<AntTable/>
+```js
+import { Table as AntTable } from 'antd';
+```
