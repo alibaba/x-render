@@ -745,27 +745,32 @@ export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
 
     switch (schema.type) {
       case 'range':
-        const rangeValidator = {
-          validator: (rule, value) => {
-            if (!value) return true;
-            if (Array.isArray(value)) {
-              // range组件点击clear，会变成 ['','']
-              // range组件对应的值bind的时候，会变成 [null,null]
-              const validValue =
-                typeof value[0] === 'string' && typeof value[1] === 'string';
-              const validValue2 =
-                value[0] === undefined && value[1] === undefined;
-              if (validValue || validValue2) {
-                return true;
-              }
-              return false;
-            }
-            return false;
-          },
-          type: 'array',
-          message: '${title}必填',
-        };
-        singleResult = rangeValidator;
+        // 暂时先去掉，应该没事了，在range组件的源头上把奇怪的case干掉了
+        // const rangeValidator = {
+        //   validator: (rule, value) => {
+        //     const rangeRequired = schema.required === true && isRequired;
+        //     // range组件点击clear，会变成 ['','']
+        //     // range组件对应的值bind的时候，会变成 [undefined,undefined]
+        //     const notValid1 = value[0] === '' && value[1] === '';
+        //     const notValid2 = value[0] === undefined && value[1] === undefined;
+        //     if (rangeRequired) {
+        //       if (!value) return false;
+        //       if (Array.isArray(value)) {
+        //         if (notValid1 || notValid2) {
+        //           return false;
+        //         }
+        //         return true;
+        //       }
+        //       return true;
+        //     } else {
+        //       return true;
+        //     }
+        //   },
+        //   type: 'array',
+        //   message: '${title}必填',
+        // };
+        // singleResult = rangeValidator;
+        singleResult.type = 'array';
         break;
       case 'html':
         singleResult.type = 'string';

@@ -27,12 +27,23 @@
             "format": "image",
             "default": "http://placekitten.com/200/300"
           },
+          "url": {
+            "title": "网址",
+            "type": "string",
+            "format": "url",
+            "props": {
+              "prefix": "https://"
+            }
+          },
           "uploader": {
             "title": "上传文件",
             "type": "string",
             "format": "upload",
-            "props": {
+            "uploadProps": {
               "action": "https://www.mocky.io/v2/5cc8019d300000980a055e76"
+            },
+            "buttonProps": {
+              "type": "primary"
             }
           },
           "treeSelect": {

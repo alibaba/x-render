@@ -4,7 +4,13 @@ import { validateAll } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
-import { generateDataSkeleton, flattenSchema, clone } from './utils';
+import {
+  generateDataSkeleton,
+  flattenSchema,
+  clone,
+  schemaContainsExpression,
+  parseAllExpression,
+} from './utils';
 
 const useForm = props => {
   const {
@@ -12,6 +18,7 @@ const useForm = props => {
     formData: _formData,
     onChange: _onChange,
     onValidate: _onValidate,
+    showValidate: _showValidate,
   } = props || {};
 
   const [renderCount, forceRender] = useState(0);
@@ -34,6 +41,7 @@ const useForm = props => {
   const beforeFinishRef = useRef(() => {});
   const onMountRef = useRef();
   const localeRef = useRef('cn');
+  const removeHiddenDataRef = useRef();
   const validateMessagesRef = useRef();
   const _data = useRef({}); // 用ref是为了破除闭包的影响
   const _flatten = useRef({}); // 用ref是为了破除闭包的影响
@@ -178,13 +186,39 @@ const useForm = props => {
     validateMessages,
     beforeFinish,
     onMount,
+    removeHiddenData,
   }) => {
     schemaRef.current = schema;
     localeRef.current = locale;
     validateMessagesRef.current = validateMessages;
     beforeFinishRef.current = beforeFinish;
     onMountRef.current = onMount;
+    removeHiddenDataRef.current = removeHiddenData;
     forceRender(renderCount + 1);
+  };
+
+  const setSchema = settings => {
+    const newFlatten = clone(_flatten.current);
+    try {
+      Object.keys(settings).forEach(path => {
+        if (!_flatten.current[path]) {
+          console.error(`path：'${path}' 不存在(form.setSchemaByPath)`);
+        } else {
+          const newSchema = settings[path];
+          const _newSchema =
+            typeof newSchema === 'function'
+              ? newSchema(newFlatten[path].schema)
+              : newSchema;
+          newFlatten[path].schema = {
+            ...newFlatten[path].schema,
+            ..._newSchema,
+          };
+        }
+      });
+      setState({ flatten: { ...newFlatten } });
+    } catch (error) {
+      console.error(error, 'setSchema');
+    }
   };
 
   const setSchemaByPath = (path, newSchema) => {
@@ -238,7 +272,8 @@ const useForm = props => {
     _setErrors(newError);
   };
 
-  const getValues = () => processData(_data.current, _flatten.current);
+  const getValues = () =>
+    processData(_data.current, _flatten.current, removeHiddenDataRef.current);
 
   const setValues = newFormData => {
     const newData = transformDataWithBind2(newFormData, _flatten.current);
@@ -251,9 +286,17 @@ const useForm = props => {
     // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
 
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
+
+    // schema 的转换在这边
+    let _schema = schemaRef.current;
+    if (schemaContainsExpression(schemaRef.current, false)) {
+      _schema = parseAllExpression(schemaRef.current, _data.current, '#');
+    }
+    const _flatten = flattenSchema(_schema);
+
     return validateAll({
       formData: _data.current,
-      schema: schemaRef.current,
+      schema: _schema,
       touchedKeys: [],
       isRequired: true,
       locale: localeRef.current,
@@ -267,29 +310,31 @@ const useForm = props => {
             errorFields: errors,
           });
         }
+
         if (typeof beforeFinishRef.current === 'function') {
-          return Promise.resolve(processData(_data.current, flatten)).then(
-            res => {
-              setState({
-                isValidating: true,
-                isSubmitting: false,
-                outsideValidating: true,
-                submitData: res,
-              });
-              return errors;
-            }
-          );
-        }
-        return Promise.resolve(processData(_data.current, flatten)).then(
-          res => {
+          return Promise.resolve(
+            processData(_data.current, _flatten, removeHiddenDataRef.current)
+          ).then(res => {
             setState({
-              isValidating: false,
-              isSubmitting: true,
+              isValidating: true,
+              isSubmitting: false,
+              outsideValidating: true,
               submitData: res,
             });
             return errors;
-          }
-        );
+          });
+        }
+
+        return Promise.resolve(
+          processData(_data.current, _flatten, removeHiddenDataRef.current)
+        ).then(res => {
+          setState({
+            isValidating: false,
+            isSubmitting: true,
+            submitData: res,
+          });
+          return errors;
+        });
       })
       .catch(err => {
         // 不应该走到这边的
@@ -345,10 +390,12 @@ const useForm = props => {
     setValueByPath: onItemChange, // 单个
     getSchemaByPath,
     setSchemaByPath,
+    setSchema,
     setValues,
     getValues,
     resetFields,
     submit,
+    init: submit, // 简版的迁移方案里用，正常用不到，换个名字迁移的时候大家更好接受点
     submitData,
     errorFields,
     isValidating,
@@ -361,6 +408,7 @@ const useForm = props => {
     isEditing,
     setEditing,
     syncStuff,
+    showValidate: _showValidate,
   };
 
   return form;

@@ -8,7 +8,6 @@ import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
 
-import 'antd/dist/antd.less'; // 需要配置一下babel-plugins
 import './index.css';
 
 const useTableRoot = props => {
@@ -172,4 +171,12 @@ const Container = (props, ref) => {
 
 const TableProvider = forwardRef(Container);
 
-export { Search, Table, TableProvider, useTable };
+const withTable = Component => ({ children, ...rest }) => {
+  return (
+    <TableProvider {...rest}>
+      <Component />
+    </TableProvider>
+  );
+};
+
+export { Search, Table, TableProvider, useTable, withTable };

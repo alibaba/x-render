@@ -35,7 +35,6 @@
     "prettier": "^1.19.1",
     "prismjs": "^1.20.0",
     "react": "^16.12.0",
-    "react-simple-code-editor": "^0.11.0",
     "umi-plugin-hire": "^1.0.3",
     "yorkie": "^2.0.0"
   },
@@ -46,7 +45,7 @@
     "platform": "github"
   },
   "dependencies": {
-    "monaco-editor-webpack-plugin": "^3.1.0",
+    "monaco-editor-webpack-plugin": "^4.0.0",
     "react-monaco-editor": "^0.43.0"
   }
 }

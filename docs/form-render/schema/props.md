@@ -143,6 +143,14 @@ window.copyMe = ({ value, index, schema }) => {
 
 目前还没有，未来会扩展
 
+### url 组件
+
+**`addonText`**
+默认为 “测试链接”，可通过此字段自定义
+
+**`prefix`** 和 **`suffix`**
+为 antd 原生支持，如果使用则最终的 formData 里对应 key 的值会自动拼接上 prefix 和 suffix。例如 prefix: "https://", 填写了"www.taobao.com"，则最终提交的 formData 值为"https://www.taobao.com"
+
 ### upload 上传
 
 **uploadProps**

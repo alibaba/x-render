@@ -10,7 +10,6 @@ import _get from 'lodash.get';
 import { TablePaginationConfig } from 'antd/lib/table';
 import zh_CN from 'antd/lib/locale/zh_CN';
 
-import 'antd/dist/antd.less'; // 需要配置一下babel-plugins
 import './index.css';
 
 export interface RootState {

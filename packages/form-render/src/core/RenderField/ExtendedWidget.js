@@ -27,7 +27,14 @@ const ExtendedWidget = ({
   disabled,
   dataIndex,
 }) => {
-  const { widgets, mapping } = useTools();
+  const {
+    widgets,
+    mapping,
+    setErrorFields,
+    setSchema,
+    resetFields,
+    removeErrorField,
+  } = useTools();
 
   // TODO1: 需要查一下卡顿的源头
   // if (isObjType(schema)) {
@@ -82,6 +89,16 @@ const ExtendedWidget = ({
     widgetProps = { ...widgetProps, ...schema.props };
   }
 
+  Object.keys(schema).forEach(key => {
+    if (
+      typeof key === 'string' &&
+      key.toLowerCase().indexOf('props') > -1 &&
+      key.length > 5
+    ) {
+      widgetProps[key] = schema[key];
+    }
+  });
+
   // 支持 addonAfter 为自定义组件的情况
   if (isObject(widgetProps.addonAfter) && widgetProps.addonAfter.widget) {
     const AddonAfterWidget = widgets[widgetProps.addonAfter.widget];
@@ -91,11 +108,15 @@ const ExtendedWidget = ({
   // 避免传组件不接受的props，按情况传多余的props
   widgetProps.addons = {
     onItemChange,
-    setValue: onItemChange,
+    setValue: onItemChange, // onItemChange 已经文档放出去了，不去掉了，但改个好理解的名字
     getValue,
     formData,
     dataPath,
     dataIndex,
+    setErrorFields,
+    setSchema,
+    resetFields,
+    removeErrorField,
   };
 
   const finalProps = transformProps(widgetProps);

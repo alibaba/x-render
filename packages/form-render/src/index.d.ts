@@ -9,6 +9,7 @@ export interface FormParams {
   formData?: any;
   onChange?: (data: any) => void;
   onValidate?: (valid: any) => void;
+  showValidate?: boolean;
 }
 
 export interface ValidateParams {
@@ -27,6 +28,7 @@ export interface FormInstance {
   setValueByPath: (path: string, value: any) => void;
   getSchemaByPath: (path: string) => object;
   setSchemaByPath: (path: string, value: any) => void;
+  setSchema: (settings: any) => void;
   setValues: (formData: any) => void;
   getValues: () => any;
   resetFields: () => void;
@@ -45,6 +47,8 @@ export interface FormInstance {
   isEditing: boolean;
   setEditing: (status: boolean) => void;
   syncStuff: (any) => void;
+  /** 折中升级方案中使用到，正常用不到 */
+  init: () => void;
 }
 
 export type WatchProperties = {
@@ -100,6 +104,8 @@ export interface FRProps {
   onFinish?: (formData: any, error: Error[]) => void;
   /** 时时与外部更新同步的钩子 */
   onValuesChange?: (changedValues: any, formData: any) => void;
+  /** 隐藏的数据是否去掉，默认不去掉（false） */
+  removeHiddenData?: boolean;
 }
 
 declare const FR: React.FC<FRProps>;

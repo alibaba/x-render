@@ -1,5 +1,37 @@
 # Changelog
 
+## 1.5.9
+
+- [+] url 组件现在支持自定义 btn 文案，自定义 prefix、suffix
+- [!]
+
+### 1.5.8
+
+- [!] 修复了上个版本引入的校验信息无法展示的问题
+
+### 1.5.7 (showValidate 造成校验没有展示，请勿使用本版本)
+
+- [!] 修复了 connectForm 上的 ref 没有透传的问题
+- [!] 提供了“折中升级方案”，适用于旧版 FormRender 项目快速大面积升级，虽然不能享受 100%的新功能
+
+### 1.5.6
+
+- [!] 修复了所有涉及 range 组件的校验问题（从源头上把几个奇异 case 处理了）
+
+### 1.5.5
+
+- [+] 将一系列有用的 form 方法也挂在了自定义组件的 addons props 上，能够取到使用
+- [+] 提供了能够同时修改多个 key 值的 schema 的 setSchema 方法
+
+### 1.5.4
+
+- [!] 修复了 upload 等多元素组件的 xxprops 没有透传的问题
+- [!] 修复了涉及到数组 bind 的场景下，外部更新表单数据后，range 元素会通过必填校验的问题
+
+### 1.5.3
+
+- [+] Form 的 props 添加 `removeHiddenData` 用于选择提交的时候是否去掉已经被隐藏的元素的数据，默认 false 不隐藏
+
 ### 1.5.2
 
 - [+] 展示是 table 的 list 类组件（list2，list3，list4）的 props 和 itemProps 分别透传 table 的 props 和 columns 的 props 到 antd，便于用户定制化配置
