@@ -75,7 +75,6 @@ const Demo = () => {
   return (
     <div>
       <Form
-        readOnly
         form={form}
         schema={schema}
         widgets={{ site: SiteInput }}
