@@ -19,6 +19,14 @@ const useForm = props => {
     onChange: _onChange,
     onValidate: _onValidate,
     showValidate: _showValidate,
+    /** 数据分析接口，表单提交成功时触发 */
+    logSubmitSuccess,
+    /** 数据分析接口，表单提交失败时触发 */
+    logSubmitFailure,
+    /** 数据分析接口，表单展示完成渲染时触发 */
+    logOnMount,
+    /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
+    logTimeToFinish,
   } = props || {};
 
   const [renderCount, forceRender] = useState(0);
@@ -149,17 +157,6 @@ const useForm = props => {
     const flatten = flattenSchema(schemaRef.current);
     setState({ flatten });
   }, [JSON.stringify(schemaRef.current), renderCount]);
-
-  useEffect(() => {
-    if (
-      didMount.current === false &&
-      flatten['#'] &&
-      typeof onMountRef.current === 'function'
-    ) {
-      onMountRef.current();
-      didMount.current = true;
-    }
-  }, [JSON.stringify(flatten)]);
 
   const setEditing = isEditing => {
     setState({ isEditing });
@@ -409,6 +406,8 @@ const useForm = props => {
     setEditing,
     syncStuff,
     showValidate: _showValidate,
+    // logs
+    logOnMount,
   };
 
   return form;

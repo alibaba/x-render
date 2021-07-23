@@ -51,6 +51,8 @@ function App({
   removeHiddenData = false,
   ...rest
 }) {
+  const didMount = useRef(false);
+
   try {
     const _ = form.submit;
   } catch (error) {
@@ -77,6 +79,7 @@ function App({
     removeTouched,
     changeTouchedKeys,
     syncStuff,
+    logOnMount,
     ...valuesThatWillChange
   } = form;
 
@@ -103,6 +106,25 @@ function App({
         removeHiddenData,
       });
     } else {
+    }
+  }, [JSON.stringify(schema)]);
+
+  useEffect(() => {
+    if (
+      didMount.current === false &&
+      schema &&
+      schema.type &&
+      typeof onMount === 'function'
+    ) {
+      onMount();
+      if (typeof logOnMount === 'function') {
+        logOnMount({
+          schema,
+          url: location.href,
+          formData,
+        });
+      }
+      didMount.current = true;
     }
   }, [JSON.stringify(schema)]);
 
