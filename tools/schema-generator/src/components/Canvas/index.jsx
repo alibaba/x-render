@@ -69,10 +69,17 @@ const Canvas = ({ onSelect }) => {
   }, [selected])
 
   const _extraButtons = Array.isArray(extraButtons) ? extraButtons : [];
-  const _showDefaultBtns = _extraButtons.filter(
-    item => item === true || item === false
-  );
-  const _extraBtns = _extraButtons.filter(item => isObject(item) && item.text);
+  const _showDefaultBtns = _extraButtons.filter(item => !isObject(item));
+  const _extraBtns = _extraButtons.filter(item => isObject(item));
+
+  const getDefaultBtnText = (text, defaultText, index) => {
+    if (typeof index === 'number') {
+      if (Array.isArray(text)) return text[index];
+      return defaultText[index];
+    }
+    if (typeof text === 'string') return text;
+    return defaultText;
+  }
 
   return (
     <div className="mid-layout pr2">
@@ -85,22 +92,22 @@ const Canvas = ({ onSelect }) => {
               setGlobal({ selected: '#' });
             }}
           >
-            {preview ? '开始编辑' : '最终展示'}
+            {getDefaultBtnText(_showDefaultBtns[0], ['开始编辑', '最终展示'], Number(!preview))}
           </Button>
         )}
         {_showDefaultBtns[1] !== false && (
           <Button className="mr2" onClick={clearSchema}>
-            清空
+            {getDefaultBtnText(_showDefaultBtns[1], '清空')}
           </Button>
         )}
         {_showDefaultBtns[2] !== false && (
           <Button className="mr2" onClick={toggleModal2}>
-            导入
+            {getDefaultBtnText(_showDefaultBtns[2], '导入')}
           </Button>
         )}
         {_showDefaultBtns[3] !== false && (
           <Button type="primary" className="mr2" onClick={toggleModal}>
-            导出schema
+            {getDefaultBtnText(_showDefaultBtns[3], '导出schema')}
           </Button>
         )}
         {_extraBtns.map((item, idx) => {
