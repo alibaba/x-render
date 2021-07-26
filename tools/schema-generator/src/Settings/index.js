@@ -430,10 +430,15 @@ export const elements = [
       widget: 'html',
     },
     setting: {
-      default: {
-        title: '展示内容',
-        type: 'string',
-      },
+      props: {
+        type: 'object',
+        properties: {
+          value: {
+            title: '展示内容',
+            type: 'string',
+          },
+        }
+      }
     },
   },
 ];
