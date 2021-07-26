@@ -36,6 +36,7 @@ function Provider(props, ref) {
   const {
     defaultValue,
     canDrag,
+    canDelete,
     submit,
     transformer: _transformer,
     extraButtons,
@@ -110,6 +111,7 @@ function Provider(props, ref) {
 
   const userProps = {
     canDrag,
+    canDelete,
     submit,
     transformer,
     isNewVersion,

@@ -24,7 +24,7 @@ export default function Wrapper({
     selected,
     userProps,
   } = useStore();
-  const { controlButtons, canDrag = true, hideId } = userProps;
+  const { controlButtons, canDrag = true, canDelete = true, hideId } = userProps;
   const setGlobal = useGlobal();
   const { schema } = item;
   const { type } = schema;
@@ -124,6 +124,8 @@ export default function Wrapper({
     } catch (error) {
       console.log('catch', error);
     }
+    const _canDelete = typeof canDelete === 'function' ? canDelete(newFlatten[$id].schema) : canDelete;
+    if (!_canDelete) return;
     delete newFlatten[$id];
     onFlattenChange(newFlatten);
     setGlobal({ selected: newSelect });
