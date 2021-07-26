@@ -22,7 +22,6 @@ export default function Wrapper({
     flatten,
     onFlattenChange,
     selected,
-    hovering,
     userProps,
   } = useStore();
   const { controlButtons, hideId } = userProps;
@@ -142,10 +141,8 @@ export default function Wrapper({
     isSelected = selected.substring(1) === $id && inside;
   }
 
-  const hoverId = inside ? '0' + $id : $id;
-
   let overwriteStyle = {
-    backgroundColor: hovering === hoverId ? '#ecf5ff' : '#fff',
+    backgroundColor: '#fff',
     opacity: isDragging ? 0 : 1,
   };
   if (inside) {

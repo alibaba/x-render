@@ -9,7 +9,7 @@ const { TextArea } = Input;
 
 const Canvas = ({ onSelect }) => {
   const setGlobal = useGlobal();
-  const { userProps, displaySchema, displaySchemaString, selected, flatten } = useStore();
+  const { userProps, displaySchema, displaySchemaString, selected, flatten, onChange, onSchemaChange } = useStore();
   const [local, setState] = useSet({
     preview: false,
     showModal: false,
@@ -34,6 +34,8 @@ const Canvas = ({ onSelect }) => {
         selected: undefined,
         ...schemaToState(value),
       }));
+      onChange(value.formData || {});
+      onSchemaChange(value);
     } catch (error) {
       console.log('catch', error)
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
@@ -48,14 +50,17 @@ const Canvas = ({ onSelect }) => {
   };
 
   const clearSchema = () => {
+    const schema = {
+      type: 'object',
+      properties: {},
+    };
     setGlobal({
-      schema: {
-        type: 'object',
-        properties: {},
-      },
+      schema,
       formData: {},
       selected: undefined,
     });
+    onChange({});
+    onSchemaChange(schema);
   };
 
   useEffect(() => {

@@ -60,7 +60,6 @@ function Provider(props, ref) {
   const [state, setState] = useSet({
     formData: {},
     frProps: {}, // form-render 的全局 props 等
-    hovering: undefined, // 目前没有用到
     isNewVersion: true, // 用schema字段，还是用propsSchema字段，这是一个问题
     preview: false, // preview = false 是编辑模式
     schema: {},
@@ -76,7 +75,6 @@ function Provider(props, ref) {
   const {
     formData,
     frProps,
-    hovering,
     isNewVersion,
     preview,
     schema,
@@ -107,7 +105,6 @@ function Provider(props, ref) {
     mapping: _mapping,
     widgets: _widgets,
     selected,
-    hovering,
   };
 
   const userProps = {
@@ -188,6 +185,8 @@ function Provider(props, ref) {
     flatten: flattenWithData, // schema + formData = flattenWithData
     onFlattenChange, // onChange + onSchemaChange = onFlattenChange
     onItemChange, // onFlattenChange 里只改一个item的flatten，使用这个方法
+    onSchemaChange,
+    onChange,
     userProps,
     frProps,
     displaySchema,
