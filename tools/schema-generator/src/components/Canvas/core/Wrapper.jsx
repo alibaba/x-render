@@ -24,7 +24,7 @@ export default function Wrapper({
     selected,
     userProps,
   } = useStore();
-  const { controlButtons, hideId } = userProps;
+  const { controlButtons, canDrag = true, hideId } = userProps;
   const setGlobal = useGlobal();
   const { schema } = item;
   const { type } = schema;
@@ -33,6 +33,7 @@ export default function Wrapper({
   const [{ isDragging }, dragRef, dragPreview] = useDrag({
     type: 'box',
     item: { $id: inside ? 0 + $id : $id },
+    canDrag: () => typeof canDrag === 'function' ? canDrag(schema) : canDrag,
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),

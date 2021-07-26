@@ -35,6 +35,7 @@ const DEFAULT_SCHEMA = {
 function Provider(props, ref) {
   const {
     defaultValue,
+    canDrag,
     submit,
     transformer: _transformer,
     extraButtons,
@@ -108,6 +109,7 @@ function Provider(props, ref) {
   };
 
   const userProps = {
+    canDrag,
     submit,
     transformer,
     isNewVersion,
