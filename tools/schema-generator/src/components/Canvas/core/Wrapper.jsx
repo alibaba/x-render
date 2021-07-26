@@ -217,7 +217,7 @@ export default function Wrapper({
       return item(schema);
     });
   const _extraBtns = _controlButtons.filter(
-    item => isObject(item) && item.text
+    item => isObject(item) && (item.text || item.children)
   );
   const { length: _numOfBtns } = _showDefaultBtns
     .concat(_extraBtns)
@@ -261,7 +261,7 @@ export default function Wrapper({
                 className="pointer"
                 onClick={e => item.onClick && item.onClick(e, schema)}
               >
-                {item.text}
+                {item.text || item.children}
               </div>
             );
           })}
