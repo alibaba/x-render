@@ -32,7 +32,7 @@ export interface FormInstance {
   setValues: (formData: any) => void;
   getValues: () => any;
   resetFields: () => void;
-  submit: () => void;
+  submit: () => Promise<void> | Promise<any[]>;
   submitData: any;
   errorFields: Error[];
   isValidating: boolean;
@@ -46,7 +46,7 @@ export interface FormInstance {
   changeTouchedKeys: (pathArray: string[]) => void;
   isEditing: boolean;
   setEditing: (status: boolean) => void;
-  syncStuff: (any) => void;
+  syncStuff: (args: any) => void;
   /** 折中升级方案中使用到，正常用不到 */
   init: () => void;
 }
