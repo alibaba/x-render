@@ -14,13 +14,7 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
         schema,
         children: [],
       },
-      $id: `#/${name}_${nanoid(6)}`,
-    },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult();
-      if (item && dropResult) {
-        // alert(`You dropped into ${dropResult.name}!`);
-      }
+      $id: fixedName ? `#/${name}` : `#/${name}_${nanoid(6)}`,
     },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
