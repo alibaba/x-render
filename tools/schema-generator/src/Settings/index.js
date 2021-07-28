@@ -1,9 +1,5 @@
 // 只需写配置，方便可扩展
 export const baseCommonSettings = {
-  title: {
-    title: '标题',
-    type: 'string',
-  },
   type: {
     title: '类型',
     type: 'string',
