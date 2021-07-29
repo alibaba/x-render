@@ -29,6 +29,13 @@ export const defaultCommonSettings = {
     title: '标题',
     type: 'string',
   },
+  displayType: {
+    title: '标题展示模式',
+    type: 'string',
+    enum: ['row', 'column'],
+    enumNames: ['同行', '单独一行'],
+    widget: 'radio',
+  },
   description: {
     title: '说明',
     type: 'string',
