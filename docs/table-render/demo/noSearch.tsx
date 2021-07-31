@@ -136,7 +136,6 @@ const Demo = () => {
         api={searchApi}
       />
       <Table
-        debug
         columns={columns}
         headerTitle="高级表单"
         rowKey="id"
