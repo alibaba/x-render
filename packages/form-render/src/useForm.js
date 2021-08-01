@@ -408,6 +408,7 @@ const useForm = props => {
     showValidate: _showValidate,
     // logs
     logOnMount,
+    logTimeToFinish,
   };
 
   return form;

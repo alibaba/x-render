@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef } from 'react';
-import { updateSchemaToNewVersion, getValueByPath } from './utils';
+import { updateSchemaToNewVersion, getValueByPath, msToTime } from './utils';
 import Core from './core';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
@@ -10,9 +10,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
 import './index.less';
 
-const defaultBeforeFinish = props => {
-  console.log('beforeFinish:', props);
-};
+const defaultBeforeFinish = () => {};
 
 const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
@@ -80,6 +78,7 @@ function App({
     changeTouchedKeys,
     syncStuff,
     logOnMount,
+    logTimeToFinish,
     ...valuesThatWillChange
   } = form;
 
@@ -123,6 +122,11 @@ function App({
           url: location.href,
           formData,
         });
+      }
+      // 如果是要计算时间，在 onMount 时存一个时间戳
+      if (typeof logTimeToFinish === 'function') {
+        sessionStorage.setItem('FORM_MOUNT_TIME', new Date().getTime());
+        sessionStorage.setItem('NUMBER_OF_SUBMIT', 1);
       }
       didMount.current = true;
     }
@@ -217,6 +221,21 @@ function App({
     if (isValidating === false && isSubmitting === true) {
       endSubmitting();
       onFinish(submitData, errorFields);
+      if (typeof logTimeToFinish === 'function') {
+        const start = sessionStorage.getItem('FORM_MOUNT_TIME');
+        const numberOfSubmit = sessionStorage.getItem('NUMBER_OF_SUBMIT');
+        const end = new Date().getTime();
+        logTimeToFinish({
+          ms: end - start,
+          duration: msToTime(end - start),
+          numberOfSubmit: Number(numberOfSubmit),
+          url: location.href,
+          data: submitData,
+          errors: errorFields,
+        });
+        sessionStorage.setItem('FORM_MOUNT_TIME', end);
+        sessionStorage.setItem('NUMBER_OF_SUBMIT', Number(numberOfSubmit) + 1);
+      }
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
