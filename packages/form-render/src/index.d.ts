@@ -49,6 +49,14 @@ export interface FormInstance {
   syncStuff: (any) => void;
   /** 折中升级方案中使用到，正常用不到 */
   init: () => void;
+  /** 数据分析接口，表单提交成功时触发 */
+  logSubmitSuccess?: (any) => void;
+  /** 数据分析接口，表单提交失败时触发 */
+  logSubmitFailure?: (any) => void;
+  /** 数据分析接口，表单展示完成渲染时触发 */
+  logOnMount?: (any) => void;
+  /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
+  logTimeToFinish?: (any) => void;
 }
 
 export type WatchProperties = {
