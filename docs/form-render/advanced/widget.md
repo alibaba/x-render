@@ -14,7 +14,7 @@ toc: content
 - 我们团队使用 xxx ui，与 antd 不搭，希望能适配一套 xxx ui 组件的 FormRender（欢迎 Pull Request）
 - 我需要在表单内部写一个 excel 上传按钮（完全定制化的需求）
 
-注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态，FormRender 的社区以及提供了部分 [常用自定义组件](/widgets)。
+注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态，FormRender 的社区以及提供了部分 [常用自定义组件](https://github.com/alibaba/x-render/tree/master/widgets)。
 
 ## 使用
 
@@ -43,42 +43,41 @@ const schema = {
 实际代码如下：
 
 ```jsx
-import React, { useState } from 'react';
-import { Input, Button } from 'antd';
-import Form, { useForm } from 'form-render';
+import React from "react";
+import { Input, Button } from "antd";
+import Form, { useForm } from "form-render";
 
 const schema = {
-  type: 'object',
+  type: "object",
   properties: {
     string: {
-      title: '网址输入自定义组件',
-      type: 'string',
-      widget: 'site',
+      title: "网址输入自定义组件111",
+      type: "string",
+      widget: "site"
     },
     select: {
-      title: '单选',
-      type: 'number',
+      title: "单选",
+      type: "number",
       enum: [1, 2, 3],
-      enumNames: ['选项1', '选项2', '选项3'],
-    },
-  },
+      enumNames: ["选项1", "选项2", "选项3"]
+    }
+  }
 };
 
-const SiteInput = props => {
-  console.log('widget props:', props);
-  return <Input addonBefore="http://" addonAfter=".com" {...props} />;
+const SiteInput = (props) => {
+  console.log("widget props:", props);
+  return <Input addonBefore="https://" addonAfter=".com" {...props} />;
 };
 
 const Demo = () => {
   const form = useForm();
-  const handleSubmit = () => {};
   return (
     <div>
       <Form
         form={form}
         schema={schema}
         widgets={{ site: SiteInput }}
-        onFinish={formData => alert(JSON.stringify(formData, null, 2))}
+        onFinish={(formData) => alert(JSON.stringify(formData, null, 2))}
       />
       <Button type="primary" onClick={form.submit}>
         提交
@@ -88,6 +87,7 @@ const Demo = () => {
 };
 
 export default Demo;
+
 ```
 
 可以看到自定义组件的写法十分直观，事实上很多 antd 的组件都是可以直接拿来作为自定义组件使用（内置组件中就有 Input, InputNumber, Checkbox 和 Switch）
@@ -112,13 +112,13 @@ export default Demo;
 
 大多数情况下，antd 的组件可以拿来即用。但有时组件的 props 并不是约定的 value/onChange, 例如 Checkbox 的情况，value 值对应的是 checked，此时只需要少量改动即可：
 
-```js
+```jsx
 import { Checkbox } from 'antd';
 import { createWidget } from 'form-render';
 
 const MyCheckBox = (({ value, ...rest }) => {
   return <Checkbox checked={value} {...rest} />
-}
+})
 ```
 
 ## 只读模式下的自定义组件
@@ -145,7 +145,7 @@ const MyCheckBox = (({ value, ...rest }) => {
 const SiteInput = ({ readOnly, value, ...rest }) => {
   if (readOnly) return <div>{`https://${value}.com`}</div>;
   return (
-    <Input addonBefore="http://" addonAfter=".com" value={value} {...rest} />
+    <Input addonBefore="https://" addonAfter=".com" value={value} {...rest} />
   );
 };
 ```
@@ -206,4 +206,4 @@ const Demo1 = props => {
 
 ## 内置组件
 
-使用自定义组件前，也许已经有内置组件支持。具体见[schema 与内置组件](/form-render/schema/inner-widget)
+使用自定义组件前，也许已经有内置组件支持。具体见 [schema 与内置组件](/form-render/schema/inner-widget)
