@@ -46,6 +46,10 @@ export default defineConfig({
     },
     {
       title: 'Playground',
+      children: [
+        { title: 'Playground', path: '/playground' },
+        { title: 'Schema 编辑器', path: '/tools/generator/playground' },
+      ],
       path: '/playground',
     },
     {

@@ -43,29 +43,29 @@ const schema = {
 实际代码如下：
 
 ```jsx
-import React from "react";
-import { Input, Button } from "antd";
-import Form, { useForm } from "form-render";
+import React from 'react';
+import { Input, Button } from 'antd';
+import Form, { useForm } from 'form-render';
 
 const schema = {
-  type: "object",
+  type: 'object',
   properties: {
     string: {
-      title: "网址输入自定义组件111",
-      type: "string",
-      widget: "site"
+      title: '网址输入自定义组件',
+      type: 'string',
+      widget: 'site',
     },
     select: {
-      title: "单选",
-      type: "number",
+      title: '单选',
+      type: 'number',
       enum: [1, 2, 3],
-      enumNames: ["选项1", "选项2", "选项3"]
-    }
-  }
+      enumNames: ['选项1', '选项2', '选项3'],
+    },
+  },
 };
 
-const SiteInput = (props) => {
-  console.log("widget props:", props);
+const SiteInput = props => {
+  console.log('widget props:', props);
   return <Input addonBefore="https://" addonAfter=".com" {...props} />;
 };
 
@@ -77,7 +77,7 @@ const Demo = () => {
         form={form}
         schema={schema}
         widgets={{ site: SiteInput }}
-        onFinish={(formData) => alert(JSON.stringify(formData, null, 2))}
+        onFinish={formData => alert(JSON.stringify(formData, null, 2))}
       />
       <Button type="primary" onClick={form.submit}>
         提交
@@ -87,7 +87,6 @@ const Demo = () => {
 };
 
 export default Demo;
-
 ```
 
 可以看到自定义组件的写法十分直观，事实上很多 antd 的组件都是可以直接拿来作为自定义组件使用（内置组件中就有 Input, InputNumber, Checkbox 和 Switch）
@@ -112,13 +111,12 @@ export default Demo;
 
 大多数情况下，antd 的组件可以拿来即用。但有时组件的 props 并不是约定的 value/onChange, 例如 Checkbox 的情况，value 值对应的是 checked，此时只需要少量改动即可：
 
-```jsx
+```js
 import { Checkbox } from 'antd';
-import { createWidget } from 'form-render';
 
-const MyCheckBox = (({ value, ...rest }) => {
-  return <Checkbox checked={value} {...rest} />
-})
+const MyCheckBox = ({ value, ...rest }) => {
+  return <Checkbox checked={value} {...rest} />;
+};
 ```
 
 ## 只读模式下的自定义组件
