@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef } from 'react';
-import { updateSchemaToNewVersion, getValueByPath, msToTime } from './utils';
+import {
+  updateSchemaToNewVersion,
+  getValueByPath,
+  msToTime,
+  yymmdd,
+} from './utils';
 import Core from './core';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
@@ -78,7 +83,7 @@ function App({
     changeTouchedKeys,
     syncStuff,
     logOnMount,
-    logTimeToFinish,
+    logOnSubmit,
     ...valuesThatWillChange
   } = form;
 
@@ -116,17 +121,25 @@ function App({
       typeof onMount === 'function'
     ) {
       onMount();
+      const start = new Date().getTime();
+      if (
+        typeof logOnMount === 'function' ||
+        typeof logOnSubmit === 'function'
+      ) {
+        sessionStorage.setItem('FORM_MOUNT_TIME', start);
+      }
       if (typeof logOnMount === 'function') {
         logOnMount({
           schema,
           url: location.href,
           formData,
+          start: yymmdd(start),
         });
       }
       // 如果是要计算时间，在 onMount 时存一个时间戳
-      if (typeof logTimeToFinish === 'function') {
-        sessionStorage.setItem('FORM_MOUNT_TIME', new Date().getTime());
-        sessionStorage.setItem('NUMBER_OF_SUBMIT', 1);
+      if (typeof logOnSubmit === 'function') {
+        sessionStorage.setItem('NUMBER_OF_SUBMITS', 0);
+        sessionStorage.setItem('FAILED_ATTEMPTS', 0);
       }
       didMount.current = true;
     }
@@ -221,20 +234,28 @@ function App({
     if (isValidating === false && isSubmitting === true) {
       endSubmitting();
       onFinish(submitData, errorFields);
-      if (typeof logTimeToFinish === 'function') {
+      if (typeof logOnSubmit === 'function') {
         const start = sessionStorage.getItem('FORM_MOUNT_TIME');
-        const numberOfSubmit = sessionStorage.getItem('NUMBER_OF_SUBMIT');
+        const numberOfSubmits =
+          Number(sessionStorage.getItem('NUMBER_OF_SUBMITS')) + 1;
         const end = new Date().getTime();
-        logTimeToFinish({
+        let failedAttempts = Number(sessionStorage.getItem('FAILED_ATTEMPTS'));
+        if (errorFields.length > 0) {
+          failedAttempts = failedAttempts + 1;
+        }
+        logOnSubmit({
+          start: yymmdd(start),
           ms: end - start,
           duration: msToTime(end - start),
-          numberOfSubmit: Number(numberOfSubmit),
+          numberOfSubmits: numberOfSubmits,
+          failedAttempts: failedAttempts,
           url: location.href,
           data: submitData,
           errors: errorFields,
         });
         sessionStorage.setItem('FORM_MOUNT_TIME', end);
-        sessionStorage.setItem('NUMBER_OF_SUBMIT', Number(numberOfSubmit) + 1);
+        sessionStorage.setItem('NUMBER_OF_SUBMITS', numberOfSubmits);
+        sessionStorage.setItem('FAILED_ATTEMPTS', failedAttempts);
       }
     }
   }, [isValidating, isSubmitting, outsideValidating]);
