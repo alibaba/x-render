@@ -1191,17 +1191,11 @@ export function msToTime(duration) {
 export function yymmdd(timeStamp) {
   const date_ob = new Date(Number(timeStamp));
   const adjustZero = num => ('0' + num).slice(-2);
-  // adjust 0 before single digit date
   let day = adjustZero(date_ob.getDate());
-  // current month
   let month = adjustZero(date_ob.getMonth());
-  // current year
   let year = date_ob.getFullYear();
-  // current hours
   let hours = adjustZero(date_ob.getHours());
-  // current minutes
   let minutes = adjustZero(date_ob.getMinutes());
-  // current seconds
   let seconds = adjustZero(date_ob.getSeconds());
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }

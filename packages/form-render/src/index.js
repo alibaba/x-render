@@ -114,26 +114,24 @@ function App({
   }, [JSON.stringify(schema)]);
 
   useEffect(() => {
-    if (
-      didMount.current === false &&
-      schema &&
-      schema.type &&
-      typeof onMount === 'function'
-    ) {
-      onMount();
+    if (didMount.current === false && schema && schema.type) {
+      if (typeof onMount === 'function') {
+        onMount();
+      }
       const start = new Date().getTime();
       if (
         typeof logOnMount === 'function' ||
         typeof logOnSubmit === 'function'
       ) {
         sessionStorage.setItem('FORM_MOUNT_TIME', start);
+        sessionStorage.setItem('FORM_START', start);
       }
       if (typeof logOnMount === 'function') {
         logOnMount({
           schema,
           url: location.href,
           formData,
-          start: yymmdd(start),
+          formMount: yymmdd(start),
         });
       }
       // 如果是要计算时间，在 onMount 时存一个时间戳
@@ -235,7 +233,8 @@ function App({
       endSubmitting();
       onFinish(submitData, errorFields);
       if (typeof logOnSubmit === 'function') {
-        const start = sessionStorage.getItem('FORM_MOUNT_TIME');
+        const start = sessionStorage.getItem('FORM_START');
+        const mount = sessionStorage.getItem('FORM_MOUNT_TIME');
         const numberOfSubmits =
           Number(sessionStorage.getItem('NUMBER_OF_SUBMITS')) + 1;
         const end = new Date().getTime();
@@ -244,7 +243,7 @@ function App({
           failedAttempts = failedAttempts + 1;
         }
         logOnSubmit({
-          start: yymmdd(start),
+          formMount: yymmdd(mount),
           ms: end - start,
           duration: msToTime(end - start),
           numberOfSubmits: numberOfSubmits,
@@ -253,7 +252,7 @@ function App({
           data: submitData,
           errors: errorFields,
         });
-        sessionStorage.setItem('FORM_MOUNT_TIME', end);
+        sessionStorage.setItem('FORM_START', end);
         sessionStorage.setItem('NUMBER_OF_SUBMITS', numberOfSubmits);
         sessionStorage.setItem('FAILED_ATTEMPTS', failedAttempts);
       }
