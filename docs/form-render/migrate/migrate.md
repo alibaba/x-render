@@ -1,8 +1,8 @@
 ---
-order: 6
+order: 1
 group:
-  order: 1
-  title: 升级方案（推荐）
+  order: 6
+  title: 0.x 到 1.x
 toc: content
 ---
 

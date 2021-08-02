@@ -1,8 +1,8 @@
 ---
-order: 6
+order: 2
 group:
-  order: 2
-  title: 折中升级方案
+  order: 6
+  title: 0.x 到 1.x
 toc: content
 ---
 
