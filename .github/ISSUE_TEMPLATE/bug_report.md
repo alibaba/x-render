@@ -26,4 +26,6 @@ assignees: FateRiddle, F-loat, onewmm
   请尽可能提供复现demo，有 demo 的 bug report 会在第一时间处理 
   Please provide reproduction of your bug. Bug report with reproduction demo will be dealt first
 -->
-https://codesandbox.io/s/form-renderjichudemo-f55oy
+form-render demo https://codesandbox.io/s/unruffled-flower-jl78h
+table-render demo https://codesandbox.io/s/sweet-euler-bdoty
+fr-generator demo https://codesandbox.io/s/s13sh
