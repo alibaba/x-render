@@ -27,6 +27,7 @@ export { default as useForm } from './useForm';
 export { default as connectForm } from './connectForm';
 
 function App({
+  id,
   widgets,
   mapping,
   form,
@@ -127,12 +128,16 @@ function App({
         sessionStorage.setItem('FORM_START', start);
       }
       if (typeof logOnMount === 'function') {
-        logOnMount({
+        const logParams = {
           schema,
           url: location.href,
           formData,
           formMount: yymmdd(start),
-        });
+        };
+        if (id) {
+          logParams.id = id;
+        }
+        logOnMount(logParams);
       }
       // 如果是要计算时间，在 onMount 时存一个时间戳
       if (typeof logOnSubmit === 'function') {
@@ -242,7 +247,7 @@ function App({
         if (errorFields.length > 0) {
           failedAttempts = failedAttempts + 1;
         }
-        logOnSubmit({
+        const logParams = {
           formMount: yymmdd(mount),
           ms: end - start,
           duration: msToTime(end - start),
@@ -251,7 +256,12 @@ function App({
           url: location.href,
           data: submitData,
           errors: errorFields,
-        });
+          schema: schema,
+        };
+        if (id) {
+          logParams.id = id;
+        }
+        logOnSubmit(logParams);
         sessionStorage.setItem('FORM_START', end);
         sessionStorage.setItem('NUMBER_OF_SUBMITS', numberOfSubmits);
         sessionStorage.setItem('FAILED_ATTEMPTS', failedAttempts);
@@ -267,6 +277,13 @@ function App({
     sizeCls = 'fr-form-large';
   }
 
+  const rootProps = {
+    className: `fr-container ${sizeCls}`,
+  };
+  if (id) {
+    rootProps.id = id;
+  }
+
   const watchList = Object.keys(watch);
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
@@ -274,7 +291,7 @@ function App({
       <StoreCtx.Provider value={store}>
         <Store2Ctx.Provider value={store2}>
           <Ctx.Provider value={tools}>
-            <div className={`fr-container ${sizeCls}`}>
+            <div {...rootProps}>
               {debug ? (
                 <div className="mv2 bg-black-05 pa2 br2">
                   <div style={{ display: 'flex' }}>
