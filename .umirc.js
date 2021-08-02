@@ -40,10 +40,10 @@ export default defineConfig({
       title: 'TableRender',
       path: '/table-render',
     },
-    {
-      title: 'ChartRender',
-      path: '/chart-render',
-    },
+    // {
+    //   title: 'ChartRender',
+    //   path: '/chart-render',
+    // },
     {
       title: 'Playground',
       children: [
@@ -74,15 +74,15 @@ export default defineConfig({
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/table-render/CHANGELOG.md',
         },
-        {
-          title: 'ChartRender',
-          path:
-            'https://github.com/alibaba/form-render/blob/master/packages/chart-render/CHANGELOG.md',
-        },
+        // {
+        //   title: 'ChartRender',
+        //   path:
+        //     'https://github.com/alibaba/form-render/blob/master/packages/chart-render/CHANGELOG.md',
+        // },
       ],
     },
     {
-      title: '旧版本',
+      title: '旧版文档',
       path: 'https://x-components.gitee.io/form-render/',
     },
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
