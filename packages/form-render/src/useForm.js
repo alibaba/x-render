@@ -43,7 +43,6 @@ const useForm = props => {
 
   const schemaRef = useRef({});
   const beforeFinishRef = useRef(() => {});
-  const onMountRef = useRef();
   const localeRef = useRef('cn');
   const removeHiddenDataRef = useRef();
   const validateMessagesRef = useRef();
@@ -178,14 +177,12 @@ const useForm = props => {
     locale,
     validateMessages,
     beforeFinish,
-    onMount,
     removeHiddenData,
   }) => {
     schemaRef.current = schema;
     localeRef.current = locale;
     validateMessagesRef.current = validateMessages;
     beforeFinishRef.current = beforeFinish;
-    onMountRef.current = onMount;
     removeHiddenDataRef.current = removeHiddenData;
     forceRender(renderCount + 1);
   };
@@ -265,8 +262,13 @@ const useForm = props => {
     _setErrors(newError);
   };
 
-  const getValues = () =>
-    processData(_data.current, _flatten.current, removeHiddenDataRef.current);
+  const getValues = () => {
+    return processData(
+      _data.current,
+      _flatten.current,
+      removeHiddenDataRef.current
+    );
+  };
 
   const setValues = newFormData => {
     const newData = transformDataWithBind2(newFormData, _flatten.current);

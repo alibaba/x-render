@@ -117,36 +117,40 @@ function App({
   useEffect(() => {
     if (didMount.current === false && schema && schema.type) {
       if (typeof onMount === 'function') {
-        onMount();
+        // 等一下 useForm 里接到第一份schema时，计算第一份data的骨架
+        setTimeout(() => {
+          onMount();
+          didMount.current = true;
+        }, 0);
       }
-      const start = new Date().getTime();
-      if (
-        typeof logOnMount === 'function' ||
-        typeof logOnSubmit === 'function'
-      ) {
-        sessionStorage.setItem('FORM_MOUNT_TIME', start);
-        sessionStorage.setItem('FORM_START', start);
-      }
-      if (typeof logOnMount === 'function') {
-        const logParams = {
-          schema,
-          url: location.href,
-          formData,
-          formMount: yymmdd(start),
-        };
-        if (id) {
-          logParams.id = id;
-        }
-        logOnMount(logParams);
-      }
-      // 如果是要计算时间，在 onMount 时存一个时间戳
-      if (typeof logOnSubmit === 'function') {
-        sessionStorage.setItem('NUMBER_OF_SUBMITS', 0);
-        sessionStorage.setItem('FAILED_ATTEMPTS', 0);
-      }
-      didMount.current = true;
+      setTimeout(onMountLogger, 0);
     }
   }, [JSON.stringify(schema)]);
+
+  const onMountLogger = () => {
+    const start = new Date().getTime();
+    if (typeof logOnMount === 'function' || typeof logOnSubmit === 'function') {
+      sessionStorage.setItem('FORM_MOUNT_TIME', start);
+      sessionStorage.setItem('FORM_START', start);
+    }
+    if (typeof logOnMount === 'function') {
+      const logParams = {
+        schema,
+        url: location.href,
+        formData: form.getValues(),
+        formMount: yymmdd(start),
+      };
+      if (id) {
+        logParams.id = id;
+      }
+      logOnMount(logParams);
+    }
+    // 如果是要计算时间，在 onMount 时存一个时间戳
+    if (typeof logOnSubmit === 'function') {
+      sessionStorage.setItem('NUMBER_OF_SUBMITS', 0);
+      sessionStorage.setItem('FAILED_ATTEMPTS', 0);
+    }
+  };
 
   // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
