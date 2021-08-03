@@ -52,18 +52,18 @@ class SearchInput extends React.Component {
   };
 
   handleChange = value => {
-    const { onChange, name } = this.props;
-    onChange(name, value);
+    const { onChange } = this.props;
+    onChange(value);
   };
 
   render() {
-    const { value, options: uiOptions } = this.props;
+    const { value, ...rest } = this.props;
     const options = this.state.data.map(d => (
       <Option key={d.value}>{d.text}</Option>
     ));
     return (
       <Select
-        {...uiOptions}
+        {...rest}
         style={{ width: '100%' }}
         showSearch
         value={value || undefined}
