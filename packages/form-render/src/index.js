@@ -254,7 +254,7 @@ function App({
           numberOfSubmits: numberOfSubmits,
           failedAttempts: failedAttempts,
           url: location.href,
-          data: submitData,
+          formData: submitData,
           errors: errorFields,
           schema: schema,
         };

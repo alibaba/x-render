@@ -1,9 +1,24 @@
 # Changelog
 
-## 1.5.9
+## 1.6.0
+
+新增“度量”这个话题。FormRender 作为表单提效方案，对于用户填写一份表单现在需要多少时间，到底提效了多少这些问题并没有提供数据上的证明。无法被度量的事，改进也无从谈起。所以围绕这个主题，我们提供了新的 api 以及文档说明
+
+- [+] 新增 logOnMount / logOnSubmit 两个 api，作为 useForm 的入参，用于在表单加载以及提交的时机给用户提供相关的度量信息
+
+- [+] 新增[“度量”文档](https://x-render.gitee.io/form-render/measure)
+
+功能优化
 
 - [+] url 组件现在支持自定义 btn 文案，自定义 prefix、suffix
-- [!]
+
+文档翻新
+
+- [!] 文档/git issue 模板等翻新
+- [!] 翻新了 bug/feature report 的模板
+- [!] 考虑到表单编辑器的重要性，在文档中的位置变动到
+- [!] 修复了联动/自定义组件等多处文档 demo 的 bug
+- [!] 为旧版 form-render 的用户提供了 schema 装换器，一键转换成新版 schema
 
 ### 1.5.8
 

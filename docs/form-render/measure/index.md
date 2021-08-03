@@ -8,7 +8,9 @@ toc: false
 
 # 表单健康度 & 提效
 
-业界有句话叫 "You can't improve what you can't measure"。即是说，如果无法度量一件事，那也就无法改善。 FormRender 作为表单提效的方案，提效的同时也需要给出合理的度量数据，帮助使用者更好地认知和发现问题。
+业界有句话叫 "You can't improve what you can't measure"。即是说，如果无法度量一件事，那改善也无从谈起。 FormRender 作为表单提效的方案，提效的同时也需要给出合理的度量数据，帮助使用者更好地认知和发现问题。
+
+目前 FormRender 提供了两个触发时机以及一系列相关数据作为对外开放接口，推荐用户用于接入适合自己项目的埋点 & 数据监控方案。
 
 ## RoadMap
 
@@ -108,13 +110,13 @@ export default Demo;
 
 会在表单首次加载时触发，一般也就是页面首次加载时。样例的入参值如下
 
-| 参数          | 描述               |
-| ------------- | ------------------ |
-| **id**        | 表单 id            |
-| **formData**  | 表单值             |
-| **schema**    | 表单协议           |
-| **url**       | 表单加载的页面地址 |
-| **formMount** | 表单加载的时间点   |
+| 参数          | 描述                                |
+| ------------- | ----------------------------------- |
+| **id**        | 表单 id，只当用户注明 id 时才会 log |
+| **formData**  | 表单值                              |
+| **schema**    | 表单协议                            |
+| **url**       | 表单加载的页面地址                  |
+| **formMount** | 表单加载的时间点                    |
 
 ```js
 {
@@ -146,16 +148,24 @@ export default Demo;
 
 会在表单每次提交时触发。样例的入参值如下
 
+| 参数                | 描述                         |
+| ------------------- | ---------------------------- |
+| **duration**        | 表单填写时长                 |
+| **ms**              | duration 的时间戳形式        |
+| **numberOfSubmits** | 从首次加载开始提交了几次     |
+| **failedAttempts**  | 从首次加载开始提交失败了几次 |
+| **errors**          | 提交失败的校验信息           |
+
 ```js
 {
   id: "my-demo-form", // 如果注明表单id，会在此处展示
   formMount: '2021-07-02 16:27:28', // 表单首次加载的时间点
   ms: 35598, // duration的时间戳形式
   duration: '00:00:35', // 从表单加载/上次提交完成开始计时，到本次提交使用的时间
-  numberOfSubmits: 1, // 提交成功的次数（即校验全通过）
+  numberOfSubmits: 1, // 提交的次数（失败与否）
   failedAttempts: 0, // 提交失败的次数（即有校验未通过）
   url: 'https://x-render.gitee.io/form-render/measure', // 表单对应页面的url
-  data: {
+  formData: {
     input1: '3123',
     select1: 'c',
   },
