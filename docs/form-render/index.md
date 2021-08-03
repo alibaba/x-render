@@ -213,6 +213,7 @@ import Form, { useForm, connectForm } from 'form-render';
 
 | 参数             | 描述                                                                           | 类型                                                                 | 是否必填 | 默认值   |
 | ---------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------- | -------- | -------- |
+| id               | 表单的 id，一般用于标识一个表单的语义化名称                                    | `string`/`number`                                                    | 否       |          |
 | schema           | 描述表单的 schema，详见                                                        | `object`                                                             | 是       |          |
 | form             | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                                       | 是       |          |
 | onFinish         | 提交后的回调，执行 form.submit() 后触发                                        | `(data, errors: Error[]) => void`                                    | 否       | () => {} |
@@ -276,6 +277,15 @@ const Demo = ({ form }) => {
 
 export default connectForm(Demo);
 ```
+
+**useForm 入参**
+
+以下入参的具体意义及用法，详见[表单健康度 & 提效](/form-render/measure)
+
+| 参数        | 描述                                                            | 类型     |
+| ----------- | --------------------------------------------------------------- | -------- |
+| logOnMount  | 会在表单首次加载时触发, 获取表单信息                            | function |
+| logOnSubmit | 会在 form.submit 时触发，获取表单信息（如填写时长、报错信息等） | function |
 
 **form 方法**
 

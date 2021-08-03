@@ -1176,3 +1176,26 @@ export const removeHiddenFromResult = (data, flatten) => {
   });
   return data;
 };
+
+export function msToTime(duration) {
+  let seconds = Math.floor((duration / 1000) % 60);
+  let minutes = Math.floor((duration / (1000 * 60)) % 60);
+  let hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+
+  hours = hours < 10 ? '0' + hours : hours;
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  seconds = seconds < 10 ? '0' + seconds : seconds;
+  return hours + ':' + minutes + ':' + seconds;
+}
+
+export function yymmdd(timeStamp) {
+  const date_ob = new Date(Number(timeStamp));
+  const adjustZero = num => ('0' + num).slice(-2);
+  let day = adjustZero(date_ob.getDate());
+  let month = adjustZero(date_ob.getMonth());
+  let year = date_ob.getFullYear();
+  let hours = adjustZero(date_ob.getHours());
+  let minutes = adjustZero(date_ob.getMinutes());
+  let seconds = adjustZero(date_ob.getSeconds());
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}

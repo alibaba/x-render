@@ -1,8 +1,12 @@
 ---
-order: 6
+order: 2
+group:
+  order: 6
+  title: 0.x 到 1.x
+toc: content
 ---
 
-## 折中迁移方案
+## 折中升级方案
 
 ### 背景简述
 

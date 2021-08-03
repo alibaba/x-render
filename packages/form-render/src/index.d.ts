@@ -10,6 +10,10 @@ export interface FormParams {
   onChange?: (data: any) => void;
   onValidate?: (valid: any) => void;
   showValidate?: boolean;
+  /** 数据分析接口，表单展示完成渲染时触发 */
+  logOnMount?: (any) => void;
+  /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
+  logOnSubmit?: (any) => void;
 }
 
 export interface ValidateParams {
@@ -32,7 +36,7 @@ export interface FormInstance {
   setValues: (formData: any) => void;
   getValues: () => any;
   resetFields: () => void;
-  submit: () => void;
+  submit: () => Promise<void> | Promise<any[]>;
   submitData: any;
   errorFields: Error[];
   isValidating: boolean;
@@ -46,9 +50,13 @@ export interface FormInstance {
   changeTouchedKeys: (pathArray: string[]) => void;
   isEditing: boolean;
   setEditing: (status: boolean) => void;
-  syncStuff: (any) => void;
+  syncStuff: (args: any) => void;
   /** 折中升级方案中使用到，正常用不到 */
   init: () => void;
+  /** 数据分析接口，表单展示完成渲染时触发 */
+  logOnMount?: (any) => void;
+  /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
+  logOnSubmit?: (any) => void;
 }
 
 export type WatchProperties = {
@@ -61,6 +69,8 @@ export type WatchProperties = {
 };
 
 export interface FRProps {
+  /** 表单 id */
+  id?: string | number;
   /** 表单 schema */
   schema: any;
   /** form单例 */

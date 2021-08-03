@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef } from 'react';
-import { updateSchemaToNewVersion, getValueByPath } from './utils';
+import {
+  updateSchemaToNewVersion,
+  getValueByPath,
+  msToTime,
+  yymmdd,
+} from './utils';
 import Core from './core';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
@@ -10,9 +15,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
 import './index.less';
 
-const defaultBeforeFinish = props => {
-  console.log('beforeFinish:', props);
-};
+const defaultBeforeFinish = () => {};
 
 const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
@@ -24,6 +27,7 @@ export { default as useForm } from './useForm';
 export { default as connectForm } from './connectForm';
 
 function App({
+  id,
   widgets,
   mapping,
   form,
@@ -51,6 +55,8 @@ function App({
   removeHiddenData = false,
   ...rest
 }) {
+  const didMount = useRef(false);
+
   try {
     const _ = form.submit;
   } catch (error) {
@@ -77,6 +83,8 @@ function App({
     removeTouched,
     changeTouchedKeys,
     syncStuff,
+    logOnMount,
+    logOnSubmit,
     ...valuesThatWillChange
   } = form;
 
@@ -103,6 +111,40 @@ function App({
         removeHiddenData,
       });
     } else {
+    }
+  }, [JSON.stringify(schema)]);
+
+  useEffect(() => {
+    if (didMount.current === false && schema && schema.type) {
+      if (typeof onMount === 'function') {
+        onMount();
+      }
+      const start = new Date().getTime();
+      if (
+        typeof logOnMount === 'function' ||
+        typeof logOnSubmit === 'function'
+      ) {
+        sessionStorage.setItem('FORM_MOUNT_TIME', start);
+        sessionStorage.setItem('FORM_START', start);
+      }
+      if (typeof logOnMount === 'function') {
+        const logParams = {
+          schema,
+          url: location.href,
+          formData,
+          formMount: yymmdd(start),
+        };
+        if (id) {
+          logParams.id = id;
+        }
+        logOnMount(logParams);
+      }
+      // 如果是要计算时间，在 onMount 时存一个时间戳
+      if (typeof logOnSubmit === 'function') {
+        sessionStorage.setItem('NUMBER_OF_SUBMITS', 0);
+        sessionStorage.setItem('FAILED_ATTEMPTS', 0);
+      }
+      didMount.current = true;
     }
   }, [JSON.stringify(schema)]);
 
@@ -195,6 +237,35 @@ function App({
     if (isValidating === false && isSubmitting === true) {
       endSubmitting();
       onFinish(submitData, errorFields);
+      if (typeof logOnSubmit === 'function') {
+        const start = sessionStorage.getItem('FORM_START');
+        const mount = sessionStorage.getItem('FORM_MOUNT_TIME');
+        const numberOfSubmits =
+          Number(sessionStorage.getItem('NUMBER_OF_SUBMITS')) + 1;
+        const end = new Date().getTime();
+        let failedAttempts = Number(sessionStorage.getItem('FAILED_ATTEMPTS'));
+        if (errorFields.length > 0) {
+          failedAttempts = failedAttempts + 1;
+        }
+        const logParams = {
+          formMount: yymmdd(mount),
+          ms: end - start,
+          duration: msToTime(end - start),
+          numberOfSubmits: numberOfSubmits,
+          failedAttempts: failedAttempts,
+          url: location.href,
+          formData: submitData,
+          errors: errorFields,
+          schema: schema,
+        };
+        if (id) {
+          logParams.id = id;
+        }
+        logOnSubmit(logParams);
+        sessionStorage.setItem('FORM_START', end);
+        sessionStorage.setItem('NUMBER_OF_SUBMITS', numberOfSubmits);
+        sessionStorage.setItem('FAILED_ATTEMPTS', failedAttempts);
+      }
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
@@ -206,6 +277,13 @@ function App({
     sizeCls = 'fr-form-large';
   }
 
+  const rootProps = {
+    className: `fr-container ${sizeCls}`,
+  };
+  if (id) {
+    rootProps.id = id;
+  }
+
   const watchList = Object.keys(watch);
   // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
@@ -213,7 +291,7 @@ function App({
       <StoreCtx.Provider value={store}>
         <Store2Ctx.Provider value={store2}>
           <Ctx.Provider value={tools}>
-            <div className={`fr-container ${sizeCls}`}>
+            <div {...rootProps}>
               {debug ? (
                 <div className="mv2 bg-black-05 pa2 br2">
                   <div style={{ display: 'flex' }}>

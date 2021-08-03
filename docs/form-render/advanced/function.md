@@ -40,20 +40,23 @@ import FormRender, { useForm } from 'form-render';
 const schema = {
   type: 'object',
   properties: {
+    checkbox1: {
+      title: '展示更多内容',
+      type: 'boolean',
+    },
     select1: {
-      title: '单选',
-      description: '尝试选择“显示输入框”',
+      title: '请假原因',
       type: 'string',
-      enum: ['a', 'b'],
-      enumNames: ['隐藏输入框', '显示输入框'],
-      disabled: '{{rootValue.input1.length > 5}}',
-      default: 'a',
+      enum: ['a', 'b', 'c'],
+      enumNames: ['病假', '有事', '其它 (需注明具体原因)'],
+      hidden: '{{formData.checkbox1 !== true}}',
+      widget: 'radio',
     },
     input1: {
-      title: '输入框',
-      description: '尝试输入超过5个字符',
+      title: '具体原因',
       type: 'string',
-      hidden: '{{formData.select1 == "a"}}',
+      format: 'textarea',
+      hidden: '{{rootValue.checkbox1 !== true || formData.select1 !== "c"}}',
     },
   },
 };
@@ -66,8 +69,8 @@ const Demo1 = () => {
 export default Demo1;
 ```
 
-1. 在以上场景，`formData.select1`的父级就是 formData，所以`rootValue`字段与`formData`字段使用起来没有区别。
-2. 写表达式的时候，需要注意的是首次渲染时，所有没有指明 default 值的元素的值都是 undefined。所以例如 checkbox 的初始值并不是 false，而是 undefined。写类似于 `"{{formData.checkbox === false}}"` 的表达式在首次渲染中是无效的，更好的处理方式是曲线救国的 `"{{formData.checkbox !== true}}"`
+1. 在以上场景，`rootValue.checkbox1`的父级就是 formData，所以`rootValue`字段与`formData`字段使用起来没有区别。
+2. 写表达式的时候，需要注意的是首次渲染时，所有没有指明 default 值的元素的 string 类的值都是 undefined。所以例如 select1、input1 的初始值并不是空字符串 ""，而是 undefined。写类似于 `"{{formData.input1 === ''}}"` 的表达式在首次渲染中是无效的。
 
 ### 更多属性的 demo
 
