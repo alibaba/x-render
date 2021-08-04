@@ -1,6 +1,5 @@
 import { defineConfig } from 'dumi';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
-import path from 'path';
 
 export default defineConfig({
   title: 'XRender',
