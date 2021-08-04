@@ -39,7 +39,6 @@ string: {
 点击单选 radio
 下拉多选框 multiSelect
 点击多选框 checkboxes
-级联选择 cascader
 树形选择 treeSelect
 
 # 其他
