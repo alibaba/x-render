@@ -12,6 +12,7 @@ import {
   widgets as defaultWidgets,
   mapping as defaultMapping,
 } from 'form-render';
+import copyTOClipboard from 'copy-text-to-clipboard';
 import {
   flattenSchema,
   idToSchema,
