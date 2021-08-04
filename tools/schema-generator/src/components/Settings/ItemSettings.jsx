@@ -73,7 +73,7 @@ export default function ItemSettings({ widgets }) {
         onItemChange(selected, {
           ...item,
           schema: transformer.fromSetting(value),
-        });
+        }, 'schema');
       }
     } catch (error) {
       console.log('catch', error);

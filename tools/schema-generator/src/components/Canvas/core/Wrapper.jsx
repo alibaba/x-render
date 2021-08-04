@@ -223,6 +223,8 @@ export default function Wrapper({
     .concat(_extraBtns)
     .filter(Boolean);
 
+  const hasDuplicateId = Object.keys(flatten).map(key => flatten[key].schema.$id).filter(key => key === schema.$id).length > 1;
+
   return (
     <div
       ref={boxRef}
@@ -232,9 +234,14 @@ export default function Wrapper({
     >
       {children}
 
-      {!inside && $id !== '#' && !hideId && (
-        <div className="absolute top-0 right-1 blue f7">{shownId}</div>
-      )}
+      <div className="absolute top-0 right-1 f7">
+        {!inside && $id !== '#' && !hideId && (
+          <span className={hasDuplicateId ? 'red' : 'blue'}>{shownId}</span>
+        )}
+        {schema.hidden && (
+          <span style={{ color: '#666', marginLeft: '6px' }}>[hidden]</span>
+        )}
+      </div>
 
       {!inside && $id !== '#' && isSelected && (
         <div className="pointer-move" ref={dragRef}>

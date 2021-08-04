@@ -135,7 +135,7 @@ function Provider(props, ref) {
     const newSchema = idToSchema(newFlatten);
     const newData = flattenToData(newFlatten);
     // 判断只有schema变化时才调用，一般需求的用户不需要
-    if (changeSource === 'schema' && onSchemaChange) {
+    if (changeSource === 'schema') {
       onSchemaChange(newSchema);
     }
     // schema 变化大都会触发 data 变化
