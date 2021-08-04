@@ -123,7 +123,9 @@ const ExtendedWidget = ({
 
   return (
     <Suspense fallback={<div></div>}>
+    <div className='fr-item-wrapper'>
       <Widget {...finalProps} />
+    </div>
     </Suspense>
   );
 };
