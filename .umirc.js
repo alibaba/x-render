@@ -73,11 +73,11 @@ export default defineConfig({
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/table-render/CHANGELOG.md',
         },
-        // {
-        //   title: 'ChartRender',
-        //   path:
-        //     'https://github.com/alibaba/form-render/blob/master/packages/chart-render/CHANGELOG.md',
-        // },
+        {
+          title: 'ChartRender',
+          path:
+            'https://github.com/alibaba/form-render/blob/master/packages/chart-render/CHANGELOG.md',
+        },
       ],
     },
     {
