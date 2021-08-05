@@ -40,10 +40,10 @@ export default defineConfig({
       title: 'TableRender',
       path: '/table-render',
     },
-    // {
-    //   title: 'ChartRender',
-    //   path: '/chart-render',
-    // },
+    {
+      title: 'ChartRender',
+      path: '/chart-render',
+    },
     {
       title: 'Playground',
       children: [
