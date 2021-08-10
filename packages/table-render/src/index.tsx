@@ -39,7 +39,7 @@ const useTableRoot = props => {
       current?: number;
       tab?: number | string;
       pageSize?: number;
-      sorter: any;
+      sorter?: any;
     },
     customSearch?: any
   ) => {
