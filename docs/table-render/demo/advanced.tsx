@@ -38,8 +38,8 @@ const schema = {
 const Demo = () => {
   const { refresh, tableState }: any = useTable();
 
-  const searchApi = params => {
-    console.log('params >>> ', params);
+  const searchApi = (params, sorter) => {
+    console.group(sorter);
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
@@ -106,6 +106,7 @@ const Demo = () => {
     {
       title: '酒店GMV',
       key: 'money',
+      sorter: true,
       dataIndex: 'money',
       valueType: 'money',
     },
@@ -153,8 +154,6 @@ const Demo = () => {
       <Search
         schema={schema}
         displayType="row"
-        onSearch={search => console.log('onSearch', search)}
-        afterSearch={params => console.log('afterSearch', params)}
         api={[
           {
             name: '全部数据',
@@ -168,6 +167,7 @@ const Demo = () => {
       />
       <Table
         // size="small"
+        pagination={{ pageSize: 4 }}
         columns={columns}
         // headerTitle="高级表单"
         rowKey="id"

@@ -21,14 +21,14 @@ const ProTable = (props: ProTableProps) => {
   const { dataSource, pagination, loading, api, tableSize } = tableState;
   const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
 
-  const onPageChange = (page: any, pageSize: any) => {
-    setTable({ pagination: { ...pagination, current: page, pageSize } });
+  const onChange = ({ current, pageSize }, filters, sorter) => {
+    setTable({ pagination: { ...pagination, current, pageSize } });
     if (
       !props.pageChangeWithRequest &&
       props.pageChangeWithRequest !== undefined
     )
       return;
-    doSearch({ current: page, pageSize });
+    doSearch({ current, pageSize, sorter });
   };
 
   const {
@@ -67,13 +67,14 @@ const ProTable = (props: ProTableProps) => {
   });
   const tableProps = {
     ...props,
+    onChange,
     // dataSource不准在使用ProTable时用props赋值
     dataSource,
     pagination:
       props.pagination === false
         ? false
         : {
-            onChange: onPageChange,
+            // onChange: onPageChange,
             size: 'small',
             ...props.pagination,
             pageSize: props.pagination?.pageSize || pagination.pageSize,
