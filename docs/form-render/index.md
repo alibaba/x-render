@@ -71,11 +71,15 @@ const schema = {
 };
 
 class Demo extends React.Component {
+  onFinish = (formData, errors) => {
+    console.log('formData:', formData, 'errors', errors);
+  };
+
   render() {
     const { form } = this.props;
     return (
       <div>
-        <FormRender form={form} schema={schema} />
+        <FormRender form={form} schema={schema} onFinish={this.onFinish} />
         <Button type="primary" onClick={form.submit}>
           提交
         </Button>
@@ -117,9 +121,12 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
+  const onFinish = (formData, errors) => {
+    console.log('formData:', formData, 'errors', errors);
+  };
   return (
     <div>
-      <FormRender form={form} schema={schema} />
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
       <Button type="primary" onClick={form.submit}>
         提交
       </Button>
