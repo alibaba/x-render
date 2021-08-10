@@ -26,7 +26,7 @@ const Core = ({
   debugCss,
   ...rest
 }) => {
-  // console.log('<Core>');
+  // console.log('<Core>', id);
   const snapShot = useRef();
 
   const { flatten, errorFields, isEditing, formData, allTouched } = useStore();
@@ -36,7 +36,23 @@ const Core = ({
 
   let dataPath = getDataPath(id, dataIndex);
   const _value = getValueByPath(formData, dataPath);
-  let schema = clone(item.schema); // TODO: 用deepClone，函数啥的才能正常copy，但是deepClone的代价是不是有点大，是否应该让用户避免schema里写函数
+  let schema = clone(item.schema);
+  const dependencies = schema.dependencies;
+  const dependValues = [];
+
+  try {
+    if (Array.isArray(dependencies)) {
+      dependencies.forEach(item => {
+        const itemPath = getDataPath(item, dataIndex);
+        const result = getValueByPath(formData, itemPath);
+        if (result !== undefined) {
+          dependValues.push(result);
+        }
+      });
+    }
+  } catch (error) {
+    console.error(`dependencies 计算报错，${dependencies}`);
+  }
 
   // 节流部分逻辑，编辑时不执行
   if (isEditing && snapShot.current) {
@@ -58,6 +74,7 @@ const Core = ({
     dataIndex, // 数据来源是数组的第几个index，上层每有一个list，就push一个index
     dataPath,
     _value,
+    dependValues,
     hideTitle,
     hideValidation,
     debugCss,
@@ -72,7 +89,7 @@ const Core = ({
     ...rest,
   };
 
-  return <MCore {...dataProps} />;
+  return <CoreRender {...dataProps} />;
 };
 
 const CoreRender = ({
@@ -85,6 +102,7 @@ const CoreRender = ({
   debugCss,
   schema,
   _value,
+  dependValues,
   displayType,
   column,
   labelWidth,
@@ -217,6 +235,7 @@ const CoreRender = ({
     dataIndex,
     dataPath,
     _value,
+    dependValues,
     _schema: schema,
     labelClass,
     labelStyle,
@@ -287,6 +306,11 @@ const areEqual = (prev, current) => {
     return false;
   }
   if (prev.labelWidth !== current.labelWidth) {
+    return false;
+  }
+  if (
+    JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
+  ) {
     return false;
   }
   if (
