@@ -20,6 +20,7 @@ export default function ItemSettings({ widgets }) {
     selected,
     flatten,
     onItemChange,
+    onItemFormChange,
     userProps = {},
     widgets: globalWidgets,
     mapping: globalMapping,
@@ -108,6 +109,7 @@ export default function ItemSettings({ widgets }) {
         displayType: 'column',
         properties,
       });
+      onItemFormChange(form);
       form.setValues(transformer.toSetting(item.schema));
       setTimeout(() => {
         setReady(true);

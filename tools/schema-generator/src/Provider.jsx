@@ -3,6 +3,7 @@ import React, {
   useRef,
   forwardRef,
   useImperativeHandle,
+  useState,
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -68,6 +69,7 @@ function Provider(props, ref) {
     schema: {},
     selected: undefined, // 被选中的$id, 如果object/array的内部，以首字母0标识
   });
+  const [itemForm, setItemForm] = useState(null)
 
   // 收口点 propsSchema 到 schema 的转换 (一共3处，其他两个是 importSchema 和 setValue，在 FRWrapper 文件)
   useEffect(() => {
@@ -192,6 +194,8 @@ function Provider(props, ref) {
     onItemChange, // onFlattenChange 里只改一个item的flatten，使用这个方法
     onSchemaChange,
     onChange,
+    itemForm,
+    onItemFormChange: setItemForm,
     userProps,
     frProps,
     displaySchema,
