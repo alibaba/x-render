@@ -106,6 +106,7 @@ export default Demo;
 - **addons.removeErrorField**: form 方法透传给自定义组件使用，删除所有 error
 - **addons.setSchema**: form 方法透传给自定义组件使用，修改 schema
 - **addons.resetFields**: form 方法透传给自定义组件使用，重置清空整个表单
+- **addons.dependValues**: 当自定义组件对应的 schema 使用到 dependencies 字段时，在此获得 dependencies 对应的表单项的实时的值
 
 ## antd 组件改造成自定义组件
 
