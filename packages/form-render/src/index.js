@@ -314,6 +314,11 @@ function App({
                   <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
                   <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
                   <div>{'descriptor:' + JSON.stringify(window.descriptor)}</div>
+                  {/* <textarea
+                    style={{ width: 500, height: 300 }}
+                    value={'schema:' + JSON.stringify(flatten, null, 2)}
+                    onChange={() => {}}
+                  /> */}
                 </div>
               ) : null}
               {watchList.length > 0
