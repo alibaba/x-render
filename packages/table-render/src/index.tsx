@@ -171,7 +171,7 @@ const Container = (props, ref) => {
 
 const TableProvider = forwardRef(Container);
 
-const withTable = Component => ({ children, ...rest }) => {
+const withTable = Component => ({ children = undefined, ...rest }) => {
   return (
     <TableProvider {...rest}>
       <Component />
