@@ -9,7 +9,6 @@ import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
 
 import './index.css';
-import { useState } from 'react';
 
 const useTableRoot = props => {
   const form = useForm();
