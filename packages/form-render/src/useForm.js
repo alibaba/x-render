@@ -284,7 +284,7 @@ const useForm = props => {
 
     // schema 的转换在这边
     let _schema = schemaRef.current;
-    if (schemaContainsExpression(schemaRef.current, false)) {
+    if (schemaContainsExpression(schemaRef.current)) {
       _schema = parseAllExpression(schemaRef.current, _data.current, '#');
     }
     const _flatten = flattenSchema(_schema);

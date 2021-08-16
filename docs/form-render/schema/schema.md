@@ -290,7 +290,7 @@ list1: {
         title: '单选2（自定义组件）',
         type: 'string',
         widget: 'select2', // select2 为自定义组件，具体实现与dependencies的讨论无关，不赘述
-        dependencies: ['list1.select1'],
+        dependencies: ['list1[].select1'],
       },
     },
   },

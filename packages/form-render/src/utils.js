@@ -398,14 +398,9 @@ export function isExpression(func) {
   if (typeof func !== 'string') return false;
   // 这样的pattern {{.....}}
   const pattern = /^{{(.+)}}$/;
-  const reg1 = /^{{(function.+)}}$/;
-  const reg2 = /^{{(.+=>.+)}}$/;
-  if (
-    typeof func === 'string' &&
-    func.match(pattern) &&
-    !func.match(reg1) &&
-    !func.match(reg2)
-  ) {
+  const reg1 = /^{{function\(.+}}$/;
+  // const reg2 = /^{{(.+=>.+)}}$/;
+  if (typeof func === 'string' && func.match(pattern) && !func.match(reg1)) {
     return true;
   }
   return false;
@@ -425,7 +420,7 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
       return Function(str)();
     } catch (error) {
       console.log(error, func, dataPath);
-      return func;
+      return null; // 如果计算有错误，return null 最合适
     }
     // const funcBody = func.substring(2, func.length - 2);
     // //TODO: 这样有问题，例如 a.b.indexOf(), 会把 a.b.indexOf 当做值
@@ -448,30 +443,20 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
   } else return func;
 }
 
-export const schemaContainsExpression = (schema, shallow = true) => {
+export const schemaContainsExpression = schema => {
   if (isObject(schema)) {
     return Object.keys(schema).some(key => {
       const value = schema[key];
       if (typeof value === 'string') {
         return isExpression(value);
-      } else if (
-        typeof key === 'string' &&
-        key.toLowerCase().indexOf('props') > -1
-      ) {
-        const propsObj = schema[key];
-        if (isObject(propsObj)) {
-          return Object.keys(propsObj).some(k => {
-            return isExpression(propsObj[k]);
-          });
-        }
-      } else if (!shallow && isObject(value)) {
-        return schemaContainsExpression(value, false);
+      } else if (isObject(value)) {
+        return schemaContainsExpression(value);
+      } else {
+        return false;
       }
-      return false;
     });
-  } else {
-    return false;
   }
+  return false;
 };
 
 // TODO: 两个优化，1. 可以通过表达式的path来判断，避免一些重复计算
