@@ -26,10 +26,10 @@ toc: false
 
 函数表达式可使用以下 2 关键字：
 
-| 名称      |                                       说明                                        |
-| --------- | :-------------------------------------------------------------------------------: |
-| formData  | 整个 form 的值 （最常用，当两个关联组件距离较远时，可以从顶层的 formData 里获取） |
-| rootValue | 父组件的值 （上一级的值，一般在列表场景中的子元素获取对应 index 的 item 时使用）  |
+| 名称      |                                                       说明                                                        |
+| --------- | :---------------------------------------------------------------------------------------------------------------: |
+| formData  |                 整个 form 的值 （最常用，当两个关联组件距离较远时，可以从顶层的 formData 里获取）                 |
+| rootValue | 父表单元素的值 （上一级的值，只在列表场景的使用，例如列表某个元素的父级就是整个 item，其他场景一律使用 formData） |
 
 ### 使用
 
@@ -70,7 +70,7 @@ export default Demo1;
 ```
 
 1. 在以上场景，`rootValue.checkbox1`的父级就是 formData，所以`rootValue`字段与`formData`字段使用起来没有区别。
-2. 写表达式的时候，需要注意的是首次渲染时，所有没有指明 default 值的元素的 string 类的值都是 undefined。所以例如 select1、input1 的初始值并不是空字符串 ""，而是 undefined。写类似于 `"{{formData.input1 === ''}}"` 的表达式在首次渲染中是无效的。
+2. **写表达式的时候，需要注意的是首次渲染时，所有没有指明 default 值的元素，值都是 undefined**。所以例如 select1、input1 的初始值并不是空字符串 ""，而是 undefined。写类似于 `"{{formData.input1 === ''}}"` 的表达式在首次渲染中是无效的
 
 ### 更多属性的 demo
 
@@ -85,4 +85,4 @@ export default () => <FR schema={expression} />;
 ### 最后
 
 1. 如果涉及到值的联动，或者极其复杂的表单展示联动，可以使用 [watch](/form-render/advanced/watch)
-2. 更复杂和定制化的表单需求建议使用自定义组件。FormRender 的设计理念非常推崇组件的即插即用，详见[自定义组件](/form-render/advanced/widget)章节。
+2. 更复杂和定制化的表单需求建议使用 `dependencies` 字段明确注明关联关系字段，并使用自定义组件定制所需展示。FormRender 的设计理念非常推崇组件的即插即用，详见[自定义组件](/form-render/advanced/widget)章节。`dependencies`字段的使用细节见[schema 规范](/form-render/schema/schema#dependencies)
