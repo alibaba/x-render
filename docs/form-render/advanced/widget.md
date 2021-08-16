@@ -89,9 +89,37 @@ const Demo = () => {
 export default Demo;
 ```
 
-可以看到自定义组件的写法十分直观，事实上很多 antd 的组件都是可以直接拿来作为自定义组件使用（内置组件中就有 Input, InputNumber, Checkbox 和 Switch）
+## 不需要自己手写自定义组件哦
+
+自定义组件就是普通的 React 组件，唯一的要求是要有 value/onChange 这两个 props，用于双向绑定值。所以如果现成的组件已经默认使用了 value/onChange，就可以直接拿来用。
+
+举例来说：现在我们需要使用“级联选择”组件，FormRender 并没有内置支持。这时打开 antd 文档 https://ant.design/components/cascader/，我们看到cascader默认使用了 value/onChange，那就直接拿来用吧：
+
+```js
+import { Cascader } from 'antd';
+
+// 顶层引入注册
+...
+<Form
+  form={form}
+  schema={schema}
+  widgets={{ cascader: Cascader }}
+/>
+
+// schema 中使用
+location: {
+  title: '省市区',
+  type: 'string',
+  widget: 'cascader',
+  props: {
+    ...
+  }
+},
+```
 
 ## 自定义组件收到的 props
+
+使用自定义组件时，大多有复杂定制需求，FormRender 提供了丰富的 props：
 
 - **disabled**：是否禁止输入
 - **readOnly**：是否只读

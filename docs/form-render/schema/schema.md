@@ -261,7 +261,7 @@ export default () => <FR schema={titleTrick} />;
 2. 用户并不希望纯展示的字段也出现在表单中，此时，使用 bind: `false` 可避免字段在提交时出现
 3. 注意：请不要 bind 一个数组结构下面的字段，目前没有对此进行处理，所以会无效（在未来这个限制会解除）
 
-### dependencies
+### dependencies (v1.6.2 以上)
 
 - 类型：string[]
 - 详细：
