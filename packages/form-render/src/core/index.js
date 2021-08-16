@@ -13,8 +13,6 @@ import {
   getValueByPath,
   getDataPath,
   clone,
-  schemaContainsExpression,
-  parseAllExpression,
 } from '../utils';
 
 const Core = ({
@@ -58,9 +56,6 @@ const Core = ({
   if (isEditing && snapShot.current) {
     schema = snapShot.current;
   } else {
-    if (schemaContainsExpression(schema)) {
-      schema = parseAllExpression(schema, formData, dataPath);
-    }
     snapShot.current = schema;
   }
 

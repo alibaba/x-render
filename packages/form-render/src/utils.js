@@ -116,10 +116,12 @@ export function getDataPath(id, dataIndex) {
 }
 
 export function isObjType(schema) {
-  return schema && schema.type === 'object' && schema.properties;
+  return (
+    schema && schema.type === 'object' && schema.properties && !schema.widget
+  );
 }
 
-// TODO: 支持非对象类型数组项
+// TODO: to support case that item is not an object
 export function isListType(schema) {
   return (
     schema &&
@@ -129,12 +131,12 @@ export function isListType(schema) {
   );
 }
 
-// TODO: 检验是否丢进去各种schema都能兜底不会crash
+// TODO: more tests to make sure weird & wrong schema won't crush
 export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
-  const schema = clone(_schema); // TODO: 是否需要deepClone，这个花费是不是有点大
+  const schema = clone(_schema);
   let _name = name;
   if (!schema.$id) {
-    schema.$id = _name; // 给生成的schema添加一个唯一标识，方便从schema中直接读取
+    schema.$id = _name; // path as $id, for easy access to path in schema
   }
   const children = [];
   if (isObjType(schema)) {
@@ -144,7 +146,7 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
       children.push(uniqueName);
       flattenSchema(value, uniqueName, _name, result);
     });
-    // schema.properties = {};
+    schema.properties = {};
   }
   if (isListType(schema)) {
     Object.entries(schema.items.properties).forEach(([key, value]) => {
@@ -153,20 +155,37 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
       children.push(uniqueName);
       flattenSchema(value, uniqueName, _name, result);
     });
-    // schema.items.properties = {};
-  }
-
-  const rules = Array.isArray(schema.rules) ? [...schema.rules] : [];
-  if (['boolean', 'function', 'string'].indexOf(typeof schema.required) > -1) {
-    rules.push({ required: schema.required }); // TODO: 万一内部已经用重复的required规则？
+    schema.items.properties = {};
   }
 
   if (schema.type) {
-    // Check: 为啥一定要有type？
     // TODO: 没有想好 validation 的部分
-    result[_name] = { parent, schema: schema, children, rules };
+    result[_name] = { parent, schema, children };
   }
   return result;
+}
+// the reverse of flattenSchema
+export function getSchemaFromFlatten(flatten, path = '#') {
+  let schema = {};
+  const item = clone(flatten[path]);
+  if (item) {
+    schema = item.schema;
+    // remove $id, maybe leave it for now
+    // schema.$id && delete schema.$id;
+    if (item.children.length > 0) {
+      item.children.forEach(child => {
+        if (!flatten[child]) return;
+        const key = getKeyFromPath(child);
+        if (isObjType(schema)) {
+          schema.properties[key] = getSchemaFromFlatten(flatten, child);
+        }
+        if (isListType(schema)) {
+          schema.items.properties[key] = getSchemaFromFlatten(flatten, child);
+        }
+      });
+    }
+  }
+  return schema;
 }
 
 //////////   old
@@ -629,11 +648,12 @@ export function defaultGetValueFromEvent(valuePropName, ...args) {
   return event;
 }
 
-export const getKeyFromPath = path => {
+export const getKeyFromPath = (path = '#') => {
   try {
-    const keyList = path.split('.');
-    const last = keyList.slice(-1)[0];
-    return last;
+    const arr = path.split('.');
+    const last = arr.slice(-1)[0];
+    const result = last.replace('[]', '');
+    return result;
   } catch (error) {
     console.error(error, 'getKeyFromPath');
     return '';
@@ -907,10 +927,9 @@ export const isPathRequired = (path, schema) => {
 };
 
 // _path 只供内部递归使用
-export const generateDataSkeleton = (schema, formData, _path = '') => {
-  let result = {};
+export const generateDataSkeleton = (schema, formData) => {
   let _formData = clone(formData);
-  result = _formData;
+  let result = _formData;
   if (isObjType(schema)) {
     if (_formData === undefined || typeof _formData !== 'object') {
       _formData = {};
@@ -919,11 +938,7 @@ export const generateDataSkeleton = (schema, formData, _path = '') => {
     Object.keys(schema.properties).forEach(key => {
       const childSchema = schema.properties[key];
       const childData = _formData[key];
-      const childResult = generateDataSkeleton(
-        childSchema,
-        childData,
-        `${_path}.${key}`
-      );
+      const childResult = generateDataSkeleton(childSchema, childData);
       result[key] = childResult;
     });
   } else if (_formData !== undefined) {
@@ -931,7 +946,7 @@ export const generateDataSkeleton = (schema, formData, _path = '') => {
   } else {
     if (schema.default !== undefined) {
       result = clone(schema.default);
-    } else if (schema.type === 'boolean') {
+    } else if (schema.type === 'boolean' && !schema.widget) {
       // result = false;
       result = undefined;
     } else {

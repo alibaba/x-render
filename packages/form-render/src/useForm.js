@@ -41,7 +41,7 @@ const useForm = props => {
     flatten: {}, // schema 的转换结构，便于处理
   });
 
-  const schemaRef = useRef({});
+  const schemaRef = useRef();
   const beforeFinishRef = useRef(() => {});
   const localeRef = useRef('cn');
   const removeHiddenDataRef = useRef();
@@ -49,6 +49,7 @@ const useForm = props => {
   const _data = useRef({}); // 用ref是为了破除闭包的影响
   const _flatten = useRef({}); // 用ref是为了破除闭包的影响
   const _touchedKeys = useRef([]); // 用ref是为了破除闭包的影响
+  const _errorFields = useRef();
 
   const {
     formData: innerData,
@@ -64,21 +65,51 @@ const useForm = props => {
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
-  const _errorFields = useRef();
   _errorFields.current = errorFields;
-
-  const dataFromOutside = props && props.hasOwnProperty('formData');
-
-  const formData = dataFromOutside ? _formData : innerData;
-
-  // 生成一个基础结构，确保对象内的必填元素也被校验。
-  _data.current = useMemo(() => {
-    return generateDataSkeleton(schemaRef.current, formData);
-  }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
-
   _touchedKeys.current = touchedKeys;
   _flatten.current = flatten;
 
+  const dataFromOutside = props && props.hasOwnProperty('formData');
+  const formData = dataFromOutside ? _formData : innerData;
+  // 生成一个基础结构，确保对象内的必填元素也被校验
+  _data.current = useMemo(() => {
+    if (schemaRef.current) {
+      return generateDataSkeleton(schemaRef.current, formData);
+    }
+    return {};
+  }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
+
+  useEffect(() => {
+    if (schemaRef.current) {
+      const flatten = flattenSchema(schemaRef.current);
+      Object.entries(flatten).forEach(([path, info]) => {
+        if (schemaContainsExpression(info.schema)) {
+          flatten[path].schema = parseAllExpression(
+            info.schema,
+            _data.current,
+            path
+          );
+        }
+      });
+      setState({ flatten });
+    }
+  }, [JSON.stringify(schemaRef.current), JSON.stringify(formData)]);
+
+  // TODO: 首次渲染的时候不要执行，这里导致第二次的渲染。不过关系不大
+  useEffect(() => {
+    validateAll({
+      formData: _data.current,
+      flatten: _flatten.current,
+      isRequired: allTouched,
+      touchedKeys: _touchedKeys.current,
+      locale: localeRef.current,
+      validateMessages: validateMessagesRef.current,
+    }).then(res => {
+      _setErrors(res);
+    });
+  }, [JSON.stringify(_data.current), allTouched]);
+
+  // All form methods are down here ----------------------------------------------------------------
   // 两个兼容 0.x 的函数
   const _setData = data => {
     if (typeof _onChange === 'function') {
@@ -113,45 +144,6 @@ const useForm = props => {
   const changeTouchedKeys = newTouchedKeys => {
     setState({ touchedKeys: newTouchedKeys });
   };
-
-  // 为了兼容 0.x
-  // useEffect(() => {
-  //   // 如果是外部数据，submit没有收束，无校验
-  //   if (dataFromOutside && typeof _onValidate === 'function') {
-  //     setTimeout(() => {
-  //       validateAll({
-  //         formData: _data.current,
-  //         schema: schemaRef.current,
-  //         isRequired: true,
-  //         touchedKeys: _touchedKeys.current,
-  //         locale: localeRef.current,
-  //         validateMessages: validateMessagesRef.current,
-  //       }).then(res => {
-  //         const oldFormatErrors = res.map(item => item.name);
-  //         _onValidate(oldFormatErrors);
-  //       });
-  //     }, 200);
-  //   }
-  // }, []);
-
-  // 这里导致第二次的渲染
-  useEffect(() => {
-    validateAll({
-      formData: _data.current,
-      schema: schemaRef.current,
-      isRequired: allTouched,
-      touchedKeys: _touchedKeys.current,
-      locale: localeRef.current,
-      validateMessages: validateMessagesRef.current,
-    }).then(res => {
-      _setErrors(res);
-    });
-  }, [JSON.stringify(_data.current), allTouched]);
-
-  useEffect(() => {
-    const flatten = flattenSchema(schemaRef.current);
-    setState({ flatten });
-  }, [JSON.stringify(schemaRef.current), renderCount]);
 
   const setEditing = isEditing => {
     setState({ isEditing });
@@ -278,20 +270,11 @@ const useForm = props => {
   const submit = () => {
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
     //  https://formik.org/docs/guides/form-submission
-    // TODO: 更多的处理，注意处理的时候一定要是copy一份formData，否则submitData会和表单操作实时同步的。。而不是submit再变动了
-
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
-
-    // schema 的转换在这边
-    let _schema = schemaRef.current;
-    if (schemaContainsExpression(schemaRef.current)) {
-      _schema = parseAllExpression(schemaRef.current, _data.current, '#');
-    }
-    const _flatten = flattenSchema(_schema);
 
     return validateAll({
       formData: _data.current,
-      schema: _schema,
+      flatten: _flatten.current,
       touchedKeys: [],
       isRequired: true,
       locale: localeRef.current,
@@ -347,14 +330,6 @@ const useForm = props => {
       allTouched: false,
     });
   };
-
-  // const setValue = (id, value, dataIndex) => {
-  //   let path = id;
-  //   if (dataIndex && Array.isArray(dataIndex)) {
-  //     path = getDataPath(id, dataIndex);
-  //   }
-  //   onItemChange(path, value);
-  // };
 
   const endValidating = () =>
     setState({
