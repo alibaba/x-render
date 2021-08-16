@@ -546,31 +546,42 @@ export function looseJsonParse(obj) {
   return Function('"use strict";return (' + obj + ')')();
 }
 
-// 获得propsSchema的children
-function getChildren2(schema) {
-  if (!schema) return [];
-  const {
-    // object
-    properties,
-    // array
-    items,
-    type,
-  } = schema;
-  if (!properties && !items) {
-    return [];
+export const isFunctionString = fString => {
+  return typeof fString === 'string' && fString.indexOf('function(') === 0;
+};
+
+export function parseFunction(fString) {
+  if (isFunctionString(fString)) {
+    return Function('return ' + fString)();
   }
-  let schemaSubs = {};
-  if (type === 'object') {
-    schemaSubs = properties;
-  }
-  if (type === 'array') {
-    schemaSubs = items.properties;
-  }
-  return Object.keys(schemaSubs).map(name => ({
-    schema: schemaSubs[name],
-    name,
-  }));
+  return fString;
 }
+
+// 获得propsSchema的children
+// function getChildren2(schema) {
+//   if (!schema) return [];
+//   const {
+//     // object
+//     properties,
+//     // array
+//     items,
+//     type,
+//   } = schema;
+//   if (!properties && !items) {
+//     return [];
+//   }
+//   let schemaSubs = {};
+//   if (type === 'object') {
+//     schemaSubs = properties;
+//   }
+//   if (type === 'array') {
+//     schemaSubs = items.properties;
+//   }
+//   return Object.keys(schemaSubs).map(name => ({
+//     schema: schemaSubs[name],
+//     name,
+//   }));
+// }
 
 export const oldSchemaToNew = schema => {
   if (schema && schema.propsSchema) {
