@@ -226,7 +226,7 @@ const useForm = props => {
     try {
       return _flatten.current[path].schema;
     } catch (error) {
-      console.error(error, 'getSchemaByPath');
+      console.log(error, 'getSchemaByPath');
       return {};
     }
   };
