@@ -107,7 +107,7 @@ const useForm = props => {
     }).then(res => {
       _setErrors(res);
     });
-  }, [JSON.stringify(_data.current), allTouched]);
+  }, [JSON.stringify(_data.current)]);
 
   // All form methods are down here ----------------------------------------------------------------
   // 两个兼容 0.x 的函数
@@ -271,7 +271,6 @@ const useForm = props => {
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
     //  https://formik.org/docs/guides/form-submission
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
-
     return validateAll({
       formData: _data.current,
       flatten: _flatten.current,
@@ -281,17 +280,16 @@ const useForm = props => {
       validateMessages: validateMessagesRef.current,
     })
       .then(errors => {
-        // 如果有错误，也不停止校验和提交，在onFinish里让用户自己搞
-        if (errors && errors.length > 0) {
-          // console.log('submit:', _data.current, errors);
-          setState({
-            errorFields: errors,
-          });
-        }
+        // console.log('submit:', _data.current, errors);
+        setState({ errorFields: errors });
 
         if (typeof beforeFinishRef.current === 'function') {
           return Promise.resolve(
-            processData(_data.current, _flatten, removeHiddenDataRef.current)
+            processData(
+              _data.current,
+              _flatten.current,
+              removeHiddenDataRef.current
+            )
           ).then(res => {
             setState({
               isValidating: true,
@@ -304,7 +302,11 @@ const useForm = props => {
         }
 
         return Promise.resolve(
-          processData(_data.current, _flatten, removeHiddenDataRef.current)
+          processData(
+            _data.current,
+            _flatten.current,
+            removeHiddenDataRef.current
+          )
         ).then(res => {
           setState({
             isValidating: false,
@@ -325,7 +327,7 @@ const useForm = props => {
     setState({
       formData: {},
       submitData: {},
-      errors: [],
+      errorFields: [],
       touchedKeys: [],
       allTouched: false,
     });
