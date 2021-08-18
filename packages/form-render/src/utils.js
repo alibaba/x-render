@@ -1129,12 +1129,6 @@ const updateSingleSchema = schema => {
   }
 };
 
-// 旧版schema转新版schema
-export const parseExpression = (schema, formData) => {
-  let schema1 = parseRootValue(schema);
-  let schema2 = replaceParseValue(schema1);
-};
-
 // 检验一个string是 function（传统活箭头函数）
 export const parseFunctionString = string => {
   if (typeof string !== 'string') return false;
