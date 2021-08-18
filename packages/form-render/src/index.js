@@ -55,8 +55,6 @@ function App({
   removeHiddenData = false,
   ...rest
 }) {
-  const didMount = useRef(false);
-
   try {
     const _ = form.submit;
   } catch (error) {
@@ -85,6 +83,7 @@ function App({
     syncStuff,
     logOnMount,
     logOnSubmit,
+    setFirstMount,
     ...valuesThatWillChange
   } = form;
 
@@ -97,11 +96,13 @@ function App({
     formData,
     flatten,
     showValidate, // 旧版折中升级方案里，旧的api的软兼容
+    firstMount,
   } = valuesThatWillChange;
 
   useEffect(() => {
     // Schema最外层的type是object来判断，没有的话，认为schema没有传
     if (schema && schema.type) {
+      setFirstMount(true);
       syncStuff({
         schema,
         locale,
@@ -115,17 +116,16 @@ function App({
   }, [JSON.stringify(schema)]);
 
   useEffect(() => {
-    if (didMount.current === false && schema && schema.type) {
+    if (!firstMount && schema && schema.type) {
       if (typeof onMount === 'function') {
         // 等一下 useForm 里接到第一份schema时，计算第一份data的骨架
         setTimeout(() => {
           onMount();
-          didMount.current = true;
         }, 0);
       }
       setTimeout(onMountLogger, 0);
     }
-  }, [JSON.stringify(schema)]);
+  }, [JSON.stringify(schema), firstMount]);
 
   const onMountLogger = () => {
     const start = new Date().getTime();
@@ -329,6 +329,7 @@ function App({
                         watchKey={item}
                         watch={watch}
                         formData={formData}
+                        firstMount={firstMount}
                       />
                     );
                   })
@@ -356,29 +357,35 @@ const Wrapper = props => {
 
 export default Wrapper;
 
-const Watcher = ({ watchKey, watch, formData }) => {
+const Watcher = ({ watchKey, watch, formData, firstMount }) => {
   const value = getValueByPath(formData, watchKey);
   const watchObj = watch[watchKey];
-  const firstMount = useRef(true);
 
   useEffect(() => {
     const runWatcher = () => {
       if (typeof watchObj === 'function') {
-        watchObj(value);
+        try {
+          watchObj(value);
+        } catch (error) {
+          console.log(`${watchKey}对应的watch函数执行报错：`, error);
+        }
       } else if (watchObj && typeof watchObj.handler === 'function') {
-        watchObj.handler(value);
+        try {
+          watchObj.handler(value);
+        } catch (error) {
+          console.log(`${watchKey}对应的watch函数执行报错：`, error);
+        }
       }
     };
 
-    if (firstMount.current) {
+    if (firstMount) {
       const immediate = watchObj && watchObj.immediate;
       if (immediate) {
         runWatcher();
       }
-      firstMount.current = false;
     } else {
       runWatcher();
     }
-  }, [JSON.stringify(value)]);
+  }, [JSON.stringify(value), firstMount]);
   return null;
 };
