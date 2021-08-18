@@ -26,7 +26,6 @@ const useForm = props => {
   } = props || {};
 
   const [renderCount, forceRender] = useState(0);
-  const didMount = useRef(false);
 
   const [state, setState] = useSet({
     formData: {},
@@ -39,6 +38,8 @@ const useForm = props => {
     allTouched: false, // 是否所有表单元素都被碰过了（一键开关，用于提交的时候，默认所有都被touch了）
     touchedKeys: [], // 碰过的key（用于submit之前，判断哪些被碰过了）
     flatten: {}, // schema 的转换结构，便于处理
+    finalFlatten: {}, // 表达式等被处理过的flatten，用于渲染
+    firstMount: true,
   });
 
   const schemaRef = useRef();
@@ -62,6 +63,8 @@ const useForm = props => {
     allTouched,
     touchedKeys,
     flatten,
+    finalFlatten,
+    firstMount,
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
@@ -80,23 +83,37 @@ const useForm = props => {
   }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
 
   useEffect(() => {
-    if (schemaRef.current) {
+    if (schemaRef.current && firstMount) {
       const flatten = flattenSchema(schemaRef.current);
-      Object.entries(flatten).forEach(([path, info]) => {
-        if (schemaContainsExpression(info.schema)) {
-          flatten[path].schema = parseAllExpression(
-            info.schema,
-            _data.current,
-            path
-          );
-        }
-      });
-      setState({ flatten });
+      setState({ flatten, firstMount: false });
     }
-  }, [JSON.stringify(schemaRef.current), JSON.stringify(formData)]);
+  }, [JSON.stringify(schemaRef.current), firstMount]);
+
+  // 统一的处理expression
+  useEffect(() => {
+    if (firstMount) {
+      return;
+    }
+    let newFlatten = clone(_flatten.current);
+    Object.entries(_flatten.current).forEach(([path, info]) => {
+      if (schemaContainsExpression(info.schema)) {
+        newFlatten[path].schema = parseAllExpression(
+          info.schema,
+          _data.current,
+          path
+        );
+      }
+    });
+    setState({ finalFlatten: newFlatten });
+  }, [
+    JSON.stringify(_flatten.current),
+    JSON.stringify(_data.current),
+    firstMount,
+  ]);
 
   // TODO: 首次渲染的时候不要执行，这里导致第二次的渲染。不过关系不大
   useEffect(() => {
+    if (firstMount) return;
     validateAll({
       formData: _data.current,
       flatten: _flatten.current,
@@ -124,6 +141,10 @@ const useForm = props => {
       _onValidate(oldFormatErrors);
     }
     setState({ errorFields: errors });
+  };
+
+  const setFirstMount = value => {
+    setState({ firstMount: value });
   };
 
   const touchKey = key => {
@@ -197,7 +218,8 @@ const useForm = props => {
           };
         }
       });
-      setState({ flatten: { ...newFlatten } });
+      setState({ flatten: newFlatten });
+      _flatten.current = newFlatten;
     } catch (error) {
       console.error(error, 'setSchema');
     }
@@ -216,7 +238,8 @@ const useForm = props => {
           ? newSchema(newFlatten[path].schema)
           : newSchema;
       newFlatten[path].schema = { ...newFlatten[path].schema, ..._newSchema };
-      setState({ flatten: { ...newFlatten } });
+      setState({ flatten: newFlatten });
+      _flatten.current = newFlatten;
     } catch (error) {
       console.error(error, 'setSchemaByPath');
     }
@@ -280,7 +303,6 @@ const useForm = props => {
       validateMessages: validateMessagesRef.current,
     })
       .then(errors => {
-        // console.log('submit:', _data.current, errors);
         setState({ errorFields: errors });
 
         if (typeof beforeFinishRef.current === 'function') {
@@ -351,7 +373,7 @@ const useForm = props => {
     // state
     formData: _data.current,
     schema: schemaRef.current,
-    flatten,
+    flatten: finalFlatten,
     touchedKeys: _touchedKeys.current,
     allTouched,
     // methods
@@ -381,6 +403,8 @@ const useForm = props => {
     setEditing,
     syncStuff,
     showValidate: _showValidate,
+    // firstMount,
+    setFirstMount,
     // logs
     logOnMount,
     logOnSubmit,
