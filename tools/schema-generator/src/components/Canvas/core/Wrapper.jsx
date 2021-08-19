@@ -143,11 +143,11 @@ export default function Wrapper({
   };
 
   const handleItemCopy = async e => {
+    e.stopPropagation();
     if (itemForm) {
       const errors = await itemForm.submit();
       if (errors.length) return;
     }
-    e.stopPropagation();
     const [newFlatten, newId] = copyItem(flatten, $id);
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
