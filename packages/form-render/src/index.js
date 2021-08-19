@@ -163,12 +163,14 @@ function App({
   const store = useMemo(
     () => ({
       ...valuesThatWillChange,
+      globalData,
       ...rest,
     }),
     [
       JSON.stringify(flatten),
       JSON.stringify(formData),
       JSON.stringify(errorFields),
+      JSON.stringify(globalData),
     ]
   );
 
@@ -216,7 +218,6 @@ function App({
       removeErrorField,
       removeTouched,
       changeTouchedKeys,
-      globalData,
     }),
     []
   );
