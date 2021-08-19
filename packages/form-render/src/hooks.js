@@ -28,42 +28,31 @@ export const useStore2 = () => {
 
 // export default logger;
 
-export const useSet = x => useReducer((a, b) => ({ ...a, ...b }), x);
+// export const useSet = x => useReducer((a, b) => ({ ...a, ...b }), x);
 
 // 类似于class component 的 setState
-// export const useSet = initState => {
-//   let show = useRef(true);
-//   const [state, setState] = useReducer((state, newState) => {
-//     let action = newState;
-//     if (typeof newState === 'function') {
-//       action = action(state);
-//     }
-//     if (newState.action && newState.payload) {
-//       action = newState.payload;
-//       if (typeof action === 'function') {
-//         action = action(state);
-//       }
-//     }
-//     const result = { ...state, ...action };
-//     // if (newState.action !== 'no-log') {
-//     // 解决会展示两遍的问题，TODO: 是否真的解决了？如果有不是每次重复显示两遍的咋办？
-//     if (show.current === true) {
-//       console.group(newState.action || 'action'); // TODO: give it a name
-//       console.log('%cState:', 'color: #9E9E9E; font-weight: 700;', state);
-//       console.log('%cAction:', 'color: #00A7F7; font-weight: 700;', action);
-//       console.log('%cNext:', 'color: #47B04B; font-weight: 700;', result);
-//       console.groupEnd();
-//       show.current = false;
-//     } else {
-//       show.current = true;
-//     }
-
-//     // } else {
-//     // }
-//     return result;
-//   }, initState);
-//   return [state, setState];
-// };
+export const useSet = initState => {
+  const [state, setState] = useReducer((state, newState) => {
+    let action = newState;
+    if (typeof newState === 'function') {
+      action = action(state);
+    }
+    if (newState.action && newState.payload) {
+      action = newState.payload;
+      if (typeof action === 'function') {
+        action = action(state);
+      }
+    }
+    const result = { ...state, ...action };
+    // console.group(newState.action || 'action'); // TODO: give it a name
+    // console.log('%cState:', 'color: #9E9E9E; font-weight: 700;', state);
+    // console.log('%cAction:', 'color: #00A7F7; font-weight: 700;', action);
+    // console.log('%cNext:', 'color: #47B04B; font-weight: 700;', result);
+    // console.groupEnd();
+    return result;
+  }, initState);
+  return [state, setState];
+};
 
 // start: true 开始、false 暂停
 export function useInterval(callback, delay, start) {

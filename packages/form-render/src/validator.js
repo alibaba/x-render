@@ -3,30 +3,23 @@ import {
   getDescriptorFromSchema,
   formatPathFromValidator,
   isPathRequired,
-  generateDataSkeleton,
-  parseAllExpression,
-  schemaContainsExpression,
   getArray,
+  getSchemaFromFlatten,
 } from './utils';
 import { defaultValidateMessagesCN } from './validateMessageCN';
 import { defaultValidateMessages } from './validateMessage';
 import Validator from 'async-validator';
 import { get, merge } from 'lodash-es';
-// export const validateAll = () => Promise.resolve([]);
 
 export const validateAll = ({
   formData,
-  schema = {},
+  flatten,
   isRequired = true,
   touchedKeys = [],
   locale = 'cn',
   validateMessages = {},
 }) => {
-  // Check: 添加了这个逻辑，不知道性能是否会变坏
-  let _schema = schema;
-  if (schemaContainsExpression(schema, false)) {
-    _schema = parseAllExpression(schema, formData, '#');
-  }
+  let _schema = getSchemaFromFlatten(flatten);
   if (Object.keys(_schema).length === 0) return Promise.resolve();
   const descriptor = getDescriptorFromSchema({
     schema: _schema,

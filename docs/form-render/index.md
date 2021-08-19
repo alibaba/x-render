@@ -50,52 +50,6 @@ npm i form-render --save
  */
 import React from 'react';
 import { Button } from 'antd';
-import FormRender, { connectForm } from 'form-render';
-// import 'antd/dist/antd.css';    如果项目没有对antd、less做任何配置的话，需要加上
-
-const schema = {
-  type: 'object',
-  properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚'],
-    },
-  },
-};
-
-class Demo extends React.Component {
-  render() {
-    const { form } = this.props;
-    return (
-      <div>
-        <FormRender form={form} schema={schema} />
-        <Button type="primary" onClick={form.submit}>
-          提交
-        </Button>
-      </div>
-    );
-  }
-}
-
-export default connectForm(Demo);
-```
-
-**对于函数组件，FormRender 提供了 `useForm` hooks, 书写更为灵活**
-
-```jsx
-/**
- * transform: true
- * defaultShowCode: true
- */
-import React from 'react';
-import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
 
 const schema = {
@@ -117,9 +71,12 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
+  const onFinish = (formData, errors) => {
+    console.log('formData:', formData, 'errors', errors);
+  };
   return (
     <div>
-      <FormRender form={form} schema={schema} />
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
       <Button type="primary" onClick={form.submit}>
         提交
       </Button>
@@ -130,7 +87,57 @@ const Demo = () => {
 export default Demo;
 ```
 
-**换一个更复杂一点的 schema，我们支持数据绑定、antd 的 props 透传等一系列功能：**
+对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks：
+
+```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
+import React from 'react';
+import { Button } from 'antd';
+import FormRender, { connectForm } from 'form-render';
+// import 'antd/dist/antd.css';    如果项目没有对antd、less做任何配置的话，需要加上
+
+const schema = {
+  type: 'object',
+  properties: {
+    input1: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+    },
+    select1: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b', 'c'],
+      enumNames: ['早', '中', '晚'],
+    },
+  },
+};
+
+class Demo extends React.Component {
+  onFinish = (formData, errors) => {
+    console.log('formData:', formData, 'errors', errors);
+  };
+
+  render() {
+    const { form } = this.props;
+    return (
+      <div>
+        <FormRender form={form} schema={schema} onFinish={this.onFinish} />
+        <Button type="primary" onClick={form.submit}>
+          提交
+        </Button>
+      </div>
+    );
+  }
+}
+
+export default connectForm(Demo);
+```
+
+**换一个更复杂一点的 schema，FR 支持数据绑定、antd 的 props 透传、表单联动等一系列功能：**
 
 ```jsx
 import React from 'react';
@@ -148,10 +155,15 @@ const schema = {
       type: 'range',
       format: 'date',
     },
+    showSetting: {
+      title: '是否展示网址',
+      type: 'boolean',
+    },
     siteUrl: {
       title: '网址',
       type: 'string',
       placeholder: '此处必填',
+      hidden: '{{formData.showSetting !== true}}',
       required: true,
       props: {
         addonBefore: 'https://',
@@ -189,7 +201,8 @@ export default Demo;
 1. 以 schema 来描述表单展示，提交方式与 antd v4 的方式类似
 2. schema 以国际标准的 JSON schema 为基础，同时能够方便使用任何 antd 的 props
 3. 通过 bind 字段，我们允许数据的双向绑定，数据展示和真实提交的数据可以根据开发需求不同（例如从服务端接口拿到不规则数据时，也能直接使用）
-4. 可以通过`displayType`,`labelWidth`等字段轻易修改展示
+4. 使用"{{...}}"书写表达式来完成简单的联动，值得一提的是，这里表达式支持所有 js 语法。FR 还提供自定义组件、dependencies 声明、watch 等工具用于更加复杂的定制
+5. 可以通过`displayType`,`labelWidth`等字段轻易修改展示
 
 ## 高级用法
 

@@ -15,9 +15,7 @@ const Demo = () => {
     <div className="fr-generator-playground" style={{ height: '80vh' }}>
       <Generator
         ref={ref}
-        extraButtons={[
-          { text: '去playground验证', onClick: goToFrPlayground },
-        ]}
+        extraButtons={[{ text: '去playground验证', onClick: goToFrPlayground }]}
         onChange={data => console.log('data:change', data)}
         onSchemaChange={schema => console.log('schema:change', schema)}
       />
