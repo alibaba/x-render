@@ -53,6 +53,7 @@ function App({
   onValuesChange,
   column,
   removeHiddenData = false,
+  globalData = {},
   ...rest
 }) {
   const didMount = useRef(false);
@@ -211,6 +212,7 @@ function App({
       removeErrorField,
       removeTouched,
       changeTouchedKeys,
+      globalData,
     }),
     []
   );

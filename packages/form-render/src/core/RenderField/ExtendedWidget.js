@@ -34,6 +34,7 @@ const ExtendedWidget = ({
     setSchema,
     resetFields,
     removeErrorField,
+    globalData,
   } = useTools();
 
   // TODO1: 需要查一下卡顿的源头
@@ -73,6 +74,7 @@ const ExtendedWidget = ({
     disabled,
     readOnly,
     ...schema.props,
+    ...globalData,
   };
 
   if (schema.type === 'string' && typeof schema.max === 'number') {
