@@ -106,6 +106,8 @@ export interface FRProps {
   watch?: WatchProperties;
   /** 对象组件是否折叠（全局的控制） */
   allCollapsed?: boolean;
+  /** 表单的全局共享属性 */
+  globalData?: any;
   /** 表单首次加载钩子 */
   onMount?: () => void;
   /** 表单提交前钩子 */
