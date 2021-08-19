@@ -53,6 +53,7 @@ function App({
   onValuesChange,
   column,
   removeHiddenData = false,
+  globalData = {},
   ...rest
 }) {
   try {
@@ -162,12 +163,14 @@ function App({
   const store = useMemo(
     () => ({
       ...valuesThatWillChange,
+      globalData,
       ...rest,
     }),
     [
       JSON.stringify(flatten),
       JSON.stringify(formData),
       JSON.stringify(errorFields),
+      JSON.stringify(globalData),
     ]
   );
 

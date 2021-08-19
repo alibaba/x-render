@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { getWidgetName, extraSchemaList } from '../../mapping';
-import { useTools } from '../../hooks';
+import { useTools, useStore } from '../../hooks';
 import { transformProps } from '../../createWidget';
 
 import { isObjType, isListType, isObject } from '../../utils';
@@ -37,6 +37,8 @@ const ExtendedWidget = ({
     resetFields,
     removeErrorField,
   } = useTools();
+
+  const { globalData } = useStore();
 
   // TODO1: 需要查一下卡顿的源头
   // if (isObjType(schema)) {
@@ -75,6 +77,7 @@ const ExtendedWidget = ({
     disabled,
     readOnly,
     ...schema.props,
+    ...globalData,
   };
 
   if (schema.type === 'string' && typeof schema.max === 'number') {
