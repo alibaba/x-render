@@ -116,7 +116,7 @@ const useForm = props => {
     if (firstMount) return;
     validateAll({
       formData: _data.current,
-      flatten: _flatten.current,
+      flatten: finalFlatten,
       isRequired: allTouched,
       touchedKeys: _touchedKeys.current,
       locale: localeRef.current,
@@ -280,7 +280,7 @@ const useForm = props => {
   const getValues = () => {
     return processData(
       _data.current,
-      _flatten.current,
+      finalFlatten,
       removeHiddenDataRef.current
     );
   };
@@ -296,7 +296,7 @@ const useForm = props => {
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
     return validateAll({
       formData: _data.current,
-      flatten: _flatten.current,
+      flatten: finalFlatten,
       touchedKeys: [],
       isRequired: true,
       locale: localeRef.current,
@@ -309,7 +309,7 @@ const useForm = props => {
           return Promise.resolve(
             processData(
               _data.current,
-              _flatten.current,
+              finalFlatten,
               removeHiddenDataRef.current
             )
           ).then(res => {
@@ -324,11 +324,7 @@ const useForm = props => {
         }
 
         return Promise.resolve(
-          processData(
-            _data.current,
-            _flatten.current,
-            removeHiddenDataRef.current
-          )
+          processData(_data.current, finalFlatten, removeHiddenDataRef.current)
         ).then(res => {
           setState({
             isValidating: false,
