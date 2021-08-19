@@ -64,7 +64,7 @@ for (let i = 0; i < 6; i++) {
 const schema = {
   type: 'object',
   properties: {
-    string: {
+    title: {
       title: '标题',
       type: 'string',
       'ui:width': '30%',
