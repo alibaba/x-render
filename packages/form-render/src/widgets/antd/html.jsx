@@ -34,10 +34,5 @@ export default function html({ value, schema = {} }) {
     __html = JSON.stringify(value);
   }
 
-  return (
-    <div
-      style={{ marginTop: 5, minHeight: 22 }}
-      dangerouslySetInnerHTML={{ __html }}
-    />
-  );
+  return <div dangerouslySetInnerHTML={{ __html }} />;
 }

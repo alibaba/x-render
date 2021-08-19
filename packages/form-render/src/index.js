@@ -56,8 +56,6 @@ function App({
   globalData = {},
   ...rest
 }) {
-  const didMount = useRef(false);
-
   try {
     const _ = form.submit;
   } catch (error) {
@@ -86,6 +84,7 @@ function App({
     syncStuff,
     logOnMount,
     logOnSubmit,
+    setFirstMount,
     ...valuesThatWillChange
   } = form;
 
@@ -98,11 +97,13 @@ function App({
     formData,
     flatten,
     showValidate, // 旧版折中升级方案里，旧的api的软兼容
+    firstMount,
   } = valuesThatWillChange;
 
   useEffect(() => {
     // Schema最外层的type是object来判断，没有的话，认为schema没有传
     if (schema && schema.type) {
+      setFirstMount(true);
       syncStuff({
         schema,
         locale,
@@ -116,38 +117,41 @@ function App({
   }, [JSON.stringify(schema)]);
 
   useEffect(() => {
-    if (didMount.current === false && schema && schema.type) {
+    if (!firstMount && schema && schema.type) {
       if (typeof onMount === 'function') {
-        onMount();
+        // 等一下 useForm 里接到第一份schema时，计算第一份data的骨架
+        setTimeout(() => {
+          onMount();
+        }, 0);
       }
-      const start = new Date().getTime();
-      if (
-        typeof logOnMount === 'function' ||
-        typeof logOnSubmit === 'function'
-      ) {
-        sessionStorage.setItem('FORM_MOUNT_TIME', start);
-        sessionStorage.setItem('FORM_START', start);
-      }
-      if (typeof logOnMount === 'function') {
-        const logParams = {
-          schema,
-          url: location.href,
-          formData,
-          formMount: yymmdd(start),
-        };
-        if (id) {
-          logParams.id = id;
-        }
-        logOnMount(logParams);
-      }
-      // 如果是要计算时间，在 onMount 时存一个时间戳
-      if (typeof logOnSubmit === 'function') {
-        sessionStorage.setItem('NUMBER_OF_SUBMITS', 0);
-        sessionStorage.setItem('FAILED_ATTEMPTS', 0);
-      }
-      didMount.current = true;
+      setTimeout(onMountLogger, 0);
     }
-  }, [JSON.stringify(schema)]);
+  }, [JSON.stringify(schema), firstMount]);
+
+  const onMountLogger = () => {
+    const start = new Date().getTime();
+    if (typeof logOnMount === 'function' || typeof logOnSubmit === 'function') {
+      sessionStorage.setItem('FORM_MOUNT_TIME', start);
+      sessionStorage.setItem('FORM_START', start);
+    }
+    if (typeof logOnMount === 'function') {
+      const logParams = {
+        schema,
+        url: location.href,
+        formData: form.getValues(),
+        formMount: yymmdd(start),
+      };
+      if (id) {
+        logParams.id = id;
+      }
+      logOnMount(logParams);
+    }
+    // 如果是要计算时间，在 onMount 时存一个时间戳
+    if (typeof logOnSubmit === 'function') {
+      sessionStorage.setItem('NUMBER_OF_SUBMITS', 0);
+      sessionStorage.setItem('FAILED_ATTEMPTS', 0);
+    }
+  };
 
   // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
@@ -312,6 +316,11 @@ function App({
                   <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
                   <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
                   <div>{'descriptor:' + JSON.stringify(window.descriptor)}</div>
+                  {/* <textarea
+                    style={{ width: 500, height: 300 }}
+                    value={'schema:' + JSON.stringify(flatten, null, 2)}
+                    onChange={() => {}}
+                  /> */}
                 </div>
               ) : null}
               {watchList.length > 0
@@ -322,6 +331,7 @@ function App({
                         watchKey={item}
                         watch={watch}
                         formData={formData}
+                        firstMount={firstMount}
                       />
                     );
                   })
@@ -349,29 +359,35 @@ const Wrapper = props => {
 
 export default Wrapper;
 
-const Watcher = ({ watchKey, watch, formData }) => {
+const Watcher = ({ watchKey, watch, formData, firstMount }) => {
   const value = getValueByPath(formData, watchKey);
   const watchObj = watch[watchKey];
-  const firstMount = useRef(true);
 
   useEffect(() => {
     const runWatcher = () => {
       if (typeof watchObj === 'function') {
-        watchObj(value);
+        try {
+          watchObj(value);
+        } catch (error) {
+          console.log(`${watchKey}对应的watch函数执行报错：`, error);
+        }
       } else if (watchObj && typeof watchObj.handler === 'function') {
-        watchObj.handler(value);
+        try {
+          watchObj.handler(value);
+        } catch (error) {
+          console.log(`${watchKey}对应的watch函数执行报错：`, error);
+        }
       }
     };
 
-    if (firstMount.current) {
+    if (firstMount) {
       const immediate = watchObj && watchObj.immediate;
       if (immediate) {
         runWatcher();
       }
-      firstMount.current = false;
     } else {
       runWatcher();
     }
-  }, [JSON.stringify(value)]);
+  }, [JSON.stringify(value), firstMount]);
   return null;
 };

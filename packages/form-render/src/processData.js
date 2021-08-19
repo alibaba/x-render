@@ -64,6 +64,7 @@ export const transformDataWithBind = (data, flatten) => {
     bindArrKeys.forEach(item => {
       const { key, bind } = item;
       const temp = get(formData, key);
+      unset(formData, key);
       if (Array.isArray(temp)) {
         temp.forEach((t, i) => {
           if (bind[i]) {
@@ -71,7 +72,6 @@ export const transformDataWithBind = (data, flatten) => {
           }
         });
       }
-      unset(formData, key);
     });
   };
   handleBindData(_data);

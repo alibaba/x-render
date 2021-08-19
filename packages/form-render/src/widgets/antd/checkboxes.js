@@ -1,9 +1,8 @@
 import React from 'react';
 import { Checkbox } from 'antd';
-import { createWidget } from '../../createWidget';
 import { getArray } from '../../utils';
 
-const mapProps = ({ schema, style, options: _options }) => {
+const Checkboxes = ({ schema, options: _options, ...rest }) => {
   let options;
   // 如果已经有外部注入的options了，内部的schema就会被忽略
   if (_options && Array.isArray(_options)) {
@@ -20,13 +19,12 @@ const mapProps = ({ schema, style, options: _options }) => {
     });
   }
 
-  return {
+  const checkboxesProps = {
     options,
     mode: 'multiple',
-    style: { width: '100%', marginTop: 5, ...style },
-  };
-};
-
-const Checkboxes = createWidget(mapProps)(Checkbox.Group);
-
+    ...rest,
+  }
+  return <Checkbox.Group {...checkboxesProps} />
+}
+  
 export default Checkboxes;

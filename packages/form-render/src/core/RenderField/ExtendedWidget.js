@@ -18,6 +18,7 @@ const ExtendedWidget = ({
   schema,
   onChange,
   value,
+  dependValues,
   children,
   onItemChange,
   formData,
@@ -26,6 +27,7 @@ const ExtendedWidget = ({
   dataPath,
   disabled,
   dataIndex,
+  // $id,
 }) => {
   const {
     widgets,
@@ -109,6 +111,7 @@ const ExtendedWidget = ({
 
   // 避免传组件不接受的props，按情况传多余的props
   widgetProps.addons = {
+    dependValues,
     onItemChange,
     setValue: onItemChange, // onItemChange 已经文档放出去了，不去掉了，但改个好理解的名字
     getValue,
@@ -125,7 +128,9 @@ const ExtendedWidget = ({
 
   return (
     <Suspense fallback={<div></div>}>
-      <Widget {...finalProps} />
+      <div className="fr-item-wrapper">
+        <Widget {...finalProps} />
+      </div>
     </Suspense>
   );
 };
@@ -138,6 +143,14 @@ const areEqual = (prev, current) => {
     return false;
   }
   if (prev.disabled !== current.disabled) {
+    return false;
+  }
+  if (
+    JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
+  ) {
+    return false;
+  }
+  if (isObjType(prev.schema) && isObjType(current.schema)) {
     return false;
   }
   if (

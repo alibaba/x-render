@@ -111,7 +111,7 @@ const Demo = () => {
 
   const watch = {
     input1: val => {
-      if (val.length > 2) {
+      if (val && val.length > 2) {
         form.setSchemaByPath('obj1.select', ({ enumNames }) => {
           return {
             enumNames: enumNames.map(item => item + 'a'),

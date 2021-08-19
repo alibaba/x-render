@@ -10,9 +10,11 @@ import ExtendedWidget from './ExtendedWidget';
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
 const RenderField = props => {
   const {
+    $id,
     dataIndex,
     dataPath,
     _value,
+    dependValues,
     _schema,
     labelClass,
     labelStyle,
@@ -95,6 +97,7 @@ const RenderField = props => {
   };
 
   const widgetProps = {
+    $id,
     schema: _schema,
     readOnly: _readOnly,
     disabled: _disabled,
@@ -102,6 +105,7 @@ const RenderField = props => {
     getValue: _getValue,
     formData,
     value: _value,
+    dependValues,
     onItemChange,
     dataIndex,
     dataPath,
