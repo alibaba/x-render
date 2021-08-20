@@ -212,7 +212,7 @@ export default withTable(Page)
   {
     loading: false, // 表单是否在加载中
     search: {}, // 选项数据
-    searchApi // 搜索用的api
+    searchApi, // 搜索用的api
     tab: 0, // 如果searchApi是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
     dataSource: [], // 表格的数据
     extraData: { ... }, // 自定义的扩展星系
