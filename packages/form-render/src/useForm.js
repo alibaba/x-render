@@ -49,6 +49,7 @@ const useForm = props => {
   const validateMessagesRef = useRef();
   const _data = useRef({}); // 用ref是为了破除闭包的影响
   const _flatten = useRef({}); // 用ref是为了破除闭包的影响
+  const _finalflatten = useRef({}); // 用ref是为了破除闭包的影响
   const _touchedKeys = useRef([]); // 用ref是为了破除闭包的影响
   const _errorFields = useRef();
 
@@ -71,6 +72,7 @@ const useForm = props => {
   _errorFields.current = errorFields;
   _touchedKeys.current = touchedKeys;
   _flatten.current = flatten;
+  _finalflatten.current = finalFlatten;
 
   const dataFromOutside = props && props.hasOwnProperty('formData');
   const formData = dataFromOutside ? _formData : innerData;
@@ -116,7 +118,7 @@ const useForm = props => {
     if (firstMount) return;
     validateAll({
       formData: _data.current,
-      flatten: finalFlatten,
+      flatten: _finalFlatten.current,
       isRequired: allTouched,
       touchedKeys: _touchedKeys.current,
       locale: localeRef.current,
@@ -280,7 +282,7 @@ const useForm = props => {
   const getValues = () => {
     return processData(
       _data.current,
-      finalFlatten,
+      _finalFlatten.current,
       removeHiddenDataRef.current
     );
   };
@@ -296,7 +298,7 @@ const useForm = props => {
     // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
     return validateAll({
       formData: _data.current,
-      flatten: finalFlatten,
+      flatten: _finalFlatten.current,
       touchedKeys: [],
       isRequired: true,
       locale: localeRef.current,
@@ -309,7 +311,7 @@ const useForm = props => {
           return Promise.resolve(
             processData(
               _data.current,
-              finalFlatten,
+              _finalFlatten.current,
               removeHiddenDataRef.current
             )
           ).then(res => {
@@ -324,7 +326,11 @@ const useForm = props => {
         }
 
         return Promise.resolve(
-          processData(_data.current, finalFlatten, removeHiddenDataRef.current)
+          processData(
+            _data.current,
+            _finalFlatten.current,
+            removeHiddenDataRef.current
+          )
         ).then(res => {
           setState({
             isValidating: false,
