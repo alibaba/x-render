@@ -14,7 +14,6 @@ import {
 
 const useForm = props => {
   const {
-    // 为了更平滑兼容 0.x，如果外部传入状态，那么使用外部的状态
     formData: _formData,
     onChange: _onChange,
     onValidate: _onValidate,
@@ -49,7 +48,7 @@ const useForm = props => {
   const validateMessagesRef = useRef();
   const _data = useRef({}); // 用ref是为了破除闭包的影响
   const _flatten = useRef({}); // 用ref是为了破除闭包的影响
-  const _finalflatten = useRef({}); // 用ref是为了破除闭包的影响
+  const _finalFlatten = useRef({}); // 用ref是为了破除闭包的影响
   const _touchedKeys = useRef([]); // 用ref是为了破除闭包的影响
   const _errorFields = useRef();
 
@@ -72,7 +71,7 @@ const useForm = props => {
   _errorFields.current = errorFields;
   _touchedKeys.current = touchedKeys;
   _flatten.current = flatten;
-  _finalflatten.current = finalFlatten;
+  _finalFlatten.current = finalFlatten;
 
   const dataFromOutside = props && props.hasOwnProperty('formData');
   const formData = dataFromOutside ? _formData : innerData;
@@ -113,7 +112,6 @@ const useForm = props => {
     firstMount,
   ]);
 
-  // TODO: 首次渲染的时候不要执行，这里导致第二次的渲染。不过关系不大
   useEffect(() => {
     if (firstMount) return;
     validateAll({
@@ -182,7 +180,6 @@ const useForm = props => {
     _setData({ ..._data.current });
   };
 
-  // TODO: 全局的没有path, 这个函数要这么写么。。全局的，可以path = #
   // errorFields: [
   //   { name: 'a.b.c', errors: ['Please input your Password!', 'something else is wrong'] },
   // ]
@@ -256,8 +253,7 @@ const useForm = props => {
     }
   };
 
-  // TODO: 外部校验的error要和本地的合并么？
-  // TODO!: 这块要优化一下吧
+  // TODO: better implementation needed
   const setErrorFields = error => {
     let newErrorFields = [];
     if (Array.isArray(error)) {
@@ -270,7 +266,6 @@ const useForm = props => {
     newErrorFields = sortedUniqBy(newErrorFields, item => item.name);
     _setErrors(newErrorFields);
   };
-  // TODO: 提取出来，重新写一份，注意要处理async
 
   const removeErrorField = path => {
     let newError = _errorFields.current.filter(item => {
@@ -295,7 +290,6 @@ const useForm = props => {
   const submit = () => {
     setState({ isValidating: true, allTouched: true, isSubmitting: false });
     //  https://formik.org/docs/guides/form-submission
-    // 开始校验。如果校验写在每个renderField，也会有问题，比如table第一页以外的数据是不渲染的，所以都不会触发，而且校验还有异步问题
     return validateAll({
       formData: _data.current,
       flatten: _finalFlatten.current,
