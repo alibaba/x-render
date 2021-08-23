@@ -9,28 +9,20 @@ import {
 
 export const Ctx = createContext(() => {});
 export const StoreCtx = createContext({});
-export const Store2Ctx = createContext({}); // 放不常用的属性
+export const Store2Ctx = createContext({});
 
-// 使用最顶层组件的 setState
 export const useTools = () => {
   return useContext(Ctx);
 };
 
-// 组件最顶层传入的所有props
 export const useStore = () => {
   return useContext(StoreCtx);
 };
 
-// 组件最顶层传入的所有props
 export const useStore2 = () => {
   return useContext(Store2Ctx);
 };
 
-// export default logger;
-
-// export const useSet = x => useReducer((a, b) => ({ ...a, ...b }), x);
-
-// 类似于class component 的 setState
 export const useSet = initState => {
   const [state, setState] = useReducer((state, newState) => {
     let action = newState;
@@ -54,15 +46,12 @@ export const useSet = initState => {
   return [state, setState];
 };
 
-// start: true 开始、false 暂停
 export function useInterval(callback, delay, start) {
   const savedCallback = useRef();
-  // Remember the latest callback.
   useEffect(() => {
     savedCallback.current = callback;
   }, [callback]);
 
-  // Set up the interval.
   const id = useRef();
   useEffect(() => {
     if (!start) {
@@ -120,7 +109,6 @@ export const useWindowState = initState => {
 };
 
 export const useStorageState = (initState = {}, searchKey = 'SAVES') => {
-  // 从 localStorage 读取 search 值
   const readSearchFromStorage = () => {
     const searchStr = localStorage.getItem(searchKey);
     if (searchStr) {
@@ -133,7 +121,6 @@ export const useStorageState = (initState = {}, searchKey = 'SAVES') => {
     return initState;
   };
   const [data, setData] = useState(readSearchFromStorage());
-  // 存储搜索值到 localStorage
   const setSearchWithStorage = search => {
     setData(search);
     localStorage.setItem(searchKey, JSON.stringify(search));

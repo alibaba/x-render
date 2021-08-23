@@ -30,7 +30,7 @@ export const mapping = {
   '*?enum_long': 'select',
   'array?enum': 'checkboxes',
   'array?enum_long': 'multiSelect',
-  '*?readOnly': 'html', // TODO: 只读模式加上后，这儿要还要2个自定义组件。一个渲染list，一个渲染select
+  '*?readOnly': 'html', // TODO: html widgets for list / object
 };
 
 export function getWidgetName(schema, _mapping = mapping) {

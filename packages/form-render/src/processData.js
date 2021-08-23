@@ -48,12 +48,11 @@ export const transformDataWithBind = (data, flatten) => {
 
   const handleBindData = formData => {
     unbindKeys.forEach(key => {
-      unset(formData, key); // TODO: 光remove了一个key，如果遇到remove了那个key上层的object为空了，object是不是也要去掉。。。不过感觉是伪需求
+      unset(formData, key); // TODO: maybe removing upper structure
     });
     bindKeys.forEach(item => {
       const { key, bind } = item;
       let temp = get(formData, key);
-      // 如果已经有值了，要和原来的值合并，而不是覆盖
       const oldVal = get(formData, bind);
       if (isObject(oldVal)) {
         temp = { ...oldVal, ...temp };
@@ -78,8 +77,6 @@ export const transformDataWithBind = (data, flatten) => {
   return _data;
 };
 
-// 反向，外部赋值formData，bind的字段要转换后赋值给formData
-// 思路是一个个bind的字段反向转换 dataPath <=> bindPath
 export const transformDataWithBind2 = (data, flatten) => {
   let _data = clone(data);
 

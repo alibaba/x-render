@@ -276,7 +276,7 @@ function App({
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
-  // TODO: 这段代码写了没用
+  // TODO: fk doesn't work
   let sizeCls = '';
   if (size === 'small') {
     sizeCls = 'fr-form-small';
@@ -292,7 +292,6 @@ function App({
   }
 
   const watchList = Object.keys(watch);
-  // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
       <StoreCtx.Provider value={store}>
