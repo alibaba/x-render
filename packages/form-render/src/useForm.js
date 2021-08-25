@@ -25,9 +25,9 @@ const useForm = props => {
   } = props || {};
 
   const logOnMount =
-    (window.FR_LOGGER && window.FR_LOGGER.logOnMount) || _logOnMount;
+    _logOnMount || (window.FR_LOGGER && window.FR_LOGGER.logOnMount);
   const logOnSubmit =
-    (window.FR_LOGGER && window.FR_LOGGER.logOnSubmit) || _logOnSubmit;
+    _logOnSubmit || (window.FR_LOGGER && window.FR_LOGGER.logOnSubmit);
 
   const [renderCount, forceRender] = useState(0);
 
