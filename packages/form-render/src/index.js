@@ -138,7 +138,7 @@ function App({
       const logParams = {
         schema,
         url: location.href,
-        formData: form.getValues(),
+        formData: JSON.stringify(form.getValues()),
         formMount: yymmdd(start),
       };
       if (id) {
@@ -261,9 +261,9 @@ function App({
           numberOfSubmits: numberOfSubmits,
           failedAttempts: failedAttempts,
           url: location.href,
-          formData: submitData,
-          errors: errorFields,
-          schema: schema,
+          formData: JSON.stringify(submitData),
+          errors: JSON.stringify(errorFields),
+          schema: JSON.stringify(schema),
         };
         if (id) {
           logParams.id = id;
