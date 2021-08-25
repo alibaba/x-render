@@ -1,9 +1,21 @@
 # Changelog
 
+## 1.6.7
+
+- [!] 添加了 mapping 用法的文档，即如何覆盖默认组件的行为
+- [!] logOnMount/logOnSubmit 的传参会 stringify 化，便于作为发送给服务端的埋点数据
+
+## 1.6.6
+
+- [+] 添加全局 props `globalProps`, 解决与 form-render 无关的全局数据的注入问题。通过`globalProps`注入的数据在任何组件（以及自定义组件）中可以被取到和使用。这也解决了自定义组件在不同的页面也许需要接受不同的 props 的问题
+
+## 1.6.5
+
+- [!] 修复了外部传入的 schema 中对象类型的内部变化，但对象本身不变化时，表单不重新渲染的问题
+
 ## 1.6.4
 
 - [!] 修复了 setSchemaByPath 和 setSchema 无效的 bug
-- [!] 修复了外部传入的 schema 变化时，表单不重新渲染的问题
 
 ## 1.6.3(setSchema 出现有时了无效的问题)
 
