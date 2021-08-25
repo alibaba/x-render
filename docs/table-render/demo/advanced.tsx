@@ -58,6 +58,25 @@ const Demo = () => {
       .catch(e => console.log('Oops, error', e));
   };
 
+  const searchApi2 = (params, sorter) => {
+    return request
+      .get(
+        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+        { params }
+      )
+      .then(res => {
+        // console.log('response:', res);
+        if (res && res.data) {
+          return {
+            rows: res.data.slice(1),
+            total: res.data.length - 1,
+            extraData: res.status,
+          }; // 注意一定要返回 rows 和 total
+        }
+      })
+      .catch(e => console.log('Oops, error', e));
+  };
+
   // 配置完全透传antd table
   const columns = [
     {
@@ -161,7 +180,7 @@ const Demo = () => {
           },
           {
             name: '我的数据',
-            api: searchApi,
+            api: searchApi2,
           },
         ]}
       />
