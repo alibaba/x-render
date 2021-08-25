@@ -19,10 +19,15 @@ const useForm = props => {
     onValidate: _onValidate,
     showValidate: _showValidate,
     /** 数据分析接口，表单展示完成渲染时触发 */
-    logOnMount,
+    logOnMount: _logOnMount,
     /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
-    logOnSubmit,
+    logOnSubmit: _logOnSubmit,
   } = props || {};
+
+  const logOnMount =
+    (window.FR_LOGGER && window.FR_LOGGER.logOnMount) || _logOnMount;
+  const logOnSubmit =
+    (window.FR_LOGGER && window.FR_LOGGER.logOnSubmit) || _logOnSubmit;
 
   const [renderCount, forceRender] = useState(0);
 
