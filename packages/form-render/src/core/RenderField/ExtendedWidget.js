@@ -40,7 +40,6 @@ const ExtendedWidget = ({
 
   const { globalProps } = useStore();
 
-  // TODO1: 需要查一下卡顿的源头
   // if (isObjType(schema)) {
   //   return <Map value={value} onChange={onChange} children={children} />;
   // }
@@ -49,7 +48,7 @@ const ExtendedWidget = ({
   // }
   // return <Input value={value} onChange={e => onChange(e.target.value)} />;
 
-  // TODO: 计算是哪个widget，需要优化
+  // TODO: calc widget, better way?
   // let widgetName = useMemo(() => getWidgetName(schema, mapping), [
   //   JSON.stringify(schema),
   // ]);
