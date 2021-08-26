@@ -35,6 +35,7 @@ const useForm = props => {
     formData: {},
     submitData: {},
     errorFields: [],
+    outErrorFields: [],
     isValidating: false, // 是否在提交状态
     outsideValidating: false, // 是否开始外部校验，没有外部校验回传的场景，一直是false
     isSubmitting: false,
@@ -56,11 +57,14 @@ const useForm = props => {
   const _finalFlatten = useRef({}); // 用ref是为了破除闭包的影响
   const _touchedKeys = useRef([]); // 用ref是为了破除闭包的影响
   const _errorFields = useRef();
+  const _outErrorFields = useRef();
+  const _allErrors = useRef([]); // 内部和外部的错误的合并
 
   const {
     formData: innerData,
     submitData,
     errorFields = [],
+    outErrorFields = [], // 用户人为输入的errors，可以是直接调用 setErrorField/removeErrorField 方法，或者使用 beforeFinish 钩子
     isValidating,
     outsideValidating,
     isSubmitting,
@@ -74,6 +78,7 @@ const useForm = props => {
   } = state;
 
   _errorFields.current = errorFields;
+  _outErrorFields.current = outErrorFields;
   _touchedKeys.current = touchedKeys;
   _flatten.current = flatten;
   _finalFlatten.current = finalFlatten;
@@ -87,6 +92,22 @@ const useForm = props => {
     }
     return {};
   }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
+
+  _allErrors.current = useMemo(() => {
+    if (
+      Array.isArray(_errorFields.current) &&
+      Array.isArray(_outErrorFields.current) &&
+      _outErrorFields.current.length > 0
+    ) {
+      const mergeErrors = [..._errorFields.current, ..._outErrorFields.current];
+      return sortedUniqBy(mergeErrors, item => item.name);
+    } else {
+      return _errorFields.current;
+    }
+  }, [
+    JSON.stringify(_errorFields.current),
+    JSON.stringify(_outErrorFields.current),
+  ]);
 
   useEffect(() => {
     if (schemaRef.current && firstMount) {
@@ -262,21 +283,21 @@ const useForm = props => {
   const setErrorFields = error => {
     let newErrorFields = [];
     if (Array.isArray(error)) {
-      newErrorFields = [...error, ..._errorFields.current];
+      newErrorFields = [...error, ..._outErrorFields.current];
     } else if (error && error.name) {
-      newErrorFields = [error, ..._errorFields.current];
+      newErrorFields = [error, ..._outErrorFields.current];
     } else {
       console.log('error format is wrong');
     }
     newErrorFields = sortedUniqBy(newErrorFields, item => item.name);
-    _setErrors(newErrorFields);
+    setState({ outErrorFields: newErrorFields });
   };
 
   const removeErrorField = path => {
     let newError = _errorFields.current.filter(item => {
       return item.name.indexOf(path) === -1;
     });
-    _setErrors(newError);
+    setState({ outErrorFields: newError });
   };
 
   const getValues = () => {
@@ -392,7 +413,7 @@ const useForm = props => {
     submit,
     init: submit, // 简版的迁移方案里用，正常用不到，换个名字迁移的时候大家更好接受点
     submitData,
-    errorFields,
+    errorFields: _allErrors.current,
     isValidating,
     outsideValidating,
     isSubmitting,
