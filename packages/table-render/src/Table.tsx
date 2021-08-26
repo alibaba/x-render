@@ -22,7 +22,7 @@ const ProTable = (props: ProTableProps) => {
   const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
 
   const onChange = ({ current, pageSize }, filters, sorter) => {
-    setTable({ pagination: { ...pagination, current, pageSize } });
+    setTable({ pagination: { ...pagination, current, pageSize }, sorter });
     if (
       !props.pageChangeWithRequest &&
       props.pageChangeWithRequest !== undefined
