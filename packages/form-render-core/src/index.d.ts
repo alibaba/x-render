@@ -78,7 +78,7 @@ export interface FRProps {
   /** 组件和schema的映射规则 */
   mapping?: any;
   /** 自定义组件 */
-  widgets?: any;
+  widgets: any;
   /** 表单提交前钩子 */
   displayType?: string;
   /** 只读模式 */
