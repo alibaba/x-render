@@ -176,10 +176,10 @@ const Container = (props, ref) => {
 
 const TableProvider = forwardRef(Container);
 
-const withTable = Component => ({ children, ...rest }) => {
+const withTable = Component => props => {
   return (
-    <TableProvider {...rest}>
-      <Component />
+    <TableProvider>
+      <Component {...props} />
     </TableProvider>
   );
 };
