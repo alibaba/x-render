@@ -1,6 +1,6 @@
 {
   "name": "form-render-core",
-  "version": "1.6.7",
+  "version": "1.0.0",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "repository": {
     "type": "git",
@@ -44,6 +44,7 @@
     ]
   },
   "dependencies": {
+    "antd": "4.x",
     "async-validator": "^3.5.1",
     "lodash-es": "^4.17.21"
   },
