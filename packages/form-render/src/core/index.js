@@ -43,9 +43,7 @@ const Core = ({
       dependencies.forEach(item => {
         const itemPath = getDataPath(item, dataIndex);
         const result = getValueByPath(formData, itemPath);
-        if (result !== undefined) {
-          dependValues.push(result);
-        }
+        dependValues.push(result);
       });
     }
   } catch (error) {

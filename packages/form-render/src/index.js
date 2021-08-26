@@ -53,7 +53,7 @@ function App({
   onValuesChange,
   column,
   removeHiddenData = false,
-  globalData = {},
+  globalProps = {},
   ...rest
 }) {
   try {
@@ -138,7 +138,7 @@ function App({
       const logParams = {
         schema,
         url: location.href,
-        formData: form.getValues(),
+        formData: JSON.stringify(form.getValues()),
         formMount: yymmdd(start),
       };
       if (id) {
@@ -163,14 +163,14 @@ function App({
   const store = useMemo(
     () => ({
       ...valuesThatWillChange,
-      globalData,
+      globalProps,
       ...rest,
     }),
     [
       JSON.stringify(flatten),
       JSON.stringify(formData),
       JSON.stringify(errorFields),
-      JSON.stringify(globalData),
+      JSON.stringify(globalProps),
     ]
   );
 
@@ -261,9 +261,9 @@ function App({
           numberOfSubmits: numberOfSubmits,
           failedAttempts: failedAttempts,
           url: location.href,
-          formData: submitData,
-          errors: errorFields,
-          schema: schema,
+          formData: JSON.stringify(submitData),
+          errors: JSON.stringify(errorFields),
+          schema: JSON.stringify(schema),
         };
         if (id) {
           logParams.id = id;
@@ -276,7 +276,7 @@ function App({
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
-  // TODO: 这段代码写了没用
+  // TODO: fk doesn't work
   let sizeCls = '';
   if (size === 'small') {
     sizeCls = 'fr-form-small';
@@ -292,7 +292,6 @@ function App({
   }
 
   const watchList = Object.keys(watch);
-  // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
       <StoreCtx.Provider value={store}>

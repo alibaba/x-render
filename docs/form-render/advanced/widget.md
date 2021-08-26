@@ -6,7 +6,7 @@ group:
 toc: content
 ---
 
-# 自定义组件
+# 自定义组件（widget）
 
 当 FormRender 提供的组件无法 100%满足用户需求时，可以考虑自己写一个。自定义组件功能使 FormRender 拥有很好扩展性，可能的应用场景如下：
 

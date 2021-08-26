@@ -1,28 +1,20 @@
 import { get, set, cloneDeep } from 'lodash-es';
 
-// 后面三个参数都是内部递归使用的，将schema的树形结构扁平化成一层, 每个item的结构
-// {
-//   parent: '#',
-//   schema: ...,
-//   children: []
-// }
+// window.log1 = value => {
+//   console.log('%ccommon:', 'color: #00A7F7; font-weight: 500;', value);
+// };
 
-// TODO: 发布后去掉
-window.log1 = value => {
-  console.log('%ccommon:', 'color: #00A7F7; font-weight: 500;', value);
-};
+// window.log2 = value => {
+//   console.log('%cwarning:', 'color: #f50; font-weight: 500;', value);
+// };
 
-window.log2 = value => {
-  console.log('%cwarning:', 'color: #f50; font-weight: 500;', value);
-};
+// window.log3 = value => {
+//   console.log('%csuccess:', 'color: #87d068; font-weight: 500;', value);
+// };
 
-window.log3 = value => {
-  console.log('%csuccess:', 'color: #87d068; font-weight: 500;', value);
-};
-
-window.log4 = value => {
-  console.log('%cspecial:', 'color: #722ed1; font-weight: 500;', value);
-};
+// window.log4 = value => {
+//   console.log('%cspecial:', 'color: #722ed1; font-weight: 500;', value);
+// };
 
 export function isUrl(string) {
   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
@@ -159,18 +151,16 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   }
 
   if (schema.type) {
-    // TODO: 没有想好 validation 的部分
     result[_name] = { parent, schema, children };
   }
   return result;
 }
-// the reverse of flattenSchema
+
 export function getSchemaFromFlatten(flatten, path = '#') {
   let schema = {};
   const item = clone(flatten[path]);
   if (item) {
     schema = item.schema;
-    // remove $id, maybe leave it for now
     // schema.$id && delete schema.$id;
     if (item.children.length > 0) {
       item.children.forEach(child => {
@@ -188,8 +178,6 @@ export function getSchemaFromFlatten(flatten, path = '#') {
   return schema;
 }
 
-//////////   old
-
 function stringContains(str, text) {
   return str.indexOf(text) > -1;
 }
@@ -197,32 +185,7 @@ function stringContains(str, text) {
 export const isObject = a =>
   stringContains(Object.prototype.toString.call(a), 'Object');
 
-// 克隆对象
-// function clone1(data) {
-//   // data = functionToString(data);
-//   try {
-//     return JSON.parse(JSON.stringify(data));
-//   } catch (e) {
-//     return data;
-//   }
-// }
-
 export const clone = cloneDeep;
-// export const clone = clone1;
-
-// export const functionToString = data => {
-//   let result;
-//   if (isObject(data)) {
-//     result = {};
-//     Object.keys(data).forEach(key => {
-//       result[key] = functionToString(data[key]);
-//     });
-//     return result;
-//   } else if (typeof data === 'function') {
-//     return result.toString();
-//   }
-//   return data;
-// };
 
 // '3' => true, 3 => true, undefined => false
 export function isLooselyNumber(num) {
@@ -238,7 +201,6 @@ export function isCssLength(str) {
   return str.match(/^([0-9])*(%|px|rem|em)$/i);
 }
 
-// 深度对比
 export function isDeepEqual(param1, param2) {
   if (param1 === undefined && param2 === undefined) return true;
   else if (param1 === undefined || param2 === undefined) return false;
@@ -272,7 +234,6 @@ export function isDeepEqual(param1, param2) {
   return true;
 }
 
-// 时间组件
 export function getFormat(format) {
   let dateFormat;
   switch (format) {
@@ -315,9 +276,6 @@ export function hasRepeat(list) {
   );
 }
 
-// ----------------- schema 相关
-
-// 合并propsSchema和UISchema。由于两者的逻辑相关性，合并为一个大schema能简化内部处理
 export function combineSchema(propsSchema = {}, uiSchema = {}) {
   const propList = getChildren(propsSchema);
   const newList = propList.map(p => {
@@ -363,7 +321,6 @@ function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 
-// 获得propsSchema的children
 function getChildren(schema) {
   if (!schema) return [];
   const {
@@ -389,22 +346,15 @@ function getChildren(schema) {
   }));
 }
 
-// 合并多个schema树，比如一个schema的树节点是另一个schema
-export function combine() {}
-
-// 代替eval的函数
 export const parseString = string =>
   Function('"use strict";return (' + string + ')')();
 
-// 解析函数字符串值
 export const evaluateString = (string, formData, rootValue) =>
   Function(`"use strict";
     const rootValue = ${JSON.stringify(rootValue)};
     const formData = ${JSON.stringify(formData)};
     return (${string})`)();
 
-// 判断schema的值是是否是“函数”
-// JSON无法使用函数值的参数，所以使用"{{...}}"来标记为函数，也可使用@标记，不推荐。
 export function isExpression(func) {
   // if (typeof func === 'function') {
   //   const funcString = func.toString();
@@ -413,9 +363,7 @@ export function isExpression(func) {
   //     funcString.indexOf('rootValue') > -1
   //   );
   // }
-  // 不再允许函数式的表达式了！
   if (typeof func !== 'string') return false;
-  // 这样的pattern {{.....}}
   const pattern = /^{{(.+)}}$/;
   const reg1 = /^{{function\(.+}}$/;
   // const reg2 = /^{{(.+=>.+)}}$/;
@@ -478,21 +426,14 @@ export const schemaContainsExpression = schema => {
   return false;
 };
 
-// TODO: 两个优化，1. 可以通过表达式的path来判断，避免一些重复计算
 export const parseAllExpression = (_schema, formData, dataPath) => {
   const schema = clone(_schema);
   Object.keys(schema).forEach(key => {
     const value = schema[key];
     if (isObject(value)) {
-      // TODO: dataPath 这边要处理一下，否则rootValue类的没有效果
       schema[key] = parseAllExpression(value, formData, dataPath);
     } else if (isExpression(value)) {
       schema[key] = parseSingleExpression(value, formData, dataPath);
-      // console.log(
-      //   formData.materialType,
-      //   dataPath,
-      //   parseSingleExpression(value, formData, dataPath)
-      // );
     } else if (
       typeof key === 'string' &&
       key.toLowerCase().indexOf('props') > -1
@@ -513,7 +454,6 @@ export const parseAllExpression = (_schema, formData, dataPath) => {
   return schema;
 };
 
-// 判断schema中是否有属性值是函数表达式
 export function isFunctionSchema(schema) {
   return Object.keys(schema).some(key => {
     if (typeof schema[key] === 'function') {
@@ -528,7 +468,6 @@ export function isFunctionSchema(schema) {
   });
 }
 
-// 例如当前item的id = '#/obj/input'  propName: 'ui:labelWidth' 往上一直找，直到找到第一个不是undefined的值 TODO: 看看是否ok
 export const getParentProps = (propName, id, flatten) => {
   try {
     const item = flatten[id];

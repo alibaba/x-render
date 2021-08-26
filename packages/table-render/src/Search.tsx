@@ -83,7 +83,7 @@ export interface SearchProps {
 const Search = (props: SearchProps) => {
   const { searchBtnRender, searchBtnStyle, searchBtnClassName } = props;
   const [formSchema, setSchema] = useState({});
-  const { refresh, syncMethods, setTable, form }: any = useTable();
+  const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
   const _schema = props.schema || props.propsSchema;
   let searchOnMount = true;
   if (!props.searchOnMount && props.searchOnMount !== undefined) {
@@ -183,7 +183,19 @@ const Search = (props: SearchProps) => {
     if (typeof props.onSearch === 'function') {
       props.onSearch(data);
     }
-    refresh(data);
+    refresh({ ...data, sorter: tableState?.sorter });
+  };
+
+  const searchFormProps = {
+    displayType: 'row',
+    onFinish,
+    ...props,
+    form,
+    schema: formSchema,
+    widgets: {
+      searchBtn: () => <MySearchBtn {...btnProps} />,
+      ...props.widgets,
+    },
   };
 
   return (
@@ -196,17 +208,7 @@ const Search = (props: SearchProps) => {
         }
       }}
     >
-      <SearchForm
-        form={form}
-        displayType="row"
-        {...props}
-        schema={formSchema}
-        widgets={{
-          searchBtn: () => <MySearchBtn {...btnProps} />,
-          ...props.widgets,
-        }}
-        onFinish={onFinish}
-      />
+      <SearchForm {...searchFormProps} />
     </div>
   );
 };
