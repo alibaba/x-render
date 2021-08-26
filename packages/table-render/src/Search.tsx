@@ -186,6 +186,18 @@ const Search = (props: SearchProps) => {
     refresh(data);
   };
 
+  const searchFormProps = {
+    displayType: 'row',
+    onFinish,
+    ...props,
+    form,
+    schema: formSchema,
+    widgets: {
+      searchBtn: () => <MySearchBtn {...btnProps} />,
+      ...props.widgets,
+    },
+  };
+
   return (
     <div
       className={`tr-search ${props.className}`}
@@ -196,17 +208,7 @@ const Search = (props: SearchProps) => {
         }
       }}
     >
-      <SearchForm
-        form={form}
-        displayType="row"
-        {...props}
-        schema={formSchema}
-        widgets={{
-          searchBtn: () => <MySearchBtn {...btnProps} />,
-          ...props.widgets,
-        }}
-        onFinish={onFinish}
-      />
+      <SearchForm {...searchFormProps} />
     </div>
   );
 };
