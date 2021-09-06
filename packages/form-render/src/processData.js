@@ -7,16 +7,15 @@ import { unset, get, set } from 'lodash-es';
 import { isObject, clone } from './utils';
 // 提交前需要先处理formData的逻辑
 export const processData = (data, flatten, removeHiddenData) => {
-  // 1. bind 的处理
-  let _data = transformDataWithBind(data, flatten);
-
-  // 2. 去掉list里面所有的空值
-  _data = removeEmptyItemFromList(_data);
-
-  // 3. 去掉 hidden = true 的元素
+  // 1. 去掉 hidden = true 的元素
   if (removeHiddenData) {
-    _data = removeHiddenFromResult(_data, flatten);
+    _data = removeHiddenFromResult(data, flatten);
   }
+  // 2. bind 的处理
+  let _data = transformDataWithBind(_data, flatten);
+
+  // 3. 去掉list里面所有的空值
+  _data = removeEmptyItemFromList(_data);
 
   // 4. 去掉所有的 undefined
   _data = cleanEmpty(_data);
