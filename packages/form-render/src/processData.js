@@ -8,11 +8,12 @@ import { isObject, clone } from './utils';
 // 提交前需要先处理formData的逻辑
 export const processData = (data, flatten, removeHiddenData) => {
   // 1. 去掉 hidden = true 的元素
+  let _data = clone(data);
   if (removeHiddenData) {
     _data = removeHiddenFromResult(data, flatten);
   }
   // 2. bind 的处理
-  let _data = transformDataWithBind(_data, flatten);
+  _data = transformDataWithBind(_data, flatten);
 
   // 3. 去掉list里面所有的空值
   _data = removeEmptyItemFromList(_data);
@@ -24,7 +25,7 @@ export const processData = (data, flatten, removeHiddenData) => {
 };
 
 export const transformDataWithBind = (data, flatten) => {
-  let _data = clone(data);
+  let _data = data;
   const unbindKeys = [];
   const bindKeys = [];
   const bindArrKeys = [];
