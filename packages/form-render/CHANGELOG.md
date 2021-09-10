@@ -1,12 +1,9 @@
 # Changelog
 
-## 1.7.0
-
-- [!] 修复了 rootValue 有时无效的问题
-
 ## 1.6.9
 
 - [!] 修复了动态 hidden 和 bind 共用时，`removeHiddenData` props 有时会无效的问题
+- [!] 修复了 rootValue 有时无效的问题
 
 ## 1.6.8
 
