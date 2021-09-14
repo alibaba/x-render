@@ -21,13 +21,10 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
     }),
   });
   const setGlobal = useGlobal();
-  const { selected, flatten, itemForm, onFlattenChange } = useStore();
+  const { selected, flatten, itemError, onFlattenChange } = useStore();
 
   const handleElementClick = async () => {
-    if (itemForm) {
-      const errors = await itemForm.submit();
-      if (errors.length) return;
-    }
+    if (itemError?.length) return;
     if (selected && !flatten[selected]) {
       setGlobal({ selected: '#' });
       return;

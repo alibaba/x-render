@@ -23,7 +23,7 @@ export default function Wrapper({
     onFlattenChange,
     selected,
     userProps,
-    itemForm,
+    itemError,
   } = useStore();
   const { controlButtons, canDrag = true, canDelete = true, hideId } = userProps;
   const setGlobal = useGlobal();
@@ -45,13 +45,9 @@ export default function Wrapper({
     drop: async (item, monitor) => {
       // 如果 children 已经作为了 drop target，不处理
       const didDrop = monitor.didDrop();
-      if (didDrop) {
-        return;
-      }
 
-      if (itemForm) {
-        const errors = await itemForm.submit();
-        if (errors.length) return;
+      if (didDrop || itemError?.length) {
+        return;
       }
 
       const [newFlatten, newId] = dropItem({
@@ -107,10 +103,7 @@ export default function Wrapper({
 
   const handleClick = async e => {
     e.stopPropagation();
-    if (itemForm) {
-      const errors = await itemForm.submit();
-      if (errors.length) return;
-    }
+    if (itemError?.length) return;
     const _id = inside ? '0' + $id : $id;
     setGlobal({ selected: _id });
   };
@@ -144,10 +137,7 @@ export default function Wrapper({
 
   const handleItemCopy = async e => {
     e.stopPropagation();
-    if (itemForm) {
-      const errors = await itemForm.submit();
-      if (errors.length) return;
-    }
+    if (itemError?.length) return;
     const [newFlatten, newId] = copyItem(flatten, $id);
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });

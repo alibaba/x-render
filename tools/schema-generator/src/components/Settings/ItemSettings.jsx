@@ -20,7 +20,7 @@ export default function ItemSettings({ widgets }) {
     selected,
     flatten,
     onItemChange,
-    onItemFormChange,
+    onItemErrorChange,
     userProps = {},
     widgets: globalWidgets,
     mapping: globalMapping,
@@ -109,7 +109,6 @@ export default function ItemSettings({ widgets }) {
         displayType: 'column',
         properties,
       });
-      onItemFormChange(form);
       form.setValues(transformer.toSetting(item.schema));
       setTimeout(() => {
         setReady(true);
@@ -120,6 +119,10 @@ export default function ItemSettings({ widgets }) {
     }
   }, [selected]);
 
+  useEffect(() => {
+    onItemErrorChange(form?.errorFields)
+  }, [form?.errorFields])
+
   return (
     <div style={{ paddingRight: 24 }}>
       <FormRender
@@ -127,7 +130,7 @@ export default function ItemSettings({ widgets }) {
         schema={settingSchema}
         widgets={{ ..._widgets, ...widgets }}
         watch={{
-          '#': v => onDataChange(v),
+          '#': v => setTimeout(() => onDataChange(v), 0)
         }}
       />
     </div>
