@@ -1,6 +1,5 @@
 import { defaultGetValueFromEvent } from './utils';
-// TODO: props传入的值，之后要改造
-// mention: createWidget 设计的构架，保证了可以多次使用套壳，而不会互相影响。内部使用了一遍用于解析schema上的字段trigger, valuePropName。外部生成自定义组件的时候还可以再套一层，用于解析 propsMap
+
 export const createWidget = (mapProps, extraSchema) => Component => props => {
   const { schema, ...rest } = props;
   const _schema = { ...schema, ...extraSchema };
@@ -16,7 +15,7 @@ export const createWidget = (mapProps, extraSchema) => Component => props => {
   const _props = {
     schema: _schema,
     ...rest,
-    ...propsMap, //TODO: propsMap 需要验证一下是否为object
+    ...propsMap,
   };
 
   const finalProps = transformProps(_props);
@@ -54,7 +53,6 @@ export const transformProps = props => {
     controlProps.onChange = _onChange;
   }
 
-  // TODO: 之后 ui:xx 会舍去
   const usefulPropsFromSchema = {
     disabled: schema.disabled || schema['ui:disabled'],
     readOnly: schema.readOnly || schema['ui:readonly'] || readOnly,

@@ -10,9 +10,11 @@ import ExtendedWidget from './ExtendedWidget';
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
 const RenderField = props => {
   const {
+    $id,
     dataIndex,
     dataPath,
     _value,
+    dependValues,
     _schema,
     labelClass,
     labelStyle,
@@ -24,17 +26,20 @@ const RenderField = props => {
   } = props;
 
   const { formData } = useStore();
-  const { debounceInput, readOnly, disabled } = useStore2();
+  const { debounceInput, readOnly, disabled, showValidate } = useStore2();
   const { onValuesChange, onItemChange, setEditing, touchKey } = useTools();
+  const formDataRef = useRef();
+  formDataRef.current = formData;
   // console.log('<renderField>', $id);
 
   const errObj = errorFields.find(err => err.name === dataPath);
   const errorMessage = errObj && errObj.error; // 是一个list
   const hasError = Array.isArray(errorMessage) && errorMessage.length > 0;
   // 补上这个class，会自动让下面所有的展示ui变红！
-  const contentClass = hasError
-    ? _contentClass + ' ant-form-item-has-error'
-    : _contentClass;
+  const contentClass =
+    hasError && showValidate
+      ? _contentClass + ' ant-form-item-has-error'
+      : _contentClass;
 
   let contentStyle = {};
 
@@ -57,7 +62,7 @@ const RenderField = props => {
     }
     // 先不暴露给外部，这个api
     if (typeof onValuesChange === 'function') {
-      onValuesChange({ [dataPath]: value }, formData);
+      onValuesChange({ [dataPath]: value }, formDataRef.current);
     }
   };
 
@@ -68,13 +73,12 @@ const RenderField = props => {
     displayType,
   };
 
-  const hideValidation = displayType === 'inline' || _readOnly === true;
-
   const messageProps = {
     message: errorMessage,
     schema: _schema,
     displayType,
-    hideValidation: hideValidation,
+    softHidden: displayType === 'inline', // 这个是如果没有校验信息时，展示与否
+    hardHidden: showValidate === false || _readOnly === true, // 这个是强制的展示与否
   };
 
   const placeholderTitleProps = {
@@ -93,6 +97,7 @@ const RenderField = props => {
   };
 
   const widgetProps = {
+    $id,
     schema: _schema,
     readOnly: _readOnly,
     disabled: _disabled,
@@ -100,6 +105,7 @@ const RenderField = props => {
     getValue: _getValue,
     formData,
     value: _value,
+    dependValues,
     onItemChange,
     dataIndex,
     dataPath,

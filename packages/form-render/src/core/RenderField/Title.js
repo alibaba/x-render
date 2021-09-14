@@ -27,7 +27,7 @@ const Title = ({ labelClass, labelStyle, schema, displayType }) => {
               _displayType === 'column' ? 'flex-none' : ''
             }`}
           >
-            {title}
+            <span dangerouslySetInnerHTML={{ __html: title }} />
           </span>
           {description &&
             (_displayType === 'row' ? (

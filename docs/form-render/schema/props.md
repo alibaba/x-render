@@ -33,7 +33,7 @@ toc: content
 | hideTitle  | boolean | 只支持“list1”，隐藏 title，展示更紧凑 |
 | hideDelete | boolean |             隐藏删除按钮              |
 | hideAdd    | boolean |           隐藏新增/复制按钮           |
-| hdeCopy    | boolean |             隐藏复制按钮              |
+| hideCopy   | boolean |             隐藏复制按钮              |
 | hideMove   | boolean |       隐藏上下移动 item 的按钮        |
 | buttons    |  array  |             下详 （注 1）             |
 
@@ -142,6 +142,14 @@ window.copyMe = ({ value, index, schema }) => {
 **props**
 
 目前还没有，未来会扩展
+
+### url 组件
+
+**`addonText`**
+默认为 “测试链接”，可通过此字段自定义
+
+**`prefix`** 和 **`suffix`**
+为 antd 原生支持，如果使用则最终的 formData 里对应 key 的值会自动拼接上 prefix 和 suffix。例如 prefix: "https://", 填写了"www.taobao.com"，则最终提交的 formData 值为"https://www.taobao.com"
 
 ### upload 上传
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import deepEqual from 'deep-equal';
 import parseJson from 'json-parse-better-errors';
 import FormRender, { useForm } from 'form-render';
 import DefaultSchema from './json/simplest.json';
 import { Tabs } from 'antd';
 import AsyncSelect from './customized/AsyncSelect';
-import MonacoEditor from './monaco';
+import CodeBlock from './monaco';
 const { TabPane } = Tabs;
 
 // help functions
@@ -53,21 +54,15 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
       <div className="w-50 h-100 pl2 flex flex-column">
         <Tabs
           defaultActiveKey="1"
-          onChange={() => { }}
+          onChange={() => {}}
           className="flex flex-column"
           style={{ overflow: 'auto' }}
         >
           <TabPane tab="Schema" key="1">
-            <MonacoEditor
-              value={schemaStr}
-              onChange={handleCodeChange}
-            />
+            <CodeBlock value={schemaStr} onChange={handleCodeChange} />
           </TabPane>
           <TabPane tab="Data" key="2">
-            <MonacoEditor
-              value={schema2str(form.getValues())}
-              options={{ readOnly: true }}
-            />
+            <CodeBlock value={schema2str(form.getValues())} readOnly />
           </TabPane>
         </Tabs>
       </div>

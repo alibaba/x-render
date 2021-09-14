@@ -56,9 +56,9 @@ export default () => (
 );
 ```
 
-非常特别的情况，会用到 display: inline
+<!-- 非常特别的情况，会用到 display: inline -->
 
-```jsx
+<!-- ```jsx
 import React from 'react';
 import Form from '../demo/display';
 
@@ -86,7 +86,7 @@ const schema = {
 };
 
 export default () => <Form schema={schema} />;
-```
+``` -->
 
 ### ReadOnly
 

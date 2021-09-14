@@ -35,6 +35,27 @@ export default function Map({ children, title, ...rest }) {
     );
   }
 
+  // 新增卡片视图
+  if (theme == '2') {
+    const { id } = rest.schema
+    return (
+      <div class="fr-theme-card-wrap">
+        <div>
+          {/* title 容器的 id，用来加锚点用 */}
+          <div 
+            id={id || title}
+            class="fr-theme-card-title"
+          >
+            {title}
+          </div>
+          <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const toggle = keyList => {
     if (keyList.length > 0) {
       setCollapsed(false);

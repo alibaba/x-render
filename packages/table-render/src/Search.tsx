@@ -27,7 +27,10 @@ const MySearchBtn = ({
   searchBtnClassName,
   form,
 }: any) => {
-  const clearSearch = form.resetFields;
+  const clearSearch = () => {
+    form.resetFields();
+    form.submit();
+  };
   const searchBtnArr =
     typeof searchBtnRender === 'function'
       ? searchBtnRender(form.submit, clearSearch)
@@ -57,6 +60,7 @@ const MySearchBtn = ({
 };
 
 export interface SearchProps {
+  debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
   api?: any;
@@ -79,7 +83,7 @@ export interface SearchProps {
 const Search = (props: SearchProps) => {
   const { searchBtnRender, searchBtnStyle, searchBtnClassName } = props;
   const [formSchema, setSchema] = useState({});
-  const { refresh, syncMethods, setTable, form }: any = useTable();
+  const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
   const _schema = props.schema || props.propsSchema;
   let searchOnMount = true;
   if (!props.searchOnMount && props.searchOnMount !== undefined) {
@@ -157,8 +161,12 @@ const Search = (props: SearchProps) => {
       searchApi: props.api,
       syncAfterSearch: props.afterSearch,
     });
-    if (props.hidden || searchOnMount) {
+    if (!props.hidden && searchOnMount) {
       form.submit();
+    }
+    // 隐藏search组件时，不会触发form.submit
+    if (props.hidden) {
+      refresh();
     }
   }, []);
 
@@ -175,7 +183,19 @@ const Search = (props: SearchProps) => {
     if (typeof props.onSearch === 'function') {
       props.onSearch(data);
     }
-    refresh(data);
+    refresh({ ...data, sorter: tableState?.sorter });
+  };
+
+  const searchFormProps = {
+    displayType: 'row',
+    onFinish,
+    ...props,
+    form,
+    schema: formSchema,
+    widgets: {
+      searchBtn: () => <MySearchBtn {...btnProps} />,
+      ...props.widgets,
+    },
   };
 
   return (
@@ -188,17 +208,7 @@ const Search = (props: SearchProps) => {
         }
       }}
     >
-      <SearchForm
-        form={form}
-        displayType="row"
-        {...props}
-        schema={formSchema}
-        widgets={{
-          searchBtn: () => <MySearchBtn {...btnProps} />,
-          ...props.widgets,
-        }}
-        onFinish={onFinish}
-      />
+      <SearchForm {...searchFormProps} />
     </div>
   );
 };

@@ -5,6 +5,16 @@ toc: content
 
 # 内置组件
 
+有时，用户希望强制指定一个表单原件用某个内置或自定义的组件来展示，可使用 widget 字段来说明，这个指定的优先级是最高的，被指定的表单项一定会使用此 widget 来渲染，例如下面的 schema 如果不以 widget 指明，会默认用 input 输入框来渲染，但现在会用 select 下拉单选组件来渲染，即使没有下拉选项：
+
+```js
+string: {
+  title: '下拉选框',
+  type: 'string',
+  widget: 'select',
+},
+```
+
 目前 FormRender 已经支持的内置组件的展示，见 [playground](/playground) - 基础控件
 
 组件与 widget name 的规则如下：
@@ -29,7 +39,6 @@ toc: content
 点击单选 radio
 下拉多选框 multiSelect
 点击多选框 checkboxes
-级联选择 cascader
 树形选择 treeSelect
 
 # 其他

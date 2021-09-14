@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Table, Search, TableProvider, useTable } from 'table-render';
+import { Table, Search, withTable, useTable } from 'table-render';
 import { Tag, Space, Menu, message, Tooltip, Button } from 'antd';
 import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import request from 'umi-request';
@@ -17,7 +17,7 @@ const schema = {
       type: 'string',
       enum: ['open', 'closed'],
       enumNames: ['营业中', '已打烊'],
-      'ui:width': '25%',
+      width: '25%',
       widget: 'select',
     },
     labels: {
@@ -36,18 +36,10 @@ const schema = {
 };
 
 const Demo = () => {
-  return (
-    <TableProvider>
-      <TableBody />
-    </TableProvider>
-  );
-};
-
-const TableBody = () => {
   const { refresh, tableState }: any = useTable();
 
-  const searchApi = params => {
-    console.log('params >>> ', params);
+  const searchApi = (params, sorter) => {
+    console.group(sorter);
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
@@ -59,6 +51,25 @@ const TableBody = () => {
           return {
             rows: res.data,
             total: res.data.length,
+            extraData: res.status,
+          }; // 注意一定要返回 rows 和 total
+        }
+      })
+      .catch(e => console.log('Oops, error', e));
+  };
+
+  const searchApi2 = (params, sorter) => {
+    return request
+      .get(
+        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+        { params }
+      )
+      .then(res => {
+        // console.log('response:', res);
+        if (res && res.data) {
+          return {
+            rows: res.data.slice(1),
+            total: res.data.length - 1,
             extraData: res.status,
           }; // 注意一定要返回 rows 和 total
         }
@@ -114,6 +125,7 @@ const TableBody = () => {
     {
       title: '酒店GMV',
       key: 'money',
+      sorter: true,
       dataIndex: 'money',
       valueType: 'money',
     },
@@ -161,8 +173,6 @@ const TableBody = () => {
       <Search
         schema={schema}
         displayType="row"
-        onSearch={search => console.log('onSearch', search)}
-        afterSearch={params => console.log('afterSearch', params)}
         api={[
           {
             name: '全部数据',
@@ -170,12 +180,13 @@ const TableBody = () => {
           },
           {
             name: '我的数据',
-            api: searchApi,
+            api: searchApi2,
           },
         ]}
       />
       <Table
         // size="small"
+        pagination={{ pageSize: 4 }}
         columns={columns}
         // headerTitle="高级表单"
         rowKey="id"
@@ -201,4 +212,4 @@ const TableBody = () => {
   );
 };
 
-export default Demo;
+export default withTable(Demo);

@@ -50,52 +50,6 @@ npm i form-render --save
  */
 import React from 'react';
 import { Button } from 'antd';
-import FormRender, { connectForm } from 'form-render';
-// import 'antd/dist/antd.css';    如果项目没有对antd、less做任何配置的话，需要加上
-
-const schema = {
-  type: 'object',
-  properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚'],
-    },
-  },
-};
-
-class Demo extends React.Component {
-  render() {
-    const { form } = this.props;
-    return (
-      <div>
-        <FormRender form={form} schema={schema} />
-        <Button type="primary" onClick={form.submit}>
-          提交
-        </Button>
-      </div>
-    );
-  }
-}
-
-export default connectForm(Demo);
-```
-
-**对于函数组件，FormRender 提供了 `useForm` hooks, 书写更为灵活**
-
-```jsx
-/**
- * transform: true
- * defaultShowCode: true
- */
-import React from 'react';
-import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
 
 const schema = {
@@ -117,9 +71,12 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
+  const onFinish = (formData, errors) => {
+    console.log('formData:', formData, 'errors', errors);
+  };
   return (
     <div>
-      <FormRender form={form} schema={schema} />
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
       <Button type="primary" onClick={form.submit}>
         提交
       </Button>
@@ -130,7 +87,57 @@ const Demo = () => {
 export default Demo;
 ```
 
-**换一个更复杂一点的 schema，我们支持数据绑定、antd 的 props 透传等一系列功能：**
+对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks：
+
+```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
+import React from 'react';
+import { Button } from 'antd';
+import FormRender, { connectForm } from 'form-render';
+// import 'antd/dist/antd.css';    如果项目没有对antd、less做任何配置的话，需要加上
+
+const schema = {
+  type: 'object',
+  properties: {
+    input1: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+    },
+    select1: {
+      title: '单选',
+      type: 'string',
+      enum: ['a', 'b', 'c'],
+      enumNames: ['早', '中', '晚'],
+    },
+  },
+};
+
+class Demo extends React.Component {
+  onFinish = (formData, errors) => {
+    console.log('formData:', formData, 'errors', errors);
+  };
+
+  render() {
+    const { form } = this.props;
+    return (
+      <div>
+        <FormRender form={form} schema={schema} onFinish={this.onFinish} />
+        <Button type="primary" onClick={form.submit}>
+          提交
+        </Button>
+      </div>
+    );
+  }
+}
+
+export default connectForm(Demo);
+```
+
+**换一个更复杂一点的 schema，FR 支持数据绑定、antd 的 props 透传、表单联动等一系列功能：**
 
 ```jsx
 import React from 'react';
@@ -148,10 +155,15 @@ const schema = {
       type: 'range',
       format: 'date',
     },
+    showSetting: {
+      title: '是否展示网址',
+      type: 'boolean',
+    },
     siteUrl: {
       title: '网址',
       type: 'string',
       placeholder: '此处必填',
+      hidden: '{{formData.showSetting !== true}}',
       required: true,
       props: {
         addonBefore: 'https://',
@@ -189,7 +201,8 @@ export default Demo;
 1. 以 schema 来描述表单展示，提交方式与 antd v4 的方式类似
 2. schema 以国际标准的 JSON schema 为基础，同时能够方便使用任何 antd 的 props
 3. 通过 bind 字段，我们允许数据的双向绑定，数据展示和真实提交的数据可以根据开发需求不同（例如从服务端接口拿到不规则数据时，也能直接使用）
-4. 可以通过`displayType`,`labelWidth`等字段轻易修改展示
+4. 使用"{{...}}"书写表达式来完成简单的联动，值得一提的是，这里表达式支持所有 js 语法。FR 还提供自定义组件、dependencies 声明、watch 等工具用于更加复杂的定制
+5. 可以通过`displayType`,`labelWidth`等字段轻易修改展示
 
 ## 高级用法
 
@@ -209,30 +222,30 @@ export default Demo;
 import Form, { useForm, connectForm } from 'form-render';
 ```
 
-### \<Form \/> (常用 props)
+### \<Form \/> 常用 props
 
-| 参数         | 描述                                                                           | 类型                                                              | 是否必填 | 默认值   |
-| ------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------- | -------- | -------- |
-| schema       | 描述表单的 schema，详见                                                        | `object`                                                          | 是       |          |
-| form         | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                                    | 是       |          |
-| onFinish     | 提交后的回调，执行 form.submit() 后触发                                        | `(data, errors: Error[]) => void`                                 | 否       | () => {} |
-| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填，入参是个对象，便于扩展         | `({ data, errors, schema, ...rest }) => Error[]|Promise<Error[]>` | 否       | () => {} |
-| onMount      | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)           | `() => void`                                                      | 否       | () => {} |
-| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`                             | 否       | 'column' |
-| widgets      | 自定义组件，当内置组件无法满足时使用                                           | `object`                                                          | 否       | {}       |
-| watch        | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                                          | 否       | {}       |
+| 参数             | 描述                                                                           | 类型                                                                 | 是否必填 | 默认值   |
+| ---------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------- | -------- | -------- |
+| id               | 表单的 id，一般用于标识一个表单的语义化名称                                    | `string`/`number`                                                    | 否       |          |
+| schema           | 描述表单的 schema，详见                                                        | `object`                                                             | 是       |          |
+| form             | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                                       | 是       |          |
+| onFinish         | 提交后的回调，执行 form.submit() 后触发                                        | `(data, errors: Error[]) => void`                                    | 否       | () => {} |
+| beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填，入参是个对象，便于扩展         | `({ data, errors, schema, ...rest }) => Error[] 或 Promise<Error[]>` | 否       | () => {} |
+| onMount          | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)           | `() => void`                                                         | 否       | () => {} |
+| displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`                                | 否       | 'column' |
+| widgets          | 自定义组件，当内置组件无法满足时使用                                           | `object`                                                             | 否       | {}       |
+| watch            | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                                             | 否       | {}       |
+| removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                       | `boolean`                                                            | 否       | false    |
+| debug            | 开启 debug 模式，时时显示表单内部状态，**开发的时候强烈建议打开**              | `boolean`                                                            | 否       | false    |
+| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                                     | `boolean`                                                            | 否       | false    |
 
-注 1：
-
-### \<Form \/> (不常用 props)
+### \<Form \/> 不常用 props
 
 | 参数             | 描述                                                             | 类型                | 默认值 |
 | ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
 | column           | 一行展示多少列                                                   | `number`            | 1      |
 | mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
-| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                       | `boolean`           | false  |
 | disabled         | 禁用模式，全部表单元素禁用                                       | `boolean`           | false  |
-| debug            | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
 | debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
 | locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
 | configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
@@ -278,22 +291,34 @@ const Demo = ({ form }) => {
 export default connectForm(Demo);
 ```
 
+**useForm 入参**
+
+以下入参的具体意义及用法，详见[表单健康度 & 提效](/form-render/measure)
+
+| 参数        | 描述                                                            | 类型     |
+| ----------- | --------------------------------------------------------------- | -------- |
+| logOnMount  | 会在表单首次加载时触发, 获取表单信息                            | function |
+| logOnSubmit | 会在 form.submit 时触发，获取表单信息（如填写时长、报错信息等） | function |
+
 **form 方法**
 
-| 参数             | 描述                                                | 类型                                 |
-| ---------------- | --------------------------------------------------- | ------------------------------------ |
-| submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                         |
-| resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `() => void`                         |
-| errorFields      | 表单校验错误的数组                                  | `array,[{name, error: []}]`          |
-| setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error | Error[]) => void`   |
-| setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`            |
-| setValueByPath   | 外部修改指定单个 field 的数据(原名 onItemChange)    | `(path: string, value: any) => void` |
-| setSchemaByPath  | 指定路径修改 schema                                 | `(path: string, value: any) => void` |
-| getValues        | 获取表单内部维护的数据 formData                     | `() => void`                         |
-| schema           | 表单的 schema                                       | object                               |
-| touchedKeys      | 已经触碰过的 field 的数据路径                       | `string[]`                           |
-| removeErrorField | 外部手动删除某一个 path 下所有的校验信息            | `(path: string) => void`             |
-| formData         | 表单内部维护的数据，建议使用 getValues/setValues    | `object`                             |
+| 参数             | 描述                                                | 类型                                         |
+| ---------------- | --------------------------------------------------- | -------------------------------------------- |
+| submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                                 |
+| resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `() => void`                                 |
+| errorFields      | 表单校验错误的数组                                  | `array,[{name, error: []}]`                  |
+| setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error | Error[]) => void`           |
+| setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`                    |
+| setValueByPath   | 外部修改指定单个 field 的数据(原名 onItemChange)    | `(path: string, value: any) => void`         |
+| setSchemaByPath  | 指定路径修改 schema                                 | `(path: string, value: any) => void`         |
+| setSchema        | 指定**多个**路径修改 schema。注 1                   | `({ path1: value1, path2: value2 }) => void` |
+| getValues        | 获取表单内部维护的数据 formData                     | `() => void`                                 |
+| schema           | 表单的 schema                                       | object                                       |
+| touchedKeys      | 已经触碰过的 field 的数据路径                       | `string[]`                                   |
+| removeErrorField | 外部手动删除某一个 path 下所有的校验信息            | `(path: string) => void`                     |
+| formData         | 表单内部维护的数据，建议使用 getValues/setValues    | `object`                                     |
+
+注 1： react 更新机制导致，同时多次调用 `setSchemaByPath` 无效，所以请使用 `setSchema`，事实上`setSchema` 能完全覆盖 `setSchemaByPath` 的场景
 
 ## 如何速写 Schema
 

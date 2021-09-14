@@ -8,7 +8,6 @@ import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
 
-import 'antd/dist/antd.less'; // 需要配置一下babel-plugins
 import './index.css';
 
 const useTableRoot = props => {
@@ -36,12 +35,17 @@ const useTableRoot = props => {
   const table = useTable();
 
   const doSearch = (
-    params: { current?: any; tab?: any; pageSize?: any },
+    params: {
+      current?: number;
+      tab?: number | string;
+      pageSize?: number;
+      sorter?: any;
+    },
     customSearch?: any
   ) => {
     // console.log(checkPassed);
     // if (!checkPassed) return;
-    const { current, pageSize, tab, ...extraSearch } = params || {};
+    const { current, pageSize, tab, sorter, ...extraSearch } = params || {};
     const _current = current || 1;
     const _pageSize = pageSize || 10;
     let _tab = currentTab;
@@ -63,7 +67,7 @@ const useTableRoot = props => {
       message.warning('api 不是函数，检查 <Search /> 的 props');
     }
 
-    function basicSearch(api: (arg0: any) => any) {
+    function basicSearch(api: (arg0: any, sorter: any) => any) {
       set({ loading: true });
       let _params = {
         ...form.getValues(),
@@ -75,7 +79,7 @@ const useTableRoot = props => {
       if (Array.isArray(api)) {
         _params = { ..._params, tab };
       }
-      Promise.resolve(api(_params))
+      Promise.resolve(api(_params, sorter))
         .then(res => {
           // TODO：这里校验res是否规范
           const { rows, total, pageSize, ...extraData } = res;
@@ -172,4 +176,12 @@ const Container = (props, ref) => {
 
 const TableProvider = forwardRef(Container);
 
-export { Search, Table, TableProvider, useTable };
+const withTable = Component => props => {
+  return (
+    <TableProvider>
+      <Component {...props} />
+    </TableProvider>
+  );
+};
+
+export { Search, Table, TableProvider, useTable, withTable };

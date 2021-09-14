@@ -1,6 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef } from 'react';
-import { updateSchemaToNewVersion, getValueByPath } from './utils';
+import {
+  updateSchemaToNewVersion,
+  getValueByPath,
+  msToTime,
+  yymmdd,
+} from './utils';
 import Core from './core';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import { widgets as defaultWidgets } from './widgets/antd';
@@ -10,9 +15,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
 import './index.less';
 
-const defaultBeforeFinish = props => {
-  console.log('beforeFinish:', props);
-};
+const defaultBeforeFinish = () => {};
 
 const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
@@ -24,6 +27,7 @@ export { default as useForm } from './useForm';
 export { default as connectForm } from './connectForm';
 
 function App({
+  id,
   widgets,
   mapping,
   form,
@@ -48,6 +52,8 @@ function App({
   allCollapsed = false,
   onValuesChange,
   column,
+  removeHiddenData = false,
+  globalProps = {},
   ...rest
 }) {
   try {
@@ -64,6 +70,7 @@ function App({
     setValueByPath,
     getSchemaByPath,
     setSchemaByPath,
+    setSchema,
     setValues,
     getValues,
     resetFields,
@@ -75,6 +82,9 @@ function App({
     removeTouched,
     changeTouchedKeys,
     syncStuff,
+    logOnMount,
+    logOnSubmit,
+    setFirstMount,
     ...valuesThatWillChange
   } = form;
 
@@ -86,21 +96,62 @@ function App({
     isSubmitting,
     formData,
     flatten,
+    showValidate, // 旧版折中升级方案里，旧的api的软兼容
+    firstMount,
   } = valuesThatWillChange;
 
   useEffect(() => {
     // Schema最外层的type是object来判断，没有的话，认为schema没有传
     if (schema && schema.type) {
+      setFirstMount(true);
       syncStuff({
         schema,
         locale,
         validateMessages,
         beforeFinish,
         onMount,
+        removeHiddenData,
       });
     } else {
     }
   }, [JSON.stringify(schema)]);
+
+  useEffect(() => {
+    if (!firstMount && schema && schema.type) {
+      if (typeof onMount === 'function') {
+        // 等一下 useForm 里接到第一份schema时，计算第一份data的骨架
+        setTimeout(() => {
+          onMount();
+        }, 0);
+      }
+      setTimeout(onMountLogger, 0);
+    }
+  }, [JSON.stringify(schema), firstMount]);
+
+  const onMountLogger = () => {
+    const start = new Date().getTime();
+    if (typeof logOnMount === 'function' || typeof logOnSubmit === 'function') {
+      sessionStorage.setItem('FORM_MOUNT_TIME', start);
+      sessionStorage.setItem('FORM_START', start);
+    }
+    if (typeof logOnMount === 'function') {
+      const logParams = {
+        schema,
+        url: location.href,
+        formData: JSON.stringify(form.getValues()),
+        formMount: yymmdd(start),
+      };
+      if (id) {
+        logParams.id = id;
+      }
+      logOnMount(logParams);
+    }
+    // 如果是要计算时间，在 onMount 时存一个时间戳
+    if (typeof logOnSubmit === 'function') {
+      sessionStorage.setItem('NUMBER_OF_SUBMITS', 0);
+      sessionStorage.setItem('FAILED_ATTEMPTS', 0);
+    }
+  };
 
   // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
@@ -112,12 +163,14 @@ function App({
   const store = useMemo(
     () => ({
       ...valuesThatWillChange,
+      globalProps,
       ...rest,
     }),
     [
       JSON.stringify(flatten),
       JSON.stringify(formData),
       JSON.stringify(errorFields),
+      JSON.stringify(globalProps),
     ]
   );
 
@@ -134,6 +187,7 @@ function App({
       readOnly,
       disabled,
       allCollapsed,
+      showValidate,
     }),
     [
       displayType,
@@ -146,6 +200,7 @@ function App({
       readOnly,
       disabled,
       allCollapsed,
+      showValidate,
     ]
   );
 
@@ -158,6 +213,7 @@ function App({
       setEditing,
       touchKey,
       resetFields,
+      setSchema,
       setErrorFields,
       removeErrorField,
       removeTouched,
@@ -188,10 +244,39 @@ function App({
     if (isValidating === false && isSubmitting === true) {
       endSubmitting();
       onFinish(submitData, errorFields);
+      if (typeof logOnSubmit === 'function') {
+        const start = sessionStorage.getItem('FORM_START');
+        const mount = sessionStorage.getItem('FORM_MOUNT_TIME');
+        const numberOfSubmits =
+          Number(sessionStorage.getItem('NUMBER_OF_SUBMITS')) + 1;
+        const end = new Date().getTime();
+        let failedAttempts = Number(sessionStorage.getItem('FAILED_ATTEMPTS'));
+        if (errorFields.length > 0) {
+          failedAttempts = failedAttempts + 1;
+        }
+        const logParams = {
+          formMount: yymmdd(mount),
+          ms: end - start,
+          duration: msToTime(end - start),
+          numberOfSubmits: numberOfSubmits,
+          failedAttempts: failedAttempts,
+          url: location.href,
+          formData: JSON.stringify(submitData),
+          errors: JSON.stringify(errorFields),
+          schema: JSON.stringify(schema),
+        };
+        if (id) {
+          logParams.id = id;
+        }
+        logOnSubmit(logParams);
+        sessionStorage.setItem('FORM_START', end);
+        sessionStorage.setItem('NUMBER_OF_SUBMITS', numberOfSubmits);
+        sessionStorage.setItem('FAILED_ATTEMPTS', failedAttempts);
+      }
     }
   }, [isValidating, isSubmitting, outsideValidating]);
 
-  // TODO: 这段代码写了没用
+  // TODO: fk doesn't work
   let sizeCls = '';
   if (size === 'small') {
     sizeCls = 'fr-form-small';
@@ -199,14 +284,20 @@ function App({
     sizeCls = 'fr-form-large';
   }
 
+  const rootProps = {
+    className: `fr-container ${sizeCls}`,
+  };
+  if (id) {
+    rootProps.id = id;
+  }
+
   const watchList = Object.keys(watch);
-  // TODO: Ctx 这层暂时不用，所有都放在StoreCtx，之后性能优化在把一些常量的东西提取出来
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
       <StoreCtx.Provider value={store}>
         <Store2Ctx.Provider value={store2}>
           <Ctx.Provider value={tools}>
-            <div className={`fr-container ${sizeCls}`}>
+            <div {...rootProps}>
               {debug ? (
                 <div className="mv2 bg-black-05 pa2 br2">
                   <div style={{ display: 'flex' }}>
@@ -225,6 +316,11 @@ function App({
                   <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
                   <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
                   <div>{'descriptor:' + JSON.stringify(window.descriptor)}</div>
+                  {/* <textarea
+                    style={{ width: 500, height: 300 }}
+                    value={'schema:' + JSON.stringify(flatten, null, 2)}
+                    onChange={() => {}}
+                  /> */}
                 </div>
               ) : null}
               {watchList.length > 0
@@ -235,6 +331,7 @@ function App({
                         watchKey={item}
                         watch={watch}
                         formData={formData}
+                        firstMount={firstMount}
                       />
                     );
                   })
@@ -262,29 +359,35 @@ const Wrapper = props => {
 
 export default Wrapper;
 
-const Watcher = ({ watchKey, watch, formData }) => {
+const Watcher = ({ watchKey, watch, formData, firstMount }) => {
   const value = getValueByPath(formData, watchKey);
   const watchObj = watch[watchKey];
-  const firstMount = useRef(true);
 
   useEffect(() => {
     const runWatcher = () => {
       if (typeof watchObj === 'function') {
-        watchObj(value);
+        try {
+          watchObj(value);
+        } catch (error) {
+          console.log(`${watchKey}对应的watch函数执行报错：`, error);
+        }
       } else if (watchObj && typeof watchObj.handler === 'function') {
-        watchObj.handler(value);
+        try {
+          watchObj.handler(value);
+        } catch (error) {
+          console.log(`${watchKey}对应的watch函数执行报错：`, error);
+        }
       }
     };
 
-    if (firstMount.current) {
+    if (firstMount) {
       const immediate = watchObj && watchObj.immediate;
       if (immediate) {
         runWatcher();
       }
-      firstMount.current = false;
     } else {
       runWatcher();
     }
-  }, [JSON.stringify(value)]);
+  }, [JSON.stringify(value), firstMount]);
   return null;
 };

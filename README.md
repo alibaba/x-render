@@ -28,7 +28,7 @@
 
 - <a href="https://x-render.gitee.io/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
 - <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
-- <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
+  <!-- - <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库 -->
 
 <Alert>
   <span>🎉🎉🎉 FormRender 品牌已升级到 XRender，提供中后台中 「表单 / 表格 / 图表」 很易用的解决方案， 原 0.X 版本可快速 <a href="https://x-render.gitee.io/form-render/migrate" target="_blank_"> 升级到 1.X </a> </span>
@@ -136,6 +136,10 @@
   <a href="https://github.com/alibaba/form-render/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=alibaba/form-render" />
   </a>
+
+<br>
+
+https://user-images.githubusercontent.com/8736212/123383626-ff187a80-d5c5-11eb-803f-296762fe72d0.mp4
 
 ## 协议
 

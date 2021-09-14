@@ -1,6 +1,5 @@
 import { defineConfig } from 'dumi';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
-import path from 'path';
 
 export default defineConfig({
   title: 'XRender',
@@ -46,6 +45,10 @@ export default defineConfig({
     },
     {
       title: 'Playground',
+      children: [
+        { title: 'Playground', path: '/playground' },
+        { title: 'Schema 编辑器', path: '/tools/generator/playground' },
+      ],
       path: '/playground',
     },
     {
@@ -61,7 +64,7 @@ export default defineConfig({
       title: '更新日志',
       children: [
         {
-          title: 'FormTender',
+          title: 'FormRender',
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
         },
@@ -78,7 +81,7 @@ export default defineConfig({
       ],
     },
     {
-      title: '旧版本',
+      title: '旧版文档',
       path: 'https://x-components.gitee.io/form-render/',
     },
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },

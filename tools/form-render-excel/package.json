@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "lodash-es": "^4.17.21",
-    "xlsx": "^0.16.8"
+    "xlsx": ">=0.17.0"
   },
   "peerDependencies": {
     "antd": "^4.x",
