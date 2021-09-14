@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Modal, Input, Button, message } from 'antd';
 import copyTOClipboard from 'copy-text-to-clipboard';
 import FR from './core';
-import { looseJsonParse, isObject, schemaToState } from '../../utils';
+import { looseJsonParse, isObject, schemaToState, idToSchema } from '../../utils';
 import { useSet, useGlobal, useStore } from '../../utils/hooks';
 
 const { TextArea } = Input;
 
-const Canvas = () => {
+const Canvas = ({ onSelect }) => {
   const setGlobal = useGlobal();
-  const { userProps, displaySchema, displaySchemaString } = useStore();
+  const { userProps, displaySchema, displaySchemaString, selected, flatten, onChange, onSchemaChange } = useStore();
   const [local, setState] = useSet({
     preview: false,
     showModal: false,
@@ -34,6 +34,8 @@ const Canvas = () => {
         selected: undefined,
         ...schemaToState(value),
       }));
+      onChange(value.formData || {});
+      onSchemaChange(value);
     } catch (error) {
       console.log('catch', error)
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
@@ -48,21 +50,36 @@ const Canvas = () => {
   };
 
   const clearSchema = () => {
+    const schema = {
+      type: 'object',
+      properties: {},
+    };
     setGlobal({
-      schema: {
-        type: 'object',
-        properties: {},
-      },
+      schema,
       formData: {},
       selected: undefined,
     });
+    onChange({});
+    onSchemaChange(schema);
   };
 
+  useEffect(() => {
+    if (!onSelect) return;
+    onSelect(idToSchema(flatten, selected));
+  }, [selected])
+
   const _extraButtons = Array.isArray(extraButtons) ? extraButtons : [];
-  const _showDefaultBtns = _extraButtons.filter(
-    item => item === true || item === false
-  );
-  const _extraBtns = _extraButtons.filter(item => isObject(item) && item.text);
+  const _showDefaultBtns = _extraButtons.filter(item => !isObject(item));
+  const _extraBtns = _extraButtons.filter(item => isObject(item));
+
+  const getDefaultBtnText = (text, defaultText, index) => {
+    if (typeof index === 'number') {
+      if (Array.isArray(text)) return text[index];
+      return defaultText[index];
+    }
+    if (typeof text === 'string') return text;
+    return defaultText;
+  }
 
   return (
     <div className="mid-layout pr2">
@@ -75,22 +92,22 @@ const Canvas = () => {
               setGlobal({ selected: '#' });
             }}
           >
-            {preview ? '开始编辑' : '最终展示'}
+            {getDefaultBtnText(_showDefaultBtns[0], ['开始编辑', '最终展示'], Number(!preview))}
           </Button>
         )}
         {_showDefaultBtns[1] !== false && (
           <Button className="mr2" onClick={clearSchema}>
-            清空
+            {getDefaultBtnText(_showDefaultBtns[1], '清空')}
           </Button>
         )}
         {_showDefaultBtns[2] !== false && (
           <Button className="mr2" onClick={toggleModal2}>
-            导入
+            {getDefaultBtnText(_showDefaultBtns[2], '导入')}
           </Button>
         )}
         {_showDefaultBtns[3] !== false && (
           <Button type="primary" className="mr2" onClick={toggleModal}>
-            导出schema
+            {getDefaultBtnText(_showDefaultBtns[3], '导出schema')}
           </Button>
         )}
         {_extraBtns.map((item, idx) => {

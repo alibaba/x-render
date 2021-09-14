@@ -1,9 +1,5 @@
 // 只需写配置，方便可扩展
 export const baseCommonSettings = {
-  title: {
-    title: '标题',
-    type: 'string',
-  },
   type: {
     title: '类型',
     type: 'string',
@@ -32,6 +28,13 @@ export const defaultCommonSettings = {
   title: {
     title: '标题',
     type: 'string',
+  },
+  displayType: {
+    title: '标题展示模式',
+    type: 'string',
+    enum: ['row', 'column'],
+    enumNames: ['同行', '单独一行'],
+    widget: 'radio',
   },
   description: {
     title: '说明',
@@ -430,10 +433,15 @@ export const elements = [
       widget: 'html',
     },
     setting: {
-      default: {
-        title: '展示内容',
-        type: 'string',
-      },
+      props: {
+        type: 'object',
+        properties: {
+          value: {
+            title: '展示内容',
+            type: 'string',
+          },
+        }
+      }
     },
   },
 ];

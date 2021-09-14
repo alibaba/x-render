@@ -3,6 +3,7 @@ import React, {
   useRef,
   forwardRef,
   useImperativeHandle,
+  useState,
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -12,6 +13,7 @@ import {
   widgets as defaultWidgets,
   mapping as defaultMapping,
 } from 'form-render';
+import copyTOClipboard from 'copy-text-to-clipboard';
 import {
   flattenSchema,
   idToSchema,
@@ -35,6 +37,8 @@ const DEFAULT_SCHEMA = {
 function Provider(props, ref) {
   const {
     defaultValue,
+    canDrag,
+    canDelete,
     submit,
     transformer: _transformer,
     extraButtons,
@@ -60,12 +64,12 @@ function Provider(props, ref) {
   const [state, setState] = useSet({
     formData: {},
     frProps: {}, // form-render 的全局 props 等
-    hovering: undefined, // 目前没有用到
     isNewVersion: true, // 用schema字段，还是用propsSchema字段，这是一个问题
     preview: false, // preview = false 是编辑模式
     schema: {},
     selected: undefined, // 被选中的$id, 如果object/array的内部，以首字母0标识
   });
+  const [itemError, setItemError] = useState([])
 
   // 收口点 propsSchema 到 schema 的转换 (一共3处，其他两个是 importSchema 和 setValue，在 FRWrapper 文件)
   useEffect(() => {
@@ -76,7 +80,6 @@ function Provider(props, ref) {
   const {
     formData,
     frProps,
-    hovering,
     isNewVersion,
     preview,
     schema,
@@ -107,10 +110,11 @@ function Provider(props, ref) {
     mapping: _mapping,
     widgets: _widgets,
     selected,
-    hovering,
   };
 
   const userProps = {
+    canDrag,
+    canDelete,
     submit,
     transformer,
     isNewVersion,
@@ -133,7 +137,7 @@ function Provider(props, ref) {
     const newSchema = idToSchema(newFlatten);
     const newData = flattenToData(newFlatten);
     // 判断只有schema变化时才调用，一般需求的用户不需要
-    if (changeSource === 'schema' && onSchemaChange) {
+    if (changeSource === 'schema') {
       onSchemaChange(newSchema);
     }
     // schema 变化大都会触发 data 变化
@@ -188,6 +192,10 @@ function Provider(props, ref) {
     flatten: flattenWithData, // schema + formData = flattenWithData
     onFlattenChange, // onChange + onSchemaChange = onFlattenChange
     onItemChange, // onFlattenChange 里只改一个item的flatten，使用这个方法
+    onSchemaChange,
+    onChange,
+    itemError,
+    onItemErrorChange: setItemError,
     userProps,
     frProps,
     displaySchema,

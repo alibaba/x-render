@@ -51,6 +51,8 @@ export interface Setting {
 export interface FRGeneratorProps {
   /** 隐藏组件 ID */
   hideId?: boolean;
+  /** 固定 id */
+  fixedName?: boolean;
   /** 默认一进入编辑器展示的表单对应的 schema */
   defaultValue?: any;
   /** 自定义 schema 到 form-render 的 schema 的双向转换函数 */
@@ -67,19 +69,27 @@ export interface FRGeneratorProps {
   globalSettings?: any;
   /** 自定义组件 */
   widgets?: any;
+  /** 配置栏自定义组件 */
+  settingsWidgets?: any;
   /** 组件和 schema 的映射规则 */
   mapping?: any;
   /** 表单 data 变化回调 */
   onChange?: (data: any) => void;
   /** 表单 schema 变化回调 */
   onSchemaChange?: (schema: any) => void;
+  /** 画布组件选择回调 */
+  onCanvasSelect?: (schema: any) => void;
 }
 
 export interface SettingsProps {
   /** 自定义组件 */
   widgets?: any;
 }
-export interface CanvasProps {}
+export interface CanvasProps {
+  /** 画布组件选择回调 */
+  onCanvasSelect?: (schema: any) => void;
+}
+
 export interface SidebarProps {
   /** 固定 id */
   fixedName?: boolean;
@@ -98,8 +108,8 @@ declare const FRGenerator: Generator;
 declare const defaultSettings: Setting;
 declare const defaultCommonSettings: any;
 declare const defaultGlobalSettings: any;
-declare const fromSetting: (schema: any) => any;;
-declare const toSetting: (schema: any) => any;;
+declare const fromSetting: (schema: any) => any;
+declare const toSetting: (schema: any) => any;
 
 export { defaultSettings, defaultCommonSettings, defaultGlobalSettings };
 export { fromSetting, toSetting };
