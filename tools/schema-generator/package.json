@@ -1,6 +1,6 @@
 {
   "name": "fr-generator",
-  "version": "2.5.6",
+  "version": "2.5.7",
   "scripts": {
     "build": "father-build",
     "prepare": "npm run build",
@@ -26,8 +26,8 @@
   },
   "peerDependencies": {
     "antd": "4.x",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
   },
   "dependencies": {
     "antd": "^4.4.2",
