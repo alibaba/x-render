@@ -650,7 +650,7 @@ export const transformProps = props => {
   const usefulPropsFromSchema = {
     disabled: schema.disabled || schema['ui:disabled'],
     readOnly: schema.readOnly || schema['ui:readonly'],
-    hidden: schema.hidden || schema['ui:hidden'],
+    // hidden: schema.hidden || schema['ui:hidden'],
     // $options: schema.options || schema['ui:options'],
   };
 

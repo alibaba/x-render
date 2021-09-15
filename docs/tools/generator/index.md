@@ -49,18 +49,19 @@ export default Demo;
 
 ### Props
 
-| 参数           | 说明                     | 类型      | 默认值                                                                                                                          |
-| -------------- | ------------------------ | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| hideId         | 隐藏组件 ID              | `boolean` | `false`                                                                                                                         |
-| defaultValue   | 默认表单 schema          | `object`  | `DEFAULT_SCHEMA`                                                                                                                |
-| transformer    | schema 双向转换          | `object`  | `{ from, to }`                                                                                              |
-| extraButtons   | 操作栏按钮               | `array`   | `extraButton[]`                                                                                                                 |
-| controlButtons | 选中项操作按钮           | `array`   | `controlButton[]`                                                                                                               |
-| settings       | 左右侧栏配置             | `array`   | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L651)       |
-| commonSettings | 通用配置                 | `object`  | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L2)   |
-| globalSettings | 全局配置                 | `object`  | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L672) |
-| widgets        | 自定义组件               | `object`  | `{}`                                                                                                                            |
-| mapping        | 组件和 schema 的映射规则 | `object`  | `{}`                                                                                                                            |
+| 参数           | 说明                            | 类型      | 默认值                                                                                                                          |
+| -------------- | ------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| hideId         | 隐藏组件 ID                     | `boolean` | `false`                                                                                                                         |
+| fixedName      | 固定 settings 的 name 为组件 ID | `boolean` | `false`                                                                                                                         |
+| defaultValue   | 默认表单 schema                 | `object`  | `DEFAULT_SCHEMA`                                                                                                                |
+| transformer    | schema 双向转换                 | `object`  | `{ from, to, fromSetting, toSetting }`                                                                                          |
+| extraButtons   | 操作栏按钮                      | `array`   | `extraButton[]`                                                                                                                 |
+| controlButtons | 选中项操作按钮                  | `array`   | `controlButton[]`                                                                                                               |
+| settings       | 左右侧栏配置                    | `array`   | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L651)       |
+| commonSettings | 通用配置                        | `object`  | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L2)   |
+| globalSettings | 全局配置                        | `object`  | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L672) |
+| widgets        | 自定义组件                      | `object`  | `{}`                                                                                                                            |
+| mapping        | 组件和 schema 的映射规则        | `object`  | `{}`                                                                                                                            |
 
 #### extraButton
 
@@ -83,10 +84,11 @@ export default Demo;
 
 ### Events
 
-| 事件名         | 说明                 | 回调参数      |
-| -------------- | -------------------- | ------------- |
-| onChange       | 表单 data 变化回调   | 表单的 data   |
-| onSchemaChange | 表单 schema 变化回调 | 导出的 schema |
+| 事件名         | 说明                 | 回调参数        |
+| -------------- | -------------------- | --------------- |
+| onChange       | 表单 data 变化回调   | 表单的 data     |
+| onSchemaChange | 表单 schema 变化回调 | 导出的 schema   |
+| onCanvasSelect | 画布组件选择回调     | 选中项的 schema |
 
 ### Methods
 
