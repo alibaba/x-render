@@ -11,6 +11,7 @@ export const mapping = {
   'string:url': 'url',
   'string:dateTime': 'date',
   'string:date': 'date',
+  'string:time': 'date',
   'string:year': 'date',
   'string:month': 'date',
   'string:week': 'date',
