@@ -15,7 +15,7 @@ export const mapping = {
   'string:month': 'date',
   'string:week': 'date',
   'string:quarter': 'date',
-  'string:time': 'time',
+  'string:time': 'date',
   'string:textarea': 'textarea',
   'string:color': 'color',
   'string:image': 'imageInput',
