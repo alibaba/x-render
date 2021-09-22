@@ -1,6 +1,0 @@
-{
-  "extends": "eslint-config-umi",
-  "globals": {
-    "acquireVsCodeApi": true
-  }
-}
