@@ -113,8 +113,10 @@ const ExtendedWidget = ({
   widgetProps.addons = {
     dependValues,
     onItemChange,
-    setValue: onItemChange, // onItemChange 已经文档放出去了，不去掉了，但改个好理解的名字
+    setValue: onItemChange,
+    setValueByPath: onItemChange,
     getValue,
+    getValueByPath: getValue,
     formData,
     dataPath,
     dataIndex,
