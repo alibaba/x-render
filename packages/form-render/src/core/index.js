@@ -104,9 +104,9 @@ const CoreRender = ({
   effectiveLabelWidth,
   ...rest
 }) => {
-  if (schema.hidden) {
-    return null;
-  }
+  // if (schema.hidden) {
+  //   return null;
+  // }
   // 样式的逻辑全放在这层
   // displayType 一层层网上找值
   const _displayType =
@@ -187,17 +187,18 @@ const CoreRender = ({
 
   // style part
   let columnStyle = {};
+  if (schema.hidden) {
+    columnStyle.display = 'none';
+  }
+  // if (!isComplex) {
+  // }
   if (!isObj) {
     if (width) {
-      columnStyle = {
-        width,
-        paddingRight: '12px',
-      };
+      columnStyle.width = width;
+      columnStyle.marginRight = 6;
     } else if (column > 1) {
-      columnStyle = {
-        width: `calc(100% /${column})`,
-        paddingRight: '12px',
-      };
+      columnStyle.width = width = `calc(100% /${column})`;
+      columnStyle.marginRight = 6;
     }
   }
 
