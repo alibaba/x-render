@@ -1,6 +1,0 @@
-{
-  "packages": ["packages/*", "widgets/*", "tools/schema-generator"],
-  "version": "independent",
-  "npmClient": "yarn",
-  "useWorkspaces": true
-}
