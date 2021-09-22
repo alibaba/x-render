@@ -27,14 +27,18 @@ const ExtendedWidget = ({
   dataPath,
   disabled,
   dataIndex,
-  // $id,
 }) => {
   const {
     widgets,
     mapping,
-    setErrorFields,
+    setValueByPath,
+    getSchemaByPath,
+    setSchemaByPath,
     setSchema,
+    setValues,
+    getValues,
     resetFields,
+    setErrorFields,
     removeErrorField,
   } = useTools();
 
@@ -109,21 +113,28 @@ const ExtendedWidget = ({
     widgetProps.addonAfter = <AddonAfterWidget {...schema} />;
   }
 
+  const hideSelf = (hidden = true) => {
+    setSchemaByPath(schema.$id, { hidden });
+  };
+
   // 避免传组件不接受的props，按情况传多余的props
   widgetProps.addons = {
     dependValues,
     onItemChange,
-    setValue: onItemChange,
-    setValueByPath: onItemChange,
     getValue,
-    getValueByPath: getValue,
     formData,
     dataPath,
     dataIndex,
-    setErrorFields,
+    setValueByPath,
+    getSchemaByPath,
+    setSchemaByPath,
     setSchema,
+    setValues,
+    getValues,
     resetFields,
+    setErrorFields,
     removeErrorField,
+    hideSelf,
   };
 
   const finalProps = transformProps(widgetProps);

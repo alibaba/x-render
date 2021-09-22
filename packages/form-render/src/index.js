@@ -209,15 +209,7 @@ function App({
       widgets: { ...defaultWidgets, ...widgets },
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
-      onItemChange,
-      setEditing,
-      touchKey,
-      resetFields,
-      setSchema,
-      setErrorFields,
-      removeErrorField,
-      removeTouched,
-      changeTouchedKeys,
+      ...form,
     }),
     []
   );
