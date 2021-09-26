@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.10
+
+- [+] 自定义组件的 addons props 里可以使用几乎所有 form 方法，个别不一致的方法名称也与 form 方法统一，避免混乱
+- [+] 自定义组件的 addons props 里提供 hideSelf 方法，用于简单控制自身的显示隐藏
+
 ## 1.6.9
 
 - [!] 修复了动态 hidden 和 bind 共用时，`removeHiddenData` props 有时会无效的问题
