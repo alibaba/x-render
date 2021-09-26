@@ -1059,7 +1059,11 @@ const updateSingleSchema = schema => {
     if (schema.rules && schema.rules.length === 0) {
       delete schema.rules;
     }
-    if (JSON.stringify(schema.props) === '{}') {
+    if (
+      typeof schema.props === 'function' ||
+      (isObject(schema.props) && Object.keys(schema.props).length > 0)
+    ) {
+    } else {
       delete schema.props;
     }
     return schema;
