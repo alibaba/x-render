@@ -626,6 +626,7 @@ export const removeEmptyItemFromList = formData => {
     });
   } else if (Array.isArray(formData)) {
     result = formData.filter(item => {
+      if ([false, 0, ''].indexOf(item) > -1) return true;
       if (item && JSON.stringify(item) !== '{}') {
         return true;
       }
