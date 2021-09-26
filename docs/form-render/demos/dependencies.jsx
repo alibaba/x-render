@@ -1,7 +1,3 @@
-/**
- * transform: true
- * defaultShowCode: true
- */
 import React from 'react';
 import { Button, message, Input } from 'antd';
 import FormRender, { useForm } from 'form-render';
