@@ -1,10 +1,15 @@
 # Changelog
 
+## 1.6.12
+
+- [!] 修复了 rootValue 在 list 下无法使用的问题
+- [!] 修复了一处 typo
+
 ## 1.6.11
 
-- [+] 修复了 schema 的 props 为函数时无效的问题 #543
-- [+] 修复了 formData 中的数组的 item 值为 false 时提交时会被误删的问题 #541
-- [+] 修复了使用百分比 width 展示时溢出的一个 bug
+- [!] 修复了 schema 的 props 为函数时无效的问题 #543
+- [!] 修复了 formData 中的数组的 item 值为 false 时提交时会被误删的问题 #541
+- [!] 修复了使用百分比 width 展示时溢出的一个 bug
 
 ## 1.6.10
 
