@@ -37,6 +37,7 @@ const Core = ({
   let schema = clone(item.schema);
   const dependencies = schema.dependencies;
   const dependValues = [];
+  let rootValue;
 
   try {
     if (Array.isArray(dependencies)) {
@@ -49,6 +50,13 @@ const Core = ({
   } catch (error) {
     console.error(`dependencies 计算报错，${dependencies}`);
   }
+
+  // try {
+  //   const parentPath = getDataPath()
+  //   rootValue =
+  // } catch (error) {
+
+  // }
 
   // 节流部分逻辑，编辑时不执行
   if (isEditing && snapShot.current) {
@@ -195,10 +203,10 @@ const CoreRender = ({
   if (!isObj) {
     if (width) {
       columnStyle.width = width;
-      columnStyle.marginRight = 6;
+      columnStyle.paddingRight = 8;
     } else if (column > 1) {
       columnStyle.width = width = `calc(100% /${column})`;
-      columnStyle.marginRight = 6;
+      columnStyle.paddingRight = 8;
     }
   }
 
