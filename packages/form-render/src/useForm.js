@@ -124,11 +124,20 @@ const useForm = props => {
     let newFlatten = clone(_flatten.current);
     Object.entries(_flatten.current).forEach(([path, info]) => {
       if (schemaContainsExpression(info.schema)) {
-        newFlatten[path].schema = parseAllExpression(
-          info.schema,
-          _data.current,
-          path
-        );
+        const arrayLikeIndex = path.indexOf(']');
+        const isArrayItem =
+          arrayLikeIndex > -1 && arrayLikeIndex < path.length - 1;
+        const hasRootValue =
+          JSON.stringify(info.schema).indexOf('rootValue') > -1;
+        if (isArrayItem && hasRootValue) {
+          // do nothing
+        } else {
+          newFlatten[path].schema = parseAllExpression(
+            info.schema,
+            _data.current,
+            path
+          );
+        }
       }
     });
     setState({ finalFlatten: newFlatten });

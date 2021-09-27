@@ -7,11 +7,13 @@ import {
   isLooselyNumber,
   isCssLength,
   getParentProps,
+  getParentPath,
   isListType,
   isCheckBoxType,
   isObjType,
   getValueByPath,
   getDataPath,
+  parseRootValueInSchema,
   clone,
 } from '../utils';
 
@@ -33,6 +35,7 @@ const Core = ({
   if (!item) return null;
 
   let dataPath = getDataPath(id, dataIndex);
+  const parentPath = getParentPath(dataPath);
   const _value = getValueByPath(formData, dataPath);
   let schema = clone(item.schema);
   const dependencies = schema.dependencies;
@@ -51,17 +54,18 @@ const Core = ({
     console.error(`dependencies 计算报错，${dependencies}`);
   }
 
-  // try {
-  //   const parentPath = getDataPath()
-  //   rootValue =
-  // } catch (error) {
-
-  // }
+  try {
+    rootValue = getValueByPath(formData, parentPath);
+  } catch (error) {}
 
   // 节流部分逻辑，编辑时不执行
   if (isEditing && snapShot.current) {
     schema = snapShot.current;
   } else {
+    if (JSON.stringify(schema).indexOf('rootValue') > -1) {
+      schema = parseRootValueInSchema(schema, rootValue);
+    }
+
     snapShot.current = schema;
   }
 
@@ -205,7 +209,7 @@ const CoreRender = ({
       columnStyle.width = width;
       columnStyle.paddingRight = 8;
     } else if (column > 1) {
-      columnStyle.width = width = `calc(100% /${column})`;
+      columnStyle.width = `calc(100% /${column})`;
       columnStyle.paddingRight = 8;
     }
   }

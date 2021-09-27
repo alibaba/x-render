@@ -373,6 +373,41 @@ export function isExpression(func) {
   return false;
 }
 
+export const parseRootValueInSchema = (schema, rootValue) => {
+  const result = clone(schema);
+  if (isObject(schema)) {
+    Object.keys(schema).forEach(key => {
+      const item = schema[key];
+      if (isObject(item)) {
+        result[key] = parseRootValueInSchema(item, rootValue);
+      } else if (typeof item === 'string') {
+        result[key] = parseSingleRootValue(item, rootValue);
+      }
+    });
+  } else {
+    console.error('schema is not an object:', schema);
+  }
+  return result;
+};
+
+// handle rootValue inside List
+export const parseSingleRootValue = (expression, rootValue) => {
+  if (typeof expression === 'string' && expression.indexOf('rootValue') > 0) {
+    const funcBody = expression.substring(2, expression.length - 2);
+    const str = `
+    return ${funcBody.replace(/rootValue/g, JSON.stringify(rootValue))}`;
+
+    try {
+      return Function(str)();
+    } catch (error) {
+      console.error(error, 'expression:', expression, 'rootValue:', rootValue);
+      return null; // 如果计算有错误，return null 最合适
+    }
+  } else {
+    return expression;
+  }
+};
+
 export function parseSingleExpression(func, formData = {}, dataPath) {
   const parentPath = getParentPath(dataPath);
   const parent = getValueByPath(formData, parentPath) || {};
