@@ -11,8 +11,8 @@ const schema = {
   type: 'object',
   properties: {
     listName: {
-      title: 'list0',
-      description: '对象数组嵌套功能',
+      title: 'mylist',
+1      description: '对象数组嵌套功能',
       type: 'array',
       min: 2,
       max: 3,
@@ -54,10 +54,10 @@ const schema = {
       },
     },
     listName1: {
-      title: 'list1',
+      title: 'myList1',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list1',
+      widget: 'simpleList',
       min: 2,
       max: 3,
       props: {
@@ -93,10 +93,10 @@ const schema = {
       },
     },
     listName2: {
-      title: 'list2',
+      title: 'tableList',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list2',
+      widget: 'tableList',
       items: {
         type: 'object',
         properties: {
@@ -132,7 +132,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list3',
+      widget: 'drawerList',
       items: {
         type: 'object',
         properties: {
@@ -169,7 +169,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list4',
+      widget: 'virtualList',
       items: {
         type: 'object',
         properties: {

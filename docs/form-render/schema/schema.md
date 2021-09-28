@@ -438,7 +438,7 @@ readOnly=true 的情况，FormRender 默认使用 html 组件渲染。特殊情�
   "type": "array",
   "min": 1,
   "max": 3,
-  "widget": "list0",
+  "widget": "cardList",
   "items": {
     "type": "object",
     "properties": {
