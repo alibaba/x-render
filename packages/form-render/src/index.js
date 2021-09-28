@@ -31,6 +31,8 @@ function App({
   widgets,
   mapping,
   form,
+  className,
+  style,
   beforeFinish = defaultBeforeFinish,
   onFinish = defaultFinish,
   displayType = 'column',
@@ -277,9 +279,14 @@ function App({
   }
 
   const rootProps = {
-    className: `fr-container ${sizeCls}`,
+    className: `fr-container ${sizeCls} ${className || ''}`,
   };
-  if (id) {
+
+  if (style && typeof style === 'object') {
+    rootProps.style = style;
+  }
+
+  if (id && ['number', 'string'].indexOf(typeof id) > -1) {
     rootProps.id = id;
   }
 

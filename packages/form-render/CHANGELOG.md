@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6.13
+
+- [!] 去除了 rootValue 初始值为 undefined 时 console 里会有报错（虽然不影响功能，但有碍观瞻）
+- [!] 顶层支持了 className、style 属性
+
 ## 1.6.12
 
 - [!] 修复了 rootValue 在 list 下无法使用的问题
