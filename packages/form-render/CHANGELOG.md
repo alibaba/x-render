@@ -4,6 +4,7 @@
 
 - [!] 去除了 rootValue 初始值为 undefined 时 console 里会有报错（虽然不影响功能，但有碍观瞻）
 - [!] 顶层支持了 className、style 属性
+- [!] 修改了列表类组件的命名，从 list0/list1/list2/list3/list4 变为 cardList/simpleList/tableList/drawerList/virtualList，对旧的命名还是支持的，改动的目的一来更为语义化，二来方便之后的扩展，list5，list6 这样不是个可扩展的模式
 
 ## 1.6.12
 
