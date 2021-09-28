@@ -391,7 +391,7 @@ export const parseRootValueInSchema = (schema, rootValue) => {
 };
 
 // handle rootValue inside List
-export const parseSingleRootValue = (expression, rootValue) => {
+export const parseSingleRootValue = (expression, rootValue = {}) => {
   if (typeof expression === 'string' && expression.indexOf('rootValue') > 0) {
     const funcBody = expression.substring(2, expression.length - 2);
     const str = `
