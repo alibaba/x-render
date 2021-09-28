@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
 
 const Ha = props => {
-  console.log(props, 'poadshahahahah --asd-fs-df-s-sd-f');
+  console.log(props, '');
   return 'haha';
 };
 
@@ -12,7 +12,7 @@ const schema = {
   properties: {
     listName: {
       title: 'mylist',
-1      description: '对象数组嵌套功能',
+      description: '对象数组嵌套功能',
       type: 'array',
       min: 2,
       max: 3,
