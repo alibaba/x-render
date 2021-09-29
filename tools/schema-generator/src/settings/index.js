@@ -200,6 +200,7 @@ export const elements = [
       title: '日期选择',
       type: 'string',
       format: 'date',
+      widget: 'date',
     },
     setting: {
       format: {
