@@ -11,9 +11,9 @@ export interface FormParams {
   onValidate?: (valid: any) => void;
   showValidate?: boolean;
   /** 数据分析接口，表单展示完成渲染时触发 */
-  logOnMount?: (any) => void;
+  logOnMount?: (stats: any) => void;
   /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
-  logOnSubmit?: (any) => void;
+  logOnSubmit?: (stats: any) => void;
 }
 
 export interface ValidateParams {
