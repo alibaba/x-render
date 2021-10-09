@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.7.0
+
+- [+] submit 现在内置了.then 方法，返回 formData 和 errors (并不建议使用，可以的情况还是使用 onFinish 的模式)
+- [+] 添加 descType 字段，用于在 title 分行展示时也允许描述文案收起到“？” icon 内。
+- [!] 修复 logOnMount 等的 ts 报错
+
 ## 1.6.13
 
 - [!] 去除了 rootValue 初始值为 undefined 时 console 里会有报错（虽然不影响功能，但有碍观瞻）

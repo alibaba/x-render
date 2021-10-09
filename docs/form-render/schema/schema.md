@@ -136,6 +136,11 @@ export default () => <FR schema={titleTrick} />;
 - 类型：`string`
 - 详细：表单的描述信息，常将填写注意点放入此参数
 
+### descType (v1.7.0)
+
+- 类型：'text' | 'icon'
+- 详细：当 displayType = 'row' 时，无作用；但当 displayType = 'column' （默认值）时，描述信息（description）的一般展示为文案形式，如果设定 descType: 'icon', 则会使用 tooltip 形式
+
 ### type
 
 - 类型：one of [`'string'`, `'number'`, `'boolean'`, `'array'`, `'object'`, `'range'`, `'html'`]
