@@ -366,7 +366,11 @@ const useForm = props => {
             isSubmitting: true,
             submitData: res,
           });
-          return errors;
+          const _errors = sortedUniqBy(
+            [...errors, ..._outErrorFields.current],
+            item => item.name
+          );
+          return { data: res, errors: _errors };
         });
       })
       .catch(err => {
