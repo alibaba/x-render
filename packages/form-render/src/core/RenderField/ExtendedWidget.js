@@ -126,6 +126,7 @@ const ExtendedWidget = ({
     dataPath,
     dataIndex,
     setValueByPath,
+    setValue: setValueByPath,
     getSchemaByPath,
     setSchemaByPath,
     setSchema,
