@@ -15,8 +15,6 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
 import './index.less';
 
-const defaultBeforeFinish = () => {};
-
 const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
 };
@@ -33,7 +31,7 @@ function App({
   form,
   className,
   style,
-  beforeFinish = defaultBeforeFinish,
+  beforeFinish,
   onFinish = defaultFinish,
   displayType = 'column',
   schema,

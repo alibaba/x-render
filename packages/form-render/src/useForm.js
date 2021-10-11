@@ -48,7 +48,7 @@ const useForm = props => {
   });
 
   const schemaRef = useRef();
-  const beforeFinishRef = useRef(() => {});
+  const beforeFinishRef = useRef();
   const localeRef = useRef('cn');
   const removeHiddenDataRef = useRef();
   const validateMessagesRef = useRef();
@@ -336,6 +336,11 @@ const useForm = props => {
       .then(errors => {
         setState({ errorFields: errors });
 
+        const _errors = sortedUniqBy(
+          [...errors, ..._outErrorFields.current],
+          item => item.name
+        );
+
         if (typeof beforeFinishRef.current === 'function') {
           return Promise.resolve(
             processData(
@@ -350,7 +355,7 @@ const useForm = props => {
               outsideValidating: true,
               submitData: res,
             });
-            return errors;
+            return { data: res, errors: _errors };
           });
         }
 
@@ -366,10 +371,6 @@ const useForm = props => {
             isSubmitting: true,
             submitData: res,
           });
-          const _errors = sortedUniqBy(
-            [...errors, ..._outErrorFields.current],
-            item => item.name
-          );
           return { data: res, errors: _errors };
         });
       })
