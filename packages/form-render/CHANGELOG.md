@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.2
+
+- [!] 修复了 error 为 undefined 时的一个数据错误
+
 ## 1.7.1
 
 - [!] 自定义组件的 props 对旧版本的 setValue 等进行兼容

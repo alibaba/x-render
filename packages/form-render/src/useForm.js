@@ -337,7 +337,7 @@ const useForm = props => {
         setState({ errorFields: errors });
 
         const _errors = sortedUniqBy(
-          [...errors, ..._outErrorFields.current],
+          [...(errors || []), ..._outErrorFields.current],
           item => item.name
         );
 
