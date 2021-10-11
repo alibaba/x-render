@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7.1
+
+- [!] 自定义组件的 props 对旧版本的 setValue 等进行兼容
+
 ## 1.7.0
 
 - [+] submit 现在内置了.then 方法，返回 formData 和 errors (并不建议使用，可以的情况还是使用 onFinish 的模式)
