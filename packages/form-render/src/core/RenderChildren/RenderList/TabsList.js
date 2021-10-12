@@ -21,7 +21,7 @@ const TabsList = ({
 
   const [activeKey, setActiveKey ] = useState('0')
   const { props = {}, itemProps } = schema;
-  const { tabsName, type, ...restProps } = props
+  const { tabName, type, ...restProps } = props
 
   const onEdit = (targetKey, action) => {
     if(action === 'add'){
@@ -35,7 +35,7 @@ const TabsList = ({
   };
 
   const getCurrentTabPaneName = (idx)=>{
-    return tabsName instanceof Array ? tabsName[idx] || idx + 1 : `${tabsName || '产品'} ${idx + 1}`
+    return tabName instanceof Array ? tabName[idx] || idx + 1 : `${tabName || '产品'} ${idx + 1}`
   }
 
   return (

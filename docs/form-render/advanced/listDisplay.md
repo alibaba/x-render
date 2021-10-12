@@ -301,7 +301,7 @@ const schema = {
       widget: 'tabs',
       props:{
         type: 'editable-card',
-        tabsName: '产品'  // 选项卡头显示文字，对应antd中Tabs的tab属性。
+        tabName: '产品'  // 选项卡头显示文字，对应antd中Tabs的tab属性。
       },
       items: {
         type: 'object',
