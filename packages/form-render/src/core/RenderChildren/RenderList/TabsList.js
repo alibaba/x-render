@@ -35,7 +35,7 @@ const TabsList = ({
   };
 
   const getCurrentTabPaneName = (idx)=>{
-    return tabsName instanceof Array ? tabsName[idx] || idx + 1 : `${tabsName || '产品'} - ${idx + 1}`
+    return tabsName instanceof Array ? tabsName[idx] || idx + 1 : `${tabsName || '产品'} ${idx + 1}`
   }
 
   return (
