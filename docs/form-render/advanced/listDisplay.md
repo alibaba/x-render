@@ -283,3 +283,70 @@ const Demo = () => {
 
 export default Demo;
 ```
+
+
+6. widget: 'tabs' 用于展示可新增和关闭页签的Tabs标签页
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  properties: {
+    tabsName1: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'tabList',
+      props:{
+        type: 'editable-card',
+        tabName: '产品'  // 选项卡头显示文字，对应antd中Tabs的tab属性。
+      },
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+            required: true,
+          },
+          select1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+          },
+          listName1: {
+            title: '对象数组',
+            type: 'array',
+            widget: 'list1',
+            props: {
+              hideMove: true,
+            },
+            items: {
+              type: 'object',
+              properties: {
+                input1: {
+                  title: '简单输入框',
+                  type: 'string',
+                  required: true,
+                },
+                select1: {
+                  title: '单选',
+                  type: 'string',
+                  enum: ['a', 'b', 'c'],
+                  enumNames: ['早', '中', '晚'],
+                },
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => <Form schema={schema} />
+export default Demo;
+```
