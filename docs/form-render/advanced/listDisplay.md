@@ -298,7 +298,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'tabs',
+      widget: 'tabList',
       props:{
         type: 'editable-card',
         tabName: '产品'  // 选项卡头显示文字，对应antd中Tabs的tab属性。

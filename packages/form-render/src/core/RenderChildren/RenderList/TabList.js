@@ -5,7 +5,7 @@ import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 
-const TabsList = ({
+const TabList = ({
   displayList = [],
   listData,
   changeList,
@@ -59,4 +59,4 @@ const TabsList = ({
   );
 };
 
-export default TabsList;
+export default TabList;
