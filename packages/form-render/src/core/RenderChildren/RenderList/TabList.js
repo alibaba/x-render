@@ -42,7 +42,7 @@ const TabList = ({
   return (
       <Tabs
         type={type || 'line' }
-        onChange={(key)=>setActiveKey(key)}
+        onChange={setActiveKey}
         activeKey={activeKey}
         onEdit={onEdit}
         {...restProps}
