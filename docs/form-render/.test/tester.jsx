@@ -19,24 +19,43 @@ const Demo = () => {
   };
 
   const test = {
+    // displayType: 'row',
     type: 'object',
     properties: {
-      select1: {
-        title: '单选',
-        type: 'string',
-        enum: ['a', 'b'],
-        enumNames: ['haha', 'hehe'],
-      },
-      input1: {
-        title: '输入框',
-        type: 'string',
-      },
-      StayTime: {
-        title: '停留时间段',
-        type: 'range',
-        // bind: ['StayStartTime', 'StayEndTime'],
-        format: 'date',
-        // required: true,
+      list1: {
+        title: '对象数组',
+        type: 'array',
+        items: {
+          type: 'object',
+          properties: {
+            select1: {
+              title: '隐藏',
+              type: 'boolean',
+            },
+            input1: {
+              title: '输入框',
+              type: 'string',
+              dependencies: ['list1[].select1'],
+              hidden: '{{rootValue.select1 === true}}',
+            },
+            input2: {
+              title: '输入框',
+              type: 'string',
+              width: '50%',
+            },
+            input3: {
+              title: '输入框',
+              type: 'string',
+              width: '50%',
+            },
+            StayTime: {
+              title: '停留时间段',
+              type: 'range',
+              format: 'date',
+              // required: true,
+            },
+          },
+        },
       },
     },
   };
@@ -59,10 +78,6 @@ const Demo = () => {
     }
   };
 
-  const onValuesChange = (a, b) => {
-    console.log(a, b);
-  };
-
   return (
     <div>
       <FormRender
@@ -72,10 +87,8 @@ const Demo = () => {
           richText: RichTextEditor,
         }}
         debug
-        theme="1"
         onMount={onMount}
         onFinish={onFinish}
-        onValuesChange={onValuesChange}
       />
       <Space>
         <Button onClick={getRemoteData}>加载服务端数据</Button>

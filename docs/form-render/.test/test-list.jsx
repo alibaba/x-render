@@ -45,7 +45,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list1',
+      widget: 'simpleList',
       min: 2,
       max: 3,
       props: {
@@ -82,7 +82,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list2',
+      widget: 'tableList',
       items: {
         type: 'object',
         properties: {
@@ -116,7 +116,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list3',
+      widget: 'drawerList',
       props: {
         hideTitle: true,
       },

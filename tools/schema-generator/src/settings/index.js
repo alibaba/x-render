@@ -263,7 +263,7 @@ export const elements = [
       enumList: {
         title: '选项',
         type: 'array',
-        widget: 'list1',
+        widget: 'simpleList',
         className: 'frg-options-list',
         items: {
           type: 'object',
@@ -286,7 +286,7 @@ export const elements = [
         },
         props: {
           hideMove: true,
-          hideCopy: true
+          hideCopy: true,
         },
       },
     },
@@ -305,7 +305,7 @@ export const elements = [
       enumList: {
         title: '选项',
         type: 'array',
-        widget: 'list1',
+        widget: 'simpleList',
         className: 'frg-options-list',
         items: {
           type: 'object',
@@ -328,7 +328,7 @@ export const elements = [
         },
         props: {
           hideMove: true,
-          hideCopy: true
+          hideCopy: true,
         },
       },
     },
@@ -351,7 +351,7 @@ export const elements = [
       enumList: {
         title: '选项',
         type: 'array',
-        widget: 'list1',
+        widget: 'simpleList',
         className: 'frg-options-list',
         items: {
           type: 'object',
@@ -374,7 +374,7 @@ export const elements = [
         },
         props: {
           hideMove: true,
-          hideCopy: true
+          hideCopy: true,
         },
       },
     },
@@ -396,7 +396,7 @@ export const elements = [
       enumList: {
         title: '选项',
         type: 'array',
-        widget: 'list1',
+        widget: 'simpleList',
         className: 'frg-options-list',
         items: {
           type: 'object',
@@ -419,7 +419,7 @@ export const elements = [
         },
         props: {
           hideMove: true,
-          hideCopy: true
+          hideCopy: true,
         },
       },
     },
@@ -440,8 +440,8 @@ export const elements = [
             title: '展示内容',
             type: 'string',
           },
-        }
-      }
+        },
+      },
     },
   },
 ];
@@ -556,11 +556,11 @@ export const layouts = [
   },
   {
     text: '简单列表',
-    name: 'list1',
+    name: 'simpleList',
     schema: {
       title: '数组',
       type: 'array',
-      widget: 'list1',
+      widget: 'simpleList',
       items: {
         type: 'object',
         properties: {},
@@ -650,11 +650,11 @@ export const layouts = [
   },
   {
     text: '复杂表格列表',
-    name: 'list3',
+    name: 'drawerList',
     schema: {
       title: '数组',
       type: 'array',
-      widget: 'list3',
+      widget: 'drawerList',
       items: {
         type: 'object',
         properties: {},

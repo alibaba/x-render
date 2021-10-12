@@ -2,9 +2,43 @@ import React from 'react';
 import { useStore2 } from '../../hooks';
 import { isCheckBoxType } from '../../utils';
 
+const Description = ({ displayType, schema }) => {
+  const { description, descType } = schema;
+  if (!description) return null;
+
+  switch (displayType) {
+    case 'row':
+      return (
+        <span className="fr-tooltip-toggle" aria-label={description}>
+          <i className="fr-tooltip-icon" />
+          <div className="fr-tooltip-container">
+            <i className="fr-tooltip-triangle" />
+            {description}
+          </div>
+        </span>
+      );
+    case 'inline':
+      return null;
+    default:
+      if (descType === 'icon') {
+        return (
+          <span className="fr-tooltip-toggle" aria-label={description}>
+            <i className="fr-tooltip-icon" />
+            <div className="fr-tooltip-container">
+              <i className="fr-tooltip-triangle" />
+              {description}
+            </div>
+          </span>
+        );
+      }
+
+      return <span className="fr-desc ml2">{`( ${description} )`}</span>;
+  }
+};
+
 const Title = ({ labelClass, labelStyle, schema, displayType }) => {
   const { displayType: globalDisplayType, readOnly } = useStore2();
-  const { title, description, required, type } = schema;
+  const { title, required, type } = schema;
   const isObjType = type === 'object';
 
   let _displayType =
@@ -29,18 +63,7 @@ const Title = ({ labelClass, labelStyle, schema, displayType }) => {
           >
             <span dangerouslySetInnerHTML={{ __html: title }} />
           </span>
-          {description &&
-            (_displayType === 'row' ? (
-              <span className="fr-tooltip-toggle" aria-label={description}>
-                <i className="fr-tooltip-icon" />
-                <div className="fr-tooltip-container">
-                  <i className="fr-tooltip-triangle" />
-                  {description}
-                </div>
-              </span>
-            ) : _displayType === 'inline' ? null : (
-              <span className="fr-desc ml2">(&nbsp;{description}&nbsp;)</span>
-            ))}
+          <Description schema={schema} displayType={_displayType} />
         </label>
       ) : null}
     </div>
