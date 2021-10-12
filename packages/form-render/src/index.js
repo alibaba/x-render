@@ -15,8 +15,6 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
 import './index.less';
 
-const defaultBeforeFinish = () => {};
-
 const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
 };
@@ -31,7 +29,9 @@ function App({
   widgets,
   mapping,
   form,
-  beforeFinish = defaultBeforeFinish,
+  className,
+  style,
+  beforeFinish,
   onFinish = defaultFinish,
   displayType = 'column',
   schema,
@@ -209,15 +209,7 @@ function App({
       widgets: { ...defaultWidgets, ...widgets },
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
-      onItemChange,
-      setEditing,
-      touchKey,
-      resetFields,
-      setSchema,
-      setErrorFields,
-      removeErrorField,
-      removeTouched,
-      changeTouchedKeys,
+      ...form,
     }),
     []
   );
@@ -285,9 +277,14 @@ function App({
   }
 
   const rootProps = {
-    className: `fr-container ${sizeCls}`,
+    className: `fr-container ${sizeCls} ${className || ''}`,
   };
-  if (id) {
+
+  if (style && typeof style === 'object') {
+    rootProps.style = style;
+  }
+
+  if (id && ['number', 'string'].indexOf(typeof id) > -1) {
     rootProps.id = id;
   }
 

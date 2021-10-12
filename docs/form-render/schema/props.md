@@ -28,16 +28,16 @@ toc: content
 
 **props**
 
-| props      |  类型   |                 说明                  |
-| ---------- | :-----: | :-----------------------------------: |
-| hideTitle  | boolean | 只支持“list1”，隐藏 title，展示更紧凑 |
-| hideDelete | boolean |             隐藏删除按钮              |
-| hideAdd    | boolean |           隐藏新增/复制按钮           |
-| hideCopy   | boolean |             隐藏复制按钮              |
-| hideMove   | boolean |       隐藏上下移动 item 的按钮        |
-| buttons    |  array  |             下详 （注 1）             |
+| props      |  类型   |                    说明                    |
+| ---------- | :-----: | :----------------------------------------: |
+| hideTitle  | boolean | 只支持“simpleList”，隐藏 title，展示更紧凑 |
+| hideDelete | boolean |                隐藏删除按钮                |
+| hideAdd    | boolean |             隐藏新增/复制按钮              |
+| hideCopy   | boolean |                隐藏复制按钮                |
+| hideMove   | boolean |          隐藏上下移动 item 的按钮          |
+| buttons    |  array  |               下详 （注 1）                |
 
-注：对于展示是 table 类型的 list（list2、list3、list4），所有 antd table 支持的 props 都可以透传，例如
+注：对于展示是 table 类型的 list（tableList、drawerList、virtualList），所有 antd table 支持的 props 都可以透传，例如
 
 ```json
 "props": {
@@ -47,11 +47,12 @@ toc: content
 
 **itemProps**
 
-| props   | 类型  |     说明      |
-| ------- | :---: | :-----------: |
-| buttons | array | 下详 （注 2） |
+| props       | 类型  |                                                                说明                                                                |
+| ----------- | :---: | :--------------------------------------------------------------------------------------------------------------------------------: |
+| buttons     | array |                                                           下详 （注 2）                                                            |
+| addBtnProps | array | “新增一条”按钮的样式和文案修改，所有 antd 的 button 的 props 都支持传入，例如 addBtnProps: {children: '新增企业', type: 'primary'} |
 
-注：对于展示是 table 类型的 list（list2、list3、list4），所有 columns 的单个配置都可以透传，会作用到 clumns 的所有 item，例如
+注：对于展示是 table 类型的 list（tableList、drawerList、virtualList），所有 columns 的单个配置都可以透传，会作用到 clumns 的所有 item，例如
 
 ```json
 "itemProps": {

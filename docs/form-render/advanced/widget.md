@@ -126,14 +126,36 @@ location: {
 - **value**：组件现在的值
 - **onChange**：函数，接收 value 为入参，用于将自定义组件的返回值同步给 Form
 - **schema**：组件对应的子 schema
-- **addons.onItemChange**: 注意挂在 addons 下面。用于在本组件内修改其他组件的值 onItemChange(path, value)
-- **addons.getValue**: 用于通过路径字符串获取值 getValue(path)。例如 `getValue('a.b[2].c')`。getValue() 获取 formData
+
+addons 上挂着几乎所有的 form 方法：
+
+```js
+const {
+  setValueByPath, // (path, value) => void
+  getSchemaByPath, // (path) => schema
+  setSchemaByPath, // (path) => void
+  setSchema, // ({path1: schema1, path2: schema2}) => void
+  setValues, // (newData) => void
+  getValues, // () => formData
+  resetFields, // () => void
+  setErrorFields, // (errors) => void
+  removeErrorField, // () => void
+} = addons;
+```
+
+详见[开始使用](/form-render/)的“form 方法”
+
+除此以外，addons 还有：
+
+- **addons.hideSelf**: 隐藏或展示自己
+
+```js
+addons.hideSelf(); // 隐藏，默认true
+addons.hideSelf(false); // 显示
+```
+
 - **addons.dataPath**: 目前数据所在的 path，例如"a.b[2].c[0].d"，string 类型。
 - **addons.dataIndex**: 如果 dataPath 不包含数组，则为 [], 如果 dataPath 包含数组，例如"a.b[2].c[0].d"，则为 [2,0]。是自上到下所有经过的数组的 index 按顺序存放的一个数组类型
-- **addons.setErrorFields**: form 方法透传给自定义组件使用，自定义 error
-- **addons.removeErrorField**: form 方法透传给自定义组件使用，删除所有 error
-- **addons.setSchema**: form 方法透传给自定义组件使用，修改 schema
-- **addons.resetFields**: form 方法透传给自定义组件使用，重置清空整个表单
 - **addons.dependValues**: 当自定义组件对应的 schema 使用到 dependencies 字段时，在此获得 dependencies 对应的表单项的实时的值
 
 ## antd 组件改造成自定义组件

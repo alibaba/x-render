@@ -19,20 +19,19 @@ const useTableRoot = props => {
     tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
     dataSource: [],
     extraData: null, // 需要用到的 dataSource 以外的扩展返回值
+    extraParams: {},
     pagination: {
       current: 1,
       pageSize: 10,
       total: 1,
     },
     tableSize: 'default',
-    checkPassed: true,
   });
 
   const api = useRef<any>();
   const afterSearch = useRef<any>();
 
-  const { pagination, tab: currentTab, checkPassed } = state;
-  const table = useTable();
+  const { pagination, tab: currentTab } = state;
 
   const doSearch = (
     params: {
@@ -43,8 +42,6 @@ const useTableRoot = props => {
     },
     customSearch?: any
   ) => {
-    // console.log(checkPassed);
-    // if (!checkPassed) return;
     const { current, pageSize, tab, sorter, ...extraSearch } = params || {};
     const _current = current || 1;
     const _pageSize = pageSize || 10;
@@ -52,7 +49,6 @@ const useTableRoot = props => {
     if (['string', 'number'].indexOf(typeof tab) > -1) {
       _tab = tab;
     }
-    // console.log(params, { _current, _pageSize, _tab }, 'searchParams');
     const _pagination = { current: _current, pageSize: _pageSize };
     if (typeof api.current === 'function') {
       basicSearch(api.current);

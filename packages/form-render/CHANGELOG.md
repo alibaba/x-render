@@ -1,5 +1,50 @@
 # Changelog
 
+## 1.7.2
+
+- [!] 修复了 error 为 undefined 时的一个数据错误
+
+## 1.7.1
+
+- [!] 自定义组件的 props 对旧版本的 setValue 等进行兼容
+
+## 1.7.0
+
+- [+] submit 现在内置了.then 方法，返回 formData 和 errors (并不建议使用，可以的情况还是使用 onFinish 的模式)
+- [+] 添加 descType 字段，用于在 title 分行展示时也允许描述文案收起到“？” icon 内。
+- [!] 修复 logOnMount 等的 ts 报错
+
+## 1.6.13
+
+- [!] 去除了 rootValue 初始值为 undefined 时 console 里会有报错（虽然不影响功能，但有碍观瞻）
+- [!] 顶层支持了 className、style 属性
+- [!] 修改了列表类组件的命名，从 list0/list1/list2/list3/list4 变为 cardList/simpleList/tableList/drawerList/virtualList，对旧的命名还是支持的，改动的目的一来更为语义化，二来方便之后的扩展，list5，list6 这样不是个可扩展的模式
+
+## 1.6.12
+
+- [!] 修复了 rootValue 在 list 下无法使用的问题
+- [!] 修复了一处 typo
+
+## 1.6.11
+
+- [!] 修复了 schema 的 props 为函数时无效的问题 #543
+- [!] 修复了 formData 中的数组的 item 值为 false 时提交时会被误删的问题 #541
+- [!] 修复了使用百分比 width 展示时溢出的一个 bug
+
+## 1.6.10
+
+- [+] 自定义组件的 addons props 里可以使用几乎所有 form 方法，个别不一致的方法名称也与 form 方法统一，避免混乱
+- [+] 自定义组件的 addons props 里提供 hideSelf 方法，用于简单控制自身的显示隐藏
+
+## 1.6.9
+
+- [!] 修复了动态 hidden 和 bind 共用时，`removeHiddenData` props 有时会无效的问题
+- [!] 修复了 rootValue 有时无效的问题
+
+## 1.6.8
+
+- [!] 修复了外部 setErrorFields 被内部校验覆盖的问题
+
 ## 1.6.7
 
 - [!] 添加了 mapping 用法的文档，即如何覆盖默认组件的行为

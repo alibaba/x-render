@@ -48,7 +48,7 @@ const useForm = props => {
   });
 
   const schemaRef = useRef();
-  const beforeFinishRef = useRef(() => {});
+  const beforeFinishRef = useRef();
   const localeRef = useRef('cn');
   const removeHiddenDataRef = useRef();
   const validateMessagesRef = useRef();
@@ -124,11 +124,20 @@ const useForm = props => {
     let newFlatten = clone(_flatten.current);
     Object.entries(_flatten.current).forEach(([path, info]) => {
       if (schemaContainsExpression(info.schema)) {
-        newFlatten[path].schema = parseAllExpression(
-          info.schema,
-          _data.current,
-          path
-        );
+        const arrayLikeIndex = path.indexOf(']');
+        const isArrayItem =
+          arrayLikeIndex > -1 && arrayLikeIndex < path.length - 1;
+        const hasRootValue =
+          JSON.stringify(info.schema).indexOf('rootValue') > -1;
+        if (isArrayItem && hasRootValue) {
+          // do nothing
+        } else {
+          newFlatten[path].schema = parseAllExpression(
+            info.schema,
+            _data.current,
+            path
+          );
+        }
       }
     });
     setState({ finalFlatten: newFlatten });
@@ -327,6 +336,11 @@ const useForm = props => {
       .then(errors => {
         setState({ errorFields: errors });
 
+        const _errors = sortedUniqBy(
+          [...(errors || []), ..._outErrorFields.current],
+          item => item.name
+        );
+
         if (typeof beforeFinishRef.current === 'function') {
           return Promise.resolve(
             processData(
@@ -341,7 +355,7 @@ const useForm = props => {
               outsideValidating: true,
               submitData: res,
             });
-            return errors;
+            return { data: res, errors: _errors };
           });
         }
 
@@ -357,7 +371,7 @@ const useForm = props => {
             isSubmitting: true,
             submitData: res,
           });
-          return errors;
+          return { data: res, errors: _errors };
         });
       })
       .catch(err => {

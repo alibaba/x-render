@@ -7,11 +7,13 @@ import {
   isLooselyNumber,
   isCssLength,
   getParentProps,
+  getParentPath,
   isListType,
   isCheckBoxType,
   isObjType,
   getValueByPath,
   getDataPath,
+  parseRootValueInSchema,
   clone,
 } from '../utils';
 
@@ -33,10 +35,12 @@ const Core = ({
   if (!item) return null;
 
   let dataPath = getDataPath(id, dataIndex);
+  const parentPath = getParentPath(dataPath);
   const _value = getValueByPath(formData, dataPath);
   let schema = clone(item.schema);
   const dependencies = schema.dependencies;
   const dependValues = [];
+  let rootValue;
 
   try {
     if (Array.isArray(dependencies)) {
@@ -50,10 +54,18 @@ const Core = ({
     console.error(`dependencies 计算报错，${dependencies}`);
   }
 
+  try {
+    rootValue = getValueByPath(formData, parentPath);
+  } catch (error) {}
+
   // 节流部分逻辑，编辑时不执行
   if (isEditing && snapShot.current) {
     schema = snapShot.current;
   } else {
+    if (JSON.stringify(schema).indexOf('rootValue') > -1) {
+      schema = parseRootValueInSchema(schema, rootValue);
+    }
+
     snapShot.current = schema;
   }
 
@@ -104,9 +116,9 @@ const CoreRender = ({
   effectiveLabelWidth,
   ...rest
 }) => {
-  if (schema.hidden) {
-    return null;
-  }
+  // if (schema.hidden) {
+  //   return null;
+  // }
   // 样式的逻辑全放在这层
   // displayType 一层层网上找值
   const _displayType =
@@ -187,17 +199,18 @@ const CoreRender = ({
 
   // style part
   let columnStyle = {};
+  if (schema.hidden) {
+    columnStyle.display = 'none';
+  }
+  // if (!isComplex) {
+  // }
   if (!isObj) {
     if (width) {
-      columnStyle = {
-        width,
-        paddingRight: '12px',
-      };
+      columnStyle.width = width;
+      columnStyle.paddingRight = 8;
     } else if (column > 1) {
-      columnStyle = {
-        width: `calc(100% /${column})`,
-        paddingRight: '12px',
-      };
+      columnStyle.width = `calc(100% /${column})`;
+      columnStyle.paddingRight = 8;
     }
   }
 
