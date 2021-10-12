@@ -37,6 +37,7 @@ const TabsList = ({
   const getCurrentTabPaneName = (idx)=>{
     return tabName instanceof Array ? tabName[idx] || idx + 1 : `${tabName || '产品'} ${idx + 1}`
   }
+  
 
   return (
       <Tabs
