@@ -1,59 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
-  getDescriptorFromSchema,
   getDescriptorSimple,
-  formatPathFromValidator,
   isPathRequired,
-  getArray,
-  getSchemaFromFlatten,
   dataToKeys,
   destructDataPath,
   getDataPath,
   isExpression,
   parseSingleExpression,
-  getKeyFromPath,
-  generateDataSkeleton,
   isObject,
+  allPromiseFinish,
+  removeDups,
 } from './utils';
 import { defaultValidateMessagesCN } from './validateMessageCN';
 import { defaultValidateMessages } from './validateMessage';
 import Validator from 'async-validator';
 import { get, merge } from 'lodash-es';
 
-export function allPromiseFinish(promiseList) {
-  let hasError = false;
-  let count = promiseList.length;
-  const results = [];
-
-  if (!promiseList.length) {
-    return Promise.resolve([]);
-  }
-
-  return new Promise((resolve, reject) => {
-    promiseList.forEach((promise, index) => {
-      promise
-        .catch(e => {
-          hasError = true;
-          return e;
-        })
-        .then(result => {
-          count -= 1;
-          results[index] = result;
-
-          if (count > 0) {
-            return;
-          }
-
-          if (hasError) {
-            reject(results);
-          }
-          resolve(results);
-        });
-    });
-  });
-}
-
-const parseSchemaExpression = (schema, formData, path) => {
+export const parseSchemaExpression = (schema, formData, path) => {
   if (!isObject(schema)) return schema;
   const result = {};
   Object.keys(schema).forEach(key => {
@@ -69,6 +32,70 @@ const parseSchemaExpression = (schema, formData, path) => {
   return result;
 };
 
+const getRelatedPaths = (path, flatten) => {
+  const parentPaths = [];
+  const pathArr = path.split('.');
+  while (pathArr.length > 0) {
+    parentPaths.push(pathArr.join('.'));
+    pathArr.pop();
+  }
+
+  let result = [...parentPaths];
+
+  parentPaths.forEach(path => {
+    const { id, dataIndex } = destructDataPath(path);
+    if (
+      flatten[id] &&
+      flatten[id].schema &&
+      Array.isArray(flatten[id].schema.dependecies)
+    ) {
+      const deps = flatten[id].schema.dependecies;
+      const fullPathDeps = deps.map(dep => getDataPath(dep, dataIndex));
+      result = [...result, ...fullPathDeps];
+    }
+  });
+  return removeDups(result).map(path => {
+    if (path.slice(-1) === ']') {
+      const pattern = /\[[0-9]+\]$/;
+      return path.replace(pattern, '');
+    } else {
+      return path;
+    }
+  });
+};
+
+export const validateField = ({ path, formData, flatten, options }) => {
+  const paths = getRelatedPaths(path, flatten);
+  // console.log('all relevant paths:', paths);
+  const promiseArray = paths.map(path => {
+    const { id, dataIndex } = destructDataPath(path);
+    if (flatten[id] || flatten[`${id}[]`]) {
+      const item = flatten[id] || flatten[`${id}[]`];
+      const singleData = get(formData, path);
+      let schema = item.schema || {};
+      const finalSchema = parseSchemaExpression(schema, formData, path);
+      return validateSingle(singleData, finalSchema, path, options); // is a promise
+    } else {
+      return Promise.resolve();
+    }
+  });
+
+  return allPromiseFinish(promiseArray)
+    .then(res => {
+      const errorFields = res
+        .filter(item => Array.isArray(item) && item.length > 0)
+        .map(item => {
+          const name = item[0].field;
+          const error = item.map(m => m.message).filter(m => !!m);
+          return { name, error };
+        });
+      return errorFields;
+    })
+    .catch(e => {
+      console.log(e);
+    });
+};
+
 // pathFromData => allPath
 const getAllPaths = (paths, flatten) => {
   if (!Array.isArray(paths)) return [];
@@ -78,21 +105,6 @@ const getAllPaths = (paths, flatten) => {
       const last = p1.lastIndexOf(']');
       return p1.substring(0, last + 1);
     });
-
-  const removeDups = arr => {
-    if (!Array.isArray(arr)) {
-      console.log('in removeDups: param is not an array');
-      return;
-    }
-    var array = [];
-    for (var i = 0; i < arr.length; i++) {
-      if (array.indexOf(arr[i]) === -1) {
-        array.push(arr[i]);
-      }
-    }
-    return array;
-  };
-
   const uniqueResult = removeDups(result);
 
   let res = [...paths];
@@ -123,12 +135,13 @@ export const validateAll = ({
   // console.log(formData, dataToKeys(formData), 'dataToKeysdataToKeys');
   const paths = dataToKeys(formData);
   const allPaths = getAllPaths(paths, flatten);
+  // console.log('allPaths', allPaths);
   const promiseArray = allPaths.map(path => {
     const { id, dataIndex } = destructDataPath(path);
-    if (flatten[id]) {
-      console.log('______________', id);
+    if (flatten[id] || flatten[`${id}[]`]) {
+      const item = flatten[id] || flatten[`${id}[]`];
       const singleData = get(formData, path);
-      let schema = flatten[id].schema || {};
+      let schema = item.schema || {};
       const finalSchema = parseSchemaExpression(schema, formData, path);
       return validateSingle(singleData, finalSchema, path, options); // is a promise
     } else {
@@ -138,15 +151,17 @@ export const validateAll = ({
 
   return allPromiseFinish(promiseArray)
     .then(res => {
-      const errorMap = res
-        .filter(item => Array.isArray(item) && item.length > 0)
+      const errorFields = res
+        .filter(
+          item =>
+            Array.isArray(item) && item.length > 0 && item[0].message !== null
+        ) // NOTICE: different from validateField
         .map(item => {
           const name = item[0].field;
-          const error = item.map(m => m.message);
+          const error = item.map(m => m.message).filter(m => !!m);
           return { name, error };
         });
-      console.log('errorMap', errorMap);
-      return errorMap;
+      return errorFields;
     })
     .catch(e => {
       console.log(e);
@@ -155,7 +170,6 @@ export const validateAll = ({
 
 const validateSingle = (data, schema = {}, path, options = {}) => {
   if (schema.hidden === true) {
-    console.log('validateSingle:hidden true', schema.$id);
     return Promise.resolve();
   }
 
@@ -163,12 +177,12 @@ const validateSingle = (data, schema = {}, path, options = {}) => {
   const cn = defaultValidateMessagesCN;
   const en = defaultValidateMessages;
   const descriptor = getDescriptorSimple(schema, path);
+  // console.log('descriptor, schema, path', descriptor, schema, path, data);
   // TODO: 有些情况会出现没有rules，需要看一下，先兜底
   let validator;
   try {
     validator = new Validator(descriptor);
   } catch (error) {
-    console.log(error, 'new validator error');
     return Promise.resolve();
   }
   let messageFeed = locale === 'en' ? en : cn;
@@ -177,8 +191,7 @@ const validateSingle = (data, schema = {}, path, options = {}) => {
   return validator
     .validate({ [path]: data })
     .then(res => {
-      // if (touchVerifyList.length > 0) return touchVerifyList;
-      return [];
+      return [{ field: path, message: null }];
     })
     .catch(({ errors, fields }) => {
       return errors;
