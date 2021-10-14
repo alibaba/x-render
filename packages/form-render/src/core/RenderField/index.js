@@ -5,6 +5,7 @@ import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import Extra from './Extra';
 import FieldTitle from './Title';
+import { validateField } from '../../validator';
 import ExtendedWidget from './ExtendedWidget';
 
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
@@ -25,9 +26,22 @@ const RenderField = props => {
     displayType,
   } = props;
 
-  const { formData } = useStore();
-  const { debounceInput, readOnly, disabled, showValidate } = useStore2();
-  const { onValuesChange, onItemChange, setEditing, touchKey } = useTools();
+  const { formData, flatten } = useStore();
+  const {
+    debounceInput,
+    readOnly,
+    disabled,
+    showValidate,
+    validateMessages,
+    locale,
+  } = useStore2();
+  const {
+    onValuesChange,
+    onItemChange,
+    setEditing,
+    touchKey,
+    _setErrors,
+  } = useTools();
   const formDataRef = useRef();
   formDataRef.current = formData;
   // console.log('<renderField>', $id);
@@ -48,6 +62,34 @@ const RenderField = props => {
   const _readOnly = readOnly !== undefined ? readOnly : _schema.readOnly;
   const _disabled = disabled !== undefined ? disabled : _schema.disabled;
 
+  const removeDupErrors = arr => {
+    if (!Array.isArray(arr)) {
+      console.log('in removeDups: param is not an array');
+      return;
+    }
+    var array = [];
+    for (var i = 0; i < arr.length; i++) {
+      const sameNameIndex = array.findIndex(item => item.name === arr[i].name);
+      if (sameNameIndex > -1) {
+        const sameNameItem = array[sameNameIndex];
+        const error1 = sameNameItem.error;
+        const error2 = arr[i].error;
+        array[sameNameIndex] = {
+          name: sameNameItem.name,
+          error:
+            error1.length > 0 && error2.length > 0
+              ? [...error1, ...error2]
+              : [],
+        };
+      } else {
+        array.push(arr[i]);
+      }
+    }
+    return array.filter(
+      item => Array.isArray(item.error) && item.error.length > 0
+    );
+  };
+
   // TODO: 优化一下，只有touch还是false的时候，setTouched
   const onChange = value => {
     // 动过的key，算被touch了, 这里之后要考虑动的来源
@@ -64,6 +106,20 @@ const RenderField = props => {
     if (typeof onValuesChange === 'function') {
       onValuesChange({ [dataPath]: value }, formDataRef.current);
     }
+
+    validateField({
+      path: dataPath,
+      formData: formDataRef.current,
+      flatten,
+      options: {
+        locale,
+        validateMessages,
+      },
+    }).then(res => {
+      _setErrors(errors => {
+        return removeDupErrors([...errors, ...res]);
+      });
+    });
   };
 
   const titleProps = {
