@@ -301,6 +301,7 @@ const CoreRender = ({
   );
 };
 
+// haven't used
 const areEqual = (prev, current) => {
   if (prev.allTouched !== current.allTouched) {
     return false;
@@ -328,7 +329,5 @@ const areEqual = (prev, current) => {
   }
   return false;
 };
-
-const MCore = React.memo(CoreRender, areEqual);
 
 export default Core;
