@@ -147,19 +147,20 @@ const useForm = props => {
     firstMount,
   ]);
 
-  useEffect(() => {
-    if (firstMount) return;
-    validateAll({
-      formData: _data.current,
-      flatten: _finalFlatten.current,
-      isRequired: allTouched,
-      touchedKeys: _touchedKeys.current,
-      locale: localeRef.current,
-      validateMessages: validateMessagesRef.current,
-    }).then(res => {
-      _setErrors(res);
-    });
-  }, [JSON.stringify(_data.current)]);
+  // logic moves to RenderField/index.js
+  // useEffect(() => {
+  //   if (firstMount) return;
+  //   validateAll({
+  //     formData: _data.current,
+  //     flatten: _finalFlatten.current,
+  //     options: {
+  //       locale: localeRef.current,
+  //       validateMessages: validateMessagesRef.current,
+  //     },
+  //   }).then(res => {
+  //     _setErrors(res);
+  //   });
+  // }, [JSON.stringify(_data.current)]);
 
   // All form methods are down here ----------------------------------------------------------------
   // 两个兼容 0.x 的函数
@@ -170,12 +171,20 @@ const useForm = props => {
       setState({ formData: data });
     }
   };
+
+  // Allow function to get the old value
   const _setErrors = errors => {
     if (typeof _onValidate === 'function') {
       const oldFormatErrors = errors ? errors.map(item => item.name) : [];
       _onValidate(oldFormatErrors);
     }
-    setState({ errorFields: errors });
+    if (typeof errors === 'function') {
+      setState(({ errorFields }) => {
+        return { errorFields: errors(errorFields) };
+      });
+    } else {
+      setState({ errorFields: errors });
+    }
   };
 
   const setFirstMount = value => {
@@ -328,10 +337,10 @@ const useForm = props => {
     return validateAll({
       formData: _data.current,
       flatten: _finalFlatten.current,
-      touchedKeys: [],
-      isRequired: true,
-      locale: localeRef.current,
-      validateMessages: validateMessagesRef.current,
+      options: {
+        locale: localeRef.current,
+        validateMessages: validateMessagesRef.current,
+      },
     })
       .then(errors => {
         setState({ errorFields: errors });
@@ -444,6 +453,8 @@ const useForm = props => {
     // logs
     logOnMount,
     logOnSubmit,
+    // inner api, DON'T USE
+    _setErrors,
   };
 
   return form;

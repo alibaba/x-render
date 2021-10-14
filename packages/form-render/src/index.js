@@ -86,6 +86,7 @@ function App({
     logOnMount,
     logOnSubmit,
     setFirstMount,
+    _setErrors,
     ...valuesThatWillChange
   } = form;
 
@@ -185,6 +186,7 @@ function App({
       debug,
       labelWidth,
       locale,
+      validateMessages,
       readOnly,
       disabled,
       allCollapsed,
@@ -198,6 +200,7 @@ function App({
       debug,
       labelWidth,
       locale,
+      validateMessages,
       readOnly,
       disabled,
       allCollapsed,
