@@ -735,186 +735,140 @@ export const getDescriptorSimple = (schema = {}, path) => {
   return { [path]: result };
 };
 
-export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
-  let result = {};
-  let singleResult = {};
-  if (schema.hidden === true) return { validator: () => true };
-  if (isObjType(schema)) {
-    result.type = 'object';
-    if (isRequired && schema.required === true) {
-      result.required = true;
-    }
-    result.fields = {};
-    Object.keys(schema.properties).forEach(key => {
-      const item = schema.properties[key];
-      // 兼容旧的！
-      if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
-        item.required = true;
-      }
-      result.fields[key] = getDescriptorFromSchema({
-        schema: item,
-        isRequired,
-      });
-    });
-  } else if (isListType(schema)) {
-    result.type = 'array';
-    if (isRequired && schema.required === true) {
-      result.required = true;
-    }
-    if (typeof schema.min === 'number') {
-      result.min = schema.min;
-    }
-    if (typeof schema.max === 'number') {
-      result.max = schema.max;
-    }
-    result.defaultField = { type: 'object', fields: {} }; // 目前就默认只有object类型的 TODO:
-    Object.keys(schema.items.properties).forEach(key => {
-      const item = schema.items.properties[key];
-      // 兼容旧的！
-      if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
-        item.required = true;
-      }
-      result.defaultField.fields[key] = getDescriptorFromSchema({
-        schema: item,
-        isRequired,
-      });
-    });
-  } else {
-    // 单个的逻辑
-    const processRule = item => {
-      if (schema.type) return { ...item, type: schema.type };
-      if (item.pattern && typeof item.pattern === 'string') {
-        return { ...item, pattern: new RegExp(item.pattern) };
-      }
-      return item;
-    };
-    const { required, ...rest } = schema;
+// export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
+//   let result = {};
+//   let singleResult = {};
+//   if (schema.hidden === true) return { validator: () => true };
+//   if (isObjType(schema)) {
+//     result.type = 'object';
+//     if (isRequired && schema.required === true) {
+//       result.required = true;
+//     }
+//     result.fields = {};
+//     Object.keys(schema.properties).forEach(key => {
+//       const item = schema.properties[key];
+//       // 兼容旧的！
+//       if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
+//         item.required = true;
+//       }
+//       result.fields[key] = getDescriptorFromSchema({
+//         schema: item,
+//         isRequired,
+//       });
+//     });
+//   } else if (isListType(schema)) {
+//     result.type = 'array';
+//     if (isRequired && schema.required === true) {
+//       result.required = true;
+//     }
+//     if (typeof schema.min === 'number') {
+//       result.min = schema.min;
+//     }
+//     if (typeof schema.max === 'number') {
+//       result.max = schema.max;
+//     }
+//     result.defaultField = { type: 'object', fields: {} }; // 目前就默认只有object类型的 TODO:
+//     Object.keys(schema.items.properties).forEach(key => {
+//       const item = schema.items.properties[key];
+//       // 兼容旧的！
+//       if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
+//         item.required = true;
+//       }
+//       result.defaultField.fields[key] = getDescriptorFromSchema({
+//         schema: item,
+//         isRequired,
+//       });
+//     });
+//   } else {
+//     // 单个的逻辑
+//     const processRule = item => {
+//       if (schema.type) return { ...item, type: schema.type };
+//       if (item.pattern && typeof item.pattern === 'string') {
+//         return { ...item, pattern: new RegExp(item.pattern) };
+//       }
+//       return item;
+//     };
+//     const { required, ...rest } = schema;
 
-    ['type', 'pattern', 'min', 'max', 'len'].forEach(key => {
-      if (Object.keys(rest).indexOf(key) > -1) {
-        singleResult[key] = rest[key];
-      }
-    });
+//     ['type', 'pattern', 'min', 'max', 'len'].forEach(key => {
+//       if (Object.keys(rest).indexOf(key) > -1) {
+//         singleResult[key] = rest[key];
+//       }
+//     });
 
-    switch (schema.type) {
-      case 'range':
-        // 暂时先去掉，应该没事了，在range组件的源头上把奇怪的case干掉了
-        // const rangeValidator = {
-        //   validator: (rule, value) => {
-        //     const rangeRequired = schema.required === true && isRequired;
-        //     // range组件点击clear，会变成 ['','']
-        //     // range组件对应的值bind的时候，会变成 [undefined,undefined]
-        //     const notValid1 = value[0] === '' && value[1] === '';
-        //     const notValid2 = value[0] === undefined && value[1] === undefined;
-        //     if (rangeRequired) {
-        //       if (!value) return false;
-        //       if (Array.isArray(value)) {
-        //         if (notValid1 || notValid2) {
-        //           return false;
-        //         }
-        //         return true;
-        //       }
-        //       return true;
-        //     } else {
-        //       return true;
-        //     }
-        //   },
-        //   type: 'array',
-        //   message: '${title}必填',
-        // };
-        // singleResult = rangeValidator;
-        singleResult.type = 'array';
-        break;
-      case 'html':
-        singleResult.type = 'string';
-        break;
-      default:
-        break;
-    }
-    switch (schema.format) {
-      case 'email':
-      case 'url':
-        singleResult.type = schema.format;
-        break;
-      default:
-        break;
-    }
+//     switch (schema.type) {
+//       case 'range':
+//         singleResult.type = 'array';
+//         break;
+//       case 'html':
+//         singleResult.type = 'string';
+//         break;
+//       default:
+//         break;
+//     }
+//     switch (schema.format) {
+//       case 'email':
+//       case 'url':
+//         singleResult.type = schema.format;
+//         break;
+//       default:
+//         break;
+//     }
 
-    let requiredRule;
-    if (isRequired && schema.required === true) {
-      requiredRule = { required: true, type: singleResult.type || 'string' };
-    }
+//     let requiredRule;
+//     if (isRequired && schema.required === true) {
+//       requiredRule = { required: true, type: singleResult.type || 'string' };
+//     }
 
-    if (schema.rules) {
-      if (Array.isArray(schema.rules)) {
-        const _rules = [];
-        schema.rules.forEach(item => {
-          if (item.required === true) {
-            if (isRequired) {
-              requiredRule = item;
-            }
-          } else {
-            _rules.push(processRule(item));
-          }
-        });
-        result = [singleResult, ..._rules];
-      } else if (isObject(schema.rules)) {
-        // TODO: 规范上不允许rules是object，省一点事儿
-        result = [singleResult, processRule(schema.rules)];
-      } else {
-        result = singleResult;
-      }
-    } else {
-      result = singleResult;
-    }
+//     if (schema.rules) {
+//       if (Array.isArray(schema.rules)) {
+//         const _rules = [];
+//         schema.rules.forEach(item => {
+//           if (item.required === true) {
+//             if (isRequired) {
+//               requiredRule = item;
+//             }
+//           } else {
+//             _rules.push(processRule(item));
+//           }
+//         });
+//         result = [singleResult, ..._rules];
+//       } else if (isObject(schema.rules)) {
+//         // TODO: 规范上不允许rules是object，省一点事儿
+//         result = [singleResult, processRule(schema.rules)];
+//       } else {
+//         result = singleResult;
+//       }
+//     } else {
+//       result = singleResult;
+//     }
 
-    if (requiredRule) {
-      if (Array.isArray(result)) {
-        result.push(requiredRule);
-      } else if (isObject(result)) {
-        result = [result, requiredRule];
-      }
-    }
+//     if (requiredRule) {
+//       if (Array.isArray(result)) {
+//         result.push(requiredRule);
+//       } else if (isObject(result)) {
+//         result = [result, requiredRule];
+//       }
+//     }
 
-    if (schema.format === 'image') {
-      const imgValidator = {
-        validator: (rule, value) => {
-          const pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
-          if (!value) return true; // 这里判断宽一点，undefined、null、'' 都当做没有填写
-          return !!pattern.exec(value) || isUrl(value);
-        },
-        message: '${title}的类型不是image',
-      };
-      if (Array.isArray(result)) {
-        result.push(imgValidator);
-      } else if (isObject(result)) {
-        result = [result, imgValidator];
-      }
-    }
-  }
-  return result;
-};
-
-// async-validator 产出的path没法用，转一下
-// "list.1.userName" => "list[1].userName"
-export const formatPathFromValidator = err => {
-  const errArr = err.split('.');
-  return errArr
-    .map(item => {
-      if (isNaN(Number(item))) {
-        return item;
-      } else {
-        return `[${item}]`;
-      }
-    })
-    .reduce((a, b) => {
-      if (b[0] === '[' || a === '') {
-        return a + b;
-      } else {
-        return a + '.' + b;
-      }
-    }, '');
-};
+//     if (schema.format === 'image') {
+//       const imgValidator = {
+//         validator: (rule, value) => {
+//           const pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
+//           if (!value) return true; // 这里判断宽一点，undefined、null、'' 都当做没有填写
+//           return !!pattern.exec(value) || isUrl(value);
+//         },
+//         message: '${title}的类型不是image',
+//       };
+//       if (Array.isArray(result)) {
+//         result.push(imgValidator);
+//       } else if (isObject(result)) {
+//         result = [result, imgValidator];
+//       }
+//     }
+//   }
+//   return result;
+// };
 
 // schema = {
 //   type: 'object',
@@ -1291,3 +1245,50 @@ export function yymmdd(timeStamp) {
   let seconds = adjustZero(date_ob.getSeconds());
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
+
+export function allPromiseFinish(promiseList) {
+  let hasError = false;
+  let count = promiseList.length;
+  const results = [];
+
+  if (!promiseList.length) {
+    return Promise.resolve([]);
+  }
+
+  return new Promise((resolve, reject) => {
+    promiseList.forEach((promise, index) => {
+      promise
+        .catch(e => {
+          hasError = true;
+          return e;
+        })
+        .then(result => {
+          count -= 1;
+          results[index] = result;
+
+          if (count > 0) {
+            return;
+          }
+
+          if (hasError) {
+            reject(results);
+          }
+          resolve(results);
+        });
+    });
+  });
+}
+
+export const removeDups = arr => {
+  if (!Array.isArray(arr)) {
+    console.log('in removeDups: param is not an array');
+    return;
+  }
+  var array = [];
+  for (var i = 0; i < arr.length; i++) {
+    if (array.indexOf(arr[i]) === -1) {
+      array.push(arr[i]);
+    }
+  }
+  return array;
+};
