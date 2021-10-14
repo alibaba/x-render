@@ -16,6 +16,15 @@ import { get, set, cloneDeep } from 'lodash-es';
 //   console.log('%cspecial:', 'color: #722ed1; font-weight: 500;', value);
 // };
 
+export function getParamByName(name, url = window.location.href) {
+  name = name.replace(/[\[\]]/g, '\\$&');
+  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+    results = regex.exec(url);
+  if (!results) return null;
+  if (!results[2]) return '';
+  return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
 export function isUrl(string) {
   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
   // const domainRE = /^[^\s\.]+\.\S{2,}$/;
@@ -673,6 +682,59 @@ export const removeEmptyItemFromList = formData => {
   return result;
 };
 
+export const getDescriptorSimple = (schema = {}, path) => {
+  let result = {};
+  if (isObject(schema)) {
+    if (schema.type) {
+      switch (schema.type) {
+        case 'range':
+          result.type = 'array';
+          break;
+        case 'html':
+          result.type = 'string';
+          break;
+        default:
+          result.type = schema.type;
+          break;
+      }
+    }
+    ['pattern', 'min', 'max', 'len', 'required'].forEach(key => {
+      if (Object.keys(schema).indexOf(key) > -1) {
+        result[key] = schema[key];
+      }
+    });
+
+    switch (schema.format) {
+      case 'email':
+      case 'url':
+        result.type = schema.format;
+        break;
+      default:
+        break;
+    }
+
+    const handleRegx = desc => {
+      if (desc.pattern && typeof desc.pattern === 'string') {
+        desc.pattern = new RegExp(desc.pattern);
+      }
+      return desc;
+    };
+    // result be array
+    if (schema.rules) {
+      if (Array.isArray(schema.rules)) {
+        result = [result, ...schema.rules];
+        result = result.map(r => handleRegx(r));
+      } else if (isObject(schema.rules)) {
+        result = [result, schema.rules];
+        result = result.map(r => handleRegx(r));
+      }
+    } else {
+      result = [result];
+    }
+  }
+  return { [path]: result };
+};
+
 export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
   let result = {};
   let singleResult = {};
@@ -1151,14 +1213,60 @@ export const cleanEmpty = obj => {
   }
 };
 
+// const x = { a: 1, b: { c: 2 }, d: [{ e: 3, f: [{ g: 5 }] }, { e: 4 }] };
+// ['a', 'b.c', 'd[0].e', 'd[0].f[0].g', 'd[1].e']
+
+export const dataToKeys = (data, rootKey = '') => {
+  let result = [];
+  if (rootKey && rootKey.slice(-1) !== ']') {
+    result.push(rootKey);
+  }
+
+  const isComplex = data => isObject(data) || Array.isArray(data);
+  if (isObject(data)) {
+    Object.keys(data).forEach(key => {
+      const item = data[key];
+      const itemRootKey = rootKey ? rootKey + '.' + key : key;
+      if (isComplex(item)) {
+        const itemKeys = dataToKeys(item, itemRootKey);
+        result = [...result, ...itemKeys];
+      } else {
+        result.push(itemRootKey);
+      }
+    });
+  } else if (Array.isArray(data)) {
+    data.forEach((item, idx) => {
+      const itemRootKey = rootKey ? `${rootKey}[${idx}]` : `[${idx}]`;
+      if (isComplex(item)) {
+        const itemKeys = dataToKeys(item, itemRootKey);
+        result = [...result, ...itemKeys];
+      } else {
+        result.push(itemRootKey);
+      }
+    });
+  } else {
+  }
+  return result;
+};
+
 export const removeHiddenFromResult = (data, flatten) => {
-  Object.keys(flatten).forEach(key => {
-    const hidden = flatten[key].schema && flatten[key].schema.hidden === true; // Remark: 有表达式的情况, 暂时不去掉了（有业务反而是希望留下的），就去掉 hidden = true 的
-    if (get(data, key) !== undefined && hidden) {
-      set(data, key, undefined);
+  let result = clone(data);
+
+  const keys = dataToKeys(result);
+
+  keys.forEach(key => {
+    const { id, dataIndex } = destructDataPath(key);
+    if (flatten[id]) {
+      let { hidden } = flatten[id].schema || {};
+      if (isExpression(hidden)) {
+        hidden = parseSingleExpression(hidden, result, key);
+      }
+      if (get(result, key) !== undefined && hidden) {
+        set(result, key, undefined);
+      }
     }
   });
-  return data;
+  return result;
 };
 
 export function msToTime(duration) {
