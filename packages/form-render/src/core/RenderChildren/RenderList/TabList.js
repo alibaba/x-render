@@ -29,13 +29,14 @@ const TabList = ({
       setActiveKey(`${currentKey}`)
     }else if(action === 'remove'){
       deleteItem(Number(targetKey))
+      setActiveKey(`${targetKey > 1 ? targetKey - 1 : 0}`)
     }else {
       return null
     }
   };
 
   const getCurrentTabPaneName = (idx)=>{
-    return tabName instanceof Array ? tabName[idx] || idx + 1 : `${tabName || '产品'} ${idx + 1}`
+    return tabName instanceof Array ? tabName[idx] || idx + 1 : `${tabName || '项目'} ${idx + 1}`
   }
   
 

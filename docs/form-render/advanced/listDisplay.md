@@ -285,7 +285,7 @@ export default Demo;
 ```
 
 
-6. widget: 'tabs' 用于展示可新增和关闭页签的Tabs标签页
+6. widget: 'tabList' 用于展示可新增/关闭页签的Tabs标签页
 
 ```jsx
 import React from 'react';
@@ -301,7 +301,7 @@ const schema = {
       widget: 'tabList',
       props:{
         type: 'editable-card',
-        tabName: '产品'  // 选项卡头显示文字，对应antd中Tabs的tab属性。
+        tabName: '项目'  // 选项卡头显示文字，对应antd中Tabs的tab属性。
       },
       items: {
         type: 'object',
