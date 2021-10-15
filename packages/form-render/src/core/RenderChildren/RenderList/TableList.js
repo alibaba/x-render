@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Core from '../../index';
-import { Button, Table, Popconfirm, Space } from 'antd';
+import { Button, Table, Popconfirm } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 // import ArrowDown from '../../../components/ArrowDown';
 
@@ -79,7 +79,7 @@ const TableList = ({
       width: 120,
       render: (value, record, idx) => {
         return (
-          <Space>
+          <div>
             {!props.hideAdd && !props.hideCopy && (
               <a onClick={() => copyItem(idx)}>复制</a>
             )}
@@ -105,7 +105,7 @@ const TableList = ({
                 />
               </>
             )}
-          </Space>
+          </div>
         );
       },
     });

@@ -3,7 +3,7 @@ import React, { useRef } from 'react';
 import Core from '../../index';
 import { useSet } from '../../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../utils';
-import { Button, Table, Drawer, Space, Popconfirm } from 'antd';
+import { Button, Table, Drawer, Popconfirm } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import ErrorMessage from '../../RenderField/ErrorMessage';
@@ -87,7 +87,7 @@ const DrawerList = ({
     render: (value, record, idx) => {
       const index = (value && value.$idx) || 0;
       return (
-        <Space>
+        <div>
           <a onClick={() => openDrawer(index)}>编辑</a>
           {!props.hideDelete && (
             <Popconfirm
@@ -111,7 +111,7 @@ const DrawerList = ({
               />
             </>
           )}
-        </Space>
+        </div>
       );
     },
   });

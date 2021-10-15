@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Core from '../../index';
-import { Button, Space, Popconfirm } from 'antd';
+import { Button, Popconfirm } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
 import {
   CloseOutlined,
@@ -50,7 +50,7 @@ const CardList = ({
               <div className="fr-card-index">{idx + 1}</div>
               <Core {...fieldsProps} />
 
-              <Space direction="horizontal" className="fr-card-toolbar">
+              <div direction="horizontal" className="fr-card-toolbar">
                 {!props.hideMove && (
                   <>
                     <ArrowUpOutlined
@@ -79,7 +79,7 @@ const CardList = ({
                     <CloseOutlined style={{ fontSize: 16, marginLeft: 8 }} />
                   </Popconfirm>
                 )}
-              </Space>
+              </div>
             </div>
           );
         })}
