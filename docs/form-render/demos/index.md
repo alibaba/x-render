@@ -3,17 +3,11 @@ order: 1
 group:
   order: 4
   title: 示例
-toc: false
+toc: content
 ---
 
-## 一些骚操作案例
+### 用自定义组件完成复杂联动
 
-### 自定义组件与其他表单元素有复杂联动
+注意 dependencies 的使用，说明两者的关联
 
 <code src='./dependencies.jsx' />
-
-### 如何在列表里做联动
-
-通过 dependencies 声明 + 自定义组件，解决一切
-
-<code src='./hideSelf.jsx' />

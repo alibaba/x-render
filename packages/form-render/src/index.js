@@ -5,6 +5,7 @@ import {
   getValueByPath,
   msToTime,
   yymmdd,
+  getParamByName,
 } from './utils';
 import Core from './core';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
@@ -85,6 +86,7 @@ function App({
     logOnMount,
     logOnSubmit,
     setFirstMount,
+    _setErrors,
     ...valuesThatWillChange
   } = form;
 
@@ -184,6 +186,7 @@ function App({
       debug,
       labelWidth,
       locale,
+      validateMessages,
       readOnly,
       disabled,
       allCollapsed,
@@ -197,6 +200,7 @@ function App({
       debug,
       labelWidth,
       locale,
+      validateMessages,
       readOnly,
       disabled,
       allCollapsed,
@@ -288,6 +292,10 @@ function App({
     rootProps.id = id;
   }
 
+  const debugForm = getParamByName('_debug_form');
+  const debugFormCss = getParamByName('_debug_form_css');
+  const isPre = location.href.indexOf('pre') > -1;
+
   const watchList = Object.keys(watch);
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
@@ -295,7 +303,7 @@ function App({
         <Store2Ctx.Provider value={store2}>
           <Ctx.Provider value={tools}>
             <div {...rootProps}>
-              {debug ? (
+              {(isPre && debugForm) || debug ? (
                 <div className="mv2 bg-black-05 pa2 br2">
                   <div style={{ display: 'flex' }}>
                     <span>formData:</span>
@@ -333,7 +341,7 @@ function App({
                     );
                   })
                 : null}
-              <Core debugCss={debugCss} />
+              <Core debugCss={(isPre && debugFormCss) || debugCss} />
             </div>
           </Ctx.Provider>
         </Store2Ctx.Provider>

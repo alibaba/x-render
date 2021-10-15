@@ -4,7 +4,7 @@ import Core from '../../index';
 import { Button, Space, Popconfirm } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
 import {
-  DeleteOutlined,
+  CloseOutlined,
   CopyOutlined,
   ArrowUpOutlined,
   ArrowDownOutlined,
@@ -51,22 +51,6 @@ const CardList = ({
               <Core {...fieldsProps} />
 
               <Space direction="horizontal" className="fr-card-toolbar">
-                {!props.hideDelete && (
-                  <Popconfirm
-                    title="确定删除?"
-                    onConfirm={() => deleteItem(idx)}
-                    okText="确定"
-                    cancelText="取消"
-                  >
-                    <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
-                  </Popconfirm>
-                )}
-                {!props.hideAdd && !props.hideCopy && (
-                  <CopyOutlined
-                    style={{ fontSize: 16, marginLeft: 8 }}
-                    onClick={() => copyItem(idx)}
-                  />
-                )}
                 {!props.hideMove && (
                   <>
                     <ArrowUpOutlined
@@ -78,6 +62,22 @@ const CardList = ({
                       onClick={() => moveItemDown(idx)}
                     />
                   </>
+                )}
+                {!props.hideAdd && !props.hideCopy && (
+                  <CopyOutlined
+                    style={{ fontSize: 16, marginLeft: 8 }}
+                    onClick={() => copyItem(idx)}
+                  />
+                )}
+                {!props.hideDelete && (
+                  <Popconfirm
+                    title="确定删除?"
+                    onConfirm={() => deleteItem(idx)}
+                    okText="确定"
+                    cancelText="取消"
+                  >
+                    <CloseOutlined style={{ fontSize: 16, marginLeft: 8 }} />
+                  </Popconfirm>
                 )}
               </Space>
             </div>

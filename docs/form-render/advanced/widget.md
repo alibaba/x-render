@@ -93,7 +93,7 @@ export default Demo;
 
 自定义组件就是普通的 React 组件，唯一的要求是要有 value/onChange 这两个 props，用于双向绑定值。所以如果现成的组件已经默认使用了 value/onChange，就可以直接拿来用。
 
-举例来说：现在我们需要使用“级联选择”组件，FormRender 并没有内置支持。这时打开 antd 文档 https://ant.design/components/cascader/，我们看到cascader默认使用了 value/onChange，那就直接拿来用吧：
+举例来说：现在我们需要使用“级联选择”组件，FormRender 并没有内置支持。这时打开 [antd 文档](https://ant.design/components/cascader/)，我们看到 cascader 默认使用了 value/onChange，那就直接拿来用吧：
 
 ```js
 import { Cascader } from 'antd';
@@ -144,15 +144,6 @@ const {
 ```
 
 详见[开始使用](/form-render/)的“form 方法”
-
-除此以外，addons 还有：
-
-- **addons.hideSelf**: 隐藏或展示自己
-
-```js
-addons.hideSelf(); // 隐藏，默认true
-addons.hideSelf(false); // 显示
-```
 
 - **addons.dataPath**: 目前数据所在的 path，例如"a.b[2].c[0].d"，string 类型。
 - **addons.dataIndex**: 如果 dataPath 不包含数组，则为 [], 如果 dataPath 包含数组，例如"a.b[2].c[0].d"，则为 [2,0]。是自上到下所有经过的数组的 index 按顺序存放的一个数组类型
