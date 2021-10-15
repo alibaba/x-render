@@ -10,6 +10,7 @@ import CardList from './CardList';
 import TableList from './TableList';
 import DrawerList from './DrawerList';
 import VirtualList from './VirtualList';
+import TabList from './TabList';
 
 const RenderList = ({
   parentId,
@@ -146,6 +147,8 @@ const RenderList = ({
     case 'list4':
     case 'virtualList':
       return <VirtualList {...displayProps} />;
+    case 'tabList':
+      return <TabList {...displayProps} />
     default:
       return <CardList {...displayProps} />;
   }
