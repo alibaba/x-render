@@ -125,7 +125,7 @@
 - 在公司或个人项目中使用 XRender，并帮忙推广给伙伴使用
 - 加入钉钉聊天群帮忙解答使用问题
 
-  <img src=https://qpluspicture.oss-cn-beijing.aliyuncs.com/W1N59f/IMG_4637.JPG width=250/>
+  <img src=https://img.alicdn.com/imgextra/i2/O1CN01RoUHQF1EoKLWyotFn_!!6000000000398-0-tps-750-990.jpg width=250/>
 
 ## 贡献
 

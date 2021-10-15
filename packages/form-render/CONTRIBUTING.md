@@ -39,3 +39,5 @@ for example:
 
 - 很推荐在提交 PR 前，先在钉钉群里进行讨论，已防止此功能已经有同学在开发了
 - 但是如果是想修复文档和明显代码错误，直接提交 PR 就好
+
+<img src=https://img.alicdn.com/imgextra/i2/O1CN01RoUHQF1EoKLWyotFn_!!6000000000398-0-tps-750-990.jpg width=250/>
