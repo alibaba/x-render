@@ -222,7 +222,63 @@ const Demo = () => {
 export default Demo;
 ```
 
-5. widget: 'virtualList' 在展示上与 'tableList' 基本相同，但以虚拟滚动替代了传统的分页
+5. widget: 'tabList' 在展示上与 'cardList' 基本相同，但以虚拟滚动替代了传统的分页
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+window.hello = ({ value }) => {
+  console.log(value);
+};
+
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      type: 'array',
+      widget: 'tabList',
+      props: {
+        tabName: '项目',
+      },
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+            required: true,
+          },
+          input2: {
+            title: '简单输入框2',
+            type: 'string',
+          },
+          input3: {
+            title: '简单输入框3',
+            type: 'string',
+          },
+          select1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+            widget: 'select',
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  return <Form schema={schema} />;
+};
+
+export default Demo;
+```
+
+6. widget: 'virtualList' 在展示上与 'tableList' 基本相同，但以虚拟滚动替代了传统的分页
 
 ```jsx
 import React from 'react';
