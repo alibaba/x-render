@@ -9,16 +9,16 @@ import {
 import Core from './core';
 import Watcher from './Watcher';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
-import { ConfigProvider } from 'antd';
-import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
 import './index.less';
+import { mapping as defaultMapping } from './mapping';
 
 const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
 };
 
 export { default as useForm } from './useForm';
+export { defaultMapping as mapping };
 export { default as connectForm } from './connectForm';
 
 function App({
@@ -207,7 +207,7 @@ function App({
   const tools = useMemo(
     () => ({
       widgets,
-      mapping,
+      mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
       ...form,
     }),
@@ -294,55 +294,53 @@ function App({
 
   const watchList = Object.keys(watch);
   return (
-    <ConfigProvider locale={zhCN} {...configProvider}>
-      <StoreCtx.Provider value={store}>
-        <Store2Ctx.Provider value={store2}>
-          <Ctx.Provider value={tools}>
-            <div {...rootProps}>
-              {(isPre && debugForm) || debug ? (
-                <div className="mv2 bg-black-05 pa2 br2">
-                  <div style={{ display: 'flex' }}>
-                    <span>formData:</span>
-                    <span
-                      style={{
-                        display: 'inline-block',
-                        wordBreak: 'break-all',
-                        maxWidth: 600,
-                      }}
-                    >
-                      {JSON.stringify(form.formData)}
-                    </span>
-                  </div>
-                  <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
-                  <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
-                  <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
-                  <div>{'descriptor:' + JSON.stringify(window.descriptor)}</div>
-                  {/* <textarea
+    <StoreCtx.Provider value={store}>
+      <Store2Ctx.Provider value={store2}>
+        <Ctx.Provider value={tools}>
+          <div {...rootProps}>
+            {(isPre && debugForm) || debug ? (
+              <div className="mv2 bg-black-05 pa2 br2">
+                <div style={{ display: 'flex' }}>
+                  <span>formData:</span>
+                  <span
+                    style={{
+                      display: 'inline-block',
+                      wordBreak: 'break-all',
+                      maxWidth: 600,
+                    }}
+                  >
+                    {JSON.stringify(form.formData)}
+                  </span>
+                </div>
+                <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>
+                <div>{'touchedKeys:' + JSON.stringify(form.touchedKeys)}</div>
+                <div>{'allTouched:' + JSON.stringify(form.allTouched)}</div>
+                <div>{'descriptor:' + JSON.stringify(window.descriptor)}</div>
+                {/* <textarea
                     style={{ width: 500, height: 300 }}
                     value={'schema:' + JSON.stringify(flatten, null, 2)}
                     onChange={() => {}}
                   /> */}
-                </div>
-              ) : null}
-              {watchList.length > 0
-                ? watchList.map((item, idx) => {
-                    return (
-                      <Watcher
-                        key={idx.toString()}
-                        watchKey={item}
-                        watch={watch}
-                        formData={formData}
-                        firstMount={firstMount}
-                      />
-                    );
-                  })
-                : null}
-              <Core debugCss={(isPre && debugFormCss) || debugCss} />
-            </div>
-          </Ctx.Provider>
-        </Store2Ctx.Provider>
-      </StoreCtx.Provider>
-    </ConfigProvider>
+              </div>
+            ) : null}
+            {watchList.length > 0
+              ? watchList.map((item, idx) => {
+                  return (
+                    <Watcher
+                      key={idx.toString()}
+                      watchKey={item}
+                      watch={watch}
+                      formData={formData}
+                      firstMount={firstMount}
+                    />
+                  );
+                })
+              : null}
+            <Core debugCss={(isPre && debugFormCss) || debugCss} />
+          </div>
+        </Ctx.Provider>
+      </Store2Ctx.Provider>
+    </StoreCtx.Provider>
   );
 }
 

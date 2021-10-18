@@ -1,17 +1,22 @@
+import React from 'react';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
 import FRCore from '../../form-render-core/src';
 import { widgets as defaultWidgets } from './widgets/antd';
-import { mapping as defaultMapping } from './mapping';
 
-export { defaultWidgets as widgets, defaultMapping as mapping };
-export { useForm, connectForm, createWidget } from '../../form-render-core/src';
+export { defaultWidgets as widgets };
+export {
+  useForm,
+  connectForm,
+  createWidget,
+  mapping,
+} from '../../form-render-core/src';
 
-const FR = ({ widgets, mapping, ...rest }) => {
+const FR = ({ widgets, configProvider, ...rest }) => {
   return (
-    <FRCore
-      widgets={{ ...defaultWidgets, ...widgets }}
-      mapping={{ ...defaultMapping, ...mapping }}
-      {...rest}
-    />
+    <ConfigProvider locale={zhCN} {...configProvider}>
+      <FRCore widgets={{ ...defaultWidgets, ...widgets }} {...rest} />
+    </ConfigProvider>
   );
 };
 
