@@ -16,41 +16,6 @@ import { get, set, cloneDeep } from 'lodash-es';
 //   console.log('%cspecial:', 'color: #722ed1; font-weight: 500;', value);
 // };
 
-export function getParamByName(name, url = window.location.href) {
-  name = name.replace(/[\[\]]/g, '\\$&');
-  var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-    results = regex.exec(url);
-  if (!results) return null;
-  if (!results[2]) return '';
-  return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
-
-export function isUrl(string) {
-  const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
-  // const domainRE = /^[^\s\.]+\.\S{2,}$/;
-  if (typeof string !== 'string') return false;
-  return protocolRE.test(string);
-}
-
-export function isCheckBoxType(schema, readOnly) {
-  if (readOnly) return false;
-  if (schema.widget === 'checkbox') return true;
-  if (schema && schema.type === 'boolean') {
-    if (schema.enum) return false;
-    if (schema.widget === undefined) return true;
-    return false;
-  }
-}
-
-// a[].b.c => a.b.c
-function removeBrackets(string) {
-  if (typeof string === 'string') {
-    return string.replace(/\[\]/g, '');
-  } else {
-    return string;
-  }
-}
-
 export function getParentPath(path) {
   if (typeof path === 'string') {
     const pathArr = path.split('.');
