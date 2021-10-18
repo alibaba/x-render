@@ -1,7 +1,6 @@
 import list from './list';
 import map from './map';
 import { InputNumber, Checkbox, Input, Switch, Rate, TreeSelect } from 'antd';
-import { createWidget } from '../../createWidget';
 import ImageInput from './imageInput';
 import urlInput from './urlInput';
 import Html from './html';
@@ -21,13 +20,13 @@ import upload from './upload';
 
 const { TextArea } = Input;
 
-const FrNumber = createWidget(({ style }) => ({
-  style: { width: '100%', ...style },
-}))(InputNumber);
+const FrNumber = ({ style, ...rest }) => {
+  return <InputNumber style={{ width: '100%', ...style }} {...rest} />;
+};
 
-const FrTextArea = createWidget(({ autoSize }) => ({
-  autoSize: autoSize ? autoSize : { minRows: 3 },
-}))(TextArea);
+const FrTextArea = ({ autoSize, ...rest }) => {
+  return <TextArea autoSize={autoSize ? autoSize : { minRows: 3 }} {...rest} />;
+};
 
 const FrTreeSelect = ({ style, ...rest }) => (
   <TreeSelect style={{ width: '100%', ...style }} {...rest} />
