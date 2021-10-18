@@ -5,8 +5,14 @@ import { mapping as defaultMapping } from './mapping';
 export { defaultWidgets as widgets, defaultMapping as mapping };
 export { useForm, connectForm, createWidget } from '../../form-render-core/src';
 
-const FR = (props = {}) => {
-  return <FRCore {...props} />;
+const FR = ({ widgets, mapping, ...rest }) => {
+  return (
+    <FRCore
+      widgets={{ ...defaultWidgets, ...widgets }}
+      mapping={{ ...defaultMapping, ...mapping }}
+      {...rest}
+    />
+  );
 };
 
 export default FR;

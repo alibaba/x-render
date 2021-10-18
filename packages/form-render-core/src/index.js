@@ -9,8 +9,6 @@ import {
 import Core from './core';
 import Watcher from './Watcher';
 import { Ctx, StoreCtx, Store2Ctx } from './hooks';
-import { widgets as defaultWidgets } from './widgets/antd';
-import { mapping as defaultMapping } from './mapping';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import './atom.less';
@@ -19,8 +17,6 @@ import './index.less';
 const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
 };
-
-export { defaultWidgets as widgets, defaultMapping as mapping };
 
 export { default as useForm } from './useForm';
 export { default as connectForm } from './connectForm';
@@ -210,8 +206,8 @@ function App({
 
   const tools = useMemo(
     () => ({
-      widgets: { ...defaultWidgets, ...widgets },
-      mapping: { ...defaultMapping, ...mapping },
+      widgets,
+      mapping,
       onValuesChange,
       ...form,
     }),
