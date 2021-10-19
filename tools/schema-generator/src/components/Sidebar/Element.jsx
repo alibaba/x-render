@@ -47,6 +47,7 @@ export default Element;
 const WidgetUI = ({ onClick, text, icon }) => {
   return (
     <li className="left-item" onClick={onClick}>
+      {icon}
       {text}
     </li>
   );

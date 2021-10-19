@@ -234,7 +234,7 @@ export default function Wrapper({
     <div
       ref={boxRef}
       style={overwriteStyle}
-      className="field-wrapper relative w-100"
+      className={`field-wrapper ${$id !== '#' && isSelected ? 'selected-field-wrapper' : ''} relative w-100`}
       onClick={handleClick}
     >
       {children}

@@ -99,7 +99,7 @@ const RenderField = ({
                 displayType === 'column' ? 'flex-none' : ''
               }`}
             >
-              {title}
+              <span dangerouslySetInnerHTML={{ __html: title }} />
             </span>
             {description && (
               <span className="fr-desc ml2">(&nbsp;{description}&nbsp;)</span>
