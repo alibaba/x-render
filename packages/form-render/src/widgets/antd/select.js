@@ -23,7 +23,7 @@ const FrSelect = ({ schema, style, options: _options, ...rest }) => {
     options,
     style: { width: '100%', ...style },
   };
-  return <Select {...finalProps} />;
+  return <Select {...finalProps} {...rest} />;
 };
 
 export default FrSelect;
