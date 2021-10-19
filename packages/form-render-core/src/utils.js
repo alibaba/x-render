@@ -722,6 +722,10 @@ export const getDescriptorSimple = (schema = {}, path) => {
     // result be array
     if (schema.rules) {
       if (Array.isArray(schema.rules)) {
+        const requiredRule = schema.rules.find(rule => rule.required === true);
+        if (requiredRule) {
+          result = { ...result, ...requiredRule };
+        }
         result = [result, ...schema.rules];
         result = result.map(r => handleRegx(r));
       } else if (isObject(schema.rules)) {

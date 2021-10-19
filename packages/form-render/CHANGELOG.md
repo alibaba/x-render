@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.1
+
+- [!] 修复了在 rules 中定制 required 的 message 时不生效的问题
+
 ## 1.8.0
 
 - [!] 重构了校验，确保了在列表场景下涉及 rootValue 相关的表达式能够正常使用，解决了之前反复复现的 hidden 元素还是被校验、rootValue 无效等问题
