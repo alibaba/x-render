@@ -81,11 +81,11 @@ const VirtualList = ({
             {!props.hideMove && (
               <>
                 <ArrowUpOutlined
-                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 4 }}
+                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 8 }}
                   onClick={() => moveItemUp(idx)}
                 />
                 <ArrowDownOutlined
-                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 4 }}
+                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 8 }}
                   onClick={() => moveItemDown(idx)}
                 />
               </>

@@ -90,17 +90,17 @@ const TableList = ({
                 okText="确定"
                 cancelText="取消"
               >
-                <a>删除</a>
+                <a style={{ marginLeft: 8 }}>删除</a>
               </Popconfirm>
             )}
             {!props.hideMove && (
               <>
                 <ArrowUpOutlined
-                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 4 }}
+                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 8 }}
                   onClick={() => moveItemUp(idx)}
                 />
                 <ArrowDownOutlined
-                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 4 }}
+                  style={{ color: '#1890ff', fontSize: 16, marginLeft: 8 }}
                   onClick={() => moveItemDown(idx)}
                 />
               </>
