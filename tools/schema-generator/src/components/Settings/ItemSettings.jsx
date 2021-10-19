@@ -28,8 +28,6 @@ export default function ItemSettings({ widgets }) {
 
   const { settings, commonSettings, hideId, transformer } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
-  // 避免切换选中项时 schema 对应出错
-  const [ready, setReady] = useState({});
 
   const _widgets = {
     ...globalWidgets,
@@ -68,7 +66,6 @@ export default function ItemSettings({ widgets }) {
 
   const onDataChange = value => {
     try {
-      if (!ready) return;
       const item = flatten[selected];
       if (item && item.schema) {
         onItemChange(selected, {
@@ -86,7 +83,6 @@ export default function ItemSettings({ widgets }) {
     try {
       const item = flatten[selected];
       if (!item || selected === '#') return;
-      setReady(false);
       // 算 widgetList
       const _settings = Array.isArray(settings)
         ? [
@@ -104,14 +100,13 @@ export default function ItemSettings({ widgets }) {
 
       if (hideId) delete properties.$id;
 
-      setSettingSchema({
-        type: 'object',
-        displayType: 'column',
-        properties,
-      });
-      form.setValues(transformer.toSetting(item.schema));
       setTimeout(() => {
-        setReady(true);
+        setSettingSchema({
+          type: 'object',
+          displayType: 'column',
+          properties,
+        });
+        form.setValues(transformer.toSetting(item.schema));
         onDataChange(form.getValues());
       }, 0);
     } catch (error) {
