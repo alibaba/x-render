@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import {
   getDescriptorSimple,
-  isPathRequired,
   dataToKeys,
   destructDataPath,
   getDataPath,

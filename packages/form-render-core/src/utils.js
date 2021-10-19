@@ -886,36 +886,36 @@ export const getDescriptorSimple = (schema = {}, path) => {
 // };
 // path = 'x.y'
 // return {required: true, message?: 'xxxx'}
-export const isPathRequired = (path, schema) => {
-  let pathArr = path.split('.');
-  while (pathArr.length > 0) {
-    let [_path, ...rest] = pathArr;
-    _path = _path.split('[')[0];
-    let childSchema;
-    if (isObjType(schema)) {
-      childSchema = schema.properties[_path];
-    } else if (isListType(schema)) {
-      childSchema = schema.items.properties[_path];
-    }
-    pathArr = rest;
-    if (childSchema) {
-      return isPathRequired(rest.join('.'), childSchema);
-    }
+// export const isPathRequired = (path, schema) => {
+//   let pathArr = path.split('.');
+//   while (pathArr.length > 0) {
+//     let [_path, ...rest] = pathArr;
+//     _path = _path.split('[')[0];
+//     let childSchema;
+//     if (isObjType(schema)) {
+//       childSchema = schema.properties[_path];
+//     } else if (isListType(schema)) {
+//       childSchema = schema.items.properties[_path];
+//     }
+//     pathArr = rest;
+//     if (childSchema) {
+//       return isPathRequired(rest.join('.'), childSchema);
+//     }
 
-    // 单个的逻辑
-    let result = { required: false };
-    if (schema.required === true) {
-      result.required = true;
-    }
-    if (schema.rules) {
-      const requiredItem = schema.rules.find(item => item.required);
-      if (requiredItem) {
-        result = requiredItem;
-      }
-    }
-    return result;
-  }
-};
+//     // 单个的逻辑
+//     let result = { required: false };
+//     if (schema.required === true) {
+//       result.required = true;
+//     }
+//     if (schema.rules) {
+//       const requiredItem = schema.rules.find(item => item.required);
+//       if (requiredItem) {
+//         result = requiredItem;
+//       }
+//     }
+//     return result;
+//   }
+// };
 
 // _path 只供内部递归使用
 export const generateDataSkeleton = (schema, formData) => {
