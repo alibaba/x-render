@@ -9,16 +9,19 @@ const Demo = () => {
 
   const schema = {
     type: 'object',
+    displayType: 'row',
     properties: {
-      useSelect: {
-        title: '输入框高度',
-        type: 'number',
-      },
-      select2: {
+      select1: {
         title: '输入框',
         type: 'string',
         dependencies: ['useSelect'],
         widget: 'MyTextEditor',
+        width: '60%',
+      },
+      useSelect: {
+        title: '输入框高度',
+        type: 'number',
+        width: '60%',
       },
     },
   };
