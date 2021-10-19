@@ -65,7 +65,7 @@ snippets 基本分为三类：
 - 右键任意 `.json` 文件，选择 `解析表单配置为接口`
   <img alt="json2interface" width="80%" src="https://img.alicdn.com/tfs/TB1nI.NWrY1gK0jSZTEXXXDQVXa-2736-1744.png" />
 
-### 生成 Scheam
+### 生成 Schema
 
 - 将 React PropTypes 解析为 schema
 

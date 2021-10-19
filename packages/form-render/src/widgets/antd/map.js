@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Collapse } from 'antd';
-import { useStore2 } from '../../hooks';
+// import { useStore2 } from '../../hooks';
 const { Panel } = Collapse;
 
 export default function Map({ children, title, ...rest }) {
-  const { theme, displayType, allCollapsed } = useStore2();
+  const { theme, displayType, allCollapsed } = {}; // TODO!
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
@@ -37,15 +37,12 @@ export default function Map({ children, title, ...rest }) {
 
   // 新增卡片视图
   if (theme == '2') {
-    const { id } = rest.schema
+    const { id } = rest.schema;
     return (
       <div class="fr-theme-card-wrap">
         <div>
           {/* title 容器的 id，用来加锚点用 */}
-          <div 
-            id={id || title}
-            class="fr-theme-card-title"
-          >
+          <div id={id || title} class="fr-theme-card-title">
             {title}
           </div>
           <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
