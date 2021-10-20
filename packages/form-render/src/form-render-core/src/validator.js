@@ -168,7 +168,7 @@ export const validateAll = ({
 };
 
 const validateSingle = (data, schema = {}, path, options = {}) => {
-  if (schema.hidden === true) {
+  if (schema.hidden) {
     return Promise.resolve();
   }
 
