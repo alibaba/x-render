@@ -106,21 +106,21 @@ const getAllPaths = (paths, flatten) => {
     });
   const uniqueResult = removeDups(result);
 
+  const allFlattenPath = Object.keys(flatten);
   let res = [...paths];
   uniqueResult.forEach(result => {
     const { id, dataIndex } = destructDataPath(result);
     if (flatten[id]) {
-      const children = flatten[id].children;
+      const children = allFlattenPath.filter(
+        f => f.indexOf(id) === 0 && f !== id
+      );
       const childrenWithIndex = children
         .map(child => {
-          if (child.slice(-1) !== ']') {
-            return getDataPath(child, dataIndex);
-          } else {
-            return undefined;
-          }
+          const p = getDataPath(child, dataIndex);
+          return p.split('[]')[0];
         })
         .filter(i => !!i);
-      res = [...res, ...childrenWithIndex];
+      res = [...res, ...removeDups(childrenWithIndex)];
     }
   });
   return removeDups(res);
@@ -131,9 +131,9 @@ export const validateAll = ({
   flatten,
   options, // {locale = 'cn', validateMessages = {}}
 }) => {
-  // console.log(formData, dataToKeys(formData), 'dataToKeysdataToKeys');
   const paths = dataToKeys(formData);
   const allPaths = getAllPaths(paths, flatten);
+  // console.log(formData, dataToKeys(formData), 'dataToKeysdataToKeys');
   // console.log('allPaths', allPaths);
   const promiseArray = allPaths.map(path => {
     const { id, dataIndex } = destructDataPath(path);
