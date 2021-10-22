@@ -150,8 +150,13 @@ const ExtendedWidget = ({
 };
 
 const areEqual = (prev, current) => {
-  if (prev.schema && prev.schema.$id === '#') {
-    return false;
+  if (prev.schema && current.schema) {
+    if (prev.schema.$id === '#') {
+      return false;
+    }
+    if (prev.schema.hidden && current.schema.hidden) {
+      return true;
+    }
   }
   if (prev.readOnly !== current.readOnly) {
     return false;

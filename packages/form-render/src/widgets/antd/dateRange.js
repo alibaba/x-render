@@ -34,7 +34,7 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
     const emptyList2 =
       stringList[0] === undefined || stringList[1] === undefined;
     if (emptyList1 || emptyList2) {
-      onChange(undefined);
+      onChange(null);
     } else {
       onChange(stringList);
     }

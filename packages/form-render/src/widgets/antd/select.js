@@ -22,6 +22,7 @@ const FrSelect = ({ schema, style, options: _options, ...rest }) => {
   const finalProps = {
     options,
     style: { width: '100%', ...style },
+    ...rest,
   };
   return <Select {...finalProps} />;
 };
