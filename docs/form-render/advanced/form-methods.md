@@ -228,7 +228,7 @@ export default Demo;
 
 ### 例 4：服务端加载选择框的选项
 
-**服务端获取数据后展示下拉选项的选项值，我们提供了 `form.setShemaByPath` 方法**
+**服务端获取数据后展示下拉选项的选项值，我们提供了 `form.setSchemaByPath` 方法**
 
 ```jsx
 /**
