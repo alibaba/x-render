@@ -58,7 +58,7 @@ export interface FRGeneratorProps {
   /** 自定义 schema 到 form-render 的 schema 的双向转换函数 */
   transformer?: Transformer;
   /** 编辑区顶部的自定义按钮 */
-  extraButtons?: (ExtraButton | boolean)[];
+  extraButtons?: (ExtraButton | boolean | string)[];
   /** 选中项操作按钮 */
   controlButtons?: (ControlButton | boolean | Function)[];
   /** 左右侧栏配置 */
