@@ -99,6 +99,7 @@ export interface Generator
   extends React.ForwardRefExoticComponent<
     FRGeneratorProps & React.RefAttributes<HTMLElement>
   > {
+  Provider: React.FC<FRGeneratorProps>;
   Settings: React.FC<SettingsProps>;
   Canvas: React.FC<CanvasProps>;
   Sidebar: React.FC<SidebarProps>;
