@@ -7,8 +7,6 @@
 ```sh
 # 安装依赖，请使用yarn，会去重的安装所有 node_modules (注意安装必须用 yarn，其他命令无所谓)
 yarn
-# 首次开发需要 build 一下，否则有些仓库的 import 在 dumi 里会找不到
-npm run build
 # 将文档网站跑起来
 npm start
 ```
