@@ -12,6 +12,7 @@ const SliderWithNumber = ({
   onChange,
   hideInput,
   inputProps,
+  props,
   ...rest
 }) => {
   const { max, min, step } = schema;
@@ -27,6 +28,8 @@ const SliderWithNumber = ({
   if (step) {
     setting = { ...setting, step };
   }
+
+  setting = { ...setting, ...props };
 
   return (
     <div className="fr-slider">
