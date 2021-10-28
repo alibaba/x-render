@@ -7,8 +7,9 @@ import { message, ConfigProvider } from 'antd';
 import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
-
+import { SearchApi } from './interface';
 import './index.css';
+
 
 const useTableRoot = props => {
   const form = useForm();
@@ -28,7 +29,7 @@ const useTableRoot = props => {
     tableSize: 'default',
   });
 
-  const api = useRef<any>();
+  const api = useRef<SearchApi>();
   const afterSearch = useRef<any>();
 
   const { pagination, tab: currentTab } = state;
@@ -40,7 +41,7 @@ const useTableRoot = props => {
       pageSize?: number;
       sorter?: any;
     },
-    customSearch?: any
+    customSearch?: Record<string, any>
   ) => {
     const { current, pageSize, tab, sorter, ...extraSearch } = params || {};
     const _current = current || 1;
@@ -63,7 +64,7 @@ const useTableRoot = props => {
       message.warning('api 不是函数，检查 <Search /> 的 props');
     }
 
-    function basicSearch(api: (arg0: any, sorter: any) => any) {
+    function basicSearch(api: SearchApi) {
       set({ loading: true });
       let _params = {
         ...form.getValues(),
@@ -134,12 +135,6 @@ const useTableRoot = props => {
 
   const context = {
     tableState: { ...state, search: form.getValues() },
-    // setTable: (newState: any, fn?: Function) => {
-    //   set(newState);
-    //   if (fn && typeof fn == 'function') {
-    //     fn(state, { ...state, ...newState });
-    //   }
-    // },
     setTable: set,
     doSearch,
     refresh,
