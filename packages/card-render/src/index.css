@@ -10,6 +10,7 @@
   background: #fff;
   padding: 0 24px;
   width: 100%;
+  overflow: auto;
 }
 
 .tr-table-top {
