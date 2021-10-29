@@ -29,7 +29,7 @@ const useTableRoot = props => {
     tableSize: 'default',
   });
 
-  const api = useRef<SearchApi>();
+  const api = useRef<SearchApi<typeof state.api[number]>>();
   const afterSearch = useRef<any>();
 
   const { pagination, tab: currentTab } = state;
@@ -64,7 +64,7 @@ const useTableRoot = props => {
       message.warning('api 不是函数，检查 <Search /> 的 props');
     }
 
-    function basicSearch(api: SearchApi) {
+    function basicSearch(api: SearchApi<typeof state.api[number]>) {
       set({ loading: true });
       let _params = {
         ...form.getValues(),
@@ -145,13 +145,6 @@ const useTableRoot = props => {
   return context;
 };
 
-export interface RootState {
-  tableState: any;
-  setTable: any;
-  doSearch: () => {};
-  refresh: () => {};
-  changeTab: () => {};
-}
 
 const Container = (props, ref) => {
   const context = useTableRoot(props);

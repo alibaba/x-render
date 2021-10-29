@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTable } from './hooks';
 import { Button } from 'antd';
 import SearchForm from 'form-render';
+import { SearchApi } from './interface';
 
 const SearchBtn = ({
   clearSearch,
@@ -59,11 +60,11 @@ const MySearchBtn = ({
   );
 };
 
-export interface SearchProps {
+export interface SearchProps<RecordType> {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
-  api?: any;
+  api?: SearchApi<RecordType> | Array<SearchApi<RecordType>>;
   displayType?: any;
   propsSchema?: any;
   className?: string;
@@ -80,7 +81,7 @@ export interface SearchProps {
   widgets?: any;
 }
 
-const Search = (props: SearchProps) => {
+const Search: <RecordType extends object = any>(props: SearchProps<RecordType>) => React.ReactElement = (props) => {
   const { searchBtnRender, searchBtnStyle, searchBtnClassName } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();

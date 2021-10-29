@@ -148,7 +148,7 @@ const ProTable: <RecordType extends object = any>(props: ProTableProps<RecordTyp
 export default ProTable;
 
 const TableTitle = ({ title }: any) => {
-  const { tableState, setTable, doSearch }: any = useTable();
+  const { tableState, setTable, doSearch } = useTable();
   const { tab, api } = tableState;
   const _tab = tab || 0;
   const onTabChange = (e: any) => {

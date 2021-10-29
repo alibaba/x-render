@@ -1,8 +1,8 @@
 import { TableProps } from "antd";
 
-export interface TableContext {
-  tableState?: TableState
-  setTable?: (state: Partial<TableState>) => void;
+export interface TableContext<RecordType> {
+  tableState?: TableState<RecordType>
+  setTable?: (state: Partial<TableState<RecordType>>) => void;
   doSearch?: (params: {
     current?: number;
     tab?: number | string;
@@ -14,11 +14,11 @@ export interface TableContext {
   changeTab?: (tab: number | string) => Promise<void>;
 }
 
-export interface TableState {
+export interface TableState<RecordType> {
   loading: boolean,
-  api: SearchApi | Array<SearchApi>,
+  api: SearchApi<RecordType> | Array<SearchApi<RecordType>>,
   tab: number,
-  dataSource: Array<any>,
+  dataSource: Array<RecordType>,
   extraData: any,
   extraParams: Record<string, any>,
   pagination: {
@@ -30,12 +30,12 @@ export interface TableState {
   sorter: any,
 }
 
-export type SearchApi = (params: Record<string, any> & {
+export type SearchApi<RecordType> = (params: Record<string, any> & {
   current: number,
   pageSize: number,
   tab?: number,
 }, sorter?: any) => {
-  rows: Array<any>,
+  rows: Array<RecordType>,
   total: number,
   pageSize?: number,
 }
