@@ -34,8 +34,8 @@ export type SearchApi<RecordType> = (params: Record<string, any> & {
   current: number,
   pageSize: number,
   tab?: number,
-}, sorter?: any) => {
+}, sorter?: any) => Promise<{
   rows: Array<RecordType>,
   total: number,
   pageSize?: number,
-}
+}>

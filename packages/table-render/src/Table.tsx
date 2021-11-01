@@ -10,6 +10,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import ToolBarAction from './components/ToolBarAction';
 
 import { ProTableProps } from './typing';
+import { ColumnType } from 'antd/lib/table';
 
 const ProTable: <RecordType extends object = any>(props: ProTableProps<RecordType>) => React.ReactElement = (props) => {
   if (props.dataSource) {
