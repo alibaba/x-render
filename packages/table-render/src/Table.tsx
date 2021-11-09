@@ -69,7 +69,7 @@ const ProTable = (props: ProTableProps) => {
     ...props,
     onChange,
     // dataSource不准在使用ProTable时用props赋值
-    dataSource,
+    dataSource: Array.isArray(props.dataSource) ? props.dataSource : dataSource,
     pagination:
       props.pagination === false
         ? false
