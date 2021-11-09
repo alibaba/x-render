@@ -7,8 +7,9 @@ import { message, ConfigProvider } from 'antd';
 import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
-
+import { SearchApi } from './interface';
 import './index.css';
+
 
 const useTableRoot = props => {
   const form = useForm();
@@ -19,20 +20,19 @@ const useTableRoot = props => {
     tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
     dataSource: [],
     extraData: null, // 需要用到的 dataSource 以外的扩展返回值
+    extraParams: {},
     pagination: {
       current: 1,
       pageSize: 10,
       total: 1,
     },
     tableSize: 'default',
-    checkPassed: true,
   });
 
-  const api = useRef<any>();
+  const api = useRef<SearchApi<typeof state.api[number]>>();
   const afterSearch = useRef<any>();
 
-  const { pagination, tab: currentTab, checkPassed } = state;
-  const table = useTable();
+  const { pagination, tab: currentTab } = state;
 
   const doSearch = (
     params: {
@@ -41,10 +41,8 @@ const useTableRoot = props => {
       pageSize?: number;
       sorter?: any;
     },
-    customSearch?: any
+    customSearch?: Record<string, any>
   ) => {
-    // console.log(checkPassed);
-    // if (!checkPassed) return;
     const { current, pageSize, tab, sorter, ...extraSearch } = params || {};
     const _current = current || 1;
     const _pageSize = pageSize || 10;
@@ -52,7 +50,6 @@ const useTableRoot = props => {
     if (['string', 'number'].indexOf(typeof tab) > -1) {
       _tab = tab;
     }
-    // console.log(params, { _current, _pageSize, _tab }, 'searchParams');
     const _pagination = { current: _current, pageSize: _pageSize };
     if (typeof api.current === 'function') {
       basicSearch(api.current);
@@ -67,7 +64,7 @@ const useTableRoot = props => {
       message.warning('api 不是函数，检查 <Search /> 的 props');
     }
 
-    function basicSearch(api: (arg0: any, sorter: any) => any) {
+    function basicSearch(api: SearchApi<typeof state.api[number]>) {
       set({ loading: true });
       let _params = {
         ...form.getValues(),
@@ -138,12 +135,6 @@ const useTableRoot = props => {
 
   const context = {
     tableState: { ...state, search: form.getValues() },
-    // setTable: (newState: any, fn?: Function) => {
-    //   set(newState);
-    //   if (fn && typeof fn == 'function') {
-    //     fn(state, { ...state, ...newState });
-    //   }
-    // },
     setTable: set,
     doSearch,
     refresh,
@@ -154,13 +145,6 @@ const useTableRoot = props => {
   return context;
 };
 
-export interface RootState {
-  tableState: any;
-  setTable: any;
-  doSearch: () => {};
-  refresh: () => {};
-  changeTab: () => {};
-}
 
 const Container = (props, ref) => {
   const context = useTableRoot(props);

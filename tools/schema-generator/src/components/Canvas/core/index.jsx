@@ -37,11 +37,12 @@ const FR = ({ id = '#', preview, displaySchema }) => {
     return <PreviewFR schema={displaySchema} />;
   }
 
-  const { displayType, column } = frProps;
+  const { column } = frProps;
   const item = flatten[id];
   if (!item) return null;
 
   const { schema } = item;
+  const displayType = schema.displayType || frProps.displayType;
   const isObj = schema.type === 'object';
   const isList = schema.type === 'array' && schema.enum === undefined;
   const isComplex = isObj || isList;

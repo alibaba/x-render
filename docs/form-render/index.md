@@ -241,17 +241,19 @@ import Form, { useForm, connectForm } from 'form-render';
 
 ### \<Form \/> 不常用 props
 
-| 参数             | 描述                                                             | 类型                | 默认值 |
-| ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
-| column           | 一行展示多少列                                                   | `number`            | 1      |
-| mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
-| disabled         | 禁用模式，全部表单元素禁用                                       | `boolean`           | false  |
-| debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
-| locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
-| configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
-| allCollapsed     | 对象组件是否默认折叠（全局）                                     | `boolean`           | false  |
-| debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
-| validateMessages | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
+| 参数                 | 描述                                                             | 类型                | 默认值 |
+| -------------------- | ---------------------------------------------------------------- | ------------------- | ------ |
+| className (v.1.6.12) | 顶层 className                                                   | `string`            | ''     |
+| style (v.1.6.12)     | 顶层 style                                                       | `object`            | {}     |
+| column               | 一行展示多少列                                                   | `number`            | 1      |
+| mapping              | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
+| disabled             | 禁用模式，全部表单元素禁用                                       | `boolean`           | false  |
+| debugCss             | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
+| locale               | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
+| configProvider       | antd 的 configProvider，配置透传                                 | `object`            | -      |
+| allCollapsed         | 对象组件是否默认折叠（全局）                                     | `boolean`           | false  |
+| debounceInput        | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
+| validateMessages     | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
 
 #### validateMessages
 

@@ -1,7 +1,6 @@
 import list from './list';
 import map from './map';
-import { InputNumber, Checkbox, Input, Switch, Rate } from 'antd';
-import { createWidget } from '../../createWidget';
+import { InputNumber, Checkbox, Input, Switch, Rate, TreeSelect } from 'antd';
 import ImageInput from './imageInput';
 import urlInput from './urlInput';
 import Html from './html';
@@ -13,22 +12,21 @@ import time from './time';
 import date from './date';
 import dateRange from './dateRange';
 import timeRange from './timeRange';
+import color from './color';
+import slider from './slider';
+import upload from './upload';
 
-const TreeSelect = React.lazy(() => import('antd/es/tree-select'));
 // const Cascader = React.lazy(() => import('antd/es/cascader'));
-const color = React.lazy(() => import('./color'));
-const slider = React.lazy(() => import('./slider'));
-const upload = React.lazy(() => import('./upload'));
 
 const { TextArea } = Input;
 
-const FrNumber = createWidget(({ style }) => ({
-  style: { width: '100%', ...style },
-}))(InputNumber);
+const FrNumber = ({ style, ...rest }) => {
+  return <InputNumber style={{ width: '100%', ...style }} {...rest} />;
+};
 
-const FrTextArea = createWidget(({ autoSize }) => ({
-  autoSize: autoSize ? autoSize : { minRows: 3 },
-}))(TextArea);
+const FrTextArea = ({ autoSize, ...rest }) => {
+  return <TextArea autoSize={autoSize ? autoSize : { minRows: 3 }} {...rest} />;
+};
 
 const FrTreeSelect = ({ style, ...rest }) => (
   <TreeSelect style={{ width: '100%', ...style }} {...rest} />

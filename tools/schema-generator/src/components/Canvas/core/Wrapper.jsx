@@ -22,10 +22,10 @@ export default function Wrapper({
     flatten,
     onFlattenChange,
     selected,
-    hovering,
     userProps,
+    itemError,
   } = useStore();
-  const { controlButtons, hideId } = userProps;
+  const { controlButtons, canDrag = true, canDelete = true, hideId } = userProps;
   const setGlobal = useGlobal();
   const { schema } = item;
   const { type } = schema;
@@ -34,6 +34,7 @@ export default function Wrapper({
   const [{ isDragging }, dragRef, dragPreview] = useDrag({
     type: 'box',
     item: { $id: inside ? 0 + $id : $id },
+    canDrag: () => typeof canDrag === 'function' ? canDrag(schema) : canDrag,
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -41,12 +42,14 @@ export default function Wrapper({
 
   const [{ canDrop, isOver }, dropRef] = useDrop({
     accept: 'box',
-    drop: (item, monitor) => {
+    drop: async (item, monitor) => {
       // 如果 children 已经作为了 drop target，不处理
       const didDrop = monitor.didDrop();
-      if (didDrop) {
+
+      if (didDrop || itemError?.length) {
         return;
       }
+
       const [newFlatten, newId] = dropItem({
         dragId: item.$id, // 内部拖拽用dragId
         dragItem: item.dragItem, // 从左边栏过来的，用dragItem
@@ -98,8 +101,9 @@ export default function Wrapper({
   const isActive = canDrop && isOver;
   dragPreview(dropRef(boxRef));
 
-  const handleClick = e => {
+  const handleClick = async e => {
     e.stopPropagation();
+    if (itemError?.length) return;
     const _id = inside ? '0' + $id : $id;
     setGlobal({ selected: _id });
   };
@@ -124,13 +128,16 @@ export default function Wrapper({
     } catch (error) {
       console.log('catch', error);
     }
+    const _canDelete = typeof canDelete === 'function' ? canDelete(newFlatten[$id].schema) : canDelete;
+    if (!_canDelete) return;
     delete newFlatten[$id];
     onFlattenChange(newFlatten);
     setGlobal({ selected: newSelect });
   };
 
-  const handleItemCopy = e => {
+  const handleItemCopy = async e => {
     e.stopPropagation();
+    if (itemError?.length) return;
     const [newFlatten, newId] = copyItem(flatten, $id);
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
@@ -142,10 +149,8 @@ export default function Wrapper({
     isSelected = selected.substring(1) === $id && inside;
   }
 
-  const hoverId = inside ? '0' + $id : $id;
-
   let overwriteStyle = {
-    backgroundColor: hovering === hoverId ? '#ecf5ff' : '#fff',
+    backgroundColor: '#fff',
     opacity: isDragging ? 0 : 1,
   };
   if (inside) {
@@ -217,11 +222,13 @@ export default function Wrapper({
       return item(schema);
     });
   const _extraBtns = _controlButtons.filter(
-    item => isObject(item) && item.text
+    item => isObject(item) && (item.text || item.children)
   );
   const { length: _numOfBtns } = _showDefaultBtns
     .concat(_extraBtns)
     .filter(Boolean);
+
+  const hasDuplicateId = Object.keys(flatten).map(key => flatten[key].schema.$id).filter(key => key === schema.$id).length > 1;
 
   return (
     <div
@@ -232,9 +239,14 @@ export default function Wrapper({
     >
       {children}
 
-      {!inside && $id !== '#' && !hideId && (
-        <div className="absolute top-0 right-1 blue f7">{shownId}</div>
-      )}
+      <div className="absolute top-0 right-1 f7">
+        {!inside && $id !== '#' && !hideId && (
+          <span className={hasDuplicateId ? 'red' : 'blue'}>{shownId}</span>
+        )}
+        {schema.hidden && (
+          <span style={{ color: '#666', marginLeft: '6px' }}>[hidden]</span>
+        )}
+      </div>
 
       {!inside && $id !== '#' && isSelected && (
         <div className="pointer-move" ref={dragRef}>
@@ -261,7 +273,7 @@ export default function Wrapper({
                 className="pointer"
                 onClick={e => item.onClick && item.onClick(e, schema)}
               >
-                {item.text}
+                {item.text || item.children}
               </div>
             );
           })}

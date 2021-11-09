@@ -3,7 +3,7 @@ import { nanoid } from 'nanoid';
 import { useDrag } from 'react-dnd';
 import { addItem } from '../../utils';
 import { useGlobal, useStore } from '../../utils/hooks';
-import './Element.css';
+import './Element.less';
 
 const Element = ({ text, name, schema, icon, fixedName }) => {
   const [{ isDragging }, dragRef] = useDrag({
@@ -14,22 +14,17 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
         schema,
         children: [],
       },
-      $id: `#/${name}_${nanoid(6)}`,
-    },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult();
-      if (item && dropResult) {
-        // alert(`You dropped into ${dropResult.name}!`);
-      }
+      $id: fixedName ? `#/${name}` : `#/${name}_${nanoid(6)}`,
     },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
   const setGlobal = useGlobal();
-  const { selected, flatten, onFlattenChange } = useStore();
+  const { selected, flatten, itemError, onFlattenChange } = useStore();
 
-  const handleElementClick = () => {
+  const handleElementClick = async () => {
+    if (itemError?.length) return;
     if (selected && !flatten[selected]) {
       setGlobal({ selected: '#' });
       return;

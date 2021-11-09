@@ -11,7 +11,7 @@
         "props": {
           "filterOption": true,
           "showSearch": true,
-          "optionFilterProp": "children"
+          "optionFilterProp": "label"
         }
       },
       "multiSelect": {

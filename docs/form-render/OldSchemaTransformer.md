@@ -7,7 +7,7 @@ order: 7
 ```jsx
 import React, { useState } from 'react';
 import { Input, Button } from 'antd';
-import { updateSchemaToNewVersion } from '../../packages/form-render/src/utils.js';
+import { updateSchemaToNewVersion } from '../../packages/form-render/src/form-render-core/src/utils.js';
 const TextArea = Input.TextArea;
 
 const old = {

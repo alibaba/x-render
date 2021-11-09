@@ -50,15 +50,15 @@ string: {
 
 # 结构类
 对象 map
-列表 list0/list1/list2/list3
+列表 cardList/simpleList/tableList/drawerList
 ```
 
-注：其中列表的 `widget` 有四个可匹配组件（list0/list1/list2/list3）
+注：其中列表的 `widget` 有四个可匹配组件（cardList/simpleList/tableList/drawerList）
 
-1. 默认使用 widget: `'list0'`，卡片 list 的展示，适宜有复杂结构，但 item 数量不大的场景
-2. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'list1'`
-3. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'list2'`
-4. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: `'list3'`
+1. 默认使用 widget: `'cardList'`，卡片 list 的展示，适宜有复杂结构，但 item 数量不大的场景
+2. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'simpleList'`
+3. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'tableList'`
+4. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: `'drawerList'`
 
 四种展示见[展示的最佳实践](/form-render/advanced/display#列表的展示)
 

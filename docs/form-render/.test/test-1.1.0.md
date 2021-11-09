@@ -57,7 +57,7 @@ var schema = {
       widget: 'mymy',
     },
     listName: {
-      // widget: 'list1',
+      // widget: 'simpleList',
       props: {
         hideTitle: true,
       },

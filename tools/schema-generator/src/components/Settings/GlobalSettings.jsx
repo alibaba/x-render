@@ -11,7 +11,7 @@ export default function GlobalSettings({ widgets }) {
   const globalSettings = userProps.globalSettings || defaultGlobalSettings;
 
   const onDataChange = value => {
-    setInnerUpdate(true);
+    setInnerUpdate(!!Object.keys(value).length);
     setGlobal({ frProps: value });
   };
 

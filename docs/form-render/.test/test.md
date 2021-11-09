@@ -11,7 +11,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list0',
+      widget: 'cardList',
       items: {
         type: 'object',
         properties: {
