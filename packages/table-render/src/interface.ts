@@ -1,15 +1,15 @@
-import { TableProps } from "antd";
+import { TableProps } from 'antd';
 
 export interface TableContext<RecordType> {
-  tableState?: TableState<RecordType>
+  tableState?: TableState<RecordType>;
   setTable?: (state: Partial<TableState<RecordType>>) => void;
   doSearch?: (params: {
-    current?: number;
-    tab?: number | string;
-    pageSize?: number;
-    sorter?: any;
-  },
-    customSearch?: any) => Promise<void>;
+                current?: number;
+                tab?: number | string;
+                pageSize?: number;
+                sorter?: any;
+              },
+              customSearch?: any) => Promise<void>;
   refresh?: (params?: { stay: boolean, tab: number | string }, search?: any) => Promise<void>;
   changeTab?: (tab: number | string) => Promise<void>;
 }

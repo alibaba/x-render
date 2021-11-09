@@ -16,6 +16,7 @@ export default ({ onChange, format, value, style, ...rest }) => {
     value: _value,
     style: { width: '100%', ...style },
     onChange: handleChange,
+    format: timeFormat,
     ...rest,
   };
 
