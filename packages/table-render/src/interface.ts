@@ -27,7 +27,7 @@ export type ProColumnsType<T extends object = any> = Array<ColumnsType<T>[number
   enum?: Record<string, string>
 }>
 
-export interface TableRenderProps<RecordType extends Object = any> extends Omit<TableProps<RecordType>, 'columns'> {
+export interface TableRenderProps<RecordType extends Object = any> extends Omit<TableProps<RecordType>, 'columns' | 'dataSource'> {
   /** 列定义，除了支持antd的所有配置，还额外增加一些语法糖 */
   columns: ProColumnsType<RecordType>
   /** 开启 debug 模式，时时显示内部状态 */
