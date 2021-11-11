@@ -1,4 +1,5 @@
 import { TableProps } from "antd";
+import { ColumnsType } from 'antd/lib/table';
 
 export interface TableContext<RecordType> {
   tableState?: TableState<RecordType>
@@ -13,6 +14,32 @@ export interface TableContext<RecordType> {
   refresh?: (params?: { stay: boolean, tab: number | string }, search?: any) => Promise<void>;
   form?: any; // TODO这里应该去引FR的类型
   changeTab?: (tab: number | string) => Promise<void>;
+}
+
+export type ProColumnsType<T extends object = any> = Array<ColumnsType<T>[number] & {
+  /** 是否自动缩略 */
+  ellipsis: boolean;
+  /** 是否支持复制 */
+  copyable: boolean;
+  /** 值的类型 */
+  valueType: 'text' | 'money' | 'date' | 'dateTime';
+  /** 当前列值的枚举 */
+  enum: Record<string, string>
+}>
+
+export interface TableRenderProps<RecordType extends Object = any> extends TableProps<RecordType> {
+  /** 列定义，除了支持antd的所有配置，还额外增加一些语法糖 */
+  columns: ProColumnsType<RecordType>
+  /** 开启 debug 模式，时时显示内部状态 */
+  debug?: boolean;
+  /** headerTitle */
+  headerTitle?: string | React.ReactNode;
+  /** 表格主体右上方的控件，例如“添加”按钮 */
+  toolbarRender?: () => React.ReactNode[];
+  /** 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示 等功能 */
+  toolbarAction?: boolean;
+  /** 切换分页时是否需要请求接口 */
+  pageChangeWithRequest?: boolean;
 }
 
 export interface TableState<RecordType> {
