@@ -11,6 +11,7 @@ export interface TableContext<RecordType> {
   },
     customSearch?: any) => Promise<void>;
   refresh?: (params?: { stay: boolean, tab: number | string }, search?: any) => Promise<void>;
+  form?: any; // TODO这里应该去引FR的类型
   changeTab?: (tab: number | string) => Promise<void>;
 }
 
@@ -30,6 +31,7 @@ export interface TableState<RecordType> {
   sorter: any,
 }
 
+// TODO这里FR的props应该去FR里写，这里继承就好了
 export interface SearchProps<RecordType> {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
