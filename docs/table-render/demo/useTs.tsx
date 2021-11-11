@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Table, Search, withTable } from 'table-render';
+import { Table, Search, withTable, useTable } from 'table-render';
 import { ProColumnsType } from 'table-render/src/interface';
 import { Tag, Space, message, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -42,6 +42,9 @@ interface RecordType {
 }
 
 const Demo = () => {
+
+  // 此处表示tableState.dataSource符合Array<RecordType>
+  const { tableState, refresh } = useTable<RecordType>();
 
   const searchApi = (params, sorter) => {
     console.group(sorter);
@@ -140,11 +143,13 @@ const Demo = () => {
 
   return (
     <div>
+      {/* 此处表示api的的返回值需要符合RecordType */}
       <Search<RecordType>
         schema={schema}
         displayType="row"
         api={searchApi}
       />
+      {/* 和antd类似，与ProColumnsType配合使用 */}
       <Table<RecordType>
         pagination={{ pageSize: 4 }}
         columns={columns}
