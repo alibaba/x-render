@@ -5,8 +5,8 @@
 
 import React from 'react';
 import { Table, Search, withTable } from 'table-render';
+import { ProColumnsType } from 'table-render/src/interface';
 import { Tag, Space, message, Tooltip } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import request from 'umi-request';
 
@@ -38,6 +38,7 @@ interface RecordType {
   money: number,
   state: string,
   created_at: string,
+  labels: Array<{ name: string, color: string }>
 }
 
 const Demo = () => {
@@ -58,9 +59,6 @@ const Demo = () => {
         }
       })
       .catch(e => {
-        console.log('Oops, error', e)
-
-        // 注意一定要返回 rows 和 total
         return {
           rows: [],
           total: 0
@@ -69,8 +67,8 @@ const Demo = () => {
   };
 
 
-  // 配置完全透传antd table
-  const columns: ColumnsType<RecordType>  = [
+  // ProColumnsType的使用与antd类似
+  const columns: ProColumnsType<RecordType> = [
     {
       title: '酒店名称',
       dataIndex: 'title',
@@ -142,12 +140,12 @@ const Demo = () => {
 
   return (
     <div>
-      <Search
+      <Search<RecordType>
         schema={schema}
         displayType="row"
         api={searchApi}
       />
-      <Table
+      <Table<RecordType>
         pagination={{ pageSize: 4 }}
         columns={columns}
         rowKey="id"
