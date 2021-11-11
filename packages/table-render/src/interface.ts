@@ -16,7 +16,7 @@ export interface TableContext<RecordType> {
 
 export interface TableState<RecordType> {
   loading: boolean,
-  api: SearchApi<RecordType> | Array<{ api: SearchApi<RecordType>, name: string }>,
+  api: ApiType<RecordType>,
   tab: number,
   dataSource: Array<RecordType>,
   extraData: any,
@@ -29,6 +29,29 @@ export interface TableState<RecordType> {
   tableSize: TableProps<any>['size'],
   sorter: any,
 }
+
+export interface SearchProps<RecordType> {
+  debug?: boolean;
+  searchBtnStyle?: React.CSSProperties;
+  searchBtnClassName?: string;
+  api?: ApiType<RecordType>;
+  displayType?: any;
+  propsSchema?: any;
+  className?: string;
+  style?: React.CSSProperties;
+  schema?: any;
+  hidden?: boolean;
+  searchOnMount?: boolean | unknown;
+  searchBtnRender?: (
+    submit: Function,
+    clearSearch: Function
+  ) => React.ReactNode[];
+  onSearch?: (search: any) => any;
+  afterSearch?: (params: any) => any;
+  widgets?: any;
+}
+
+type ApiType<RecordType> = SearchApi<RecordType> | Array<{ api: SearchApi<RecordType>, name: string }>
 
 export type SearchApi<RecordType> = (params: Record<string, any> & {
   current: number,
