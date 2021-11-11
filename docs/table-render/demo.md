@@ -7,16 +7,18 @@ title: 案例展示
 
 <code src='./demo/advanced.tsx' />
 
-## 其他案例
-
-### 无查询表格
+## 无查询表格
 
 <code src='./demo/noSearch.tsx' />
 
-### 无 ToolBar 表格
+## 无 ToolBar 表格
 
 <code src='./demo/noTitle.tsx' />
 
-### url 带参查询表格
+## url 带参查询表格
 
 <code src='./demo/paramTable.tsx' />
+
+## 使用TS
+
+<code src='./demo/useTs.tsx' />
