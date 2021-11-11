@@ -16,7 +16,7 @@ export interface TableContext<RecordType> {
 
 export interface TableState<RecordType> {
   loading: boolean,
-  api: SearchApi<RecordType> | Array<SearchApi<RecordType>>,
+  api: SearchApi<RecordType> | Array<{ api: SearchApi<RecordType>, name: string }>,
   tab: number,
   dataSource: Array<RecordType>,
   extraData: any,
