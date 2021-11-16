@@ -47,6 +47,27 @@ const DrawerList = ({
     $idx: index,
   }));
 
+  let popConfirmProps = {
+    title: '确定删除?',
+    okText: '确定',
+    cancelText: '取消'
+  };
+
+  if (props.popConfirmProps && typeof props.popConfirmProps === 'object') {
+    popConfirmProps = { ...popConfirmProps, ...props.popConfirmProps };
+  }
+
+  let actionProps = {
+    title: '操作',
+    addText: '新增',
+    editText: '编辑',
+    deleteText: '删除'
+  };
+
+  if (props.actionProps && typeof props.actionProps === 'object') {
+    actionProps = { ...actionProps, ...props.actionColumnProps };
+  }
+
   const columns = children.map(child => {
     const item = flatten[child];
     const schema = (item && item.schema) || {};
@@ -80,7 +101,7 @@ const DrawerList = ({
   });
 
   columns.push({
-    title: '操作',
+    title: `${actionProps.title}`,
     key: '$action',
     fixed: 'right',
     width: 120,
@@ -88,15 +109,13 @@ const DrawerList = ({
       const index = (value && value.$idx) || 0;
       return (
         <div>
-          <a onClick={() => openDrawer(index)}>编辑</a>
+          <a onClick={() => openDrawer(index)}>{actionProps.editText}</a>
           {!props.hideDelete && (
             <Popconfirm
-              title="确定删除?"
               onConfirm={() => deleteItem(index)}
-              okText="确定"
-              cancelText="取消"
+              {...popConfirmProps}
             >
-              <a style={{ marginLeft: 8 }}>删除</a>
+              <a style={{ marginLeft: 8 }}>{actionProps.deleteText}</a>
             </Popconfirm>
           )}
           {!props.hideMove && (
@@ -142,7 +161,7 @@ const DrawerList = ({
       <div className="w-100 mb2 tr">
         {!props.hideAdd && (
           <Button type="primary" size="small" onClick={handleAdd}>
-            新增
+            {actionProps.addText}
           </Button>
         )}
         {Array.isArray(props.buttons)
@@ -179,7 +198,7 @@ const DrawerList = ({
       </div>
       <Drawer
         width="600"
-        title="编辑"
+        title={actionProps.editText}
         placement="right"
         onClose={closeDrawer}
         visible={showDrawer}

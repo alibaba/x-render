@@ -31,6 +31,16 @@ const SimpleList = ({
     addBtnProps = { ...addBtnProps, ...props.addBtnProps };
   }
 
+  let popConfirmProps = {
+    title: '确定删除?',
+    okText: '确定',
+    cancelText: '取消'
+  };
+
+  if (props.popConfirmProps && typeof props.popConfirmProps === 'object') {
+    popConfirmProps = { ...popConfirmProps, ...props.popConfirmProps };
+  }
+
   return (
     <div className="fr-list-1">
       {displayList.map((item, idx) => {
@@ -45,10 +55,8 @@ const SimpleList = ({
             <div style={{ marginTop: 6 }}>
               {!props.hideDelete && (
                 <Popconfirm
-                  title="确定删除?"
                   onConfirm={() => deleteItem(idx)}
-                  okText="确定"
-                  cancelText="取消"
+                  {...popConfirmProps}
                 >
                   <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
                 </Popconfirm>
