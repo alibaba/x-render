@@ -51,11 +51,11 @@ export default function Settings({ widgets }) {
       <ToggleIcon />
       <Tabs defaultActiveKey="1" onChange={() => {}}>
         {showItemSettings && (
-          <TabPane tab="组件配置" key="1">
+          <TabPane tab="组件配置" key="itemSettings">
             <ItemSettings widgets={widgets} />
           </TabPane>
         )}
-        <TabPane tab="表单配置" key={showItemSettings ? '2' : '1'}>
+        <TabPane tab="表单配置" key="globalSettings">
           <GlobalSettings widgets={widgets} />
         </TabPane>
       </Tabs>

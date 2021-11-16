@@ -67,6 +67,7 @@ export default function ItemSettings({ widgets }) {
   const onDataChange = value => {
     try {
       const item = flatten[selected];
+      if (!item || selected === '#') return;
       if (item && item.schema) {
         onItemChange(selected, {
           ...item,
