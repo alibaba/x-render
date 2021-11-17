@@ -5,8 +5,9 @@
 
 import React from 'react';
 import { Table, Search, withTable, useTable } from 'table-render';
-import { Tag, Space, message, Tooltip, Button } from 'antd';
-import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { ProColumnsType } from 'table-render/src/interface';
+import { Tag, Space, message, Tooltip } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import request from 'umi-request';
 
 const schema = {
@@ -25,18 +26,25 @@ const schema = {
       type: 'string',
       width: '25%',
     },
-    created_at: {
-      title: '成立时间',
-      type: 'string',
-      format: 'date',
-      width: '25%',
-    },
   },
-  'ui:labelWidth': 80,
 };
 
+interface RecordType {
+  id: number,
+  number: number,
+  address: string,
+  title: string,
+  room: number,
+  money: number,
+  state: string,
+  created_at: string,
+  labels: Array<{ name: string, color: string }>
+}
+
 const Demo = () => {
-  const { refresh } = useTable();
+
+  // 此处表示tableState.dataSource符合Array<RecordType>
+  const { tableState, refresh } = useTable<RecordType>();
 
   const searchApi = (params, sorter) => {
     console.group(sorter);
@@ -54,9 +62,6 @@ const Demo = () => {
         }
       })
       .catch(e => {
-        console.log('Oops, error', e)
-
-        // 注意一定要返回 rows 和 total
         return {
           rows: [],
           total: 0
@@ -64,35 +69,13 @@ const Demo = () => {
       });
   };
 
-  const searchApi2 = (params) => {
-    return request
-      .get(
-        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
-        { params }
-      )
-      .then(res => {
-        if (res && res.data) {
-          return {
-            rows: res.data.slice(1),
-            total: res.data.length - 1,
-          };
-        }
-      })
-      .catch(e => {
-        console.log('Oops, error', e)
-        return {
-          rows: [],
-          total: 0,
-        }
-      });
-  };
 
-  // 配置完全透传antd table
-  const columns = [
+  // ProColumnsType的使用与antd类似
+  const columns: ProColumnsType<RecordType> = [
     {
       title: '酒店名称',
       dataIndex: 'title',
-      valueType: 'text',
+      valueType: 'code',
       width: '20%',
     },
     {
@@ -131,7 +114,6 @@ const Demo = () => {
         </Space>
       ),
     },
-
     {
       title: '酒店GMV',
       key: 'money',
@@ -148,62 +130,30 @@ const Demo = () => {
     {
       title: '操作',
       render: () => (
-        <Space>
-          <a target="_blank" key="1">
-            <div
-              onClick={() => {
-                message.success('预订成功');
-              }}
-            >
-              预订
-            </div>
-          </a>
-        </Space>
+        <a
+          onClick={() => {
+            message.success('预订成功');
+          }}
+        >
+          预订
+        </a>
       ),
     },
   ];
 
-  const showData = () => {
-    refresh(null, { extra: 1 });
-  };
-
   return (
-    <div style={{ background: 'rgb(245,245,245)' }}>
-      <Search
+    <div>
+      {/* 此处表示api的的返回值需要符合RecordType */}
+      <Search<RecordType>
         schema={schema}
         displayType="row"
-        api={[
-          {
-            name: '全部数据',
-            api: searchApi,
-          },
-          {
-            name: '我的数据',
-            api: searchApi2,
-          },
-        ]}
+        api={searchApi}
       />
-      <Table
+      {/* 和antd类似，与ProColumnsType配合使用 */}
+      <Table<RecordType>
         pagination={{ pageSize: 4 }}
         columns={columns}
         rowKey="id"
-        toolbarRender={() => [
-          <Button key="show" onClick={showData}>
-            查看日志
-          </Button>,
-          <Button key="out" onClick={showData}>
-            导出数据
-          </Button>,
-          <Button
-            key="primary"
-            type="primary"
-            onClick={() => alert('table-render！')}
-          >
-            <PlusOutlined />
-            创建
-          </Button>,
-        ]}
-        toolbarAction
       />
     </div>
   );
