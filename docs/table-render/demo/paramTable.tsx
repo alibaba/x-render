@@ -37,7 +37,7 @@ const schema = {
 };
 
 const Demo = () => {
-  const { refresh, tableState, form }: any = useTable();
+  const { form } = useTable();
   useEffect(() => {
     // 实际使用时queryParam为url上取下来的有效参数
     // const queryParam = { state: 'open' };
@@ -92,7 +92,6 @@ const Demo = () => {
         </Space>
       ),
     },
-
     {
       title: '酒店GMV',
       key: 'money',
@@ -107,7 +106,7 @@ const Demo = () => {
     },
     {
       title: '操作',
-      render: row => (
+      render: () => (
         <Space>
           <a target="_blank" key="1">
             <div
@@ -123,9 +122,6 @@ const Demo = () => {
     },
   ];
 
-  const showData = () => {
-    refresh(null, { extra: 1 });
-  };
   const searchApi = params => {
     console.log('params >>> ', params);
     return request
@@ -134,20 +130,28 @@ const Demo = () => {
         { params }
       )
       .then(res => {
-        // console.log('response:', res);
         if (res && res.data) {
           return {
             rows: res.data,
             total: res.data.length,
             extraData: res.status,
-          }; // 注意一定要返回 rows 和 total
+          };
         }
       })
-      .catch(e => console.log('Oops, error', e));
+      .catch(e => {
+        console.log('Oops, error', e)
+        // 注意一定要返回 rows 和 total
+        return {
+          rows: [],
+          total: 0,
+        }
+      });
   };
+
   const onSearch = search => {
     console.log('onSearch', search);
   };
+
   const afterSearch = params => {
     const formData = form.getValues();
     history.replace({
@@ -155,6 +159,7 @@ const Demo = () => {
       query: formData,
     });
   };
+  
   return (
     <div style={{ background: 'rgb(245,245,245)' }}>
       <Search

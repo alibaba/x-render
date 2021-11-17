@@ -5,8 +5,8 @@
 
 import React from 'react';
 import { Table, Search, withTable, useTable } from 'table-render';
-import { Tag, Space, message, Tooltip, Button } from 'antd';
-import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Tag, Space, message, Tooltip } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
 import request from 'umi-request';
 
 const schema = {
@@ -30,7 +30,7 @@ const schema = {
 };
 
 const Demo = () => {
-  const { refresh, tableState }: any = useTable();
+  const { refresh } = useTable();
 
   const searchApi = params => {
     console.log('params >>> ', params);
@@ -40,16 +40,22 @@ const Demo = () => {
         { params }
       )
       .then(res => {
-        // console.log('response:', res);
         if (res && res.data) {
           return {
             rows: res.data,
             total: res.data.length,
             extraData: res.status,
-          }; // 注意一定要返回 rows 和 total
+          };
         }
       })
-      .catch(e => console.log('Oops, error', e));
+      .catch(e => {
+        console.log('Oops, error', e)
+        // 注意一定要返回 rows 和 total
+        return {
+          rows: [],
+          total: 0,
+        }
+      });
   };
 
   // 配置完全透传antd table
@@ -120,10 +126,6 @@ const Demo = () => {
       ),
     },
   ];
-
-  const showData = () => {
-    refresh(null, { extra: 1 });
-  };
 
   return (
     <div style={{ background: 'rgb(245,245,245)' }}>

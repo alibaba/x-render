@@ -1,18 +1,13 @@
 import React, { useEffect, useRef } from 'react';
-
-import { useTable } from './hooks';
 import { Table, Radio, Space, TableProps } from 'antd';
-
 import { getDate, getDateTime, getMoneyType } from './utils';
-import { renderDom } from './field';
-
 import ErrorBoundary from './components/ErrorBoundary';
 import ToolBarAction from './components/ToolBarAction';
+import { TableRenderProps } from './interface';
+import { renderDom } from './field';
+import { useTable } from './hooks';
 
-import { ProTableProps } from './typing';
-import { ColumnType } from 'antd/lib/table';
-
-const ProTable: <RecordType extends object = any>(props: ProTableProps<RecordType>) => React.ReactElement = (props) => {
+const ProTable: <RecordType extends object = any>(props: TableRenderProps<RecordType>) => React.ReactElement = (props) => {
   if (props.dataSource) {
     console.error(
       '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
