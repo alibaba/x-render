@@ -18,15 +18,15 @@ export default {
     }),
   ],
   extraBabelPlugins: [
-    [
-      'import',
-      {
-        libraryName: 'antd',
-        libraryDirectory: 'es',
-        style: true,
-      },
-      'antd',
-    ],
+    // [
+    //   'import',
+    //   {
+    //     libraryName: 'antd',
+    //     libraryDirectory: 'es',
+    //     style: true,
+    //   },
+    //   'antd',
+    // ],
     [
       'import',
       {
