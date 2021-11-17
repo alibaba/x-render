@@ -8,6 +8,7 @@ import { renderDom } from './field';
 import { useTable } from './hooks';
 
 const ProTable: <RecordType extends object = any>(props: TableRenderProps<RecordType>) => React.ReactElement = (props) => {
+  //@ts-ignore
   if (props.dataSource) {
     console.error(
       '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
