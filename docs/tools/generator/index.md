@@ -53,6 +53,7 @@ export default Demo;
 | -------------- | ------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | hideId         | 隐藏组件 ID                     | `boolean` | `false`                                                                                                                         |
 | fixedName      | 固定 settings 的 name 为组件 ID | `boolean` | `false`                                                                                                                         |
+| canDelete      | 组件删除控制                    | `boolean | Function` | `false`                                                                                                                         |
 | defaultValue   | 默认表单 schema                 | `object`  | `DEFAULT_SCHEMA`                                                                                                                |
 | transformer    | schema 双向转换                 | `object`  | `{ from, to, fromSetting, toSetting }`                                                                                          |
 | extraButtons   | 操作栏按钮                      | `array`   | `extraButton[]`                                                                                                                 |

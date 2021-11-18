@@ -108,7 +108,7 @@ export default function Wrapper({
     setGlobal({ selected: _id });
   };
 
-  const deleteItem = e => {
+  const deleteItem = async e => {
     e.stopPropagation();
     const newFlatten = { ...flatten };
     let newSelect = '#';
@@ -128,14 +128,17 @@ export default function Wrapper({
     } catch (error) {
       console.log('catch', error);
     }
-    const _canDelete = typeof canDelete === 'function' ? canDelete(newFlatten[$id].schema) : canDelete;
+    let _canDelete = canDelete;
+    if (typeof canDelete === 'function') {
+      _canDelete = await Promise.resolve(canDelete(newFlatten[$id].schema));
+    }
     if (!_canDelete) return;
     delete newFlatten[$id];
     onFlattenChange(newFlatten);
     setGlobal({ selected: newSelect });
   };
 
-  const handleItemCopy = async e => {
+  const handleItemCopy = e => {
     e.stopPropagation();
     if (itemError?.length) return;
     const [newFlatten, newId] = copyItem(flatten, $id);

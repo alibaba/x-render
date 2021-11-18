@@ -53,6 +53,8 @@ export interface FRGeneratorProps {
   hideId?: boolean;
   /** 固定 id */
   fixedName?: boolean;
+  /** 组件删除控制 */
+  canDelete?: boolean | Function;
   /** 默认一进入编辑器展示的表单对应的 schema */
   defaultValue?: any;
   /** 自定义 schema 到 form-render 的 schema 的双向转换函数 */
