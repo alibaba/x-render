@@ -33,6 +33,7 @@ const useForm = props => {
 
   const [state, setState] = useSet({
     formData: {},
+    oldFormData: {},
     submitData: {},
     errorFields: [],
     outErrorFields: [],
@@ -61,6 +62,7 @@ const useForm = props => {
 
   const {
     formData: innerData,
+    oldFormData,
     submitData,
     errorFields = [],
     outErrorFields = [], // 用户人为输入的errors，可以是直接调用 setErrorField/removeErrorField 方法，或者使用 beforeFinish 钩子
@@ -145,9 +147,9 @@ const useForm = props => {
   // 两个兼容 0.x 的函数
   const _setData = data => {
     if (typeof _onChange === 'function') {
-      _onChange(data);
+      _onChange(data, clone(formData));
     } else {
-      setState({ formData: data });
+      setState({ formData: data, oldFormData: clone(formData) });
     }
   };
 
@@ -372,6 +374,7 @@ const useForm = props => {
   const resetFields = () => {
     setState({
       formData: {},
+      oldFormData: {},
       submitData: {},
       errorFields: [],
       touchedKeys: [],
@@ -396,6 +399,7 @@ const useForm = props => {
   const form = {
     // state
     formData: _data.current,
+    oldFormData,
     schema: schemaRef.current,
     flatten: finalFlatten,
     touchedKeys: _touchedKeys.current,

@@ -44,9 +44,11 @@ const Demo = () => {
     // # 为全局
     '#': val => {
       console.log('表单的时时数据为：', val);
+      console.log('变化前表单数据为：', form.oldFormData);
     },
     input1: val => {
       form.setValueByPath('input2', val);
+      console.log('input2 变化前表单数据为：', form.oldFormData);
     },
   };
 
