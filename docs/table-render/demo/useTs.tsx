@@ -30,19 +30,18 @@ const schema = {
 };
 
 interface RecordType {
-  id: number,
-  number: number,
-  address: string,
-  title: string,
-  room: number,
-  money: number,
-  state: string,
-  created_at: string,
-  labels: Array<{ name: string, color: string }>
+  id: number;
+  number: number;
+  address: string;
+  title: string;
+  room: number;
+  money: number;
+  state: string;
+  created_at: string;
+  labels: Array<{ name: string; color: string }>;
 }
 
 const Demo = () => {
-
   // 此处表示tableState.dataSource符合Array<RecordType>
   const { tableState, refresh } = useTable<RecordType>();
 
@@ -64,11 +63,10 @@ const Demo = () => {
       .catch(e => {
         return {
           rows: [],
-          total: 0
-        }
+          total: 0,
+        };
       });
   };
-
 
   // ProColumnsType的使用与antd类似
   const columns: ProColumnsType<RecordType> = [
@@ -144,11 +142,7 @@ const Demo = () => {
   return (
     <div>
       {/* 此处表示api的的返回值需要符合RecordType */}
-      <Search<RecordType>
-        schema={schema}
-        displayType="row"
-        api={searchApi}
-      />
+      <Search<RecordType> schema={schema} displayType="row" api={searchApi} />
       {/* 和antd类似，与ProColumnsType配合使用 */}
       <Table<RecordType>
         pagination={{ pageSize: 4 }}

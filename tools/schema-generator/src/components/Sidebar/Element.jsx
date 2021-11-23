@@ -29,7 +29,13 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
       setGlobal({ selected: '#' });
       return;
     }
-    const { newId, newFlatten } = addItem({ selected, name, schema, flatten, fixedName });
+    const { newId, newFlatten } = addItem({
+      selected,
+      name,
+      schema,
+      flatten,
+      fixedName,
+    });
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
   };

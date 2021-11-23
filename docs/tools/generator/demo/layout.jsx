@@ -2,12 +2,7 @@ import React from 'react';
 import Generator from 'fr-generator';
 import './index.less';
 
-const {
-  Provider,
-  Sidebar,
-  Canvas,
-  Settings,
-} = Generator;
+const { Provider, Sidebar, Canvas, Settings } = Generator;
 
 const Demo = () => {
   return (

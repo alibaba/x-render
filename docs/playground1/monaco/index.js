@@ -3,17 +3,15 @@ import MonacoEditor from 'react-monaco-editor';
 import { valueMap, keySuggestions } from './suggestionsMap';
 
 const Demo = ({ value, onChange, options }) => {
-
-  const editorWillMount = (monaco) => {
+  const editorWillMount = monaco => {
     monaco.languages.registerCompletionItemProvider('json', {
       provideCompletionItems: (model, position) => {
-
         // 得到冒号之前的文本
         var textUntilPosition = model.getValueInRange({
           startLineNumber: position.lineNumber,
           startColumn: 1,
           endLineNumber: position.lineNumber,
-          endColumn: position.column
+          endColumn: position.column,
         });
 
         const word = model.getWordUntilPosition(position);
@@ -21,23 +19,24 @@ const Demo = ({ value, onChange, options }) => {
           startLineNumber: position.lineNumber,
           endLineNumber: position.lineNumber,
           startColumn: word.startColumn,
-          endColumn: word.endColumn
+          endColumn: word.endColumn,
         };
 
         let propKey = '';
-        const match = textUntilPosition.match(/[a-z]+(?=["][:])/)
+        const match = textUntilPosition.match(/[a-z]+(?=["][:])/);
         if (match && match.length) {
           propKey = match[0];
         }
 
-        const suggestions = propKey ? (valueMap(range)[propKey] || []) : keySuggestions(range)
+        const suggestions = propKey
+          ? valueMap(range)[propKey] || []
+          : keySuggestions(range);
 
-        return { suggestions }
-
+        return { suggestions };
       },
-      triggerCharacters: ['"']
+      triggerCharacters: ['"'],
     });
-  }
+  };
 
   return (
     <MonacoEditor

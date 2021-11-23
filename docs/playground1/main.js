@@ -53,15 +53,12 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
       <div className="w-50 h-100 pl2 flex flex-column">
         <Tabs
           defaultActiveKey="1"
-          onChange={() => { }}
+          onChange={() => {}}
           className="flex flex-column"
           style={{ overflow: 'auto' }}
         >
           <TabPane tab="Schema" key="1">
-            <MonacoEditor
-              value={schemaStr}
-              onChange={handleCodeChange}
-            />
+            <MonacoEditor value={schemaStr} onChange={handleCodeChange} />
           </TabPane>
           <TabPane tab="Data" key="2">
             <MonacoEditor

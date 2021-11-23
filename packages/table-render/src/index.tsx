@@ -10,7 +10,6 @@ import { useForm } from 'form-render';
 import { SearchApi } from './interface';
 import './index.css';
 
-
 const useTableRoot = props => {
   const form = useForm();
 
@@ -144,7 +143,6 @@ const useTableRoot = props => {
   };
   return context;
 };
-
 
 const Container = (props, ref) => {
   const context = useTableRoot(props);
