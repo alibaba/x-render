@@ -2,7 +2,7 @@
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
-import { set, sortedUniqBy } from 'lodash-es';
+import { get, set, sortedUniqBy } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
 import {
   generateDataSkeleton,
@@ -370,20 +370,13 @@ const useForm = props => {
   };
 
   const resetFields = (options) => {
-    if (typeof options === 'undefined') {
-      setState({
-        formData: {},
-        submitData: [],
-        errorFields: [],
-        touchedKeys: [],
-        allTouched: false,
-      });
-    } else {
-      // 支持重置时自定义参数
-      if (options && typeof options === 'object') {
-        setState(options)
-      }
-    }
+    setState({
+      formData: options?.formData || {},
+      submitData: options?.submitData || [],
+      errorFields: options?.errorFields || [],
+      touchedKeys: options?.touchedKeys || [],
+      allTouched: options?.allTouched || false,
+    });
   };
 
   const endValidating = () =>
