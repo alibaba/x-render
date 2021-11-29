@@ -10,9 +10,11 @@ export default function GlobalSettings({ widgets }) {
   const setGlobal = useGlobal();
   const globalSettings = userProps.globalSettings || defaultGlobalSettings;
 
-  const onDataChange = value => {
+  const onDataChange = (value = {}) => {
     setInnerUpdate(!!Object.keys(value).length);
-    setGlobal({ frProps: value });
+    if (Object.keys(value).length > 0) {
+      setGlobal({ frProps: value });
+    }
   };
 
   useEffect(() => {
