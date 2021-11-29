@@ -10,7 +10,7 @@ import {
   advancedElements,
   layouts,
 } from '../../settings';
-import { isObject } from '../../utils';
+import { isObject, mergeInOrder } from '../../utils';
 import { getWidgetName } from '../../utils/mapping';
 import { useStore } from '../../utils/hooks';
 
@@ -52,12 +52,12 @@ export default function ItemSettings({ widgets }) {
             item.widget ||
             item.schema.widget ||
             getWidgetName(item.schema, globalMapping),
-          setting: {
-            ...baseCommonSettings,
-            ...commonSettings,
-            ...baseItemSettings,
-            ...item.setting,
-          },
+          setting: mergeInOrder(
+            baseCommonSettings,
+            commonSettings,
+            baseItemSettings,
+            item.setting,
+          ),
         };
       });
       return [...widgetList, ...basicWidgets];

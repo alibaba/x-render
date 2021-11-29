@@ -663,3 +663,13 @@ export const transformProps = props => {
 
   return _props;
 };
+
+export const mergeInOrder = (...args) => {
+  return args.reduce((result, current) => {
+    if (!current) return result;
+    return Object.keys(current).reduce((rst, key) => {
+      if (rst[key]) delete rst[key];
+      return { ...rst, [key]: current[key] };
+    }, result);
+  }, {});
+}
