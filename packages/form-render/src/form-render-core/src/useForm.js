@@ -369,33 +369,21 @@ const useForm = props => {
       });
   };
 
-  const resetFields = () => {
-    setState({
-      formData: {},
-      submitData: {},
-      errorFields: [],
-      touchedKeys: [],
-      allTouched: false,
-    });
-  };
-
-  // 在不清空 formData 的情况下清空表单数据，这样可以在某些场景下避免抖动
-  const resetFormFields = ({
-    formData = {},
-    submitData = {},
-    errorFields = [],
-    touchedKeys = [],
-    allTouched = false,
-    ...rest,
-  } = {}) => {
-    setState({
-      formData,
-      submitData,
-      errorFields,
-      touchedKeys,
-      allTouched,
-      ...rest,
-    });
+  const resetFields = (options) => {
+    if (typeof options === 'undefined') {
+      setState({
+        formData: {},
+        submitData: [],
+        errorFields: [],
+        touchedKeys: [],
+        allTouched: false,
+      });
+    } else {
+      // 支持重置时自定义参数
+      if (options && typeof options === 'object') {
+        setState(options)
+      }
+    }
   };
 
   const endValidating = () =>
@@ -431,7 +419,6 @@ const useForm = props => {
     setValues,
     getValues,
     resetFields,
-    resetFormFields,
     submit,
     init: submit, // 简版的迁移方案里用，正常用不到，换个名字迁移的时候大家更好接受点
     submitData,
