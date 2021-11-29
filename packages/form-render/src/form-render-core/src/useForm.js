@@ -372,7 +372,7 @@ const useForm = props => {
   const resetFields = (options) => {
     setState({
       formData: options?.formData || {},
-      submitData: options?.submitData || [],
+      submitData: options?.submitData || {},
       errorFields: options?.errorFields || [],
       touchedKeys: options?.touchedKeys || [],
       allTouched: options?.allTouched || false,
