@@ -30,7 +30,7 @@ const schema = {
 };
 
 const Demo = () => {
-  const { refresh, tableState }: any = useTable();
+  const { refresh } = useTable();
 
   const searchApi = params => {
     console.log('params >>> ', params);
@@ -40,16 +40,22 @@ const Demo = () => {
         { params }
       )
       .then(res => {
-        // console.log('response:', res);
         if (res && res.data) {
           return {
             rows: res.data,
             total: res.data.length,
             extraData: res.status,
-          }; // 注意一定要返回 rows 和 total
+          };
         }
       })
-      .catch(e => console.log('Oops, error', e));
+      .catch(e => {
+        console.log('Oops, error', e)
+        // 注意一定要返回 rows 和 total
+        return {
+          rows: [],
+          total: 0,
+        }
+      });
   };
 
   // 配置完全透传antd table

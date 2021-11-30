@@ -116,9 +116,9 @@ const CoreRender = ({
   effectiveLabelWidth,
   ...rest
 }) => {
-  // if (schema.hidden) {
-  //   return null;
-  // }
+  if (schema.hidden) {
+    return null;
+  }
   // 样式的逻辑全放在这层
   // displayType 一层层网上找值
   const _displayType =
@@ -313,6 +313,20 @@ const areEqual = (prev, current) => {
     return false;
   }
   if (prev.labelWidth !== current.labelWidth) {
+    return false;
+  }
+  if (prev.readOnly !== current.readOnly) {
+    return false;
+  }
+  if (prev.disabled !== current.disabled) {
+    return false;
+  }
+  if (prev.schema && current.schema) {
+    if (prev.schema.$id === '#') {
+      return false;
+    }
+  }
+  if (isObjType(prev.schema) && isObjType(current.schema)) {
     return false;
   }
   if (

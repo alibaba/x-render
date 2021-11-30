@@ -1,23 +1,20 @@
 import React, { useEffect, useRef } from 'react';
-
-import { useTable } from './hooks';
-import { Table, Radio, Space } from 'antd';
-
+import { Table, Radio, Space, TableProps } from 'antd';
 import { getDate, getDateTime, getMoneyType } from './utils';
-import { renderDom } from './field';
-
 import ErrorBoundary from './components/ErrorBoundary';
 import ToolBarAction from './components/ToolBarAction';
+import { TableRenderProps } from './interface';
+import { renderDom } from './field';
+import { useTable } from './hooks';
 
-import { ProTableProps } from './typing';
-
-const ProTable = (props: ProTableProps) => {
+const ProTable: <RecordType extends object = any>(props: TableRenderProps<RecordType>) => React.ReactElement = (props) => {
+  //@ts-ignore
   if (props.dataSource) {
     console.error(
       '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
     );
   }
-  const { tableState, setTable, doSearch }: any = useTable();
+  const { tableState, setTable, doSearch } = useTable();
   const { dataSource, pagination, loading, api, tableSize } = tableState;
   const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
 
@@ -65,7 +62,8 @@ const ProTable = (props: ProTableProps) => {
     }
     return result;
   });
-  const tableProps = {
+
+  const tableProps: TableProps<typeof dataSource[number]> = {
     ...props,
     onChange,
     // dataSource不准在使用ProTable时用props赋值
@@ -147,7 +145,7 @@ const ProTable = (props: ProTableProps) => {
 export default ProTable;
 
 const TableTitle = ({ title }: any) => {
-  const { tableState, setTable, doSearch }: any = useTable();
+  const { tableState, setTable, doSearch } = useTable();
   const { tab, api } = tableState;
   const _tab = tab || 0;
   const onTabChange = (e: any) => {

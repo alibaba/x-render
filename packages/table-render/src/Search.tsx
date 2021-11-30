@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTable } from './hooks';
 import { Button } from 'antd';
 import SearchForm from 'form-render';
+import { SearchProps } from './interface';
 
 const SearchBtn = ({
   clearSearch,
@@ -59,28 +60,7 @@ const MySearchBtn = ({
   );
 };
 
-export interface SearchProps {
-  debug?: boolean;
-  searchBtnStyle?: React.CSSProperties;
-  searchBtnClassName?: string;
-  api?: any;
-  displayType?: any;
-  propsSchema?: any;
-  className?: string;
-  style?: React.CSSProperties;
-  schema?: any;
-  hidden?: boolean;
-  searchOnMount?: boolean | unknown;
-  searchBtnRender?: (
-    submit: Function,
-    clearSearch: Function
-  ) => React.ReactNode[];
-  onSearch?: (search: any) => any;
-  afterSearch?: (params: any) => any;
-  widgets?: any;
-}
-
-const Search = (props: SearchProps) => {
+const Search: <RecordType extends object = any>(props: SearchProps<RecordType>) => React.ReactElement = (props) => {
   const { searchBtnRender, searchBtnStyle, searchBtnClassName } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
