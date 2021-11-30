@@ -6,9 +6,11 @@ import { useStore, useGlobal } from '../../utils/hooks';
 export default function GlobalSettings({ widgets }) {
   const form = useForm();
   const [innerUpdate, setInnerUpdate] = useState(false);
+  const [innerInit, setInnerInit] = useState(true)
   const { widgets: globalWidgets, frProps, userProps = {} } = useStore();
   const setGlobal = useGlobal();
   const globalSettings = userProps.globalSettings || defaultGlobalSettings;
+
 
   const onDataChange = value => {
     setInnerUpdate(!!Object.keys(value).length);
@@ -29,7 +31,10 @@ export default function GlobalSettings({ widgets }) {
         form={form}
         schema={globalSettings}
         watch={{
-          '#': v => onDataChange(v),
+          '#': v => {
+            if (innerInit) return setInnerInit(false)
+            onDataChange(v)
+          },
         }}
         widgets={{ ...globalWidgets, ...widgets }}
       />
