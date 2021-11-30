@@ -1,35 +1,43 @@
-import { TableProps } from "antd";
+import { TableProps } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 
 export interface TableContext<RecordType> {
   tableState?: TableState<RecordType>;
   setTable?: (state: Partial<TableState<RecordType>>) => void;
-  doSearch?: (params: {
-                current?: number;
-                tab?: number | string;
-                pageSize?: number;
-                sorter?: any;
-              },
-              customSearch?: any) => Promise<void>;
-  refresh?: (params?: { stay: boolean, tab: number | string }, search?: any) => Promise<void>;
+  doSearch?: (
+    params: {
+      current?: number;
+      tab?: number | string;
+      pageSize?: number;
+      sorter?: any;
+    },
+    customSearch?: any
+  ) => Promise<void>;
+  refresh?: (
+    params?: { stay: boolean; tab: number | string },
+    search?: any
+  ) => Promise<void>;
   form?: any; // TODO这里应该去引FR的类型
   changeTab?: (tab: number | string) => Promise<void>;
 }
 
-export type ProColumnsType<T extends object = any> = Array<ColumnsType<T>[number] & {
-  /** 是否自动缩略 */
-  ellipsis?: boolean;
-  /** 是否支持复制 */
-  copyable?: boolean;
-  /** 值的类型 */
-  valueType?: 'text' | 'money' | 'date' | 'dateTime' | 'code';
-  /** 当前列值的枚举 */
-  enum?: Record<string, string>
-}>
+export type ProColumnsType<T extends object = any> = Array<
+  ColumnsType<T>[number] & {
+    /** 是否自动缩略 */
+    ellipsis?: boolean;
+    /** 是否支持复制 */
+    copyable?: boolean;
+    /** 值的类型 */
+    valueType?: 'text' | 'money' | 'date' | 'dateTime' | 'code';
+    /** 当前列值的枚举 */
+    enum?: Record<string, string>;
+  }
+>;
 
-export interface TableRenderProps<RecordType extends Object = any> extends Omit<TableProps<RecordType>, 'columns' | 'dataSource'> {
+export interface TableRenderProps<RecordType extends Object = any>
+  extends Omit<TableProps<RecordType>, 'columns' | 'dataSource'> {
   /** 列定义，除了支持antd的所有配置，还额外增加一些语法糖 */
-  columns: ProColumnsType<RecordType>
+  columns: ProColumnsType<RecordType>;
   /** 开启 debug 模式，时时显示内部状态 */
   debug?: boolean;
   /** headerTitle */
@@ -43,19 +51,19 @@ export interface TableRenderProps<RecordType extends Object = any> extends Omit<
 }
 
 export interface TableState<RecordType> {
-  loading: boolean,
-  api: ApiType<RecordType>,
-  tab: number,
-  dataSource: Array<RecordType>,
-  extraData: any,
-  extraParams: Record<string, any>,
+  loading: boolean;
+  api: ApiType<RecordType>;
+  tab: number;
+  dataSource: Array<RecordType>;
+  extraData: any;
+  extraParams: Record<string, any>;
   pagination: {
-    current: number,
-    pageSize: number,
-    total: number,
-  },
-  tableSize: TableProps<any>['size'],
-  sorter: any,
+    current: number;
+    pageSize: number;
+    total: number;
+  };
+  tableSize: TableProps<any>['size'];
+  sorter: any;
 }
 
 // TODO这里FR的props应该去FR里写，这里继承就好了
@@ -80,14 +88,19 @@ export interface SearchProps<RecordType> {
   widgets?: any;
 }
 
-type ApiType<RecordType> = SearchApi<RecordType> | Array<{ api: SearchApi<RecordType>, name: string }>
+type ApiType<RecordType> =
+  | SearchApi<RecordType>
+  | Array<{ api: SearchApi<RecordType>; name: string }>;
 
-export type SearchApi<RecordType> = (params: Record<string, any> & {
-  current: number,
-  pageSize: number,
-  tab?: number,
-}, sorter?: any) => Promise<{
-  rows: Array<RecordType>,
-  total: number,
-  pageSize?: number,
-}>
+export type SearchApi<RecordType> = (
+  params: Record<string, any> & {
+    current: number;
+    pageSize: number;
+    tab?: number;
+  },
+  sorter?: any
+) => Promise<{
+  rows: Array<RecordType>;
+  total: number;
+  pageSize?: number;
+}>;
