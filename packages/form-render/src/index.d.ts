@@ -22,6 +22,16 @@ export interface ValidateParams {
   error: Error[];
   [k: string]: any;
 }
+
+export interface ResetParams {
+  formData?: any;
+  submitData?: any;
+  errorFields?: Error[];
+  touchedKeys?: any[];
+  allTouched?: boolean;
+  [k: string]: any;
+}
+
 export interface FormInstance {
   formData: any;
   schema: any;
@@ -35,7 +45,7 @@ export interface FormInstance {
   setSchema: (settings: any) => void;
   setValues: (formData: any) => void;
   getValues: () => any;
-  resetFields: () => void;
+  resetFields: (options?: ResetParams) => void;
   submit: () => Promise<void> | Promise<any[]>;
   submitData: any;
   errorFields: Error[];
