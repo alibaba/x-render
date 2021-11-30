@@ -111,8 +111,10 @@ export default function ItemSettings({ widgets }) {
           displayType: 'column',
           properties,
         });
-        form.setValues(transformer.toSetting(item.schema));
-        onDataChange(form.getValues());
+        const value = transformer.toSetting(item.schema);
+        form.setValues(value);
+        form.submit();
+        onDataChange(value);
       }, 0);
     } catch (error) {
       console.log(error);

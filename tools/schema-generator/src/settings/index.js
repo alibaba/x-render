@@ -23,7 +23,13 @@ export const defaultCommonSettings = {
     description: '字段名称/英文',
     type: 'string',
     widget: 'idInput',
-    required: true,
+    require: true,
+    rules: [
+      {
+        pattern: '^#/.+$',
+        message: 'ID 必填',
+      },
+    ],
   },
   title: {
     title: '标题',

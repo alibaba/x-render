@@ -94,11 +94,12 @@ export default Demo;
 
 ### Methods
 
-| 事件名    | 说明                       | 入参     |
-| --------- | -------------------------- | -------- |
-| getValue  | 获取导出的 schema 值       | -        |
-| setValue  | 从外部强制修改 schema      | `schema` |
-| copyValue | 将现有 schema 拷贝到剪贴板 | -        |
+| 事件名         | 说明                       | 入参     |
+| -------------- | -------------------------- | -------- |
+| getValue       | 获取导出的 schema 值       | -        |
+| setValue       | 从外部强制修改 schema      | `schema` |
+| copyValue      | 将现有 schema 拷贝到剪贴板 | -        |
+| getErrorFields | 获取配置项校验错误         | -        |
 
 ## 案例演示
 

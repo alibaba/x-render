@@ -71,7 +71,7 @@ function Provider(props, ref) {
     schema: {},
     selected: undefined, // 被选中的$id, 如果object/array的内部，以首字母0标识
   });
-  const [itemError, setItemError] = useState([]);
+  const [errorFields, setErrorFields] = useState([]);
 
   // 收口点 propsSchema 到 schema 的转换 (一共3处，其他两个是 importSchema 和 setValue，在 FRWrapper 文件)
   useEffect(() => {
@@ -179,10 +179,13 @@ function Provider(props, ref) {
     copyTOClipboard(displaySchemaString);
   };
 
+  const getErrorFields = () => errorFields;
+
   useImperativeHandle(frwRef, () => ({
     getValue,
     setValue,
     copyValue,
+    getErrorFields,
   }));
 
   // TODO: flatten是频繁在变的，应该和其他两个函数分开
@@ -192,8 +195,8 @@ function Provider(props, ref) {
     onItemChange, // onFlattenChange 里只改一个item的flatten，使用这个方法
     onSchemaChange,
     onChange,
-    itemError,
-    onItemErrorChange: setItemError,
+    errorFields,
+    onItemErrorChange: setErrorFields,
     userProps,
     frProps,
     displaySchema,

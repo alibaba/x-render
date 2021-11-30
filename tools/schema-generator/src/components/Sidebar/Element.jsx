@@ -9,7 +9,7 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
   const {
     selected,
     flatten,
-    itemError,
+    errorFields,
     userProps,
     onFlattenChange,
   } = useStore();
@@ -30,7 +30,7 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
   });
 
   const handleElementClick = async () => {
-    if (itemError?.length) return;
+    if (errorFields?.length) return;
     if (selected && !flatten[selected]) {
       setGlobal({ selected: '#' });
       return;
