@@ -369,13 +369,13 @@ const useForm = props => {
       });
   };
 
-  const resetFields = () => {
+  const resetFields = (options) => {
     setState({
-      formData: {},
-      submitData: {},
-      errorFields: [],
-      touchedKeys: [],
-      allTouched: false,
+      formData: options?.formData || {},
+      submitData: options?.submitData || {},
+      errorFields: options?.errorFields || [],
+      touchedKeys: options?.touchedKeys || [],
+      allTouched: options?.allTouched || false,
     });
   };
 
