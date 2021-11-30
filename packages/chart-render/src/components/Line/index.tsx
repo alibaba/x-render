@@ -1,6 +1,6 @@
 import React from 'react';
 import { Area, Line, DualAxes } from '@ant-design/charts';
-import { AreaConfig } from '@ant-design/charts/es/plots/area';
+import { AreaConfig } from '@ant-design/charts';
 import { LineConfig } from '@ant-design/charts/es/plots/line';
 import { DualAxesConfig } from '@ant-design/charts/es/plots/dualAxes';
 import { ICommonProps, IMetaItem } from '../../utils/types';
