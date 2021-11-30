@@ -1,11 +1,19 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
 import { useDrag } from 'react-dnd';
 import { addItem } from '../../utils';
 import { useGlobal, useStore } from '../../utils/hooks';
 import './Element.less';
 
 const Element = ({ text, name, schema, icon, fixedName }) => {
+  const setGlobal = useGlobal();
+  const {
+    selected,
+    flatten,
+    itemError,
+    userProps,
+    onFlattenChange,
+  } = useStore();
+  const { getId } = userProps;
   const [{ isDragging }, dragRef] = useDrag({
     type: 'box',
     item: {
@@ -14,14 +22,12 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
         schema,
         children: [],
       },
-      $id: fixedName ? `#/${name}` : `#/${name}_${nanoid(6)}`,
+      $id: `#/${getId(name)}`,
     },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
-  const setGlobal = useGlobal();
-  const { selected, flatten, itemError, onFlattenChange } = useStore();
 
   const handleElementClick = async () => {
     if (itemError?.length) return;
@@ -29,7 +35,14 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
       setGlobal({ selected: '#' });
       return;
     }
-    const { newId, newFlatten } = addItem({ selected, name, schema, flatten, fixedName });
+    const { newId, newFlatten } = addItem({
+      selected,
+      name,
+      schema,
+      flatten,
+      fixedName,
+      getId,
+    });
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
   };

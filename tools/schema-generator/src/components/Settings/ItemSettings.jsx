@@ -56,7 +56,7 @@ export default function ItemSettings({ widgets }) {
             baseCommonSettings,
             commonSettings,
             baseItemSettings,
-            item.setting,
+            item.setting
           ),
         };
       });
@@ -69,10 +69,14 @@ export default function ItemSettings({ widgets }) {
       const item = flatten[selected];
       if (!item || selected === '#') return;
       if (item && item.schema) {
-        onItemChange(selected, {
-          ...item,
-          schema: transformer.fromSetting(value),
-        }, 'schema');
+        onItemChange(
+          selected,
+          {
+            ...item,
+            schema: transformer.fromSetting(value),
+          },
+          'schema'
+        );
       }
     } catch (error) {
       console.log('catch', error);
@@ -116,8 +120,8 @@ export default function ItemSettings({ widgets }) {
   }, [selected]);
 
   useEffect(() => {
-    onItemErrorChange(form?.errorFields)
-  }, [form?.errorFields])
+    onItemErrorChange(form?.errorFields);
+  }, [form?.errorFields]);
 
   return (
     <div style={{ paddingRight: 24 }}>
@@ -126,7 +130,7 @@ export default function ItemSettings({ widgets }) {
         schema={settingSchema}
         widgets={{ ..._widgets, ...widgets }}
         watch={{
-          '#': v => setTimeout(() => onDataChange(v), 0)
+          '#': v => setTimeout(() => onDataChange(v), 0),
         }}
       />
     </div>

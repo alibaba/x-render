@@ -21,11 +21,13 @@ const Sidebar = props => {
               <p className="f6 b">{item.title}</p>
               <ul className="pl0">
                 {Array.isArray(item.widgets) ? (
-                  item.widgets.filter(item => item.show !== false).map((widget, idx) => {
-                    return (
-                      <Element key={idx.toString()} {...props} {...widget} />
-                    );
-                  })
+                  item.widgets
+                    .filter(item => item.show !== false)
+                    .map((widget, idx) => {
+                      return (
+                        <Element key={idx.toString()} {...props} {...widget} />
+                      );
+                    })
                 ) : (
                   <div>此处配置有误</div>
                 )}

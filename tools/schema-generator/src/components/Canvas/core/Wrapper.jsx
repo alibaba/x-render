@@ -25,7 +25,13 @@ export default function Wrapper({
     userProps,
     itemError,
   } = useStore();
-  const { controlButtons, canDrag = true, canDelete = true, hideId } = userProps;
+  const {
+    controlButtons,
+    canDrag = true,
+    canDelete = true,
+    hideId,
+    getId,
+  } = userProps;
   const setGlobal = useGlobal();
   const { schema } = item;
   const { type } = schema;
@@ -34,7 +40,7 @@ export default function Wrapper({
   const [{ isDragging }, dragRef, dragPreview] = useDrag({
     type: 'box',
     item: { $id: inside ? 0 + $id : $id },
-    canDrag: () => typeof canDrag === 'function' ? canDrag(schema) : canDrag,
+    canDrag: () => (typeof canDrag === 'function' ? canDrag(schema) : canDrag),
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -141,7 +147,7 @@ export default function Wrapper({
   const handleItemCopy = e => {
     e.stopPropagation();
     if (itemError?.length) return;
-    const [newFlatten, newId] = copyItem(flatten, $id);
+    const [newFlatten, newId] = copyItem(flatten, $id, getId);
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
   };
@@ -231,13 +237,18 @@ export default function Wrapper({
     .concat(_extraBtns)
     .filter(Boolean);
 
-  const hasDuplicateId = Object.keys(flatten).map(key => flatten[key].schema.$id).filter(key => key === schema.$id).length > 1;
+  const hasDuplicateId =
+    Object.keys(flatten)
+      .map(key => flatten[key].schema.$id)
+      .filter(key => key === schema.$id).length > 1;
 
   return (
     <div
       ref={boxRef}
       style={overwriteStyle}
-      className={`field-wrapper ${$id !== '#' && isSelected ? 'selected-field-wrapper' : ''} relative w-100`}
+      className={`field-wrapper ${
+        $id !== '#' && isSelected ? 'selected-field-wrapper' : ''
+      } relative w-100`}
       onClick={handleClick}
     >
       {children}

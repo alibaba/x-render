@@ -49,6 +49,7 @@ export interface Setting {
 }
 
 export interface FRGeneratorProps {
+  getId?: (name: string) => string;
   /** 隐藏组件 ID */
   hideId?: boolean;
   /** 固定 id */

@@ -22,6 +22,7 @@ import {
   flattenToData,
   newSchemaToOld,
   schemaToState,
+  defaultGetId,
 } from './utils';
 import { Ctx, StoreCtx } from './utils/context';
 import { useSet } from './utils/hooks';
@@ -44,6 +45,7 @@ function Provider(props, ref) {
     extraButtons,
     controlButtons,
     hideId,
+    getId = defaultGetId,
     settings,
     commonSettings,
     globalSettings,
@@ -57,8 +59,8 @@ function Provider(props, ref) {
     to: schema => schema,
     fromSetting,
     toSetting,
-    ..._transformer
-  }
+    ..._transformer,
+  };
 
   const frwRef = ref || useRef();
   const [state, setState] = useSet({
@@ -69,22 +71,17 @@ function Provider(props, ref) {
     schema: {},
     selected: undefined, // 被选中的$id, 如果object/array的内部，以首字母0标识
   });
-  const [itemError, setItemError] = useState([])
+  const [itemError, setItemError] = useState([]);
 
   // 收口点 propsSchema 到 schema 的转换 (一共3处，其他两个是 importSchema 和 setValue，在 FRWrapper 文件)
   useEffect(() => {
-    const schema = defaultValue ? transformer.from(defaultValue) : DEFAULT_SCHEMA;
+    const schema = defaultValue
+      ? transformer.from(defaultValue)
+      : DEFAULT_SCHEMA;
     if (schema) setState(schemaToState(schema));
   }, [defaultValue]);
 
-  const {
-    formData,
-    frProps,
-    isNewVersion,
-    preview,
-    schema,
-    selected,
-  } = state;
+  const { formData, frProps, isNewVersion, preview, schema, selected } = state;
 
   const onChange = data => {
     setState({ formData: data });
@@ -121,6 +118,7 @@ function Provider(props, ref) {
     extraButtons,
     controlButtons,
     hideId,
+    getId,
     settings,
     commonSettings,
     globalSettings,
