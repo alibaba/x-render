@@ -7,7 +7,9 @@ import { TableRenderProps } from './interface';
 import { renderDom } from './field';
 import { useTable } from './hooks';
 
-const ProTable: <RecordType extends object = any>(props: TableRenderProps<RecordType>) => React.ReactElement = (props) => {
+const ProTable: <RecordType extends object = any>(
+  props: TableRenderProps<RecordType>
+) => React.ReactElement = props => {
   //@ts-ignore
   if (props.dataSource) {
     console.error(

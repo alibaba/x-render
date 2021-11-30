@@ -54,17 +54,17 @@ const Demo = () => {
         }
       })
       .catch(e => {
-        console.log('Oops, error', e)
+        console.log('Oops, error', e);
 
         // 注意一定要返回 rows 和 total
         return {
           rows: [],
-          total: 0
-        }
+          total: 0,
+        };
       });
   };
 
-  const searchApi2 = (params) => {
+  const searchApi2 = params => {
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
@@ -79,11 +79,11 @@ const Demo = () => {
         }
       })
       .catch(e => {
-        console.log('Oops, error', e)
+        console.log('Oops, error', e);
         return {
           rows: [],
           total: 0,
-        }
+        };
       });
   };
 

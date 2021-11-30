@@ -60,7 +60,9 @@ const MySearchBtn = ({
   );
 };
 
-const Search: <RecordType extends object = any>(props: SearchProps<RecordType>) => React.ReactElement = (props) => {
+const Search: <RecordType extends object = any>(
+  props: SearchProps<RecordType>
+) => React.ReactElement = props => {
   const { searchBtnRender, searchBtnStyle, searchBtnClassName } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();

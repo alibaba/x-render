@@ -1,7 +1,7 @@
 import { getChildren2 } from '../utils';
 
 // Setting Schema => FR Schema
-const transformFrom = (schema) => {
+const transformFrom = schema => {
   const isObj = schema.type === 'object' && schema.properties;
   const isList =
     schema.type === 'array' && schema.items && schema.items.properties;
@@ -9,8 +9,12 @@ const transformFrom = (schema) => {
 
   if (!hasChildren) {
     if (Array.isArray(schema.enumList)) {
-      schema.enum = schema.enumList.filter(item => item.value).map(item => item.value);
-      schema.enumNames = schema.enumList.filter(item => item.value).map(item => item.label || item.value);
+      schema.enum = schema.enumList
+        .filter(item => item.value)
+        .map(item => item.value);
+      schema.enumNames = schema.enumList
+        .filter(item => item.value)
+        .map(item => item.label || item.value);
     }
     delete schema.enumList;
   } else {
@@ -30,7 +34,7 @@ const transformFrom = (schema) => {
 export const fromSetting = schema => transformFrom({ ...schema });
 
 // FR Schema => Setting Schema
-const transformTo = (schema) => {
+const transformTo = schema => {
   const isObj = schema.type === 'object' && schema.properties;
   const isList =
     schema.type === 'array' && schema.items && schema.items.properties;

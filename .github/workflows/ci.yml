@@ -31,6 +31,7 @@ jobs:
         run: npm i yarn -g
       - name: install
         run: yarn install
+      - run: yarn prettier
       - run: yarn build
         env:
           CI: true
