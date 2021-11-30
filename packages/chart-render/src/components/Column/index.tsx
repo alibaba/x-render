@@ -2,7 +2,7 @@ import React from 'react';
 import { ICommonProps } from '../../utils/types';
 import { Bar, Column } from '@ant-design/charts';
 import { splitMeta } from '../../utils';
-import { ColumnConfig } from '@ant-design/charts/es/Column';
+import { ColumnConfig } from '@ant-design/charts';
 import ErrorTemplate from '../ErrorTemplate';
 
 export interface ICRColumnProps
