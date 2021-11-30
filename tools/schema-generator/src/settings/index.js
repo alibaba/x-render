@@ -200,7 +200,24 @@ export const elements = [
       title: '日期选择',
       type: 'string',
       format: 'date',
-      widget: 'date',
+    },
+    setting: {
+      format: {
+        title: '格式',
+        type: 'string',
+        enum: ['dateTime', 'date', 'time'],
+        enumNames: ['日期时间', '日期', '时间'],
+      },
+    },
+  },
+  {
+    text: '时间选择',
+    name: 'time',
+    show: false,
+    schema: {
+      title: '时间选择',
+      type: 'string',
+      format: 'time',
     },
     setting: {
       format: {
