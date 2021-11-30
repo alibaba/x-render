@@ -1,5 +1,5 @@
 import { useReducer, useContext } from 'react';
-import { Ctx, StoreCtx } from './context';
+import { Ctx, StoreCtx } from './Context';
 import { TableContext } from './interface';
 
 // 使用最顶层组件的 setState
