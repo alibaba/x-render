@@ -98,7 +98,12 @@ export default function ItemSettings({ widgets }) {
         ? commonSettings
         : defaultCommonSettings;
       const widgetList = getWidgetList(_settings, _commonSettings);
-      const widgetName = getWidgetName(item.schema, globalMapping);
+      let widgetName = getWidgetName(item.schema, globalMapping);
+      // 如果 widgetName 是 time 的话， 需要给映射成 date, 因为 widgetList 只有 date 这个 widget
+      if (widgetName === 'time') {
+        widgetName = 'date';
+      }
+
       const element = widgetList.find(e => e.widget === widgetName) || {}; // 有可能会没有找到
       const properties = { ...element.setting };
 
