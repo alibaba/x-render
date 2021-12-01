@@ -17,7 +17,7 @@ const RenderField = ({
   children,
 }) => {
   const { schema, data } = item;
-  const { onItemChange, flatten, widgets, mapping, frProps = {} } = useStore();
+  const { onItemChange, flatten, widgets, mapping, frProps = {}, fieldRender } = useStore();
   const { labelWidth, displayType, showValidate } = frProps;
   const { title, description, required } = schema;
 
@@ -81,7 +81,7 @@ const RenderField = ({
     ...schema['props'],
   });
 
-  return (
+  const originNode = (
     <>
       {schema.title ? (
         <div className={labelClass} style={labelStyle}>
@@ -117,6 +117,9 @@ const RenderField = ({
       </div>
     </>
   );
+
+  if (!fieldRender) return originNode;
+  return fieldRender(schema, usefulWidgetProps, originNode);
 };
 
 export default RenderField;

@@ -52,6 +52,8 @@ function Provider(props, ref) {
     widgets = {},
     mapping = {},
     children,
+    fieldRender,
+    fieldWrapperRender,
   } = props;
 
   const transformer = {
@@ -201,6 +203,8 @@ function Provider(props, ref) {
     frProps,
     displaySchema,
     displaySchemaString,
+    fieldRender,
+    fieldWrapperRender,
     ...rootState,
   };
 

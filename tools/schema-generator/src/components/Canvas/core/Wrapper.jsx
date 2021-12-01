@@ -10,7 +10,7 @@ import {
 } from '../../../utils';
 import './Wrapper.less';
 
-export default function Wrapper({
+function Wrapper({
   $id,
   item,
   inside = false,
@@ -24,6 +24,7 @@ export default function Wrapper({
     selected,
     userProps,
     errorFields,
+    fieldWrapperRender,
   } = useStore();
   const {
     controlButtons,
@@ -242,7 +243,7 @@ export default function Wrapper({
       .map(key => flatten[key].schema.$id)
       .filter(key => key === schema.$id).length > 1;
 
-  return (
+  const originNode =  (
     <div
       ref={boxRef}
       style={overwriteStyle}
@@ -295,4 +296,9 @@ export default function Wrapper({
       )}
     </div>
   );
+
+  if (!fieldWrapperRender) return originNode;
+  return fieldWrapperRender(schema, isSelected, originNode);
 }
+
+export default Wrapper;
