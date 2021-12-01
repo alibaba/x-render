@@ -119,7 +119,7 @@ const RenderField = ({
   );
 
   if (!fieldRender) return originNode;
-  return fieldRender(schema, usefulWidgetProps, originNode);
+  return fieldRender(schema, usefulWidgetProps, children, originNode);
 };
 
 export default RenderField;

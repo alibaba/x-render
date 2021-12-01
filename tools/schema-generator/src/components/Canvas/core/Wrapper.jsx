@@ -298,7 +298,7 @@ function Wrapper({
   );
 
   if (!fieldWrapperRender) return originNode;
-  return fieldWrapperRender(schema, isSelected, originNode);
+  return fieldWrapperRender(schema, isSelected, children, originNode);
 }
 
 export default Wrapper;
