@@ -1,4 +1,4 @@
-import * as React from 'react';
+import type { FC, ReactNode, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 export interface Transformer {
   /** 正向的转换函数 */
@@ -76,6 +76,8 @@ export interface FRGeneratorProps {
   settingsWidgets?: any;
   /** 组件和 schema 的映射规则 */
   mapping?: any;
+  fieldRender?: (schema?: any, widgetProps?: any, children?: ReactNode, originNode?: ReactNode) => ReactNode;
+  fieldWrapperRender?: (schema?: any, isSelected?: boolean, children?: ReactNode, originNode?: ReactNode) => ReactNode;
   /** 表单 data 变化回调 */
   onChange?: (data: any) => void;
   /** 表单 schema 变化回调 */
@@ -99,13 +101,13 @@ export interface SidebarProps {
 }
 
 export interface Generator
-  extends React.ForwardRefExoticComponent<
-    FRGeneratorProps & React.RefAttributes<HTMLElement>
+  extends ForwardRefExoticComponent<
+    FRGeneratorProps & RefAttributes<HTMLElement>
   > {
-  Provider: React.FC<FRGeneratorProps>;
-  Settings: React.FC<SettingsProps>;
-  Canvas: React.FC<CanvasProps>;
-  Sidebar: React.FC<SidebarProps>;
+  Provider: FC<FRGeneratorProps>;
+  Settings: FC<SettingsProps>;
+  Canvas: FC<CanvasProps>;
+  Sidebar: FC<SidebarProps>;
 }
 
 declare const FRGenerator: Generator;
