@@ -79,7 +79,7 @@ export default function ItemSettings({ widgets }) {
         );
       }
     } catch (error) {
-      console.log('catch', error);
+      console.error(error, 'catch');
     }
   };
 
@@ -117,7 +117,7 @@ export default function ItemSettings({ widgets }) {
         onDataChange(value);
       }, 0);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }, [selected]);
 

@@ -127,7 +127,7 @@ function Wrapper({ $id, item, inside = false, children, style }) {
         newSelect = siblings[1] || parent;
       }
     } catch (error) {
-      console.log('catch', error);
+      console.error(error, 'catch');
     }
     let _canDelete = canDelete;
     if (typeof canDelete === 'function') {

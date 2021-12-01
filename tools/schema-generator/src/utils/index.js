@@ -247,7 +247,7 @@ export function idToSchema(flatten, id = '#', final = false) {
             childId = flatten[child].schema.$id;
           }
         } catch (error) {
-          console.log('catch', error);
+          console.error(error, 'catch');
         }
         const key = getKeyFromUniqueId(childId);
         if (schema.type === 'object') {
@@ -417,7 +417,6 @@ export const dropItem = ({ dragId, dragItem, dropId, position, flatten }) => {
         newChildren.push(dragId);
         break;
     }
-    // console.log(newChildren, dropParent, 'dropParent');
     dropParent.children = newChildren;
   } catch (error) {
     console.error(error);
