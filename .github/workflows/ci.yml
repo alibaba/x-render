@@ -27,11 +27,8 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
           registry-url: 'https://registry.npmjs.org/'
-      - name: Install yarn
-        run: npm i yarn -g
-      - name: install
-        run: yarn install
-      - run: yarn prettier
+      - name: Install
+        run: yarn install --ignore-engines
       - run: yarn build
         env:
           CI: true
