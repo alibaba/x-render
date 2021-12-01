@@ -1,6 +1,6 @@
 import React, { useRef, forwardRef, useImperativeHandle } from 'react';
 import { useSet, useTable } from './hooks';
-import { Ctx } from './context';
+import { Ctx } from './Context';
 import Search from './Search';
 import Table from './Table';
 import { message, ConfigProvider } from 'antd';
@@ -10,9 +10,8 @@ import { useForm } from 'form-render';
 import { SearchApi } from './interface';
 import './index.css';
 
-
 const useTableRoot = props => {
-  const form = useForm();
+  const form = useForm()
 
   const [state, set] = useSet({
     loading: false,
@@ -144,7 +143,6 @@ const useTableRoot = props => {
   };
   return context;
 };
-
 
 const Container = (props, ref) => {
   const context = useTableRoot(props);

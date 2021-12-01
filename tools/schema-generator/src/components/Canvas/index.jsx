@@ -2,14 +2,27 @@ import React, { useEffect } from 'react';
 import { Modal, Input, Button, message } from 'antd';
 import copyTOClipboard from 'copy-text-to-clipboard';
 import FR from './core';
-import { looseJsonParse, isObject, schemaToState, idToSchema } from '../../utils';
+import {
+  looseJsonParse,
+  isObject,
+  schemaToState,
+  idToSchema,
+} from '../../utils';
 import { useSet, useGlobal, useStore } from '../../utils/hooks';
 
 const { TextArea } = Input;
 
 const Canvas = ({ onSelect }) => {
   const setGlobal = useGlobal();
-  const { userProps, displaySchema, displaySchemaString, selected, flatten, onChange, onSchemaChange } = useStore();
+  const {
+    userProps,
+    displaySchema,
+    displaySchemaString,
+    selected,
+    flatten,
+    onChange,
+    onSchemaChange,
+  } = useStore();
   const [local, setState] = useSet({
     preview: false,
     showModal: false,
@@ -37,7 +50,7 @@ const Canvas = ({ onSelect }) => {
       onChange(value.formData || {});
       onSchemaChange(value);
     } catch (error) {
-      console.log('catch', error)
+      console.log('catch', error);
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
     }
     toggleModal2();
@@ -66,7 +79,7 @@ const Canvas = ({ onSelect }) => {
   useEffect(() => {
     if (!onSelect) return;
     onSelect(idToSchema(flatten, selected));
-  }, [selected])
+  }, [selected]);
 
   const _extraButtons = Array.isArray(extraButtons) ? extraButtons : [];
   const _showDefaultBtns = _extraButtons.filter(item => !isObject(item));
@@ -79,7 +92,7 @@ const Canvas = ({ onSelect }) => {
     }
     if (typeof text === 'string') return text;
     return defaultText;
-  }
+  };
 
   return (
     <div className="mid-layout pr2">
@@ -92,7 +105,11 @@ const Canvas = ({ onSelect }) => {
               setGlobal({ selected: '#' });
             }}
           >
-            {getDefaultBtnText(_showDefaultBtns[0], ['开始编辑', '最终展示'], Number(!preview))}
+            {getDefaultBtnText(
+              _showDefaultBtns[0],
+              ['开始编辑', '最终展示'],
+              Number(!preview)
+            )}
           </Button>
         )}
         {_showDefaultBtns[1] !== false && (

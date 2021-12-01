@@ -369,7 +369,7 @@ const useForm = props => {
       });
   };
 
-  const resetFields = (options) => {
+  const resetFields = options => {
     setState({
       formData: options?.formData || {},
       submitData: options?.submitData || {},

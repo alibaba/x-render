@@ -25,7 +25,12 @@ export default function Wrapper({
     userProps,
     itemError,
   } = useStore();
-  const { controlButtons, canDrag = true, canDelete = true, hideId } = userProps;
+  const {
+    controlButtons,
+    canDrag = true,
+    canDelete = true,
+    hideId,
+  } = userProps;
   const setGlobal = useGlobal();
   const { schema } = item;
   const { type } = schema;
@@ -34,7 +39,7 @@ export default function Wrapper({
   const [{ isDragging }, dragRef, dragPreview] = useDrag({
     type: 'box',
     item: { $id: inside ? 0 + $id : $id },
-    canDrag: () => typeof canDrag === 'function' ? canDrag(schema) : canDrag,
+    canDrag: () => (typeof canDrag === 'function' ? canDrag(schema) : canDrag),
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
@@ -128,7 +133,10 @@ export default function Wrapper({
     } catch (error) {
       console.log('catch', error);
     }
-    const _canDelete = typeof canDelete === 'function' ? canDelete(newFlatten[$id].schema) : canDelete;
+    const _canDelete =
+      typeof canDelete === 'function'
+        ? canDelete(newFlatten[$id].schema)
+        : canDelete;
     if (!_canDelete) return;
     delete newFlatten[$id];
     onFlattenChange(newFlatten);
@@ -228,7 +236,10 @@ export default function Wrapper({
     .concat(_extraBtns)
     .filter(Boolean);
 
-  const hasDuplicateId = Object.keys(flatten).map(key => flatten[key].schema.$id).filter(key => key === schema.$id).length > 1;
+  const hasDuplicateId =
+    Object.keys(flatten)
+      .map(key => flatten[key].schema.$id)
+      .filter(key => key === schema.$id).length > 1;
 
   return (
     <div
