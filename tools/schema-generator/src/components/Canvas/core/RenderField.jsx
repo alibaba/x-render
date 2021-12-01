@@ -17,7 +17,14 @@ const RenderField = ({
   children,
 }) => {
   const { schema, data } = item;
-  const { onItemChange, flatten, widgets, mapping, frProps = {}, fieldRender } = useStore();
+  const {
+    onItemChange,
+    flatten,
+    widgets,
+    mapping,
+    frProps = {},
+    fieldRender,
+  } = useStore();
   const { labelWidth, displayType, showValidate } = frProps;
   const { title, description, required } = schema;
 

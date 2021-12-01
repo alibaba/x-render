@@ -55,13 +55,13 @@ const defaultValue = {
 
 const stringContains = (str, text) => {
   return str.indexOf(text) > -1;
-}
+};
 
 const isObject = a =>
   stringContains(Object.prototype.toString.call(a), 'Object');
 
 // 获得 propsSchema 的 children
-const getChildren2 = (schema) => {
+const getChildren2 = schema => {
   if (!schema) return [];
   const {
     // object
@@ -84,7 +84,7 @@ const getChildren2 = (schema) => {
     schema: schemaSubs[name],
     name,
   }));
-}
+};
 
 // formily Schema => FRG schema
 const transformFrom = (mySchema, parent = null) => {
@@ -202,7 +202,7 @@ const transformTo = (frSchema, parent = null, key = null) => {
   return frSchema;
 };
 
-const fromFormily = schema =>  transformFrom(schema);
+const fromFormily = schema => transformFrom(schema);
 const toFormily = schema => transformTo(schema);
 
 const Demo = () => {

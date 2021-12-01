@@ -2,9 +2,7 @@
   "title": "JSON schema for FormRender",
   "$schema": "http://json-schema.org/schema",
   "type": "object",
-  "required": [
-    "properties"
-  ],
+  "required": ["properties"],
   "properties": {
     "type": {
       "type": "string",

@@ -49,12 +49,12 @@ const Demo = () => {
         }
       })
       .catch(e => {
-        console.log('Oops, error', e)
+        console.log('Oops, error', e);
         // 注意一定要返回 rows 和 total
         return {
           rows: [],
           total: 0,
-        }
+        };
       });
   };
 

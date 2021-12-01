@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.8.5
+
+- [+] 为 `resetFields` 添加了自定义的参数，可以在重置时具有更高的灵活性
+- [!] 修复 `widget` 为 `time` 时，配置 `format:HH` 未生效的 bug
+
 ## 1.8.3
 
 - [!] 修复了单选组件的一个 bug

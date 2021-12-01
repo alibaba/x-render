@@ -1,8 +1,8 @@
 import React from 'react';
 import { Area, Line, DualAxes } from '@ant-design/charts';
-import { AreaConfig } from '@ant-design/charts/es/Area';
-import { LineConfig } from '@ant-design/charts/es/line';
-import { DualAxesConfig } from '@ant-design/charts/es/dualAxes';
+import { AreaConfig } from '@ant-design/charts';
+import { LineConfig } from '@ant-design/charts/es/plots/line';
+import { DualAxesConfig } from '@ant-design/charts/es/plots/dualAxes';
 import { ICommonProps, IMetaItem } from '../../utils/types';
 import { splitMeta, strip } from '../../utils';
 import ErrorTemplate from '../ErrorTemplate';

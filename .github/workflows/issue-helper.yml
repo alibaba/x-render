@@ -1,0 +1,33 @@
+name: Issue Reply
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  reply-helper:
+    runs-on: ubuntu-latest
+    steps:
+      - name: need demo
+        if: github.event.label.name == 'need demo'
+        uses: actions-cool/issues-helper@v2.5.0
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hello @${{ github.event.issue.user.login }}. To fix it quickly, We need you to provide a complete demo on codesandbox .
+
+            你好 @${{ github.event.issue.user.login }}，我们需要你在codesandbox上提供一个完整的demo，便于我们快速修复哦。
+
+      - name: need demo
+        if: github.event.label.name == 'pr welcome'
+        uses: actions-cool/issues-helper@v2.5.0
+        with:
+          actions: 'create-comment'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.issue.number }}
+          body: |
+            Hello @${{ github.event.issue.user.login }}. We totally like your proposal/feedback, welcome PR 🎉。
+
+            你好 @${{ github.event.issue.user.login }}，我们完全同意你的提议/反馈，欢迎PR 🎉。

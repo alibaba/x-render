@@ -23,8 +23,8 @@ const Checkboxes = ({ schema, options: _options, ...rest }) => {
     options,
     mode: 'multiple',
     ...rest,
-  }
-  return <Checkbox.Group {...checkboxesProps} />
-}
-  
+  };
+  return <Checkbox.Group {...checkboxesProps} />;
+};
+
 export default Checkboxes;

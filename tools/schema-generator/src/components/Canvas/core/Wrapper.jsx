@@ -10,13 +10,7 @@ import {
 } from '../../../utils';
 import './Wrapper.less';
 
-function Wrapper({
-  $id,
-  item,
-  inside = false,
-  children,
-  style,
-}) {
+function Wrapper({ $id, item, inside = false, children, style }) {
   const [position, setPosition] = useState();
   const {
     flatten,
@@ -243,7 +237,7 @@ function Wrapper({
       .map(key => flatten[key].schema.$id)
       .filter(key => key === schema.$id).length > 1;
 
-  const originNode =  (
+  const originNode = (
     <div
       ref={boxRef}
       style={overwriteStyle}

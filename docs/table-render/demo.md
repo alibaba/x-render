@@ -19,6 +19,6 @@ title: 案例展示
 
 <code src='./demo/paramTable.tsx' />
 
-## 使用TS
+## 使用 TS
 
 <code src='./demo/useTs.tsx' />
