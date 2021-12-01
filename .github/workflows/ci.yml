@@ -28,11 +28,17 @@ jobs:
         with:
           node-version: ${{ matrix.node_version }}
           registry-url: 'https://registry.npmjs.org/'
+      - name: Cache Node Dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
       - name: Install
         run: yarn install
-        if: |
-          steps.cache-yarn-cache.outputs.cache-hit != 'true' ||
-          steps.cache-node-modules.outputs.cache-hit != 'true'
+        if: steps.cache.outputs.cache-hit != 'true'
       - run: yarn build
         env:
           CI: true
