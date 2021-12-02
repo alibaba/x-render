@@ -326,7 +326,7 @@ export function combineSchema(propsSchema = {}, uiSchema = {}) {
   return { ...propsSchema, ...topLevelUi, properties: newObj };
 }
 
-function isEmpty(obj) {
+export function isEmpty(obj) {
   return Object.keys(obj).length === 0;
 }
 

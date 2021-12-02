@@ -10,6 +10,7 @@ import {
   clone,
   schemaContainsExpression,
   parseAllExpression,
+  isEmpty,
 } from './utils';
 
 const useForm = props => {
@@ -108,7 +109,12 @@ const useForm = props => {
 
   useEffect(() => {
     if (schemaRef.current) {
-      let newFlatten = clone(_flatten.current);
+      // 处理使用setSchemaByPath,使用的是旧flatten 页面不触发更新。
+      let newFlatten = clone(
+        isEmpty(_finalFlatten.current)
+          ? _flatten.current
+          : _finalFlatten.current
+      );
       if (firstMount) {
         _flatten.current = flattenSchema(schemaRef.current);
         setState({ firstMount: false });
