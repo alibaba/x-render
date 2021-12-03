@@ -113,8 +113,8 @@ export default function ItemSettings({ widgets }) {
         });
         const value = transformer.toSetting(item.schema);
         form.setValues(value);
-        form.submit();
         onDataChange(value);
+        form.submit();
       }, 0);
     } catch (error) {
       console.error(error);
