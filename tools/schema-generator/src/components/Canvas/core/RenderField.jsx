@@ -17,7 +17,14 @@ const RenderField = ({
   children,
 }) => {
   const { schema, data } = item;
-  const { onItemChange, flatten, widgets, mapping, frProps = {} } = useStore();
+  const {
+    onItemChange,
+    flatten,
+    widgets,
+    mapping,
+    frProps = {},
+    fieldRender,
+  } = useStore();
   const { labelWidth, displayType, showValidate } = frProps;
   const { title, description, required } = schema;
 
@@ -34,9 +41,6 @@ const RenderField = ({
     widgetName = getWidgetName(defaultSchema, mapping);
     Widget = widgets[widgetName] || 'input';
   }
-  // if (widgetName === 'multiSelect') {
-  //   console.log(schema['widget'], customWidget, Widget);
-  // }
   // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 labelWidth
   const effectiveLabelWidth =
     getParentProps('labelWidth', $id, flatten) || labelWidth;
@@ -81,7 +85,7 @@ const RenderField = ({
     ...schema['props'],
   });
 
-  return (
+  const originNode = (
     <>
       {schema.title ? (
         <div className={labelClass} style={labelStyle}>
@@ -99,7 +103,7 @@ const RenderField = ({
                 displayType === 'column' ? 'flex-none' : ''
               }`}
             >
-              {title}
+              <span dangerouslySetInnerHTML={{ __html: title }} />
             </span>
             {description && (
               <span className="fr-desc ml2">(&nbsp;{description}&nbsp;)</span>
@@ -117,6 +121,9 @@ const RenderField = ({
       </div>
     </>
   );
+
+  if (!fieldRender) return originNode;
+  return fieldRender(schema, usefulWidgetProps, children, originNode);
 };
 
 export default RenderField;

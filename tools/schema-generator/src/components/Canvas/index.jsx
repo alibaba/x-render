@@ -50,7 +50,7 @@ const Canvas = ({ onSelect }) => {
       onChange(value.formData || {});
       onSchemaChange(value);
     } catch (error) {
-      console.log('catch', error);
+      console.error(error, 'catch');
       message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
     }
     toggleModal2();

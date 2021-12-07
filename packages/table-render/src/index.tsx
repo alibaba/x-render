@@ -11,7 +11,7 @@ import { SearchApi } from './interface';
 import './index.css';
 
 const useTableRoot = props => {
-  const form = useForm()
+  const form = useForm();
 
   const [state, set] = useSet({
     loading: false,
