@@ -113,7 +113,7 @@ export default function ItemSettings({ widgets }) {
         });
         const value = transformer.toSetting(item.schema);
         form.setValues(value);
-        onDataChange(value);
+        onDataChange(form.getValues());
         form.submit();
       }, 0);
     } catch (error) {
