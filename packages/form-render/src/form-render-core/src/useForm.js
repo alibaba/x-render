@@ -108,41 +108,40 @@ const useForm = props => {
   ]);
 
   useEffect(() => {
-    if (schemaRef.current) {
-      // 处理使用setSchemaByPath,使用的是旧flatten 页面不触发更新。
-      let newFlatten = clone(
-        isEmpty(_finalFlatten.current)
-          ? _flatten.current
-          : _finalFlatten.current
-      );
-      if (firstMount) {
-        _flatten.current = flattenSchema(schemaRef.current);
-        setState({ firstMount: false });
-      } else {
-        // 统一的处理expression
-        Object.entries(_flatten.current).forEach(([path, info]) => {
-          if (schemaContainsExpression(info.schema)) {
-            const arrayLikeIndex = path.indexOf(']');
-            const isArrayItem =
-              arrayLikeIndex > -1 && arrayLikeIndex < path.length - 1;
-            const hasRootValue =
-              JSON.stringify(info.schema).indexOf('rootValue') > -1;
-            if (isArrayItem && hasRootValue) {
-              // do nothing
-            } else {
-              newFlatten[path].schema = parseAllExpression(
-                info.schema,
-                _data.current,
-                path
-              );
-            }
-          }
-        });
-      }
-      setState({ finalFlatten: newFlatten });
+    if (schemaRef.current && firstMount) {
+      const flatten = flattenSchema(schemaRef.current);
+      _flatten.current = flatten;
+      setState({ firstMount: false });
     }
+  }, [JSON.stringify(schemaRef.current), firstMount]);
+
+  // 统一的处理expression
+  useEffect(() => {
+    if (firstMount) {
+      return;
+    }
+    let newFlatten = clone(_flatten.current);
+    Object.entries(_flatten.current).forEach(([path, info]) => {
+      if (schemaContainsExpression(info.schema)) {
+        const arrayLikeIndex = path.indexOf(']');
+        const isArrayItem =
+          arrayLikeIndex > -1 && arrayLikeIndex < path.length - 1;
+        const hasRootValue =
+          JSON.stringify(info.schema).indexOf('rootValue') > -1;
+        if (isArrayItem && hasRootValue) {
+          // do nothing
+        } else {
+          newFlatten[path].schema = parseAllExpression(
+            info.schema,
+            _data.current,
+            path
+          );
+        }
+      }
+    });
+    setState({ finalFlatten: newFlatten });
   }, [
-    JSON.stringify(schemaRef.current),
+    JSON.stringify(_flatten.current),
     JSON.stringify(_data.current),
     firstMount,
   ]);
