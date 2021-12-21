@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useMemo, useState } from 'react';
-import { validateAll } from './validator';
+import { validateAll, validateField, removeDupErrors } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
@@ -209,6 +209,29 @@ const useForm = props => {
     _setData({ ..._data.current });
   };
 
+  const setValueByPath = (path, value) => {
+    onItemChange(path, value);
+    // 通过 API 设置 value 时也进行字段校验
+    validateFieldByPath(path);
+  }
+
+  const validateFieldByPath = (path) => {
+    // 调用 setValueByPath API 也走校验逻辑
+    return validateField({
+      path,
+      formData: _data.current,
+      flatten: _finalFlatten.current,
+      options: {
+        locale: localeRef.current,
+        validateMessages: validateMessagesRef.current,
+      },
+    }).then(res => {
+      _setErrors(errors => {
+        return removeDupErrors([...errors, ...res]);
+      });
+    });
+  }
+
   // errorFields: [
   //   { name: 'a.b.c', errors: ['Please input your Password!', 'something else is wrong'] },
   // ]
@@ -297,10 +320,19 @@ const useForm = props => {
   };
 
   const removeErrorField = path => {
-    let newError = _errorFields.current.filter(item => {
+    // 移除错误时将内部和外部的错误都移除
+    const newInnerError = _errorFields.current.filter(item => {
       return item.name.indexOf(path) === -1;
     });
-    setState({ outErrorFields: newError });
+
+    const newOutError = _outErrorFields.current.filter(item => {
+      return item.name.indexOf(path) === -1;
+    });
+
+    setState({ 
+      outErrorFields: newOutError, 
+      errorFields: newInnerError,
+    });
   };
 
   const getValues = () => {
@@ -411,7 +443,8 @@ const useForm = props => {
     removeTouched,
     changeTouchedKeys,
     onItemChange,
-    setValueByPath: onItemChange, // 单个
+    setValueByPath, // 单个
+    validateFieldByPath,
     getSchemaByPath,
     setSchemaByPath,
     setSchema,
