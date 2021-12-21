@@ -335,6 +335,14 @@ const useForm = props => {
     });
   };
 
+  // 批量进行错误移除
+  const removeErrorFields = paths => {
+    if (Array.isArray(paths)) {
+      paths.forEach(path => removeErrorField(path));
+    }
+  };
+  
+
   const getValues = () => {
     return processData(
       _data.current,
@@ -462,6 +470,8 @@ const useForm = props => {
     endSubmitting,
     setErrorFields,
     removeErrorField,
+    // 内部多次调用 removeErrorField，注意性能
+    removeErrorFields,
     isEditing,
     setEditing,
     syncStuff,
