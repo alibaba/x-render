@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTable } from './hooks';
 import { Button } from 'antd';
 import SearchForm from 'form-render';
-import { SearchProps } from './interface';
+import { SearchProps } from '../interface';
 
 const SearchBtn = ({
   clearSearch,

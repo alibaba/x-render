@@ -7,7 +7,7 @@ import { message, ConfigProvider } from 'antd';
 import _get from 'lodash.get';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
-import { SearchApi } from './interface';
+import { SearchApi } from '../interface';
 import './index.css';
 
 const useTableRoot = props => {
@@ -166,4 +166,4 @@ const withTable = Component => props => {
   );
 };
 
-export { Search, Table, TableProvider, useTable, withTable };
+export { TableProvider, withTable };

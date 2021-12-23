@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { Table, Radio, Space, TableProps } from 'antd';
-import { getDate, getDateTime, getMoneyType } from './utils';
-import ErrorBoundary from './components/ErrorBoundary';
-import ToolBarAction from './components/ToolBarAction';
-import { TableRenderProps } from './interface';
+import { getDate, getDateTime, getMoneyType } from '../utils';
+import ErrorBoundary from './ErrorBoundary';
+import ToolBarAction from './ToolBarAction';
+import { TableRenderProps } from '../interface';
 import { renderDom } from './field';
 import { useTable } from './hooks';
 

@@ -34,6 +34,7 @@ jobs:
         run: yarn install
         if: steps.cache.outputs.cache-hit != 'true'
       - run: yarn build
+      - run: yarn test
         env:
           CI: true
           NODE_ENV: test
