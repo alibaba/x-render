@@ -167,6 +167,43 @@ export const validateAll = ({
     });
 };
 
+// 错误去重工具方法统一提取
+export const removeDupErrors = arr => {
+  if (!Array.isArray(arr)) {
+    console.log('in removeDups: param is not an array');
+    return;
+  }
+  var array = [];
+  for (var i = 0; i < arr.length; i++) {
+    const sameNameIndex = array.findIndex(item => item.name === arr[i].name);
+    if (sameNameIndex > -1) {
+      const sameNameItem = array[sameNameIndex];
+      const error1 = sameNameItem.error;
+      const error2 = arr[i].error;
+      array[sameNameIndex] = {
+        name: sameNameItem.name,
+        error:
+          error1.length > 0 && error2.length > 0
+          // 最后加入的错误先展示
+            ? [...error2, ...error1]
+            : [],
+      };
+    } else {
+      array.unshift(arr[i]);
+    }
+  }
+  const result = array.filter(
+    item => Array.isArray(item.error) && item.error.length > 0
+  ).map((item) => {
+    const dupError = item.error;
+    // 对错误进行去重
+    item.error =  [...new Set(dupError)];
+    return item;
+  });
+
+  return result;
+};
+
 const validateSingle = (data, schema = {}, path, options = {}) => {
   if (schema.hidden) {
     return Promise.resolve();

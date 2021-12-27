@@ -5,7 +5,7 @@ import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import Extra from './Extra';
 import FieldTitle from './Title';
-import { validateField } from '../../validator';
+import { validateField, removeDupErrors } from '../../validator';
 import ExtendedWidget from './ExtendedWidget';
 
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
@@ -61,34 +61,6 @@ const RenderField = props => {
 
   const _readOnly = readOnly !== undefined ? readOnly : _schema.readOnly;
   const _disabled = disabled !== undefined ? disabled : _schema.disabled;
-
-  const removeDupErrors = arr => {
-    if (!Array.isArray(arr)) {
-      console.log('in removeDups: param is not an array');
-      return;
-    }
-    var array = [];
-    for (var i = 0; i < arr.length; i++) {
-      const sameNameIndex = array.findIndex(item => item.name === arr[i].name);
-      if (sameNameIndex > -1) {
-        const sameNameItem = array[sameNameIndex];
-        const error1 = sameNameItem.error;
-        const error2 = arr[i].error;
-        array[sameNameIndex] = {
-          name: sameNameItem.name,
-          error:
-            error1.length > 0 && error2.length > 0
-              ? [...error1, ...error2]
-              : [],
-        };
-      } else {
-        array.push(arr[i]);
-      }
-    }
-    return array.filter(
-      item => Array.isArray(item.error) && item.error.length > 0
-    );
-  };
 
   // TODO: 优化一下，只有touch还是false的时候，setTouched
   const onChange = value => {

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useMemo, useState } from 'react';
-import { validateAll } from './validator';
+import { validateAll, validateField, removeDupErrors } from './validator';
 import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
@@ -108,41 +108,40 @@ const useForm = props => {
   ]);
 
   useEffect(() => {
-    if (schemaRef.current) {
-      // 处理使用setSchemaByPath,使用的是旧flatten 页面不触发更新。
-      let newFlatten = clone(
-        isEmpty(_finalFlatten.current)
-          ? _flatten.current
-          : _finalFlatten.current
-      );
-      if (firstMount) {
-        _flatten.current = flattenSchema(schemaRef.current);
-        setState({ firstMount: false });
-      } else {
-        // 统一的处理expression
-        Object.entries(_flatten.current).forEach(([path, info]) => {
-          if (schemaContainsExpression(info.schema)) {
-            const arrayLikeIndex = path.indexOf(']');
-            const isArrayItem =
-              arrayLikeIndex > -1 && arrayLikeIndex < path.length - 1;
-            const hasRootValue =
-              JSON.stringify(info.schema).indexOf('rootValue') > -1;
-            if (isArrayItem && hasRootValue) {
-              // do nothing
-            } else {
-              newFlatten[path].schema = parseAllExpression(
-                info.schema,
-                _data.current,
-                path
-              );
-            }
-          }
-        });
-      }
-      setState({ finalFlatten: newFlatten });
+    if (schemaRef.current && firstMount) {
+      const flatten = flattenSchema(schemaRef.current);
+      _flatten.current = flatten;
+      setState({ firstMount: false });
     }
+  }, [JSON.stringify(schemaRef.current), firstMount]);
+
+  // 统一的处理expression
+  useEffect(() => {
+    if (firstMount) {
+      return;
+    }
+    let newFlatten = clone(_flatten.current);
+    Object.entries(_flatten.current).forEach(([path, info]) => {
+      if (schemaContainsExpression(info.schema)) {
+        const arrayLikeIndex = path.indexOf(']');
+        const isArrayItem =
+          arrayLikeIndex > -1 && arrayLikeIndex < path.length - 1;
+        const hasRootValue =
+          JSON.stringify(info.schema).indexOf('rootValue') > -1;
+        if (isArrayItem && hasRootValue) {
+          // do nothing
+        } else {
+          newFlatten[path].schema = parseAllExpression(
+            info.schema,
+            _data.current,
+            path
+          );
+        }
+      }
+    });
+    setState({ finalFlatten: newFlatten });
   }, [
-    JSON.stringify(schemaRef.current),
+    JSON.stringify(_flatten.current),
     JSON.stringify(_data.current),
     firstMount,
   ]);
@@ -208,6 +207,29 @@ const useForm = props => {
     set(_data.current, path, value);
     _setData({ ..._data.current });
   };
+
+  const setValueByPath = (path, value) => {
+    onItemChange(path, value);
+    // 通过 API 设置 value 时也进行字段校验
+    validateFieldByPath(path);
+  }
+
+  const validateFieldByPath = (path) => {
+    // 调用 setValueByPath API 也走校验逻辑
+    return validateField({
+      path,
+      formData: _data.current,
+      flatten: _finalFlatten.current,
+      options: {
+        locale: localeRef.current,
+        validateMessages: validateMessagesRef.current,
+      },
+    }).then(res => {
+      _setErrors(errors => {
+        return removeDupErrors([...errors, ...res]);
+      });
+    });
+  }
 
   // errorFields: [
   //   { name: 'a.b.c', errors: ['Please input your Password!', 'something else is wrong'] },
@@ -297,11 +319,28 @@ const useForm = props => {
   };
 
   const removeErrorField = path => {
-    let newError = _errorFields.current.filter(item => {
+    // 移除错误时将内部和外部的错误都移除
+    const newInnerError = _errorFields.current.filter(item => {
       return item.name.indexOf(path) === -1;
     });
-    setState({ outErrorFields: newError });
+
+    const newOutError = _outErrorFields.current.filter(item => {
+      return item.name.indexOf(path) === -1;
+    });
+
+    setState({ 
+      outErrorFields: newOutError, 
+      errorFields: newInnerError,
+    });
   };
+
+  // 批量进行错误移除
+  const removeErrorFields = paths => {
+    if (Array.isArray(paths)) {
+      paths.forEach(path => removeErrorField(path));
+    }
+  };
+  
 
   const getValues = () => {
     return processData(
@@ -411,7 +450,8 @@ const useForm = props => {
     removeTouched,
     changeTouchedKeys,
     onItemChange,
-    setValueByPath: onItemChange, // 单个
+    setValueByPath, // 单个
+    validateFieldByPath,
     getSchemaByPath,
     setSchemaByPath,
     setSchema,
@@ -429,6 +469,8 @@ const useForm = props => {
     endSubmitting,
     setErrorFields,
     removeErrorField,
+    // 内部多次调用 removeErrorField，注意性能
+    removeErrorFields,
     isEditing,
     setEditing,
     syncStuff,
