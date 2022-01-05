@@ -89,7 +89,7 @@ const RenderField = props => {
       },
     }).then(res => {
       _setErrors(errors => {
-        return removeDupErrors([...errors, ...res]);
+        return removeDupErrors([...res]);
       });
     });
   };
