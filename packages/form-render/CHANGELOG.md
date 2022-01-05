@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.8.7
+
+- [+] `useForm.js`内部逻辑修改
+
 ## 1.8.6
 
 - [!] 修复 `form.setSchemaByPath` 不触发更新的bug
