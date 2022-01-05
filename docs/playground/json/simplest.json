@@ -2,7 +2,7 @@
   "schema": {
     "type": "object",
     "properties": {
-      "input1": {
+      "input": {
         "title": "简单输入框",
         "type": "string",
         "min": 6,
