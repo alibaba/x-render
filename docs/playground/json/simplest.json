@@ -2,10 +2,16 @@
   "schema": {
     "type": "object",
     "properties": {
-      "string": {
-        "title": "字符串",
+      "input": {
+        "title": "简单输入框",
         "type": "string",
-        "required": true
+        "min": 6,
+        "rules": [
+          {
+            "pattern": "^[A-Za-z0-9]+$",
+            "message": "只允许填写英文字母和数字"
+          }
+        ]
       },
       "select": {
         "title": "单选",

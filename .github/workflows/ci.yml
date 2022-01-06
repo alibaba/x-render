@@ -3,13 +3,8 @@ name: CI
 env:
   NODE_OPTIONS: --max-old-space-size=6144
 
-on:
-  push:
-    paths-ignore:
-      - 'examples/**'
-      - 'docs/**'
-      - '**/*.md'
-      - 'tools/form-render-excel'
+on: [push, pull_request]
+
 
 jobs:
   build:
@@ -27,7 +22,6 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node_version }}
-          registry-url: 'https://registry.npmjs.org/'
       - name: Cache Node Dependencies
         id: cache
         uses: actions/cache@v2
