@@ -6,13 +6,13 @@ import RenderChildren from './RenderChildren';
 import RenderField from './RenderField';
 import Wrapper from './Wrapper';
 
-const PreviewFR = ({ schema }) => {
+const PreviewFR = ({ schema, data }) => {
   const form = useForm();
   const { flatten, widgets, mapping, userProps, onFlattenChange } = useStore();
   const renderSchema = userProps.transformer.to(schema);
 
   useEffect(() => {
-    form.setValues(flattenToData(flatten));
+    form.setValues(data);
   }, []);
 
   return (
@@ -34,7 +34,8 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   const { flatten, frProps = {} } = useStore();
 
   if (preview) {
-    return <PreviewFR schema={displaySchema} />;
+    const data = flattenToData(flatten);
+    return <PreviewFR schema={displaySchema} data={data} />;
   }
 
   const { column } = frProps;
@@ -47,9 +48,9 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   const isList = schema.type === 'array' && schema.enum === undefined;
   const isComplex = isObj || isList;
   const width = schema['width'];
-  let containerClass = `fr-field w-100 ${
-    isComplex ? 'fr-field-complex' : ''
-  } ${schema.className || ''}`;
+  let containerClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''} ${
+    schema.className || ''
+  }`;
   let labelClass = 'fr-label mb2';
   let contentClass = 'fr-content';
 

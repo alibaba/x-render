@@ -49,19 +49,23 @@ export default Demo;
 
 ### Props
 
-| 参数           | 说明                            | 类型      | 默认值                                                                                                                          |
-| -------------- | ------------------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| hideId         | 隐藏组件 ID                     | `boolean` | `false`                                                                                                                         |
-| fixedName      | 固定 settings 的 name 为组件 ID | `boolean` | `false`                                                                                                                         |
-| defaultValue   | 默认表单 schema                 | `object`  | `DEFAULT_SCHEMA`                                                                                                                |
-| transformer    | schema 双向转换                 | `object`  | `{ from, to, fromSetting, toSetting }`                                                                                          |
-| extraButtons   | 操作栏按钮                      | `array`   | `extraButton[]`                                                                                                                 |
-| controlButtons | 选中项操作按钮                  | `array`   | `controlButton[]`                                                                                                               |
-| settings       | 左右侧栏配置                    | `array`   | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L651)       |
-| commonSettings | 通用配置                        | `object`  | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L2)   |
-| globalSettings | 全局配置                        | `object`  | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L672) |
-| widgets        | 自定义组件                      | `object`  | `{}`                                                                                                                            |
-| mapping        | 组件和 schema 的映射规则        | `object`  | `{}`                                                                                                                            |
+| 参数               | 说明                            | 类型       | 默认值                                                                                                                     |
+| ------------------ | ------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
+| getId              | 设置如何生成新的 id             | `Function` | name => `${name}_${nanoid(6)}`                                                                                             |
+| hideId             | 隐藏组件 ID                     | `boolean`  | `false`                                                                                                                    |
+| fixedName          | 固定 settings 的 name 为组件 ID | `boolean`  | `false`                                                                                                                    |
+| canDelete          | 组件删除控制                    | `boolean`  | `Function`                                                                                                                 | `false` |
+| defaultValue       | 默认表单 schema                 | `object`   | `DEFAULT_SCHEMA`                                                                                                           |
+| transformer        | schema 双向转换                 | `object`   | `{ from, to, fromSetting, toSetting }`                                                                                     |
+| extraButtons       | 操作栏按钮                      | `array`    | `extraButton[]`                                                                                                            |
+| controlButtons     | 选中项操作按钮                  | `array`    | `controlButton[]`                                                                                                          |
+| settings           | 左右侧栏配置                    | `array`    | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js)       |
+| commonSettings     | 通用配置                        | `object`   | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js) |
+| globalSettings     | 全局配置                        | `object`   | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js) |
+| widgets            | 自定义组件                      | `object`   | `{}`                                                                                                                       |
+| mapping            | 组件和 schema 的映射规则        | `object`   | `{}`                                                                                                                       |
+| fieldRender        | 自定义组件渲染函数              | `Function` | `(schema, widgetProps, children, originNode) => originNode`                                                                |
+| fieldWrapperRender | 自定义容器组件渲染函数          | `Function` | `(schema, isSelected, children, originNode) => originNode`                                                                 |
 
 #### extraButton
 
@@ -92,11 +96,12 @@ export default Demo;
 
 ### Methods
 
-| 事件名    | 说明                       | 入参     |
-| --------- | -------------------------- | -------- |
-| getValue  | 获取导出的 schema 值       | -        |
-| setValue  | 从外部强制修改 schema      | `schema` |
-| copyValue | 将现有 schema 拷贝到剪贴板 | -        |
+| 事件名         | 说明                       | 入参     |
+| -------------- | -------------------------- | -------- |
+| getValue       | 获取导出的 schema 值       | -        |
+| setValue       | 从外部强制修改 schema      | `schema` |
+| copyValue      | 将现有 schema 拷贝到剪贴板 | -        |
+| getErrorFields | 获取配置项校验错误         | -        |
 
 ## 案例演示
 

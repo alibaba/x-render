@@ -23,11 +23,18 @@ export const defaultCommonSettings = {
     description: '字段名称/英文',
     type: 'string',
     widget: 'idInput',
-    required: true,
+    require: true,
+    rules: [
+      {
+        pattern: '^#/.+$',
+        message: 'ID 必填',
+      },
+    ],
   },
   title: {
     title: '标题',
     type: 'string',
+    widget: 'htmlInput',
   },
   displayType: {
     title: '标题展示模式',
@@ -200,6 +207,24 @@ export const elements = [
       title: '日期选择',
       type: 'string',
       format: 'date',
+    },
+    setting: {
+      format: {
+        title: '格式',
+        type: 'string',
+        enum: ['dateTime', 'date', 'time'],
+        enumNames: ['日期时间', '日期', '时间'],
+      },
+    },
+  },
+  {
+    text: '时间选择',
+    name: 'time',
+    show: false,
+    schema: {
+      title: '时间选择',
+      type: 'string',
+      format: 'time',
     },
     setting: {
       format: {

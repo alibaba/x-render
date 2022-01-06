@@ -1,5 +1,5 @@
-import { nanoid } from 'nanoid';
 import deepClone from 'clone';
+import { nanoid } from 'nanoid';
 
 function stringContains(str, text) {
   return str.indexOf(text) > -1;
@@ -247,7 +247,7 @@ export function idToSchema(flatten, id = '#', final = false) {
             childId = flatten[child].schema.$id;
           }
         } catch (error) {
-          console.log('catch', error);
+          console.error(error, 'catch');
         }
         const key = getKeyFromUniqueId(childId);
         if (schema.type === 'object') {
@@ -284,11 +284,11 @@ export function idToSchema(flatten, id = '#', final = false) {
   return schema;
 }
 
-export const copyItem = (flatten, $id) => {
+export const copyItem = (flatten, $id, getId) => {
   let newFlatten = { ...flatten };
   try {
     const item = flatten[$id];
-    const newId = `${$id}_${nanoid(6)}`;
+    const newId = getId($id);
     const siblings = newFlatten[item.parent].children;
     const idx = siblings.findIndex(x => x === $id);
     siblings.splice(idx + 1, 0, newId);
@@ -302,7 +302,14 @@ export const copyItem = (flatten, $id) => {
 };
 
 // Left 点击添加 item
-export const addItem = ({ selected, name, schema, flatten, fixedName }) => {
+export const addItem = ({
+  selected,
+  name,
+  schema,
+  flatten,
+  fixedName,
+  getId,
+}) => {
   let _selected = selected || '#';
   let newId;
   // string第一个是0，说明点击了object、list的里侧
@@ -310,9 +317,11 @@ export const addItem = ({ selected, name, schema, flatten, fixedName }) => {
     const newFlatten = { ...flatten };
     try {
       let oldId = _selected.substring(1);
-      newId = _selected === '#' ? `#/${name}` : `${oldId}/${name}`;
+      newId = _selected === '#' ? `#/` : `${oldId}/`;
       if (!fixedName) {
-        newId += `_${nanoid(6)}`;
+        newId += getId(name);
+      } else {
+        newId += name;
       }
       if (_selected === '#') {
         oldId = '#';
@@ -331,10 +340,7 @@ export const addItem = ({ selected, name, schema, flatten, fixedName }) => {
     }
     return { newId, newFlatten };
   }
-  let _name = name;
-  if (!fixedName) {
-    _name += `_${nanoid(6)}`;
-  }
+  const _name = fixedName ? name : getId(name);
   const idArr = selected.split('/');
   idArr.pop();
   idArr.push(_name);
@@ -389,7 +395,7 @@ export const dropItem = ({ dragId, dragItem, dropId, position, flatten }) => {
   try {
     const dragParent = newFlatten[_dragItem.parent];
     const idx = dragParent.children.indexOf(dragId);
-    if (idx > -1) {
+    if (idx > -1 && !dragItem) {
       dragParent.children.splice(idx, 1);
     }
   } catch (error) {
@@ -411,7 +417,6 @@ export const dropItem = ({ dragId, dragItem, dropId, position, flatten }) => {
         newChildren.push(dragId);
         break;
     }
-    // console.log(newChildren, dropParent, 'dropParent');
     dropParent.children = newChildren;
   } catch (error) {
     console.error(error);
@@ -662,4 +667,18 @@ export const transformProps = props => {
   };
 
   return _props;
+};
+
+export const mergeInOrder = (...args) => {
+  return args.reduce((result, current) => {
+    if (!current) return result;
+    return Object.keys(current).reduce((rst, key) => {
+      if (rst[key]) delete rst[key];
+      return { ...rst, [key]: current[key] };
+    }, result);
+  }, {});
+};
+
+export const defaultGetId = name => {
+  return `${name}_${nanoid(6)}`;
 };

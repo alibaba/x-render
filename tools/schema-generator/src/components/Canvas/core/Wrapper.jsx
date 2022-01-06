@@ -10,26 +10,22 @@ import {
 } from '../../../utils';
 import './Wrapper.less';
 
-export default function Wrapper({
-  $id,
-  item,
-  inside = false,
-  children,
-  style,
-}) {
+function Wrapper({ $id, item, inside = false, children, style }) {
   const [position, setPosition] = useState();
   const {
     flatten,
     onFlattenChange,
     selected,
     userProps,
-    itemError,
+    errorFields,
+    fieldWrapperRender,
   } = useStore();
   const {
     controlButtons,
     canDrag = true,
     canDelete = true,
     hideId,
+    getId,
   } = userProps;
   const setGlobal = useGlobal();
   const { schema } = item;
@@ -51,7 +47,7 @@ export default function Wrapper({
       // 如果 children 已经作为了 drop target，不处理
       const didDrop = monitor.didDrop();
 
-      if (didDrop || itemError?.length) {
+      if (didDrop || errorFields?.length) {
         return;
       }
 
@@ -108,12 +104,12 @@ export default function Wrapper({
 
   const handleClick = async e => {
     e.stopPropagation();
-    if (itemError?.length) return;
+    if (errorFields?.length) return;
     const _id = inside ? '0' + $id : $id;
     setGlobal({ selected: _id });
   };
 
-  const deleteItem = e => {
+  const deleteItem = async e => {
     e.stopPropagation();
     const newFlatten = { ...flatten };
     let newSelect = '#';
@@ -131,22 +127,22 @@ export default function Wrapper({
         newSelect = siblings[1] || parent;
       }
     } catch (error) {
-      console.log('catch', error);
+      console.error(error, 'catch');
     }
-    const _canDelete =
-      typeof canDelete === 'function'
-        ? canDelete(newFlatten[$id].schema)
-        : canDelete;
+    let _canDelete = canDelete;
+    if (typeof canDelete === 'function') {
+      _canDelete = await Promise.resolve(canDelete(newFlatten[$id].schema));
+    }
     if (!_canDelete) return;
     delete newFlatten[$id];
     onFlattenChange(newFlatten);
     setGlobal({ selected: newSelect });
   };
 
-  const handleItemCopy = async e => {
+  const handleItemCopy = e => {
     e.stopPropagation();
-    if (itemError?.length) return;
-    const [newFlatten, newId] = copyItem(flatten, $id);
+    if (errorFields?.length) return;
+    const [newFlatten, newId] = copyItem(flatten, $id, getId);
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
   };
@@ -241,11 +237,13 @@ export default function Wrapper({
       .map(key => flatten[key].schema.$id)
       .filter(key => key === schema.$id).length > 1;
 
-  return (
+  const originNode = (
     <div
       ref={boxRef}
       style={overwriteStyle}
-      className="field-wrapper relative w-100"
+      className={`field-wrapper ${
+        $id !== '#' && isSelected ? 'selected-field-wrapper' : ''
+      } relative w-100`}
       onClick={handleClick}
     >
       {children}
@@ -292,4 +290,9 @@ export default function Wrapper({
       )}
     </div>
   );
+
+  if (!fieldWrapperRender) return originNode;
+  return fieldWrapperRender(schema, isSelected, children, originNode);
 }
+
+export default Wrapper;

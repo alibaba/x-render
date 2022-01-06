@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
 import IdInput from '../../widgets/idInput';
+import HtmlInput from '../../widgets/htmlInput';
 import PercentSlider from '../../widgets/percentSlider';
 import {
   defaultSettings,
@@ -10,7 +11,7 @@ import {
   advancedElements,
   layouts,
 } from '../../settings';
-import { isObject } from '../../utils';
+import { isObject, mergeInOrder } from '../../utils';
 import { getWidgetName } from '../../utils/mapping';
 import { useStore } from '../../utils/hooks';
 
@@ -28,12 +29,11 @@ export default function ItemSettings({ widgets }) {
 
   const { settings, commonSettings, hideId, transformer } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
-  // 避免切换选中项时 schema 对应出错
-  const [ready, setReady] = useState({});
 
   const _widgets = {
     ...globalWidgets,
     idInput: IdInput,
+    htmlInput: HtmlInput,
     percentSlider: PercentSlider,
   };
 
@@ -54,12 +54,12 @@ export default function ItemSettings({ widgets }) {
             item.widget ||
             item.schema.widget ||
             getWidgetName(item.schema, globalMapping),
-          setting: {
-            ...baseCommonSettings,
-            ...commonSettings,
-            ...baseItemSettings,
-            ...item.setting,
-          },
+          setting: mergeInOrder(
+            baseCommonSettings,
+            commonSettings,
+            baseItemSettings,
+            item.setting
+          ),
         };
       });
       return [...widgetList, ...basicWidgets];
@@ -68,8 +68,8 @@ export default function ItemSettings({ widgets }) {
 
   const onDataChange = value => {
     try {
-      if (!ready) return;
       const item = flatten[selected];
+      if (!item || selected === '#') return;
       if (item && item.schema) {
         onItemChange(
           selected,
@@ -81,7 +81,7 @@ export default function ItemSettings({ widgets }) {
         );
       }
     } catch (error) {
-      console.log('catch', error);
+      console.error(error, 'catch');
     }
   };
 
@@ -90,7 +90,6 @@ export default function ItemSettings({ widgets }) {
     try {
       const item = flatten[selected];
       if (!item || selected === '#') return;
-      setReady(false);
       // 算 widgetList
       const _settings = Array.isArray(settings)
         ? [
@@ -108,18 +107,19 @@ export default function ItemSettings({ widgets }) {
 
       if (hideId) delete properties.$id;
 
-      setSettingSchema({
-        type: 'object',
-        displayType: 'column',
-        properties,
-      });
-      form.setValues(transformer.toSetting(item.schema));
       setTimeout(() => {
-        setReady(true);
+        setSettingSchema({
+          type: 'object',
+          displayType: 'column',
+          properties,
+        });
+        const value = transformer.toSetting(item.schema);
+        form.setValues(value);
         onDataChange(form.getValues());
+        form.submit();
       }, 0);
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }, [selected]);
 

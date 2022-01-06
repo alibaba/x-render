@@ -1,11 +1,19 @@
 import React from 'react';
-import { nanoid } from 'nanoid';
 import { useDrag } from 'react-dnd';
 import { addItem } from '../../utils';
 import { useGlobal, useStore } from '../../utils/hooks';
 import './Element.less';
 
 const Element = ({ text, name, schema, icon, fixedName }) => {
+  const setGlobal = useGlobal();
+  const {
+    selected,
+    flatten,
+    errorFields,
+    userProps,
+    onFlattenChange,
+  } = useStore();
+  const { getId } = userProps;
   const [{ isDragging }, dragRef] = useDrag({
     type: 'box',
     item: {
@@ -14,17 +22,15 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
         schema,
         children: [],
       },
-      $id: fixedName ? `#/${name}` : `#/${name}_${nanoid(6)}`,
+      $id: fixedName ? `#/${name}` : `#/${getId(name)}`,
     },
     collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
-  const setGlobal = useGlobal();
-  const { selected, flatten, itemError, onFlattenChange } = useStore();
 
   const handleElementClick = async () => {
-    if (itemError?.length) return;
+    if (errorFields?.length) return;
     if (selected && !flatten[selected]) {
       setGlobal({ selected: '#' });
       return;
@@ -35,6 +41,7 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
       schema,
       flatten,
       fixedName,
+      getId,
     });
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
@@ -53,6 +60,7 @@ export default Element;
 const WidgetUI = ({ onClick, text, icon }) => {
   return (
     <li className="left-item" onClick={onClick}>
+      {icon}
       {text}
     </li>
   );
