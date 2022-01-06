@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.8.7
+
+- [+] `useForm.js`内部逻辑修改
+
+## 1.8.6
+
+- [!] 修复 `form.setSchemaByPath` 不触发更新的bug
+- [!] 修复 `fr` 只提示初始错误的bug
+
 ## 1.8.5
 
 - [+] 为 `resetFields` 添加了自定义的参数，可以在重置时具有更高的灵活性
