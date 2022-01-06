@@ -42,7 +42,7 @@ export default function ItemSettings({ widgets }) {
       if (!Array.isArray(setting.widgets)) return widgetList;
       const basicWidgets = setting.widgets.map(item => {
         const baseItemSettings = {};
-        if (item.schema.type === 'array') {
+        if (item.schema.type === 'array' && item.schema.items) {
           baseItemSettings.items = {
             type: 'object',
             hidden: '{{true}}',
