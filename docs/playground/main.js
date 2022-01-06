@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { parse as parseJson } from 'json5';
+import deepEqual from 'deep-equal';
+import parseJson from 'json-parse-better-errors';
 import FormRender, { useForm } from 'form-render';
 import DefaultSchema from './json/simplest.json';
 import { Tabs } from 'antd';

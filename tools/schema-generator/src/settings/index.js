@@ -34,6 +34,7 @@ export const defaultCommonSettings = {
   title: {
     title: '标题',
     type: 'string',
+    widget: 'htmlInput',
   },
   displayType: {
     title: '标题展示模式',
