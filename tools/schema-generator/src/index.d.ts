@@ -31,6 +31,8 @@ export interface SettingWidget {
   name: string;
   /** 在左侧栏按钮展示文案 */
   text: string;
+  /** 在左侧栏按钮展示图标 */
+  icon?: string | ReactNode;
   /** 如果是基本组件，这个字段注明它对应的 widgets */
   widget?: string;
   /** 组件对应的 schema 片段 */
@@ -86,6 +88,11 @@ export interface FRGeneratorProps {
     schema?: any,
     isSelected?: boolean,
     children?: ReactNode,
+    originNode?: ReactNode
+  ) => ReactNode;
+  elementRender?: (
+    schema?: any,
+    widgetProps?: SettingWidget,
     originNode?: ReactNode
   ) => ReactNode;
   /** 表单 data 变化回调 */

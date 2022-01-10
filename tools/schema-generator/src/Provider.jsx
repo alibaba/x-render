@@ -54,6 +54,7 @@ function Provider(props, ref) {
     children,
     fieldRender,
     fieldWrapperRender,
+    elementRender,
   } = props;
 
   const transformer = {
@@ -205,6 +206,7 @@ function Provider(props, ref) {
     displaySchemaString,
     fieldRender,
     fieldWrapperRender,
+    elementRender,
     ...rootState,
   };
 
