@@ -395,7 +395,7 @@ export const dropItem = ({ dragId, dragItem, dropId, position, flatten }) => {
   try {
     const dragParent = newFlatten[_dragItem.parent];
     const idx = dragParent.children.indexOf(dragId);
-    if (idx > -1) {
+    if (idx > -1 && !dragItem) {
       dragParent.children.splice(idx, 1);
     }
   } catch (error) {

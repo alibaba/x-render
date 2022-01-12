@@ -1,4 +1,4 @@
-import { get, set, cloneDeep } from 'lodash-es';
+import { get, set, cloneDeep, isEmpty } from 'lodash-es';
 
 // window.log1 = value => {
 //   console.log('%ccommon:', 'color: #00A7F7; font-weight: 500;', value);
@@ -326,9 +326,9 @@ export function combineSchema(propsSchema = {}, uiSchema = {}) {
   return { ...propsSchema, ...topLevelUi, properties: newObj };
 }
 
-export function isEmpty(obj) {
-  return Object.keys(obj).length === 0;
-}
+// export function isEmpty(obj) {
+//   return Object.keys(obj).length === 0;
+// }
 
 function getChildren(schema) {
   if (!schema) return [];

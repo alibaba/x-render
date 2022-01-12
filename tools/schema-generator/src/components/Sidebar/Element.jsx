@@ -22,7 +22,7 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
         schema,
         children: [],
       },
-      $id: `#/${getId(name)}`,
+      $id: fixedName ? `#/${name}` : `#/${getId(name)}`,
     },
     collect: monitor => ({
       isDragging: monitor.isDragging(),

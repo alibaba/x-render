@@ -2,7 +2,7 @@
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
-import { set, sortedUniqBy } from 'lodash-es';
+import { set, sortedUniqBy, isEmpty } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
 import {
   generateDataSkeleton,
@@ -10,7 +10,6 @@ import {
   clone,
   schemaContainsExpression,
   parseAllExpression,
-  isEmpty,
 } from './utils';
 
 const useForm = props => {
@@ -115,12 +114,17 @@ const useForm = props => {
           ? _flatten.current
           : _finalFlatten.current
       );
+      debugger;
       if (firstMount) {
         _flatten.current = flattenSchema(schemaRef.current);
         setState({ firstMount: false });
       } else {
         // 统一的处理expression
-        Object.entries(_flatten.current).forEach(([path, info]) => {
+        Object.entries(
+          isEmpty(_finalFlatten.current)
+            ? _flatten.current
+            : _finalFlatten.current
+        ).forEach(([path, info]) => {
           if (schemaContainsExpression(info.schema)) {
             const arrayLikeIndex = path.indexOf(']');
             const isArrayItem =
