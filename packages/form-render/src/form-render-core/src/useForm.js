@@ -304,7 +304,7 @@ const useForm = props => {
     let newError = _errorFields.current.filter(item => {
       return item.name.indexOf(path) === -1;
     });
-    setState({ outErrorFields: newError });
+    setState({ errorFields: newError, outErrorFields: newError });
   };
 
   const getValues = () => {
