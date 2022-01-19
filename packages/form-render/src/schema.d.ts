@@ -16,18 +16,18 @@ interface SchemaBase {
     | 'time'
     | 'upload';
   default: any;
-  /** 是否必填，支持 `'{{ formData.xxx = "" }}'` 形式的表达式 */
+  /** 是否必填，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   required: boolean | string;
   placeholder: string;
   bind: false | string | string[];
   dependencies: string[];
   min: number;
   max: number;
-  /** 是否禁用，支持 `'{{ formData.xxx = "" }}'` 形式的表达式 */
+  /** 是否禁用，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   disabled: boolean | string;
-  /** 是否只读，支持 `'{{ formData.xxx = "" }}'` 形式的表达式 */
+  /** 是否只读，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   readOnly: boolean | string;
-  /** 是否隐藏，隐藏的字段不会在 formData 里透出，支持 `'{{ formData.xxx = "" }}'` 形式的表达式 */
+  /** 是否隐藏，隐藏的字段不会在 formData 里透出，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   hidden: boolean | string;
   displayType: 'row' | 'column';
   width: string;

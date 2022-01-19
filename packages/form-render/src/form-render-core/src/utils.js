@@ -91,7 +91,7 @@ export function destructDataPath(path) {
     id = path.replace(pattern, '[]');
     // 这个是match下来的结果，可安全处理
     dataIndex = matchList.map(item =>
-      Number(item.substring(1, item.length - 1))
+      Number(item?.substring(1, item.length - 1))
     );
   }
   return { id, dataIndex };
