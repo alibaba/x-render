@@ -1,4 +1,8 @@
 import * as React from 'react';
+import Schema from './schema';
+
+export { Schema };
+
 export interface Error {
   /** 错误的数据路径 */
   name: string;
@@ -18,7 +22,7 @@ export interface FormParams {
 
 export interface ValidateParams {
   formData: any;
-  schema: any;
+  schema: Schema;
   error: Error[];
   [k: string]: any;
 }
@@ -34,7 +38,7 @@ export interface ResetParams {
 
 export interface FormInstance {
   formData: any;
-  schema: any;
+  schema: Schema;
   flatten: any;
   touchedKeys: string[];
   touchKey: (key: string) => void;
@@ -46,7 +50,7 @@ export interface FormInstance {
   setValues: (formData: any) => void;
   getValues: () => any;
   resetFields: (options?: ResetParams) => void;
-  submit: () => Promise<void> | Promise<any[]>;
+  submit: () => Promise<{ data: any; errors: Error[] }>;
   submitData: any;
   errorFields: Error[];
   isValidating: boolean;
@@ -85,17 +89,17 @@ export interface FRProps {
   /** 表单顶层的className */
   className?: string;
   /** 表单顶层的样式 */
-  style?: any;
+  style?: React.CSSProperties;
   /** 表单 schema */
-  schema: any;
+  schema: Schema;
   /** form单例 */
   form: FormInstance;
   /** 组件和schema的映射规则 */
   mapping?: any;
   /** 自定义组件 */
   widgets?: any;
-  /** 表单提交前钩子 */
-  displayType?: string;
+  /** 标签元素和输入元素的排列方式，column-分两行展示，row-同行展示，inline-自然顺排，默认`'column'` */
+  displayType?: 'column' | 'row' | 'inline';
   /** 只读模式 */
   readOnly?: boolean;
   /** 禁用模式 */
@@ -111,7 +115,7 @@ export interface FRProps {
   debug?: boolean;
   /** 显示css布局提示线 */
   debugCss?: boolean;
-  locale?: string;
+  locale?: 'cn' | 'en';
   column?: number;
   debounceInput?: boolean;
   size?: string;

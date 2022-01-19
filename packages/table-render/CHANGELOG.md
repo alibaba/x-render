@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.1.7
+
+- [!] 添加一些兜底逻辑
+
 ### 1.1.6
 
 - [!] 修复了 withTable 中 props 没有透传的 bug
