@@ -114,7 +114,6 @@ const useForm = props => {
           ? _flatten.current
           : _finalFlatten.current
       );
-      // debugger;
       if (firstMount) {
         _flatten.current = flattenSchema(schemaRef.current);
         setState({ firstMount: false });
