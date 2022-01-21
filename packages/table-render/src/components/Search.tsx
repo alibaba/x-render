@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTable } from './hooks';
 import { Button } from 'antd';
 import SearchForm from 'form-render';
-import { SearchProps } from './interface';
+import { SearchProps } from '../interface';
 
 const SearchBtn = ({
   clearSearch,
@@ -86,10 +86,11 @@ const Search: <RecordType extends object = any>(
         )
         .map((v: any) => (v['width'] ? v['width'] : v['ui:width']));
       const idx = wList.lastIndexOf(undefined);
-      const effectiveList = wList
-        .slice(idx + 1)
-        .map(item => Number(item.substring(0, item.length - 1)));
-      const len = effectiveList.reduce((a, b) => {
+      const effectiveList =
+        wList
+          .slice(idx + 1)
+          .map(item => Number(item?.substring(0, item.length - 1))) || [];
+      const len = effectiveList?.reduce((a, b) => {
         const sum = a + b;
         if (sum > 100) return Math.min(100, b);
         return sum;

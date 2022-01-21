@@ -1,6 +1,6 @@
 import { useReducer, useContext } from 'react';
 import { Ctx, StoreCtx } from './Context';
-import { TableContext } from './interface';
+import { TableContext } from '../interface';
 
 // 使用最顶层组件的 setState
 export const useTable: <RecordType extends object = any>() => TableContext<
