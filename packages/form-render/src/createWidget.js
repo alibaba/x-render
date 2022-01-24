@@ -49,6 +49,7 @@ export const transformProps = props => {
     onChange(newValue);
   };
   if (trigger && typeof trigger === 'string') {
+    controlProps.onChange = _onChange;
     controlProps[trigger] = _onChange;
   } else {
     controlProps.onChange = _onChange;
