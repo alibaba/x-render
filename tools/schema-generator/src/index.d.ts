@@ -78,6 +78,8 @@ export interface FRGeneratorProps {
   settingsWidgets?: any;
   /** 组件和 schema 的映射规则 */
   mapping?: any;
+  /** 配置表单校验 */
+  validation?: boolean;
   fieldRender?: (
     schema?: any,
     widgetProps?: any,
