@@ -1,12 +1,10 @@
 ---
-order: 1
-group:
-  order: 6
-  title: 0.x 到 1.x
+order: 6
+title: 0.x 到 1.x 升级方案
 toc: content
 ---
 
-# 升级方案（推荐）
+# 升级方案
 
 ## 三个改变
 
@@ -190,7 +188,8 @@ const MyWidget = props => {
 ```jsx
 import React, { useState } from 'react';
 import { Input, Button } from 'antd';
-import { updateSchemaToNewVersion } from '../../../packages/form-render/src/utils.js';
+import { updateSchemaToNewVersion } from 'form-render/src/utils.js';
+
 const TextArea = Input.TextArea;
 
 const old = {

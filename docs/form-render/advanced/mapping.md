@@ -1,5 +1,5 @@
 ---
-order: 2.5
+order: 3
 group:
   order: 3
   title: 高级用法
