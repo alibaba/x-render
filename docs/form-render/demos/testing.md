@@ -1,8 +1,8 @@
 ---
-order: 5
+order: 9
 group:
-  order: 5
-  title: 错误排查技巧
+  order: 4
+  title: 示例
 toc: content
 ---
 
