@@ -8,11 +8,12 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    name: deploy steps
     steps:
       - uses: actions/checkout@v2
       - name: install 
         run: yarn install
       - name: build
-        run: yarn run build
+        run: yarn build
       - name: deploy
-        run: yarn run deploy
+        run: yarn deploy
