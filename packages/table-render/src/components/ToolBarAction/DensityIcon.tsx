@@ -1,7 +1,7 @@
 import React from 'react';
 import { ColumnHeightOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Tooltip } from 'antd';
-import { useTable } from '../../hooks';
+import { useTable } from '../hooks';
 
 export type DensitySize = 'middle' | 'small' | 'default' | undefined;
 

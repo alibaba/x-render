@@ -2,7 +2,7 @@
 import { useEffect, useRef, useMemo, useState } from 'react';
 import { validateAll } from './validator';
 import { useSet } from './hooks';
-import { set, sortedUniqBy, isEmpty } from 'lodash-es';
+import { set, sortedUniqBy } from 'lodash-es';
 import { processData, transformDataWithBind2 } from './processData';
 import {
   generateDataSkeleton,
@@ -42,6 +42,7 @@ const useForm = props => {
     isEditing: false, // 是否在编辑状态。主要用于优化体验，用户编辑时减少不必要的运算
     allTouched: false, // 是否所有表单元素都被碰过了（一键开关，用于提交的时候，默认所有都被touch了）
     touchedKeys: [], // 碰过的key（用于submit之前，判断哪些被碰过了）
+    flatten: {}, // schema 的转换结构，便于处理
     finalFlatten: {}, // 表达式等被处理过的flatten，用于渲染
     firstMount: true,
   });
@@ -70,6 +71,7 @@ const useForm = props => {
     isEditing,
     allTouched,
     touchedKeys,
+    flatten,
     finalFlatten,
     firstMount,
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
@@ -78,6 +80,7 @@ const useForm = props => {
   _errorFields.current = errorFields;
   _outErrorFields.current = outErrorFields;
   _touchedKeys.current = touchedKeys;
+  _flatten.current = flatten;
   _finalFlatten.current = finalFlatten;
 
   const dataFromOutside = props && props.hasOwnProperty('formData');
@@ -107,49 +110,57 @@ const useForm = props => {
   ]);
 
   useEffect(() => {
-    if (schemaRef.current) {
-      // 处理使用setSchemaByPath,使用的是旧flatten 页面不触发更新。
-      let newFlatten = clone(
-        isEmpty(_finalFlatten.current)
-          ? _flatten.current
-          : _finalFlatten.current
-      );
-      // debugger;
-      if (firstMount) {
-        _flatten.current = flattenSchema(schemaRef.current);
-        setState({ firstMount: false });
-      } else {
-        // 统一的处理expression
-        Object.entries(
-          isEmpty(_finalFlatten.current)
-            ? _flatten.current
-            : _finalFlatten.current
-        ).forEach(([path, info]) => {
-          if (schemaContainsExpression(info.schema)) {
-            const arrayLikeIndex = path.indexOf(']');
-            const isArrayItem =
-              arrayLikeIndex > -1 && arrayLikeIndex < path.length - 1;
-            const hasRootValue =
-              JSON.stringify(info.schema).indexOf('rootValue') > -1;
-            if (isArrayItem && hasRootValue) {
-              // do nothing
-            } else {
-              newFlatten[path].schema = parseAllExpression(
-                info.schema,
-                _data.current,
-                path
-              );
-            }
-          }
-        });
-      }
-      setState({ finalFlatten: newFlatten });
+    if (schemaRef.current && firstMount) {
+      const flatten = flattenSchema(schemaRef.current);
+      setState({ flatten, firstMount: false });
     }
+  }, [JSON.stringify(schemaRef.current), firstMount]);
+
+  // 统一的处理expression
+  useEffect(() => {
+    if (firstMount) {
+      return;
+    }
+    let newFlatten = clone(_flatten.current);
+    Object.entries(_flatten.current).forEach(([path, info]) => {
+      if (schemaContainsExpression(info.schema)) {
+        const arrayLikeIndex = path.indexOf(']');
+        const isArrayItem =
+          arrayLikeIndex > -1 && arrayLikeIndex < path.length - 1;
+        const hasRootValue =
+          JSON.stringify(info.schema).indexOf('rootValue') > -1;
+        if (isArrayItem && hasRootValue) {
+          // do nothing
+        } else {
+          newFlatten[path].schema = parseAllExpression(
+            info.schema,
+            _data.current,
+            path
+          );
+        }
+      }
+    });
+    setState({ finalFlatten: newFlatten });
   }, [
-    JSON.stringify(schemaRef.current),
+    JSON.stringify(_flatten.current),
     JSON.stringify(_data.current),
     firstMount,
   ]);
+
+  // logic moves to RenderField/index.js
+  // useEffect(() => {
+  //   if (firstMount) return;
+  //   validateAll({
+  //     formData: _data.current,
+  //     flatten: _finalFlatten.current,
+  //     options: {
+  //       locale: localeRef.current,
+  //       validateMessages: validateMessagesRef.current,
+  //     },
+  //   }).then(res => {
+  //     _setErrors(res);
+  //   });
+  // }, [JSON.stringify(_data.current)]);
 
   // All form methods are down here ----------------------------------------------------------------
   // 两个兼容 0.x 的函数
@@ -233,10 +244,10 @@ const useForm = props => {
   };
 
   const setSchema = settings => {
-    const newFlatten = clone(_finalFlatten.current);
+    const newFlatten = clone(_flatten.current);
     try {
       Object.keys(settings).forEach(path => {
-        if (!_finalFlatten.current[path]) {
+        if (!_flatten.current[path]) {
           console.error(`path：'${path}' 不存在(form.setSchemaByPath)`);
         } else {
           const newSchema = settings[path];
@@ -250,19 +261,19 @@ const useForm = props => {
           };
         }
       });
-      setState({ finalFlatten: newFlatten });
-      _finalFlatten.current = newFlatten;
+      setState({ flatten: newFlatten });
+      _flatten.current = newFlatten;
     } catch (error) {
       console.error(error, 'setSchema');
     }
   };
 
   const setSchemaByPath = (path, newSchema) => {
-    if (!_finalFlatten.current[path]) {
+    if (!_flatten.current[path]) {
       console.error(`path：'${path}' 不存在(form.setSchemaByPath)`);
       return;
     }
-    const newFlatten = clone(_finalFlatten.current);
+    const newFlatten = clone(_flatten.current);
 
     try {
       const _newSchema =
@@ -270,8 +281,8 @@ const useForm = props => {
           ? newSchema(newFlatten[path].schema)
           : newSchema;
       newFlatten[path].schema = { ...newFlatten[path].schema, ..._newSchema };
-      setState({ finalFlatten: newFlatten });
-      _finalFlatten.current = newFlatten;
+      setState({ flatten: newFlatten });
+      _flatten.current = newFlatten;
     } catch (error) {
       console.error(error, 'setSchemaByPath');
     }
@@ -279,7 +290,7 @@ const useForm = props => {
 
   const getSchemaByPath = path => {
     try {
-      return _finalFlatten.current[path].schema;
+      return _flatten.current[path].schema;
     } catch (error) {
       console.log(error, 'getSchemaByPath');
       return {};
@@ -304,7 +315,11 @@ const useForm = props => {
     let newError = _errorFields.current.filter(item => {
       return item.name.indexOf(path) === -1;
     });
-    setState({ outErrorFields: newError });
+
+    let newOutError = _outErrorFields.current.filter(item => {
+      return item.name.indexOf(path) === -1;
+    });
+    setState({ errorFields: newError, outErrorFields: newOutError });
   };
 
   const getValues = () => {
@@ -316,7 +331,7 @@ const useForm = props => {
   };
 
   const setValues = newFormData => {
-    const newData = transformDataWithBind2(newFormData, _finalFlatten.current);
+    const newData = transformDataWithBind2(newFormData, _flatten.current);
     _setData(newData);
   };
 

@@ -1,4 +1,52 @@
 import * as React from 'react';
+import { RuleItem } from 'async-validator';
+
+interface SchemaBase {
+  type: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'range' | 'html';
+  title: string;
+  description: string;
+  descType: 'text' | 'icon';
+  format:
+    | 'image'
+    | 'textarea'
+    | 'color'
+    | 'email'
+    | 'url'
+    | 'dateTime'
+    | 'date'
+    | 'time'
+    | 'upload';
+  default: any;
+  /** 是否必填，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
+  required: boolean | string;
+  placeholder: string;
+  bind: false | string | string[];
+  dependencies: string[];
+  min: number;
+  max: number;
+  /** 是否禁用，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
+  disabled: boolean | string;
+  /** 是否只读，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
+  readOnly: boolean | string;
+  /** 是否隐藏，隐藏的字段不会在 formData 里透出，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
+  hidden: boolean | string;
+  displayType: 'row' | 'column';
+  width: string;
+  labelWidth: number | string;
+  className: string;
+  widget: string;
+  readOnlyWidget: string;
+  extra: string;
+  properties: Record<string, Schema>;
+  items: Schema;
+  enum: Array<string | number>;
+  enumNames: Array<string | number>;
+  rules: RuleItem | RuleItem[];
+  props: Record<string, any>;
+}
+
+type Schema = Partial<SchemaBase>;
+
 export interface Error {
   /** 错误的数据路径 */
   name: string;
@@ -18,7 +66,7 @@ export interface FormParams {
 
 export interface ValidateParams {
   formData: any;
-  schema: any;
+  schema: Schema;
   error: Error[];
   [k: string]: any;
 }
@@ -34,7 +82,7 @@ export interface ResetParams {
 
 export interface FormInstance {
   formData: any;
-  schema: any;
+  schema: Schema;
   flatten: any;
   touchedKeys: string[];
   touchKey: (key: string) => void;
@@ -46,7 +94,7 @@ export interface FormInstance {
   setValues: (formData: any) => void;
   getValues: () => any;
   resetFields: (options?: ResetParams) => void;
-  submit: () => Promise<void> | Promise<any[]>;
+  submit: () => Promise<{ data: any; errors: Error[] }>;
   submitData: any;
   errorFields: Error[];
   isValidating: boolean;
@@ -85,17 +133,17 @@ export interface FRProps {
   /** 表单顶层的className */
   className?: string;
   /** 表单顶层的样式 */
-  style?: any;
+  style?: React.CSSProperties;
   /** 表单 schema */
-  schema: any;
+  schema: Schema;
   /** form单例 */
   form: FormInstance;
   /** 组件和schema的映射规则 */
   mapping?: any;
   /** 自定义组件 */
   widgets?: any;
-  /** 表单提交前钩子 */
-  displayType?: string;
+  /** 标签元素和输入元素的排列方式，column-分两行展示，row-同行展示，inline-自然顺排，默认`'column'` */
+  displayType?: 'column' | 'row' | 'inline';
   /** 只读模式 */
   readOnly?: boolean;
   /** 禁用模式 */
@@ -111,7 +159,7 @@ export interface FRProps {
   debug?: boolean;
   /** 显示css布局提示线 */
   debugCss?: boolean;
-  locale?: string;
+  locale?: 'cn' | 'en';
   column?: number;
   debounceInput?: boolean;
   size?: string;

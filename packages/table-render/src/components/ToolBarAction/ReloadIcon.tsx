@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTable } from '../../hooks';
+import { useTable } from '../hooks';
 import { Tooltip } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
 

@@ -1,13 +1,19 @@
 # Changelog
 
+## 1.9.0
+
+- [!] 修复`setSchema`失效 bug https://github.com/alibaba/x-render/issues/647
+- [!] 修复`表单联动`失效 bug https://github.com/alibaba/x-render/issues/651
+- [!] `widget:select` 对`allowClear`属性进行兼容 https://github.com/alibaba/x-render/issues/655
+
 ## 1.8.7
 
 - [+] `useForm.js`内部逻辑修改
 
 ## 1.8.6
 
-- [!] 修复 `form.setSchemaByPath` 不触发更新的bug
-- [!] 修复 `fr` 只提示初始错误的bug
+- [!] 修复 `form.setSchemaByPath` 不触发更新的 bug
+- [!] 修复 `fr` 只提示初始错误的 bug
 
 ## 1.8.5
 
