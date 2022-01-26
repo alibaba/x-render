@@ -90,7 +90,7 @@ export default Demo;
 
 ## 案例演示
 
-https://x-render.gitee.io/tools/generator#%E6%A1%88%E4%BE%8B%E6%BC%94%E7%A4%BA
+https://x-render.gitee.io/generator#%E6%A1%88%E4%BE%8B%E6%BC%94%E7%A4%BA
 
 ## 常见问题
 
