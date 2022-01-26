@@ -4,7 +4,7 @@ import { PlusCircleOutlined, DeleteOutlined } from '@ant-design/icons';
 
 export default function list(props) {
   if (!/^#/.test(props.schema.$id)) {
-    return props.children;
+    return <div className="w-100">{props.children}</div>;
   }
 
   return (
