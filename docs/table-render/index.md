@@ -152,6 +152,8 @@ export default withTable(Page)
 | searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
 | searchBtnStyle     | 自定义表单操作按钮组的样式                                                            | `React.CSSProperties`                  | {}      | 否   |
 | searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                      | `string`                               | ''      | 否   |
+| searchText         | 自定义查询按钮的文本                                                                  | `string`                               | '查询'  | 否   |
+| resetText          | 自定义重置按钮的文本                                                                  | `string`                               | '重置'  | 否   |
 | debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                         | `boolean`                              | `false` | 否   |
 
 - **api**： `api` 是 `<Search />` 最重要的 属性，`api` 是一个函数，有两个入参：`params`、`sorter`，分别是表单筛选项的值、排序参数。它的返回值是一个`Object`，此`Object`中必须要有 rows 和 total，其中 rows 即`dataSource` ，total 用于分页。`api` 会接管 loading 的设置，同时在表单查询和 params 参数发生修改时重新执行。同时 查询表单的值和 params 参数也会带入。
