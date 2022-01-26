@@ -5,6 +5,9 @@
   border: 1px solid #eee;
   margin-bottom: 16px;
 }
+.tr-search .search-btn {
+  flex: 1;
+}
 
 .tr-table-wrapper {
   background: #fff;

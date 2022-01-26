@@ -1,5 +1,13 @@
 # Changelog
 
+### 1.1.9
+
+- [!] `SearchBtn` 宽度使用 flex 进行自适应，不再需要 `calcWidth` 计算
+
+### 1.1.8
+
+- [!] 修改 calcWidth 内部逻辑
+
 ### 1.1.7
 
 - [!] 添加一些兜底逻辑
