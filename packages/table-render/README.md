@@ -135,6 +135,9 @@ export default withTable(Wrapper);
 | searchBtnRender    | 自定义表单查询按钮                                                                                             | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
 | searchBtnStyle     | 自定义表单操作按钮组的样式                                                                                     | `React.CSSProperties`                  | {}      | 否   |
 | searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                                               | `string`                               | ''      | 否   |
+| searchText         | 自定义查询按钮的文本                                                                                           | `string`                               | '查询'  | 否   |
+| resetText          | 自定义重置按钮的文本                                                                                           | `string`                               | '重置'  | 否   |
+| debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                                                  | `boolean`                              | `false` | 否   |
 
 ### `<Table>` 参数
 

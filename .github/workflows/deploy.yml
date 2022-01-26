@@ -1,0 +1,19 @@
+name: Deploy CI
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    name: deploy steps
+    steps:
+      - uses: actions/checkout@v2
+      - name: install 
+        run: yarn install
+      - name: build
+        run: yarn build
+      - name: deploy
+        run: yarn deploy 
