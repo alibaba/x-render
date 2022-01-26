@@ -46,4 +46,6 @@ interface SchemaBase {
 
 type Schema = Partial<SchemaBase>;
 
-export default Schema;
+export = Schema;
+
+export as namespace ISchema;

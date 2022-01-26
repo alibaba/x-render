@@ -229,12 +229,12 @@ const useForm = props => {
   // ]
 
   const syncStuff = ({
-                       schema,
-                       locale,
-                       validateMessages,
-                       beforeFinish,
-                       removeHiddenData,
-                     }) => {
+    schema,
+    locale,
+    validateMessages,
+    beforeFinish,
+    removeHiddenData,
+  }) => {
     schemaRef.current = schema;
     localeRef.current = locale;
     validateMessagesRef.current = validateMessages;
@@ -315,7 +315,11 @@ const useForm = props => {
     let newError = _errorFields.current.filter(item => {
       return item.name.indexOf(path) === -1;
     });
-    setState({ outErrorFields: newError });
+
+    let newOutError = _outErrorFields.current.filter(item => {
+      return item.name.indexOf(path) === -1;
+    });
+    setState({ errorFields: newError, outErrorFields: newOutError });
   };
 
   const getValues = () => {
