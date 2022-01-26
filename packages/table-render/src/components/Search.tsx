@@ -9,15 +9,16 @@ const SearchBtn = ({
   submit,
   style = {},
   className = '',
+  ...rest
 }: any) => {
   const { tableState = {} }: any = useTable();
   const { loading } = tableState;
   return (
     <div className={`flex justify-end w-100 ${className}`} style={style}>
       <Button loading={loading} className="mr" type="primary" onClick={submit}>
-        查询
+        {rest.searchText}
       </Button>
-      <Button onClick={clearSearch}>重置</Button>
+      <Button onClick={clearSearch}>{rest.resetText}</Button>
     </div>
   );
 };
@@ -27,6 +28,7 @@ const MySearchBtn = ({
   searchBtnStyle,
   searchBtnClassName,
   form,
+  ...rest
 }: any) => {
   const clearSearch = () => {
     form.resetFields();
@@ -56,6 +58,7 @@ const MySearchBtn = ({
       clearSearch={clearSearch}
       style={searchBtnStyle || {}}
       className={searchBtnClassName || ''}
+      {...rest}
     />
   );
 };
@@ -63,7 +66,13 @@ const MySearchBtn = ({
 const Search: <RecordType extends object = any>(
   props: SearchProps<RecordType>
 ) => React.ReactElement = props => {
-  const { searchBtnRender, searchBtnStyle, searchBtnClassName } = props;
+  const {
+    searchBtnRender,
+    searchBtnStyle,
+    searchBtnClassName,
+    searchText = '查询',
+    resetText = '重置',
+  } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
   const _schema = props.schema || props.propsSchema;
@@ -157,6 +166,8 @@ const Search: <RecordType extends object = any>(
     searchBtnRender,
     searchBtnStyle,
     searchBtnClassName,
+    searchText,
+    resetText,
     form,
   };
 
