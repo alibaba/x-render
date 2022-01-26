@@ -1,9 +1,8 @@
 import React from 'react';
 import { Radio } from 'antd';
-import { createWidget } from '../../createWidget';
 import { getArray } from '../../utils';
 
-const mapProps = ({ schema, style, options: _options }) => {
+const Radioes = ({ schema, options: _options, props, ...rest }) => {
   let options;
   // 如果已经有外部注入的options了，内部的schema就会被忽略
   if (_options && Array.isArray(_options)) {
@@ -19,18 +18,12 @@ const mapProps = ({ schema, style, options: _options }) => {
       return { label, value: item };
     });
   }
-
-  return {
+  const radioProps = {
     options,
     mode: 'multiple',
-    style: { width: '100%', minWidth: 120, marginTop: 5, ...style },
+    ...rest,
   };
+  return <Radio.Group {...radioProps} />;
 };
-
-// const A = ({ ...rest }) => {
-//   return <Radio.Group {...rest} />;
-// };
-
-const Radioes = createWidget(mapProps)(Radio.Group);
 
 export default Radioes;

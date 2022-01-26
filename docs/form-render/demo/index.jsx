@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FormRender, { useForm, createWidget } from 'form-render';
+import FormRender, { useForm } from 'form-render';
 import schema from './basic.js';
 import Percent from './otherWidgets/Percent';
 // import schema1 from './basic1.json';
@@ -13,10 +13,9 @@ const delay = ms => new Promise(res => setTimeout(res, ms));
 //   return <App form={form} schema={schema} />;
 // };
 
-const PercentWidget = createWidget(({ value, onChange }) => ({
-  onPress: onChange,
-  percent: value,
-}))(Percent);
+const PercentWidget = ({ value, onChange }) => {
+  return <Percent onPress={onChange} percent={value} />;
+};
 
 const Demo = () => {
   const [display, setDisplay] = useState({}); // TODO: 只是开发时候用

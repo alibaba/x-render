@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "1.4.4",
+  "version": "1.9.0",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "repository": {
     "type": "git",
@@ -30,8 +30,8 @@
     "test": "umi-test",
     "test:coverage": "umi-test --coverage"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
+  "main": "lib/index.js",
+  "module": "es/index.js",
   "gitHooks": {
     "pre-commit": "lint-staged"
   },

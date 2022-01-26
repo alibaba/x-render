@@ -136,6 +136,11 @@ export default () => <FR schema={titleTrick} />;
 - 类型：`string`
 - 详细：表单的描述信息，常将填写注意点放入此参数
 
+### descType (v1.7.0)
+
+- 类型：'text' | 'icon'
+- 详细：当 displayType = 'row' 时，无作用；但当 displayType = 'column' （默认值）时，描述信息（description）的一般展示为文案形式，如果设定 descType: 'icon', 则会使用 tooltip 形式
+
 ### type
 
 - 类型：one of [`'string'`, `'number'`, `'boolean'`, `'array'`, `'object'`, `'range'`, `'html'`]
@@ -260,6 +265,45 @@ export default () => <FR schema={titleTrick} />;
 1. 当服务端接口获取的字段与你希望的表单展示结构不同时，可以通过 bind 字段绑定的方式指明表单的某个字段对应的是外部数据的另一个字段。详细例子见 [“表单与外界的交互”](/form-render/advanced/form-methods) 的例 3
 2. 用户并不希望纯展示的字段也出现在表单中，此时，使用 bind: `false` 可避免字段在提交时出现
 3. 注意：请不要 bind 一个数组结构下面的字段，目前没有对此进行处理，所以会无效（在未来这个限制会解除）
+
+### dependencies
+
+- 类型：string[]
+- 支持：v1.6.2 以上版本
+- 详细：
+
+1. 一般来说用 `watch` api 和动态表达式，能够解决大部分联动问题，但当联动关系复杂时并不适合使用表达式，当关联性存在列表中时，使用 watch 也不能很好实现
+2. 书写自定义组件时，大伙儿经常想在自定义组件中获取全局的某个值，并根据那个值的变动来决定自定义组件的渲染。但是 FR 1.0 性能优化上已经避免了不必要的重复渲染，如果没有显式的指明，自定义组件是不会因为其他表单项的变动而重新渲染的，导致自定义组件内拿到的 formData 并不是最新的
+
+为了解决上述两个问题，我们自然地引入了 `dependencies` 字段。用于显式的指明一个表单项依赖于另一个（多个）表单项。`dependencies`为数组，数组的每一项为所依赖的表单项的数据路径：
+
+```js
+list1: {
+  title: '对象数组',
+  description: '对象数组嵌套功能',
+  type: 'array',
+  items: {
+    type: 'object',
+    properties: {
+      select1: {
+        title: '单选',
+        type: 'string',
+        enum: ['a', 'b', 'c'],
+        enumNames: ['早', '中', '晚'],
+        widget: 'radio',
+      },
+      select2: {
+        title: '单选2（自定义组件）',
+        type: 'string',
+        widget: 'select2', // select2 为自定义组件，具体实现与dependencies的讨论无关，不赘述
+        dependencies: ['list1[].select1'],
+      },
+    },
+  },
+};
+```
+
+如上为一个列表 list1，其中每个 item 都包含两个表单项 select1 和 select2。通过`dependencies`字段，select2 显式的依赖于 select1，以确保 select1 的值变动的同时，对应的同一个 item 下的 select2 必然重新渲染并获取最新的数据
 
 ### min (0.x 版本 `min`,`minItem` 和 `minLength` 统一到 `min`)
 
@@ -399,7 +443,7 @@ readOnly=true 的情况，FormRender 默认使用 html 组件渲染。特殊情�
   "type": "array",
   "min": 1,
   "max": 3,
-  "widget": "list0",
+  "widget": "cardList",
   "items": {
     "type": "object",
     "properties": {

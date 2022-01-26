@@ -1,17 +1,21 @@
-import * as React from 'react';
+import { FC, ReactNode, ForwardRefExoticComponent, RefAttributes } from 'react';
 
 export interface Transformer {
   /** 正向的转换函数 */
-  from: (schema: any) => any;
+  from?: (schema: any) => any;
   /** 反向的转换函数 */
-  to: (schema: any) => any;
+  to?: (schema: any) => any;
+  /** 反向的转换函数 */
+  fromSetting?: (schema: any) => any;
+  /** 反向的转换函数 */
+  toSetting?: (schema: any) => any;
 }
 
 export interface ExtraButton {
   /** 按钮文案 */
   text: string;
   /** 点击回调 */
-  onClick?: () => void;
+  onClick?: (event: any) => void;
   [key: string]: any;
 }
 
@@ -19,7 +23,7 @@ export interface ControlButton {
   /** 按钮文案 */
   text?: string;
   /** 点击回调 */
-  onClick?: () => void;
+  onClick?: (event: any, schema: any) => void;
 }
 
 export interface SettingWidget {
@@ -45,14 +49,19 @@ export interface Setting {
 }
 
 export interface FRGeneratorProps {
+  getId?: (name: string) => string;
   /** 隐藏组件 ID */
   hideId?: boolean;
+  /** 固定 id */
+  fixedName?: boolean;
+  /** 组件删除控制 */
+  canDelete?: boolean | Function;
   /** 默认一进入编辑器展示的表单对应的 schema */
   defaultValue?: any;
   /** 自定义 schema 到 form-render 的 schema 的双向转换函数 */
   transformer?: Transformer;
   /** 编辑区顶部的自定义按钮 */
-  extraButtons?: (ExtraButton | boolean)[];
+  extraButtons?: (ExtraButton | boolean | string)[];
   /** 选中项操作按钮 */
   controlButtons?: (ControlButton | boolean | Function)[];
   /** 左右侧栏配置 */
@@ -63,33 +72,61 @@ export interface FRGeneratorProps {
   globalSettings?: any;
   /** 自定义组件 */
   widgets?: any;
+  /** 配置栏自定义组件 */
+  settingsWidgets?: any;
   /** 组件和 schema 的映射规则 */
   mapping?: any;
+  fieldRender?: (
+    schema?: any,
+    widgetProps?: any,
+    children?: ReactNode,
+    originNode?: ReactNode
+  ) => ReactNode;
+  fieldWrapperRender?: (
+    schema?: any,
+    isSelected?: boolean,
+    children?: ReactNode,
+    originNode?: ReactNode
+  ) => ReactNode;
   /** 表单 data 变化回调 */
   onChange?: (data: any) => void;
   /** 表单 schema 变化回调 */
   onSchemaChange?: (schema: any) => void;
+  /** 画布组件选择回调 */
+  onCanvasSelect?: (schema: any) => void;
 }
 
-declare const FRGenerator: React.ForwardRefExoticComponent<FRGeneratorProps &
-  React.RefAttributes<unknown>>;
+export interface SettingsProps {
+  /** 自定义组件 */
+  widgets?: any;
+}
+export interface CanvasProps {
+  /** 画布组件选择回调 */
+  onCanvasSelect?: (schema: any) => void;
+}
 
+export interface SidebarProps {
+  /** 固定 id */
+  fixedName?: boolean;
+}
+
+export interface Generator
+  extends ForwardRefExoticComponent<
+    FRGeneratorProps & RefAttributes<HTMLElement>
+  > {
+  Provider: FC<FRGeneratorProps>;
+  Settings: FC<SettingsProps>;
+  Canvas: FC<CanvasProps>;
+  Sidebar: FC<SidebarProps>;
+}
+
+declare const FRGenerator: Generator;
 declare const defaultSettings: Setting;
 declare const defaultCommonSettings: any;
 declare const defaultGlobalSettings: any;
+declare const fromSetting: (schema: any) => any;
+declare const toSetting: (schema: any) => any;
 
-declare const fromFormily: (schema: any) => any;
-declare const toFormily: (schema: any) => any;
-declare const fromFormRender: (schema: any) => any;
-declare const toFormRender: (schema: any) => any;
-
-export {
-  defaultSettings,
-  defaultCommonSettings,
-  defaultGlobalSettings,
-  fromFormily,
-  toFormily,
-  fromFormRender,
-  toFormRender,
-};
+export { defaultSettings, defaultCommonSettings, defaultGlobalSettings };
+export { fromSetting, toSetting };
 export default FRGenerator;

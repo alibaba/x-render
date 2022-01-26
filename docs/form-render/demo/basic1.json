@@ -8,13 +8,13 @@
           "type": "string",
           "enum": ["1", "2"],
           "enumNames": ["白名单", "黑名单"],
-          "ui:width": "50%"
+          "width": "50%"
         },
         "upfIdList": {
           "title": "圈人平台ID",
           "description": "",
           "type": "string",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "realNameChecked": {
           "title": "实名可见",
@@ -63,7 +63,7 @@
           "description": "保底库存最少X个",
           "type": "string",
           "pattern": "^([0-9])+$",
-          "ui:width": "33%"
+          "width": "33%"
         },
         "addAllCount": {
           "title": "已补充总库存",
@@ -71,7 +71,7 @@
           "type": "string",
           "ui:hidden": "hasAddItems == '1'",
           "ui:disabled": true,
-          "ui:width": "33%"
+          "width": "33%"
         },
         "totalLimitId": {
           "title": "库存限制ID",
@@ -85,7 +85,7 @@
           "description": "",
           "type": "string",
           "ui:disabled": true,
-          "ui:width": "33%"
+          "width": "33%"
         },
         "noActiveAllCount": {
           "title": "未生效总库存",
@@ -93,14 +93,14 @@
           "type": "string",
           "ui:hidden": "hasAddItems == '1'",
           "ui:disabled": true,
-          "ui:width": "33%"
+          "width": "33%"
         },
         "userLimitTotal": {
           "title": "单用户总参与次数",
           "description": "用户在该活动总共可领取数量",
           "type": "string",
           "pattern": "^([1-9]\\d*)$",
-          "ui:width": "33%"
+          "width": "33%"
         },
         "showAdvancedSetting": {
           "title": "高级配置展开显示（收起不影响功能）",
@@ -114,7 +114,7 @@
           "type": "string",
           "pattern": "^([1-9]\\d*)$",
           "ui:hidden": "showAdvancedSetting==false",
-          "ui:width": "33%"
+          "width": "33%"
         },
         "userLimitWeek": {
           "title": "单用户每周参与次数",
@@ -122,7 +122,7 @@
           "type": "string",
           "pattern": "^([1-9]\\d*)$",
           "ui:hidden": "showAdvancedSetting==false",
-          "ui:width": "33%"
+          "width": "33%"
         },
         "userLimitNaturalMonth": {
           "title": "单用户自然月参与次数",
@@ -130,7 +130,7 @@
           "type": "string",
           "pattern": "^([1-9]\\d*)$",
           "ui:hidden": "showAdvancedSetting==false",
-          "ui:width": "33%"
+          "width": "33%"
         },
         "limitDay": {
           "title": "活动每天可被参与的次数（慎重）",
@@ -138,7 +138,7 @@
           "type": "string",
           "pattern": "^([1-9]\\d*)$",
           "ui:hidden": "showAdvancedSetting==false",
-          "ui:width": "33%"
+          "width": "33%"
         },
         "userWinningLimitTotal": {
           "title": "单用户总可中奖次数",
@@ -146,7 +146,7 @@
           "type": "string",
           "pattern": "^([1-9]\\d*|0)$",
           "ui:hidden": true,
-          "ui:width": "33%"
+          "width": "33%"
         },
         "userWinningLimitDay": {
           "title": "单用户每天可中奖次数",
@@ -154,7 +154,7 @@
           "type": "string",
           "pattern": "^([1-9]\\d*|0)$",
           "ui:hidden": true,
-          "ui:width": "33%"
+          "width": "33%"
         },
         "userWinningLimitWeek": {
           "title": "单用户每周可中奖次数",
@@ -162,7 +162,7 @@
           "type": "string",
           "pattern": "^([1-9]\\d*|0)$",
           "ui:hidden": true,
-          "ui:width": "33%"
+          "width": "33%"
         },
         "latour2SendFliggyPackage": {
           "title": "拉菲发飞猪礼包",
@@ -171,7 +171,7 @@
           "enum": ["0", "1"],
           "enumNames": ["否", "是"],
           "ui:hidden": true,
-          "ui:width": "50%"
+          "width": "50%"
         },
         "hasAddItems": {
           "title": "是否添加了添加库存的item",
@@ -199,7 +199,7 @@
                 "type": "string",
                 "ui:widget": "date",
                 "ui:disabled": false,
-                "ui:width": "40%"
+                "width": "40%"
               },
               "addCount": {
                 "title": "补充数量",
@@ -207,7 +207,7 @@
                 "type": "string",
                 "pattern": "^([1-9]\\d*|0)$",
                 "ui:disabled": false,
-                "ui:width": "30%"
+                "width": "30%"
               },
               "validCount": {
                 "title": "已生效数量",
@@ -215,7 +215,7 @@
                 "type": "string",
                 "pattern": "^([1-9]\\d*|0)$",
                 "ui:disabled": true,
-                "ui:width": "30%"
+                "width": "30%"
               },
               "taskId": {
                 "title": "执行添加库存任务的Id",
@@ -304,7 +304,7 @@
                 "maxLength": 16,
                 "minLength": 1,
                 "pattern": "^([0-9])+$",
-                "ui:width": "50%"
+                "width": "50%"
               },
               "groupAddAllCount": {
                 "title": "奖品组已补充总库存",
@@ -312,7 +312,7 @@
                 "type": "string",
                 "ui:hidden": "groupHasAddItems == '1'",
                 "ui:disabled": true,
-                "ui:width": "33%"
+                "width": "33%"
               },
               "surplusCount": {
                 "title": "剩余库存",
@@ -321,7 +321,7 @@
                 "maxLength": 16,
                 "minLength": 1,
                 "ui:disabled": true,
-                "ui:width": "50%"
+                "width": "50%"
               },
               "groupNoActiveAllCount": {
                 "title": "奖品组未生效总库存",
@@ -329,7 +329,7 @@
                 "type": "string",
                 "ui:hidden": "groupHasAddItems == '1'",
                 "ui:disabled": true,
-                "ui:width": "33%"
+                "width": "33%"
               },
               "userGroupWinningLimitTotal": {
                 "title": "该奖品组单用户可中次数",
@@ -338,7 +338,7 @@
                 "maxLength": 16,
                 "minLength": 1,
                 "ui:hidden": "@['LOTTERY'].indexOf(formData.wfCommonInfo.productCode)===-1",
-                "ui:width": "50%"
+                "width": "50%"
               },
               "groupShowAdvancedSetting": {
                 "title": "库存高级配置展开显示（收起不影响功能）",
@@ -352,7 +352,7 @@
                 "maxLength": 16,
                 "minLength": 1,
                 "ui:hidden": "@['LOTTERY'].indexOf(formData.wfCommonInfo.productCode)===-1 || groupShowAdvancedSetting == false",
-                "ui:width": "50%"
+                "width": "50%"
               },
               "userGroupWinningLimitWeek": {
                 "title": "该奖品组单用户每周可中次数",
@@ -361,7 +361,7 @@
                 "maxLength": 16,
                 "minLength": 1,
                 "ui:hidden": "@['LOTTERY'].indexOf(formData.wfCommonInfo.productCode)===-1 || groupShowAdvancedSetting == false",
-                "ui:width": "50%"
+                "width": "50%"
               },
               "lotteryApplyMsg": {
                 "title": "中奖提示文案",
@@ -396,7 +396,7 @@
                       "type": "string",
                       "ui:widget": "date",
                       "ui:disabled": false,
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "groupAddCount": {
                       "title": "补充数量",
@@ -404,7 +404,7 @@
                       "type": "string",
                       "pattern": "^([1-9]\\d*|0)$",
                       "ui:disabled": false,
-                      "ui:width": "30%"
+                      "width": "30%"
                     },
                     "groupValidCount": {
                       "title": "已生效数量",
@@ -412,7 +412,7 @@
                       "type": "string",
                       "pattern": "^([1-9]\\d*|0)$",
                       "ui:disabled": true,
-                      "ui:width": "30%"
+                      "width": "30%"
                     },
                     "groupTaskId": {
                       "title": "执行添加库存任务的Id",
@@ -776,7 +776,7 @@
                       "type": "string",
                       "ui:options": { "addonBefore": "满", "addonAfter": "元" },
                       "ui:hidden": "showAdvancedSetting==false ||faceValue!='1'||prizeType=='FLIGGY_F2_VIP'||prizeType=='VIRTUAL_BONUS_POINTS'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "fixedAmountAfter": {
                       "title": "",
@@ -784,7 +784,7 @@
                       "type": "string",
                       "ui:options": { "addonBefore": "减", "addonAfter": "元" },
                       "ui:hidden": "showAdvancedSetting==false ||faceValue!='1'||prizeType=='FLIGGY_F2_VIP'||prizeType=='VIRTUAL_BONUS_POINTS'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "discount": {
                       "title": "",
@@ -792,7 +792,7 @@
                       "type": "string",
                       "ui:options": { "addonAfter": "折" },
                       "ui:hidden": "showAdvancedSetting==false ||faceValue!='2'||prizeType=='FLIGGY_F2_VIP'||prizeType=='VIRTUAL_BONUS_POINTS'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "reduce": {
                       "title": "",
@@ -800,21 +800,21 @@
                       "type": "string",
                       "ui:options": { "addonAfter": "元" },
                       "ui:hidden": "showAdvancedSetting==false ||faceValue!='3'||prizeType=='FLIGGY_F2_VIP'||prizeType=='VIRTUAL_BONUS_POINTS'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "faceValuePurePrefixText": {
                       "title": "前缀",
                       "description": "",
                       "type": "string",
                       "ui:hidden": "showAdvancedSetting==false || faceValue!='5'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "faceValuePureInfixText": {
                       "title": "中缀",
                       "description": "",
                       "type": "string",
                       "ui:hidden": "showAdvancedSetting==false || faceValue!='5'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "faceValuePureText": {
                       "title": "{{rootValue.faceValue=='5'?'后缀':''}}",
@@ -841,7 +841,7 @@
                       "type": "string",
                       "ui:widget": "date",
                       "ui:hidden": "showAdvancedSetting==false ||effectiveTimeType!='1'||prizeType=='FLIGGY_F2_VIP'||prizeType=='VIRTUAL_BONUS_POINTS'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "endTime": {
                       "title": "结束时间",
@@ -849,7 +849,7 @@
                       "type": "string",
                       "ui:widget": "date",
                       "ui:hidden": "showAdvancedSetting==false ||effectiveTimeType!='1'||prizeType=='FLIGGY_F2_VIP'||prizeType=='VIRTUAL_BONUS_POINTS'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "effectiveMin": {
                       "title": "",
@@ -858,7 +858,7 @@
                       "pattern": "^[0-9]+$",
                       "ui:options": { "addonAfter": "分钟" },
                       "ui:hidden": "showAdvancedSetting==false ||effectiveTimeType!='2'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "effectiveDay": {
                       "title": "",
@@ -867,7 +867,7 @@
                       "pattern": "^[0-9]+$",
                       "ui:options": { "addonAfter": "天" },
                       "ui:hidden": "showAdvancedSetting==false ||effectiveTimeType!='3'",
-                      "ui:width": "50%"
+                      "width": "50%"
                     },
                     "effectTimePureText": {
                       "title": "",
@@ -1081,7 +1081,7 @@
                 "type": "string",
                 "maxLength": 12,
                 "minLength": 1,
-                "ui:width": "50%"
+                "width": "50%"
               },
               "unMatchNotice": {
                 "title": "未命中提示",
@@ -1089,7 +1089,7 @@
                 "type": "string",
                 "maxLength": 36,
                 "minLength": 1,
-                "ui:width": "50%"
+                "width": "50%"
               },
               "strategyId": {
                 "title": "规则策略Id",
@@ -1292,7 +1292,7 @@
                         "批量查看用户是否有(可用、冻结、核销、删除)的优惠券"
                       ],
                       "ui:options": { "showSearch": true },
-                      "ui:width": "45%"
+                      "width": "45%"
                     },
                     "3002_comparator": {
                       "enumNames": [
@@ -1304,53 +1304,53 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14"],
                       "ui:hidden": "conditionName!=3002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "3002_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=3002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "3004_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=3004",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "3004_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=3004",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "3008_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=3008",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "3008_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=3008",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "3008_params_tag": {
                       "type": "string",
                       "title": "航旅标签",
                       "ui:hidden": "conditionName!=3008",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "4001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=4001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "4001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=4001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "5001_comparator": {
                       "enumNames": [
@@ -1359,7 +1359,7 @@
                       ],
                       "enum": ["17", "3001"],
                       "ui:hidden": "conditionName!=5001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "5001_return_value": {
                       "enumNames": [
@@ -1687,72 +1687,72 @@
                         "100401"
                       ],
                       "ui:hidden": "conditionName!=5001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "9001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=9001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "9001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=9001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "9001_params_businessLine": {
                       "type": "string",
                       "title": "类目",
                       "ui:hidden": "conditionName!=9001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "9001_params_templateId": {
                       "type": "string",
                       "title": "模板Id",
                       "ui:hidden": "conditionName!=9001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "10001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=10001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "10001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=10001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "20002_comparator": {
                       "enumNames": ["等于(数值)", "大于（数值）", "小于(数值)"],
                       "enum": ["1", "9", "12"],
                       "ui:hidden": "conditionName!=20002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "20002_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=20002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "24001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=24001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "24001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=24001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "24004_comparator": {
                       "enumNames": ["等于(数值)", "大于（数值）", "小于(数值)"],
                       "enum": ["1", "9", "12"],
                       "ui:hidden": "conditionName!=24004",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "24004_return_value": {
                       "enumNames": [
@@ -1806,31 +1806,31 @@
                         "1757"
                       ],
                       "ui:hidden": "conditionName!=24004",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "26001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=26001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "26001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=26001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "26001_params_channel": {
                       "type": "string",
                       "title": "渠道(非必填)",
                       "ui:hidden": "conditionName!=26001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "26001_params_templateId": {
                       "type": "string",
                       "title": "卡券模版ID",
                       "ui:hidden": "conditionName!=26001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "27001_comparator": {
                       "enumNames": [
@@ -1842,520 +1842,520 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14"],
                       "ui:hidden": "conditionName!=27001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "27001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=27001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "27002_comparator": {
                       "enumNames": ["等于(字符)", "不等于(字符)"],
                       "enum": ["2", "3"],
                       "ui:hidden": "conditionName!=27002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "27002_return_value": {
                       "enumNames": ["预售支付订单"],
                       "enum": ["10000-trade-paid-done"],
                       "ui:hidden": "conditionName!=27002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "35001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=35001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "35001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=35001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "35002_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=35002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "35002_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=35002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "36001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=36001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "36001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=36001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "36001_params_userIdList": {
                       "type": "string",
                       "title": "userIdList",
                       "ui:hidden": "conditionName!=36001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "59001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=59001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "59001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=59001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "59001_params_umpInstanceIds": {
                       "type": "string",
                       "title": "ump模板Id",
                       "ui:hidden": "conditionName!=59001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "59002_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=59002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "59002_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=59002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "59002_params_umpInstanceIds": {
                       "type": "string",
                       "title": "ump模板Id",
                       "ui:hidden": "conditionName!=59002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "60001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=60001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "60001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=60001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "60001_params_crowdId": {
                       "type": "string",
                       "title": "人群ID",
                       "ui:hidden": "conditionName!=60001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "97001_comparator": {
                       "enumNames": ["大于（数值）", "小于(数值)"],
                       "enum": ["9", "12"],
                       "ui:hidden": "conditionName!=97001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "97001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=97001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "115001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=115001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "115001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=115001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "116001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=116001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "116001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=116001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "116001_params_surveyId": {
                       "type": "string",
                       "title": "问卷id",
                       "ui:hidden": "conditionName!=116001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "117001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=117001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "117001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=117001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "117001_params_categoryIdList": {
                       "type": "string",
                       "title": "categoryIdList",
                       "ui:hidden": "conditionName!=117001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "131001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=131001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "131001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=131001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "131001_params_nodeCode": {
                       "type": "string",
                       "title": "节点ID",
                       "ui:hidden": "conditionName!=131001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "134001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=134001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "134001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=134001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "134001_params_umpInstanceIds": {
                       "type": "string",
                       "title": "ump模板Id",
                       "ui:hidden": "conditionName!=134001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "169001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=169001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "169001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=169001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "169001_params_surveyId": {
                       "type": "string",
                       "title": "问卷id",
                       "ui:hidden": "conditionName!=169001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "170002_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=170002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "170002_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=170002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "173001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=173001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "173001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=173001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "173001_params_productId": {
                       "type": "string",
                       "title": "产品id",
                       "ui:hidden": "conditionName!=173001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "173001_params_crowdId": {
                       "type": "string",
                       "title": "人群id",
                       "ui:hidden": "conditionName!=173001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "173001_params_token": {
                       "type": "string",
                       "title": "口令",
                       "ui:hidden": "conditionName!=173001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "178001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=178001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "178001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=178001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "180001_comparator": {
                       "enumNames": ["大于等于(数值)", "小于等于(数值)"],
                       "enum": ["10", "14"],
                       "ui:hidden": "conditionName!=180001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "180001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=180001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "181001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=181001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "181001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=181001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "181001_params_hidList": {
                       "type": "string",
                       "title": "酒店hid列表",
                       "ui:hidden": "conditionName!=181001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "182001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=182001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "182001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=182001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "182001_params_sellerIdList": {
                       "type": "string",
                       "title": "卖家ID名单",
                       "ui:hidden": "conditionName!=182001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "182002_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=182002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "182002_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=182002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "182002_params_checkInDate2": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=182002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "183001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=183001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "183001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=183001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "183001_params_checkOutDate2": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=183001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "184001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=184001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "184001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=184001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "184001_params_checkInDate2": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=184001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "185001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=185001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "185001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=185001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "185001_params_orderCreateDate2": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=185001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "186001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=186001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "186001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=186001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "186001_params_orderCreateDate2": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=186001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "187001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=187001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "187001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=187001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "188001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=188001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "188001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=188001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "189001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=189001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "189001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=189001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "194001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=194001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "194001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=194001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "200001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=200001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "200001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=200001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "200001_params_tailPaidDate3": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=200001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "201001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=201001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "201001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=201001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "201001_params_tailPaidDate2": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=201001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "207001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=207001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "207001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=207001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "208001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=208001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "208001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=208001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "212001_comparator": {
                       "enumNames": [
@@ -2368,18 +2368,18 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14", "12001"],
                       "ui:hidden": "conditionName!=212001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "212001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=212001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "212001_params_virtralCode": {
                       "type": "string",
                       "title": "虚拟积分ID",
                       "ui:hidden": "conditionName!=212001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "213001_comparator": {
                       "enumNames": [
@@ -2392,82 +2392,82 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14", "12001"],
                       "ui:hidden": "conditionName!=213001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "213001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=213001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "213001_params_vendor": {
                       "type": "string",
                       "title": "供应商",
                       "ui:hidden": "conditionName!=213001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "213001_params_partnerId": {
                       "type": "string",
                       "title": "伙伴ID",
                       "ui:hidden": "conditionName!=213001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "215001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=215001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "215001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=215001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "215001_params_payTime4PointDouble2": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=215001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "216001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=216001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "216001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=216001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "216001_params_payTime4PointDouble3": {
                       "type": "string",
                       "title": "yyyy-MM-dd HH:mm:ss",
                       "ui:hidden": "conditionName!=216001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "219001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=219001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "219001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=219001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "220001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=220001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "220001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=220001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "221001_comparator": {
                       "enumNames": [
@@ -2478,18 +2478,18 @@
                       ],
                       "enum": ["1", "9", "10", "12"],
                       "ui:hidden": "conditionName!=221001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "221001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=221001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "221001_params_virtualCode": {
                       "type": "string",
                       "title": "虚拟积分id",
                       "ui:hidden": "conditionName!=221001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "222001_comparator": {
                       "enumNames": [
@@ -2501,41 +2501,41 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14"],
                       "ui:hidden": "conditionName!=222001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "222001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=222001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "222001_params_virtualCode": {
                       "type": "string",
                       "title": "虚拟积分id",
                       "ui:hidden": "conditionName!=222001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "223001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=223001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "223001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=223001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "223001_params_subActId": {
                       "type": "string",
                       "title": "活动id",
                       "ui:hidden": "conditionName!=223001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "223001_params_groupResourceId": {
                       "type": "string",
                       "title": "资源组id",
                       "ui:hidden": "conditionName!=223001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "224001_comparator": {
                       "enumNames": [
@@ -2548,132 +2548,132 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14", "12001"],
                       "ui:hidden": "conditionName!=224001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "224001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=224001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "224001_params_virtualCode": {
                       "type": "string",
                       "title": "虚拟积分id",
                       "ui:hidden": "conditionName!=224001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "224001_params_virtualValue": {
                       "type": "string",
                       "title": "本次新增积分",
                       "ui:hidden": "conditionName!=224001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "225001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=225001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "225001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=225001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "225001_params_subActId": {
                       "type": "string",
                       "title": "subActId",
                       "ui:hidden": "conditionName!=225001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "226001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=226001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "226001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=226001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "229001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=229001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "229001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=229001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "229001_params_sellerId": {
                       "type": "string",
                       "title": "sellerId",
                       "ui:hidden": "conditionName!=229001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "229001_params_templateCode": {
                       "type": "string",
                       "title": "templateCode",
                       "ui:hidden": "conditionName!=229001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "230002_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=230002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "230002_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=230002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "230002_params_userIdList": {
                       "type": "string",
                       "title": "userIdList",
                       "ui:hidden": "conditionName!=230002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "231001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=231001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "231001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=231001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "231001_params_templateId": {
                       "type": "string",
                       "title": "ump模板ID",
                       "ui:hidden": "conditionName!=231001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "232001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=232001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "232001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=232001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "232001_params_subActIdList": {
                       "type": "string",
                       "title": "活动id(英文逗号隔开)",
                       "ui:hidden": "conditionName!=232001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "234001_comparator": {
                       "enumNames": [
@@ -2685,12 +2685,12 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14"],
                       "ui:hidden": "conditionName!=234001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "234001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=234001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "234002_comparator": {
                       "enumNames": [
@@ -2703,252 +2703,252 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14", "12001"],
                       "ui:hidden": "conditionName!=234002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "234002_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=234002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "235001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=235001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "235001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=235001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "235002_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=235002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "235002_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=235002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "236001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=236001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "236001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=236001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "237001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=237001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "237001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=237001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "238001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=238001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "238001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=238001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "239001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=239001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "239001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=239001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "240001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=240001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "240001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=240001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "241001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=241001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "241001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=241001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "241001_params_subActTemplatedId": {
                       "type": "string",
                       "title": "模版Id",
                       "ui:hidden": "conditionName!=241001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "244001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=244001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "244001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=244001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "244001_params_templateId": {
                       "type": "string",
                       "title": "ump模板ID",
                       "ui:hidden": "conditionName!=244001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "245001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=245001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "245001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=245001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "245001_params_whiteItemIdList": {
                       "type": "string",
                       "title": "商品Id白名单列表（多个用逗号分割）",
                       "ui:hidden": "conditionName!=245001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "250001_comparator": {
                       "enumNames": ["等于(数值)"],
                       "enum": ["1"],
                       "ui:hidden": "conditionName!=250001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "250001_return_value": {
                       "enumNames": ["没有", "有"],
                       "enum": ["0", "1"],
                       "ui:hidden": "conditionName!=250001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "250001_params_templateIds": {
                       "type": "string",
                       "title": "templateIds",
                       "ui:hidden": "conditionName!=250001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "251001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=251001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "251001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=251001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "251001_params_tpOrderList": {
                       "type": "string",
                       "title": "订单号list",
                       "ui:hidden": "conditionName!=251001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "251002_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=251002",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "251002_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=251002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "251002_params_whiteOrderPayTime": {
                       "type": "string",
                       "title": "支付完成限制时间",
                       "ui:hidden": "conditionName!=251002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "251002_params_whiteCategoryList": {
                       "type": "string",
                       "title": "叶子类目白名单",
                       "ui:hidden": "conditionName!=251002",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "252001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=252001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "252001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=252001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "252001_params_whiteItemTags": {
                       "type": "string",
                       "title": "商品上的itemTag白名单（多个用逗号分割）",
                       "ui:hidden": "conditionName!=252001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "253001_comparator": {
                       "enumNames": ["等于(数值)"],
                       "enum": ["1"],
                       "ui:hidden": "conditionName!=253001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "253001_return_value": {
                       "enumNames": ["否", "是"],
                       "enum": ["0", "1"],
                       "ui:hidden": "conditionName!=253001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "255001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=255001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "255001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=255001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "257001_comparator": {
                       "enumNames": [
@@ -2961,12 +2961,12 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14", "12001"],
                       "ui:hidden": "conditionName!=257001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "257001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=257001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "258001_comparator": {
                       "enumNames": [
@@ -2979,107 +2979,107 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14", "12001"],
                       "ui:hidden": "conditionName!=258001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "258001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=258001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "258001_params_bizType": {
                       "type": "string",
                       "title": "bizType",
                       "ui:hidden": "conditionName!=258001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "259001_comparator": {
                       "enumNames": ["等于(布尔)", "测试比较符管理"],
                       "enum": ["6", "13001"],
                       "ui:hidden": "conditionName!=259001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "259001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=259001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "261001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=261001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "261001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=261001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "261001_params_templateIds": {
                       "type": "string",
                       "title": "券模版Id（多个用逗号分割）",
                       "ui:hidden": "conditionName!=261001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "271001_comparator": {
                       "enumNames": ["等于(数值)"],
                       "enum": ["1"],
                       "ui:hidden": "conditionName!=271001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "271001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=271001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "273001_comparator": {
                       "enumNames": ["等于(数值)"],
                       "enum": ["1"],
                       "ui:hidden": "conditionName!=273001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "273001_return_value": {
                       "enumNames": ["否", "是"],
                       "enum": ["0", "1"],
                       "ui:hidden": "conditionName!=273001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "281001_comparator": {
                       "enumNames": ["等于(布尔)"],
                       "enum": ["6"],
                       "ui:hidden": "conditionName!=281001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "281001_return_value": {
                       "enumNames": ["是", "否"],
                       "enum": ["true", "false"],
                       "ui:hidden": "conditionName!=281001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "281001_params_templateId": {
                       "type": "string",
                       "title": "飞猪日常卡模板",
                       "ui:hidden": "conditionName!=281001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "285001_comparator": {
                       "enumNames": ["等于(数值)"],
                       "enum": ["1"],
                       "ui:hidden": "conditionName!=285001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "285001_return_value": {
                       "enumNames": ["否", "是"],
                       "enum": ["0", "1"],
                       "ui:hidden": "conditionName!=285001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "285001_params_crowdIds": {
                       "type": "string",
                       "title": "crowdIds",
                       "ui:hidden": "conditionName!=285001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "286001_comparator": {
                       "enumNames": [
@@ -3092,18 +3092,18 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14", "12001"],
                       "ui:hidden": "conditionName!=286001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "286001_return_value": {
                       "type": "string",
                       "ui:hidden": "conditionName!=286001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "286001_params_crowdIds": {
                       "type": "string",
                       "title": "crowdIds",
                       "ui:hidden": "conditionName!=286001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "289001_comparator": {
                       "enumNames": [
@@ -3116,7 +3116,7 @@
                       ],
                       "enum": ["1", "9", "10", "12", "14", "12001"],
                       "ui:hidden": "conditionName!=289001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "289001_return_value": {
                       "enumNames": [
@@ -3128,7 +3128,7 @@
                       ],
                       "enum": ["0", "1", "2", "3", "4"],
                       "ui:hidden": "conditionName!=289001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "291001_comparator": {
                       "enumNames": [
@@ -3152,19 +3152,19 @@
                         "14001"
                       ],
                       "ui:hidden": "conditionName!=291001",
-                      "ui:width": "15%"
+                      "width": "15%"
                     },
                     "291001_return_value": {
                       "enumNames": ["没有", "有"],
                       "enum": ["0", "1"],
                       "ui:hidden": "conditionName!=291001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     },
                     "291001_params_templateIds": {
                       "type": "string",
                       "title": "模版id（逗号分隔）",
                       "ui:hidden": "conditionName!=291001",
-                      "ui:width": "40%"
+                      "width": "40%"
                     }
                   },
                   "type": "object",
@@ -3240,7 +3240,7 @@
           "pattern": "^([1-9]\\d*|0)$",
           "ui:options": { "addonBefore": "满", "addonAfter": "元" },
           "ui:hidden": "faceValue!='1' || (template!=1 && template!=4)",
-          "ui:width": "42%"
+          "width": "42%"
         },
         "fixedAmountAfter": {
           "title": "",
@@ -3249,7 +3249,7 @@
           "pattern": "^([1-9]\\d*)$",
           "ui:options": { "addonBefore": "减", "addonAfter": "元" },
           "ui:hidden": "faceValue!='1'",
-          "ui:width": "42%"
+          "width": "42%"
         },
         "discount": {
           "title": "",
@@ -3258,7 +3258,7 @@
           "pattern": "^((0\\.[1-9]{1})|(([1-9]{1})(\\.\\d{1})?))$",
           "ui:options": { "addonAfter": "折" },
           "ui:hidden": "faceValue!='2'",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "reduce": {
           "title": "",
@@ -3267,28 +3267,28 @@
           "pattern": "^([1-9]\\d*)$",
           "ui:options": { "addonAfter": "元" },
           "ui:hidden": "faceValue!='3'",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "faceValuePurePrefixText": {
           "title": "前缀",
           "description": "",
           "type": "string",
           "ui:hidden": "faceValue!='5'",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "faceValuePureInfixText": {
           "title": "中缀",
           "description": "",
           "type": "string",
           "ui:hidden": "{{(!(rootValue.faceValue=='4' && rootValue.template==2)) && (!(rootValue.faceValue=='5'))}}",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "faceValuePureText": {
           "title": "{{rootValue.template=='2'?'后缀':rootValue.template=='1'?rootValue.faceValue=='5'?'后缀':'':rootValue.template=='3'?'后缀':''}}",
           "description": "",
           "type": "string",
           "ui:hidden": "faceValue!='4' && faceValue!='5'",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "effectiveTimeType": {
           "title": "使用有效期",
@@ -3304,7 +3304,7 @@
           "type": "string",
           "ui:widget": "date",
           "ui:hidden": "effectiveTimeType!='1' || (template!=1 && template!=4)",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "endTime": {
           "title": "结束时间",
@@ -3312,7 +3312,7 @@
           "type": "string",
           "ui:widget": "date",
           "ui:hidden": "effectiveTimeType!='1' || (template!=1 && template!=4)",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "effectiveMin": {
           "title": "",
@@ -3321,7 +3321,7 @@
           "pattern": "^[0-9]+$",
           "ui:options": { "addonAfter": "分钟" },
           "ui:hidden": "effectiveTimeType!='2' || (template!=1 && template!=4)",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "effectiveDay": {
           "title": "",
@@ -3330,7 +3330,7 @@
           "pattern": "^[0-9]+$",
           "ui:options": { "addonAfter": "天" },
           "ui:hidden": "effectiveTimeType!='3' || (template!=1 && template!=4)",
-          "ui:width": "50%"
+          "width": "50%"
         },
         "effectTimePureText": {
           "title": "",

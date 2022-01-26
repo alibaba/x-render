@@ -52,7 +52,7 @@ toc: content
 snippets 基本分为三类：
 
 - 生成一个表单元素的 schema（例如输入框，多选框，列表，对象）
-- 生成部分常用选项的 schema（例如 ui:options, ui:width, format 等）
+- 生成部分常用选项的 schema（例如 props, width, format 等）
 - 生成骨架和 demo。fr-init 生成骨架，fr-demo 生成一个包含所有可用组件以及一个联动显隐的样例
 
 注意不需要输入完整的 `fr-number-complex` 来唤起一个 snippet 哦，只需要输入 `number` 或者甚至 `fnc` 就能智能联想了。
@@ -65,7 +65,7 @@ snippets 基本分为三类：
 - 右键任意 `.json` 文件，选择 `解析表单配置为接口`
   <img alt="json2interface" width="80%" src="https://img.alicdn.com/tfs/TB1nI.NWrY1gK0jSZTEXXXDQVXa-2736-1744.png" />
 
-### 生成 Scheam
+### 生成 Schema
 
 - 将 React PropTypes 解析为 schema
 

@@ -28,7 +28,7 @@
 
 - <a href="https://x-render.gitee.io/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
 - <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
-- <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
+  <!-- - <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库 -->
 
 <Alert>
   <span>🎉🎉🎉 FormRender 品牌已升级到 XRender，提供中后台中 「表单 / 表格 / 图表」 很易用的解决方案， 原 0.X 版本可快速 <a href="https://x-render.gitee.io/form-render/migrate" target="_blank_"> 升级到 1.X </a> </span>
@@ -104,7 +104,7 @@
   <tr>
     <td width="160" align="center">
       <img
-        src="https://www.agtech.com/public/asset/yabologo-6f9d76c5cbb0b954b9939a8cac3a0cb1.png"
+        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/up/hU257o.png"
         width="160"
       />
     </td>
@@ -125,7 +125,7 @@
 - 在公司或个人项目中使用 XRender，并帮忙推广给伙伴使用
 - 加入钉钉聊天群帮忙解答使用问题
 
-  <img src=https://qpluspicture.oss-cn-beijing.aliyuncs.com/W1N59f/IMG_4637.JPG width=250/>
+  <img src=https://img.alicdn.com/imgextra/i2/O1CN01RoUHQF1EoKLWyotFn_!!6000000000398-0-tps-750-990.jpg width=250/>
 
 ## 贡献
 
@@ -136,6 +136,10 @@
   <a href="https://github.com/alibaba/form-render/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=alibaba/form-render" />
   </a>
+
+<br>
+
+https://user-images.githubusercontent.com/8736212/123383626-ff187a80-d5c5-11eb-803f-296762fe72d0.mp4
 
 ## 协议
 

@@ -1,5 +1,8 @@
 ---
 order: 6
+group:
+  order: 3
+  title: 高级用法
 toc: false
 ---
 
@@ -34,11 +37,11 @@ const schema = {
       required: true,
     },
     select1: {
-      title: '下拉选框',
+      title: '选择框',
       description: '加载中...',
       type: 'string',
       enum: [],
-      widget: 'select',
+      widget: 'radio',
     },
   },
 };

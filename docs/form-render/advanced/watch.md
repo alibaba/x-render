@@ -1,5 +1,9 @@
 ---
 order: 5
+group:
+  order: 3
+  title: 高级用法
+toc: content
 ---
 
 # 表单监听（watch）
@@ -111,7 +115,7 @@ const Demo = () => {
 
   const watch = {
     input1: val => {
-      if (val.length > 2) {
+      if (val && val.length > 2) {
         form.setSchemaByPath('obj1.select', ({ enumNames }) => {
           return {
             enumNames: enumNames.map(item => item + 'a'),

@@ -1,9 +1,22 @@
 ---
 order: 4
+group:
+  order: 2
+  title: 协议（schema）
 toc: content
 ---
 
 # 内置组件
+
+有时，用户希望强制指定一个表单原件用某个内置或自定义的组件来展示，可使用 widget 字段来说明，这个指定的优先级是最高的，被指定的表单项一定会使用此 widget 来渲染，例如下面的 schema 如果不以 widget 指明，会默认用 input 输入框来渲染，但现在会用 select 下拉单选组件来渲染，即使没有下拉选项：
+
+```js
+string: {
+  title: '下拉选框',
+  type: 'string',
+  widget: 'select',
+},
+```
 
 目前 FormRender 已经支持的内置组件的展示，见 [playground](/playground) - 基础控件
 
@@ -29,7 +42,6 @@ toc: content
 点击单选 radio
 下拉多选框 multiSelect
 点击多选框 checkboxes
-级联选择 cascader
 树形选择 treeSelect
 
 # 其他
@@ -41,15 +53,15 @@ toc: content
 
 # 结构类
 对象 map
-列表 list0/list1/list2/list3
+列表 cardList/simpleList/tableList/drawerList
 ```
 
-注：其中列表的 `widget` 有四个可匹配组件（list0/list1/list2/list3）
+注：其中列表的 `widget` 有四个可匹配组件（cardList/simpleList/tableList/drawerList）
 
-1. 默认使用 widget: `'list0'`，卡片 list 的展示，适宜有复杂结构，但 item 数量不大的场景
-2. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'list1'`
-3. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'list2'`
-4. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: `'list3'`
+1. 默认使用 widget: `'cardList'`，卡片 list 的展示，适宜有复杂结构，但 item 数量不大的场景
+2. 如果每个 item 数据 1-2 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'simpleList'`
+3. 如果每个 item 数据 3-5 条，且没有复杂结构（例如对象、列表），建议使用 widget: `'tableList'`
+4. 如果每个各 item 数据量大，或者结构复杂，建议使用 widget: `'drawerList'`
 
 四种展示见[展示的最佳实践](/form-render/advanced/display#列表的展示)
 

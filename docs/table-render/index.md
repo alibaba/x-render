@@ -54,7 +54,7 @@ npm i table-render --save
  * defaultShowCode: true
  */
 import React from 'react';
-import { Table, Search, TableProvider } from 'table-render';
+import { Table, Search, withTable } from 'table-render';
 
 const dataSource = [];
 for (let i = 0; i < 6; i++) {
@@ -69,16 +69,16 @@ for (let i = 0; i < 6; i++) {
 const schema = {
   type: 'object',
   properties: {
-    string: {
+    title: {
       title: '标题',
       type: 'string',
-      'ui:width': '30%',
+      width: '30%',
     },
     created_at: {
       title: '创建时间',
       type: 'string',
       format: 'date',
-      'ui:width': '30%',
+      width: '30%',
     },
   },
 };
@@ -109,21 +109,33 @@ const Wrapper = () => {
     };
   };
   return (
-    <TableProvider>
+    <>
       <Search schema={schema} api={searchApi} />
       <Table headerTitle="最简表格" columns={columns} rowKey="id" />
-    </TableProvider>
+    </>
   );
 };
 
-export default Wrapper;
+export default withTable(Wrapper);
 ```
 
 ## API
 
-### `<TableProvider>` 参数
+### `withTable`
 
-**TableProvider 本质就是一个 React Context，将对应的 `<Search>` 和 `<Table>` 包裹起来，可以很方便在里面插入一些其他东西，不需要任何入参**
+TableRender 的书写能够很简洁，在底层使用了 Context，withTable 则是 Context Provider 高阶组件形式的语法糖。书写上用户不再需要额外添加 Provider 包裹表格组件，所有表格代码通过 `withTable` 包一下即可：
+
+使用 withTable 的写法
+
+```js
+import { withTable，useTable } from 'table-render';
+
+const Page = () => {
+  const { refresh } = useTable();
+}
+
+export default withTable(Page)
+```
 
 ### `<Search>` 参数
 
@@ -140,6 +152,9 @@ export default Wrapper;
 | searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
 | searchBtnStyle     | 自定义表单操作按钮组的样式                                                            | `React.CSSProperties`                  | {}      | 否   |
 | searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                      | `string`                               | ''      | 否   |
+| debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                         | `boolean`                              | `false` | 否   |
+
+- **api**： `api` 是 `<Search />` 最重要的 属性，`api` 是一个函数，有两个入参：`params`、`sorter`，分别是表单筛选项的值、排序参数。它的返回值是一个`Object`，此`Object`中必须要有 rows 和 total，其中 rows 即`dataSource` ，total 用于分页。`api` 会接管 loading 的设置，同时在表单查询和 params 参数发生修改时重新执行。同时 查询表单的值和 params 参数也会带入。
 
 ### `<Table>` 参数
 
@@ -152,6 +167,7 @@ export default Wrapper;
 | toolbarAction         | 显示在表格主体右上方的 Icon 列表，内置了`刷新、调整密度、全屏显示` 等功能 | `boolean`           | `false`     |
 | pageChangeWithRequest | 切换分页时是否需要请求接口                                                | `boolean`           | `true`      |
 | columns               | 列定义                                                                    | `object`            | `false`     |
+| debug                 | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**             | `boolean`           | `false`     |
 
 #### `<Table>` 参数 中 Columns 列定义
 
@@ -198,7 +214,7 @@ export default Wrapper;
   {
     loading: false, // 表单是否在加载中
     search: {}, // 选项数据
-    searchApi // 搜索用的api
+    searchApi, // 搜索用的api
     tab: 0, // 如果searchApi是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
     dataSource: [], // 表格的数据
     extraData: { ... }, // 自定义的扩展星系

@@ -1,5 +1,5 @@
 import { defineConfig } from 'dumi';
-import path from 'path';
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 
 export default defineConfig({
   title: 'XRender',
@@ -11,24 +11,6 @@ export default defineConfig({
     loading: '@/docs/Loading.js',
   },
   locales: [['zh-CN', '中文']],
-  hire: {
-    title: '飞猪用户技术正寻觅前端',
-    content: `
-<p><strong>招聘团队：</strong>飞猪用户技术（拔赤）- 前端组</p>
-<p><strong>招聘层级：</strong>P5 ~ P7</p>
-<p><strong>工作城市：</strong>杭州、北京</p>
-<p><strong>面试效率：</strong>加急面试</p>
-<p><strong>团队链接：</strong></p>
-<ul>
-  <li>微信：<a href="https://weixin.sogou.com/weixin?query=Fliggy+F2E" target="_blank">Fliggy F2E</a></li>
-  <li>掘金：<a href="https://juejin.cn/user/3051900006845944" target="_blank">飞猪前端团队</a></li>
-  <li>开源：<a href="https://github.com/alibaba/form-render/" target="_blank">alibaba/x-render</a></li>
-  <li>开源：<a href="https://github.com/apache/incubator-weex-ui" target="_blank">apache/weex-ui</a></li>
-  <li>开源：<a href="https://github.com/fliggy-mobile" target="_blank">fliggy-mobile</a></li>
-</ul>`,
-    email: 'tw102972@alibaba-inc.com',
-    slogan: '想快乐的写前端吗？',
-  },
   ignoreMomentLocale: false,
   navs: [
     {
@@ -45,6 +27,10 @@ export default defineConfig({
     },
     {
       title: 'Playground',
+      children: [
+        { title: 'Playground', path: '/playground' },
+        { title: 'Schema 编辑器', path: '/tools/generator/playground' },
+      ],
       path: '/playground',
     },
     {
@@ -60,7 +46,7 @@ export default defineConfig({
       title: '更新日志',
       children: [
         {
-          title: 'FormTender',
+          title: 'FormRender',
           path:
             'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
         },
@@ -77,7 +63,7 @@ export default defineConfig({
       ],
     },
     {
-      title: '旧版本',
+      title: '旧版文档',
       path: 'https://x-components.gitee.io/form-render/',
     },
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
@@ -109,5 +95,8 @@ export default defineConfig({
       '@alifd/next',
     ],
   ],
+  chainWebpack(config, { webpack }) {
+    config.plugin('monaco-editor').use(MonacoWebpackPlugin);
+  },
   // more config: https://d.umijs.org/config
 });

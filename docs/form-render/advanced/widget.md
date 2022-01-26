@@ -6,7 +6,7 @@ group:
 toc: content
 ---
 
-# 自定义组件
+# 自定义组件（widget）
 
 当 FormRender 提供的组件无法 100%满足用户需求时，可以考虑自己写一个。自定义组件功能使 FormRender 拥有很好扩展性，可能的应用场景如下：
 
@@ -14,7 +14,7 @@ toc: content
 - 我们团队使用 xxx ui，与 antd 不搭，希望能适配一套 xxx ui 组件的 FormRender（欢迎 Pull Request）
 - 我需要在表单内部写一个 excel 上传按钮（完全定制化的需求）
 
-注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态，FormRender 的社区以及提供了部分 [常用自定义组件](/widgets)。
+注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态，FormRender 的社区以及提供了部分 [常用自定义组件](https://github.com/alibaba/x-render/tree/master/widgets)。
 
 ## 使用
 
@@ -43,7 +43,7 @@ const schema = {
 实际代码如下：
 
 ```jsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Input, Button } from 'antd';
 import Form, { useForm } from 'form-render';
 
@@ -66,16 +66,14 @@ const schema = {
 
 const SiteInput = props => {
   console.log('widget props:', props);
-  return <Input addonBefore="http://" addonAfter=".com" {...props} />;
+  return <Input addonBefore="https://" addonAfter=".com" {...props} />;
 };
 
 const Demo = () => {
   const form = useForm();
-  const handleSubmit = () => {};
   return (
     <div>
       <Form
-        readOnly
         form={form}
         schema={schema}
         widgets={{ site: SiteInput }}
@@ -91,20 +89,65 @@ const Demo = () => {
 export default Demo;
 ```
 
-可以看到自定义组件的写法十分直观，事实上很多 antd 的组件都是可以直接拿来作为自定义组件使用（内置组件中就有 Input, InputNumber, Checkbox 和 Switch）
+## 不需要自己手写自定义组件哦
+
+自定义组件就是普通的 React 组件，唯一的要求是要有 value/onChange 这两个 props，用于双向绑定值。所以如果现成的组件已经默认使用了 value/onChange，就可以直接拿来用。
+
+举例来说：现在我们需要使用“级联选择”组件，FormRender 并没有内置支持。这时打开 [antd 文档](https://ant.design/components/cascader/)，我们看到 cascader 默认使用了 value/onChange，那就直接拿来用吧：
+
+```js
+import { Cascader } from 'antd';
+
+// 顶层引入注册
+...
+<Form
+  form={form}
+  schema={schema}
+  widgets={{ cascader: Cascader }}
+/>
+
+// schema 中使用
+location: {
+  title: '省市区',
+  type: 'string',
+  widget: 'cascader',
+  props: {
+    ...
+  }
+},
+```
 
 ## 自定义组件收到的 props
+
+使用自定义组件时，大多有复杂定制需求，FormRender 提供了丰富的 props：
 
 - **disabled**：是否禁止输入
 - **readOnly**：是否只读
 - **value**：组件现在的值
 - **onChange**：函数，接收 value 为入参，用于将自定义组件的返回值同步给 Form
 - **schema**：组件对应的子 schema
-- **addons.onItemChange**: 注意挂在 addons 下面。用于在本组件内修改其他组件的值 onItemChange(value, path)
-- **addons.getValue**: 用于通过路径字符串获取值 getValue(path)。例如 `getValue('a.b[2].c')`。getValue() 获取 formData
-- **addons.formData**: 表单当前的数据。其实可以通过 getValue 获取，但我也传下来了。
+
+addons 上挂着几乎所有的 form 方法：
+
+```js
+const {
+  setValueByPath, // (path, value) => void
+  getSchemaByPath, // (path) => schema
+  setSchemaByPath, // (path) => void
+  setSchema, // ({path1: schema1, path2: schema2}) => void
+  setValues, // (newData) => void
+  getValues, // () => formData
+  resetFields, // () => void
+  setErrorFields, // (errors) => void
+  removeErrorField, // () => void
+} = addons;
+```
+
+详见[开始使用](/form-render/)的“form 方法”
+
 - **addons.dataPath**: 目前数据所在的 path，例如"a.b[2].c[0].d"，string 类型。
 - **addons.dataIndex**: 如果 dataPath 不包含数组，则为 [], 如果 dataPath 包含数组，例如"a.b[2].c[0].d"，则为 [2,0]。是自上到下所有经过的数组的 index 按顺序存放的一个数组类型
+- **addons.dependValues**: 当自定义组件对应的 schema 使用到 dependencies 字段时，在此获得 dependencies 对应的表单项的实时的值
 
 ## antd 组件改造成自定义组件
 
@@ -112,11 +155,10 @@ export default Demo;
 
 ```js
 import { Checkbox } from 'antd';
-import { createWidget } from 'form-render';
 
-const MyCheckBox = (({ value, ...rest }) => {
-  return <Checkbox checked={value} {...rest} />
-}
+const MyCheckBox = ({ value, ...rest }) => {
+  return <Checkbox checked={value} {...rest} />;
+};
 ```
 
 ## 只读模式下的自定义组件
@@ -143,7 +185,7 @@ const MyCheckBox = (({ value, ...rest }) => {
 const SiteInput = ({ readOnly, value, ...rest }) => {
   if (readOnly) return <div>{`https://${value}.com`}</div>;
   return (
-    <Input addonBefore="http://" addonAfter=".com" value={value} {...rest} />
+    <Input addonBefore="https://" addonAfter=".com" value={value} {...rest} />
   );
 };
 ```
@@ -204,4 +246,4 @@ const Demo1 = props => {
 
 ## 内置组件
 
-使用自定义组件前，也许已经有内置组件支持。具体见[schema 与内置组件](/form-render/schema/inner-widget)
+使用自定义组件前，也许已经有内置组件支持。具体见 [schema 与内置组件](/form-render/schema/inner-widget)

@@ -73,7 +73,7 @@ var schema = {
       default: 'sfdsfaslfkdj',
     },
     listName: {
-      // widget: 'list1',
+      // widget: 'simpleList',
       props: {
         hideTitle: true,
       },

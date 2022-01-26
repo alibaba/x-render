@@ -1,3 +1,7 @@
+.debug * {
+  outline: 1px solid gold;
+}
+
 .markdown p {
   color: #454d64 !important;
   font-size: 15px !important;

@@ -16,7 +16,14 @@ const TimeRange = ({ onChange, format, value, style, ...rest }) => {
     start && end ? [moment(start, timeFormat), moment(end, timeFormat)] : [];
 
   const handleChange = (value, stringList) => {
-    onChange(stringList);
+    const emptyList1 = stringList[0] === '' || stringList[1] === '';
+    const emptyList2 =
+      stringList[0] === undefined || stringList[1] === undefined;
+    if (emptyList1 || emptyList2) {
+      onChange(undefined);
+    } else {
+      onChange(stringList);
+    }
   };
 
   const timeParams = {

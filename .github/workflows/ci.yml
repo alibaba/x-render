@@ -1,0 +1,39 @@
+name: CI
+
+env:
+  NODE_OPTIONS: --max-old-space-size=6144
+
+on: [push, pull_request]
+
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: [12.x, 14.x, 16.x]
+        os: [ubuntu-latest, macos-latest]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Use Node.js ${{ matrix.node_version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node_version }}
+      - name: Cache Node Dependencies
+        id: cache
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
+      - name: Install
+        run: yarn install
+        if: steps.cache.outputs.cache-hit != 'true'
+      - run: yarn build
+        env:
+          CI: true
+          NODE_ENV: test

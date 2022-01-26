@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import Generator, { fromFormily, toFormily } from 'fr-generator';
+import Generator from 'fr-generator';
 import { Button, Modal, Input } from 'antd';
 const { TextArea } = Input;
 
@@ -53,6 +53,158 @@ const defaultValue = {
   },
 };
 
+const stringContains = (str, text) => {
+  return str.indexOf(text) > -1;
+};
+
+const isObject = a =>
+  stringContains(Object.prototype.toString.call(a), 'Object');
+
+// 获得 propsSchema 的 children
+const getChildren2 = schema => {
+  if (!schema) return [];
+  const {
+    // object
+    properties,
+    // array
+    items,
+    type,
+  } = schema;
+  if (!properties && !items) {
+    return [];
+  }
+  let schemaSubs = {};
+  if (type === 'object') {
+    schemaSubs = properties;
+  }
+  if (type === 'array') {
+    schemaSubs = items.properties;
+  }
+  return Object.keys(schemaSubs).map(name => ({
+    schema: schemaSubs[name],
+    name,
+  }));
+};
+
+// formily Schema => FRG schema
+const transformFrom = (mySchema, parent = null) => {
+  const isObj = mySchema.type === 'object' && mySchema.properties;
+  const isList =
+    mySchema.type === 'array' && mySchema.items && mySchema.items.properties;
+  const hasChildren = isObj || isList;
+  // debugger;
+  if (!hasChildren) {
+    if (mySchema.enum && Array.isArray(mySchema.enum)) {
+      const list = mySchema.enum;
+      if (
+        isObject(list[0]) &&
+        list[0].label !== undefined &&
+        list[0].value !== undefined
+      ) {
+        const _enumNames = list.map(i => i.label);
+        const _enum = list.map(i => i.value);
+        mySchema.enum = _enum;
+        mySchema.enumNames = _enumNames;
+      }
+    }
+  } else {
+    const childrenList = getChildren2(mySchema);
+    childrenList.map(item => {
+      if (isObj) {
+        mySchema.properties[item.name] = transformFrom(item.schema, mySchema);
+      }
+      if (isList) {
+        mySchema.items.properties[item.name] = transformFrom(
+          item.schema,
+          mySchema
+        );
+      }
+    });
+  }
+  if (mySchema['x-component']) {
+    mySchema['widget'] = mySchema['x-component'];
+  }
+  if (mySchema['x-component-props']) {
+    mySchema['props'] = mySchema['x-component-props'];
+  }
+  if (parent && mySchema.required) {
+    if (parent.required && Array.isArray(parent.required)) {
+      parent.required.push(mySchema.name);
+    } else {
+      parent.required = [mySchema.name];
+    }
+  }
+  delete mySchema.key;
+  delete mySchema.name;
+  delete mySchema.required;
+  delete mySchema['x-component'];
+  delete mySchema['x-component-props'];
+  return mySchema;
+};
+
+// FRG schema => formily Schema
+const transformTo = (frSchema, parent = null, key = null) => {
+  const isObj = frSchema.type === 'object' && frSchema.properties;
+  const isList =
+    frSchema.type === 'array' && frSchema.items && frSchema.items.properties;
+  const hasChildren = isObj || isList;
+  // debugger;
+  if (!hasChildren) {
+    if (
+      frSchema.enum &&
+      Array.isArray(frSchema.enum) &&
+      frSchema.enumNames &&
+      Array.isArray(frSchema.enumNames)
+    ) {
+      const list = frSchema.enum.map((item, idx) => ({
+        value: item,
+        label: frSchema.enumNames[idx],
+      }));
+      frSchema.enum = list;
+    }
+  } else {
+    const childrenList = getChildren2(frSchema);
+    childrenList.map(item => {
+      if (isObj) {
+        frSchema.properties[item.name] = transformTo(
+          item.schema,
+          frSchema,
+          item.name
+        );
+      }
+      if (isList) {
+        frSchema.items.properties[item.name] = transformTo(
+          item.schema,
+          frSchema,
+          item.name
+        );
+      }
+    });
+  }
+  if (frSchema['widget']) {
+    frSchema['x-component'] = frSchema['widget'];
+  }
+  if (frSchema['props']) {
+    frSchema['x-component-props'] = frSchema['props'];
+  }
+  delete frSchema['widget'];
+  delete frSchema['props'];
+  delete frSchema['enumNames'];
+  if (key) {
+    frSchema.name = key;
+    frSchema.key = key;
+  }
+  if (parent && key && parent.required && Array.isArray(parent.required)) {
+    if (parent.required.indexOf(key) > -1) {
+      frSchema.required = true;
+    }
+  }
+  return frSchema;
+};
+
+const fromFormily = schema => transformFrom(schema);
+const toFormily = schema => transformTo(schema);
+
 const Demo = () => {
   const [show, setShow] = useState(false);
   const [schema, setSchema] = useState(() => defaultValue);
@@ -97,38 +249,5 @@ const Demo = () => {
     </div>
   );
 };
-
-// const b = {
-//   schema: {
-//     type: 'object',
-//     properties: {
-//       array: {
-//         type: 'array',
-//         title: 'Name',
-//         items: {
-//           type: 'object',
-//           properties: {
-//             aa: {
-//               type: 'string',
-//               title: '控制相邻字段显示隐藏',
-//               enum: [true, false],
-//               'ui:widget': 'input',
-//               enumNames: ['显示', '隐藏'],
-//             },
-//             bb: { type: 'string', title: 'BB', 'ui:widget': 'input' },
-//           },
-//         },
-//       },
-//       cc: {
-//         type: 'string',
-//         title: 'CC',
-//         'ui:widget': 'input',
-//         'ui:options': { min: 1 },
-//       },
-//     },
-//   },
-// };
-
-// console.log(toFormily(b));
 
 export default Demo;

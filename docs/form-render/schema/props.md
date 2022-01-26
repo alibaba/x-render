@@ -1,5 +1,8 @@
 ---
 order: 3
+group:
+  order: 2
+  title: 协议（schema）
 toc: content
 ---
 
@@ -28,19 +31,39 @@ toc: content
 
 **props**
 
-| props      |  类型   |                 说明                  |
-| ---------- | :-----: | :-----------------------------------: |
-| hideTitle  | boolean | 只支持“list1”，隐藏 title，展示更紧凑 |
-| hideDelete | boolean |             隐藏删除按钮              |
-| hideAdd    | boolean |           隐藏新增/复制按钮           |
-| hideMove   | boolean |       隐藏上下移动 item 的按钮        |
-| buttons    |  array  |             下详 （注 1）             |
+| props      |  类型   |                    说明                    |
+| ---------- | :-----: | :----------------------------------------: |
+| hideTitle  | boolean | 只支持“simpleList”，隐藏 title，展示更紧凑 |
+| hideDelete | boolean |                隐藏删除按钮                |
+| hideAdd    | boolean |             隐藏新增/复制按钮              |
+| hideCopy   | boolean |                隐藏复制按钮                |
+| hideMove   | boolean |          隐藏上下移动 item 的按钮          |
+| buttons    |  array  |               下详 （注 1）                |
+
+注：对于展示是 table 类型的 list（tableList、drawerList、virtualList），所有 antd table 支持的 props 都可以透传，例如
+
+```json
+"props": {
+  "scrollX": 2000
+}
+```
 
 **itemProps**
 
-| props   | 类型  |     说明      |
-| ------- | :---: | :-----------: |
-| buttons | array | 下详 （注 2） |
+| props       | 类型  |                                                                说明                                                                |
+| ----------- | :---: | :--------------------------------------------------------------------------------------------------------------------------------: |
+| buttons     | array |                                                           下详 （注 2）                                                            |
+| addBtnProps | array | “新增一条”按钮的样式和文案修改，所有 antd 的 button 的 props 都支持传入，例如 addBtnProps: {children: '新增企业', type: 'primary'} |
+
+注：对于展示是 table 类型的 list（tableList、drawerList、virtualList），所有 columns 的单个配置都可以透传，会作用到 clumns 的所有 item，例如
+
+```json
+"itemProps": {
+  "width": 200
+}
+```
+
+则 table 的所有单元格（除了“操作”那一列）都会宽度 200 px
 
 **注 1：**
 
@@ -124,9 +147,17 @@ window.copyMe = ({ value, index, schema }) => {
 
 目前还没有，未来会扩展
 
+### url 组件
+
+**`addonText`**
+默认为 “测试链接”，可通过此字段自定义
+
+**`prefix`** 和 **`suffix`**
+为 antd 原生支持，如果使用则最终的 formData 里对应 key 的值会自动拼接上 prefix 和 suffix。例如 prefix: "https://", 填写了"www.taobao.com"，则最终提交的 formData 值为"https://www.taobao.com"
+
 ### upload 上传
 
-**props**
+**uploadProps**
 
 upload 组件的主体 props，参考 [antd/upload 文档](https://ant.design/components/upload/)
 

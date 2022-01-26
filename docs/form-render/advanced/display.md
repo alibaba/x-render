@@ -1,5 +1,8 @@
 ---
-order: 4
+order: 8
+group:
+  order: 3
+  title: 高级用法
 toc: content
 ---
 
@@ -56,9 +59,9 @@ export default () => (
 );
 ```
 
-非常特别的情况，会用到 display: inline
+<!-- 非常特别的情况，会用到 display: inline -->
 
-```jsx
+<!-- ```jsx
 import React from 'react';
 import Form from '../demo/display';
 
@@ -86,7 +89,7 @@ const schema = {
 };
 
 export default () => <Form schema={schema} />;
-```
+``` -->
 
 ### ReadOnly
 
@@ -183,7 +186,7 @@ export default () => <Form labelWidth="200" schema={schema} />;
 
 列表的展示对于简单需求占位太多，复杂需求定制不够一直是痛点。所以我们给出了 5 种展示，充分满足从极简到复杂的所有需求。详见[列表展示](/advanced/listDisplay.md)
 
-1. 默认展示使用 widget: 'list0'，卡片类型，用于展示数量不太多但结构复杂的 list
+1. 默认展示使用 widget: 'cardList'，卡片类型，用于展示数量不太多但结构复杂的 list
 
 ```jsx
 import React from 'react';
@@ -196,7 +199,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      // widget: 'list0',
+      // widget: 'cardList',
       items: {
         type: 'object',
         properties: {
@@ -241,7 +244,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-2. widget: 'list1' 用于展示每行只有 1-3 个简单元素的情况
+2. widget: 'simpleList' 用于展示每行只有 1-3 个简单元素的情况
 
 ```jsx
 import React from 'react';
@@ -254,7 +257,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list1',
+      widget: 'simpleList',
       items: {
         type: 'object',
         properties: {
@@ -282,7 +285,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-3. widget: 'list2' 用于展示每行只有 3 - n 个简单元素的情况，特别是数据量很大需要分页的
+3. widget: 'tableList' 用于展示每行只有 3 - n 个简单元素的情况，特别是数据量很大需要分页的
 
 ```jsx
 import React from 'react';
@@ -295,7 +298,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list2',
+      widget: 'tableList',
       items: {
         type: 'object',
         properties: {
@@ -332,7 +335,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-4. widget: 'list3' 用于展示存在列表套列表，列表套对象等复杂元素的情况
+4. widget: 'drawerList' 用于展示存在列表套列表，列表套对象等复杂元素的情况
 
 ```jsx
 import React from 'react';
@@ -345,7 +348,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'list3',
+      widget: 'drawerList',
       items: {
         type: 'object',
         properties: {
@@ -364,7 +367,10 @@ const schema = {
             title: '对象数组',
             description: '对象数组嵌套功能',
             type: 'array',
-            widget: 'list1',
+            widget: 'simpleList',
+            props: {
+              hideMove: true,
+            },
             items: {
               type: 'object',
               properties: {

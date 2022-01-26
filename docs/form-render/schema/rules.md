@@ -1,5 +1,8 @@
 ---
 order: 2
+group:
+  order: 2
+  title: 协议（schema）
 toc: content
 ---
 
@@ -42,7 +45,7 @@ toc: content
    name: {
      type: 'string',
      required: true,
-     validator: (rule, value) => value === 'muji',
+     rules: [{ validator: (rule, value) => value === 'muji' }]
    },
    ```
 
@@ -78,6 +81,6 @@ toc: content
      "title": "zip code",
      "type": "string",
      "required": true,
-     "rules": [{ "len": 8, "message": "invalid zip"  },{ "required": true, "message": "zip is required"  }]
+     "rules": [{"len": 8, "message": "invalid zip"},{"required": true, "message": "zip is required"}]
    }
    ```
