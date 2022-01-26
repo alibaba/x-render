@@ -29,7 +29,7 @@
 - <a href="https://x-render.gitee.io/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
 - <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
 - <a href="https://x-render.gitee.io/tools/generator" target="_blank">Schema 编辑器</a>：中后台表单可视化搭建利器
-  <!-- - <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库 -->
+- <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
 
 ## 谁在使用？
 
@@ -56,6 +56,12 @@
     <td width="160" align="center">
       <img
         src="https://img.alicdn.com/tfs/TB13DzOjXP7gK0jSZFjXXc5aXXa-212-48.png"
+        width="160"
+      />
+    </td>
+    <td width="160" align="center">
+      <img
+        src="https://img.alicdn.com/imgextra/i1/O1CN01Uw1xNd1H1GnHYCaOr_!!6000000000697-2-tps-1920-1920.png"
         width="160"
       />
     </td>
@@ -97,6 +103,12 @@
         width="160"
       />
     </td>
+    <td width="160" align="center">
+      <img
+        src="https://img.alicdn.com/imgextra/i1/O1CN01K3AD1b1WZMSHolALT_!!6000000002802-0-tps-700-207.jpg"
+        width="160"
+      />
+    </td>
   </tr>
   <tr>
     <td width="160" align="center">
@@ -105,18 +117,8 @@
         width="160"
       />
     </td>
-    <td width="160" align="center">
-      <img
-        src="https://img.alicdn.com/imgextra/i1/O1CN01K3AD1b1WZMSHolALT_!!6000000002802-0-tps-700-207.jpg"
-        width="160"
-      />
-    </td>
-    <td width="160" align="center">
-      <img
-        src="https://img.alicdn.com/imgextra/i1/O1CN01Uw1xNd1H1GnHYCaOr_!!6000000000697-2-tps-1920-1920.png"
-        width="160"
-      />
-    </td>
+    
+    
   </tr>
 </table>
 
