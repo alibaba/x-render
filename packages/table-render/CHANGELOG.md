@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.2.0
+
+- [+] `Search` 组件新增`searchText`和`resetText`属性，支持自定义`搜索/重置`按钮文本。
+
 ### 1.1.9
 
 - [!] `SearchBtn` 宽度使用 flex 进行自适应，不再需要 `calcWidth` 计算
