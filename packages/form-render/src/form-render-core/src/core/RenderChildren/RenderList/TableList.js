@@ -3,7 +3,6 @@ import React from 'react';
 import Core from '../../index';
 import { Button, Table, Popconfirm } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-// import ArrowDown from '../../../components/ArrowDown';
 
 const FIELD_LENGTH = 170;
 
@@ -77,7 +76,8 @@ const TableList = ({
       key: '$action',
       fixed: 'right',
       width: 120,
-      render: (value, record, idx) => {
+      render: (value, record) => {
+        const idx = record.index;
         return (
           <div>
             {!props.hideAdd && !props.hideCopy && (

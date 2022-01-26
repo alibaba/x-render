@@ -3,7 +3,6 @@ const typeTemplate = '${title} is not a valid ${type}';
 export const defaultValidateMessages = {
   default: 'Validation error on field ${title}',
   required: '${title} is required',
-  // enum: '${title} must be one of [${enum}]',
   whitespace: '${title} cannot be empty',
   date: {
     format: '${title} is invalid for format date',

@@ -2,8 +2,7 @@
 import React from 'react';
 import { get } from 'lodash-es';
 import { useStore, useTools } from '../../../hooks';
-import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../utils';
-// import ArrowDown from '../../../components/ArrowDown';
+import { getDataPath } from '../../../utils';
 import './list.less';
 import SimpleList from './SimpleList';
 import CardList from './CardList';
@@ -20,6 +19,7 @@ const RenderList = ({
   errorFields,
   displayType,
 }) => {
+
   const { formData, flatten } = useStore();
   const { onItemChange, removeTouched } = useTools();
 
@@ -94,7 +94,6 @@ const RenderList = ({
 
   let itemSchema = {
     type: 'object',
-    // properties: (schema.items && schema.items.properties) || {},
     properties: {},
     props: schema.props || {},
     $id: schema.$id,

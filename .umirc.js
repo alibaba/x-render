@@ -25,21 +25,25 @@ export default defineConfig({
       title: 'ChartRender',
       path: '/chart-render',
     },
+    { title: 'Schema 编辑器', path: '/generator' },
     {
       title: 'Playground',
-      children: [
-        { title: 'Playground', path: '/playground' },
-        { title: 'Schema 编辑器', path: '/tools/generator/playground' },
-      ],
+      // children: [
+      //   { title: 'Playground', path: '/playground' },
+      //   { title: 'Schema 编辑器', path: '/tools/generator/playground' },
+      // ],
       path: '/playground',
     },
     {
       title: '周边工具',
       path: '/tools',
       children: [
-        { title: 'Schema 编辑器', path: '/tools/generator' },
         { title: 'PropToSchema', path: '/tools/proptypes' },
         { title: 'VSCode 插件', path: '/tools/vscode' },
+        {
+          title: '旧版文档',
+          path: 'https://x-components.gitee.io/form-render/',
+        },
       ],
     },
     {
@@ -62,10 +66,7 @@ export default defineConfig({
         },
       ],
     },
-    {
-      title: '旧版文档',
-      path: 'https://x-components.gitee.io/form-render/',
-    },
+
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
   ],
   mode: 'site',
