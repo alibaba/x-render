@@ -1,0 +1,19 @@
+name: Deploy CI
+
+on:
+  branches: [ master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: [12.x, 14.x, 16.x]
+        os: [ubuntu-latest, macos-latest]
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - run: yarn install
+      - run: yarn build
+      - name: deploy site
+        run: npm run deploy
