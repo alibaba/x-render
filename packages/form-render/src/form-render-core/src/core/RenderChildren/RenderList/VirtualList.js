@@ -29,6 +29,26 @@ const VirtualList = ({
     return { index: idx };
   });
 
+  let popConfirmProps = {
+    title: '确定删除?',
+    okText: '确定',
+    cancelText: '取消',
+  };
+
+  if (props.popConfirmProps && typeof props.popConfirmProps === 'object') {
+    popConfirmProps = { ...popConfirmProps, ...props.popConfirmProps };
+  }
+
+  let actionProps = {
+    title: '操作',
+    addText: '新增',
+    deleteText: '删除',
+  };
+
+  if (props.actionProps && typeof props.actionProps === 'object') {
+    actionProps = { ...actionProps, ...props.actionColumnProps };
+  }
+
   const columns = children.map(child => {
     const item = flatten[child];
     const schema = (item && item.schema) || {};
@@ -61,7 +81,7 @@ const VirtualList = ({
 
   if (!props.hideDelete || Array.isArray(itemProps.buttons)) {
     columns.push({
-      title: '操作',
+      title: actionProps.title,
       key: '$action',
       fixed: 'right',
       width: 120,
@@ -70,12 +90,10 @@ const VirtualList = ({
           <>
             {!props.hideDelete && (
               <Popconfirm
-                title="确定删除?"
                 onConfirm={() => deleteItem(idx)}
-                okText="确定"
-                cancelText="取消"
+                {...popConfirmProps}
               >
-                <a>删除</a>
+                <a>{actionProps.deleteText}</a>
               </Popconfirm>
             )}
             {!props.hideMove && (
@@ -128,7 +146,7 @@ const VirtualList = ({
       <div className="w-100 mb2 tr">
         {!props.hideAdd && (
           <Button type="primary" size="small" onClick={addItem}>
-            新增
+            {actionProps.addText}
           </Button>
         )}
         {Array.isArray(props.buttons)

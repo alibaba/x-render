@@ -49,7 +49,10 @@ export class frSchemaGenProvider {
       properties?: any;
     }
     const item: Item = {};
-    const type = Object.prototype.toString.call(val).slice(8, -1).toLowerCase();
+    const type = Object.prototype.toString
+      .call(val)
+      .slice(8, -1)
+      .toLowerCase();
     switch (type) {
       case 'null':
       case 'undefined':

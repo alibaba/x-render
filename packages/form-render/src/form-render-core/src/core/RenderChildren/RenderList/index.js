@@ -19,7 +19,6 @@ const RenderList = ({
   errorFields,
   displayType,
 }) => {
-
   const { formData, flatten } = useStore();
   const { onItemChange, removeTouched } = useTools();
 

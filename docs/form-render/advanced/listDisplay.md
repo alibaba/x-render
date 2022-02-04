@@ -68,6 +68,36 @@ const Demo = () => {
 export default Demo;
 ```
 
+可以使用 props.addBtnProps 和 props.popConfirmProps 来国际化 cardList，如：
+
+```jsx
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      // widget: 'cardList',
+      items: {
+        ...
+      },
+      props: {
+        addBtnProps: {
+          children: 'Add a item',
+          type: 'primary',
+        },
+        popConfirmProps: {
+          title: 'Sure to delete?',
+          okText: 'Ok',
+          cancelText: 'Cancel',
+        },
+      },
+    },
+  },
+};
+```
+
 2. widget: 'simpleList' 用于展示每行只有 1-3 个简单元素的情况
 
 ```jsx
@@ -107,6 +137,36 @@ const Demo = () => {
 };
 
 export default Demo;
+```
+
+可以使用 props.addBtnProps 和 props.popConfirmProps 来国际化 simpleList，如：
+
+```jsx
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'simpleList',
+      items: {
+        ...
+      },
+      props: {
+        addBtnProps: {
+          children: 'Add a item',
+          type: 'primary',
+        },
+        popConfirmProps: {
+          title: 'Sure to delete?',
+          okText: 'Ok',
+          cancelText: 'Cancel',
+        },
+      },
+    },
+  },
+};
 ```
 
 3. widget: 'tableList' 用于展示每行只有 3 - n 个简单元素的情况，特别是数据量很大需要分页的
@@ -157,6 +217,38 @@ const Demo = () => {
 };
 
 export default Demo;
+```
+
+可以使用 props.actionProps 和 props.popConfirmProps 来国际化 tableList，如：
+
+```jsx
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'tableList',
+      items: {
+        ...
+      },
+      props: {
+        actionProps: {
+          title: 'Action',
+          addText: 'Add',
+          copyText: 'Copy',
+          deleteText: 'Delete',
+        },
+        popConfirmProps: {
+          title: 'Sure to delete?',
+          okText: 'Ok',
+          cancelText: 'Cancel',
+        },
+      },
+    },
+  },
+};
 ```
 
 4. widget: 'drawerList' 用于展示存在列表套列表，列表套对象等复杂元素的情况
@@ -225,6 +317,38 @@ const Demo = () => {
 export default Demo;
 ```
 
+可以使用 props.actionProps 和 props.popConfirmProps 来国际化 drawerList，如：
+
+```jsx
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'drawerList',
+      items: {
+        ...
+      },
+      props: {
+        actionProps: {
+          title: 'Action',
+          addText: 'Add',
+          copyText: 'Copy',
+          deleteText: 'Delete',
+        },
+        popConfirmProps: {
+          title: 'Sure to delete?',
+          okText: 'Ok',
+          cancelText: 'Cancel',
+        },
+      },
+    },
+  },
+};
+```
+
 5. widget: 'tabList' 在展示上与 'cardList' 基本相同，但以虚拟滚动替代了传统的分页
 
 ```jsx
@@ -281,7 +405,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-5. widget: 'tabList' 用于展示可新增/关闭页签的 Tabs 标签页
+widget: 'tabList' 还可以用于展示可新增/关闭页签的 Tabs 标签页
 
 ```jsx
 import React from 'react';
@@ -407,4 +531,36 @@ const Demo = () => {
 };
 
 export default Demo;
+```
+
+可以使用 props.actionProps 和 props.popConfirmProps 来国际化 virtualList，如：
+
+```jsx
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'virtualList',
+      items: {
+        ...
+      },
+      props: {
+        actionProps: {
+          title: 'Action',
+          addText: 'Add',
+          copyText: 'Copy',
+          deleteText: 'Delete',
+        },
+        popConfirmProps: {
+          title: 'Sure to delete?',
+          okText: 'Ok',
+          cancelText: 'Cancel',
+        },
+      },
+    },
+  },
+};
 ```

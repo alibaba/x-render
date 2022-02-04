@@ -184,7 +184,7 @@ export default () => <Form labelWidth="200" schema={schema} />;
 
 ### 列表的展示
 
-列表的展示对于简单需求占位太多，复杂需求定制不够一直是痛点。所以我们给出了 5 种展示，充分满足从极简到复杂的所有需求。详见[列表展示](/advanced/listDisplay.md)
+列表的展示对于简单需求占位太多，复杂需求定制不够一直是痛点。所以我们给出了 5 种展示，充分满足从极简到复杂的所有需求。详见[列表展示](/docs/form-render/advanced/listDisplay.md)
 
 1. 默认展示使用 widget: 'cardList'，卡片类型，用于展示数量不太多但结构复杂的 list
 
