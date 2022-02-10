@@ -15,5 +15,10 @@ jobs:
         run: yarn install
       - name: build
         run: yarn build
-      - name: deploy
-        run: yarn deploy 
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./docs-dist
+          force_orphan: true
+        
