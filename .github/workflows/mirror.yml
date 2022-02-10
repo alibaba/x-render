@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: mirror action
         continue-on-error: true
-        uses: wearerequired/git-mirror-action@v1
+        uses: wearerequired/git-mirror-action@master
         env:
           SSH_PRIVATE_KEY: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
         with:
