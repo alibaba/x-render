@@ -15,7 +15,7 @@ jobs:
         run: yarn install
       - name: build
         run: yarn doc
-      - name: Deploy
+      - name: Deploy Action
         uses: peaceiris/actions-gh-pages@v3
         with:
           deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
