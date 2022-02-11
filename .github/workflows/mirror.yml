@@ -10,7 +10,7 @@ jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: mirror action
+      - name: mirror actions
         continue-on-error: true
         uses: wearerequired/git-mirror-action@v1
         env:
