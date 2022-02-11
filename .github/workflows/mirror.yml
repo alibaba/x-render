@@ -1,10 +1,10 @@
 name: 🔀 Sync mirror to Gitee
 
 on:
-  push:
-    branches:
-      - master
-  create:
+  workflow_run:
+    workflows: ["Deploy CI"]
+    types:
+      - completed
 
 jobs:
   mirror:
@@ -24,4 +24,4 @@ jobs:
           gitee-username: 13186171773
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
           gitee-repo: x-render/x-render
-          branch: master
+          branch: gh-pages
