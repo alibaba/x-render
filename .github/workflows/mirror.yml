@@ -21,7 +21,7 @@ jobs:
       - name: Build Gitee Pages
         uses: yanglbme/gitee-pages-action@main
         with:
-          gitee-username: siyi98
+          gitee-username: zhusijia1998@gmail.com
           gitee-password: ${{ secrets.GITEE_PASSWORD }}
           gitee-repo: x-render/x-render
           branch: master
