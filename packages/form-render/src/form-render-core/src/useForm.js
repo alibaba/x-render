@@ -147,21 +147,6 @@ const useForm = props => {
     firstMount,
   ]);
 
-  // logic moves to RenderField/index.js
-  // useEffect(() => {
-  //   if (firstMount) return;
-  //   validateAll({
-  //     formData: _data.current,
-  //     flatten: _finalFlatten.current,
-  //     options: {
-  //       locale: localeRef.current,
-  //       validateMessages: validateMessagesRef.current,
-  //     },
-  //   }).then(res => {
-  //     _setErrors(res);
-  //   });
-  // }, [JSON.stringify(_data.current)]);
-
   // All form methods are down here ----------------------------------------------------------------
   // 两个兼容 0.x 的函数
   const _setData = data => {

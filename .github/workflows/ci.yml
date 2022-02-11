@@ -8,20 +8,17 @@ on: [push, pull_request]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node_version: [12.x, 14.x, 16.x]
-        os: [ubuntu-latest, macos-latest]
-      fail-fast: false
+        node: [ '12', '14', '16' ]
+    name: build steps
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - name: Use Node.js ${{ matrix.node_version }}
+      - name: Use Node.js ${{ matrix.node }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ matrix.node_version }}
+          node-version: ${{ matrix.node }}
       - name: Cache Node Dependencies
         id: cache
         uses: actions/cache@v2
@@ -34,6 +31,3 @@ jobs:
         run: yarn install
         if: steps.cache.outputs.cache-hit != 'true'
       - run: yarn build
-        env:
-          CI: true
-          NODE_ENV: test

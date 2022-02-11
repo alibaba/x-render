@@ -16,9 +16,9 @@ features:
     title: TableRender
     desc: 协议生成 & 高度灵活的搜索列表
   - icon: https://qpluspicture.oss-cn-beijing.aliyuncs.com/tDHL2H/028-xylophone.png
-    title: ChartRender
-    desc: 傻瓜式的图表绘制库
+    title: SchemaGenerator
+    desc: 中后台表单可视化搭建利器
 footer: Please feel free to use and contribute to the development.
 ---
 
-<embed src="../README.md#L33-L144"></embed>
+<embed src="../README.md#L33-L153"></embed>

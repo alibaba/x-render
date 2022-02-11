@@ -1,8 +1,6 @@
 ---
 order: 1
 title: 使用文档
-group:
-  title: Schema 编辑器
 toc: content
 ---
 

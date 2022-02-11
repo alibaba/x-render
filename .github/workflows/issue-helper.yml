@@ -20,7 +20,7 @@ jobs:
 
             你好 @${{ github.event.issue.user.login }}，我们需要你在codesandbox上提供一个完整的demo，便于我们快速修复哦。
 
-      - name: need demo
+      - name: pr welcome
         if: github.event.label.name == 'pr welcome'
         uses: actions-cool/issues-helper@v2.5.0
         with:

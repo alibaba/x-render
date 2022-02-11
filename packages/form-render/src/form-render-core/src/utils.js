@@ -1,21 +1,5 @@
 import { get, set, cloneDeep, isEmpty } from 'lodash-es';
 
-// window.log1 = value => {
-//   console.log('%ccommon:', 'color: #00A7F7; font-weight: 500;', value);
-// };
-
-// window.log2 = value => {
-//   console.log('%cwarning:', 'color: #f50; font-weight: 500;', value);
-// };
-
-// window.log3 = value => {
-//   console.log('%csuccess:', 'color: #87d068; font-weight: 500;', value);
-// };
-
-// window.log4 = value => {
-//   console.log('%cspecial:', 'color: #722ed1; font-weight: 500;', value);
-// };
-
 export function getParamByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, '\\$&');
   var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
@@ -739,188 +723,6 @@ export const getDescriptorSimple = (schema = {}, path) => {
   return { [path]: result };
 };
 
-// export const getDescriptorFromSchema = ({ schema, isRequired = true }) => {
-//   let result = {};
-//   let singleResult = {};
-//   if (schema.hidden === true) return { validator: () => true };
-//   if (isObjType(schema)) {
-//     result.type = 'object';
-//     if (isRequired && schema.required === true) {
-//       result.required = true;
-//     }
-//     result.fields = {};
-//     Object.keys(schema.properties).forEach(key => {
-//       const item = schema.properties[key];
-//       // 兼容旧的！
-//       if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
-//         item.required = true;
-//       }
-//       result.fields[key] = getDescriptorFromSchema({
-//         schema: item,
-//         isRequired,
-//       });
-//     });
-//   } else if (isListType(schema)) {
-//     result.type = 'array';
-//     if (isRequired && schema.required === true) {
-//       result.required = true;
-//     }
-//     if (typeof schema.min === 'number') {
-//       result.min = schema.min;
-//     }
-//     if (typeof schema.max === 'number') {
-//       result.max = schema.max;
-//     }
-//     result.defaultField = { type: 'object', fields: {} }; // 目前就默认只有object类型的 TODO:
-//     Object.keys(schema.items.properties).forEach(key => {
-//       const item = schema.items.properties[key];
-//       // 兼容旧的！
-//       if (Array.isArray(schema.required) && schema.required.indexOf(key) > -1) {
-//         item.required = true;
-//       }
-//       result.defaultField.fields[key] = getDescriptorFromSchema({
-//         schema: item,
-//         isRequired,
-//       });
-//     });
-//   } else {
-//     // 单个的逻辑
-//     const processRule = item => {
-//       if (schema.type) return { ...item, type: schema.type };
-//       if (item.pattern && typeof item.pattern === 'string') {
-//         return { ...item, pattern: new RegExp(item.pattern) };
-//       }
-//       return item;
-//     };
-//     const { required, ...rest } = schema;
-
-//     ['type', 'pattern', 'min', 'max', 'len'].forEach(key => {
-//       if (Object.keys(rest).indexOf(key) > -1) {
-//         singleResult[key] = rest[key];
-//       }
-//     });
-
-//     switch (schema.type) {
-//       case 'range':
-//         singleResult.type = 'array';
-//         break;
-//       case 'html':
-//         singleResult.type = 'string';
-//         break;
-//       default:
-//         break;
-//     }
-//     switch (schema.format) {
-//       case 'email':
-//       case 'url':
-//         singleResult.type = schema.format;
-//         break;
-//       default:
-//         break;
-//     }
-
-//     let requiredRule;
-//     if (isRequired && schema.required === true) {
-//       requiredRule = { required: true, type: singleResult.type || 'string' };
-//     }
-
-//     if (schema.rules) {
-//       if (Array.isArray(schema.rules)) {
-//         const _rules = [];
-//         schema.rules.forEach(item => {
-//           if (item.required === true) {
-//             if (isRequired) {
-//               requiredRule = item;
-//             }
-//           } else {
-//             _rules.push(processRule(item));
-//           }
-//         });
-//         result = [singleResult, ..._rules];
-//       } else if (isObject(schema.rules)) {
-//         // TODO: 规范上不允许rules是object，省一点事儿
-//         result = [singleResult, processRule(schema.rules)];
-//       } else {
-//         result = singleResult;
-//       }
-//     } else {
-//       result = singleResult;
-//     }
-
-//     if (requiredRule) {
-//       if (Array.isArray(result)) {
-//         result.push(requiredRule);
-//       } else if (isObject(result)) {
-//         result = [result, requiredRule];
-//       }
-//     }
-
-//     if (schema.format === 'image') {
-//       const imgValidator = {
-//         validator: (rule, value) => {
-//           const pattern = /([/|.|w|s|-])*.(jpg|gif|png|bmp|apng|webp|jpeg|json)/;
-//           if (!value) return true; // 这里判断宽一点，undefined、null、'' 都当做没有填写
-//           return !!pattern.exec(value) || isUrl(value);
-//         },
-//         message: '${title}的类型不是image',
-//       };
-//       if (Array.isArray(result)) {
-//         result.push(imgValidator);
-//       } else if (isObject(result)) {
-//         result = [result, imgValidator];
-//       }
-//     }
-//   }
-//   return result;
-// };
-
-// schema = {
-//   type: 'object',
-//   properties: {
-//     x: {
-//       type: 'object',
-//       properties: {
-//         y: {
-//           type: 'string',
-//           required: true,
-//         },
-//       },
-//     },
-//   },
-// };
-// path = 'x.y'
-// return {required: true, message?: 'xxxx'}
-// export const isPathRequired = (path, schema) => {
-//   let pathArr = path.split('.');
-//   while (pathArr.length > 0) {
-//     let [_path, ...rest] = pathArr;
-//     _path = _path.split('[')[0];
-//     let childSchema;
-//     if (isObjType(schema)) {
-//       childSchema = schema.properties[_path];
-//     } else if (isListType(schema)) {
-//       childSchema = schema.items.properties[_path];
-//     }
-//     pathArr = rest;
-//     if (childSchema) {
-//       return isPathRequired(rest.join('.'), childSchema);
-//     }
-
-//     // 单个的逻辑
-//     let result = { required: false };
-//     if (schema.required === true) {
-//       result.required = true;
-//     }
-//     if (schema.rules) {
-//       const requiredItem = schema.rules.find(item => item.required);
-//       if (requiredItem) {
-//         result = requiredItem;
-//       }
-//     }
-//     return result;
-//   }
-// };
-
 // _path 只供内部递归使用
 export const generateDataSkeleton = (schema, formData) => {
   let _formData = clone(formData);
@@ -985,27 +787,6 @@ export const translateMessage = (msg, schema) => {
   }
   return msg;
 };
-
-// "objectName": {
-//   "title": "对象",
-//   "description": "这是一个对象类型",
-//   "type": "object",
-//   "properties": {
-
-//   }
-// }
-
-// "listName": {
-//   "title": "对象数组",
-//   "description": "对象数组嵌套功能",
-//   "type": "array",
-//   "items": {
-//     "type": "object",
-//     "properties": {
-
-//     }
-//   }
-// }
 
 const changeSchema = (_schema, singleChange) => {
   let schema = clone(_schema);
@@ -1288,8 +1069,8 @@ export const removeDups = arr => {
     console.log('in removeDups: param is not an array');
     return;
   }
-  var array = [];
-  for (var i = 0; i < arr.length; i++) {
+  const array = [];
+  for (let i = 0; i < arr.length; i++) {
     if (array.indexOf(arr[i]) === -1) {
       array.push(arr[i]);
     }

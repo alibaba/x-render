@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.1
+
+- [!] 修复`FormRender`的`tableList`组件
+
 ## 1.9.0
 
 - [!] 修复`setSchema`失效 bug https://github.com/alibaba/x-render/issues/647
