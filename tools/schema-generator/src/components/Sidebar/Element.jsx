@@ -12,6 +12,7 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
     errorFields,
     userProps,
     onFlattenChange,
+    elementRender,
   } = useStore();
   const { getId } = userProps;
   const [{ isDragging }, dragRef] = useDrag({
@@ -47,9 +48,17 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
     setGlobal({ selected: newId });
   };
 
+  const widgetProps = {
+    text,
+    icon,
+    onClick: handleElementClick
+  }
+
+  const originNode = <WidgetUI {...widgetProps} />
+
   return (
     <div ref={dragRef}>
-      <WidgetUI text={text} icon={icon} onClick={handleElementClick} />
+      {elementRender ? elementRender(schema, widgetProps, originNode) : originNode}
     </div>
   );
 };

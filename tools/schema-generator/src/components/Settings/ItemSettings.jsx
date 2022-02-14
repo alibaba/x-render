@@ -27,7 +27,7 @@ export default function ItemSettings({ widgets }) {
     mapping: globalMapping,
   } = useStore();
 
-  const { settings, commonSettings, hideId, transformer } = userProps;
+  const { settings, commonSettings, hideId, validation, transformer } = userProps;
   const [settingSchema, setSettingSchema] = useState({});
 
   const _widgets = {
@@ -42,7 +42,7 @@ export default function ItemSettings({ widgets }) {
       if (!Array.isArray(setting.widgets)) return widgetList;
       const basicWidgets = setting.widgets.map(item => {
         const baseItemSettings = {};
-        if (item.schema.type === 'array') {
+        if (item.schema.type === 'array' && item.schema.items) {
           baseItemSettings.items = {
             type: 'object',
             hidden: '{{true}}',
@@ -116,7 +116,7 @@ export default function ItemSettings({ widgets }) {
         const value = transformer.toSetting(item.schema);
         form.setValues(value);
         onDataChange(form.getValues());
-        form.submit();
+        validation && form.submit();
       }, 0);
     } catch (error) {
       console.error(error);
@@ -124,13 +124,14 @@ export default function ItemSettings({ widgets }) {
   }, [selected]);
 
   useEffect(() => {
-    onItemErrorChange(form?.errorFields);
-  }, [form?.errorFields]);
+    validation && onItemErrorChange(form?.errorFields);
+  }, [validation, form?.errorFields]);
 
   return (
     <div style={{ paddingRight: 24 }}>
       <FormRender
         form={form}
+        removeHiddenData
         schema={settingSchema}
         widgets={{ ..._widgets, ...widgets }}
         watch={{

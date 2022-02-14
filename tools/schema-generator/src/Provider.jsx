@@ -51,9 +51,11 @@ function Provider(props, ref) {
     globalSettings,
     widgets = {},
     mapping = {},
+    validation = true,
     children,
     fieldRender,
     fieldWrapperRender,
+    elementRender,
   } = props;
 
   const transformer = {
@@ -121,6 +123,7 @@ function Provider(props, ref) {
     controlButtons,
     hideId,
     getId,
+    validation,
     settings,
     commonSettings,
     globalSettings,
@@ -205,6 +208,7 @@ function Provider(props, ref) {
     displaySchemaString,
     fieldRender,
     fieldWrapperRender,
+    elementRender,
     ...rootState,
   };
 
