@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.2
+
+- [!] 修复`select`有默认值情况下使用`form.resetFields`视图没有更新 bug
+
 ## 1.9.1
 
 - [!] 修复`FormRender`的`tableList`组件
