@@ -1,6 +1,6 @@
 {
-  "name": "fr-generator",
-  "version": "2.7.3",
+  "name": "@coocoon/fr-generator",
+  "version": "2.7.2-en",
   "scripts": {
     "build": "father-build",
     "prepare": "npm run build",
