@@ -29,14 +29,14 @@ const Sidebar = props => {
                       );
                     })
                 ) : (
-                  <div>此处配置有误</div>
+                  <div>There is an error in the configuration</div>
                 )}
               </ul>
             </div>
           );
         })
       ) : (
-        <div>配置错误：Setting不是数组</div>
+        <div>Configuration error: Setting is not an array</div>
       )}
     </div>
   );

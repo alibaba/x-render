@@ -26,6 +26,7 @@ const PreviewFR = ({ schema, data }) => {
           onFlattenChange(dataToFlatten(flatten, formData), 'data');
         },
       }}
+      locale={'en'}
     />
   );
 };
@@ -134,7 +135,7 @@ const FR = ({ id = '#', preview, displaySchema }) => {
         <div
           className={`${containerClass} h-100 f4 black-40 flex items-center justify-center`}
         >
-          点击/拖拽左侧栏的组件进行添加
+          Click/drag the component in the left column to add it
         </div>
       </Wrapper>
     );

@@ -311,6 +311,10 @@ export const elements = [
         props: {
           hideMove: true,
           hideCopy: true,
+          addBtnProps: {
+            children: 'Add Option',
+            type: 'primary',
+          },
         },
       },
     },
@@ -353,6 +357,10 @@ export const elements = [
         props: {
           hideMove: true,
           hideCopy: true,
+          addBtnProps: {
+            children: 'Add Option',
+            type: 'primary',
+          },
         },
       },
     },
@@ -399,6 +407,10 @@ export const elements = [
         props: {
           hideMove: true,
           hideCopy: true,
+          addBtnProps: {
+            children: 'Add Option',
+            type: 'primary',
+          },
         },
       },
     },
@@ -444,6 +456,10 @@ export const elements = [
         props: {
           hideMove: true,
           hideCopy: true,
+          addBtnProps: {
+            children: 'Add Option',
+            type: 'primary',
+          },
         },
       },
     },
@@ -721,7 +737,7 @@ export const layouts = [
 
 const saves = [
   {
-    text: 'Complex structure sample',
+    text: 'Complex sample',
     name: 'something',
     schema: {
       title: 'Object',

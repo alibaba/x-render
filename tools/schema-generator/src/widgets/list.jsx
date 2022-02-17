@@ -17,11 +17,11 @@ export default function list(props) {
           type="dashed"
           icon={<DeleteOutlined />}
         >
-          删除
+          Delete
         </Button>
       </div>
       <Button size="small" className="self-end" icon={<PlusCircleOutlined />}>
-        添加
+        Add
       </Button>
     </div>
   );
