@@ -13,9 +13,10 @@ import {
 } from '../../settings';
 import { isObject, mergeInOrder } from '../../utils';
 import { getWidgetName } from '../../utils/mapping';
-import { useStore } from '../../utils/hooks';
+import { useStore, useGlobal } from '../../utils/hooks';
 
 export default function ItemSettings({ widgets }) {
+  const setGlobal = useGlobal();
   const form = useForm();
   const {
     selected,
@@ -126,6 +127,10 @@ export default function ItemSettings({ widgets }) {
   useEffect(() => {
     validation && onItemErrorChange(form?.errorFields);
   }, [validation, form?.errorFields]);
+
+  useEffect(() => {
+    setGlobal({ settingsForm: form });
+  }, []);
 
   return (
     <div style={{ paddingRight: 24 }}>

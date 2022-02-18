@@ -23,6 +23,10 @@ export default function GlobalSettings({ widgets }) {
     }
   }, [frProps]);
 
+  useEffect(() => {
+    setGlobal({ settingsForm: form });
+  }, []);
+
   return (
     <div style={{ paddingRight: 24 }}>
       <FormRender
