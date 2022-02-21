@@ -25,7 +25,7 @@ export default defineConfig({
       title: 'ChartRender',
       path: '/chart-render',
     },
-    { title: 'Schema 编辑器', path: '/generator' },
+    { title: '表单设计器', path: '/generator' },
     {
       title: 'Playground',
       // children: [

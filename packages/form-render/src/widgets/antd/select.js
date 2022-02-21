@@ -34,11 +34,13 @@ const FrSelect = ({
   };
 
   const finalProps = {
+    value,
     options,
     style: { width: '100%', ...style },
     onChange: handleChange,
     ...rest,
   };
+
   return (
     <>
       <Select defaultValue={value} {...finalProps} />

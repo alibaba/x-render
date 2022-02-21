@@ -45,7 +45,7 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   const { schema } = item;
   const displayType = schema.displayType || frProps.displayType;
   const isObj = schema.type === 'object';
-  const isList = schema.type === 'array' && schema.enum === undefined;
+  const isList = schema.type === 'array' && schema.enum === undefined && !!schema.items;
   const isComplex = isObj || isList;
   const width = schema['width'];
   let containerClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''} ${
@@ -79,7 +79,7 @@ const FR = ({ id = '#', preview, displaySchema }) => {
       }
       break;
     case 'array':
-      if (schema.title && !schema.enum) {
+      if (isList) {
         labelClass += ' mt2 mb3';
       }
       break;
