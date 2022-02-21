@@ -68,7 +68,7 @@ export const renderCode = (code: string) => {
 
 // 渲染单元格
 export const renderDom = (val: string, item: any) => {
-  if (typeof item.val === 'object') {
+  if (typeof val === 'object') {
     return;
   }
   if (item.valueType === 'code') {
