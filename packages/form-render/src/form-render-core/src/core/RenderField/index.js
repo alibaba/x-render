@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useStore, useStore2, useTools } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
-import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
+import { getValueByPath, isCheckBoxType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import Extra from './Extra';
 import FieldTitle from './Title';
@@ -187,25 +187,6 @@ const RenderField = props => {
   }
 
   let titleElement = <FieldTitle {...titleProps} />;
-
-  if (isObjType(_schema)) {
-    titleElement = (
-      <div style={{ display: 'flex' }}>
-        {titleElement}
-        <ErrorMessage {...messageProps} />
-      </div>
-    );
-    return (
-      <div className={contentClass} style={contentStyle}>
-        <ExtendedWidget
-          {...widgetProps}
-          message={errorMessage}
-          title={_showTitle ? titleElement : undefined}
-        />
-        <Extra {...widgetProps} />
-      </div>
-    );
-  }
 
   return (
     <>

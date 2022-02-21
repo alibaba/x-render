@@ -36,7 +36,7 @@ const CardList = ({
   }
 
   return (
-    <div className="w-100">
+    <div className="w-100 mb3">
       <div className="fr-card-list">
         {displayList.map((item, idx) => {
           const fieldsProps = getFieldsProps(idx);

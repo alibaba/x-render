@@ -13,6 +13,7 @@ export default function Map({
   const { title } = schema;
   const { theme, allCollapsed } = {}; // TODO!
   const [collapsed, setCollapsed] = useState(false);
+  const containerClass = displayType === 'inline' ? 'flex' : 'flex flex-wrap';
 
   useEffect(() => {
     setCollapsed(allCollapsed);
@@ -29,11 +30,11 @@ export default function Map({
   })
 
   if (!title) {
-    return <div className="w-100">{_children}</div>;
+    return <div className={`w-100 ${containerClass}`}>{_children}</div>;
   }
   if (theme == '1') {
     return (
-      <div className="w-100">
+      <div className={`w-100 ${containerClass}`}>
         <div
           style={{
             fontSize: 17,
@@ -79,18 +80,20 @@ export default function Map({
   };
 
   return (
-    <div className="flex flex-wrap w-100">
-      <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
-        <Panel
-          header={
-            <span style={{ fontSize: 16, fontWeight: 500 }}>{title}</span>
-          }
-          key="1"
-          className="fr-collapse-object"
-        >
-          {_children}
-        </Panel>
-      </Collapse>
+    <div className="flex flex-wrap">
+      <div className="w-100">
+        <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
+          <Panel
+            header={
+              <span style={{ fontSize: 16, fontWeight: 500 }}>{title}</span>
+            }
+            key="1"
+            className="fr-collapse-object"
+          >
+            {_children}
+          </Panel>
+        </Collapse>
+      </div>
     </div>
   );
 }
