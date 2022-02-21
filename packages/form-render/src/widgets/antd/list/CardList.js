@@ -12,8 +12,8 @@ import './CardList.less';
 
 const CardList = ({
   displayList = [],
-  listData,
-  changeList,
+  value,
+  onChange,
   schema,
   deleteItem,
   copyItem,
@@ -92,16 +92,16 @@ const CardList = ({
               const { callback, text, html } = item;
               let onClick = () => {
                 console.log({
-                  value: listData,
-                  onChange: changeList,
+                  value,
+                  onChange,
                   schema,
                 });
               };
               if (typeof window[callback] === 'function') {
                 onClick = () => {
                   window[callback]({
-                    value: listData,
-                    onChange: changeList,
+                    value,
+                    onChange,
                     schema,
                   });
                 };

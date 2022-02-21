@@ -24,15 +24,15 @@ const RenderList = ({
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
-  let listData;
+  let value;
   if (typeof dataPath === 'string') {
-    // TODO: listData会有不少“窟窿”，submit 的时候，listData 需要补齐 or filter
-    listData = get(formData, dataPath);
+    // TODO: value 会有不少“窟窿”，submit 的时候，value 需要补齐 or filter
+    value = get(formData, dataPath);
   }
 
-  const displayList = Array.isArray(listData) ? listData : [{}];
+  const displayList = Array.isArray(value) ? value : [{}];
 
-  const changeList = newList => {
+  const onChange = newList => {
     onItemChange(dataPath, newList);
   };
 
@@ -107,7 +107,7 @@ const RenderList = ({
 
   const displayProps = {
     displayList,
-    changeList,
+    onChange,
     schema,
     dataPath,
     dataIndex,
@@ -117,7 +117,7 @@ const RenderList = ({
     copyItem,
     moveItemDown,
     moveItemUp,
-    listData,
+    value,
     flatten,
     errorFields,
     displayType,

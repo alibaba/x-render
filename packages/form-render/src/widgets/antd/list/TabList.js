@@ -6,20 +6,15 @@ const { TabPane } = Tabs;
 
 const TabList = ({
   displayList = [],
-  listData,
-  changeList,
   schema,
   deleteItem,
-  copyItem,
   addItem,
-  moveItemUp,
-  moveItemDown,
   displayType,
   getFieldsProps,
   Field,
 }) => {
   const [activeKey, setActiveKey] = useState('0');
-  const { props = {}, itemProps } = schema;
+  const { props = {} } = schema;
   const { tabName, type, ...restProps } = props;
 
   const onEdit = (targetKey, action) => {

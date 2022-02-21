@@ -16,8 +16,8 @@ const VirtualList = ({
   moveItemDown,
   flatten,
   schema,
-  listData,
-  changeList,
+  value,
+  onChange,
   Field,
 }) => {
   const { props = {}, itemProps = {} } = schema;
@@ -97,8 +97,8 @@ const VirtualList = ({
                   if (typeof window[callback] === 'function') {
                     onClick = () => {
                       window[callback]({
-                        value: listData,
-                        onChange: changeList,
+                        value,
+                        onChange,
                         schema,
                       });
                     };
@@ -139,8 +139,8 @@ const VirtualList = ({
               if (typeof window[callback] === 'function') {
                 onClick = () => {
                   window[callback]({
-                    value: listData,
-                    onChange: changeList,
+                    value,
+                    onChange,
                     schema,
                   });
                 };

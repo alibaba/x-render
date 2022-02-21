@@ -16,8 +16,8 @@ const TableList = ({
   moveItemDown,
   flatten,
   schema,
-  listData,
-  changeList,
+  value,
+  onChange,
   Field,
 }) => {
   const { props = {}, itemProps = {} } = schema;
@@ -124,16 +124,16 @@ const TableList = ({
               const { callback, text, html } = item;
               let onClick = () => {
                 console.log({
-                  value: listData,
-                  onChange: changeList,
+                  value,
+                  onChange,
                   schema,
                 });
               };
               if (typeof window[callback] === 'function') {
                 onClick = () => {
                   window[callback]({
-                    value: listData,
-                    onChange: changeList,
+                    value,
+                    onChange,
                     schema,
                   });
                 };

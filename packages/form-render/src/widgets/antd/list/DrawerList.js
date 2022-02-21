@@ -20,8 +20,7 @@ const DrawerList = ({
   errorFields,
   getFieldsProps,
   schema,
-  changeList,
-  listData,
+  value,
   Field,
 }) => {
   const { props = {}, itemProps = {} } = schema;
@@ -149,16 +148,16 @@ const DrawerList = ({
               const { callback, text, html } = item;
               let onClick = () => {
                 console.log({
-                  value: listData,
-                  onChange: changeList,
+                  value,
+                  onChange,
                   schema,
                 });
               };
               if (typeof window[callback] === 'function') {
                 onClick = () => {
                   window[callback]({
-                    value: listData,
-                    onChange: changeList,
+                    value,
+                    onChange,
                     schema,
                   });
                 };

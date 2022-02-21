@@ -10,8 +10,8 @@ import {
 const SimpleList = ({
   schema,
   displayList = [],
-  listData,
-  changeList,
+  value,
+  onChange,
   deleteItem,
   addItem,
   copyItem,
@@ -82,16 +82,16 @@ const SimpleList = ({
               const { callback, text, html } = item;
               let onClick = () => {
                 console.log({
-                  value: listData,
-                  onChange: changeList,
+                  value,
+                  onChange,
                   schema,
                 });
               };
               if (typeof window[callback] === 'function') {
                 onClick = () => {
                   window[callback]({
-                    value: listData,
-                    onChange: changeList,
+                    value,
+                    onChange,
                     schema,
                   });
                 };
