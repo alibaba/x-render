@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.2.2
+
+- [+] `valueType`兼容`object`值类型。
+
 ### 1.2.1
 
 - [+] `searchText`和`resetText`属性为非必填属性。
