@@ -13,14 +13,8 @@ const RenderList = ({
   errorFields,
   displayType,
 }) => {
-
   const { formData, flatten } = useStore();
   const { widgets, onItemChange, removeTouched } = useTools();
-
-  let renderWidget = 'list';
-  try {
-    renderWidget = schema.widget;
-  } catch (error) {}
 
   // 计算 list对应的formData
   const dataPath = getDataPath(parentId, dataIndex);
@@ -125,9 +119,14 @@ const RenderList = ({
     Field: Core,
   };
 
+  const renderWidget = schema.widget || 'cardList';
   const ListWidget = widgets[renderWidget] || widgets.cardList;
 
-  return ListWidget ? <ListWidget {...displayProps} /> : null;
+  return (
+    <div className="w-100">
+      <ListWidget {...displayProps} />
+    </div>
+  );
 };
 
 export default RenderList;

@@ -1,18 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import { Collapse } from 'antd';
-// import { useStore2 } from '../../hooks';
 const { Panel } = Collapse;
 
-export default function Map({ children, title, ...rest }) {
-  const { theme, displayType, allCollapsed } = {}; // TODO!
+export default function Map({
+  children,
+  schema,
+  displayType,
+  dataIndex,
+  hideTitle,
+  Field,
+}) {
+  const { title } = schema;
+  const { theme, allCollapsed } = {}; // TODO!
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     setCollapsed(allCollapsed);
   }, [allCollapsed]);
 
+  const _children = children.map((child, i) => {
+    const FRProps = {
+      displayType,
+      id: child,
+      dataIndex,
+      hideTitle,
+    };
+    return <Field key={i.toString()} {...FRProps} />;
+  })
+
   if (!title) {
-    return <div className="w-100">{children}</div>;
+    return <div className="w-100">{_children}</div>;
   }
   if (theme == '1') {
     return (
@@ -29,7 +46,7 @@ export default function Map({ children, title, ...rest }) {
           {title}
         </div>
         <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
-          {children}
+          {_children}
         </div>
       </div>
     );
@@ -37,7 +54,7 @@ export default function Map({ children, title, ...rest }) {
 
   // 新增卡片视图
   if (theme == '2') {
-    const { id } = rest.schema;
+    const { id } = schema;
     return (
       <div class="fr-theme-card-wrap">
         <div>
@@ -46,7 +63,7 @@ export default function Map({ children, title, ...rest }) {
             {title}
           </div>
           <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
-            {children}
+            {_children}
           </div>
         </div>
       </div>
@@ -71,13 +88,9 @@ export default function Map({ children, title, ...rest }) {
           key="1"
           className="fr-collapse-object"
         >
-          {children}
+          {_children}
         </Panel>
       </Collapse>
     </div>
   );
 }
-
-// export default function map({ children, title }) {
-//   return <div className="w-100">{children}</div>;
-// }

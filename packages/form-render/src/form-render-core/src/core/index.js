@@ -254,16 +254,15 @@ const CoreRender = ({
   };
 
   const objChildren = (
-    <div className={`flex flex-wrap`}>
-      <RenderObject
-        dataIndex={dataIndex}
-        errorFields={errorFields}
-        displayType={_displayType}
-        hideTitle={hideTitle}
-      >
-        {item.children}
-      </RenderObject>
-    </div>
+    <RenderObject
+      schema={schema}
+      dataIndex={dataIndex}
+      errorFields={errorFields}
+      displayType={_displayType}
+      hideTitle={hideTitle}
+    >
+      {item.children}
+    </RenderObject>
   );
 
   const listChildren = (
@@ -280,7 +279,8 @@ const CoreRender = ({
   );
 
   // 计算 children
-  let _children = null;
+  let _children = <RenderField {...fieldProps} />;
+
   if (hasChildren) {
     if (isObj) {
       _children = objChildren;
@@ -288,7 +288,7 @@ const CoreRender = ({
       _children = listChildren;
     }
   } else if (isCheckBox) {
-    _children = schema.title;
+    _children = <RenderField {...fieldProps}>{schema.title}</RenderField>;
   }
 
   return (
@@ -296,54 +296,9 @@ const CoreRender = ({
       style={columnStyle}
       className={`${containerClass} ${debugCss ? 'debug' : ''}`}
     >
-      {isList
-        ? <div className="w-100">{_children}</div>
-        : <RenderField {...fieldProps}>{_children}</RenderField>}
+      {_children}
     </div>
   );
-};
-
-// haven't used
-const areEqual = (prev, current) => {
-  if (prev.allTouched !== current.allTouched) {
-    return false;
-  }
-  if (prev.displayType !== current.displayType) {
-    return false;
-  }
-  if (prev.column !== current.column) {
-    return false;
-  }
-  if (prev.labelWidth !== current.labelWidth) {
-    return false;
-  }
-  if (prev.readOnly !== current.readOnly) {
-    return false;
-  }
-  if (prev.disabled !== current.disabled) {
-    return false;
-  }
-  if (prev.schema && current.schema) {
-    if (prev.schema.$id === '#') {
-      return false;
-    }
-  }
-  if (isObjType(prev.schema) && isObjType(current.schema)) {
-    return false;
-  }
-  if (
-    JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
-  ) {
-    return false;
-  }
-  if (
-    JSON.stringify(prev._value) === JSON.stringify(current._value) &&
-    JSON.stringify(prev.schema) === JSON.stringify(current.schema) &&
-    JSON.stringify(prev.errorFields) === JSON.stringify(current.errorFields)
-  ) {
-    return true;
-  }
-  return false;
 };
 
 export default Core;
