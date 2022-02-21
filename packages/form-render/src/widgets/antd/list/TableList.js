@@ -112,7 +112,7 @@ const TableList = ({
   }
 
   return (
-    <>
+    <div className="w-100">
       <div className="w-100 mb2 tr">
         {!props.hideAdd && (
           <Button type="primary" size="small" onClick={addItem}>
@@ -160,7 +160,7 @@ const TableList = ({
         pagination={paginationConfig}
         {...rest}
       />
-    </>
+    </div>
   );
 };
 

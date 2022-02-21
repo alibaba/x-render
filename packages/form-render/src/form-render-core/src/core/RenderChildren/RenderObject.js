@@ -23,11 +23,7 @@ const RenderObject = ({
   const renderWidget = schema.widget || 'map';
   const ObjectWidget = widgets[renderWidget] || widgets.map;
 
-  return (
-    <div className={`flex flex-wrap`}>
-      <ObjectWidget {...displayProps} />
-    </div>
-  );
+  return <ObjectWidget {...displayProps} />;
 };
 
 export default RenderObject;

@@ -124,7 +124,7 @@ const VirtualList = ({
   }
 
   return (
-    <>
+    <div className="w-100">
       <div className="w-100 mb2 tr">
         {!props.hideAdd && (
           <Button type="primary" size="small" onClick={addItem}>
@@ -169,7 +169,7 @@ const VirtualList = ({
         pagination={false}
         {...rest}
       />
-    </>
+    </div>
   );
 };
 

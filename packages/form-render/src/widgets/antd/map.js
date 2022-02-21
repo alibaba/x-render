@@ -79,7 +79,7 @@ export default function Map({
   };
 
   return (
-    <div className="w-100">
+    <div className="flex flex-wrap w-100">
       <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
         <Panel
           header={

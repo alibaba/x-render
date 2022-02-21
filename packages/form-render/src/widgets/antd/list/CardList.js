@@ -36,7 +36,7 @@ const CardList = ({
   }
 
   return (
-    <>
+    <div className="w-100">
       <div className="fr-card-list">
         {displayList.map((item, idx) => {
           const fieldsProps = getFieldsProps(idx);
@@ -119,7 +119,7 @@ const CardList = ({
             })
           : null}
       </div>
-    </>
+    </div>
   );
 };
 

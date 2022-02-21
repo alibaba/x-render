@@ -32,7 +32,7 @@ const SimpleList = ({
   }
 
   return (
-    <div className="fr-list-1">
+    <div className="w-100 fr-list-1">
       {displayList.map((item, idx) => {
         const fieldsProps = getFieldsProps(idx);
         fieldsProps.displayType = 'inline';

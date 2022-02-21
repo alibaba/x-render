@@ -36,23 +36,25 @@ const TabList = ({
   };
 
   return (
-    <Tabs
-      type={type || 'line'}
-      onChange={setActiveKey}
-      activeKey={activeKey}
-      onEdit={onEdit}
-      {...restProps}
-    >
-      {displayList.map((item, idx) => {
-        const fieldsProps = getFieldsProps(idx);
-        fieldsProps.displayType = displayType;
-        return (
-          <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
-            <Field {...fieldsProps} />
-          </TabPane>
-        );
-      })}
-    </Tabs>
+    <div className="w-100">
+      <Tabs
+        type={type || 'line'}
+        onChange={setActiveKey}
+        activeKey={activeKey}
+        onEdit={onEdit}
+        {...restProps}
+      >
+        {displayList.map((item, idx) => {
+          const fieldsProps = getFieldsProps(idx);
+          fieldsProps.displayType = displayType;
+          return (
+            <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
+              <Field {...fieldsProps} />
+            </TabPane>
+          );
+        })}
+      </Tabs>
+    </div>
   );
 };
 

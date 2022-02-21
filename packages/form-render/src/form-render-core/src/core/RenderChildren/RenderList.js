@@ -122,11 +122,7 @@ const RenderList = ({
   const renderWidget = schema.widget || 'cardList';
   const ListWidget = widgets[renderWidget] || widgets.cardList;
 
-  return (
-    <div className="w-100">
-      <ListWidget {...displayProps} />
-    </div>
-  );
+  return <ListWidget {...displayProps} />;
 };
 
 export default RenderList;
