@@ -1,5 +1,4 @@
 import React from 'react';
-import Core from '../../index';
 import { Button, Popconfirm } from 'antd';
 import {
   DeleteOutlined,
@@ -19,6 +18,7 @@ const SimpleList = ({
   moveItemUp,
   moveItemDown,
   getFieldsProps,
+  Field,
 }) => {
   const { props = {}, itemProps } = schema;
 
@@ -41,7 +41,7 @@ const SimpleList = ({
         }
         return (
           <div key={idx} style={{ display: 'flex' }}>
-            <Core {...fieldsProps} />
+            <Field {...fieldsProps} />
             <div style={{ marginTop: 6 }}>
               {!props.hideDelete && (
                 <Popconfirm

@@ -296,7 +296,9 @@ const CoreRender = ({
       style={columnStyle}
       className={`${containerClass} ${debugCss ? 'debug' : ''}`}
     >
-      <RenderField {...fieldProps}>{_children}</RenderField>
+      {isList
+        ? <div className="w-100">{_children}</div>
+        : <RenderField {...fieldProps}>{_children}</RenderField>}
     </div>
   );
 };

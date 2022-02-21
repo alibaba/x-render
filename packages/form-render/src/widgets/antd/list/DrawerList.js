@@ -1,12 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useRef } from 'react';
-import Core from '../../index';
-import { useSet } from '../../../hooks';
-import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../utils';
 import { Button, Table, Drawer, Popconfirm } from 'antd';
-// import ArrowDown from '../../../components/ArrowDown';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import ErrorMessage from '../../RenderField/ErrorMessage';
+import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../form-render-core/src/utils';
+import { useSet } from '../../../form-render-core/src/hooks';
+import ErrorMessage from '../../../form-render-core/src/core/RenderField/ErrorMessage';
 
 const FIELD_LENGTH = 170;
 
@@ -24,6 +22,7 @@ const DrawerList = ({
   schema,
   changeList,
   listData,
+  Field,
 }) => {
   const { props = {}, itemProps = {} } = schema;
   const { buttons, ...columnProps } = itemProps;
@@ -183,10 +182,10 @@ const DrawerList = ({
         placement="right"
         onClose={closeDrawer}
         visible={showDrawer}
-        destroyOnClose // 必须要加，currentIndex不是一个state，Core不会重新渲染就跪了
+        destroyOnClose // 必须要加，currentIndex不是一个state，Field不会重新渲染就跪了
       >
         <div className="fr-container">
-          <Core {...fieldsProps} />
+          <Field {...fieldsProps} />
         </div>
       </Drawer>
       <Table

@@ -1,4 +1,3 @@
-import list from './list';
 import map from './map';
 import { InputNumber, Checkbox, Input, Switch, Rate, TreeSelect } from 'antd';
 import ImageInput from './imageInput';
@@ -15,6 +14,12 @@ import timeRange from './timeRange';
 import color from './color';
 import slider from './slider';
 import upload from './upload';
+import SimpleList from './list/SimpleList';
+import CardList from './list/CardList';
+import TableList from './list/TableList';
+import DrawerList from './list/DrawerList';
+import VirtualList from './list/VirtualList';
+import TabList from './list/TabList';
 
 // const Cascader = React.lazy(() => import('antd/es/cascader'));
 
@@ -47,7 +52,17 @@ export const widgets = {
   timeRange,
   imageInput: ImageInput,
   url: urlInput,
-  list,
+  list0: CardList,
+  cardList: CardList,
+  list1: SimpleList,
+  simpleList: SimpleList,
+  list2: TableList,
+  tableList: TableList,
+  list3: DrawerList,
+  drawerList: DrawerList,
+  list4: VirtualList,
+  virtualList: VirtualList,
+  tabList: TabList,
   map,
   multiSelect, // 下拉多选
   number: FrNumber,

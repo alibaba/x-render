@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import Core from '../../index';
 import { Button, Popconfirm } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
 import {
@@ -9,6 +8,7 @@ import {
   ArrowUpOutlined,
   ArrowDownOutlined,
 } from '@ant-design/icons';
+import './CardList.less';
 
 const CardList = ({
   displayList = [],
@@ -22,6 +22,7 @@ const CardList = ({
   moveItemDown,
   displayType,
   getFieldsProps,
+  Field,
 }) => {
   const { props = {}, itemProps } = schema;
 
@@ -48,7 +49,7 @@ const CardList = ({
               key={idx}
             >
               <div className="fr-card-index">{idx + 1}</div>
-              <Core {...fieldsProps} />
+              <Field {...fieldsProps} />
 
               <div direction="horizontal" className="fr-card-toolbar">
                 {!props.hideMove && (

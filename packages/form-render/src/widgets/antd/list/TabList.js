@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react';
-import Core from '../../index';
 import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
@@ -17,6 +16,7 @@ const TabList = ({
   moveItemDown,
   displayType,
   getFieldsProps,
+  Field,
 }) => {
   const [activeKey, setActiveKey] = useState('0');
   const { props = {}, itemProps } = schema;
@@ -53,7 +53,7 @@ const TabList = ({
         fieldsProps.displayType = displayType;
         return (
           <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
-            <Core {...fieldsProps} />
+            <Field {...fieldsProps} />
           </TabPane>
         );
       })}

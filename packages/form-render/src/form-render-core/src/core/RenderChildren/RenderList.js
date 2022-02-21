@@ -1,15 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import { get } from 'lodash-es';
-import { useStore, useTools } from '../../../hooks';
-import { getDataPath } from '../../../utils';
-import './list.less';
-import SimpleList from './SimpleList';
-import CardList from './CardList';
-import TableList from './TableList';
-import DrawerList from './DrawerList';
-import VirtualList from './VirtualList';
-import TabList from './TabList';
+import { useStore, useTools } from '../../hooks';
+import { getDataPath } from '../../utils';
+import Core from '../index';
 
 const RenderList = ({
   parentId,
@@ -21,7 +15,7 @@ const RenderList = ({
 }) => {
 
   const { formData, flatten } = useStore();
-  const { onItemChange, removeTouched } = useTools();
+  const { widgets, onItemChange, removeTouched } = useTools();
 
   let renderWidget = 'list';
   try {
@@ -128,29 +122,12 @@ const RenderList = ({
     errorFields,
     displayType,
     getFieldsProps,
+    Field: Core,
   };
 
-  switch (renderWidget) {
-    case 'list0':
-    case 'cardList':
-      return <CardList {...displayProps} />;
-    case 'list1':
-    case 'simpleList':
-      return <SimpleList {...displayProps} />;
-    case 'list2':
-    case 'tableList':
-      return <TableList {...displayProps} />;
-    case 'list3':
-    case 'drawerList':
-      return <DrawerList {...displayProps} />;
-    case 'list4':
-    case 'virtualList':
-      return <VirtualList {...displayProps} />;
-    case 'tabList':
-      return <TabList {...displayProps} />;
-    default:
-      return <CardList {...displayProps} />;
-  }
+  const ListWidget = widgets[renderWidget] || widgets.cardList;
+
+  return ListWidget ? <ListWidget {...displayProps} /> : null;
 };
 
 export default RenderList;
