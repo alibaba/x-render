@@ -83,8 +83,8 @@ export interface SearchProps<RecordType> {
     submit: Function,
     clearSearch: Function
   ) => React.ReactNode[];
-  searchText: string;
-  resetText: string;
+  searchText?: string;
+  resetText?: string;
   onSearch?: (search: any) => any;
   afterSearch?: (params: any) => any;
   widgets?: any;
