@@ -350,7 +350,7 @@ export default Demo;
 6. widget: 'virtualList' 在展示上与 'tableList' 基本相同，但以虚拟滚动替代了传统的分页
 
 ```jsx
-import React from 'react';
+import React, { useState } from 'react';
 import Form from '../demo/display';
 
 window.hello = ({ value }) => {
@@ -404,6 +404,62 @@ const schema = {
 
 const Demo = () => {
   return <Form schema={schema} />;
+};
+
+export default Demo;
+```
+
+7. 自定义列表组件，readOnly 状态下隐藏操作按钮
+
+``` jsx
+import React, { useState } from 'react';
+import FormRender, { useForm } from 'form-render';
+import { Button } from 'antd';
+import SimpleList from '../demo/custom-simple-list';
+
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'simpleList',
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+            required: true,
+          },
+          select1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  const form = useForm();
+  const [readOnly, setReadOnly] = useState(false);
+  
+  return (
+    <>
+      <FormRender
+        form={form}
+        schema={schema}
+        widgets={{ simpleList: SimpleList}}
+        readOnly={readOnly}
+      />
+      <Button onClick={() => setReadOnly(!readOnly)}>切换只读</Button>
+    </>
+  );
 };
 
 export default Demo;
