@@ -1,6 +1,4 @@
 import React, { useRef } from 'react';
-import RenderList from './RenderChildren/RenderList';
-import RenderObject from './RenderChildren/RenderObject';
 import RenderField from './RenderField';
 import { useStore, useStore2, useTools } from '../hooks';
 import {
@@ -57,7 +55,7 @@ const Core = ({
 
   let dataPath = getDataPath(id, dataIndex);
   const parentPath = getParentPath(dataPath);
-  const _value = getValueByPath(formData, dataPath);
+  const value = getValueByPath(formData, dataPath);
   let schema = clone(item.schema);
   const dependencies = schema.dependencies;
   const dependValues = [];
@@ -123,7 +121,7 @@ const Core = ({
   };
 
   // TODO: 优化一下，只有touch还是false的时候，setTouched
-  const onChange = value => {
+  const onChange = val => {
     // 动过的key，算被touch了, 这里之后要考虑动的来源
     touchKey(dataPath);
     // 开始编辑，节流
@@ -132,11 +130,11 @@ const Core = ({
       debouncedSetEditing(false);
     }
     if (typeof dataPath === 'string') {
-      onItemChange(dataPath, value);
+      onItemChange(dataPath, val);
     }
     // 先不暴露给外部，这个api
     if (typeof onValuesChange === 'function') {
-      onValuesChange({ [dataPath]: value }, formDataRef.current);
+      onValuesChange({ [dataPath]: val }, formDataRef.current);
     }
 
     validateField({
@@ -162,7 +160,7 @@ const Core = ({
     item, // 如果直接传了item，就不用id去取item, 暂时是内部属性，不外用
     dataIndex, // 数据来源是数组的第几个index，上层每有一个list，就push一个index
     dataPath,
-    _value,
+    value,
     onChange,
     dependValues,
     readOnly: _readOnly,
@@ -323,7 +321,7 @@ const CoreRender = ({
   hideValidation,
   debugCss,
   schema,
-  _value,
+  value,
   onChange,
   dependValues,
   displayType,
@@ -360,16 +358,15 @@ const CoreRender = ({
   } = getClassNames(schema, options);
   const columnStyle = getColumnStyle(schema, column, options);
   const labelStyle = getLabelStyle(effectiveLabelWidth, options);
-  const hasChildren = item.children && item.children.length > 0;
 
   const fieldProps = {
     $id: id,
     dataIndex,
     dataPath,
-    _value,
+    value,
     onChange,
     dependValues,
-    _schema: schema,
+    schema,
     disabled,
     readOnly,
     labelClass,
@@ -380,58 +377,15 @@ const CoreRender = ({
     displayType: _displayType,
     hideTitle,
     hideValidation,
+    item,
   };
-
-  const objChildren = (
-    <RenderObject
-      schema={schema}
-      dataIndex={dataIndex}
-      errorFields={errorFields}
-      displayType={_displayType}
-      hideTitle={hideTitle}
-      value={_value}
-      onChange={onChange}
-      disabled={disabled}
-      readOnly={readOnly}
-    >
-      {item.children}
-    </RenderObject>
-  );
-
-  const listChildren = (
-    <RenderList
-      parentId={id}
-      schema={schema}
-      dataIndex={dataIndex}
-      errorFields={errorFields}
-      displayType={_displayType}
-      hideTitle={hideTitle}
-      disabled={disabled}
-      readOnly={readOnly}
-    >
-      {item.children}
-    </RenderList>
-  );
-
-  // 计算 children
-  let _children = <RenderField {...fieldProps} />;
-
-  if (hasChildren) {
-    if (isObj) {
-      _children = objChildren;
-    } else if (isList) {
-      _children = listChildren;
-    }
-  } else if (isCheckBox) {
-    _children = <RenderField {...fieldProps}>{schema.title}</RenderField>;
-  }
 
   return (
     <div
       style={columnStyle}
       className={`${containerClass} ${debugCss ? 'debug' : ''}`}
     >
-      {_children}
+      <RenderField {...fieldProps} />
     </div>
   );
 };

@@ -1,10 +1,12 @@
 import React from 'react';
 import { useStore, useStore2, useTools } from '../../hooks';
-import { getValueByPath, isCheckBoxType } from '../../utils';
+import { getValueByPath, isCheckBoxType, isListType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import Extra from './Extra';
 import FieldTitle from './Title';
 import ExtendedWidget from './ExtendedWidget';
+import RenderList from '../RenderChildren/RenderList';
+import RenderObject from '../RenderChildren/RenderObject';
 
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
 const RenderField = props => {
@@ -12,12 +14,12 @@ const RenderField = props => {
     $id,
     dataIndex,
     dataPath,
-    _value,
+    value,
     onChange,
     dependValues,
     readOnly,
     disabled,
-    _schema,
+    schema,
     labelClass,
     labelStyle,
     contentClass: _contentClass,
@@ -25,6 +27,7 @@ const RenderField = props => {
     errorFields = [],
     hideTitle,
     displayType,
+    item,
   } = props;
 
   const { showValidate } = useStore2();
@@ -46,13 +49,13 @@ const RenderField = props => {
   const titleProps = {
     labelClass,
     labelStyle: labelStyle,
-    schema: _schema,
+    schema,
     displayType,
   };
 
   const messageProps = {
     message: errorMessage,
-    schema: _schema,
+    schema,
     displayType,
     softHidden: displayType === 'inline', // 这个是如果没有校验信息时，展示与否
     hardHidden: showValidate === false || readOnly === true, // 这个是强制的展示与否
@@ -63,10 +66,13 @@ const RenderField = props => {
     style: labelStyle,
   };
 
-  const _showTitle = !hideTitle && typeof _schema.title === 'string';
+  const isObj = isObjType(schema);
+  const isList = isListType(schema);
+  const hasChildren = item.children && item.children.length > 0;
+  const _showTitle = !isObj && !hideTitle && typeof schema.title === 'string';
   // TODO: 这块最好能判断上一层是list1，
-  if (hideTitle && _schema.title) {
-    _schema.placeholder = _schema.placeholder || _schema.title;
+  if (hideTitle && schema.title) {
+    schema.placeholder = schema.placeholder || schema.title;
   }
 
   const _getValue = path => {
@@ -75,13 +81,13 @@ const RenderField = props => {
 
   const widgetProps = {
     $id,
-    schema: _schema,
+    schema,
     readOnly,
     disabled,
     onChange,
     getValue: _getValue,
     formData,
-    value: _value,
+    value,
     dependValues,
     onItemChange,
     dataIndex,
@@ -89,17 +95,17 @@ const RenderField = props => {
     children,
   };
 
-  // if (_schema && _schema.default !== undefined) {
-  //   widgetProps.value = _schema.default;
+  // if (schema && schema.default !== undefined) {
+  //   widgetProps.value = schema.default;
   // }
 
   // checkbox必须单独处理，布局太不同了
-  if (isCheckBoxType(_schema, readOnly)) {
+  if (isCheckBoxType(schema, readOnly)) {
     return (
       <>
         {_showTitle && <div {...placeholderTitleProps} />}
         <div className={contentClass} style={contentStyle}>
-          <ExtendedWidget {...widgetProps} />
+          <ExtendedWidget {...widgetProps}>{schema.title}</ExtendedWidget>
           <Extra {...widgetProps} />
           <ErrorMessage {...messageProps} />
         </div>
@@ -108,6 +114,25 @@ const RenderField = props => {
   }
 
   let titleElement = <FieldTitle {...titleProps} />;
+  let _children = <ExtendedWidget {...widgetProps} />;
+
+  if (hasChildren) {
+    if (isObj) {
+      _children = (
+        <RenderObject {...props}>
+          {item.children}
+        </RenderObject>
+      );
+    }
+
+    if (isList) {
+      _children = (
+        <RenderList {...props}>
+          {item.children}
+        </RenderList>
+      );
+    }
+  }
 
   return (
     <>
@@ -116,9 +141,9 @@ const RenderField = props => {
         className={`${contentClass} ${hideTitle ? 'fr-content-no-title' : ''}`}
         style={contentStyle}
       >
-        <ExtendedWidget {...widgetProps} />
+        {_children}
         <Extra {...widgetProps} />
-        <ErrorMessage {...messageProps} />
+        {!isObj && <ErrorMessage {...messageProps} />}
       </div>
     </>
   );

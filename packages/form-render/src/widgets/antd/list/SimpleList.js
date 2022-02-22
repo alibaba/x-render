@@ -35,7 +35,7 @@ const SimpleList = ({
   }
 
   return (
-    <div className="w-100 mb3">
+    <div className="w-100">
       <div className="fr-list-1">
         {displayList.map((item, idx) => {
           const fieldProps = getFieldProps(idx, {

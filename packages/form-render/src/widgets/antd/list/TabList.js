@@ -35,7 +35,7 @@ const TabList = ({
   };
 
   return (
-    <div className="w-100 mb3">
+    <div className="w-100">
       <Tabs
         type={type || 'line'}
         onChange={setActiveKey}

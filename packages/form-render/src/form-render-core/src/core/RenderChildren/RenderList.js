@@ -6,7 +6,7 @@ import { getDataPath } from '../../utils';
 import Core from '../index';
 
 const RenderList = ({
-  parentId,
+  $id,
   schema = {},
   dataIndex = [],
   children = [],
@@ -19,7 +19,7 @@ const RenderList = ({
   const { widgets, onItemChange, removeTouched } = useTools();
 
   // 计算 list对应的formData
-  const dataPath = getDataPath(parentId, dataIndex);
+  const dataPath = getDataPath($id, dataIndex);
   let value;
   if (typeof dataPath === 'string') {
     // TODO: value 会有不少“窟窿”，submit 的时候，value 需要补齐 or filter
