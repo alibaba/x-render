@@ -11,20 +11,23 @@ import {
 import './CardList.less';
 
 const CardList = ({
-  displayList = [],
+  addons,
   value,
   onChange,
   schema,
-  deleteItem,
-  copyItem,
-  addItem,
-  moveItemUp,
-  moveItemDown,
   displayType,
-  getFieldsProps,
+  displayList = [],
+  getFieldProps,
   Field,
 }) => {
-  const { props = {}, itemProps } = schema;
+  const {
+    deleteItem,
+    addItem,
+    copyItem,
+    moveItemDown,
+    moveItemUp,
+  } = addons;
+  const { props = {} } = schema;
 
   let addBtnProps = {
     type: 'dashed',
@@ -39,8 +42,7 @@ const CardList = ({
     <div className="w-100 mb3">
       <div className="fr-card-list">
         {displayList.map((item, idx) => {
-          const fieldsProps = getFieldsProps(idx);
-          fieldsProps.displayType = displayType;
+          const fieldProps = getFieldProps(idx);
           return (
             <div
               className={`fr-card-item ${
@@ -49,7 +51,7 @@ const CardList = ({
               key={idx}
             >
               <div className="fr-card-index">{idx + 1}</div>
-              <Field {...fieldsProps} />
+              <Field {...fieldProps} />
 
               <div direction="horizontal" className="fr-card-toolbar">
                 {!props.hideMove && (

@@ -7,19 +7,22 @@ import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 const FIELD_LENGTH = 170;
 
 const VirtualList = ({
-  displayList = [],
-  dataIndex,
-  children,
-  deleteItem,
-  addItem,
-  moveItemUp,
-  moveItemDown,
-  flatten,
-  schema,
+  addons,
   value,
   onChange,
+  schema,
+  children,
+  displayList = [],
   Field,
 }) => {
+  const {
+    deleteItem,
+    addItem,
+    moveItemDown,
+    moveItemUp,
+    dataIndex,
+    flatten,
+  } = addons;
   const { props = {}, itemProps = {} } = schema;
   const { scrollY = 600, ...rest } = props;
 

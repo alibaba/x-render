@@ -8,15 +8,36 @@ const RenderObject = ({
   dataIndex = [],
   displayType,
   hideTitle,
+  disabled,
+  readOnly,
 }) => {
   const { widgets } = useTools();
 
-  const displayProps = {
-    schema,
-    children,
+  const getFieldProps = (child, extraProps) => {
+    return {
+      id: child,
+      displayType,
+      dataIndex,
+      hideTitle,
+      ...extraProps,
+    };
+  };
+
+  const addons = {
     dataIndex,
-    displayType,
     hideTitle,
+  }
+
+  const displayProps = {
+    addons,
+    schema,
+    disabled,
+    readOnly,
+    hidden: schema.hidden,
+    title: schema.title,
+    children,
+    displayType,
+    getFieldProps,
     Field: Core,
   };
 

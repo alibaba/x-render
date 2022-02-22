@@ -12,6 +12,8 @@ const RenderList = ({
   children = [],
   errorFields,
   displayType,
+  disabled,
+  readOnly,
 }) => {
   const { formData, flatten } = useStore();
   const { widgets, onItemChange, removeTouched } = useTools();
@@ -91,31 +93,40 @@ const RenderList = ({
     children,
   };
 
-  const getFieldsProps = (idx, extraProps) => {
+  const getFieldProps = (idx, extraProps) => {
     return {
       _item: itemFlatten,
       dataIndex: [...dataIndex, idx],
+      displayType,
       ...extraProps,
     };
   };
 
-  const displayProps = {
-    displayList,
-    onChange,
-    schema,
-    dataPath,
-    dataIndex,
-    children,
+  const addons = {
     deleteItem,
     addItem,
     copyItem,
     moveItemDown,
     moveItemUp,
-    value,
+    dataPath,
+    dataIndex,
     flatten,
     errorFields,
+  }
+
+  const displayProps = {
+    addons,
+    value,
+    onChange,
+    schema,
+    disabled,
+    readOnly,
+    hidden: schema.hidden,
+    title: schema.title,
+    children,
     displayType,
-    getFieldsProps,
+    displayList,
+    getFieldProps,
     Field: Core,
   };
 

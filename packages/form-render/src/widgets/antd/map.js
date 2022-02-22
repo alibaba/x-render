@@ -6,8 +6,7 @@ export default function Map({
   children,
   schema,
   displayType,
-  dataIndex,
-  hideTitle,
+  getFieldProps,
   Field,
 }) {
   const { title } = schema;
@@ -19,14 +18,9 @@ export default function Map({
     setCollapsed(allCollapsed);
   }, [allCollapsed]);
 
-  const _children = children.map((child, i) => {
-    const FRProps = {
-      displayType,
-      id: child,
-      dataIndex,
-      hideTitle,
-    };
-    return <Field key={i.toString()} {...FRProps} />;
+  const _children = children.map((child, idx) => {
+    const fieldProps = getFieldProps(child);
+    return <Field key={idx.toString()} {...fieldProps} />;
   })
 
   if (!title) {

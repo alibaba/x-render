@@ -9,20 +9,24 @@ import ErrorMessage from '../../../form-render-core/src/core/RenderField/ErrorMe
 const FIELD_LENGTH = 170;
 
 const DrawerList = ({
-  displayList = [],
-  dataPath,
-  children,
-  deleteItem,
-  addItem,
-  moveItemDown,
-  moveItemUp,
-  flatten,
-  errorFields,
-  getFieldsProps,
-  schema,
+  addons,
   value,
+  onChange,
+  schema,
+  children,
+  displayList = [],
+  getFieldProps,
   Field,
 }) => {
+  const {
+    deleteItem,
+    addItem,
+    moveItemDown,
+    moveItemUp,
+    dataPath,
+    flatten,
+    errorFields,
+  } = addons;
   const { props = {}, itemProps = {} } = schema;
   const { buttons, ...columnProps } = itemProps;
   const { pagination = {}, ...rest } = props;
@@ -114,7 +118,7 @@ const DrawerList = ({
     },
   });
 
-  const fieldsProps = getFieldsProps(currentIndex.current);
+  const fieldProps = getFieldProps(currentIndex.current);
 
   const openDrawer = index => {
     currentIndex.current = index;
@@ -184,7 +188,7 @@ const DrawerList = ({
         destroyOnClose // 必须要加，currentIndex不是一个state，Field不会重新渲染就跪了
       >
         <div className="fr-container">
-          <Field {...fieldsProps} />
+          <Field {...fieldProps} />
         </div>
       </Drawer>
       <Table

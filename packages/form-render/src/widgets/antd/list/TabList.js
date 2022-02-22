@@ -5,14 +5,13 @@ import { Tabs } from 'antd';
 const { TabPane } = Tabs;
 
 const TabList = ({
-  displayList = [],
+  addons,
   schema,
-  deleteItem,
-  addItem,
-  displayType,
-  getFieldsProps,
+  displayList = [],
+  getFieldProps,
   Field,
 }) => {
+  const { deleteItem, addItem } = addons;
   const [activeKey, setActiveKey] = useState('0');
   const { props = {} } = schema;
   const { tabName, type, ...restProps } = props;
@@ -45,11 +44,10 @@ const TabList = ({
         {...restProps}
       >
         {displayList.map((item, idx) => {
-          const fieldsProps = getFieldsProps(idx);
-          fieldsProps.displayType = displayType;
+          const fieldProps = getFieldProps(idx);
           return (
             <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
-              <Field {...fieldsProps} />
+              <Field {...fieldProps} />
             </TabPane>
           );
         })}

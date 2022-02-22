@@ -6,20 +6,23 @@ import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 const FIELD_LENGTH = 170;
 
 const TableList = ({
-  displayList = [],
-  dataIndex,
-  children,
-  deleteItem,
-  copyItem,
-  addItem,
-  moveItemUp,
-  moveItemDown,
-  flatten,
-  schema,
+  addons,
   value,
   onChange,
+  schema,
+  children,
+  displayList = [],
   Field,
 }) => {
+  const {
+    deleteItem,
+    addItem,
+    copyItem,
+    moveItemDown,
+    moveItemUp,
+    dataIndex,
+    flatten,
+  } = addons;
   const { props = {}, itemProps = {} } = schema;
   const { buttons, ...columnProps } = itemProps;
   const { pagination = {}, ...rest } = props;

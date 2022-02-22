@@ -8,18 +8,21 @@ import {
 } from '@ant-design/icons';
 
 const SimpleList = ({
-  schema,
-  displayList = [],
+  addons,
   value,
   onChange,
-  deleteItem,
-  addItem,
-  copyItem,
-  moveItemUp,
-  moveItemDown,
-  getFieldsProps,
+  schema,
+  displayList = [],
+  getFieldProps,
   Field,
 }) => {
+  const {
+    deleteItem,
+    addItem,
+    copyItem,
+    moveItemDown,
+    moveItemUp,
+  } = addons;
   const { props = {} } = schema;
 
   let addBtnProps = {
@@ -35,14 +38,15 @@ const SimpleList = ({
     <div className="w-100 mb3">
       <div className="fr-list-1">
         {displayList.map((item, idx) => {
-          const fieldsProps = getFieldsProps(idx);
-          fieldsProps.displayType = 'inline';
+          const fieldProps = getFieldProps(idx, {
+            displayType: 'inline',
+          });
           if (props.hideTitle) {
-            fieldsProps.hideTitle = true;
+            fieldProps.hideTitle = true;
           }
           return (
             <div key={idx} style={{ display: 'flex' }}>
-              <Field {...fieldsProps} />
+              <Field {...fieldProps} />
               <div style={{ marginTop: 6 }}>
                 {!props.hideDelete && (
                   <Popconfirm

@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import RenderList from './RenderChildren/RenderList';
 import RenderObject from './RenderChildren/RenderObject';
 import RenderField from './RenderField';
-import { useStore, useStore2 } from '../hooks';
+import { useStore, useStore2, useTools } from '../hooks';
 import {
   isLooselyNumber,
   isCssLength,
@@ -16,6 +16,8 @@ import {
   parseRootValueInSchema,
   clone,
 } from '../utils';
+import useDebouncedCallback from '../useDebounce';
+import { validateField } from '../validator';
 
 const Core = ({
   id = '#',
@@ -30,7 +32,26 @@ const Core = ({
   const snapShot = useRef();
 
   const { flatten, errorFields, isEditing, formData, allTouched } = useStore();
-  const { displayType, column, labelWidth, readOnly } = useStore2();
+  const {
+    debounceInput,
+    validateMessages,
+    locale,
+    displayType,
+    column,
+    labelWidth,
+    readOnly,
+    disabled,
+  } = useStore2();
+  const {
+    onValuesChange,
+    onItemChange,
+    setEditing,
+    touchKey,
+    _setErrors,
+  } = useTools();
+  const formDataRef = useRef();
+  const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
+  formDataRef.current = formData;
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
@@ -73,13 +94,79 @@ const Core = ({
   const effectiveLabelWidth =
     getParentProps('labelWidth', id, flatten) || labelWidth;
 
+  const removeDupErrors = arr => {
+    if (!Array.isArray(arr)) {
+      console.log('in removeDups: param is not an array');
+      return;
+    }
+    var array = [];
+    for (var i = 0; i < arr.length; i++) {
+      const sameNameIndex = array.findIndex(item => item.name === arr[i].name);
+      if (sameNameIndex > -1) {
+        const sameNameItem = array[sameNameIndex];
+        const error1 = sameNameItem.error;
+        const error2 = arr[i].error;
+        array[sameNameIndex] = {
+          name: sameNameItem.name,
+          error:
+            error1.length > 0 && error2.length > 0
+              ? error2
+              : [],
+        };
+      } else {
+        array.push(arr[i]);
+      }
+    }
+    return array.filter(
+      item => Array.isArray(item.error) && item.error.length > 0
+    );
+  };
+
+  // TODO: 优化一下，只有touch还是false的时候，setTouched
+  const onChange = value => {
+    // 动过的key，算被touch了, 这里之后要考虑动的来源
+    touchKey(dataPath);
+    // 开始编辑，节流
+    if (debounceInput) {
+      setEditing(true);
+      debouncedSetEditing(false);
+    }
+    if (typeof dataPath === 'string') {
+      onItemChange(dataPath, value);
+    }
+    // 先不暴露给外部，这个api
+    if (typeof onValuesChange === 'function') {
+      onValuesChange({ [dataPath]: value }, formDataRef.current);
+    }
+
+    validateField({
+      path: dataPath,
+      formData: formDataRef.current,
+      flatten,
+      options: {
+        locale,
+        validateMessages,
+      },
+    }).then(res => {
+      _setErrors(errors => {
+        return removeDupErrors([...errors, ...res]);
+      });
+    });
+  };
+
+  const _readOnly = readOnly !== undefined ? readOnly : schema.readOnly;
+  const _disabled = disabled !== undefined ? disabled : schema.disabled;
+
   const dataProps = {
     id,
     item, // 如果直接传了item，就不用id去取item, 暂时是内部属性，不外用
     dataIndex, // 数据来源是数组的第几个index，上层每有一个list，就push一个index
     dataPath,
     _value,
+    onChange,
     dependValues,
+    readOnly: _readOnly,
+    disabled: _disabled,
     hideTitle,
     hideValidation,
     debugCss,
@@ -97,39 +184,15 @@ const Core = ({
   return <CoreRender {...dataProps} />;
 };
 
-const CoreRender = ({
-  id,
-  item,
-  dataIndex,
-  dataPath,
-  hideTitle,
-  hideValidation,
-  debugCss,
-  schema,
-  _value,
-  dependValues,
+const getClassNames = (schema, {
+  isList,
+  isObj,
+  isComplex,
+  isCheckBox,
   displayType,
-  column,
-  labelWidth,
-  readOnly,
-  errorFields,
-  effectiveLabelWidth,
-  ...rest
 }) => {
-  if (schema.hidden) {
-    return null;
-  }
-  // 样式的逻辑全放在这层
-  // displayType 一层层网上找值
-  const _displayType =
-    schema.displayType || rest.displayType || displayType || 'column';
-  const isList = isListType(schema);
-  const isObj = isObjType(schema);
-  const isComplex = isObj || isList;
-  const isCheckBox = isCheckBoxType(schema, readOnly);
-  const width = schema.width || schema['ui:width'];
   let containerClass = `fr-field ${
-    _displayType === 'inline' ? '' : 'w-100'
+    displayType === 'inline' ? '' : 'w-100'
   } flex`;
   let labelClass = `fr-label`;
   let contentClass = `fr-content`;
@@ -161,7 +224,7 @@ const CoreRender = ({
       if (isCheckBox) {
         contentClass += ' fr-content-column'; // checkbox高度短，需要居中对齐
         containerClass += ` flex ${
-          _displayType === 'column' ? 'flex-column' : ''
+          displayType === 'column' ? 'flex-column' : ''
         }`;
       }
       break;
@@ -169,7 +232,7 @@ const CoreRender = ({
   }
   // column specific className
   if (!isComplex && !isCheckBox) {
-    if (_displayType === 'column') {
+    if (displayType === 'column') {
       containerClass += ' flex-column';
       labelClass += ' fr-label-column';
       contentClass += ' fr-content-column';
@@ -185,7 +248,7 @@ const CoreRender = ({
           break;
         default:
       }
-    } else if (_displayType === 'row') {
+    } else if (displayType === 'row') {
       // row specific className
       containerClass += '';
       labelClass += ' fr-label-row';
@@ -197,13 +260,27 @@ const CoreRender = ({
     }
   }
 
-  // style part
+  if (displayType === 'inline') {
+    labelClass = '';
+    contentClass += ' fr-content-inline';
+    if (containerClass.indexOf('fr-field-object') === -1) {
+      containerClass += ' fr-field-inline';
+    }
+  }
+
+  return {
+    containerClass,
+    labelClass,
+    contentClass,
+  };
+};
+
+const getColumnStyle = (schema, column, { isObj }) => {
+  const width = schema.width || schema['ui:width'];
   let columnStyle = {};
   if (schema.hidden) {
     columnStyle.display = 'none';
   }
-  // if (!isComplex) {
-  // }
   if (!isObj) {
     if (width) {
       columnStyle.width = width;
@@ -213,7 +290,13 @@ const CoreRender = ({
       columnStyle.paddingRight = 8;
     }
   }
+  return columnStyle;
+};
 
+const getLabelStyle = (effectiveLabelWidth, {
+  isComplex,
+  displayType
+}) => {
   const _labelWidth = isLooselyNumber(effectiveLabelWidth)
     ? Number(effectiveLabelWidth)
     : isCssLength(effectiveLabelWidth)
@@ -221,19 +304,62 @@ const CoreRender = ({
     : 110; // 默认是 110px 的长度
 
   let labelStyle = { width: _labelWidth };
-  if (isComplex || _displayType === 'column') {
+  if (isComplex || displayType === 'column') {
     labelStyle = { flexGrow: 1 };
   }
 
-  if (_displayType === 'inline') {
+  if (displayType === 'inline') {
     labelStyle = { marginTop: 5, paddingLeft: 12 };
-    labelClass = '';
-    contentClass += ' fr-content-inline';
-    if (containerClass.indexOf('fr-field-object') === -1) {
-      containerClass += ' fr-field-inline';
-    }
   }
+  return labelStyle;
+};
 
+const CoreRender = ({
+  id,
+  item,
+  dataIndex,
+  dataPath,
+  hideTitle,
+  hideValidation,
+  debugCss,
+  schema,
+  _value,
+  onChange,
+  dependValues,
+  displayType,
+  column,
+  labelWidth,
+  readOnly,
+  disabled,
+  errorFields,
+  effectiveLabelWidth,
+  ...rest
+}) => {
+  if (schema.hidden) {
+    return null;
+  }
+  // 样式的逻辑全放在这层
+  // displayType 一层层网上找值
+  const _displayType =
+    schema.displayType || rest.displayType || displayType || 'column';
+  const isList = isListType(schema);
+  const isObj = isObjType(schema);
+  const isComplex = isObj || isList;
+  const isCheckBox = isCheckBoxType(schema, readOnly);
+  const options = {
+    isList,
+    isObj,
+    isComplex,
+    isCheckBox,
+    displayType: _displayType,
+  }
+  const {
+    containerClass,
+    labelClass,
+    contentClass,
+  } = getClassNames(schema, options);
+  const columnStyle = getColumnStyle(schema, column, options);
+  const labelStyle = getLabelStyle(effectiveLabelWidth, options);
   const hasChildren = item.children && item.children.length > 0;
 
   const fieldProps = {
@@ -241,8 +367,11 @@ const CoreRender = ({
     dataIndex,
     dataPath,
     _value,
+    onChange,
     dependValues,
     _schema: schema,
+    disabled,
+    readOnly,
     labelClass,
     labelStyle,
     contentClass,
@@ -260,6 +389,10 @@ const CoreRender = ({
       errorFields={errorFields}
       displayType={_displayType}
       hideTitle={hideTitle}
+      value={_value}
+      onChange={onChange}
+      disabled={disabled}
+      readOnly={readOnly}
     >
       {item.children}
     </RenderObject>
@@ -273,6 +406,8 @@ const CoreRender = ({
       errorFields={errorFields}
       displayType={_displayType}
       hideTitle={hideTitle}
+      disabled={disabled}
+      readOnly={readOnly}
     >
       {item.children}
     </RenderList>
