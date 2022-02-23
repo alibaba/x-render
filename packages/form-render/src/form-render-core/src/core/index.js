@@ -97,10 +97,7 @@ const Core = ({
         const error2 = arr[i].error;
         array[sameNameIndex] = {
           name: sameNameItem.name,
-          error:
-            error1.length > 0 && error2.length > 0
-              ? error2
-              : [],
+          error: error1.length > 0 && error2.length > 0 ? error2 : [],
         };
       } else {
         array.push(arr[i]);
@@ -145,7 +142,8 @@ const Core = ({
 
   const _readOnly = readOnly !== undefined ? readOnly : schema.readOnly;
   const _disabled = disabled !== undefined ? disabled : schema.disabled;
-  const _displayType = schema.displayType || rest.displayType || displayType || 'column';
+  const _displayType =
+    schema.displayType || rest.displayType || displayType || 'column';
   // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
   const _labelWidth = getParentProps('labelWidth', id, flatten) || labelWidth;
 

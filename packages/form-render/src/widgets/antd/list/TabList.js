@@ -4,13 +4,7 @@ import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 
-const TabList = ({
-  addons,
-  schema,
-  value = [],
-  getFieldProps,
-  Field,
-}) => {
+const TabList = ({ addons, schema, value = [], getFieldProps, Field }) => {
   const { deleteItem, addItem } = addons;
   const [activeKey, setActiveKey] = useState('0');
   const { props = {} } = schema;

@@ -19,13 +19,7 @@ const CardList = ({
   getFieldProps,
   Field,
 }) => {
-  const {
-    deleteItem,
-    addItem,
-    copyItem,
-    moveItemDown,
-    moveItemUp,
-  } = addons;
+  const { deleteItem, addItem, copyItem, moveItemDown, moveItemUp } = addons;
   const { props = {} } = schema;
 
   let addBtnProps = {

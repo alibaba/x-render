@@ -26,7 +26,7 @@ const RenderObject = ({
   const addons = {
     dataIndex,
     hideTitle,
-  }
+  };
 
   const displayProps = {
     addons,

@@ -21,7 +21,7 @@ export default ({ onChange, format, value, style, ...rest }) => {
     if (_value) {
       _value = moment(_value, dateFormat);
     }
-    return _value
+    return _value;
   }, [value]);
 
   const handleChange = (value, string) => {

@@ -2,7 +2,11 @@
 import React, { useRef } from 'react';
 import { Button, Table, Drawer, Popconfirm } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
-import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../form-render-core/src/utils';
+import {
+  getDataPath,
+  getKeyFromPath,
+  getDisplayValue,
+} from '../../../form-render-core/src/utils';
 import { useSet } from '../../../form-render-core/src/hooks';
 import ErrorMessage from '../../../form-render-core/src/core/RenderField/ErrorMessage';
 

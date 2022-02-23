@@ -112,7 +112,7 @@ const RenderList = ({
     dataIndex,
     flatten,
     errorFields,
-  }
+  };
 
   const displayProps = {
     addons,

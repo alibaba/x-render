@@ -2,19 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Collapse } from 'antd';
 const { Panel } = Collapse;
 
-export default function Map({
-  children,
-  schema,
-  getFieldProps,
-  Field,
-}) {
+export default function Map({ children, schema, getFieldProps, Field }) {
   const { title } = schema;
   const [collapsed, setCollapsed] = useState(false);
 
   const _children = children.map((key, idx) => {
     const fieldProps = getFieldProps(key);
     return <Field key={idx.toString()} {...fieldProps} />;
-  })
+  });
 
   if (!title) {
     return <div className="w-100 flex flex-wrap">{_children}</div>;

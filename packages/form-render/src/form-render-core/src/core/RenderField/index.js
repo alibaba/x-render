@@ -1,6 +1,11 @@
 import React from 'react';
 import { useStore, useStore2, useTools } from '../../hooks';
-import { getValueByPath, isCheckBoxType, isListType, isObjType } from '../../utils';
+import {
+  getValueByPath,
+  isCheckBoxType,
+  isListType,
+  isObjType,
+} from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import Extra from './Extra';
 import FieldTitle from './Title';
@@ -116,19 +121,11 @@ const RenderField = props => {
 
   if (hasChildren) {
     if (isObj) {
-      _children = (
-        <RenderObject {...props}>
-          {item.children}
-        </RenderObject>
-      );
+      _children = <RenderObject {...props}>{item.children}</RenderObject>;
     }
 
     if (isList) {
-      _children = (
-        <RenderList {...props}>
-          {item.children}
-        </RenderList>
-      );
+      _children = <RenderList {...props}>{item.children}</RenderList>;
     }
   }
 

@@ -411,7 +411,7 @@ export default Demo;
 
 7. 自定义列表组件，readOnly 状态下隐藏操作按钮
 
-``` jsx
+```jsx
 import React, { useState } from 'react';
 import FormRender, { useForm } from 'form-render';
 import { Button } from 'antd';
@@ -448,13 +448,13 @@ const schema = {
 const Demo = () => {
   const form = useForm();
   const [readOnly, setReadOnly] = useState(false);
-  
+
   return (
     <>
       <FormRender
         form={form}
         schema={schema}
-        widgets={{ simpleList: SimpleList}}
+        widgets={{ simpleList: SimpleList }}
         readOnly={readOnly}
       />
       <Button onClick={() => setReadOnly(!readOnly)}>切换只读</Button>

@@ -8,13 +8,10 @@ import {
   isObjType,
 } from '../utils';
 
-const getClassNames = (schema, {
-  isList,
-  isObj,
-  isComplex,
-  isCheckBox,
-  displayType,
-}) => {
+const getClassNames = (
+  schema,
+  { isList, isObj, isComplex, isCheckBox, displayType }
+) => {
   let containerClass = `fr-field ${
     displayType === 'inline' ? '' : 'w-100'
   } flex`;
@@ -117,10 +114,7 @@ const getColumnStyle = (schema, column, { isObj }) => {
   return columnStyle;
 };
 
-const getLabelStyle = (labelWidth, {
-  isComplex,
-  displayType
-}) => {
+const getLabelStyle = (labelWidth, { isComplex, displayType }) => {
   const _labelWidth = isLooselyNumber(labelWidth)
     ? Number(labelWidth)
     : isCssLength(labelWidth)
@@ -138,15 +132,8 @@ const getLabelStyle = (labelWidth, {
   return labelStyle;
 };
 
-const CoreRender = (props) => {
-  const {
-    debugCss,
-    schema,
-    readOnly,
-    displayType,
-    labelWidth,
-    column,
-  } = props;
+const CoreRender = props => {
+  const { debugCss, schema, readOnly, displayType, labelWidth, column } = props;
 
   if (schema.hidden) {
     return null;
@@ -163,12 +150,11 @@ const CoreRender = (props) => {
     isComplex,
     isCheckBox,
     displayType,
-  }
-  const {
-    containerClass,
-    labelClass,
-    contentClass,
-  } = getClassNames(schema, options);
+  };
+  const { containerClass, labelClass, contentClass } = getClassNames(
+    schema,
+    options
+  );
   const columnStyle = getColumnStyle(schema, column, options);
   const labelStyle = getLabelStyle(labelWidth, options);
 
