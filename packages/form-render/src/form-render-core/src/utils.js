@@ -101,9 +101,7 @@ export function getDataPath(id, dataIndex) {
 }
 
 export function isObjType(schema) {
-  return (
-    schema && schema.type === 'object' && schema.properties && !schema.widget
-  );
+  return schema && schema.type === 'object' && schema.properties;
 }
 
 // TODO: to support case that item is not an object
