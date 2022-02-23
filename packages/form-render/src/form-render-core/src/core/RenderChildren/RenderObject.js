@@ -13,9 +13,9 @@ const RenderObject = ({
 }) => {
   const { widgets } = useTools();
 
-  const getFieldProps = (child, extraProps) => {
+  const getFieldProps = (id, extraProps) => {
     return {
-      id: child,
+      id,
       displayType,
       dataIndex,
       hideTitle,

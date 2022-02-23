@@ -10,11 +10,10 @@ const FIELD_LENGTH = 170;
 
 const DrawerList = ({
   addons,
-  value,
+  value = [],
   onChange,
   schema,
   children,
-  displayList = [],
   getFieldProps,
   Field,
 }) => {
@@ -44,7 +43,7 @@ const DrawerList = ({
 
   const { showDrawer } = state;
 
-  const dataSource = displayList.map((item, index) => ({
+  const dataSource = value.map((item, index) => ({
     ...item,
     $idx: index,
   }));
@@ -64,13 +63,13 @@ const DrawerList = ({
         schema.title
       ),
       width: FIELD_LENGTH,
-      render: (value, record) => {
+      render: (val, record) => {
         const childPath = getDataPath(child, [record.$idx]);
         const errorObj = errorFields.find(item => item.name == childPath) || {};
         //TODO: 万一error在更深的层，这个办法是find不到的，会展示那一行没有提示。可以整一行加一个红线的方式处理
         return (
           <div>
-            <div>{getDisplayValue(value, schema)}</div>
+            <div>{getDisplayValue(val, schema)}</div>
             {errorObj.error && (
               <ErrorMessage message={errorObj.error} schema={schema} />
             )}
@@ -86,8 +85,8 @@ const DrawerList = ({
     key: '$action',
     fixed: 'right',
     width: 120,
-    render: (value, record, idx) => {
-      const index = (value && value.$idx) || 0;
+    render: (val, record, idx) => {
+      const index = (val && val.$idx) || 0;
       return (
         <div>
           <a onClick={() => openDrawer(index)}>编辑</a>

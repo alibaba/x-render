@@ -7,11 +7,10 @@ const FIELD_LENGTH = 170;
 
 const TableList = ({
   addons,
-  value,
+  value = [],
   onChange,
   schema,
   children,
-  displayList = [],
   Field,
 }) => {
   const {
@@ -33,7 +32,7 @@ const TableList = ({
     ...pagination,
   };
 
-  const dataSource = displayList.map((item, idx) => {
+  const dataSource = value.map((item, idx) => {
     return { index: idx };
   });
 
@@ -51,7 +50,7 @@ const TableList = ({
         schema.title
       ),
       width: FIELD_LENGTH,
-      render: (value, record, index) => {
+      render: (val, record, index) => {
         // Check: record.index 似乎是antd自己会给的，不错哦
         const childIndex = [...dataIndex, record.index];
         return (
@@ -79,7 +78,7 @@ const TableList = ({
       key: '$action',
       fixed: 'right',
       width: 120,
-      render: (value, record) => {
+      render: (val, record) => {
         const idx = record.index;
         return (
           <div>

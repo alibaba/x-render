@@ -8,11 +8,10 @@ const FIELD_LENGTH = 170;
 
 const VirtualList = ({
   addons,
-  value,
+  value = [],
   onChange,
   schema,
   children,
-  displayList = [],
   Field,
 }) => {
   const {
@@ -28,7 +27,7 @@ const VirtualList = ({
 
   const [vt, set_components] = useVT(() => ({ scroll: { y: scrollY } }), []);
 
-  const dataSource = displayList.map((item, idx) => {
+  const dataSource = value.map((item, idx) => {
     return { index: idx };
   });
 
@@ -46,7 +45,7 @@ const VirtualList = ({
       ) : (
         schema.title
       ),
-      render: (value, record, index) => {
+      render: (val, record, index) => {
         // Check: record.index 似乎是antd自己会给的，不错哦
         const childIndex = [...dataIndex, record.index];
         return (
@@ -68,7 +67,7 @@ const VirtualList = ({
       key: '$action',
       fixed: 'right',
       width: 120,
-      render: (value, record, idx) => {
+      render: (val, record, idx) => {
         return (
           <>
             {!props.hideDelete && (

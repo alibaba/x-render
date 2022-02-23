@@ -116,7 +116,7 @@ const RenderList = ({
 
   const displayProps = {
     addons,
-    value,
+    value: displayList,
     onChange,
     schema,
     disabled,
@@ -125,7 +125,6 @@ const RenderList = ({
     title: schema.title,
     children,
     displayType,
-    displayList,
     getFieldProps,
     Field: Core,
   };

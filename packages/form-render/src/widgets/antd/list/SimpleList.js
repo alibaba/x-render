@@ -9,10 +9,9 @@ import {
 
 const SimpleList = ({
   addons,
-  value,
+  value = [],
   onChange,
   schema,
-  displayList = [],
   getFieldProps,
   Field,
 }) => {
@@ -37,7 +36,7 @@ const SimpleList = ({
   return (
     <div className="w-100">
       <div className="fr-list-1">
-        {displayList.map((item, idx) => {
+        {value.map((item, idx) => {
           const fieldProps = getFieldProps(idx, {
             displayType: 'inline',
           });
@@ -80,7 +79,7 @@ const SimpleList = ({
             </div>
           );
         })}
-        <div style={{ marginTop: displayList.length > 0 ? 0 : 8 }}>
+        <div style={{ marginTop: value.length > 0 ? 0 : 8 }}>
           {!props.hideAdd && <Button onClick={addItem} {...addBtnProps} />}
           {Array.isArray(props.buttons)
             ? props.buttons.map((item, idx) => {

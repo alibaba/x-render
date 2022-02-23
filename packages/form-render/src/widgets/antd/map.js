@@ -11,8 +11,8 @@ export default function Map({
   const { title } = schema;
   const [collapsed, setCollapsed] = useState(false);
 
-  const _children = children.map((child, idx) => {
-    const fieldProps = getFieldProps(child);
+  const _children = children.map((key, idx) => {
+    const fieldProps = getFieldProps(key);
     return <Field key={idx.toString()} {...fieldProps} />;
   })
 

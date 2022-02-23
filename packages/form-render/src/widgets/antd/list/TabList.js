@@ -7,7 +7,7 @@ const { TabPane } = Tabs;
 const TabList = ({
   addons,
   schema,
-  displayList = [],
+  value = [],
   getFieldProps,
   Field,
 }) => {
@@ -43,7 +43,7 @@ const TabList = ({
         onEdit={onEdit}
         {...restProps}
       >
-        {displayList.map((item, idx) => {
+        {value.map((item, idx) => {
           const fieldProps = getFieldProps(idx);
           return (
             <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
