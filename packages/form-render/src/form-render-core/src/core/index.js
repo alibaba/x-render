@@ -1,14 +1,9 @@
 import React, { useRef } from 'react';
-import RenderField from './RenderField';
+import CoreRender from './render';
 import { useStore, useStore2, useTools } from '../hooks';
 import {
-  isLooselyNumber,
-  isCssLength,
   getParentProps,
   getParentPath,
-  isListType,
-  isCheckBoxType,
-  isObjType,
   getValueByPath,
   getDataPath,
   parseRootValueInSchema,
@@ -88,10 +83,6 @@ const Core = ({
     snapShot.current = schema;
   }
 
-  // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
-  const effectiveLabelWidth =
-    getParentProps('labelWidth', id, flatten) || labelWidth;
-
   const removeDupErrors = arr => {
     if (!Array.isArray(arr)) {
       console.log('in removeDups: param is not an array');
@@ -154,240 +145,32 @@ const Core = ({
 
   const _readOnly = readOnly !== undefined ? readOnly : schema.readOnly;
   const _disabled = disabled !== undefined ? disabled : schema.disabled;
+  const _displayType = schema.displayType || rest.displayType || displayType || 'column';
+  // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
+  const _labelWidth = getParentProps('labelWidth', id, flatten) || labelWidth;
 
   const dataProps = {
-    id,
+    $id: id,
     item, // 如果直接传了item，就不用id去取item, 暂时是内部属性，不外用
     dataIndex, // 数据来源是数组的第几个index，上层每有一个list，就push一个index
     dataPath,
+    hideTitle,
+    hideValidation,
+    debugCss,
+    schema,
     value,
     onChange,
     dependValues,
     readOnly: _readOnly,
     disabled: _disabled,
-    hideTitle,
-    hideValidation,
-    debugCss,
-    schema,
-    displayType,
+    displayType: _displayType,
+    labelWidth: _labelWidth,
     column,
-    labelWidth,
-    readOnly,
     errorFields,
-    effectiveLabelWidth,
     allTouched,
-    ...rest,
   };
 
   return <CoreRender {...dataProps} />;
-};
-
-const getClassNames = (schema, {
-  isList,
-  isObj,
-  isComplex,
-  isCheckBox,
-  displayType,
-}) => {
-  let containerClass = `fr-field ${
-    displayType === 'inline' ? '' : 'w-100'
-  } flex`;
-  let labelClass = `fr-label`;
-  let contentClass = `fr-content`;
-
-  if (typeof schema.className === 'string') {
-    containerClass += ' ' + schema.className;
-  }
-
-  // common classNames dispite row or column
-  switch (schema.type) {
-    case 'object':
-      if (isObj) {
-        if (schema.title) {
-          labelClass += ' fr-label-object';
-        }
-        containerClass += ' fr-field-object';
-      }
-      break;
-    case 'array':
-      // list 有两种展示形式！
-      if (isList) {
-        if (schema.title) {
-          labelClass += ' fr-label-list';
-        }
-        containerClass += ' fr-field-column';
-      }
-      break;
-    case 'boolean':
-      if (isCheckBox) {
-        contentClass += ' fr-content-column'; // checkbox高度短，需要居中对齐
-        containerClass += ` flex ${
-          displayType === 'column' ? 'flex-column' : ''
-        }`;
-      }
-      break;
-    default:
-  }
-  // column specific className
-  if (!isComplex && !isCheckBox) {
-    if (displayType === 'column') {
-      containerClass += ' flex-column';
-      labelClass += ' fr-label-column';
-      contentClass += ' fr-content-column';
-      switch (schema.type) {
-        case 'object':
-          break;
-        case 'array':
-          if (schema.title && !schema.enum) {
-            // labelClass += ' b mb2';
-          }
-          break;
-        case 'boolean':
-          break;
-        default:
-      }
-    } else if (displayType === 'row') {
-      // row specific className
-      containerClass += '';
-      labelClass += ' fr-label-row';
-      contentClass += ' fr-content-row';
-      if (!isObj && !isCheckBox) {
-        labelClass += ' flex-shrink-0 fr-label-row';
-        contentClass += ' flex-grow-1 relative';
-      }
-    }
-  }
-
-  if (displayType === 'inline') {
-    labelClass = '';
-    contentClass += ' fr-content-inline';
-    if (containerClass.indexOf('fr-field-object') === -1) {
-      containerClass += ' fr-field-inline';
-    }
-  }
-
-  return {
-    containerClass,
-    labelClass,
-    contentClass,
-  };
-};
-
-const getColumnStyle = (schema, column, { isObj }) => {
-  const width = schema.width || schema['ui:width'];
-  let columnStyle = {};
-  if (schema.hidden) {
-    columnStyle.display = 'none';
-  }
-  if (!isObj) {
-    if (width) {
-      columnStyle.width = width;
-      columnStyle.paddingRight = 8;
-    } else if (column > 1) {
-      columnStyle.width = `calc(100% /${column})`;
-      columnStyle.paddingRight = 8;
-    }
-  }
-  return columnStyle;
-};
-
-const getLabelStyle = (effectiveLabelWidth, {
-  isComplex,
-  displayType
-}) => {
-  const _labelWidth = isLooselyNumber(effectiveLabelWidth)
-    ? Number(effectiveLabelWidth)
-    : isCssLength(effectiveLabelWidth)
-    ? effectiveLabelWidth
-    : 110; // 默认是 110px 的长度
-
-  let labelStyle = { width: _labelWidth };
-  if (isComplex || displayType === 'column') {
-    labelStyle = { flexGrow: 1 };
-  }
-
-  if (displayType === 'inline') {
-    labelStyle = { marginTop: 5, paddingLeft: 12 };
-  }
-  return labelStyle;
-};
-
-const CoreRender = ({
-  id,
-  item,
-  dataIndex,
-  dataPath,
-  hideTitle,
-  hideValidation,
-  debugCss,
-  schema,
-  value,
-  onChange,
-  dependValues,
-  displayType,
-  column,
-  labelWidth,
-  readOnly,
-  disabled,
-  errorFields,
-  effectiveLabelWidth,
-  ...rest
-}) => {
-  if (schema.hidden) {
-    return null;
-  }
-  // 样式的逻辑全放在这层
-  // displayType 一层层网上找值
-  const _displayType =
-    schema.displayType || rest.displayType || displayType || 'column';
-  const isList = isListType(schema);
-  const isObj = isObjType(schema);
-  const isComplex = isObj || isList;
-  const isCheckBox = isCheckBoxType(schema, readOnly);
-  const options = {
-    isList,
-    isObj,
-    isComplex,
-    isCheckBox,
-    displayType: _displayType,
-  }
-  const {
-    containerClass,
-    labelClass,
-    contentClass,
-  } = getClassNames(schema, options);
-  const columnStyle = getColumnStyle(schema, column, options);
-  const labelStyle = getLabelStyle(effectiveLabelWidth, options);
-
-  const fieldProps = {
-    $id: id,
-    dataIndex,
-    dataPath,
-    value,
-    onChange,
-    dependValues,
-    schema,
-    disabled,
-    readOnly,
-    labelClass,
-    labelStyle,
-    contentClass,
-    errorFields,
-    // 层级间可使用的字段
-    displayType: _displayType,
-    hideTitle,
-    hideValidation,
-    item,
-  };
-
-  return (
-    <div
-      style={columnStyle}
-      className={`${containerClass} ${debugCss ? 'debug' : ''}`}
-    >
-      <RenderField {...fieldProps} />
-    </div>
-  );
 };
 
 export default Core;

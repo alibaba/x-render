@@ -48,7 +48,7 @@ const RenderField = props => {
 
   const titleProps = {
     labelClass,
-    labelStyle: labelStyle,
+    labelStyle,
     schema,
     displayType,
   };
@@ -70,14 +70,12 @@ const RenderField = props => {
   const isList = isListType(schema);
   const hasChildren = item.children && item.children.length > 0;
   const _showTitle = !isObj && !hideTitle && typeof schema.title === 'string';
-  // TODO: 这块最好能判断上一层是list1，
+
   if (hideTitle && schema.title) {
     schema.placeholder = schema.placeholder || schema.title;
   }
 
-  const _getValue = path => {
-    return getValueByPath(formData, path);
-  };
+  const _getValue = path => getValueByPath(formData, path);
 
   const widgetProps = {
     $id,
@@ -113,7 +111,7 @@ const RenderField = props => {
     );
   }
 
-  let titleElement = <FieldTitle {...titleProps} />;
+  const titleElement = <FieldTitle {...titleProps} />;
   let _children = <ExtendedWidget {...widgetProps} />;
 
   if (hasChildren) {

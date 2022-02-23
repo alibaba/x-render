@@ -44,18 +44,6 @@ const ExtendedWidget = ({
 
   const { globalProps } = useStore();
 
-  // if (isObjType(schema)) {
-  //   return <Map value={value} onChange={onChange} children={children} />;
-  // }
-  // if (isListType(schema)) {
-  //   return 'haha';
-  // }
-  // return <Input value={value} onChange={e => onChange(e.target.value)} />;
-
-  // TODO: calc widget, better way?
-  // let widgetName = useMemo(() => getWidgetName(schema, mapping), [
-  //   JSON.stringify(schema),
-  // ]);
   let widgetName = getWidgetName(schema, mapping);
   const customName = schema.widget || schema['ui:widget'];
   if (customName && widgets[customName]) {
