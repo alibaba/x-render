@@ -745,8 +745,7 @@ export const generateDataSkeleton = (schema, formData) => {
   } else if (schema.default !== undefined) {
     result = clone(schema.default);
   } else if (isListType(schema)) {
-    const childData = generateDataSkeleton(schema.items);
-    result = childData && [childData];
+    result = [generateDataSkeleton(schema.items)];
   } else if (schema.type === 'boolean' && !schema.widget) {
     // result = false;
     result = undefined;

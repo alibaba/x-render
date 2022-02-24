@@ -44,7 +44,7 @@ const RenderList = ({
 
   const addItem = () => {
     const _schema = getSchemaFromFlatten(flatten, parentId);
-    const [newItem] = generateDataSkeleton(_schema) || [{}];
+    const newItem = generateDataSkeleton(_schema.items) || {};
     const newList = [...displayList, newItem];
     const newIndex = newList.length - 1;
     onItemChange(dataPath, newList);
