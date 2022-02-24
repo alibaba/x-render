@@ -736,19 +736,22 @@ export const generateDataSkeleton = (schema, formData) => {
       const childSchema = schema.properties[key];
       const childData = _formData[key];
       const childResult = generateDataSkeleton(childSchema, childData);
-      result[key] = childResult;
+      if (childResult !== undefined) {
+        result[key] = childResult;
+      }
     });
   } else if (_formData !== undefined) {
     // result = _formData;
+  } else if (schema.default !== undefined) {
+    result = clone(schema.default);
+  } else if (isListType(schema)) {
+    const childData = generateDataSkeleton(schema.items);
+    result = childData && [childData];
+  } else if (schema.type === 'boolean' && !schema.widget) {
+    // result = false;
+    result = undefined;
   } else {
-    if (schema.default !== undefined) {
-      result = clone(schema.default);
-    } else if (schema.type === 'boolean' && !schema.widget) {
-      // result = false;
-      result = undefined;
-    } else {
-      result = undefined;
-    }
+    result = undefined;
   }
   return result;
 };
