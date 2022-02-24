@@ -625,24 +625,6 @@ export const getKeyFromPath = (path = '#') => {
   }
 };
 
-// 更多的值获取
-export const getDisplayValue = (value, schema) => {
-  if (typeof value === 'boolean') {
-    return value ? 'yes' : 'no';
-  }
-  if (isObjType(schema) || isListType(schema)) {
-    return '-';
-  }
-  if (Array.isArray(schema.enum) && Array.isArray(schema.enumNames)) {
-    try {
-      return schema.enumNames[schema.enum.indexOf(value)];
-    } catch (error) {
-      return value;
-    }
-  }
-  return value;
-};
-
 // 去掉数组里的空元素 {a: [null, {x:1}]} => {a: [{x:1}]}
 export const removeEmptyItemFromList = formData => {
   let result = {};

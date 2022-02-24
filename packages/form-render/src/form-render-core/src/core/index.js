@@ -147,6 +147,8 @@ const Core = ({
   // 真正有效的label宽度需要从现在所在item开始一直往上回溯（设计成了继承关系），找到的第一个有值的 ui:labelWidth
   const _labelWidth = getParentProps('labelWidth', id, flatten) || labelWidth;
 
+  const getValue = path => getValueByPath(formData, path);
+
   const renderProps = {
     $id: id,
     item, // 如果直接传了item，就不用id去取item, 暂时是内部属性，不外用
@@ -158,11 +160,13 @@ const Core = ({
     schema,
     value,
     onChange,
+    onItemChange,
     dependValues,
     readOnly: _readOnly,
     disabled: _disabled,
     displayType: _displayType,
     labelWidth: _labelWidth,
+    getValue,
     column,
     errorFields,
     allTouched,

@@ -11,7 +11,8 @@ const RenderObject = ({
   disabled,
   readOnly,
 }) => {
-  const { widgets } = useTools();
+  const tools = useTools();
+  const { widgets } = tools;
 
   const getFieldProps = (id, extraProps) => {
     return {
@@ -24,11 +25,12 @@ const RenderObject = ({
   };
 
   const addons = {
+    ...tools,
     dataIndex,
     hideTitle,
   };
 
-  const displayProps = {
+  const layoutWidgetProps = {
     addons,
     schema,
     disabled,
@@ -44,7 +46,7 @@ const RenderObject = ({
   const renderWidget = schema.widget || 'map';
   const ObjectWidget = widgets[renderWidget] || widgets.map;
 
-  return <ObjectWidget {...displayProps} />;
+  return <ObjectWidget {...layoutWidgetProps} />;
 };
 
 export default RenderObject;

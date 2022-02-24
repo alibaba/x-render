@@ -3,14 +3,33 @@ import React, { useRef } from 'react';
 import { Button, Table, Drawer, Popconfirm } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 import {
+  isObjType,
+  isListType,
   getDataPath,
   getKeyFromPath,
-  getDisplayValue,
 } from '../../../form-render-core/src/utils';
 import { useSet } from '../../../form-render-core/src/hooks';
 import ErrorMessage from '../../../form-render-core/src/core/RenderField/ErrorMessage';
 
 const FIELD_LENGTH = 170;
+
+// 展示的值获取
+const getDisplayValue = (value, schema) => {
+  if (typeof value === 'boolean') {
+    return value ? 'yes' : 'no';
+  }
+  if (isObjType(schema) || isListType(schema)) {
+    return '-';
+  }
+  if (Array.isArray(schema.enum) && Array.isArray(schema.enumNames)) {
+    try {
+      return schema.enumNames[schema.enum.indexOf(value)];
+    } catch (error) {
+      return value;
+    }
+  }
+  return JSON.stringify(value);
+};
 
 const DrawerList = ({
   addons,
@@ -29,6 +48,7 @@ const DrawerList = ({
     dataPath,
     flatten,
     errorFields,
+    widgets,
   } = addons;
   const { props = {}, itemProps = {} } = schema;
   const { buttons, ...columnProps } = itemProps;
@@ -70,10 +90,15 @@ const DrawerList = ({
       render: (val, record) => {
         const childPath = getDataPath(child, [record.$idx]);
         const errorObj = errorFields.find(item => item.name == childPath) || {};
+        const Widget = widgets[schema.readOnlyWidget];
         //TODO: 万一error在更深的层，这个办法是find不到的，会展示那一行没有提示。可以整一行加一个红线的方式处理
         return (
           <div>
-            <div>{getDisplayValue(val, schema)}</div>
+            {Widget ? (
+              <Widget value={val} schema={schema} />
+            ) : (
+              getDisplayValue(val, schema)
+            )}
             {errorObj.error && (
               <ErrorMessage message={errorObj.error} schema={schema} />
             )}

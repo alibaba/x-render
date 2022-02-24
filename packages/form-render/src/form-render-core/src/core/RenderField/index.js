@@ -1,11 +1,6 @@
 import React from 'react';
-import { useStore, useStore2, useTools } from '../../hooks';
-import {
-  getValueByPath,
-  isCheckBoxType,
-  isListType,
-  isObjType,
-} from '../../utils';
+import { useStore2 } from '../../hooks';
+import { isCheckBoxType, isListType, isObjType } from '../../utils';
 import ErrorMessage from './ErrorMessage';
 import Extra from './Extra';
 import FieldTitle from './Title';
@@ -16,18 +11,12 @@ import RenderObject from '../RenderChildren/RenderObject';
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
 const RenderField = props => {
   const {
-    $id,
-    dataIndex,
     dataPath,
-    value,
-    onChange,
-    dependValues,
     readOnly,
-    disabled,
     schema,
     labelClass,
     labelStyle,
-    contentClass: _contentClass,
+    contentClass,
     children,
     errorFields = [],
     hideTitle,
@@ -36,20 +25,16 @@ const RenderField = props => {
   } = props;
 
   const { showValidate } = useStore2();
-  const { onItemChange } = useTools();
-  const { formData } = useStore();
   // console.log('<renderField>', $id);
 
   const errObj = errorFields.find(err => err.name === dataPath);
   const errorMessage = errObj && errObj.error; // 是一个list
   const hasError = Array.isArray(errorMessage) && errorMessage.length > 0;
   // 补上这个class，会自动让下面所有的展示ui变红！
-  const contentClass =
+  const _contentClass =
     hasError && showValidate
-      ? _contentClass + ' ant-form-item-has-error'
-      : _contentClass;
-
-  let contentStyle = {};
+      ? contentClass + ' ant-form-item-has-error'
+      : contentClass;
 
   const titleProps = {
     labelClass,
@@ -80,44 +65,21 @@ const RenderField = props => {
     schema.placeholder = schema.placeholder || schema.title;
   }
 
-  const _getValue = path => getValueByPath(formData, path);
-
-  const widgetProps = {
-    $id,
-    schema,
-    readOnly,
-    disabled,
-    onChange,
-    getValue: _getValue,
-    formData,
-    value,
-    dependValues,
-    onItemChange,
-    dataIndex,
-    dataPath,
-    children,
-  };
-
-  // if (schema && schema.default !== undefined) {
-  //   widgetProps.value = schema.default;
-  // }
-
   // checkbox必须单独处理，布局太不同了
   if (isCheckBoxType(schema, readOnly)) {
     return (
       <>
         {_showTitle && <div {...placeholderTitleProps} />}
-        <div className={contentClass} style={contentStyle}>
-          <ExtendedWidget {...widgetProps}>{schema.title}</ExtendedWidget>
-          <Extra {...widgetProps} />
+        <div className={_contentClass}>
+          <ExtendedWidget {...props}>{schema.title}</ExtendedWidget>
+          <Extra {...props} />
           <ErrorMessage {...messageProps} />
         </div>
       </>
     );
   }
 
-  const titleElement = <FieldTitle {...titleProps} />;
-  let _children = <ExtendedWidget {...widgetProps} />;
+  let _children = <ExtendedWidget {...props}>{children}</ExtendedWidget>;
 
   if (hasChildren) {
     if (isObj) {
@@ -131,13 +93,12 @@ const RenderField = props => {
 
   return (
     <>
-      {_showTitle && titleElement}
+      {_showTitle && <FieldTitle {...titleProps} />}
       <div
-        className={`${contentClass} ${hideTitle ? 'fr-content-no-title' : ''}`}
-        style={contentStyle}
+        className={`${_contentClass} ${hideTitle ? 'fr-content-no-title' : ''}`}
       >
         {_children}
-        <Extra {...widgetProps} />
+        <Extra {...props} />
         {!isObj && <ErrorMessage {...messageProps} />}
       </div>
     </>

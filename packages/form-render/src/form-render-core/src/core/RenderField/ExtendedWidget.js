@@ -28,19 +28,8 @@ const ExtendedWidget = ({
   disabled,
   dataIndex,
 }) => {
-  const {
-    widgets,
-    mapping,
-    setValueByPath,
-    getSchemaByPath,
-    setSchemaByPath,
-    setSchema,
-    setValues,
-    getValues,
-    resetFields,
-    setErrorFields,
-    removeErrorField,
-  } = useTools();
+  const tools = useTools();
+  const { widgets, mapping, setValueByPath, setSchemaByPath } = tools;
 
   const { globalProps } = useStore();
 
@@ -60,7 +49,7 @@ const ExtendedWidget = ({
   const Widget = widgets[widgetName];
   const extraSchema = extraSchemaList[widgetName];
 
-  let widgetProps = {
+  const widgetProps = {
     schema: { ...schema, ...extraSchema },
     onChange,
     value,
@@ -80,10 +69,6 @@ const ExtendedWidget = ({
       widgetProps[key] = schema[key];
     }
   });
-
-  if (schema.props) {
-    widgetProps = { ...widgetProps, ...schema.props };
-  }
 
   Object.keys(schema).forEach(key => {
     if (
@@ -107,23 +92,15 @@ const ExtendedWidget = ({
 
   // 避免传组件不接受的props，按情况传多余的props
   widgetProps.addons = {
+    ...tools,
     dependValues,
-    onItemChange,
-    getValue,
     formData,
+    getValue,
+    setValue: setValueByPath,
     dataPath,
     dataIndex,
-    setValueByPath,
-    setValue: setValueByPath,
-    getSchemaByPath,
-    setSchemaByPath,
-    setSchema,
-    setValues,
-    getValues,
-    resetFields,
-    setErrorFields,
-    removeErrorField,
     hideSelf,
+    onItemChange,
   };
 
   const finalProps = transformProps(widgetProps);

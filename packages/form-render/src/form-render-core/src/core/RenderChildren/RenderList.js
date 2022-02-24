@@ -15,8 +15,9 @@ const RenderList = ({
   disabled,
   readOnly,
 }) => {
+  const tools = useTools();
+  const { widgets, onItemChange, removeTouched } = tools;
   const { formData, flatten } = useStore();
-  const { widgets, onItemChange, removeTouched } = useTools();
 
   // 计算 list对应的formData
   const dataPath = getDataPath($id, dataIndex);
@@ -103,6 +104,7 @@ const RenderList = ({
   };
 
   const addons = {
+    ...tools,
     deleteItem,
     addItem,
     copyItem,
@@ -114,7 +116,7 @@ const RenderList = ({
     errorFields,
   };
 
-  const displayProps = {
+  const layoutWidgetProps = {
     addons,
     value: displayList,
     onChange,
@@ -132,7 +134,7 @@ const RenderList = ({
   const renderWidget = schema.widget || 'cardList';
   const ListWidget = widgets[renderWidget] || widgets.cardList;
 
-  return <ListWidget {...displayProps} />;
+  return <ListWidget {...layoutWidgetProps} />;
 };
 
 export default RenderList;
