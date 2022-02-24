@@ -642,7 +642,7 @@ export const getDisplayValue = (value, schema) => {
       return value;
     }
   }
-  return value;
+  return JSON.stringify(value);
 };
 
 // 去掉数组里的空元素 {a: [null, {x:1}]} => {a: [{x:1}]}
