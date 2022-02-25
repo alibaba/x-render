@@ -131,7 +131,6 @@ export default function ItemSettings({ widgets }) {
     <div style={{ paddingRight: 24 }}>
       <FormRender
         form={form}
-        removeHiddenData
         schema={settingSchema}
         widgets={{ ..._widgets, ...widgets }}
         watch={{
