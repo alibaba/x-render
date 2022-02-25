@@ -12,12 +12,13 @@ const RenderList = ({
   children = [],
   errorFields,
   displayType,
+  hideTitle,
   disabled,
   readOnly,
 }) => {
   const tools = useTools();
   const { widgets, onItemChange, removeTouched } = tools;
-  const { formData, flatten } = useStore();
+  const { formData, globalProps } = useStore();
 
   // 计算 list对应的formData
   const dataPath = getDataPath($id, dataIndex);
@@ -99,6 +100,7 @@ const RenderList = ({
       _item: itemFlatten,
       dataIndex: [...dataIndex, idx],
       displayType,
+      hideTitle,
       ...extraProps,
     };
   };
@@ -112,7 +114,7 @@ const RenderList = ({
     moveItemUp,
     dataPath,
     dataIndex,
-    flatten,
+    hideTitle,
     errorFields,
   };
 
@@ -129,6 +131,7 @@ const RenderList = ({
     displayType,
     getFieldProps,
     Field: Core,
+    ...globalProps,
   };
 
   const renderWidget = schema.widget || 'cardList';

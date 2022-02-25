@@ -34,9 +34,6 @@ const SimpleList = ({
           const fieldProps = getFieldProps(idx, {
             displayType: 'inline',
           });
-          if (props.hideTitle) {
-            fieldProps.hideTitle = true;
-          }
           return (
             <div key={idx} style={{ display: 'flex' }}>
               <Field {...fieldProps} />

@@ -20,8 +20,6 @@ const ExtendedWidget = ({
   value,
   dependValues,
   children,
-  onItemChange,
-  formData,
   getValue,
   readOnly,
   dataPath,
@@ -30,7 +28,6 @@ const ExtendedWidget = ({
 }) => {
   const tools = useTools();
   const { widgets, mapping, setValueByPath, setSchemaByPath } = tools;
-
   const { globalProps } = useStore();
 
   let widgetName = getWidgetName(schema, mapping);
@@ -93,14 +90,12 @@ const ExtendedWidget = ({
   // 避免传组件不接受的props，按情况传多余的props
   widgetProps.addons = {
     ...tools,
-    dependValues,
-    formData,
     getValue,
     setValue: setValueByPath,
+    dependValues,
     dataPath,
     dataIndex,
     hideSelf,
-    onItemChange,
   };
 
   const finalProps = transformProps(widgetProps);
