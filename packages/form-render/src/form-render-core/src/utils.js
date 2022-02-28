@@ -642,7 +642,7 @@ export const getDisplayValue = (value, schema) => {
       return value;
     }
   }
-  return value;
+  return JSON.stringify(value);
 };
 
 // 去掉数组里的空元素 {a: [null, {x:1}]} => {a: [{x:1}]}
@@ -736,19 +736,21 @@ export const generateDataSkeleton = (schema, formData) => {
       const childSchema = schema.properties[key];
       const childData = _formData[key];
       const childResult = generateDataSkeleton(childSchema, childData);
-      result[key] = childResult;
+      if (childResult !== undefined) {
+        result[key] = childResult;
+      }
     });
   } else if (_formData !== undefined) {
     // result = _formData;
+  } else if (schema.default !== undefined) {
+    result = clone(schema.default);
+  } else if (isListType(schema)) {
+    result = [generateDataSkeleton(schema.items)];
+  } else if (schema.type === 'boolean' && !schema.widget) {
+    // result = false;
+    result = undefined;
   } else {
-    if (schema.default !== undefined) {
-      result = clone(schema.default);
-    } else if (schema.type === 'boolean' && !schema.widget) {
-      // result = false;
-      result = undefined;
-    } else {
-      result = undefined;
-    }
+    result = undefined;
   }
   return result;
 };

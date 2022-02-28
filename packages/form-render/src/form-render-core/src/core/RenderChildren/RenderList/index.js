@@ -2,7 +2,7 @@
 import React from 'react';
 import { get } from 'lodash-es';
 import { useStore, useTools } from '../../../hooks';
-import { getDataPath } from '../../../utils';
+import { getDataPath, getSchemaFromFlatten, generateDataSkeleton } from '../../../utils';
 import './list.less';
 import SimpleList from './SimpleList';
 import CardList from './CardList';
@@ -43,7 +43,9 @@ const RenderList = ({
   };
 
   const addItem = () => {
-    const newList = [...displayList, {}];
+    const _schema = getSchemaFromFlatten(flatten, parentId);
+    const newItem = generateDataSkeleton(_schema.items) || {};
+    const newList = [...displayList, newItem];
     const newIndex = newList.length - 1;
     onItemChange(dataPath, newList);
     return newIndex;
