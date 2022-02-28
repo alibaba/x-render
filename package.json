@@ -12,7 +12,7 @@
     "doc": "dumi build",
     "predeploy": "npm run doc",
     "deploy": "gh-pages -d docs-dist",
-    "start": "dumi dev",
+    "start": "PORT=8080 dumi dev",
     "size": "ANALYZE=1 dumi build",
     "clean": "lerna clean -y",
     "changelog": "lerna-changelog",
@@ -43,7 +43,6 @@
     "react": "^16.12.0",
     "react-monaco-editor": "^0.44.0",
     "react-simple-code-editor": "^0.11.0",
-    "react-test-renderer": "^17.0.2",
     "yorkie": "^2.0.0"
   },
   "repository": {
