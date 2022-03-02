@@ -1,9 +1,10 @@
-name: Build CI
+name: Coverage CI
 
-env:
-  NODE_OPTIONS: --max-old-space-size=6144
-
-on: [push, pull_request]
+on:
+  workflow_run:
+    workflows: ["Build CI"]
+    types:
+      - completed
 
 
 jobs:
@@ -11,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [ '12', '14', '16' ]
+        node: [ '14', '16' ]
     name: build steps
     steps:
       - uses: actions/checkout@v2
@@ -30,4 +31,4 @@ jobs:
       - name: Install
         run: yarn install
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn build
+      - run: yarn run test:coverage
