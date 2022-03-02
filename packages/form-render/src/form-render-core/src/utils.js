@@ -736,9 +736,7 @@ export const generateDataSkeleton = (schema, formData) => {
       const childSchema = schema.properties[key];
       const childData = _formData[key];
       const childResult = generateDataSkeleton(childSchema, childData);
-      if (childResult !== undefined) {
-        result[key] = childResult;
-      }
+      result[key] = childResult;
     });
   } else if (_formData !== undefined) {
     // result = _formData;
