@@ -26,5 +26,4 @@ jobs:
             ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
       - name: Install
         run: yarn install
-        if: steps.cache.outputs.cache-hit != 'true'
       - run: yarn run test:coverage
