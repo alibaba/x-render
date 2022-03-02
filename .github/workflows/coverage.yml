@@ -1,10 +1,6 @@
 name: Coverage CI
 
-on:
-  workflow_run:
-    workflows: ["Build CI"]
-    types:
-      - completed
+on: [push, pull_request]
 
 
 jobs:
