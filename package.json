@@ -19,6 +19,7 @@
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
     "prettier": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
     "test": "jest",
+    "test:coverage": "jest --coverage",
     "test:clean": "jest --clearCache"
   },
   "devDependencies": {

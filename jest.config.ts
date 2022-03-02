@@ -6,8 +6,11 @@ const config: Config.InitialOptions = {
   clearMocks: true,
   testEnvironment: 'jsdom',
   transform: {
-    '\\.(t|j)sx?$': "ts-jest",
+    // '\\.(t|j)sx?$': "ts-jest",
+    // "^.+\\.(js|jsx)$": "babel-jest",
+    "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
   },
+  transformIgnorePatterns: ["<rootDir>/node_modules/(?!(lodash-es|other-es-lib))"],
   moduleFileExtensions: ['ts', 'js', 'json', 'tsx','jsx'],
   moduleNameMapper:{
     "\\.(css|less)$": "identity-obj-proxy"
