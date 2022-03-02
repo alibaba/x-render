@@ -24,6 +24,6 @@ const config: Config.InitialOptions = {
     },
   },
   collectCoverage: true, // 开启单测覆盖率
-  collectCoverageFrom: ['**/packages/form-render/','!**/node_modules/**','!**/packages/**/es/','!**/packages/**/lib/']
+  collectCoverageFrom: ['**/packages/form-render/','**/packages/table-render/','!**/node_modules/**','!**/packages/**/es/','!**/packages/**/lib/']
 };
 export default config;
