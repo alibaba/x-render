@@ -1,20 +1,19 @@
 import type { Config } from '@jest/types';
-import type { InitialOptionsTsJest } from 'ts-jest'
-import { defaults as tsjPreset } from 'ts-jest/presets'
-
 
 // Sync object
 const config: Config.InitialOptions = {
   verbose: true,
-  collectCoverage: true,
   clearMocks: true,
   testEnvironment: 'jsdom',
   transform: {
-    ...tsjPreset.transform,
+    '\\.(t|j)sx?$': "ts-jest",
   },
   moduleFileExtensions: ['ts', 'js', 'json', 'tsx','jsx'],
+  moduleNameMapper:{
+    "\\.(css|less)$": "identity-obj-proxy"
+  },
   testMatch: ['**/packages/*/__tests__/*.(spec|test).(js|ts)?(x)'],
-  extensionsToTreatAsEsm:[".ts", ".tsx"],
+  // extensionsToTreatAsEsm:[".ts", ".tsx"],
   preset: 'ts-jest',
   globals: {
     'ts-jest': {
@@ -24,5 +23,7 @@ const config: Config.InitialOptions = {
       useESM:true
     },
   },
+  collectCoverage: true, // 开启单测覆盖率
+  collectCoverageFrom: ['**/packages/form-render/','!**/node_modules/**','!**/packages/**/es/','!**/packages/**/lib/']
 };
 export default config;
