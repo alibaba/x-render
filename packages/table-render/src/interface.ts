@@ -1,5 +1,6 @@
 import { TableProps } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { FRProps } from 'form-render';
 
 export interface TableContext<RecordType> {
   tableState?: TableState<RecordType>;
@@ -67,7 +68,7 @@ export interface TableState<RecordType> {
 }
 
 // TODO这里FR的props应该去FR里写，这里继承就好了
-export interface SearchProps<RecordType> {
+export interface SearchProps<RecordType> extends FRProps {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
@@ -76,15 +77,14 @@ export interface SearchProps<RecordType> {
   propsSchema?: any;
   className?: string;
   style?: React.CSSProperties;
-  schema?: any;
   hidden?: boolean;
   searchOnMount?: boolean | unknown;
   searchBtnRender?: (
     submit: Function,
     clearSearch: Function
   ) => React.ReactNode[];
-  searchText: string;
-  resetText: string;
+  searchText?: string;
+  resetText?: string;
   onSearch?: (search: any) => any;
   afterSearch?: (params: any) => any;
   widgets?: any;

@@ -62,6 +62,7 @@ export default Demo;
 | globalSettings     | 全局配置                        | `object`   | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js) |
 | widgets            | 自定义组件                      | `object`   | `{}`                                                                                                                       |
 | mapping            | 组件和 schema 的映射规则        | `object`   | `{}`                                                                                                                       |
+| validation         | 是否启用配置表单校验             | `boolean`   | `true`                                                                                                                       |
 | fieldRender        | 自定义组件渲染函数              | `Function` | `(schema, widgetProps, children, originNode) => originNode`                                                                |
 | fieldWrapperRender | 自定义容器组件渲染函数          | `Function` | `(schema, isSelected, children, originNode) => originNode`                                                                 |
 

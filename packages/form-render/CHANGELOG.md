@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.9.5
+
+- [+] 扩展`watch`的能力
+
+## 1.9.4
+
+- [!] 修复 `onFinish` 触发时时必填校验未生效的问题
+
+## 1.9.3
+
+- [+] `type:array`支持给子项设置默认值
+- [!] 兼容部分内置组件的 `value` 类型为`object`时，导致页面报错的场景
+
+## 1.9.2
+
+- [!] 修复`select`有默认值情况下使用`form.resetFields`视图没有更新 bug
+
 ## 1.9.1
 
 - [!] 修复`FormRender`的`tableList`组件

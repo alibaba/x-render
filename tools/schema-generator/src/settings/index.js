@@ -242,7 +242,12 @@ export const elements = [
       title: '数字输入框',
       type: 'number',
     },
-    setting: {},
+    setting: {
+      default: {
+        title: '默认值',
+        type: 'number',
+      },
+    },
   },
   {
     text: '是否选择',
@@ -500,7 +505,12 @@ export const advancedElements = [
       type: 'number',
       widget: 'slider',
     },
-    setting: {},
+    setting: {
+      default: {
+        title: '默认值',
+        type: 'number',
+      },
+    },
   },
   {
     text: '图片展示',

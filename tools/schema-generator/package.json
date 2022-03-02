@@ -1,6 +1,6 @@
 {
   "name": "fr-generator",
-  "version": "2.7.3",
+  "version": "2.7.5",
   "scripts": {
     "build": "father-build",
     "prepare": "npm run build",
@@ -33,7 +33,7 @@
     "antd": "^4.4.2",
     "clone": "^2.1.2",
     "copy-text-to-clipboard": "^2.2.0",
-    "form-render": "1.x",
+    "form-render": "^1.0.0",
     "moment": "^2.27.0",
     "nanoid": "^3.1.22",
     "rc-color-picker": "^1.2.6",

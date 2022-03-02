@@ -29,7 +29,7 @@
 - <a href="https://x-render.gitee.io/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
 - <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
 - <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
-- <a href="https://x-render.gitee.io/generator" target="_blank">FormGenerator</a>：中后台表单可视化搭建利器
+- <a href="https://x-render.gitee.io/generator" target="_blank">FormGenerator</a>：中后台表单可视化搭建生成利器
 
 ## 谁在使用？
 
@@ -117,8 +117,6 @@
         width="160"
       />
     </td>
-    
-    
   </tr>
 </table>
 

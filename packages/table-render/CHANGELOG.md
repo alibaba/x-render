@@ -1,5 +1,17 @@
 # Changelog
 
+### 1.2.4
+
+- [+] `Search`组件继承`FormRender`的类型声明。
+
+### 1.2.2
+
+- [+] `valueType`兼容`object`值类型。
+
+### 1.2.1
+
+- [+] `searchText`和`resetText`属性为非必填属性。
+
 ### 1.2.0
 
 - [+] `Search` 组件新增`searchText`和`resetText`属性，支持自定义`搜索/重置`按钮文本。

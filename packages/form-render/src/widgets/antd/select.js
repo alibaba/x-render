@@ -9,6 +9,7 @@ const FrSelect = ({
   value,
   onChange,
   options: _options,
+  addons,
   ...rest
 }) => {
   let options;
@@ -34,11 +35,20 @@ const FrSelect = ({
   };
 
   const finalProps = {
+    value,
     options,
     style: { width: '100%', ...style },
     onChange: handleChange,
     ...rest,
   };
+
+  if (rest.showSearch && !!schema.props.onSearch) {
+    finalProps.onSearch = search => {
+      const _onSearch = addons.watch[schema.props.onSearch];
+      if (typeof _onSearch === 'function') _onSearch(search);
+    };
+  }
+
   return (
     <>
       <Select defaultValue={value} {...finalProps} />
