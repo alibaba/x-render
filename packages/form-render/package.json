@@ -1,6 +1,10 @@
 {
   "name": "form-render",
+<<<<<<< HEAD
   "version": "1.9.4-beta.1",
+=======
+  "version": "1.9.4",
+>>>>>>> adf3073fdde0b03ab6aa761d72c1af8fcf668340
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "repository": {
     "type": "git",
