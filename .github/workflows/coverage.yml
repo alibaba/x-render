@@ -1,7 +1,6 @@
-name: Coverage CI
+name: 💯 Coverage CI
 
 on: [push, pull_request]
-
 
 jobs:
   build:

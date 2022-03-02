@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Adapter from 'enzyme-adapter-react-16';
 import FormRender, { useForm } from '../src/index';
 import { shallow, configure, mount } from 'enzyme';
@@ -12,20 +12,24 @@ const schema = {
       title: '简单输入框',
       type: 'string',
       required: true,
+      default: 'form-render测试',
     },
     select1: {
       title: '单选',
       type: 'string',
       enum: ['a', 'b', 'c'],
       enumNames: ['早', '中', '晚'],
+      default: 'a',
     },
   },
 };
 
 const Form = () => {
   const form = useForm();
+  const [state, setState] = useState();
   const onFinish = (formData, errors) => {
     console.log('formData:', formData, 'errors', errors);
+    setState(formData);
   };
   return (
     <div>
@@ -37,8 +41,11 @@ const Form = () => {
   );
 };
 
-test('render form-render', () => {
+test('Render FR Success', () => {
   const wrapper = mount(<Form />);
-  const text = wrapper.find('button[id="submit"]').text();
-  expect(text).toEqual('提交');
+  expect(wrapper.find('button').length).toEqual(1);
+  const html = wrapper.html();
+  expect(html).toContain('fr-container');
+  expect(html).toContain('fr-field');
+  wrapper.unmount();
 });
