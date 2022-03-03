@@ -2,7 +2,7 @@
 
 ### 1.2.5
 
-- [+] `Search`组件继承`FormRender`的类型声明。
+- [+] `valueType`为`money`时做判空处理
 
 ### 1.2.4
 
