@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useRef } from 'react';
 import Core from '../../index';
-import { useSet } from '../../../hooks';
+import { useSet, useTools } from '../../../hooks';
 import { getDataPath, getKeyFromPath, getDisplayValue } from '../../../utils';
 import { Button, Table, Drawer, Popconfirm } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
@@ -25,6 +25,7 @@ const DrawerList = ({
   changeList,
   listData,
 }) => {
+  const { widgets } = useTools();
   const { props = {}, itemProps = {} } = schema;
   const { buttons, ...columnProps } = itemProps;
   const { pagination = {}, ...rest } = props;
@@ -66,9 +67,16 @@ const DrawerList = ({
         const childPath = getDataPath(child, [record.$idx]);
         const errorObj = errorFields.find(item => item.name == childPath) || {};
         //TODO: 万一error在更深的层，这个办法是find不到的，会展示那一行没有提示。可以整一行加一个红线的方式处理
+        const Widget = widgets[schema.readOnlyWidget];
         return (
           <div>
-            <div>{getDisplayValue(value, schema)}</div>
+            <div>
+              {Widget ? (
+                <Widget value={value} schema={schema} />
+              ) : (
+                getDisplayValue(value, schema)
+              )
+            }</div>
             {errorObj.error && (
               <ErrorMessage message={errorObj.error} schema={schema} />
             )}
@@ -147,34 +155,34 @@ const DrawerList = ({
         )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
-              const { callback, text, html } = item;
-              let onClick = () => {
-                console.log({
+            const { callback, text, html } = item;
+            let onClick = () => {
+              console.log({
+                value: listData,
+                onChange: changeList,
+                schema,
+              });
+            };
+            if (typeof window[callback] === 'function') {
+              onClick = () => {
+                window[callback]({
                   value: listData,
                   onChange: changeList,
                   schema,
                 });
               };
-              if (typeof window[callback] === 'function') {
-                onClick = () => {
-                  window[callback]({
-                    value: listData,
-                    onChange: changeList,
-                    schema,
-                  });
-                };
-              }
-              return (
-                <Button
-                  key={idx.toString()}
-                  style={{ marginLeft: 8 }}
-                  size="small"
-                  onClick={onClick}
-                >
-                  <span dangerouslySetInnerHTML={{ __html: html || text }} />
-                </Button>
-              );
-            })
+            }
+            return (
+              <Button
+                key={idx.toString()}
+                style={{ marginLeft: 8 }}
+                size="small"
+                onClick={onClick}
+              >
+                <span dangerouslySetInnerHTML={{ __html: html || text }} />
+              </Button>
+            );
+          })
           : null}
       </div>
       <Drawer
