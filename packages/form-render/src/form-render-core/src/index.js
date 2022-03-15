@@ -187,6 +187,7 @@ function App({
       disabled,
       allCollapsed,
       showValidate,
+      watch,
     }),
     [
       displayType,
@@ -201,6 +202,7 @@ function App({
       disabled,
       allCollapsed,
       showValidate,
+      watch,
     ]
   );
 

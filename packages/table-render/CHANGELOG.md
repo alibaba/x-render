@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.2.4
+
+- [+] `Search`组件继承`FormRender`的类型声明。
+
 ### 1.2.2
 
 - [+] `valueType`兼容`object`值类型。

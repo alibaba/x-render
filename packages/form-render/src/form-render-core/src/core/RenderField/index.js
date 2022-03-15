@@ -34,6 +34,7 @@ const RenderField = props => {
     showValidate,
     validateMessages,
     locale,
+    watch,
   } = useStore2();
   const {
     onValuesChange,
@@ -76,10 +77,7 @@ const RenderField = props => {
         const error2 = arr[i].error;
         array[sameNameIndex] = {
           name: sameNameItem.name,
-          error:
-            error1.length > 0 && error2.length > 0
-              ? error2
-              : [],
+          error: error1.length > 0 && error2.length > 0 ? error2 : [],
         };
       } else {
         array.push(arr[i]);
@@ -166,6 +164,7 @@ const RenderField = props => {
     dataIndex,
     dataPath,
     children,
+    watch,
   };
 
   // if (_schema && _schema.default !== undefined) {

@@ -27,6 +27,7 @@ const ExtendedWidget = ({
   dataPath,
   disabled,
   dataIndex,
+  watch,
 }) => {
   const {
     widgets,
@@ -136,6 +137,7 @@ const ExtendedWidget = ({
     setErrorFields,
     removeErrorField,
     hideSelf,
+    watch,
   };
 
   const finalProps = transformProps(widgetProps);
