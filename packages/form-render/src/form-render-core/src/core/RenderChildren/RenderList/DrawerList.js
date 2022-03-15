@@ -75,8 +75,8 @@ const DrawerList = ({
                 <Widget value={value} schema={schema} />
               ) : (
                 getDisplayValue(value, schema)
-              )
-            }</div>
+              )}
+            </div>
             {errorObj.error && (
               <ErrorMessage message={errorObj.error} schema={schema} />
             )}
@@ -155,34 +155,34 @@ const DrawerList = ({
         )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
-            const { callback, text, html } = item;
-            let onClick = () => {
-              console.log({
-                value: listData,
-                onChange: changeList,
-                schema,
-              });
-            };
-            if (typeof window[callback] === 'function') {
-              onClick = () => {
-                window[callback]({
+              const { callback, text, html } = item;
+              let onClick = () => {
+                console.log({
                   value: listData,
                   onChange: changeList,
                   schema,
                 });
               };
-            }
-            return (
-              <Button
-                key={idx.toString()}
-                style={{ marginLeft: 8 }}
-                size="small"
-                onClick={onClick}
-              >
-                <span dangerouslySetInnerHTML={{ __html: html || text }} />
-              </Button>
-            );
-          })
+              if (typeof window[callback] === 'function') {
+                onClick = () => {
+                  window[callback]({
+                    value: listData,
+                    onChange: changeList,
+                    schema,
+                  });
+                };
+              }
+              return (
+                <Button
+                  key={idx.toString()}
+                  style={{ marginLeft: 8 }}
+                  size="small"
+                  onClick={onClick}
+                >
+                  <span dangerouslySetInnerHTML={{ __html: html || text }} />
+                </Button>
+              );
+            })
           : null}
       </div>
       <Drawer
