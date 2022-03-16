@@ -32,6 +32,7 @@ interface SchemaBase {
   displayType: 'row' | 'column';
   width: string;
   labelWidth: number | string;
+  column: number;
   className: string;
   widget: string;
   readOnlyWidget: string;
