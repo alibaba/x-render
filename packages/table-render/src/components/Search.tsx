@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useTable } from './hooks';
 import { Button } from 'antd';
 import SearchForm from 'form-render';
+import React, { useEffect, useRef, useState } from 'react';
 import { SearchProps } from '../interface';
+import { useTable } from './hooks';
 
 const SearchBtn = ({
   clearSearch,

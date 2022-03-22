@@ -1,12 +1,12 @@
+import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
+  CopyOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
+import { Button, Popconfirm } from 'antd';
 import React from 'react';
 import Core from '../../index';
-import { Button, Popconfirm } from 'antd';
-import {
-  DeleteOutlined,
-  CopyOutlined,
-  ArrowUpOutlined,
-  ArrowDownOutlined,
-} from '@ant-design/icons';
 
 const SimpleList = ({
   schema,

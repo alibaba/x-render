@@ -1,12 +1,8 @@
 {
   "name": "vscode-plugin-fr-schema",
   "displayName": "FormRender generator",
-  "description": "form-render 的表单设计器",
   "version": "1.0.5",
-  "publisher": "F-loat",
-  "engines": {
-    "vscode": "^1.46.0"
-  },
+  "description": "form-render 的表单设计器",
   "categories": [
     "Snippets",
     "Other"
@@ -15,36 +11,17 @@
     "type": "git",
     "url": "https://github.com/alibaba/x-render.git"
   },
-  "icon": "media/icon.png",
+  "publisher": "F-loat",
   "main": "./out/extension/index.js",
   "scripts": {
-    "dev:web": "umi dev",
-    "dev:extension": "webpack --mode development",
-    "build:web": "umi build",
     "build:extension": "webpack --mode production",
+    "build:web": "umi build",
+    "dev:extension": "webpack --mode development",
+    "dev:web": "umi dev",
     "lint": "eslint . --ext .jsx,.ts,.tsx --fix",
     "vscode:prepublish": "npm run lint && npm run build:web && npm run build:extension"
   },
-  "activationEvents": [
-    "onCommand:frSchema.p2s",
-    "onCommand:frSchema.s2i",
-    "onCommand:frSchema.c2i",
-    "onCommand:frSchema.gen",
-    "onCommand:frSchema.edit",
-    "onCommand:frSchema.preview",
-    "onCustomEditor:frSchema.editor"
-  ],
   "contributes": {
-    "snippets": [
-      {
-        "language": "json",
-        "path": "./out/snippets/snippets.json"
-      },
-      {
-        "language": "javascript",
-        "path": "./out/snippets/snippets.json"
-      }
-    ],
     "commands": [
       {
         "command": "frSchema.gen",
@@ -74,6 +51,40 @@
         "command": "frSchema.preview",
         "title": "%frSchema.preview.title%",
         "icon": "$(open-preview)"
+      }
+    ],
+    "configuration": {
+      "type": "object",
+      "title": "FormRender generator",
+      "properties": {
+        "vscode-plugin-fr-schema.theme": {
+          "type": "boolean",
+          "default": true,
+          "description": "启用主题"
+        }
+      }
+    },
+    "customEditors": [
+      {
+        "viewType": "frSchema.editor",
+        "displayName": "FormRender Schema Editor",
+        "selector": [
+          {
+            "filenamePattern": "*.json"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "jsonValidation": [
+      {
+        "fileMatch": [
+          "*.fr.json",
+          "*.schema.json",
+          "schema/*.json",
+          "schemas/*.json"
+        ],
+        "url": "./src/validation/schema.json"
       }
     ],
     "menus": {
@@ -139,40 +150,37 @@
         }
       ]
     },
-    "customEditors": [
+    "snippets": [
       {
-        "viewType": "frSchema.editor",
-        "displayName": "FormRender Schema Editor",
-        "selector": [
-          {
-            "filenamePattern": "*.json"
-          }
-        ],
-        "priority": "option"
-      }
-    ],
-    "jsonValidation": [
+        "language": "json",
+        "path": "./out/snippets/snippets.json"
+      },
       {
-        "fileMatch": [
-          "*.fr.json",
-          "*.schema.json",
-          "schema/*.json",
-          "schemas/*.json"
-        ],
-        "url": "./src/validation/schema.json"
+        "language": "javascript",
+        "path": "./out/snippets/snippets.json"
       }
+    ]
+  },
+  "activationEvents": [
+    "onCommand:frSchema.p2s",
+    "onCommand:frSchema.s2i",
+    "onCommand:frSchema.c2i",
+    "onCommand:frSchema.gen",
+    "onCommand:frSchema.edit",
+    "onCommand:frSchema.preview",
+    "onCustomEditor:frSchema.editor"
+  ],
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "configuration": {
-      "type": "object",
-      "title": "FormRender generator",
-      "properties": {
-        "vscode-plugin-fr-schema.theme": {
-          "type": "boolean",
-          "default": true,
-          "description": "启用主题"
-        }
-      }
-    }
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
     "fr-generator": "^2.0.2",
@@ -204,16 +212,8 @@
     "webpack": "^4.4.0",
     "webpack-cli": "^3.3.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "engines": {
+    "vscode": "^1.46.0"
+  },
+  "icon": "media/icon.png"
 }

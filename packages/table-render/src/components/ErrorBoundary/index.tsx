@@ -1,6 +1,5 @@
-import { ErrorInfo } from 'react';
-import React from 'react';
 import { Result } from 'antd';
+import React, { ErrorInfo } from 'react';
 
 class ErrorBoundary extends React.Component<
   {},

@@ -1,8 +1,8 @@
 import React, { forwardRef } from 'react';
-import Provider from './Provider';
-import Sidebar from './components/Sidebar';
 import Canvas from './components/Canvas';
 import Settings from './components/Settings';
+import Sidebar from './components/Sidebar';
+import Provider from './Provider';
 import './styles/index.less';
 
 const Generator = forwardRef(
@@ -25,9 +25,9 @@ Generator.Canvas = Canvas;
 Generator.Settings = Settings;
 
 export {
-  defaultSettings,
   defaultCommonSettings,
   defaultGlobalSettings,
+  defaultSettings,
 } from './settings';
 export { fromSetting, toSetting } from './transformer/form-render';
 export default Generator;

@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import { Button, Popconfirm, Table } from 'antd';
 import React from 'react';
 import Core from '../../index';
-import { Button, Table, Popconfirm } from 'antd';
-import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
 
 const FIELD_LENGTH = 170;
 

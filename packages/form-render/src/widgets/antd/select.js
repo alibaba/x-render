@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
 import { Select } from 'antd';
-import { getArray } from '../../utils';
 import { isUndefined } from 'lodash-es';
+import React from 'react';
+import { getArray } from '../../utils';
 
 const FrSelect = ({
   schema,

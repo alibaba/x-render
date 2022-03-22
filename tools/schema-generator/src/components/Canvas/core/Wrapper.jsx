@@ -1,13 +1,13 @@
+import { CopyOutlined, DeleteOutlined, DragOutlined } from '@ant-design/icons';
 import React, { useRef, useState } from 'react';
-import { DeleteOutlined, CopyOutlined, DragOutlined } from '@ant-design/icons';
 import { useDrag, useDrop } from 'react-dnd';
-import { useGlobal, useStore } from '../../../utils/hooks';
 import {
   copyItem,
-  getKeyFromUniqueId,
   dropItem,
+  getKeyFromUniqueId,
   isObject,
 } from '../../../utils';
+import { useGlobal, useStore } from '../../../utils/hooks';
 import './Wrapper.less';
 
 function Wrapper({ $id, item, inside = false, children, style }) {

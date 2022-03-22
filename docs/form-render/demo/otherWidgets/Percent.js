@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { Progress, Button } from 'antd';
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Progress } from 'antd';
+import React from 'react';
 
 const App = ({ percent = 0, onPress = () => {} }) => {
   const increase = () => {

@@ -3,8 +3,8 @@
  * 滑动输入组件
  */
 
-import React from 'react';
 import { InputNumber, Slider } from 'antd';
+import React from 'react';
 
 const SliderWithNumber = ({
   schema,

@@ -2,9 +2,9 @@
  * proptypes to schema
  */
 
-import * as vscode from 'vscode';
-import * as docgen from 'react-docgen';
 import * as toSchema from 'proptypes-to-json-schema/src/to-Schema';
+import * as docgen from 'react-docgen';
+import * as vscode from 'vscode';
 
 export class frProp2SchemaProvider {
   public static register(): vscode.Disposable {

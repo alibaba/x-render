@@ -1,4 +1,4 @@
-import { FC, ReactNode, ForwardRefExoticComponent, RefAttributes } from 'react';
+import { FC, ForwardRefExoticComponent, ReactNode, RefAttributes } from 'react';
 
 export interface Transformer {
   /** 正向的转换函数 */

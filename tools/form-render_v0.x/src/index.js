@@ -1,19 +1,19 @@
+import PropTypes from 'prop-types';
 import React, {
-  useRef,
   useEffect,
-  useMemo,
   useImperativeHandle,
+  useMemo,
+  useRef,
   useState,
 } from 'react';
-import useDebouncedCallback from './base/useDebounce';
-import PropTypes from 'prop-types';
-import { combineSchema } from './base/utils';
+import './atom.less';
 import { asField, DefaultFieldUI } from './base/asField';
 import parse from './base/parser';
 import resolve from './base/resolve';
+import useDebouncedCallback from './base/useDebounce';
+import { combineSchema } from './base/utils';
 import { getValidateList } from './base/validate';
 import fetcher from './HOC/fetcher';
-import './atom.less';
 import './index.less';
 
 function RenderField({ fields, onChange, ...settings }) {
@@ -85,10 +85,10 @@ function FormRender({
   const [isEditing, setEditing] = useState(false);
   const debouncedSetEditing = useDebouncedCallback(setEditing, 300);
 
-  const data = useMemo(() => resolve(schema, formData), [
-    JSON.stringify(schema),
-    JSON.stringify(formData),
-  ]);
+  const data = useMemo(
+    () => resolve(schema, formData),
+    [JSON.stringify(schema), JSON.stringify(formData)]
+  );
 
   useEffect(() => {
     onChange(data);

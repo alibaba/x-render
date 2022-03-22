@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
-import { flattenToData, dataToFlatten } from '../../../utils';
+import React, { useEffect } from 'react';
+import { dataToFlatten, flattenToData } from '../../../utils';
 import { useStore } from '../../../utils/hooks';
 import RenderChildren from './RenderChildren';
 import RenderField from './RenderField';
@@ -45,7 +45,8 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   const { schema } = item;
   const displayType = schema.displayType || frProps.displayType;
   const isObj = schema.type === 'object';
-  const isList = schema.type === 'array' && schema.enum === undefined && !!schema.items;
+  const isList =
+    schema.type === 'array' && schema.enum === undefined && !!schema.items;
   const isComplex = isObj || isList;
   const width = schema['width'];
   let containerClass = `fr-field w-100 ${isComplex ? 'fr-field-complex' : ''} ${

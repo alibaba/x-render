@@ -1,10 +1,9 @@
-import React from 'react';
-import { Area, Line, DualAxes } from '@ant-design/charts';
-import { AreaConfig } from '@ant-design/charts';
-import { LineConfig } from '@ant-design/charts/es/plots/line';
+import { Area, AreaConfig, DualAxes, Line } from '@ant-design/charts';
 import { DualAxesConfig } from '@ant-design/charts/es/plots/dualAxes';
-import { ICommonProps, IMetaItem } from '../../utils/types';
+import { LineConfig } from '@ant-design/charts/es/plots/line';
+import React from 'react';
 import { splitMeta, strip } from '../../utils';
+import { ICommonProps, IMetaItem } from '../../utils/types';
 import ErrorTemplate from '../ErrorTemplate';
 
 export interface ILine
@@ -48,7 +47,7 @@ export function generateConfig(
       yField,
       yAxis: {
         label: {
-          formatter: v => {
+          formatter: (v) => {
             return yFieldMeta.isRate ? `${strip(100 * Number(v))}%` : v;
           },
         },
@@ -80,7 +79,7 @@ export function generateConfig(
       seriesField,
       yAxis: {
         label: {
-          formatter: v => {
+          formatter: (v) => {
             return yFieldMeta.isRate ? `${strip(100 * Number(v))}%` : v;
           },
         },
@@ -130,7 +129,7 @@ export function generateConfig(
     const seriesField = 'type';
     return {
       data: data
-        .map(item => {
+        .map((item) => {
           return metaInd.map(({ id, name }) => {
             return {
               [xField]: item[xField],

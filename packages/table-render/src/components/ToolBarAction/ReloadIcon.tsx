@@ -1,7 +1,7 @@
+import { ReloadOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import React from 'react';
 import { useTable } from '../hooks';
-import { Tooltip } from 'antd';
-import { ReloadOutlined } from '@ant-design/icons';
 
 const ReloadIcon = () => {
   const { refresh }: any = useTable();

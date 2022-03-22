@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { RuleItem } from 'async-validator';
+import * as React from 'react';
 
 interface SchemaBase {
   type: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'range' | 'html';

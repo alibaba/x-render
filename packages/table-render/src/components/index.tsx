@@ -1,13 +1,11 @@
-import React, { useRef, forwardRef, useImperativeHandle } from 'react';
-import { useSet, useTable } from './hooks';
-import { Ctx } from './Context';
-import Search from './Search';
-import Table from './Table';
-import { message, ConfigProvider } from 'antd';
-import _get from 'lodash.get';
+import { ConfigProvider, message } from 'antd';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
+import _get from 'lodash.get';
+import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { SearchApi } from '../interface';
+import { Ctx } from './Context';
+import { useSet } from './hooks';
 import './index.css';
 
 const useTableRoot = props => {

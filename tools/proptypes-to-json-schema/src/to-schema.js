@@ -10,7 +10,7 @@ const {
   parse,
 } = require('./tool');
 
-module.exports = function(componentInfo, options) {
+module.exports = function (componentInfo, options) {
   const { props, description, displayName } = componentInfo;
   const { shouldAddUi } = options;
   if (!props || props === 'undefined' || props === undefined) {

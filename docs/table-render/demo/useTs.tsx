@@ -3,11 +3,11 @@
  * defaultShowCode: true
  */
 
-import React from 'react';
-import { Table, Search, withTable, useTable } from 'table-render';
-import { ProColumnsType } from 'table-render/src/interface';
-import { Tag, Space, message, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { message, Space, Tag, Tooltip } from 'antd';
+import React from 'react';
+import { Search, Table, useTable, withTable } from 'table-render';
+import { ProColumnsType } from 'table-render/src/interface';
 import request from 'umi-request';
 
 const schema = {
