@@ -3,15 +3,15 @@
  * antd 主题入口文件
  */
 
+import { ConfigProvider } from 'antd';
+import 'antd/dist/antd.less';
+import zhCN from 'antd/lib/locale/zh_CN';
 import React, { forwardRef } from 'react';
 import FormRender from './index';
-import { ConfigProvider } from 'antd';
-import zhCN from 'antd/lib/locale/zh_CN';
 import {
   mapping as defaultMapping,
   widgets as defaultWidgets,
 } from './widgets/antd';
-import 'antd/dist/antd.less';
 
 const AntdForm = (
   { mapping = {}, widgets = {}, configProvider = {}, ...rest },

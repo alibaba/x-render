@@ -1,8 +1,8 @@
-import React from 'react';
-import ColorPicker from 'rc-color-picker';
 import { Input } from '@alifd/next';
-import 'rc-color-picker/assets/index.css';
 import Color from 'color';
+import ColorPicker from 'rc-color-picker';
+import 'rc-color-picker/assets/index.css';
+import React from 'react';
 
 export default function color(p) {
   const { format } = p.schema;

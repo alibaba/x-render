@@ -1,5 +1,5 @@
-import * as React from 'react';
 import { RuleItem } from 'async-validator';
+import * as React from 'react';
 
 interface SchemaBase {
   type: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'range' | 'html';
@@ -33,6 +33,7 @@ interface SchemaBase {
   displayType: 'row' | 'column';
   width: string;
   labelWidth: number | string;
+  column: number;
   className: string;
   widget: string;
   readOnlyWidget: string;

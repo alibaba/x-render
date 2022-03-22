@@ -1,5 +1,5 @@
-import React from 'react';
 import { message, Tooltip, Typography } from 'antd';
+import React from 'react';
 
 export const renderEllipsis = (
   dom: {} | null | undefined,

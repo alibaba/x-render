@@ -1,8 +1,7 @@
+import { Bar, Column, ColumnConfig } from '@ant-design/charts';
 import React from 'react';
-import { ICommonProps } from '../../utils/types';
-import { Bar, Column } from '@ant-design/charts';
 import { splitMeta } from '../../utils';
-import { ColumnConfig } from '@ant-design/charts';
+import { ICommonProps } from '../../utils/types';
 import ErrorTemplate from '../ErrorTemplate';
 
 export interface ICRColumnProps
@@ -31,7 +30,7 @@ export function generateConfig(
       xField,
       yField,
       data: data
-        .map(item => {
+        .map((item) => {
           return metaInd.map(({ id, name }) => {
             return {
               [xField]: id,
@@ -42,7 +41,7 @@ export function generateConfig(
         .flat(),
       meta: {
         [xField]: {
-          formatter: label =>
+          formatter: (label) =>
             meta.find(({ id }) => label === id)?.name || label,
         },
       },
@@ -72,7 +71,7 @@ export function generateConfig(
     const seriesField = 'type';
     return {
       data: data
-        .map(item => {
+        .map((item) => {
           return metaInd.map(({ id, name }) => {
             return {
               [xField]: item[xField],

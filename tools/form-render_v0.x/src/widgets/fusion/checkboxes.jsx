@@ -1,5 +1,5 @@
-import React from 'react';
 import { Checkbox } from '@alifd/next';
+import React from 'react';
 import { getArray } from '../../base/utils';
 
 export default function checkboxes(p) {

@@ -1,5 +1,5 @@
-import React from 'react';
 import FormRender from 'form-render/lib/antd';
+import React from 'react';
 import './index.less';
 
 interface FormProps {

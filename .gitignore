@@ -49,4 +49,4 @@ old-doc
 test.json
 /docs/guide/.test
 
-coverage/
+/coverage

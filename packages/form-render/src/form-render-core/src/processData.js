@@ -1,10 +1,11 @@
+import { get, set, unset } from 'lodash-es';
 import {
-  removeEmptyItemFromList,
   cleanEmpty,
+  clone,
+  isObject,
+  removeEmptyItemFromList,
   removeHiddenFromResult,
 } from './utils';
-import { unset, get, set } from 'lodash-es';
-import { isObject, clone } from './utils';
 // 提交前需要先处理formData的逻辑
 export const processData = (data, flatten, removeHiddenData) => {
   // 1. 去掉 hidden = true 的元素

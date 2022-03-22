@@ -1,5 +1,5 @@
-import React from 'react';
 import FormRender, { useForm } from 'form-render';
+import React from 'react';
 
 const Demo = props => {
   const form = useForm();

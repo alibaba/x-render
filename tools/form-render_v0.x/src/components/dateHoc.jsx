@@ -3,8 +3,8 @@
  * 抽离高阶日期组件
  */
 
-import React from 'react';
 import moment from 'moment';
+import React from 'react';
 import { getFormat } from '../base/utils';
 
 export default (p, onChange, DateComponent) => {

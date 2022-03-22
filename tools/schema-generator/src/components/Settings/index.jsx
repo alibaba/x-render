@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
-import { Tabs } from 'antd';
 import { RightOutlined } from '@ant-design/icons';
-import ItemSettings from './ItemSettings';
+import { Tabs } from 'antd';
+import React, { useEffect } from 'react';
+import { useSet, useStore } from '../../utils/hooks';
 import GlobalSettings from './GlobalSettings';
-import { useStore, useSet } from '../../utils/hooks';
 import './index.less';
+import ItemSettings from './ItemSettings';
 
 const { TabPane } = Tabs;
 

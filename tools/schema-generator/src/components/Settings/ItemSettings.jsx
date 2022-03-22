@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
-import IdInput from '../../widgets/idInput';
-import HtmlInput from '../../widgets/htmlInput';
-import PercentSlider from '../../widgets/percentSlider';
+import React, { useEffect, useState } from 'react';
 import {
-  defaultSettings,
+  advancedElements,
   baseCommonSettings,
   defaultCommonSettings,
+  defaultSettings,
   elements,
-  advancedElements,
   layouts,
 } from '../../settings';
 import { isObject, mergeInOrder } from '../../utils';
-import { getWidgetName } from '../../utils/mapping';
 import { useStore } from '../../utils/hooks';
+import { getWidgetName } from '../../utils/mapping';
+import HtmlInput from '../../widgets/htmlInput';
+import IdInput from '../../widgets/idInput';
+import PercentSlider from '../../widgets/percentSlider';
 
 export default function ItemSettings({ widgets }) {
   const form = useForm();
@@ -27,7 +27,8 @@ export default function ItemSettings({ widgets }) {
     mapping: globalMapping,
   } = useStore();
 
-  const { settings, commonSettings, hideId, validation, transformer } = userProps;
+  const { settings, commonSettings, hideId, validation, transformer } =
+    userProps;
   const [settingSchema, setSettingSchema] = useState({});
 
   const _widgets = {

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import FormRender, { useForm } from 'form-render';
+import React, { useState } from 'react';
 import schema from './basic.js';
 import Percent from './otherWidgets/Percent';
 // import schema1 from './basic1.json';

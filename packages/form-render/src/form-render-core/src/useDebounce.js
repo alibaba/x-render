@@ -1,4 +1,4 @@
-import { useRef, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 
 function useDebouncedCallback(func, wait, options) {
   const lastCallTime = useRef(null);
@@ -147,7 +147,11 @@ function useDebouncedCallback(func, wait, options) {
           : clearTimeout(timerId.current);
       }
       lastInvokeTime.current = 0;
-      lastArgs.current = lastCallTime.current = lastThis.current = timerId.current = null;
+      lastArgs.current =
+        lastCallTime.current =
+        lastThis.current =
+        timerId.current =
+          null;
     };
 
     func.isPending = () => {

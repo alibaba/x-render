@@ -2,11 +2,11 @@
  * transform: true
  * defaultShowCode: true
  */
-import React, { useState, useEffect } from 'react';
-import { Button, Space, message, Tag } from 'antd';
+import { Button, message, Space, Tag } from 'antd';
 import FormRender, { useForm } from 'form-render';
-import { fakeApi, delay } from './advanced/utils';
+import React, { useEffect, useState } from 'react';
 import RichTextEditor from '../../widgets/RichText/src';
+import { fakeApi } from './advanced/utils';
 
 const SelectableTag = ({ value, onChange, options }) => {
   const handleChange = newValue => {

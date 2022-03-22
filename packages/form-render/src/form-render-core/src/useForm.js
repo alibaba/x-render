@@ -1,16 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect, useRef, useMemo, useState } from 'react';
-import { validateAll } from './validator';
-import { useSet } from './hooks';
 import { set, sortedUniqBy } from 'lodash-es';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSet } from './hooks';
 import { processData, transformDataWithBind2 } from './processData';
 import {
-  generateDataSkeleton,
-  flattenSchema,
   clone,
-  schemaContainsExpression,
+  flattenSchema,
+  generateDataSkeleton,
   parseAllExpression,
+  schemaContainsExpression,
 } from './utils';
+import { validateAll } from './validator';
 
 const useForm = props => {
   const {
