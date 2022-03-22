@@ -68,7 +68,7 @@ export interface TableState<RecordType> {
 }
 
 // TODO这里FR的props应该去FR里写，这里继承就好了
-export interface SearchProps<RecordType> extends FRProps {
+export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
