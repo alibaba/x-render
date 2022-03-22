@@ -1,5 +1,5 @@
+import { Button, Icon, Message, Upload } from '@alifd/next';
 import React from 'react';
-import { Icon, Upload, Message, Button } from '@alifd/next';
 
 export default function upload(p) {
   const props = {

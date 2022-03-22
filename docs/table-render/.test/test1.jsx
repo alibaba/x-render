@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, Search, withTable } from 'table-render';
+import { Search, Table, withTable } from 'table-render';
 
 const dataSource = [];
 for (let i = 0; i < 6; i++) {

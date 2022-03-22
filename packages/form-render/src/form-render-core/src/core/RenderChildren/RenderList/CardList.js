@@ -1,14 +1,14 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
-import Core from '../../index';
-import { Button, Popconfirm } from 'antd';
 // import ArrowDown from '../../../components/ArrowDown';
 import {
+  ArrowDownOutlined,
+  ArrowUpOutlined,
   CloseOutlined,
   CopyOutlined,
-  ArrowUpOutlined,
-  ArrowDownOutlined,
 } from '@ant-design/icons';
+import { Button, Popconfirm } from 'antd';
+import React from 'react';
+import Core from '../../index';
 
 const CardList = ({
   displayList = [],

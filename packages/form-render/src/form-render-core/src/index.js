@@ -1,25 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useMemo, useRef } from 'react';
-import {
-  updateSchemaToNewVersion,
-  msToTime,
-  yymmdd,
-  getParamByName,
-} from './utils';
-import Core from './core';
-import Watcher from './Watcher';
-import { Ctx, StoreCtx, Store2Ctx } from './hooks';
 import './atom.less';
+import Core from './core';
+import { Ctx, Store2Ctx, StoreCtx } from './hooks';
 import './index.less';
 import { mapping as defaultMapping } from './mapping';
+import {
+  getParamByName,
+  msToTime,
+  updateSchemaToNewVersion,
+  yymmdd,
+} from './utils';
+import Watcher from './Watcher';
 
 const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
 };
 
+export { default as connectForm } from './connectForm';
+export { createWidget } from './createWidget';
 export { default as useForm } from './useForm';
 export { defaultMapping as mapping };
-export { default as connectForm } from './connectForm';
 
 function App({
   id,
@@ -358,8 +359,6 @@ function App({
     </StoreCtx.Provider>
   );
 }
-
-export { createWidget } from './createWidget';
 
 const Wrapper = props => {
   const { isOldVersion = true, schema, ...rest } = props || {};

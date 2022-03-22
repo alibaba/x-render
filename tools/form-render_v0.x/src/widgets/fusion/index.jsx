@@ -3,6 +3,7 @@ import checkboxes from './checkboxes';
 import color from './color';
 import date from './date';
 import dateRange from './dateRange';
+import html from './html';
 import input from './input';
 import list from './list';
 import map from './map';
@@ -14,7 +15,6 @@ import slider from './slider';
 import switch1 from './switch';
 import textarea from './textarea';
 import upload from './upload';
-import html from './html';
 
 export const widgets = {
   checkbox,

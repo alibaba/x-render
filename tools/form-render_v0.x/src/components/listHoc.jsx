@@ -3,17 +3,17 @@
  * 抽离高阶列表组件
  */
 
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import {
-  SortableContainer,
-  SortableHandle,
-  SortableElement,
   arrayMove,
+  SortableContainer,
+  SortableElement,
+  SortableHandle,
 } from 'react-sortable-hoc';
-import { isFunction, evaluateString, isObj, isNumber } from '../base/utils';
-import FoldIcon from './foldIcon';
+import { evaluateString, isFunction, isNumber, isObj } from '../base/utils';
 import DescriptionList, { getDescription } from './descList';
+import FoldIcon from './foldIcon';
 
 const DragHandle = SortableHandle(() => (
   <div className="fr-item-action-icon fr-move-icon">:::</div>

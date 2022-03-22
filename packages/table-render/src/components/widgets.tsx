@@ -1,6 +1,6 @@
-import React from 'react';
 import { Tag, Tooltip } from 'antd';
-import { getDateTime, getDate } from '../utils';
+import React from 'react';
+import { getDate, getDateTime } from '../utils';
 
 const PrompText = ({ text = '', prompText = '' }) => (
   <Tooltip title={prompText || text}>

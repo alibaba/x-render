@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
+import { Button, Input, Modal } from 'antd';
 import Generator from 'fr-generator';
-import { Button, Modal, Input } from 'antd';
+import React, { useRef, useState } from 'react';
 const { TextArea } = Input;
 
 const defaultValue = {

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import { Button, Checkbox } from 'antd';
 import FormRender, { useForm } from 'form-render';
+import React from 'react';
 
 const MyCheckbox = ({ addons }) => {
   const { dependValues, setValueByPath } = addons;

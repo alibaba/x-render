@@ -1,6 +1,6 @@
-import React from 'react';
+import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
-import { PlusCircleOutlined, DeleteOutlined } from '@ant-design/icons';
+import React from 'react';
 
 export default function list(props) {
   if (!/^#/.test(props.schema.$id)) {

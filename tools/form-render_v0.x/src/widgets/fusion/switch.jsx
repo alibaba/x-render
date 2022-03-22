@@ -1,5 +1,5 @@
-import React from 'react';
 import { Switch } from '@alifd/next';
+import React from 'react';
 
 export default function sw(p) {
   return (

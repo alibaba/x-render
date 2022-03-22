@@ -37,7 +37,7 @@ const schema = {
             type: 'string',
             enum: ['a', 'b', 'c'],
             enumNames: ['早', '中', '晚'],
-            default: 'a'
+            default: 'a',
           },
           obj: {
             title: '对象',
@@ -47,7 +47,7 @@ const schema = {
                 title: '简单输入框',
                 type: 'string',
                 required: true,
-                default: '卡片列表'
+                default: '卡片列表',
               },
               select1: {
                 title: '单选',

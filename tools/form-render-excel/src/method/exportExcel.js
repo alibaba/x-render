@@ -1,6 +1,6 @@
 import { get } from 'lodash-es';
 import XLSX from 'xlsx';
-import { generateSheetHeader, generateSheetData } from '../utils';
+import { generateSheetData, generateSheetHeader } from '../utils';
 
 export default (arrayData, onChange, schema) => {
   const itemsProperties = get(schema, 'items.properties', {});

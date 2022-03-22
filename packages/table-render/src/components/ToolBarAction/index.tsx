@@ -1,9 +1,8 @@
-import React from 'react';
 import { Space } from 'antd';
-import FullScreenIcon from './FullScreenIcon';
+import React from 'react';
 import DensityIcon from './DensityIcon';
+import FullScreenIcon from './FullScreenIcon';
 import ReloadIcon from './ReloadIcon';
-import SettingIcon from './ColumnSetting';
 
 const ToolBar = props => {
   return (

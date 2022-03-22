@@ -8,7 +8,7 @@ import { IMetaItem } from './types';
 export function splitMeta(meta: IMetaItem[]) {
   const metaDim: IMetaItem[] = [];
   const metaInd: IMetaItem[] = [];
-  meta.forEach(item => {
+  meta.forEach((item) => {
     if (item.isDim) {
       metaDim.push(item);
     } else {

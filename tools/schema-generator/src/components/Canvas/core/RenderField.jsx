@@ -1,11 +1,11 @@
 import React, { Suspense } from 'react';
-import { useStore } from '../../../utils/hooks';
 import {
-  isLooselyNumber,
-  isCssLength,
   getParentProps,
+  isCssLength,
+  isLooselyNumber,
   transformProps,
 } from '../../../utils';
+import { useStore } from '../../../utils/hooks';
 import { getWidgetName } from '../../../utils/mapping';
 
 const RenderField = ({

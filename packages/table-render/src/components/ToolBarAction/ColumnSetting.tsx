@@ -1,11 +1,6 @@
+import { SettingOutlined } from '@ant-design/icons';
+import { Popover, Tooltip } from 'antd';
 import React from 'react';
-import { Checkbox, Tree, Popover, ConfigProvider, Tooltip } from 'antd';
-import {
-  SettingOutlined,
-  VerticalAlignMiddleOutlined,
-  VerticalAlignTopOutlined,
-  VerticalAlignBottomOutlined,
-} from '@ant-design/icons';
 
 const ColumnSetting = props => {
   return (

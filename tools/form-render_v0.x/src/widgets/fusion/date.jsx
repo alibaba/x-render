@@ -5,8 +5,8 @@
 
 import { DatePicker, TimePicker } from '@alifd/next';
 import moment from 'moment';
-import dateHoc from '../../components/dateHoc';
 import { getFormatForFusion } from '../../base/utils';
+import dateHoc from '../../components/dateHoc';
 const { MonthPicker, YearPicker, WeekPicker } = DatePicker;
 
 export default function date(p) {

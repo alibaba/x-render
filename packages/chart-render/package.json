@@ -1,45 +1,6 @@
 {
   "name": "chart-render",
   "version": "0.1.9",
-  "scripts": {
-    "build": "father-build",
-    "prepare": "npm run build",
-    "postpublish": "git push --tags",
-    "beta": "npm publish --tag beta",
-    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/form-render.git"
-  },
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
-  "gitHooks": {
-    "pre-commit": "lint-staged"
-  },
-  "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
-  },
-  "peerDependencies": {
-    "react": ">=16.8.0"
-  },
-  "dependencies": {
-    "@ant-design/charts": "~1.2.14",
-    "ali-react-table": "^2.4.0",
-    "dvt-aggregation": "^0.2.8"
-  },
-  "devDependencies": {
-    "@types/react": "^17.0.3",
-    "@umijs/test": "^3.0.5"
-  },
   "keywords": [
     "Chart",
     "ChartRender",
@@ -50,8 +11,47 @@
     "Ant Design"
   ],
   "homepage": "https://x-render.gitee.io/chart-render",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/alibaba/x-render/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/form-render.git"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "beta": "npm publish --tag beta",
+    "build": "father-build",
+    "prepare": "npm run build",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "postpublish": "git push --tags",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "@ant-design/charts": "~1.2.14",
+    "ali-react-table": "^2.4.0",
+    "dvt-aggregation": "^0.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.3",
+    "@umijs/test": "^3.0.5"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   }
 }

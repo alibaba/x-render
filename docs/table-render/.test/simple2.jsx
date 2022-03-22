@@ -1,7 +1,7 @@
+import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Menu, message, Space, Tag, Tooltip } from 'antd';
 import React from 'react';
-import { Table, Search, withTable, useTable } from 'table-render';
-import { Tag, Space, Menu, message, Tooltip, Button } from 'antd';
-import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Search, Table, useTable, withTable } from 'table-render';
 import request from 'umi-request';
 
 const schema = {

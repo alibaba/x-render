@@ -1,11 +1,11 @@
+import { Radio, Space, Table, TableProps } from 'antd';
 import React, { useEffect, useRef } from 'react';
-import { Table, Radio, Space, TableProps } from 'antd';
+import { TableRenderProps } from '../interface';
 import { getDate, getDateTime, getMoneyType } from '../utils';
 import ErrorBoundary from './ErrorBoundary';
-import ToolBarAction from './ToolBarAction';
-import { TableRenderProps } from '../interface';
 import { renderDom } from './field';
 import { useTable } from './hooks';
+import ToolBarAction from './ToolBarAction';
 
 const ProTable: <RecordType extends object = any>(
   props: TableRenderProps<RecordType>

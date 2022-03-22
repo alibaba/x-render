@@ -4,7 +4,7 @@
  */
 
 import { pope } from 'pope';
-import { parseString, baseGet } from './utils';
+import { baseGet, parseString } from './utils';
 
 export function isDependShow({ formData, dependShow } = {}) {
   if (formData && dependShow) {

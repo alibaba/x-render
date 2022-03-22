@@ -3,15 +3,11 @@
  * 数组组件
  */
 
+import { DeleteOutlined, PlusCircleOutlined } from '@ant-design/icons';
+import { Button, Drawer, Modal, Pagination } from 'antd';
 import React, { useState } from 'react';
-import listHoc from '../../components/listHoc';
-import {
-  PlusCircleOutlined,
-  DeleteOutlined,
-  CopyOutlined,
-} from '@ant-design/icons';
 import { isObj } from '../../base/utils';
-import { Button, Modal, Drawer, Pagination } from 'antd';
+import listHoc from '../../components/listHoc';
 
 const isComponent = comp => {
   const type = typeof comp;

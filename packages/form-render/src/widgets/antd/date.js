@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
-import moment from 'moment';
 import { DatePicker } from 'antd';
+import moment from 'moment';
+import React, { useMemo } from 'react';
 import { getFormat } from '../../utils';
 
 // TODO: 不要使用 moment，使用 dayjs
@@ -21,7 +21,7 @@ export default ({ onChange, format, value, style, ...rest }) => {
     if (_value) {
       _value = moment(_value, dateFormat);
     }
-    return _value
+    return _value;
   }, [value]);
 
   const handleChange = (value, string) => {

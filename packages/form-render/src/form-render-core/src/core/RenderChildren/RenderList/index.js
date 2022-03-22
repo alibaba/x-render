@@ -1,15 +1,19 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
 import { get } from 'lodash-es';
+import React from 'react';
 import { useStore, useTools } from '../../../hooks';
-import { getDataPath, getSchemaFromFlatten, generateDataSkeleton } from '../../../utils';
+import {
+  generateDataSkeleton,
+  getDataPath,
+  getSchemaFromFlatten,
+} from '../../../utils';
+import CardList from './CardList';
+import DrawerList from './DrawerList';
 import './list.less';
 import SimpleList from './SimpleList';
-import CardList from './CardList';
 import TableList from './TableList';
-import DrawerList from './DrawerList';
-import VirtualList from './VirtualList';
 import TabList from './TabList';
+import VirtualList from './VirtualList';
 
 const RenderList = ({
   parentId,
@@ -19,7 +23,6 @@ const RenderList = ({
   errorFields,
   displayType,
 }) => {
-
   const { formData, flatten } = useStore();
   const { onItemChange, removeTouched } = useTools();
 

@@ -1,8 +1,8 @@
+import { Radio, Select, Slider, Switch } from 'antd';
 import React, { Component } from 'react';
+import './index.css';
 // import GithubCorner from 'react-github-corner';
 import Demo from './main';
-import { Radio, Select, Switch, Slider } from 'antd';
-import './index.css';
 
 const Option = Select.Option;
 class Root extends Component {
