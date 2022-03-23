@@ -458,7 +458,7 @@ readOnly=true 的情况，FormRender 默认使用 html 组件渲染。特殊情�
 
 ### collapsed
 
-只在嵌套的对象类型组件中使用，用于控制折叠面板是否展开
+只在嵌套的对象类型组件中使用，用于控制面板是否折叠
 
 - 类型：boolean
 - 默认值：false
