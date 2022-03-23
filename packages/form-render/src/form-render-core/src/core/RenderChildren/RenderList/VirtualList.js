@@ -161,7 +161,7 @@ const VirtualList = ({
 
       <Table
         rowKey="index"
-        scroll={{ y: scrollY, x: 'max-content' }}
+        scroll={{ y: scrollY, x: "100%" }}
         components={vt}
         size="small"
         columns={columns}
