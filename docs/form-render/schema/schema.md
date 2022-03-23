@@ -456,6 +456,33 @@ readOnly=true 的情况，FormRender 默认使用 html 组件渲染。特殊情�
 }
 ```
 
+### collapsed
+
+只在嵌套的对象类型组件中使用，用于控制面板是否折叠
+
+- 类型：boolean
+- 默认值：false
+
+```json
+{
+  "type": "object",
+  "properties": {
+    "objectName": {
+      "type": "object",
+      "description": "这是一个对象类型",
+      "collapsed": false,
+      "properties": {
+        "input1": {
+          "title": "简单输入框",
+          "type": "string",
+          "required": true
+        }
+      }
+    }
+  }
+}
+```
+
 ### enum & enumNames
 
 只在选择类组件中使用，用于描述枚举值的值和文案

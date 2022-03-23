@@ -1,8 +1,19 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
 
+export type SchemaType =
+  | 'string'
+  | 'object'
+  | 'array'
+  | 'number'
+  | 'boolean'
+  | 'void'
+  | 'date'
+  | 'datetime'
+  | (string & {});
+
 interface SchemaBase {
-  type: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'range' | 'html';
+  type: SchemaType;
   title: string;
   description: string;
   descType: 'text' | 'icon';
@@ -46,7 +57,7 @@ interface SchemaBase {
   props: Record<string, any>;
 }
 
-type Schema = Partial<SchemaBase>;
+export type Schema = Partial<SchemaBase>;
 
 export interface Error {
   /** 错误的数据路径 */
