@@ -50,7 +50,6 @@ const schema = displayType => ({
   },
 });
 
-
 export default () => (
   <div>
     <h2>display: row</h2>

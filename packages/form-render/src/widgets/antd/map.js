@@ -10,13 +10,11 @@ export default function Map({ children, title, schema, ...rest }) {
   //   setCollapsed(allCollapsed);
   // }, [allCollapsed]);
 
-  useEffect(()=>{
-    if(schema.hasOwnProperty('collapsed')){
-      setCollapsed(schema.collapsed)
+  useEffect(() => {
+    if (schema.hasOwnProperty('collapsed')) {
+      setCollapsed(schema.collapsed);
     }
-  },[schema.collapsed])
-
-  
+  }, [schema.collapsed]);
 
   if (!title) {
     return <div className="w-100">{children}</div>;

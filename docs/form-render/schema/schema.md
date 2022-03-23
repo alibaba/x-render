@@ -475,9 +475,9 @@ readOnly=true 的情况，FormRender 默认使用 html 组件渲染。特殊情�
         "input1": {
           "title": "简单输入框",
           "type": "string",
-          "required": true,
-        },
-    }
+          "required": true
+        }
+      }
     }
   }
 }

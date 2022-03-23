@@ -10,7 +10,7 @@ export type SchemaType =
   | 'void'
   | 'date'
   | 'datetime'
-  | (string & {})
+  | (string & {});
 
 interface SchemaBase {
   type: SchemaType;
