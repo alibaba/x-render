@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.8
+
+- [+] 更新`virtualList`样式
+
 ## 1.9.7
 
 - [+] 对嵌套的`对象类型`组件扩展`schema`，新增`collapsed`属性用于控制面板折叠。
