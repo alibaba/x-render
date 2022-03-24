@@ -79,6 +79,7 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   style?: React.CSSProperties;
   hidden?: boolean;
   searchOnMount?: boolean | unknown;
+  searchWithError?: boolean;
   searchBtnRender?: (
     submit: Function,
     clearSearch: Function
