@@ -50,8 +50,12 @@ export const getDateTime = time => dayjs(time).format('YYYY-MM-DD HH:mm');
 export const getDate = time => dayjs(time).format('YYYY-MM-DD');
 
 // 格式化千分符
-export const getMoneyType = num =>
+export const getMoneyType = num => {
+  if (!num) {
+    return null;
+  }
   `¥${num}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+};
 
 // 如果是函数，则解析，如果不是，直接返回值
 export const parseFunctionValue = (value, params, cb) => {
