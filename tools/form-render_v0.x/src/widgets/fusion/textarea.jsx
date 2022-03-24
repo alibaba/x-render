@@ -1,5 +1,5 @@
-import React from 'react';
 import { Input } from '@alifd/next';
+import React from 'react';
 
 const { TextArea } = Input;
 

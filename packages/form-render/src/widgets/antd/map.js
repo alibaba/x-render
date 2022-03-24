@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
 import { Collapse } from 'antd';
+import React, { useEffect, useState } from 'react';
 // import { useStore2 } from '../../hooks';
 const { Panel } = Collapse;
 
-export default function Map({ children, title, ...rest }) {
+export default function Map({ children, title, schema, ...rest }) {
   const { theme, displayType, allCollapsed } = {}; // TODO!
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(schema.collapsed || false);
+  // useEffect(() => {
+  //   setCollapsed(allCollapsed);
+  // }, [allCollapsed]);
 
   useEffect(() => {
-    setCollapsed(allCollapsed);
-  }, [allCollapsed]);
+    if (schema.hasOwnProperty('collapsed')) {
+      setCollapsed(schema.collapsed);
+    }
+  }, [schema.collapsed]);
 
   if (!title) {
     return <div className="w-100">{children}</div>;

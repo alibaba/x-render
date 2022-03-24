@@ -1,32 +1,32 @@
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/lib/locale/zh_CN';
+import copyTOClipboard from 'copy-text-to-clipboard';
+import {
+  mapping as defaultMapping,
+  widgets as defaultWidgets,
+} from 'form-render';
 import React, {
-  useEffect,
-  useRef,
   forwardRef,
+  useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from 'react';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { ConfigProvider } from 'antd';
-import zhCN from 'antd/lib/locale/zh_CN';
+import { fromSetting, toSetting } from './transformer/form-render';
 import {
-  widgets as defaultWidgets,
-  mapping as defaultMapping,
-} from 'form-render';
-import copyTOClipboard from 'copy-text-to-clipboard';
-import {
-  flattenSchema,
-  idToSchema,
   combineSchema,
   dataToFlatten,
+  defaultGetId,
+  flattenSchema,
   flattenToData,
+  idToSchema,
   newSchemaToOld,
   schemaToState,
-  defaultGetId,
 } from './utils';
 import { Ctx, StoreCtx } from './utils/context';
 import { useSet } from './utils/hooks';
-import { fromSetting, toSetting } from './transformer/form-render';
 import list from './widgets/list';
 
 const DEFAULT_SCHEMA = {

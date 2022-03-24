@@ -8,20 +8,17 @@
     "Json Schema",
     "Ant Design"
   ],
-  "scripts": {
-    "build": "father-build",
-    "prepare": "npm run build",
-    "release": "npm publish --access public",
-    "postpublish": "git push --tags",
-    "beta": "npm publish --tag beta",
-    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
-  },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+  "scripts": {
+    "beta": "npm publish --tag beta",
+    "build": "father-build",
+    "prepare": "npm run build",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "postpublish": "git push --tags",
+    "release": "npm publish --access public",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
@@ -34,5 +31,8 @@
   "peerDependencies": {
     "antd": "^4.x",
     "react": ">=16.8.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   }
 }

@@ -48,7 +48,7 @@ export default Demo;
 ### Props
 
 | 参数               | 说明                            | 类型       | 默认值                                                                                                                     |
-| ------------------ | ------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------- |
+| ------------------ | ------------------------------- | ---------- | -------------------------------------------------------------------------------------------------------------------------- | ------- |
 | getId              | 设置如何生成新的 id             | `Function` | name => `${name}_${nanoid(6)}`                                                                                             |
 | hideId             | 隐藏组件 ID                     | `boolean`  | `false`                                                                                                                    |
 | fixedName          | 固定 settings 的 name 为组件 ID | `boolean`  | `false`                                                                                                                    |
@@ -62,7 +62,7 @@ export default Demo;
 | globalSettings     | 全局配置                        | `object`   | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js) |
 | widgets            | 自定义组件                      | `object`   | `{}`                                                                                                                       |
 | mapping            | 组件和 schema 的映射规则        | `object`   | `{}`                                                                                                                       |
-| validation         | 是否启用配置表单校验             | `boolean`   | `true`                                                                                                                       |
+| validation         | 是否启用配置表单校验            | `boolean`  | `true`                                                                                                                     |
 | fieldRender        | 自定义组件渲染函数              | `Function` | `(schema, widgetProps, children, originNode) => originNode`                                                                |
 | fieldWrapperRender | 自定义容器组件渲染函数          | `Function` | `(schema, isSelected, children, originNode) => originNode`                                                                 |
 

@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
 import {
-  CrossTable,
   buildDrillTree,
   buildRecordMatrix,
   convertDrillTreeToCrossTree,
+  CrossTable,
 } from 'ali-react-table/pivot';
 import { createAggregateFunction } from 'dvt-aggregation';
-import { ICommonProps, IDataItem } from '../../utils/types';
+import React, { useState } from 'react';
 import { splitMeta, strip } from '../../utils';
+import { ICommonProps, IDataItem } from '../../utils/types';
 import './index.less';
 
 export interface ICRPivotTableProps extends ICommonProps {
@@ -94,7 +94,9 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
   const leftCodes = leftMetaDim.map(({ id }) => id);
   const leftDrillTree = buildDrillTree(data, leftCodes, {
     includeTopWrapper: true,
-    isExpand: leftExpandable ? key => leftExpandKeys.includes(key) : undefined,
+    isExpand: leftExpandable
+      ? (key) => leftExpandKeys.includes(key)
+      : undefined,
   });
   const [leftTreeRoot] = convertDrillTreeToCrossTree(leftDrillTree, {
     // @ts-expect-error => 可以传入 align 字段
@@ -103,7 +105,7 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
     expandKeys: leftExpandKeys,
     onChangeExpandKeys: setLeftExpandKeys,
     generateSubtotalNode: showSubtotal
-      ? drillNode => ({
+      ? (drillNode) => ({
           position: 'start',
           value:
             drillNode.path.length === 0
@@ -118,7 +120,7 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
   const topCodes = topMetaDim.map(({ id }) => id);
   const topDrillTree = buildDrillTree(data, topCodes, {
     includeTopWrapper: true,
-    isExpand: topExpandable ? key => topExpandKeys.includes(key) : undefined,
+    isExpand: topExpandable ? (key) => topExpandKeys.includes(key) : undefined,
   });
   const [topTreeRoot] = convertDrillTreeToCrossTree(topDrillTree, {
     // @ts-expect-error => 可以传入 align 字段
@@ -127,7 +129,7 @@ const CRPivotTable: React.FC<ICRPivotTableProps> = ({
     expandKeys: topExpandKeys,
     onChangeExpandKeys: setTopExpandKeys,
     generateSubtotalNode: showSubtotal
-      ? drillNode => ({
+      ? (drillNode) => ({
           position: 'start',
           value:
             drillNode.path.length === 0

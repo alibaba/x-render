@@ -1,21 +1,21 @@
 import React, { useRef } from 'react';
+import { useStore, useStore2 } from '../hooks';
+import {
+  clone,
+  getDataPath,
+  getParentPath,
+  getParentProps,
+  getValueByPath,
+  isCheckBoxType,
+  isCssLength,
+  isListType,
+  isLooselyNumber,
+  isObjType,
+  parseRootValueInSchema,
+} from '../utils';
 import RenderList from './RenderChildren/RenderList';
 import RenderObject from './RenderChildren/RenderObject';
 import RenderField from './RenderField';
-import { useStore, useStore2 } from '../hooks';
-import {
-  isLooselyNumber,
-  isCssLength,
-  getParentProps,
-  getParentPath,
-  isListType,
-  isCheckBoxType,
-  isObjType,
-  getValueByPath,
-  getDataPath,
-  parseRootValueInSchema,
-  clone,
-} from '../utils';
 
 const Core = ({
   id = '#',

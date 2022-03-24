@@ -2,10 +2,6 @@
   "name": "form-render",
   "version": "0.10.5",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:alibaba/form-render.git"
-  },
   "keywords": [
     "FormRender",
     "Render",
@@ -14,6 +10,10 @@
     "Ant Design",
     "Fusion Design"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/form-render.git"
+  },
   "contributors": [
     {
       "name": "Tw93",
@@ -28,19 +28,16 @@
       "email": "fateriddle@gmail.com"
     }
   ],
-  "scripts": {
-    "build": "father-build",
-    "prepare": "npm run build",
-    "postpublish": "git push --tags",
-    "beta": "npm publish --tag beta",
-    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
-  },
   "main": "lib/index.js",
   "module": "dist/index.esm.js",
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+  "scripts": {
+    "beta": "npm publish --tag beta",
+    "build": "father-build",
+    "prepare": "npm run build",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "postpublish": "git push --tags",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
@@ -60,14 +57,17 @@
     "react-sortable-hoc": "^1.6.1",
     "validator": "^10.7.1"
   },
+  "devDependencies": {
+    "deep-equal": "^2.0.3",
+    "rollup-plugin-commonjs": "^10.1.0"
+  },
   "peerDependencies": {
     "@alifd/next": "^1.x",
     "antd": "^4.x",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },
-  "devDependencies": {
-    "deep-equal": "^2.0.3",
-    "rollup-plugin-commonjs": "^10.1.0"
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   }
 }

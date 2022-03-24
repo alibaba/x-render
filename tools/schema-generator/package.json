@@ -1,20 +1,17 @@
 {
   "name": "fr-generator",
   "version": "2.7.5",
-  "scripts": {
-    "build": "father-build",
-    "prepare": "npm run build",
-    "beta": "npm publish --tag beta",
-    "postpublish": "git push --tags",
-    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
-  },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+  "scripts": {
+    "beta": "npm publish --tag beta",
+    "build": "father-build",
+    "prepare": "npm run build",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "postpublish": "git push --tags",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
@@ -23,11 +20,6 @@
     "*.ts?(x)": [
       "prettier --parser=typescript --write"
     ]
-  },
-  "peerDependencies": {
-    "antd": "4.x",
-    "react": ">=16.14.0",
-    "react-dom": ">=16.14.0"
   },
   "dependencies": {
     "antd": "^4.4.2",
@@ -44,5 +36,13 @@
   "devDependencies": {
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.4.0"
+  },
+  "peerDependencies": {
+    "antd": "4.x",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
   }
 }

@@ -1,24 +1,20 @@
 {
   "name": "form-render-snippets",
   "displayName": "FormRender snippets",
-  "description": "quick way to write form-render schema",
   "version": "1.1.1",
-  "icon": "fr-icon.png",
+  "description": "quick way to write form-render schema",
+  "categories": [
+    "Snippets"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/FateRiddle/form-render-snippets"
   },
+  "publisher": "fateriddle",
   "scripts": {
     "login": "vsce login fateriddle",
     "release": "vsce publish"
   },
-  "publisher": "fateriddle",
-  "engines": {
-    "vscode": "^1.41.0"
-  },
-  "categories": [
-    "Snippets"
-  ],
   "contributes": {
     "snippets": [
       {
@@ -34,5 +30,9 @@
         "path": "./snippets/snippets.json"
       }
     ]
-  }
+  },
+  "engines": {
+    "vscode": "^1.41.0"
+  },
+  "icon": "fr-icon.png"
 }

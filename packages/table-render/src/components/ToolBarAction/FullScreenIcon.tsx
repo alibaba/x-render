@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { message, Tooltip } from 'antd';
+import React, { useState } from 'react';
 
 const FullScreenIcon = props => {
   const [isFullScreen, setFullScreen] = useState(false);

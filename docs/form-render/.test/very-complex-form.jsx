@@ -1,6 +1,6 @@
-import React from 'react';
 import { Button } from 'antd';
 import Form, { useForm } from 'form-render';
+import React from 'react';
 const numberRule = [
   {
     pattern: '^(([1-9]{1}\\d*)|(0{1}))(\\.\\d{1,2})?$',

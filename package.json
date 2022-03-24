@@ -17,7 +17,7 @@
     "clean": "lerna clean -y",
     "changelog": "lerna-changelog",
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
-    "prettier": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
+    "format": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
     "test": "jest",
     "test:clean": "jest --clearCache"
   },
@@ -38,12 +38,22 @@
     "lerna-changelog": "^1.0.1",
     "lint-staged": "^10.0.7",
     "monaco-editor-webpack-plugin": "^4.1.1",
-    "prettier": "^1.19.1",
+    "prettier": "^2.6.0",
+    "prettier-plugin-organize-imports": "^2.3.4",
+    "prettier-plugin-packagejson": "^2.2.16",
     "prismjs": "^1.20.0",
     "react": "^16.12.0",
     "react-monaco-editor": "^0.44.0",
     "react-simple-code-editor": "^0.11.0",
     "yorkie": "^2.0.0"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
   },
   "repository": {
     "type": "git",

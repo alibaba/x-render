@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import deepEqual from 'deep-equal';
-import parseJson from 'json-parse-better-errors';
-import FormRender, { useForm } from 'form-render';
-import DefaultSchema from './json/simplest.json';
 import { Tabs } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import parseJson from 'json-parse-better-errors';
+import React, { useEffect, useState } from 'react';
 import AsyncSelect from './customized/AsyncSelect';
+import DefaultSchema from './json/simplest.json';
 import CodeBlock from './monaco';
 const { TabPane } = Tabs;
 

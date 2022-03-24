@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
 import BraftEditor from 'braft-editor';
 import 'braft-editor/dist/index.css';
+import React, { useEffect, useState } from 'react';
 
 const { createEditorState } = BraftEditor;
 

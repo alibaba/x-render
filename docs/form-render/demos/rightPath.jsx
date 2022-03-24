@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Input } from 'antd';
+import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
+import React from 'react';
 
 const Demo = () => {
   const form = useForm();

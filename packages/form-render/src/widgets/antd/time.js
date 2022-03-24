@@ -1,6 +1,6 @@
-import React from 'react';
-import moment from 'moment';
 import { TimePicker } from 'antd';
+import moment from 'moment';
+import React from 'react';
 import { getFormat } from '../../utils';
 
 // TODO: 不要使用moment，使用dayjs

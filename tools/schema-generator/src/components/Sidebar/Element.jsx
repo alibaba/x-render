@@ -51,14 +51,16 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
   const widgetProps = {
     text,
     icon,
-    onClick: handleElementClick
-  }
+    onClick: handleElementClick,
+  };
 
-  const originNode = <WidgetUI {...widgetProps} />
+  const originNode = <WidgetUI {...widgetProps} />;
 
   return (
     <div ref={dragRef}>
-      {elementRender ? elementRender(schema, widgetProps, originNode) : originNode}
+      {elementRender
+        ? elementRender(schema, widgetProps, originNode)
+        : originNode}
     </div>
   );
 };

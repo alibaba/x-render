@@ -1,5 +1,5 @@
-import React from 'react';
 import { Checkbox } from 'antd';
+import React from 'react';
 
 export default function radio(p) {
   return (

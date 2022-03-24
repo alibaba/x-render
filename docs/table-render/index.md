@@ -163,8 +163,8 @@ export default withTable(Page)
 **支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写，最基本的使用就需要填写`columns`**
 
 | 属性                  | 描述                                                                      | 类型                | 默认值      |
-| --------------------- | ------------------------------------------------------------------------- | ------------------- | ----------- |
-| headerTitle           | 表格标题                                                                  | `string`            | `ReactNode` | - |
+| --------------------- | ------------------------------------------------------------------------- | ------------------- | ----------- | --- |
+| headerTitle           | 表格标题                                                                  | `string`            | `ReactNode` | -   |
 | toolbarRender         | 表格主体右上方的控件，例如“添加”按钮                                      | `() => ReactNode[]` | `false`     |
 | toolbarAction         | 显示在表格主体右上方的 Icon 列表，内置了`刷新、调整密度、全屏显示` 等功能 | `boolean`           | `false`     |
 | pageChangeWithRequest | 切换分页时是否需要请求接口                                                | `boolean`           | `true`      |
