@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.2.6
+
+- [+] `Search`组件新增`searchWithError`属性
+
 ### 1.2.5
 
 - [+] `valueType`为`money`时做判空处理
