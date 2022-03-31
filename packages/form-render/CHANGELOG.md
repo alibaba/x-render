@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.9.10
+
+- [+] format:"textarea" 支持传入rows
+
 ## 1.9.9
 
 - [+] 更新`schema`类型声明
