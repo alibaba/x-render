@@ -177,7 +177,7 @@ export const elements = [
             title: '高度自动',
             type: 'boolean',
           },
-          row: {
+          rows: {
             title: '指定高度',
             type: 'number',
           },
