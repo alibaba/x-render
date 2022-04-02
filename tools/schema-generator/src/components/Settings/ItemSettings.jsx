@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
-import IdInput from '../../widgets/idInput';
-import HtmlInput from '../../widgets/htmlInput';
-import PercentSlider from '../../widgets/percentSlider';
+import * as frgWidgets from '../../widgets';
 import {
   defaultSettings,
   baseCommonSettings,
@@ -33,9 +31,7 @@ export default function ItemSettings({ widgets }) {
 
   const _widgets = {
     ...globalWidgets,
-    idInput: IdInput,
-    htmlInput: HtmlInput,
-    percentSlider: PercentSlider,
+    ...frgWidgets,
   };
 
   const getWidgetList = (settings, commonSettings) => {

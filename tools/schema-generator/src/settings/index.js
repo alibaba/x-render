@@ -378,6 +378,11 @@ export const elements = [
       widget: 'multiSelect',
     },
     setting: {
+      default: {
+        title: '默认值',
+        type: 'array',
+        widget: 'jsonInput'
+      },
       enumList: {
         title: '选项',
         type: 'array',
@@ -423,6 +428,11 @@ export const elements = [
       enumNames: ['杭州', '武汉', '湖州', '贵阳'],
     },
     setting: {
+      default: {
+        title: '默认值',
+        type: 'array',
+        widget: 'jsonInput'
+      },
       enumList: {
         title: '选项',
         type: 'array',
@@ -557,6 +567,11 @@ export const layouts = [
       },
     },
     setting: {
+      default: {
+        title: '默认值',
+        type: 'array',
+        widget: 'jsonInput'
+      },
       items: {
         type: 'object',
         hidden: '{{true}}',
@@ -602,6 +617,11 @@ export const layouts = [
       },
     },
     setting: {
+      default: {
+        title: '默认值',
+        type: 'array',
+        widget: 'jsonInput'
+      },
       items: {
         type: 'object',
         hidden: '{{true}}',
@@ -651,6 +671,11 @@ export const layouts = [
       },
     },
     setting: {
+      default: {
+        title: '默认值',
+        type: 'array',
+        widget: 'jsonInput'
+      },
       items: {
         type: 'object',
         hidden: '{{true}}',
@@ -696,6 +721,11 @@ export const layouts = [
       },
     },
     setting: {
+      default: {
+        title: '默认值',
+        type: 'array',
+        widget: 'jsonInput'
+      },
       items: {
         type: 'object',
         hidden: '{{true}}',
