@@ -24,16 +24,16 @@ const FrNumber = ({ style, ...rest }) => {
   return <InputNumber style={{ width: '100%', ...style }} {...rest} />;
 };
 
-const FrTextArea = (props) => {
+const FrTextArea = props => {
   let finalProps = {
     autoSize: {
-      minRows:3,
+      minRows: 3,
     },
-    ...props
-  }
-  if(finalProps.rows) delete finalProps.autoSize
-  
-  return <TextArea  {...finalProps} />;
+    ...props,
+  };
+  if (finalProps.rows) delete finalProps.autoSize;
+
+  return <TextArea {...finalProps} />;
 };
 
 const FrTreeSelect = ({ style, ...rest }) => (

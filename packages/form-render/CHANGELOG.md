@@ -1,8 +1,12 @@
 # Changelog
 
+## 1.9.11
+
+- [+] format:"upload" 支持传入 `path` 字段，用于自定义接口返回的文件链接字段。
+
 ## 1.9.10
 
-- [+] format:"textarea" 支持传入rows
+- [+] format:"textarea" 支持传入 rows
 
 ## 1.9.9
 
