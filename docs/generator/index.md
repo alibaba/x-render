@@ -1,18 +1,16 @@
 ---
 order: 1
-title: 使用文档
-toc: content
+title: 如何使用
+toc: menu
 ---
 
-## 如何使用
-
-### 安装
+## 安装
 
 ```bash
 npm i fr-generator
 ```
 
-### 代码演示
+## 代码演示
 
 ```jsx
 /**
@@ -101,34 +99,3 @@ export default Demo;
 | copyValue      | 将现有 schema 拷贝到剪贴板 | -        |
 | getErrorFields | 获取配置项校验错误         | -        |
 
-## 案例演示
-
-### 浮窗接入
-
-用于 schema 的可视化修改
-
-<code src='./demo/modal.jsx' />
-
-### 侧栏配置
-
-使用 settings/commonSettings 自由配置左右侧栏内容，并使用 widgets 注入和使用自定义组件
-
-“计数器”是自定义组件。
-
-<code src='./demo/settings.jsx' />
-
-### 自定义布局
-
-<code src='./demo/layout.jsx' />
-
-### Schema 互转
-
-使用 `transformer` 这个 props，进行 schema 的互转
-
-<code src='./demo/transformer.jsx' />
-
-## 常见问题
-
-**1、如何控制编辑器高度**
-
-给组件外层要包裹的 div 设置高度即可，否则为默认值 min-height: 30vh
