@@ -1,6 +1,6 @@
-import React from 'react';
 import { PictureOutlined } from '@ant-design/icons';
 import { Input, Popover } from 'antd';
+import React from 'react';
 
 const DEFAULT_IMG =
   'https://img.alicdn.com/tfs/TB14tSiKhTpK1RjSZFKXXa2wXXa-354-330.png';

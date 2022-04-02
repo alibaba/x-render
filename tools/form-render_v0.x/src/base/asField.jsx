@@ -1,16 +1,16 @@
-import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getValidateText } from './validate';
-import { usePrevious } from '../hooks';
-import { isHidden, isDependShow } from './isHidden';
-import {
-  isLooselyNumber,
-  isCssLength,
-  convertValue,
-  isDeepEqual,
-  getEnum,
-} from './utils';
+import React, { useEffect, useRef, useState } from 'react';
 import FoldIcon from '../components/foldIcon';
+import { usePrevious } from '../hooks';
+import { isDependShow, isHidden } from './isHidden';
+import {
+  convertValue,
+  getEnum,
+  isCssLength,
+  isDeepEqual,
+  isLooselyNumber,
+} from './utils';
+import { getValidateText } from './validate';
 
 // asField拆分成逻辑组件和展示组件，从而可替换展示组件的方式完全插拔fr的样式
 export const asField = ({ FieldUI, Widget }) => {

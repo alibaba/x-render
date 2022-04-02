@@ -1,7 +1,7 @@
-import React from 'react';
 import Loading from '@alife/loading';
-
+import React from 'react';
 import './index.scss';
+
 // import { glodLog } from './utils';
 
 const { Component, PropTypes } = React;
@@ -117,16 +117,8 @@ export default class FpDemo extends Component {
   }
 
   render() {
-    const {
-      bgImage,
-      title,
-      upDate,
-      type,
-      isLike,
-      desArr,
-      num,
-      styleObj,
-    } = this.props;
+    const { bgImage, title, upDate, type, isLike, desArr, num, styleObj } =
+      this.props;
     return (
       <div className="page-wrap">
         <img src={bgImage} className="image-bg" />

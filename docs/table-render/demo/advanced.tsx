@@ -3,10 +3,10 @@
  * defaultShowCode: true
  */
 
+import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, message, Space, Tag, Tooltip } from 'antd';
 import React from 'react';
-import { Table, Search, withTable, useTable } from 'table-render';
-import { Tag, Space, message, Tooltip, Button } from 'antd';
-import { PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { Search, Table, useTable, withTable } from 'table-render';
 import request from 'umi-request';
 
 const schema = {
@@ -48,7 +48,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: res.data,
+            rows: [...res.data, { money: null }],
             total: res.data.length,
           };
         }
@@ -123,7 +123,7 @@ const Demo = () => {
       dataIndex: 'labels',
       render: (_, row) => (
         <Space>
-          {row.labels.map(({ name, color }) => (
+          {row?.labels?.map(({ name, color }) => (
             <Tag color={color} key={name}>
               {name}
             </Tag>

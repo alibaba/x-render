@@ -1,11 +1,11 @@
 import * as vscode from 'vscode';
-import { frSchemaGenProvider } from './frSchemaGen';
-import { frSchemaEditProvider } from './frSchemaEdit';
-import * as frSchemaPreviewProvider from './frSchemaPreview';
-import { frSchemaEditorProvider } from './frSchemaEditor';
+import { frCode2InterfaceProvider } from './frCode2Interface';
 import { frProp2SchemaProvider } from './frProp2Schema';
 import { frSchema2InterfaceProvider } from './frSchema2Interface';
-import { frCode2InterfaceProvider } from './frCode2Interface';
+import { frSchemaEditProvider } from './frSchemaEdit';
+import { frSchemaEditorProvider } from './frSchemaEditor';
+import { frSchemaGenProvider } from './frSchemaGen';
+import * as frSchemaPreviewProvider from './frSchemaPreview';
 
 export function activate(context: vscode.ExtensionContext) {
   // Register our custom editor providers

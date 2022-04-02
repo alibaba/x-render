@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
 import { Select } from 'antd';
-import { getArray } from '../../utils';
 import { isUndefined } from 'lodash-es';
+import React from 'react';
+import { getArray } from '../../utils';
 
 const FrSelect = ({
   schema,
@@ -9,6 +9,7 @@ const FrSelect = ({
   value,
   onChange,
   options: _options,
+  addons,
   ...rest
 }) => {
   let options;
@@ -40,6 +41,13 @@ const FrSelect = ({
     onChange: handleChange,
     ...rest,
   };
+
+  if (rest.showSearch && !!schema.props.onSearch) {
+    finalProps.onSearch = search => {
+      const _onSearch = addons.watch[schema.props.onSearch];
+      if (typeof _onSearch === 'function') _onSearch(search);
+    };
+  }
 
   return (
     <>

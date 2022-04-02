@@ -6,7 +6,7 @@ export function flatProperties(properties, ignoreObject = false, preKey = '') {
     return {};
   }
   let obj = {};
-  Object.keys(properties).forEach(key => {
+  Object.keys(properties).forEach((key) => {
     obj[preKey ? `${preKey}[${key}]` : `[${key}]`] = properties[key];
     if (get(properties[key], 'type', '').toLocaleLowerCase() === 'object') {
       if (ignoreObject) {
@@ -34,16 +34,16 @@ export function enumToEnumNames(data, enums, enumNames = enums) {
     // 原有的 data 值是 ['apple', 'pear'] 这种，换成 苹果_梨子
     retData = data
       .map(
-        item =>
-          enumNames[enums.findIndex(i => String(i) === String(item))] ||
-          enumNames.findIndex(i => String(i) === String(item)),
+        (item) =>
+          enumNames[enums.findIndex((i) => String(i) === String(item))] ||
+          enumNames.findIndex((i) => String(i) === String(item)),
       )
       .join('_');
   } else {
     // 原有的 data 值是 'pear' 这种，换成 梨子
     retData =
-      enumNames[enums.findIndex(i => String(i) === String(data))] ||
-      enumNames.findIndex(i => String(i) === String(data));
+      enumNames[enums.findIndex((i) => String(i) === String(data))] ||
+      enumNames.findIndex((i) => String(i) === String(data));
   }
   return retData || data;
 }
@@ -53,21 +53,21 @@ export function enumNamesToEnum(data, enums, enumNames = enums) {
   let retData = null;
   if (Array.isArray(data)) {
     retData = data.map(
-      item =>
-        enums[enumNames.findIndex(i => String(i) === String(item))] ||
-        enums.find(i => String(i) === String(item)),
+      (item) =>
+        enums[enumNames.findIndex((i) => String(i) === String(item))] ||
+        enums.find((i) => String(i) === String(item)),
     );
   } else {
     retData =
-      enums[enumNames.findIndex(i => String(i) === String(data))] ||
-      enums.find(i => String(i) === String(data));
+      enums[enumNames.findIndex((i) => String(i) === String(data))] ||
+      enums.find((i) => String(i) === String(data));
   }
   return retData || data;
 }
 
 export function generateSheetHeader(properties) {
   const flatProp = flatProperties(properties, true);
-  return Object.keys(flatProp).map(key => {
+  return Object.keys(flatProp).map((key) => {
     const iProp = get(properties, key.replaceAll('][', '][properties]['), {});
     return iProp.type === 'array' && iProp?.items?.type === 'object'
       ? `【此列勿填】${iProp.title || key}`
@@ -77,7 +77,7 @@ export function generateSheetHeader(properties) {
 
 export function generateSheetData(properties, arrayData) {
   function flatObject(obj) {
-    return Object.values(obj).map(objVal =>
+    return Object.values(obj).map((objVal) =>
       isObject(objVal) ? flatObject(objVal) : objVal,
     );
   }
@@ -90,18 +90,18 @@ export function generateSheetData(properties, arrayData) {
   Object.values(flatProp).forEach((prop, index) => {
     if (prop.type === 'range') {
       // 区间类型
-      arrayDataFlat.forEach(arr => {
+      arrayDataFlat.forEach((arr) => {
         // 原有的 arr[index] 值是 ['2020-01-01', '2020-01-02'] 这种
         arr[index] = Array.isArray(arr[index]) ? arr[index].join('_') : '';
       });
     } else if (prop.enum) {
       // 带enum的类型
-      arrayDataFlat.forEach(arr => {
+      arrayDataFlat.forEach((arr) => {
         arr[index] = enumToEnumNames(arr[index], prop.enum, prop.enumNames);
       });
     } else if (prop.type === 'array') {
       // 数组类型
-      arrayDataFlat.forEach(arr => {
+      arrayDataFlat.forEach((arr) => {
         // 原有的 arr[index] 值是 [{...}, {...}, {...}] 这种
         // 复杂数组直接不导出了
         arr[index] = '';

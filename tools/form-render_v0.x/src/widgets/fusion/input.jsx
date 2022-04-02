@@ -1,5 +1,5 @@
+import { Balloon, Icon, Input } from '@alifd/next';
 import React from 'react';
-import { Input, Icon, Balloon } from '@alifd/next';
 import previewContent from '../../components/previewContent';
 
 const previewNode = (format, value) => {

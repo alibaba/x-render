@@ -1,20 +1,20 @@
-import list from './list';
-import map from './map';
-import { InputNumber, Checkbox, Input, Switch, Rate, TreeSelect } from 'antd';
-import ImageInput from './imageInput';
-import urlInput from './urlInput';
-import Html from './html';
-import select from './select';
+import { Checkbox, Input, InputNumber, Rate, Switch, TreeSelect } from 'antd';
 import checkboxes from './checkboxes';
-import multiSelect from './multiSelect';
-import radio from './radio';
-import time from './time';
+import color from './color';
 import date from './date';
 import dateRange from './dateRange';
-import timeRange from './timeRange';
-import color from './color';
+import Html from './html';
+import ImageInput from './imageInput';
+import list from './list';
+import map from './map';
+import multiSelect from './multiSelect';
+import radio from './radio';
+import select from './select';
 import slider from './slider';
+import time from './time';
+import timeRange from './timeRange';
 import upload from './upload';
+import urlInput from './urlInput';
 
 // const Cascader = React.lazy(() => import('antd/es/cascader'));
 

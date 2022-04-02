@@ -1,9 +1,8 @@
 import React, { Suspense } from 'react';
-import { getWidgetName, extraSchemaList } from '../../mapping';
-import { useTools, useStore } from '../../hooks';
 import { transformProps } from '../../createWidget';
-
-import { isObjType, isListType, isObject } from '../../utils';
+import { useStore, useTools } from '../../hooks';
+import { extraSchemaList, getWidgetName } from '../../mapping';
+import { isListType, isObject, isObjType } from '../../utils';
 
 const ErrorSchema = schema => {
   return (
@@ -27,6 +26,7 @@ const ExtendedWidget = ({
   dataPath,
   disabled,
   dataIndex,
+  watch,
 }) => {
   const {
     widgets,
@@ -136,6 +136,7 @@ const ExtendedWidget = ({
     setErrorFields,
     removeErrorField,
     hideSelf,
+    watch,
   };
 
   const finalProps = transformProps(widgetProps);

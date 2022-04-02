@@ -1,5 +1,5 @@
-import React from 'react';
 import { Input } from 'antd';
+import React from 'react';
 
 export default function range({ value, onChange, name, ...rest }) {
   return (

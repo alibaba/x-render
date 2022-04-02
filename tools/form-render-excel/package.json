@@ -1,18 +1,6 @@
 {
   "name": "form-render-excel",
   "version": "1.0.1",
-  "scripts": {
-    "start": "dumi dev",
-    "docs:build": "dumi build",
-    "docs:deploy": "gh-pages -d docs-dist",
-    "build": "father-build",
-    "deploy": "npm run docs:build && npm run docs:deploy",
-    "release": "npm run build && npm publish",
-    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
-  },
-  "group": "form-render",
   "repository": {
     "type": "git",
     "url": "git@github.com:form-render/form-render-excel.git"
@@ -23,8 +11,16 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+  "scripts": {
+    "build": "father-build",
+    "deploy": "npm run docs:build && npm run docs:deploy",
+    "docs:build": "dumi build",
+    "docs:deploy": "gh-pages -d docs-dist",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "release": "npm run build && npm publish",
+    "start": "dumi dev",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
@@ -38,10 +34,6 @@
     "lodash-es": "^4.17.21",
     "xlsx": ">=0.17.0"
   },
-  "peerDependencies": {
-    "antd": "^4.x",
-    "react": ">=16.8.0"
-  },
   "devDependencies": {
     "@umijs/test": "^3.0.5",
     "antd": "^4.8.6",
@@ -53,5 +45,13 @@
     "prettier": "^1.19.1",
     "react": "^17.0.1",
     "yorkie": "^2.0.0"
-  }
+  },
+  "peerDependencies": {
+    "antd": "^4.x",
+    "react": ">=16.8.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "group": "form-render"
 }

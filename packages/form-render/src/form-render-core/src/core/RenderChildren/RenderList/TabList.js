@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import { Tabs } from 'antd';
 import React, { useState } from 'react';
 import Core from '../../index';
-import { Tabs } from 'antd';
 
 const { TabPane } = Tabs;
 

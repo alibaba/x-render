@@ -1,6 +1,6 @@
 import { DatePicker } from '@alifd/next';
 import moment from 'moment';
-import { getFormatForFusion, getFormat } from '../../base/utils';
+import { getFormat, getFormatForFusion } from '../../base/utils';
 const { RangePicker } = DatePicker;
 
 export default function dateRange({

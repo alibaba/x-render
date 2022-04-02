@@ -1,9 +1,9 @@
-import React from 'react';
 import Generator, {
-  defaultSettings,
   defaultCommonSettings,
   defaultGlobalSettings,
+  defaultSettings,
 } from 'fr-generator';
+import React from 'react';
 
 const NewWidget = ({ value = 0, onChange }) => (
   <button onClick={() => onChange(value + 1)}>{value}</button>

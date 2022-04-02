@@ -3,9 +3,9 @@
  * 日期组件
  */
 
-import React, { useState } from 'react';
 import { DatePicker, TimePicker } from 'antd';
 import moment from 'moment';
+import React from 'react';
 import { getFormat } from '../../base/utils';
 
 export default ({

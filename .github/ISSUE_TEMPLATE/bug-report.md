@@ -7,7 +7,7 @@ assignees: siyi98
 
 ---
 
----<!--
+<!---
   1. 提问前务必先搜索issue，查看是否已有类似问题。
   1. try searching for similar issues before reporting yours
   2. 非bug or feature类问题，欢迎加入我们的开源社区钉钉群进行讨论。
@@ -17,6 +17,7 @@ assignees: siyi98
 
 - react：
 - form-render：
+- table-render: 
 - antd：
 
 **2.问题描述(Bug description)**：

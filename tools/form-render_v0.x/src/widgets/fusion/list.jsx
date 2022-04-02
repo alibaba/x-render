@@ -1,7 +1,7 @@
+import { Button, Dialog as Modal, Drawer, Icon, Pagination } from '@alifd/next';
 import React, { useState } from 'react';
-import { Button, Icon, Dialog as Modal, Drawer, Pagination } from '@alifd/next';
-import listHoc from '../../components/listHoc';
 import { isObj } from '../../base/utils';
+import listHoc from '../../components/listHoc';
 
 const Pag = ({ showSizeChanger, onChange, ...rest }) => {
   const handleChange = val => onChange(val);

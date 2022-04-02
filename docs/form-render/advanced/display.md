@@ -32,6 +32,7 @@ const schema = displayType => ({
       bind: 'obj',
       description: '这是一个对象类型',
       type: 'object',
+      collapsed: false,
       properties: {
         input1: {
           title: '简单输入框',

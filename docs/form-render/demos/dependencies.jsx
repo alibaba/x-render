@@ -1,6 +1,6 @@
-import React from 'react';
-import { Button, message, Input } from 'antd';
+import { Button, Input, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
+import React from 'react';
 
 const { TextArea } = Input;
 

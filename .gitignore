@@ -48,3 +48,5 @@ node_modules
 old-doc
 test.json
 /docs/guide/.test
+
+/coverage

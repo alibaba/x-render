@@ -3,16 +3,16 @@
  * 校验表单格式
  */
 
-import isLength from 'validator/lib/isLength';
 import Color from 'color';
+import isLength from 'validator/lib/isLength';
 import { isHidden } from './isHidden';
 import {
-  hasRepeat,
-  isFunction,
   baseGet,
   convertValue,
   convertValue2,
+  hasRepeat,
   isEmail,
+  isFunction,
   isUrl,
 } from './utils';
 

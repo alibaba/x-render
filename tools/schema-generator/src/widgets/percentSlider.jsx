@@ -1,5 +1,5 @@
-import React from 'react';
 import { InputNumber, Slider } from 'antd';
+import React from 'react';
 
 const PercentSlider = p => {
   const style = p.invalid ? { borderColor: '#f5222d' } : {};

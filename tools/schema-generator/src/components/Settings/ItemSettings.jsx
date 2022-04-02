@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
 import FormRender, { useForm } from 'form-render';
+import React, { useEffect, useState } from 'react';
 import * as frgWidgets from '../../widgets';
 import {
-  defaultSettings,
+  advancedElements,
   baseCommonSettings,
   defaultCommonSettings,
+  defaultSettings,
   elements,
-  advancedElements,
   layouts,
 } from '../../settings';
 import { isObject, mergeInOrder } from '../../utils';
@@ -26,7 +26,8 @@ export default function ItemSettings({ widgets }) {
     mapping: globalMapping,
   } = useStore();
 
-  const { settings, commonSettings, hideId, validation, transformer } = userProps;
+  const { settings, commonSettings, hideId, validation, transformer } =
+    userProps;
   const [settingSchema, setSettingSchema] = useState({});
 
   const _widgets = {

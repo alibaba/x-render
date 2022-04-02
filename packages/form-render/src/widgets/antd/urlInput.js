@@ -1,5 +1,5 @@
-import React from 'react';
 import { Input } from 'antd';
+import React from 'react';
 import { isUrl } from '../../utils';
 
 const UrlNode = ({ value, addonText = '测试链接' }) => {

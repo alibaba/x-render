@@ -1,5 +1,17 @@
 # Changelog
 
+### 1.2.6
+
+- [+] `Search`组件新增`searchWithError`属性
+
+### 1.2.5
+
+- [+] `valueType`为`money`时做判空处理
+
+### 1.2.4
+
+- [+] `Search`组件继承`FormRender`的类型声明。
+
 ### 1.2.2
 
 - [+] `valueType`兼容`object`值类型。

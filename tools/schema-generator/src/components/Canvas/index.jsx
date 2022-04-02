@@ -1,14 +1,14 @@
-import React, { useEffect } from 'react';
-import { Modal, Input, Button, message } from 'antd';
+import { Button, Input, message, Modal } from 'antd';
 import copyTOClipboard from 'copy-text-to-clipboard';
-import FR from './core';
+import React, { useEffect } from 'react';
 import {
-  looseJsonParse,
-  isObject,
-  schemaToState,
   idToSchema,
+  isObject,
+  looseJsonParse,
+  schemaToState,
 } from '../../utils';
-import { useSet, useGlobal, useStore } from '../../utils/hooks';
+import { useGlobal, useSet, useStore } from '../../utils/hooks';
+import FR from './core';
 
 const { TextArea } = Input;
 

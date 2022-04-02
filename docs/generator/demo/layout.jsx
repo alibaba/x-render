@@ -1,5 +1,5 @@
-import React from 'react';
 import Generator from 'fr-generator';
+import React from 'react';
 import './index.less';
 
 const { Provider, Sidebar, Canvas, Settings } = Generator;

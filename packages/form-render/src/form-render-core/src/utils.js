@@ -1,4 +1,4 @@
-import { get, set, cloneDeep, isEmpty } from 'lodash-es';
+import { cloneDeep, get, isEmpty, set } from 'lodash-es';
 
 export function getParamByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, '\\$&');
@@ -642,6 +642,9 @@ export const getDisplayValue = (value, schema) => {
       return value;
     }
   }
+  if (typeof value === 'object') {
+    return JSON.stringify(value);
+  }
   return value;
 };
 
@@ -740,15 +743,15 @@ export const generateDataSkeleton = (schema, formData) => {
     });
   } else if (_formData !== undefined) {
     // result = _formData;
+  } else if (schema.default !== undefined) {
+    result = clone(schema.default);
+  } else if (isListType(schema)) {
+    result = [generateDataSkeleton(schema.items)];
+  } else if (schema.type === 'boolean' && !schema.widget) {
+    // result = false;
+    result = undefined;
   } else {
-    if (schema.default !== undefined) {
-      result = clone(schema.default);
-    } else if (schema.type === 'boolean' && !schema.widget) {
-      // result = false;
-      result = undefined;
-    } else {
-      result = undefined;
-    }
+    result = undefined;
   }
   return result;
 };
