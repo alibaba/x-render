@@ -4,12 +4,12 @@ import { Collapse } from 'antd';
 const { Panel } = Collapse;
 
 export default function Map({ children, title, ...rest }) {
-  const { theme, displayType, allCollapsed } = {}; // TODO!
-  const [collapsed, setCollapsed] = useState(false);
-
-  useEffect(() => {
-    setCollapsed(allCollapsed);
-  }, [allCollapsed]);
+  const { theme, displayType, allCollapsed=false, expandIconPosition = 'right' } = rest; // TODO!
+  const [collapsed, setCollapsed] = useState(allCollapsed);
+  
+  // useEffect(() => {
+  //   setCollapsed(allCollapsed);
+  // }, [allCollapsed]);
 
   if (!title) {
     return <div className="w-100">{children}</div>;
@@ -63,7 +63,7 @@ export default function Map({ children, title, ...rest }) {
 
   return (
     <div className="w-100">
-      <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
+      <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle} expandIconPosition={expandIconPosition}>
         <Panel
           header={
             <span style={{ fontSize: 16, fontWeight: 500 }}>{title}</span>

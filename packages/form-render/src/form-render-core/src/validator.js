@@ -172,7 +172,7 @@ const validateSingle = (data, schema = {}, path, options = {}) => {
     return Promise.resolve();
   }
 
-  const { validateMessages = {}, locale = 'cn' } = options;
+  const { validateMessages = {}, locale = 'en' } = options;
   const cn = defaultValidateMessagesCN;
   const en = defaultValidateMessages;
   const descriptor = getDescriptorSimple(schema, path);

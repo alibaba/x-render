@@ -65,7 +65,7 @@ const DrawerList = ({
   };
 
   if (props.actionProps && typeof props.actionProps === 'object') {
-    actionProps = { ...actionProps, ...props.actionColumnProps };
+    actionProps = { ...actionProps, ...props.actionProps };
   }
 
   const columns = children.map(child => {

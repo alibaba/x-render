@@ -32,6 +32,7 @@ export default function GlobalSettings({ widgets }) {
           '#': v => onDataChange(v),
         }}
         widgets={{ ...globalWidgets, ...widgets }}
+        locale='en'
       />
     </div>
   );

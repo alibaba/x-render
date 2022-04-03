@@ -26,7 +26,7 @@ const PreviewFR = ({ schema, data }) => {
           onFlattenChange(dataToFlatten(flatten, formData), 'data');
         },
       }}
-      locale={'en'}
+      locale='en'
     />
   );
 };

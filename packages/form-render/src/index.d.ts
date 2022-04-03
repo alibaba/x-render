@@ -159,7 +159,7 @@ export interface FRProps {
   debug?: boolean;
   /** 显示css布局提示线 */
   debugCss?: boolean;
-  locale?: 'cn' | 'en';
+  locale?: 'en' | 'cn';
   column?: number;
   debounceInput?: boolean;
   size?: string;

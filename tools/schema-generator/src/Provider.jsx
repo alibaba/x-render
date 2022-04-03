@@ -9,6 +9,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
+import enUS from 'antd/lib/locale/en_US';
 import {
   widgets as defaultWidgets,
   mapping as defaultMapping,
@@ -210,7 +211,7 @@ function Provider(props, ref) {
 
   return (
     <DndProvider backend={HTML5Backend} context={window}>
-      <ConfigProvider locale={zhCN}>
+      <ConfigProvider locale={enUS}>
         <Ctx.Provider value={setState}>
           <StoreCtx.Provider value={store}>{children}</StoreCtx.Provider>
         </Ctx.Provider>

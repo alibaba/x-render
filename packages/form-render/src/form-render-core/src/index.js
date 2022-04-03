@@ -34,7 +34,7 @@ function App({
   schema,
   debug,
   debugCss,
-  locale = 'cn', // 'cn'/'en'
+  locale = 'en', // 'cn'/'en'
   debounceInput = false,
   size,
   configProvider,

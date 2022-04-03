@@ -49,7 +49,7 @@ const useForm = props => {
 
   const schemaRef = useRef();
   const beforeFinishRef = useRef();
-  const localeRef = useRef('cn');
+  const localeRef = useRef('en');
   const removeHiddenDataRef = useRef();
   const validateMessagesRef = useRef();
   const _data = useRef({}); // 用ref是为了破除闭包的影响

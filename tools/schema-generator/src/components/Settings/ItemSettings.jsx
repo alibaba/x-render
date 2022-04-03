@@ -136,6 +136,7 @@ export default function ItemSettings({ widgets }) {
         watch={{
           '#': v => setTimeout(() => onDataChange(v), 0),
         }}
+        locale='en'
       />
     </div>
   );
