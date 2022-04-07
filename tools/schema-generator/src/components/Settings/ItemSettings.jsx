@@ -1,5 +1,6 @@
 import FormRender, { useForm } from 'form-render';
 import React, { useEffect, useState } from 'react';
+import * as frgWidgets from '../../widgets';
 import {
   advancedElements,
   baseCommonSettings,
@@ -9,13 +10,11 @@ import {
   layouts,
 } from '../../settings';
 import { isObject, mergeInOrder } from '../../utils';
-import { useStore } from '../../utils/hooks';
 import { getWidgetName } from '../../utils/mapping';
-import HtmlInput from '../../widgets/htmlInput';
-import IdInput from '../../widgets/idInput';
-import PercentSlider from '../../widgets/percentSlider';
+import { useStore, useGlobal } from '../../utils/hooks';
 
 export default function ItemSettings({ widgets }) {
+  const setGlobal = useGlobal();
   const form = useForm();
   const {
     selected,
@@ -33,9 +32,7 @@ export default function ItemSettings({ widgets }) {
 
   const _widgets = {
     ...globalWidgets,
-    idInput: IdInput,
-    htmlInput: HtmlInput,
-    percentSlider: PercentSlider,
+    ...frgWidgets,
   };
 
   const getWidgetList = (settings, commonSettings) => {
@@ -127,6 +124,10 @@ export default function ItemSettings({ widgets }) {
   useEffect(() => {
     validation && onItemErrorChange(form?.errorFields);
   }, [validation, form?.errorFields]);
+
+  useEffect(() => {
+    setGlobal({ settingsForm: form });
+  }, []);
 
   return (
     <div style={{ paddingRight: 24 }}>
