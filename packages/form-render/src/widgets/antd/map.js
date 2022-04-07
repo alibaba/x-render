@@ -32,6 +32,9 @@ export default function Map({ children, title, schema, ...rest }) {
           }}
         >
           {title}
+          <span className="fr-desc ml2">
+            {schema?.description ? `( ${schema.description} )`: ''}
+          </span>
         </div>
         <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
           {children}
@@ -49,6 +52,9 @@ export default function Map({ children, title, schema, ...rest }) {
           {/* title 容器的 id，用来加锚点用 */}
           <div id={id || title} class="fr-theme-card-title">
             {title}
+            <span className="fr-desc ml2">
+              {schema?.description ? `( ${schema.description} )`: ''}
+            </span>
           </div>
           <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
             {children}
@@ -71,7 +77,12 @@ export default function Map({ children, title, schema, ...rest }) {
       <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
         <Panel
           header={
-            <span style={{ fontSize: 16, fontWeight: 500 }}>{title}</span>
+            <span style={{ fontSize: 16, fontWeight: 500 }}>
+              {title}
+               <span className="fr-desc ml2">
+                 {schema?.description ? `( ${schema.description} )`: ''}
+               </span>
+            </span>
           }
           key="1"
           className="fr-collapse-object"
