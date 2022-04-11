@@ -29,6 +29,7 @@
     "antd": "^4.x",
     "babel-jest": "^27.4.4",
     "babel-plugin-import": "^1.13.0",
+    "babel-plugin-no-debugger": "^0.0.1",
     "dumi": "1.1.40",
     "father-build": "^1.17.2",
     "fetch-jsonp": "^1.1.3",
