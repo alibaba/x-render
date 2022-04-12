@@ -163,7 +163,9 @@ export function getSchemaFromFlatten(flatten, path = '#') {
           schema.properties[key] = getSchemaFromFlatten(flatten, child);
         }
         if (isListType(schema)) {
-          schema.items.properties[key] = getSchemaFromFlatten(flatten, child);
+          if (schema.items.properties[key]) {
+            schema.items.properties[key] = getSchemaFromFlatten(flatten, child);
+          }
         }
       });
     }

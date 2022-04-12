@@ -9,6 +9,7 @@ import {
   generateDataSkeleton,
   parseAllExpression,
   schemaContainsExpression,
+  getSchemaFromFlatten
 } from './utils';
 import { validateAll } from './validator';
 
@@ -111,10 +112,14 @@ const useForm = props => {
 
   useEffect(() => {
     if (schemaRef.current && firstMount) {
-      const flatten = flattenSchema(schemaRef.current);
-      setState({ flatten, firstMount: false });
+      setState({ firstMount: false });
     }
   }, [JSON.stringify(schemaRef.current), firstMount]);
+
+  useEffect(() => {
+    const flatten = flattenSchema(schemaRef.current);
+    setState({ flatten });
+  }, [JSON.stringify(schemaRef.current)]);
 
   // 统一的处理expression
   useEffect(() => {
@@ -246,8 +251,8 @@ const useForm = props => {
           };
         }
       });
-      setState({ flatten: newFlatten });
-      _flatten.current = newFlatten;
+
+      schemaRef.current = getSchemaFromFlatten(newFlatten);
     } catch (error) {
       console.error(error, 'setSchema');
     }
@@ -266,8 +271,8 @@ const useForm = props => {
           ? newSchema(newFlatten[path].schema)
           : newSchema;
       newFlatten[path].schema = { ...newFlatten[path].schema, ..._newSchema };
-      setState({ flatten: newFlatten });
-      _flatten.current = newFlatten;
+
+      schemaRef.current = getSchemaFromFlatten(newFlatten);
     } catch (error) {
       console.error(error, 'setSchemaByPath');
     }
