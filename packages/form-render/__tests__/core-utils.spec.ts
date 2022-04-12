@@ -21,4 +21,4 @@ describe('Test FormRender Utils', () => {
   });
 });
 
-console.log(JSON.stringify(flattenSchema(schema), null, 2));
+// console.log(JSON.stringify(flattenSchema(schema), null, 2));

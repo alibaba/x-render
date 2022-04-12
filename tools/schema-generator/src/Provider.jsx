@@ -74,6 +74,7 @@ function Provider(props, ref) {
     preview: false, // preview = false 是编辑模式
     schema: {},
     selected: undefined, // 被选中的$id, 如果object/array的内部，以首字母0标识
+    settingsForm: null,
   });
   const [errorFields, setErrorFields] = useState([]);
 
@@ -186,11 +187,14 @@ function Provider(props, ref) {
 
   const getErrorFields = () => errorFields;
 
+  const getSettingsForm = () => state.settingsForm;
+
   useImperativeHandle(frwRef, () => ({
     getValue,
     setValue,
     copyValue,
     getErrorFields,
+    getSettingsForm,
   }));
 
   // TODO: flatten是频繁在变的，应该和其他两个函数分开

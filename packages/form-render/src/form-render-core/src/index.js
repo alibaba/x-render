@@ -322,10 +322,11 @@ function App({
                     style={{
                       display: 'inline-block',
                       wordBreak: 'break-all',
+                      whiteSpace: 'pre-wrap',
                       maxWidth: 600,
                     }}
                   >
-                    {JSON.stringify(form.formData)}
+                    {JSON.stringify(form.formData, null, 4)}
                   </span>
                 </div>
                 <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>

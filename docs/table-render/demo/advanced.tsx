@@ -48,7 +48,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: res.data,
+            rows: [...res.data, { money: null }],
             total: res.data.length,
           };
         }
@@ -123,7 +123,7 @@ const Demo = () => {
       dataIndex: 'labels',
       render: (_, row) => (
         <Space>
-          {row.labels.map(({ name, color }) => (
+          {row?.labels?.map(({ name, color }) => (
             <Tag color={color} key={name}>
               {name}
             </Tag>

@@ -9,5 +9,5 @@
       "options": { "parser": "json" }
     }
   ],
-  "plugins": ["prettier-plugin-packagejson", "./scripts/prettier-plugin"]
+  "plugins": ["prettier-plugin-packagejson"]
 }
