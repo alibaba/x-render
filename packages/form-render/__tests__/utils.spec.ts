@@ -1,4 +1,5 @@
 import { isUrl, getArray, getFormat } from '../src/utils';
+import { getWidgetName } from '../src/form-render-core/src/mapping'
 
 describe('Test Utils', () => {
   test('Test getFormat', () => {
@@ -14,5 +15,12 @@ describe('Test Utils', () => {
   test('Test getArray', () => {
     expect(getArray(['hangzhou', 'nanjing'])).toEqual(['hangzhou', 'nanjing']);
     expect(getArray('test')).toEqual([]);
+  });
+
+  test('Test getWidgetName', () => {
+    expect(getWidgetName({
+      type: 'string',
+      format: 'date'
+    })).toEqual('date');
   });
 });

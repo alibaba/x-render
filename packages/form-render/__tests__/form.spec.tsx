@@ -33,7 +33,6 @@ const Form = () => {
     select1: 'd',
   });
   const onFinish = (formData, errors) => {
-    console.log('formData:', formData, 'errors', errors);
     setState(formData);
   };
 

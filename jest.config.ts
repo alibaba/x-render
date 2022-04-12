@@ -3,7 +3,6 @@ import type { Config } from '@jest/types';
 // Sync object
 const config: Config.InitialOptions = {
   verbose: true,
-  clearMocks: true,
   testEnvironment: 'jsdom',
   transform: {
     // '\\.(t|j)sx?$': "ts-jest",
@@ -16,17 +15,19 @@ const config: Config.InitialOptions = {
     "\\.(css|less)$": "identity-obj-proxy"
   },
   testMatch: ['**/packages/*/__tests__/*.(spec|test).(js|ts)?(x)'],
-  // extensionsToTreatAsEsm:[".ts", ".tsx"],
   preset: 'ts-jest',
   globals: {
     'ts-jest': {
       babelConfig: false,
       tsconfig: './tsconfig.jest.json',
       diagnostics: false,
-      useESM:true
+      useESM: true
     },
   },
   collectCoverage: true, // 开启单测覆盖率
-  collectCoverageFrom: ['**/packages/form-render/','**/packages/table-render/','!**/node_modules/**','!**/packages/**/es/','!**/packages/**/lib/']
+  collectCoverageFrom: [
+    "!**/node_modules/**",
+    "packages/form-render/src/**"
+]
 };
 export default config;
