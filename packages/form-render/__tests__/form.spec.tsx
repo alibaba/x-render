@@ -15,6 +15,7 @@ const schema = {
       type: 'string',
       required: true,
       default: '简单输入框',
+      placeholder: '尝试在此输入',
     },
     select1: {
       title: '单选',
@@ -22,6 +23,18 @@ const schema = {
       enum: ['a', 'b', 'c'],
       enumNames: ['早', '中', '晚'],
       default: 'a',
+    },
+    radio: {
+      title: '单选radio',
+      type: 'string',
+      enum: ['a', 'b'],
+      enumNames: ['早', '中'],
+      default: 'a',
+    },
+    time: {
+      title: '时间',
+      type: 'string',
+      format: 'time',
     },
   },
 };
@@ -36,9 +49,16 @@ const Form = () => {
     setState(formData);
   };
 
+  const watch = {
+    // # 为全局
+    '#': val => {
+      console.log('表单的时时数据为：', val);
+    },
+  };
+
   return (
     <div>
-      <FormRender form={form} schema={schema as any} onFinish={onFinish} />
+      <FormRender form={form} schema={schema as any} onFinish={onFinish} watch={watch} />
       <div className="fr-value">
         <div className="input">{state?.input1}</div>
         <div className="select">{state?.select1}</div>

@@ -27,7 +27,8 @@ const config: Config.InitialOptions = {
   collectCoverage: true, // 开启单测覆盖率
   collectCoverageFrom: [
     "!**/node_modules/**",
-    "packages/form-render/src/**"
+    "packages/form-render/src/**",
+    "!packages/form-render/src/**/*.d.ts"
 ]
 };
 export default config;

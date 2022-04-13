@@ -4,6 +4,13 @@ import { getWidgetName } from '../src/form-render-core/src/mapping'
 describe('Test Utils', () => {
   test('Test getFormat', () => {
     expect(getFormat('date')).toBe('YYYY-MM-DD');
+    expect(getFormat('time')).toBe('HH:mm:ss');
+    expect(getFormat('dateTime')).toBe('YYYY-MM-DD HH:mm:ss');
+    expect(getFormat('week')).toBe('YYYY-w');
+    expect(getFormat('year')).toBe('YYYY');
+    expect(getFormat('quarter')).toBe('YYYY-Q');
+    expect(getFormat('month')).toBe('YYYY-MM');
+
   });
 
   test('Test isUrl', () => {
