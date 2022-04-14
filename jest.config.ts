@@ -28,7 +28,17 @@ const config: Config.InitialOptions = {
   collectCoverageFrom: [
     "!**/node_modules/**",
     "packages/form-render/src/**",
-    "!packages/form-render/src/**/*.d.ts"
+    "!packages/form-render/src/**/*.d.ts",
+    "!packages/form-render/src/form-render-core/src/core/RenderChildren/RenderList/**",
+    "!packages/form-render/src/widgets/antd/percentSlider.js",
+    "!packages/form-render/src/widgets/antd/html.jsx",
+    "!packages/form-render/src/widgets/antd/upload.js",
+    "!packages/form-render/src/widgets/antd/urlInput.js",
+    // TODO
+    "!**/hooks.js",
+    "!**/processData.js",
+    "!**/useDebounce.js",
+    "!**/processData.js",
 ]
 };
 export default config;

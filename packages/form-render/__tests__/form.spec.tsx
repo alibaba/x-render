@@ -4,40 +4,9 @@ import FormRender, { useForm } from '../src/index';
 import { shallow, configure, mount } from 'enzyme';
 import { render, fireEvent, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
+import { normalSchema, listSchema } from './schema'
 
 configure({ adapter: new Adapter() });
-
-const schema = {
-  type: 'object',
-  properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-      default: '简单输入框',
-      placeholder: '尝试在此输入',
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚'],
-      default: 'a',
-    },
-    radio: {
-      title: '单选radio',
-      type: 'string',
-      enum: ['a', 'b'],
-      enumNames: ['早', '中'],
-      default: 'a',
-    },
-    time: {
-      title: '时间',
-      type: 'string',
-      format: 'time',
-    },
-  },
-};
 
 const Form = () => {
   const form = useForm();
@@ -52,13 +21,67 @@ const Form = () => {
   const watch = {
     // # 为全局
     '#': val => {
-      console.log('表单的时时数据为：', val);
+      console.log('表单的实时数据为：', val);
     },
+    'input1': {
+      handler: val => {
+        console.log(val)
+      },
+      immediate: true,
+    },
+    onSearch: (val) => {}
   };
+
+  const onMount = () => {
+    form.setValueByPath('link', 'www.baidu.com')
+  };
+
+  const onClick = () => {
+    form.setValueByPath('link', 'www.baidu.com')
+  }
 
   return (
     <div>
-      <FormRender form={form} schema={schema as any} onFinish={onFinish} watch={watch} />
+      <FormRender
+        form={form}
+        schema={normalSchema as any}
+        onFinish={onFinish}
+        watch={watch}
+        onMount={onMount}
+      />
+      <div className="fr-value">
+        <div className="input">{state?.input1}</div>
+        <div className="select">{state?.select1}</div>
+      </div>
+      <button id="submit" onClick={form.submit}>
+        提交
+      </button>
+      <button id="test" onClick={onClick}>
+        提交
+      </button>
+    </div>
+  );
+};
+
+const ListForm = () => {
+  const [state, setState] = useState({
+    input1: 'fr',
+    select1: 'd',
+  });
+  const form = useForm();
+
+  const onFinish = (formData, errors) => {
+    setState(formData);
+  };
+
+
+  return (
+    <div>
+      <FormRender
+        form={form}
+        onFinish={onFinish}
+        schema={listSchema as any}
+      />
       <div className="fr-value">
         <div className="input">{state?.input1}</div>
         <div className="select">{state?.select1}</div>
@@ -79,6 +102,8 @@ describe('FormRender', () => {
     const wrapper = mount(<Form />);
     act(() => {
       wrapper.find('#submit').simulate('click');
+      wrapper.find('#test').simulate('click');
+      wrapper.find('.ant-collapse-header').simulate('click');
     });
     await act(() => sleep(500));
     expect(wrapper.find('.input').text()).toEqual('简单输入框');
@@ -88,6 +113,19 @@ describe('FormRender', () => {
       wrapper.unmount();
     });
   });
+  // it('📦  Render FR List Widget Success', async () => {
+  //   const wrapper = mount(<ListForm />);
+  //   act(() => {
+  //     wrapper.find('#submit').simulate('click');
+  //   });
+  //   await act(() => sleep(500));
+  //   // expect(wrapper.find('.input').text()).toEqual('简单输入框');
+  //   // expect(wrapper.find('.select').text()).toEqual('a');
+
+  //   act(() => {
+  //     wrapper.unmount();
+  //   });
+  // });
   // it('📦  FR Validate Success', async () => {
   //   const { getByText } = render(<Form />);
 
