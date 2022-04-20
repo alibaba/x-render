@@ -130,7 +130,7 @@ export interface Generator
 }
 
 declare const FRGenerator: Generator;
-declare const defaultSettings: Setting;
+declare const defaultSettings: Setting[];
 declare const defaultCommonSettings: any;
 declare const defaultGlobalSettings: any;
 declare const fromSetting: (schema: any) => any;
