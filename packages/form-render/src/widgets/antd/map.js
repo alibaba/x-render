@@ -71,7 +71,12 @@ export default function Map({ children, title, schema, ...rest }) {
       <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
         <Panel
           header={
-            <span style={{ fontSize: 16, fontWeight: 500 }}>{title}</span>
+            <span style={{ fontSize: 16, fontWeight: 500 }}>
+              {title}
+               <span className="fr-desc ml2">
+                 {schema?.description ? `( ${schema.description} )`: ''}
+               </span>
+            </span>
           }
           key="1"
           className="fr-collapse-object"
