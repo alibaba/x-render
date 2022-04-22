@@ -19,50 +19,44 @@ export default function Map({ children, title, schema, ...rest }) {
   if (!title) {
     return <div className="w-100">{children}</div>;
   }
-  if (theme == '1') {
-    return (
-      <div className="w-100">
-        <div
-          style={{
-            fontSize: 17,
-            fontWeight: 500,
-            paddingBottom: 4,
-            borderBottom: '1px solid rgba( 0, 0, 0, .2 )',
-            marginBottom: 16,
-          }}
-        >
-          {title}
-          <span className="fr-desc ml2">
-            {schema?.description ? `( ${schema.description} )`: ''}
-          </span>
-        </div>
-        <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
-          {children}
-        </div>
-      </div>
-    );
-  }
+  // if (theme == '1') {
+  //   return (
+  //     <div className="w-100">
+  //       <div
+  //         style={{
+  //           fontSize: 17,
+  //           fontWeight: 500,
+  //           paddingBottom: 4,
+  //           borderBottom: '1px solid rgba( 0, 0, 0, .2 )',
+  //           marginBottom: 16,
+  //         }}
+  //       >
+  //         {title}
+  //       </div>
+  //       <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
+  //         {children}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   // 新增卡片视图
-  if (theme == '2') {
-    const { id } = rest.schema;
-    return (
-      <div class="fr-theme-card-wrap">
-        <div>
-          {/* title 容器的 id，用来加锚点用 */}
-          <div id={id || title} class="fr-theme-card-title">
-            {title}
-            <span className="fr-desc ml2">
-              {schema?.description ? `( ${schema.description} )`: ''}
-            </span>
-          </div>
-          <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
-            {children}
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // if (theme == '2') {
+  //   const { id } = rest.schema;
+  //   return (
+  //     <div class="fr-theme-card-wrap">
+  //       <div>
+  //         {/* title 容器的 id，用来加锚点用 */}
+  //         <div id={id || title} class="fr-theme-card-title">
+  //           {title}
+  //         </div>
+  //         <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
+  //           {children}
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   const toggle = keyList => {
     if (keyList.length > 0) {

@@ -54,7 +54,7 @@ export const getMoneyType = num => {
   if (!num) {
     return null;
   }
-  `¥${num}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+  return `¥${num}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
 
 // 如果是函数，则解析，如果不是，直接返回值
