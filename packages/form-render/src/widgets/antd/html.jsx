@@ -1,6 +1,7 @@
 import React from 'react';
 
 export default function html({ value, schema = {} }) {
+  console.log('schema >>> ',schema)
   let __html = '-';
   if (schema.type === 'boolean') {
     __html = value === true ? '✔' : '✘';
