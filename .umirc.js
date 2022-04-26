@@ -6,7 +6,7 @@ export default defineConfig({
   favicon: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   outputPath: 'docs-dist',
-  hash: true,
+  hash: false,
   dynamicImport: {
     loading: '@/docs/Loading.js',
   },
@@ -28,10 +28,6 @@ export default defineConfig({
     { title: '表单设计器', path: '/generator' },
     {
       title: 'Playground',
-      // children: [
-      //   { title: 'Playground', path: '/playground' },
-      //   { title: 'Schema 编辑器', path: '/tools/generator/playground' },
-      // ],
       path: '/playground',
     },
     {
@@ -70,9 +66,6 @@ export default defineConfig({
     { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
   ],
   mode: 'site',
-  // alias: {
-  //   'form-render/dist': path.resolve(__dirname, 'packages/form-render/dist'),
-  // },
   esbuild: {},
   // base: '/x-render/',
   publicPath: '/x-render/',
