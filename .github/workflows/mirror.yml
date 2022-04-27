@@ -1,4 +1,4 @@
-name: 🔀 Sync mirror to Gitee
+name: 🔀 Sync mirror to Vercel
 
 on:
   push:
