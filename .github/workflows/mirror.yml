@@ -1,10 +1,9 @@
 name: 🔀 Sync mirror to Gitee
 
 on:
-  workflow_run:
-    workflows: ["Deploy CI"]
-    types:
-      - completed
+  push:
+    branches:
+      - master
 
 jobs:
   mirror:
@@ -17,11 +16,4 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
         with:
           source-repo: 'https://github.com/alibaba/x-render.git'
-          destination-repo: 'git@gitee.com:x-render/x-render.git'
-      - name: Build Gitee Pages
-        uses: yanglbme/gitee-pages-action@main
-        with:
-          gitee-username: ${{ secrets.GITEE_USERNAME }}
-          gitee-password: ${{ secrets.GITEE_PASSWORD }}
-          gitee-repo: x-render/x-render
-          branch: gh-pages
+          destination-repo: 'git@github.com:siyi98/x-render.git'
