@@ -55,10 +55,10 @@ const useTableRoot = props => {
       if (typeof _api === 'function') {
         basicSearch(_api);
       } else {
-        message.warning('api 不是函数，检查 <Search /> 的 props');
+        console.warn('api 不是函数，检查 <Search /> 的 props');
       }
     } else {
-      message.warning('api 不是函数，检查 <Search /> 的 props');
+      console.warn('api 不是函数，检查 <Search /> 的 props');
     }
 
     function basicSearch(api: SearchApi<typeof state.api[number]>) {
