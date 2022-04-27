@@ -13,7 +13,8 @@ jobs:
         continue-on-error: true
         uses: wearerequired/git-mirror-action@v1
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.GITEE_SSH_PRIVATE_KEY }}
+          SSH_PRIVATE_KEY: ${{ secrets.FORK_PRIVATE_KEY }}
         with:
           source-repo: 'https://github.com/alibaba/x-render.git'
           destination-repo: 'git@github.com:siyi98/x-render.git'
+      
