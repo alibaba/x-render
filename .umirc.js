@@ -68,7 +68,7 @@ export default defineConfig({
   mode: 'site',
   esbuild: {},
   // base: '/x-render/',
-  publicPath: '/x-render/',
+  // publicPath: '/x-render/',
   exportStatic: {},
   extraBabelPlugins: [
     [
