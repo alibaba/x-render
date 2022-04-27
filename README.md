@@ -1,8 +1,8 @@
 <p align="center">
-  <a href="https://x-render.gitee.io/" target="_blank"><img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/></a>
+  <a href="https://xrender.fun/" target="_blank"><img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="20%"/></a>
 </p>
 <h1 align= "center">
-<a href="https://x-render.gitee.io/" target="_blank">XRender</a>
+<a href="https://xrender.fun/" target="_blank">XRender</a>
 </h1>
 
 <p align="center">
@@ -26,10 +26,10 @@
 
 ## 优势
 
-- <a href="https://x-render.gitee.io/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
-- <a href="https://x-render.gitee.io/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
-- <a href="https://x-render.gitee.io/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
-- <a href="https://x-render.gitee.io/generator" target="_blank">FormGenerator</a>：中后台表单可视化搭建生成利器
+- <a href="https://xrender.fun/form-render" target="_blank">FormRender</a>：像写一个 input 一样写表单
+- <a href="https://xrender.fun/table-render" target="_blank">TableRender</a>：协议生成 & 高度灵活的搜索列表
+- <a href="https://xrender.fun/chart-render" target="_blank">ChartRender</a>：傻瓜式的图表绘制库
+- <a href="https://xrender.fun/generator" target="_blank">FormGenerator</a>：中后台表单可视化搭建生成利器
 
 ## 谁在使用？
 

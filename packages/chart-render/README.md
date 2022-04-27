@@ -21,7 +21,7 @@
 
 ## 官网
 
-<https://x-render.gitee.io/chart-render>
+<https://xrender.fun/chart-render>
 
 ## 优势
 
@@ -168,13 +168,13 @@ export default () => {
 
 ### PivotTable 交叉表的额外参数
 
-| 参数                | 说明                                                                                                                                                                                                   | 类型                                                                    | 默认值             | 是否必填 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | ------------------ | -------- |
-| showSubtotal        | 是否展示总计小计                                                                                                                                                                                       | `boolean`                                                               | `true`             | 否       |
-| subtotalText        | 总计小计的文案                                                                                                                                                                                         | `[string, string]`                                                      | `['总计', '小计']` | 否       |
-| indicatorSide       | 指标的展示位置                                                                                                                                                                                         | `'left' \| 'top'`                                                       | `'top'`            | 否       |
-| size                | 表格尺寸                                                                                                                                                                                               | `'small' \| 'middle' \| 'large'`                                        | `'middle'`         | 否       |
-| leftDimensionLength | 左侧维度放多少个，超出的维度会放到表格顶部                                                                                                                                                             | `number`                                                                | -                  | 否       |
-| leftExpandable      | 左侧维度允许展开/收起                                                                                                                                                                                  | `boolean`                                                               | `false`            | 否       |
-| topExpandable       | 顶部维度允许展开/收起                                                                                                                                                                                  | `boolean`                                                               | `false`            | 否       |
-| cellRender          | 单元格自定义渲染函数，可见[交叉表案例 - 高级案例 - 自定义单元格渲染](https://x-render.gitee.io/chart-render/demo/pivot-table#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8D%95%E5%85%83%E6%A0%BC%E6%B8%B2%E6%9F%93) | `(value: any, dimRecord: IDataItem, indId: string ) => React.ReactNode` | -                  | 否       |
+| 参数                | 说明                                                                                                                                                                                             | 类型                                                                    | 默认值             | 是否必填 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | ------------------ | -------- |
+| showSubtotal        | 是否展示总计小计                                                                                                                                                                                 | `boolean`                                                               | `true`             | 否       |
+| subtotalText        | 总计小计的文案                                                                                                                                                                                   | `[string, string]`                                                      | `['总计', '小计']` | 否       |
+| indicatorSide       | 指标的展示位置                                                                                                                                                                                   | `'left' \| 'top'`                                                       | `'top'`            | 否       |
+| size                | 表格尺寸                                                                                                                                                                                         | `'small' \| 'middle' \| 'large'`                                        | `'middle'`         | 否       |
+| leftDimensionLength | 左侧维度放多少个，超出的维度会放到表格顶部                                                                                                                                                       | `number`                                                                | -                  | 否       |
+| leftExpandable      | 左侧维度允许展开/收起                                                                                                                                                                            | `boolean`                                                               | `false`            | 否       |
+| topExpandable       | 顶部维度允许展开/收起                                                                                                                                                                            | `boolean`                                                               | `false`            | 否       |
+| cellRender          | 单元格自定义渲染函数，可见[交叉表案例 - 高级案例 - 自定义单元格渲染](https://xrender.fun/chart-render/demo/pivot-table#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8D%95%E5%85%83%E6%A0%BC%E6%B8%B2%E6%9F%93) | `(value: any, dimRecord: IDataItem, indId: string ) => React.ReactNode` | -                  | 否       |
