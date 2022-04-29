@@ -11,13 +11,13 @@
 
 .tr-table-wrapper {
   background: #fff;
-  padding: 0 24px;
   width: 100%;
   overflow: auto;
 }
 
 .tr-table-top {
   display: flex;
+  padding: 0 24px;
   align-items: center;
   justify-content: space-between;
   height: 64px;
