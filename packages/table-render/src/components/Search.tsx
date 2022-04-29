@@ -130,6 +130,13 @@ const Search: <RecordType extends object = any>(
     }
   }, []);
 
+  // 让 searchApi 总是更新到最新的，就可以拿到最新的 state
+  React.useEffect(() => {
+    syncMethods({
+      searchApi: props.api,
+    });
+  }, [props.api])
+
   const btnProps = {
     searchBtnRender,
     searchBtnStyle,

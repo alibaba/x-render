@@ -13,7 +13,6 @@ const useTableRoot = props => {
 
   const [state, set] = useSet({
     loading: false,
-    api: null,
     tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
     dataSource: [],
     extraData: null, // 需要用到的 dataSource 以外的扩展返回值
@@ -125,13 +124,14 @@ const useTableRoot = props => {
   const syncMethods = ({ searchApi, syncAfterSearch }) => {
     api.current = searchApi;
     afterSearch.current = syncAfterSearch;
-    set({
-      api: searchApi,
-    });
   };
 
   const context = {
-    tableState: { ...state, search: form.getValues() },
+    tableState: {
+      ...state,
+      api: api.current,
+      search: form.getValues()
+    },
     setTable: set,
     doSearch,
     refresh,
