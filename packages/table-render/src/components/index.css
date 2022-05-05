@@ -10,8 +10,8 @@
 
 .tr-table-wrapper {
   background: #fff;
-  width: 100%;
   padding: 0 24px;
+  width: 100%;
   overflow: auto;
 }
 
