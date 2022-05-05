@@ -34,8 +34,10 @@ export interface SchemaBase {
   placeholder: string;
   bind: false | string | string[];
   dependencies: string[];
-  min: number;
-  max: number;
+  /** 最小值，支持表达式 */
+  min: number | string;
+  /** 最大值，支持表达式 */
+  max: number | string;
   /** 是否禁用，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   disabled: boolean | string;
   /** 是否只读，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
