@@ -51,7 +51,8 @@ npm i table-render --save
 ```jsx
 /**
  * transform: true
- * defaultShowCode: true
+ * defaultShowCode: false
+ * background: 'rgb(245,245,245)'
  */
 import React from 'react';
 import { Table, Search, withTable } from 'table-render';
