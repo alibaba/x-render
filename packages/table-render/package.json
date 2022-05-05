@@ -1,6 +1,6 @@
 {
   "name": "table-render",
-  "version": "1.2.6",
+  "version": "1.2.7",
   "description": "中后台表格解决方案",
   "keywords": [
     "TableRender",
@@ -10,7 +10,7 @@
     "Json Schema",
     "Ant Design"
   ],
-  "homepage": "https://x-render.gitee.io/table-render",
+  "homepage": "https://xrender.fun/table-render",
   "bugs": {
     "url": "https://github.com/alibaba/x-render/issues"
   },

@@ -110,7 +110,7 @@ export default Demo;
 {
   id: "my-demo-form",
   schema: "{type: 'object',properties: {input1: {title: '输入框',required: true,type: 'string'},select1:{title: '单选',... }",
-  url: 'https://x-render.gitee.io/form-render/measure',
+  url: 'https://xrender.fun/form-render/measure',
   formData: '{}',
   formMount: '2021-07-02 16:03:42',
 };
@@ -136,7 +136,7 @@ export default Demo;
   duration: '00:00:35', // 从表单加载/上次提交完成开始计时，到本次提交使用的时间
   numberOfSubmits: 1, // 提交的次数（失败与否）
   failedAttempts: 0, // 提交失败的次数（即有校验未通过）
-  url: 'https://x-render.gitee.io/form-render/measure', // 表单对应页面的url
+  url: 'https://xrender.fun/form-render/measure', // 表单对应页面的url
   formData: "{input1: '3123',select1: 'c'}",
   schema: "{ ... }", // 表单协议
   errors: "[]", // 校验未通过时，展示报错校验信息

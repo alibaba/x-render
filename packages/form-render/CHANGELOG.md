@@ -184,7 +184,7 @@
 
 - [+] 新增 logOnMount / logOnSubmit 两个 api，作为 useForm 的入参，用于在表单加载以及提交的时机给用户提供相关的度量信息
 
-- [+] 新增[“度量”文档](https://x-render.gitee.io/form-render/measure)
+- [+] 新增[“度量”文档](https://xrender.fun/form-render/measure)
 
 功能优化
 
@@ -379,7 +379,7 @@
 
 ### 1.0.5
 
-- [+] 新增 `validateMessages` 字段，用于覆盖默认的校验信息，详见[文档](https://x-render.gitee.io/form-render#validatemessages) ([#306](https://github.com/alibaba/x-render/issues/306))
+- [+] 新增 `validateMessages` 字段，用于覆盖默认的校验信息，详见[文档](https://xrender.fun/form-render#validatemessages) ([#306](https://github.com/alibaba/x-render/issues/306))
 - [!] rules 字段无法生效的问题 ([#305](https://github.com/alibaba/x-render/issues/305))
 - [!] 修复了下拉多选框在 value = null 时会展示一个空标签的问题
 - [!] 说明（description）的 tooltip 展示气泡位置确保对齐

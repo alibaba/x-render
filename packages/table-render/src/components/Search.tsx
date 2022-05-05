@@ -105,7 +105,7 @@ const Search: <RecordType extends object = any>(
       }
     } else {
       console.error(
-        'SearchForm 传入了不正确的 schema，参考文档: https://x-render.gitee.io/form-render/form-render/config/schema'
+        'SearchForm 传入了不正确的 schema，参考文档: https://xrender.fun/form-render/form-render/config/schema'
       );
     }
   };
