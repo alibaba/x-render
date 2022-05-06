@@ -52,8 +52,10 @@ export interface SchemaBase {
   extra: string;
   properties: Record<string, Schema>;
   items: Schema;
-  enum: Array<string | number>;
-  enumNames: Array<string | number>;
+  /** 多选，支持表达式 */
+  enum: Array<string | number> | string;
+  /** 多选label，支持表达式 */
+  enumNames: Array<string | number> | string;
   rules: RuleItem | RuleItem[];
   props: Record<string, any>;
 }
