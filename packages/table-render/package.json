@@ -1,6 +1,6 @@
 {
   "name": "table-render",
-  "version": "1.2.7",
+  "version": "1.2.8-beta.1",
   "description": "中后台表格解决方案",
   "keywords": [
     "TableRender",
@@ -17,10 +17,11 @@
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
+  "typings": "dist/src/index.d.ts",
   "scripts": {
     "analyze": "ANALYZE=1 dumi dev",
     "build": "father-build",
+    "beta": "npm publish --tag beta",
     "predeploy": "npm run site",
     "deploy": "gh-pages -d docs-dist",
     "prepare": "npm run build",
