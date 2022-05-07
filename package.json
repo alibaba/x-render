@@ -10,7 +10,7 @@
   "scripts": {
     "build": "lerna run build",
     "doc": "dumi build",
-    "predeploy": "npm run doc",
+    "predeploy": "npm run build && npm run doc",
     "deploy": "gh-pages -d docs-dist",
     "start": "PORT=8080 dumi dev",
     "size": "ANALYZE=1 dumi build",

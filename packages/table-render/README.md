@@ -22,7 +22,7 @@
 
 ## 官网
 
-<https://x-render.gitee.io/table-render>
+<https://xrender.fun/table-render>
 
 ## 优势
 
@@ -126,7 +126,7 @@ export default withTable(Wrapper);
 
 | 属性               | 描述                                                                                                           | 类型                                   | 默认值  | 必填 |
 | ------------------ | -------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------- | ---- |
-| schema             | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](https://x-render.gitee.io/form-render/config/schema) | `object`                               | -       | 是   |
+| schema             | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](https://xrender.fun/form-render/config/schema) | `object`                               | -       | 是   |
 | api                | 初始化&点击查询时执行的函数                                                                                    | `Function` or `Array`                  | -       | 是   |
 | onSearch           | 在表格查询时执行一些额外的操作                                                                                 | `Function`                             | -       | 否   |
 | afterSearch        | 在表格查询结束后执行一些额外的操作                                                                             | `Function`                             | -       | 否   |
@@ -160,9 +160,9 @@ export default withTable(Wrapper);
 | ellipsis  | 是否自动缩略                                                                | boolean                                               | -      |
 | copyable  | 是否支持复制                                                                | boolean                                               | -      |
 | valueType | 值的类型，详见下方 `valueType 配置`                                         | `string`（`text` \| `money` \| `date` \| `dateTime`） | `text` |
-| enum      | 当前列值的枚举，详见[高级用法](https://x-render.gitee.io/table-render/demo) | `object`                                              | -      |
+| enum      | 当前列值的枚举，详见[高级用法](https://xrender.fun/table-render/demo) | `object`                                              | -      |
 
-- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [案例代码](https://x-render.gitee.io/table-render/demo)：
+- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [案例代码](https://xrender.fun/table-render/demo)：
 
   | 属性     | 描述                                                               |
   | -------- | ------------------------------------------------------------------ |

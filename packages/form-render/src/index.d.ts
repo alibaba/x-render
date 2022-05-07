@@ -1,6 +1,7 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
 
+export type { RuleItem } from 'async-validator'
 export type SchemaType =
   | 'string'
   | 'object'
@@ -12,7 +13,7 @@ export type SchemaType =
   | 'datetime'
   | (string & {});
 
-interface SchemaBase {
+export interface SchemaBase {
   type: SchemaType;
   title: string;
   description: string;

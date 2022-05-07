@@ -48,9 +48,9 @@ export default Demo;
 | transformer    | schema 双向转换          | `object`  | `{ fromFormRender, toFormRender }`                                                                                              |
 | extraButtons   | 操作栏按钮               | `array`   | `extraButton[]`                                                                                                                 |
 | controlButtons | 选中项操作按钮           | `array`   | `controlButton[]`                                                                                                               |
-| settings       | 左右侧栏配置             | `array`   | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L651)       |
-| commonSettings | 通用配置                 | `object`  | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L2)   |
-| globalSettings | 全局配置                 | `object`  | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/Settings/index.js#L672) |
+| settings       | 左右侧栏配置             | `array`   | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js#L651)       |
+| commonSettings | 通用配置                 | `object`  | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js#L20)   |
+| globalSettings | 全局配置                 | `object`  | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js#L831) |
 | widgets        | 自定义组件               | `object`  | `{}`                                                                                                                            |
 | mapping        | 组件和 schema 的映射规则 | `object`  | `{}`                                                                                                                            |
 
@@ -90,7 +90,7 @@ export default Demo;
 
 ## 案例演示
 
-https://x-render.gitee.io/generator#%E6%A1%88%E4%BE%8B%E6%BC%94%E7%A4%BA
+https://xrender.fun/generator/demo
 
 ## 常见问题
 
