@@ -1,6 +1,5 @@
 import FormRender, { useForm } from 'form-render';
 import React, { useEffect, useState } from 'react';
-import * as frgWidgets from '../../widgets';
 import {
   advancedElements,
   baseCommonSettings,
@@ -10,8 +9,9 @@ import {
   layouts,
 } from '../../settings';
 import { isObject, mergeInOrder } from '../../utils';
+import { useGlobal, useStore } from '../../utils/hooks';
 import { getWidgetName } from '../../utils/mapping';
-import { useStore, useGlobal } from '../../utils/hooks';
+import * as frgWidgets from '../../widgets';
 
 export default function ItemSettings({ widgets }) {
   const setGlobal = useGlobal();

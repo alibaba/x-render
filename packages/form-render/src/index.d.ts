@@ -1,7 +1,7 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
 
-export type { RuleItem } from 'async-validator'
+export type { RuleItem } from 'async-validator';
 export type SchemaType =
   | 'string'
   | 'object'
