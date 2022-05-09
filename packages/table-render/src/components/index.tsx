@@ -4,9 +4,9 @@ import { useForm } from 'form-render';
 import _get from 'lodash.get';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { SearchApi } from '../interface';
-import { Ctx } from './Context';
 import { useSet } from './hooks';
 import './index.css';
+import { Ctx } from './store';
 
 const useTableRoot = props => {
   const form = useForm();

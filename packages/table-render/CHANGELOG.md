@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.3.0
+
+- [+] 样式优化
+
 ### 1.2.6
 
 - [+] `Search`组件新增`searchWithError`属性

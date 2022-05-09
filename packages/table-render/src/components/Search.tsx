@@ -73,6 +73,7 @@ const Search: <RecordType extends object = any>(
     searchText = '查询',
     resetText = '重置',
     searchWithError = true,
+    style = {}
   } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
@@ -130,6 +131,8 @@ const Search: <RecordType extends object = any>(
     }
   }, []);
 
+  
+
   const btnProps = {
     searchBtnRender,
     searchBtnStyle,
@@ -166,7 +169,7 @@ const Search: <RecordType extends object = any>(
   return (
     <div
       className={`tr-search ${props.className}`}
-      style={props.style}
+      style={style}
       onKeyDown={e => {
         if (e.keyCode === 13) {
           form.submit();
