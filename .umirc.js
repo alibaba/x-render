@@ -48,22 +48,22 @@ export default defineConfig({
         {
           title: 'FormRender',
           path:
-            'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
+            'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
         },
         {
           title: 'TableRender',
           path:
-            'https://github.com/alibaba/form-render/blob/master/packages/table-render/CHANGELOG.md',
+            'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
         },
         {
           title: 'ChartRender',
           path:
-            'https://github.com/alibaba/form-render/blob/master/packages/chart-render/CHANGELOG.md',
+            'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
         },
       ],
     },
 
-    { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
+    { title: 'GitHub', path: 'https://github.com/alibaba/x-render' },
   ],
   mode: 'site',
   esbuild: {},
