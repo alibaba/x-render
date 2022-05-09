@@ -28,4 +28,3 @@ footer: Please feel free to use and contribute to the development.
 <a href="https://github.com/alibaba/form-render/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=alibaba/form-render" />
 </a>
-
