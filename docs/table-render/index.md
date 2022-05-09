@@ -74,6 +74,7 @@ const schema = {
       title: '标题',
       type: 'string',
       width: '30%',
+      labelWidth: 45
     },
     created_at: {
       title: '创建时间',
