@@ -1,6 +1,7 @@
 /**
  * transform: true
- * defaultShowCode: true
+ * defaultShowCode: false
+ * background: 'rgb(245,245,245)'
  */
 
 import { InfoCircleOutlined } from '@ant-design/icons';
@@ -12,19 +13,20 @@ import request from 'umi-request';
 
 const schema = {
   type: 'object',
+  'ui:labelWidth': 80,
   properties: {
     state: {
       title: '酒店状态',
       type: 'string',
       enum: ['open', 'closed'],
       enumNames: ['营业中', '已打烊'],
-      width: '25%',
+      width: '33%',
       widget: 'select',
     },
     labels: {
       title: '酒店星级',
       type: 'string',
-      width: '25%',
+      width: '33%',
     },
   },
 };
