@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.9.12
+
+- [!] 修复 `tooltip` 显示不全问题。
+- [!] 修复 `drawerList` 第二页排序操作无效问题。
+- [+] 完善 `JSON Schema` 类型声明。
+
 ## 1.9.11
 
 - [+] format:"upload" 支持传入 `path` 字段，用于自定义接口返回的文件链接字段。

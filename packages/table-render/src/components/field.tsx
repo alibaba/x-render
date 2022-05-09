@@ -7,9 +7,17 @@ export const renderEllipsis = (
   item: { ellipsis: any }
 ) => {
   if (!item.ellipsis) {
-    return <span><>{dom}</></span>;
+    return (
+      <span>
+        <>{dom}</>
+      </span>
+    );
   }
-  return <Tooltip title={getEnumValue(text, item)}><>{dom}</></Tooltip>;
+  return (
+    <Tooltip title={getEnumValue(text, item)}>
+      <>{dom}</>
+    </Tooltip>
+  );
 };
 
 export const renderCopyable = (

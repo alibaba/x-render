@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import FormRender, { useForm } from '../src/index';
-import { shallow, configure, mount } from 'enzyme';
-import { render, fireEvent, screen } from '@testing-library/react';
+import React, { useState } from 'react';
 import { act } from 'react-dom/test-utils';
-import { normalSchema, listSchema } from './schema'
+import FormRender, { useForm } from '../src/index';
+import { listSchema, normalSchema } from './schema';
 
 configure({ adapter: new Adapter() });
 
@@ -23,22 +22,22 @@ const Form = () => {
     '#': val => {
       console.log('表单的实时数据为：', val);
     },
-    'input1': {
+    input1: {
       handler: val => {
-        console.log(val)
+        console.log(val);
       },
       immediate: true,
     },
-    onSearch: (val) => {}
+    onSearch: val => {},
   };
 
   const onMount = () => {
-    form.setValueByPath('link', 'www.baidu.com')
+    form.setValueByPath('link', 'www.baidu.com');
   };
 
   const onClick = () => {
-    form.setValueByPath('link', 'www.baidu.com')
-  }
+    form.setValueByPath('link', 'www.baidu.com');
+  };
 
   return (
     <div>
@@ -74,14 +73,9 @@ const ListForm = () => {
     setState(formData);
   };
 
-
   return (
     <div>
-      <FormRender
-        form={form}
-        onFinish={onFinish}
-        schema={listSchema as any}
-      />
+      <FormRender form={form} onFinish={onFinish} schema={listSchema as any} />
       <div className="fr-value">
         <div className="input">{state?.input1}</div>
         <div className="select">{state?.select1}</div>

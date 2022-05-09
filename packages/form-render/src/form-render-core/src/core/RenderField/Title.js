@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import React from 'react';
 import { useStore2 } from '../../hooks';
 import { isCheckBoxType } from '../../utils';
@@ -9,26 +10,18 @@ const Description = ({ displayType, schema }) => {
   switch (displayType) {
     case 'row':
       return (
-        <span className="fr-tooltip-toggle" aria-label={description}>
+        <Tooltip title={description}>
           <i className="fr-tooltip-icon" />
-          <div className="fr-tooltip-container">
-            <i className="fr-tooltip-triangle" />
-            {description}
-          </div>
-        </span>
+        </Tooltip>
       );
     case 'inline':
       return null;
     default:
       if (descType === 'icon') {
         return (
-          <span className="fr-tooltip-toggle" aria-label={description}>
+          <Tooltip title={description}>
             <i className="fr-tooltip-icon" />
-            <div className="fr-tooltip-container">
-              <i className="fr-tooltip-triangle" />
-              {description}
-            </div>
-          </span>
+          </Tooltip>
         );
       }
 

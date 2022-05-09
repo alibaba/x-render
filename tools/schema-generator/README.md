@@ -49,7 +49,7 @@ export default Demo;
 | extraButtons   | 操作栏按钮               | `array`   | `extraButton[]`                                                                                                                 |
 | controlButtons | 选中项操作按钮           | `array`   | `controlButton[]`                                                                                                               |
 | settings       | 左右侧栏配置             | `array`   | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js#L651)       |
-| commonSettings | 通用配置                 | `object`  | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js#L20)   |
+| commonSettings | 通用配置                 | `object`  | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js#L20)  |
 | globalSettings | 全局配置                 | `object`  | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js#L831) |
 | widgets        | 自定义组件               | `object`  | `{}`                                                                                                                            |
 | mapping        | 组件和 schema 的映射规则 | `object`  | `{}`                                                                                                                            |
