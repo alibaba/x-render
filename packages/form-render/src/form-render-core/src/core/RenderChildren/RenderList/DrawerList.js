@@ -111,11 +111,11 @@ const DrawerList = ({
             <>
               <ArrowUpOutlined
                 style={{ color: '#1890ff', fontSize: 16, marginLeft: 8 }}
-                onClick={() => moveItemUp(idx)}
+                onClick={() => moveItemUp(index)}
               />
               <ArrowDownOutlined
                 style={{ color: '#1890ff', fontSize: 16, marginLeft: 8 }}
-                onClick={() => moveItemDown(idx)}
+                onClick={() => moveItemDown(index)}
               />
             </>
           )}

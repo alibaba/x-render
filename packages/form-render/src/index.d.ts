@@ -1,7 +1,7 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
 
-export type { RuleItem } from 'async-validator'
+export type { RuleItem } from 'async-validator';
 export type SchemaType =
   | 'string'
   | 'object'
@@ -34,8 +34,10 @@ export interface SchemaBase {
   placeholder: string;
   bind: false | string | string[];
   dependencies: string[];
-  min: number;
-  max: number;
+  /** 最小值，支持表达式 */
+  min: number | string;
+  /** 最大值，支持表达式 */
+  max: number | string;
   /** 是否禁用，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   disabled: boolean | string;
   /** 是否只读，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
@@ -52,8 +54,10 @@ export interface SchemaBase {
   extra: string;
   properties: Record<string, Schema>;
   items: Schema;
-  enum: Array<string | number>;
-  enumNames: Array<string | number>;
+  /** 多选，支持表达式 */
+  enum: Array<string | number> | string;
+  /** 多选label，支持表达式 */
+  enumNames: Array<string | number> | string;
   rules: RuleItem | RuleItem[];
   props: Record<string, any>;
 }

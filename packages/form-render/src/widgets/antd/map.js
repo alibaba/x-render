@@ -73,9 +73,9 @@ export default function Map({ children, title, schema, ...rest }) {
           header={
             <span style={{ fontSize: 16, fontWeight: 500 }}>
               {title}
-               <span className="fr-desc ml2">
-                 {schema?.description ? `( ${schema.description} )`: ''}
-               </span>
+              <span className="fr-desc ml2">
+                {schema?.description ? `( ${schema.description} )` : ''}
+              </span>
             </span>
           }
           key="1"

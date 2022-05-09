@@ -1,5 +1,5 @@
-import { isUrl, getArray, getFormat } from '../src/utils';
-import { getWidgetName } from '../src/form-render-core/src/mapping'
+import { getWidgetName } from '../src/form-render-core/src/mapping';
+import { getArray, getFormat, isUrl } from '../src/utils';
 
 describe('Test Utils', () => {
   test('Test getFormat', () => {
@@ -27,9 +27,11 @@ describe('Test Utils', () => {
   });
 
   test('Test getWidgetName', () => {
-    expect(getWidgetName({
-      type: 'string',
-      format: 'date'
-    })).toEqual('date');
+    expect(
+      getWidgetName({
+        type: 'string',
+        format: 'date',
+      })
+    ).toEqual('date');
   });
 });

@@ -1,5 +1,3 @@
-import { flattenSchema } from '../src/form-render-core/src/utils';
-
 describe('Test FormRender Utils', () => {
   it('Test flattenSchema', () => {
     const schema = {
@@ -20,4 +18,3 @@ describe('Test FormRender Utils', () => {
     };
   });
 });
-

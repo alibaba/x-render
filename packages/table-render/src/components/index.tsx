@@ -1,4 +1,4 @@
-import { ConfigProvider, message } from 'antd';
+import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
 import _get from 'lodash.get';
