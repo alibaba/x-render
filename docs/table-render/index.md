@@ -31,14 +31,7 @@ title: 使用教程
 2. **XRender 生态**：搜索筛选能力用 FormRender 来提供，以最小成本快速生成上侧搜索面板。
 3. **无缝习惯使用**：表格能用 Ant Design Table 来提供，降低用户使用成本。
 
-## 何时使用
-
-1. 用于查看和处理多条结构类似的数据，可对数据进行排序、筛选、对比或其他自定义操作，常有导航到详情页面的作用。
-2. 表格列表建议将重要信息和操作展示出来，不重要信息直接收起，可以帮助用户更高效的查看、处理、查找数据。
-
-## 如何使用
-
-### 安装
+## 安装
 
 table-render 依赖 ant design，单独使用不要忘记安装～
 
@@ -46,7 +39,7 @@ table-render 依赖 ant design，单独使用不要忘记安装～
 npm i table-render --save
 ```
 
-### 代码演示
+## 代码演示
 
 ```jsx
 /**
@@ -123,11 +116,9 @@ export default withTable(Wrapper);
 
 ## API
 
-### `withTable`
+### withTable
 
-TableRender 的书写能够很简洁，在底层使用了 Context，withTable 则是 Context Provider 高阶组件形式的语法糖。书写上用户不再需要额外添加 Provider 包裹表格组件，所有表格代码通过 `withTable` 包一下即可：
-
-使用 withTable 的写法
+TableRender 在底层使用了 Context 管理内部状态，`withTable` 是 Context Provider 高阶组件形式的语法糖，所以用户需要使用 `withTable` 包裹表格组件
 
 ```js
 import { withTable，useTable } from 'table-render';
@@ -139,31 +130,32 @@ const Page = () => {
 export default withTable(Page)
 ```
 
-### `<Search>` 参数
+### Search
 
-**我们将搜索相关的能力放到 `<Search>` 上面配置，包括对应的搜索筛选表单的渲染**
+我们将搜索相关的能力放到 `<Search />` 上面配置，包括对应的搜索筛选表单的渲染
 
-| 属性               | 描述                                                                                  | 类型                                   | 默认值  | 必填 |
-| ------------------ | ------------------------------------------------------------------------------------- | -------------------------------------- | ------- | ---- |
-| schema             | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](/form-render/config/schema) | `object`                               | -       | 是   |
-| api                | 初始化&点击查询时执行的函数                                                           | `Function` or `Array`                  | -       | 是   |
-| onSearch           | 在表格查询时执行一些额外的操作                                                        | `Function`                             | -       | 否   |
-| afterSearch        | 在表格查询结束后执行一些额外的操作                                                    | `Function`                             | -       | 否   |
-| searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                  | `boolean`                              | `true`  | 否   |
-| hidden             | 是否隐藏`<Search />`组件                                                              | `boolean`                              | `false` | 否   |
-| searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
-| searchBtnStyle     | 自定义表单操作按钮组的样式                                                            | `React.CSSProperties`                  | {}      | 否   |
-| searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                      | `string`                               | ''      | 否   |
-| searchWithError    | 表单校验失败时，是否继续执行查询操作                                                  | `boolean`                              | true    | 否   |
-| searchText         | 自定义查询按钮的文本                                                                  | `string`                               | '查询'  | 否   |
-| resetText          | 自定义重置按钮的文本                                                                  | `string`                               | '重置'  | 否   |
-| debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                         | `boolean`                              | `false` | 否   |
+| 属性               | 描述                                                                                  | 类型                                   | 默认值  |
+| ------------------ | ------------------------------------------------------------------------------------- | -------------------------------------- | ------- | 
+| schema             | 用于渲染查询表单，具体的格式参考 [form-render 文档](/form-render/schema/schema)，**必填** | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16)                               | -       | 
+| api                | 初始化&点击查询时执行的函数，**必填**                                                           | [ApiType](https://github.com/alibaba/x-render/blob/master/packages/table-render/src/interface.ts#L94)                 | -       | 
+| onSearch           | 在表格查询时执行一些额外的操作                                                        | `(params) => void`                             | -       |
+| afterSearch        | 在表格查询结束后执行一些额外的操作                                                    | `(params) => void`                             | -       |
+| searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                  | `boolean`                              | true  | 
+| hidden             | 是否隐藏`<Search />`组件                                                              | `boolean`                              | false |
+| searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch) => ReactNode[]` | -       | 
+| searchBtnStyle     | 自定义表单操作按钮组的样式                                                            | `React.CSSProperties`                  | -      | 
+| searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                      | `string`                               | -      | 
+| searchWithError    | 表单校验失败时，是否继续执行查询操作                                                  | `boolean`                              | true    |
+| searchText         | 自定义查询按钮的文本                                                                  | `string`                               | 查询  | 
+| resetText          | 自定义重置按钮的文本                                                                  | `string`                               | 重置  | 
+| debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                         | `boolean`                              | false |
 
-- **api**： `api` 是 `<Search />` 最重要的 属性，`api` 是一个函数，有两个入参：`params`、`sorter`，分别是表单筛选项的值、排序参数。它的返回值是一个`Object`，此`Object`中必须要有 rows 和 total，其中 rows 即`dataSource` ，total 用于分页。`api` 会接管 loading 的设置，同时在表单查询和 params 参数发生修改时重新执行。同时 查询表单的值和 params 参数也会带入。
+### api
+ `api` 是 `<Search />` 最重要的属性，`api` 是一个函数，有两个入参：`params`、`sorter`，分别是表单筛选项的值、排序参数。它的返回值是一个`Object`，此`Object`中必须要有 rows 和 total，其中 rows 即`dataSource` ，total 用于分页。`api` 会接管 loading 的设置，同时在表单查询和 params 参数发生修改时重新执行。同时 查询表单的值和 params 参数也会带入。
 
-### `<Table />` 参数
+### Table
 
-**支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写，最基本的使用就需要填写`columns`**
+支持所有 antd table 的 props，但是`dataSource`, `loading`, `pagination`这几个参数是内部状态，不需要填写，最基本的使用就需要填写`columns`
 
 | 属性                  | 描述                                                                      | 类型                | 默认值      |
 | --------------------- | ------------------------------------------------------------------------- | ------------------- | ----------- |
