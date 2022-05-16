@@ -13,11 +13,7 @@ export const renderEllipsis = (
       </span>
     );
   }
-  return (
-    <Tooltip title={getEnumValue(text, item)}>
-      <>{dom}</>
-    </Tooltip>
-  );
+  return <Tooltip title={getEnumValue(text, item)}>{dom}</Tooltip>;
 };
 
 export const renderCopyable = (
@@ -84,5 +80,6 @@ export const renderDom = (val: string, item: any) => {
   }
   const copyHoc = renderCopyable(val, item);
   const ellipsisHoc = renderEllipsis(copyHoc, val, item);
+  console.log(item.ellipsis, ellipsisHoc);
   return ellipsisHoc;
 };
