@@ -1,5 +1,13 @@
 # Changelog
 
+### 1.3.1
+
+- [+] 修复 tooltip 失效的问题
+
+### 1.3.0
+
+- [+] 样式优化
+
 ### 1.2.6
 
 - [+] `Search`组件新增`searchWithError`属性
