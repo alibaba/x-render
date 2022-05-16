@@ -23,5 +23,6 @@ export default {
       },
       '@ant-design/icons',
     ],
+    ['transform-remove-console', { exclude: ['error', 'warn'] }],
   ],
 };
