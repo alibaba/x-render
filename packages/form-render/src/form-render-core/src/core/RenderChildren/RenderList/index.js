@@ -136,9 +136,6 @@ const RenderList = ({
   };
 
   switch (renderWidget) {
-    case 'list0':
-    case 'cardList':
-      return <CardList {...displayProps} />;
     case 'list1':
     case 'simpleList':
       return <SimpleList {...displayProps} />;
@@ -153,6 +150,8 @@ const RenderList = ({
       return <VirtualList {...displayProps} />;
     case 'tabList':
       return <TabList {...displayProps} />;
+    case 'list0':
+    case 'cardList':
     default:
       return <CardList {...displayProps} />;
   }
