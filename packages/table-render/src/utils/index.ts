@@ -46,14 +46,18 @@ export const buildSchema = (schema, api) => {
   return result;
 };
 
-export const getDateTime = time => dayjs(time).format('YYYY-MM-DD HH:mm');
-export const getDate = time => dayjs(time).format('YYYY-MM-DD');
+export const getDateTime = time => {
+  if (!time) return null;
+  return dayjs(time).format('YYYY-MM-DD HH:mm');
+};
+export const getDate = time => {
+  if (!time) return null;
+  return dayjs(time).format('YYYY-MM-DD');
+};
 
 // 格式化千分符
 export const getMoneyType = num => {
-  if (!num) {
-    return null;
-  }
+  if (!num) return null;
   return `¥${num}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };
 
