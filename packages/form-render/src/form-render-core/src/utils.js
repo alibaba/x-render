@@ -125,15 +125,28 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   }
   const children = [];
   if (isObjType(schema)) {
+    // 若parent的hidden为true，则子项需继承hidden属性
+    if (schema.hidden) {
+      Object.keys(schema.properties).forEach(key => {
+        schema.properties[key].hidden = true;
+      });
+    }
     Object.entries(schema.properties).forEach(([key, value]) => {
       const _key = isListType(value) ? key + '[]' : key;
       const uniqueName = _name === '#' ? _key : _name + '.' + _key;
       children.push(uniqueName);
+
       flattenSchema(value, uniqueName, _name, result);
     });
     schema.properties = {};
   }
   if (isListType(schema)) {
+    // 若parent的hidden为true，则子项需继承hidden属性
+    if (schema.hidden) {
+      Object.keys(schema.items.properties).forEach(key => {
+        schema.items.properties[key].hidden = true;
+      });
+    }
     Object.entries(schema.items.properties).forEach(([key, value]) => {
       const _key = isListType(value) ? key + '[]' : key;
       const uniqueName = _name === '#' ? _key : _name + '.' + _key;
