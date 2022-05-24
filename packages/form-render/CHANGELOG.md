@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.10.0
+
+- [+] `schema` 新增 `order` 属性，用于排序
+- [+] `props` 新增 `sortable` 属性，表示是否需要对`schema`进行排序
+- [+] `props` 新增 `colon` 属性，表示是否显示 label 后面的冒号
+- [+] `props` 新增 `labelAlign` 属性，用于定义 label 标签的文本对齐方式
+
 ## 1.9.13
 
 - [!] 修复 `数组/对象` 隐藏时，子元素依然会触发校验的 bug。

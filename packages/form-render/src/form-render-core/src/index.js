@@ -32,6 +32,7 @@ function App({
   beforeFinish,
   onFinish = defaultFinish,
   displayType = 'column',
+  labelAlign = 'right',
   schema,
   debug,
   debugCss,
@@ -177,6 +178,7 @@ function App({
   const store2 = useMemo(
     () => ({
       displayType,
+      labelAlign,
       theme,
       column: _column,
       debounceInput,
@@ -192,6 +194,7 @@ function App({
     }),
     [
       displayType,
+      labelAlign,
       theme,
       _column,
       debounceInput,
