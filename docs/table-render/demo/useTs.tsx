@@ -13,7 +13,7 @@ import request from 'umi-request';
 
 const schema = {
   type: 'object',
-  'ui:labelWidth': 80,
+  labelWidth: 80,
   properties: {
     state: {
       title: '酒店状态',

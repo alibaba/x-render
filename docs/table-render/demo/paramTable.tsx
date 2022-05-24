@@ -34,7 +34,7 @@ const schema = {
       width: '25%',
     },
   },
-  'ui:labelWidth': 80,
+  labelWidth: 80,
 };
 
 const Demo = () => {
