@@ -109,7 +109,7 @@
 
 ### 0.9.0
 
-- [+] 【Breaking】通过 ref 的方式将内部方法暴露出来，目前只有 `resetData`，具体使用参见 [api](https://x-render.gitee.io/form-render/form-render/config/api)
+- [+] 【Breaking】通过 ref 的方式将内部方法暴露出来，目前只有 `resetData`，具体使用参见 [api](https://xrender.fun/form-render/form-render/config/api)
   如果有用户在之前因为任何原因在 form-render 上挂了 ref，那这个是 breaking change(虽然感觉情况不多见)
 - [!] 修改了 onMount 的逻辑，现在 onMount 会在 formData 首次计算后触发
 - [!] 【Breaking】自定义组件接受到的入参 `readonly` 改为 `readOnly` 遵守惯例的驼峰格式。同时修复了一个 readOnly 无效的问题
@@ -186,12 +186,12 @@
 
 - [+] 单选现在允许设置 default: null，使得默认不选择任何一个选项 ([#146](https://github.com/alibaba/form-render/issues/146))
 - [!] "ui:options" 里每个 key 如果是函数表达式，也能正常解析 ([#104](https://github.com/alibaba/form-render/issues/104))
-- [!] uniqueItems 的判断，支持到复杂的 item 结构（详见 [“新功能”](https://x-render.gitee.io/form-render/guide/new-feature)）
+- [!] uniqueItems 的判断，支持到复杂的 item 结构（详见 [“新功能”](https://xrender.fun/form-render/guide/new-feature)）
 - [!] 修复了一个不常见的新校验机制和历史写法（现在的函数表达式的前身）产生的 bug
 
 ### 0.8.0
 
-- [Breaking] 对`antd`和`@alifd/next`的依赖修改为`peerDependencies`。意味着这两个包需要使用方提供。这么做避免了之前使用 form-render 时会打入两个 antd（或 fusion）的问题。目前的使用场景看来，90%以上的用户都已安装了 `antd` 或者 `@alifd/next`。所以这个升级对于 90% 的用户理应是无缝的。对于独立使用 form-render 而未安装任何组件的同学，需要 `npm i antd` 一下。详见文档的 [开始使用](https://x-render.gitee.io/form-render/guide/getting-started)
+- [Breaking] 对`antd`和`@alifd/next`的依赖修改为`peerDependencies`。意味着这两个包需要使用方提供。这么做避免了之前使用 form-render 时会打入两个 antd（或 fusion）的问题。目前的使用场景看来，90%以上的用户都已安装了 `antd` 或者 `@alifd/next`。所以这个升级对于 90% 的用户理应是无缝的。对于独立使用 form-render 而未安装任何组件的同学，需要 `npm i antd` 一下。详见文档的 [开始使用](https://xrender.fun/form-render/guide/getting-started)
 - [!] 解决了首次渲染时就会展示校验红字的问题，现在通过设定`showValidate`为 false 来关闭此行为，只有动过的 field 会提示校验，提交时通过将 showValidate 设为 true 来唤起全部校验信息的展示
 - [!] 解决了 antd 组件 textArea 和 input 人为传入 undefined 和 null 为值时的报错 ([#138](https://github.com/alibaba/form-render/issues/138))
 - [!] description 隐藏时采用 info 图标代替问号图标，符合业界规范 ([#133](https://github.com/alibaba/form-render/issues/133))

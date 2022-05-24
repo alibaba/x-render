@@ -233,6 +233,8 @@ import Form, { useForm, connectForm } from 'form-render';
 | beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填，入参是个对象，便于扩展         | `({ data, errors, schema, ...rest }) => Error[] 或 Promise<Error[]>` | 否       | () => {} |
 | onMount          | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)           | `() => void`                                                         | 否       | () => {} |
 | displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`                                | 否       | 'column' |
+| labelAlign       | 	label 标签的文本对齐方式                                                  | `string('left' / 'right')`                                           | 否       | 'right' |
+| colon            | 表示是否显示 label 后面的冒号                                              | `boolean`                                                             | 否       | true |
 | widgets          | 自定义组件，当内置组件无法满足时使用                                           | `object`                                                             | 否       | {}       |
 | watch            | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                                             | 否       | {}       |
 | removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                       | `boolean`                                                            | 否       | false    |
@@ -304,21 +306,21 @@ export default connectForm(Demo);
 
 **form 方法**
 
-| 参数             | 描述                                                | 类型                                                                                                             |
-| ---------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------- |
-| submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                                                                                                     |
+| 参数             | 描述                                              | 类型 |
+| --------------- | ------------------------------------------------- | ------|
+| submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void` |
 | resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `({formData?: any, submitData?: any, errorFields?: Error[], touchedKeys?: any[], allTouched?: boolean}) => void` |
-| errorFields      | 表单校验错误的数组                                  | `array,[{name, error: []}]`                                                                                      |
-| setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error                                                                                                   | Error[]) => void` |
-| setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`                                                                                        |
-| setValueByPath   | 外部修改指定单个 field 的数据(原名 onItemChange)    | `(path: string, value: any) => void`                                                                             |
-| setSchemaByPath  | 指定路径修改 schema                                 | `(path: string, value: any) => void`                                                                             |
-| setSchema        | 指定**多个**路径修改 schema。注 1                   | `({ path1: value1, path2: value2 }) => void`                                                                     |
-| getValues        | 获取表单内部维护的数据 formData                     | `() => void`                                                                                                     |
-| schema           | 表单的 schema                                       | object                                                                                                           |
-| touchedKeys      | 已经触碰过的 field 的数据路径                       | `string[]`                                                                                                       |
-| removeErrorField | 外部手动删除某一个 path 下所有的校验信息            | `(path: string) => void`                                                                                         |
-| formData         | 表单内部维护的数据，建议使用 getValues/setValues    | `object`                                                                                                         |
+| errorFields      | 表单校验错误的数组                                  | `array,[{name, error: []}]` |
+| setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error[]) => void` |
+| setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void` |
+| setValueByPath   | 外部修改指定单个 field 的数据(原名 onItemChange)    | `(path: string, value: any) => void` |
+| setSchemaByPath  | 指定路径修改 schema                                 | `(path: string, value: any) => void` |
+| setSchema        | 指定**多个**路径修改 schema。注 1                   | `({ path1: value1, path2: value2 }) => void` |
+| getValues        | 获取表单内部维护的数据 formData                     | `() => void` |
+| schema           | 表单的 schema                                       | object |
+| touchedKeys      | 已经触碰过的 field 的数据路径                       | `string[]` |
+| removeErrorField | 外部手动删除某一个 path 下所有的校验信息            | `(path: string) => void` |
+| formData         | 表单内部维护的数据，建议使用 getValues/setValues    | `object` |
 
 注 1： react 更新机制导致，同时多次调用 `setSchemaByPath` 无效，所以请使用 `setSchema`，事实上`setSchema` 能完全覆盖 `setSchemaByPath` 的场景
 
@@ -327,7 +329,7 @@ export default connectForm(Demo);
 **对于初学者来说记住 schema 所有的字段和使用方式并非易事。为了让大家能够快速上手，建议以以下的顺序尝试：**
 
 1. 去 [Playground](/playground) 逛逛，那里有从基础玩法、高级功能到完整样例的所有 schema 样例
-2. 玩转一下 [表单设计器](https://x-render.gitee.io/generator)，拖拖拽拽导出 schema，丢到代码里生成可用表单。本质上这是一个可视化的表单生成器，支持 schema 的导入 & 导出
+2. 玩转一下 [表单设计器](https://xrender.fun/generator)，拖拖拽拽导出 schema，丢到代码里生成可用表单。本质上这是一个可视化的表单生成器，支持 schema 的导入 & 导出
 
    <div>
       <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="500px"/>

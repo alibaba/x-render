@@ -1,3 +1,4 @@
+import { Tooltip } from 'antd';
 import React from 'react';
 import { useStore2 } from '../../hooks';
 import { isCheckBoxType } from '../../utils';
@@ -9,26 +10,18 @@ const Description = ({ displayType, schema }) => {
   switch (displayType) {
     case 'row':
       return (
-        <span className="fr-tooltip-toggle" aria-label={description}>
+        <Tooltip title={description}>
           <i className="fr-tooltip-icon" />
-          <div className="fr-tooltip-container">
-            <i className="fr-tooltip-triangle" />
-            {description}
-          </div>
-        </span>
+        </Tooltip>
       );
     case 'inline':
       return null;
     default:
       if (descType === 'icon') {
         return (
-          <span className="fr-tooltip-toggle" aria-label={description}>
+          <Tooltip title={description}>
             <i className="fr-tooltip-icon" />
-            <div className="fr-tooltip-container">
-              <i className="fr-tooltip-triangle" />
-              {description}
-            </div>
-          </span>
+          </Tooltip>
         );
       }
 
@@ -37,7 +30,7 @@ const Description = ({ displayType, schema }) => {
 };
 
 const Title = ({ labelClass, labelStyle, schema, displayType }) => {
-  const { displayType: globalDisplayType, readOnly } = useStore2();
+  const { displayType: globalDisplayType, readOnly, colon } = useStore2();
   const { title, required, type } = schema;
   const isObjType = type === 'object';
 
@@ -49,7 +42,9 @@ const Title = ({ labelClass, labelStyle, schema, displayType }) => {
       {title ? (
         <label
           className={`fr-label-title ${
-            isCheckBoxType(schema, readOnly) || _displayType === 'column'
+            isCheckBoxType(schema, readOnly) ||
+            _displayType === 'column' ||
+            !colon
               ? 'no-colon'
               : ''
           }`} // checkbox不带冒号

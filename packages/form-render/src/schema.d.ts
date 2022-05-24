@@ -30,6 +30,8 @@ interface SchemaBase {
   /** 是否隐藏，隐藏的字段不会在 formData 里透出，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   hidden: boolean | string;
   displayType: 'row' | 'column';
+  colon?: boolean;
+  labelAlign?: 'right' | 'left';
   width: string;
   labelWidth: number | string;
   column: number;

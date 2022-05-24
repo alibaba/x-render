@@ -1,5 +1,5 @@
 ---
-title: XRender
+title: 首页
 hero:
   title: XRender
   desc: 阿里巴巴 - 飞猪中后台「表单/表格/图表」开箱即用解决方案
@@ -21,4 +21,10 @@ features:
 footer: Please feel free to use and contribute to the development.
 ---
 
-<embed src="../README.md#L33-L153"></embed>
+<embed src="../README.md#L33-L163"></embed>
+
+## 贡献者们
+
+<a href="https://github.com/alibaba/form-render/graphs/contributors">
+  <img style="width: 100%" src="https://contrib.rocks/image?repo=alibaba/form-render" />
+</a>

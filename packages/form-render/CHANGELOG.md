@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.10.0
+
+- [+] `schema` 新增 `order` 属性，用于排序
+- [+] `props` 新增 `sortable` 属性，表示是否需要对`schema`进行排序
+- [+] `props` 新增 `colon` 属性，表示是否显示 label 后面的冒号
+- [+] `props` 新增 `labelAlign` 属性，用于定义 label 标签的文本对齐方式
+
+## 1.9.13
+
+- [!] 修复 `数组/对象` 隐藏时，子元素依然会触发校验的 bug。
+
+## 1.9.12
+
+- [!] 修复 `tooltip` 显示不全问题。
+- [!] 修复 `drawerList` 第二页排序操作无效问题。
+- [+] 完善 `JSON Schema` 类型声明。
+
 ## 1.9.11
 
 - [+] format:"upload" 支持传入 `path` 字段，用于自定义接口返回的文件链接字段。
@@ -184,7 +201,7 @@
 
 - [+] 新增 logOnMount / logOnSubmit 两个 api，作为 useForm 的入参，用于在表单加载以及提交的时机给用户提供相关的度量信息
 
-- [+] 新增[“度量”文档](https://x-render.gitee.io/form-render/measure)
+- [+] 新增[“度量”文档](https://xrender.fun/form-render/measure)
 
 功能优化
 
@@ -379,7 +396,7 @@
 
 ### 1.0.5
 
-- [+] 新增 `validateMessages` 字段，用于覆盖默认的校验信息，详见[文档](https://x-render.gitee.io/form-render#validatemessages) ([#306](https://github.com/alibaba/x-render/issues/306))
+- [+] 新增 `validateMessages` 字段，用于覆盖默认的校验信息，详见[文档](https://xrender.fun/form-render#validatemessages) ([#306](https://github.com/alibaba/x-render/issues/306))
 - [!] rules 字段无法生效的问题 ([#305](https://github.com/alibaba/x-render/issues/305))
 - [!] 修复了下拉多选框在 value = null 时会展示一个空标签的问题
 - [!] 说明（description）的 tooltip 展示气泡位置确保对齐

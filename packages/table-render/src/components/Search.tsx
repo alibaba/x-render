@@ -73,6 +73,7 @@ const Search: <RecordType extends object = any>(
     searchText = '查询',
     resetText = '重置',
     searchWithError = true,
+    style = {}
   } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
@@ -105,7 +106,7 @@ const Search: <RecordType extends object = any>(
       }
     } else {
       console.error(
-        'SearchForm 传入了不正确的 schema，参考文档: https://x-render.gitee.io/form-render/form-render/config/schema'
+        'SearchForm 传入了不正确的 schema，参考文档: https://xrender.fun/form-render/form-render/config/schema'
       );
     }
   };
@@ -129,6 +130,8 @@ const Search: <RecordType extends object = any>(
       refresh();
     }
   }, []);
+
+  
 
   const btnProps = {
     searchBtnRender,
@@ -166,7 +169,7 @@ const Search: <RecordType extends object = any>(
   return (
     <div
       className={`tr-search ${props.className}`}
-      style={props.style}
+      style={style}
       onKeyDown={e => {
         if (e.keyCode === 13) {
           form.submit();

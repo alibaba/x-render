@@ -21,9 +21,9 @@
 
 ## 官网
 
-<https://x-render.gitee.io/form-render>
+<https://xrender.fun/form-render>
 
-FormRender 1.0 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](https://x-render.gitee.io/form-render/migrate)
+FormRender 1.0 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](https://xrender.fun/form-render/migrate)
 
 <Alert>
   <span>FormRender 已升级到 v1.x 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本(v0.x)，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 旧文档 </a></span>
@@ -134,30 +134,40 @@ import Form, { useForm, connectForm } from 'form-render';
 
 ### \<Form \/> (常用 props)
 
-| 参数         | 描述                                                                           | 类型                                            | 是否必填          | 默认值   |
-| ------------ | ------------------------------------------------------------------------------ | ----------------------------------------------- | ----------------- | -------- | -------- |
-| schema       | 描述表单的 schema，详见                                                        | `object`                                        | 是                |          |
-| form         | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                  | 是                |          |
-| onFinish     | 提交后的回调，执行 form.submit() 后触发                                        | `(formData, errorFields: Error[]) => void`      | 否                | () => {} |
-| beforeFinish | 在 onFinish 前触发，一般用于外部校验逻辑的回填，入参是个对象，便于扩展         | `({ data, errors, schema, ...rest }) => Error[] | Promise<Error[]>` | 否       | () => {} |
-| displayType  | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`           | 否                | 'column' |
-| widgets      | 自定义组件，当内置组件无法满足时使用                                           | `object`                                        | 否                | {}       |
-| watch        | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                        | 否                | {}       |
+| 参数             | 描述                                                                           | 类型                                                                 | 是否必填 | 默认值   |
+| ---------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------- | -------- | -------- |
+| id               | 表单的 id，一般用于标识一个表单的语义化名称                                    | `string`/`number`                                                    | 否       |          |
+| schema           | 描述表单的 schema，详见                                                        | `object`                                                             | 是       |          |
+| form             | `useForm`创建的表单实例，与 Form 一对一绑定                                    | `FormInstance`                                                       | 是       |          |
+| onFinish         | 提交后的回调，执行 form.submit() 后触发                                        | `(data, errors: Error[]) => void`                                    | 否       | () => {} |
+| beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填，入参是个对象，便于扩展         | `({ data, errors, schema, ...rest }) => Error[] 或 Promise<Error[]>` | 否       | () => {} |
+| onMount          | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)           | `() => void`                                                         | 否       | () => {} |
+| displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                 | `string('column' / 'row' / 'inline')`                                | 否       | 'column' |
+| labelAlign       | label 标签的文本对齐方式                                                       | `string('left' / 'right')`                                           | 否       | 'right'  |
+| colon            | 表示是否显示 label 后面的冒号                                                  | `boolean`                                                            | 否       | true     |
+| widgets          | 自定义组件，当内置组件无法满足时使用                                           | `object`                                                             | 否       | {}       |
+| watch            | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                                             | 否       | {}       |
+| removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                       | `boolean`                                                            | 否       | false    |
+| debug            | 开启 debug 模式，时时显示表单内部状态，**开发的时候强烈建议打开**              | `boolean`                                                            | 否       | false    |
+| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                                     | `boolean`                                                            | 否       | false    |
 
 注 1：
 
 ### \<Form \/> (不常用 props)
 
-| 参数             | 描述                                                             | 类型                | 默认值 |
-| ---------------- | ---------------------------------------------------------------- | ------------------- | ------ |
-| column           | 一行展示多少列                                                   | `number`            | 1      |
-| mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
-| debug            | 开启 debug 模式，时时显示表单内部状态                            | `boolean`           | false  |
-| debugCss         | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
-| locale           | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
-| configProvider   | antd 的 configProvider，配置透传                                 | `object`            | -      |
-| debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
-| validateMessages | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
+| 参数                 | 描述                                                             | 类型                | 默认值 |
+| -------------------- | ---------------------------------------------------------------- | ------------------- | ------ |
+| className (v.1.6.12) | 顶层 className                                                   | `string`            | ''     |
+| style (v.1.6.12)     | 顶层 style                                                       | `object`            | {}     |
+| column               | 一行展示多少列                                                   | `number`            | 1      |
+| mapping              | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
+| disabled             | 禁用模式，全部表单元素禁用                                       | `boolean`           | false  |
+| debugCss             | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
+| locale               | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
+| configProvider       | antd 的 configProvider，配置透传                                 | `object`            | -      |
+| allCollapsed         | 对象组件是否默认折叠（全局）                                     | `boolean`           | false  |
+| debounceInput        | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
+| validateMessages     | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
 
 #### validateMessages
 
@@ -200,11 +210,11 @@ export default connectForm(Demo);
 **form 方法**
 
 | 参数             | 描述                                                | 类型                                                                                                             |
-| ---------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ----------------- |
+| ---------------- | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
 | submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                                                                                                     |
 | resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `({formData?: any, submitData?: any, errorFields?: Error[], touchedKeys?: any[], allTouched?: boolean}) => void` |
 | errorFields      | 表单校验错误的数组                                  | `array,[{name, error: []}]`                                                                                      |
-| setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error                                                                                                   | Error[]) => void` |
+| setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error[]) => void`                                                                                       |
 | setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`                                                                                        |
 | onItemChange     | 外部修改指定单个 field 的数据                       | `(path: string, value: any) => void`                                                                             |
 | getValues        | 获取表单内部维护的数据 formData                     | `() => void`                                                                                                     |

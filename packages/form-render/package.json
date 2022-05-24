@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "1.9.11",
+  "version": "1.9.13",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -11,7 +11,7 @@
     "Json Schema",
     "Ant Design"
   ],
-  "homepage": "https://x-render.gitee.io/form-render",
+  "homepage": "https://xrender.fun/form-render",
   "bugs": {
     "url": "https://github.com/alibaba/x-render/issues"
   },

@@ -1,12 +1,12 @@
-import { ConfigProvider, message } from 'antd';
+import { ConfigProvider } from 'antd';
 import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
 import _get from 'lodash.get';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import { SearchApi } from '../interface';
-import { Ctx } from './Context';
 import { useSet } from './hooks';
 import './index.css';
+import { Ctx } from './store';
 
 const useTableRoot = props => {
   const form = useForm();
@@ -55,10 +55,10 @@ const useTableRoot = props => {
       if (typeof _api === 'function') {
         basicSearch(_api);
       } else {
-        message.warning('api 不是函数，检查 <Search /> 的 props');
+        console.warn('api 不是函数，检查 <Search /> 的 props');
       }
     } else {
-      message.warning('api 不是函数，检查 <Search /> 的 props');
+      console.warn('api 不是函数，检查 <Search /> 的 props');
     }
 
     function basicSearch(api: SearchApi<typeof state.api[number]>) {

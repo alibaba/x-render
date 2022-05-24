@@ -9,12 +9,12 @@ export function getParamByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-export function isUrl(string) {
-  const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
-  // const domainRE = /^[^\s\.]+\.\S{2,}$/;
-  if (typeof string !== 'string') return false;
-  return protocolRE.test(string);
-}
+// export function isUrl(string) {
+//   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
+//   // const domainRE = /^[^\s\.]+\.\S{2,}$/;
+//   if (typeof string !== 'string') return false;
+//   return protocolRE.test(string);
+// }
 
 export function isCheckBoxType(schema, readOnly) {
   if (readOnly) return false;
@@ -140,8 +140,17 @@ export function orderProperties(properties, orderKey = 'order') {
   return orderItems.concat(otherArr);
 }
 
+export function extendProperties(properties, key, value) {
+  Object.keys(properties).forEach(item => {
+    properties[item][key] = value;
+  });
+}
+
 // TODO: more tests to make sure weird & wrong schema won't crush
 export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
+  // 排序
+  // _schema = orderBy(_schema, item => item.order, ['asc']);
+
   const schema = clone(_schema);
   let _name = name;
   if (!schema.$id) {
@@ -149,17 +158,29 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   }
   const children = [];
   if (isObjType(schema)) {
+    // 若parent的hidden为true，则子项需继承hidden属性
+    if (schema.hidden) {
+      extendProperties(schema.properties, 'hidden', true);
+    }
+
     orderProperties(Object.entries(schema.properties)).forEach(
       ([key, value]) => {
         const _key = isListType(value) ? key + '[]' : key;
         const uniqueName = _name === '#' ? _key : _name + '.' + _key;
         children.push(uniqueName);
+
         flattenSchema(value, uniqueName, _name, result);
       }
     );
+
     schema.properties = {};
   }
   if (isListType(schema)) {
+    // 若parent的hidden为true，则子项需继承hidden属性
+    if (schema.hidden) {
+      extendProperties(schema.items.properties, 'hidden', true);
+    }
+
     orderProperties(Object.entries(schema.items.properties)).forEach(
       ([key, value]) => {
         const _key = isListType(value) ? key + '[]' : key;
@@ -168,6 +189,7 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
         flattenSchema(value, uniqueName, _name, result);
       }
     );
+
     schema.items.properties = {};
   }
 
@@ -255,40 +277,40 @@ export function isDeepEqual(param1, param2) {
   return true;
 }
 
-export function getFormat(format) {
-  let dateFormat;
-  switch (format) {
-    case 'date':
-      dateFormat = 'YYYY-MM-DD';
-      break;
-    case 'time':
-      dateFormat = 'HH:mm:ss';
-      break;
-    case 'dateTime':
-      dateFormat = 'YYYY-MM-DD HH:mm:ss';
-      break;
-    case 'week':
-      dateFormat = 'YYYY-w';
-      break;
-    case 'year':
-      dateFormat = 'YYYY';
-      break;
-    case 'quarter':
-      dateFormat = 'YYYY-Q';
-      break;
-    case 'month':
-      dateFormat = 'YYYY-MM';
-      break;
-    default:
-      // dateTime
-      if (typeof format === 'string') {
-        dateFormat = format;
-      } else {
-        dateFormat = 'YYYY-MM-DD';
-      }
-  }
-  return dateFormat;
-}
+// export function getFormat(format) {
+//   let dateFormat;
+//   switch (format) {
+//     case 'date':
+//       dateFormat = 'YYYY-MM-DD';
+//       break;
+//     case 'time':
+//       dateFormat = 'HH:mm:ss';
+//       break;
+//     case 'dateTime':
+//       dateFormat = 'YYYY-MM-DD HH:mm:ss';
+//       break;
+//     case 'week':
+//       dateFormat = 'YYYY-w';
+//       break;
+//     case 'year':
+//       dateFormat = 'YYYY';
+//       break;
+//     case 'quarter':
+//       dateFormat = 'YYYY-Q';
+//       break;
+//     case 'month':
+//       dateFormat = 'YYYY-MM';
+//       break;
+//     default:
+//       // dateTime
+//       if (typeof format === 'string') {
+//         dateFormat = format;
+//       } else {
+//         dateFormat = 'YYYY-MM-DD';
+//       }
+//   }
+//   return dateFormat;
+// }
 
 export function hasRepeat(list) {
   return list.find(
@@ -622,10 +644,10 @@ export const getEnum = schema => {
   return itemEnum ? itemEnum : schemaEnum;
 };
 
-export const getArray = (arr, defaultValue = []) => {
-  if (Array.isArray(arr)) return arr;
-  return defaultValue;
-};
+// export const getArray = (arr, defaultValue = []) => {
+//   if (Array.isArray(arr)) return arr;
+//   return defaultValue;
+// };
 
 export const isEmail = value => {
   const regex = '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$';

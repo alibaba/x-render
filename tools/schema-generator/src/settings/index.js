@@ -381,7 +381,7 @@ export const elements = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       enumList: {
         title: '选项',
@@ -431,7 +431,7 @@ export const elements = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       enumList: {
         title: '选项',
@@ -570,7 +570,7 @@ export const layouts = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       items: {
         type: 'object',
@@ -620,7 +620,7 @@ export const layouts = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       items: {
         type: 'object',
@@ -674,7 +674,7 @@ export const layouts = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       items: {
         type: 'object',
@@ -724,7 +724,7 @@ export const layouts = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       items: {
         type: 'object',

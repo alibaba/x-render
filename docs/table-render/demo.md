@@ -22,3 +22,7 @@ title: 案例展示
 ## 使用 TS
 
 <code src='./demo/useTs.tsx' />
+
+## 错误边界
+
+<code src='./demo/error.tsx' />
