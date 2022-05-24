@@ -30,7 +30,7 @@ const Description = ({ displayType, schema }) => {
 };
 
 const Title = ({ labelClass, labelStyle, schema, displayType }) => {
-  const { displayType: globalDisplayType, readOnly } = useStore2();
+  const { displayType: globalDisplayType, readOnly, colon } = useStore2();
   const { title, required, type } = schema;
   const isObjType = type === 'object';
 
@@ -42,7 +42,9 @@ const Title = ({ labelClass, labelStyle, schema, displayType }) => {
       {title ? (
         <label
           className={`fr-label-title ${
-            isCheckBoxType(schema, readOnly) || _displayType === 'column'
+            isCheckBoxType(schema, readOnly) ||
+            _displayType === 'column' ||
+            !colon
               ? 'no-colon'
               : ''
           }`} // checkbox不带冒号

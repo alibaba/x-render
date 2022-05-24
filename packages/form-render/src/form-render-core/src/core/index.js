@@ -26,11 +26,11 @@ const Core = ({
   debugCss,
   ...rest
 }) => {
-  // console.log('<Core>', id);
   const snapShot = useRef();
 
   const { flatten, errorFields, isEditing, formData, allTouched } = useStore();
   const { displayType, column, labelWidth, readOnly, labelAlign } = useStore2();
+
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
@@ -125,7 +125,8 @@ const CoreRender = ({
   // displayType 一层层网上找值
   const _displayType =
     schema.displayType || rest.displayType || displayType || 'column';
-  const _labelAlign = schema.labelAlign || labelAlign || 'right';
+  const _labelAlign =
+    schema.labelAlign || rest.labelAlign || labelAlign || 'right';
   const isList = isListType(schema);
   const isObj = isObjType(schema);
   const isComplex = isObj || isList;
@@ -264,6 +265,7 @@ const CoreRender = ({
         dataIndex={dataIndex}
         errorFields={errorFields}
         displayType={_displayType}
+        labelAlign={_labelAlign}
         hideTitle={hideTitle}
       >
         {item.children}

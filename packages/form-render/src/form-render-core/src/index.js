@@ -33,6 +33,7 @@ function App({
   onFinish = defaultFinish,
   displayType = 'column',
   labelAlign = 'right',
+  colon = true,
   schema,
   debug,
   debugCss,
@@ -179,6 +180,7 @@ function App({
     () => ({
       displayType,
       labelAlign,
+      colon,
       theme,
       column: _column,
       debounceInput,
@@ -195,6 +197,7 @@ function App({
     [
       displayType,
       labelAlign,
+      colon,
       theme,
       _column,
       debounceInput,
