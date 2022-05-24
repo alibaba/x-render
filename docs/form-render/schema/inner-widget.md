@@ -34,7 +34,7 @@ const schema = {
 },
 ```
 
-下面是目前 FormRender 已经支持的内置组件，其中规则的格式为`${type}:${format}?${enum}/${readOnly}`
+下面是目前 FormRender 已经支持的内置组件，其中规则的格式为`${type}:${format}?${enum}/${readOnly}`，没有规则的代表必须指明 `widget` 的组件
 
 具体展示详见 [playground](/playground) - 基础控件，列表的展示见[展示的最佳实践](/form-render/advanced/display#列表的展示)
 
@@ -86,7 +86,7 @@ const schema = {
 ### checkbox
 
 - 组件：是否选择
-- 规则：`checkbox`
+- 规则：-
 
 ### checkboxes
 
