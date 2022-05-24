@@ -2,7 +2,7 @@ import { message, Tooltip, Typography } from 'antd';
 import React from 'react';
 
 export const renderEllipsis = (
-  dom: {} | null | undefined,
+  dom: JSX.Element,
   text: any,
   item: { ellipsis: any }
 ) => {
@@ -80,6 +80,5 @@ export const renderDom = (val: string, item: any) => {
   }
   const copyHoc = renderCopyable(val, item);
   const ellipsisHoc = renderEllipsis(copyHoc, val, item);
-  console.log(item.ellipsis, ellipsisHoc);
   return ellipsisHoc;
 };
