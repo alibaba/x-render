@@ -8,31 +8,31 @@ toc: content
 
 ## Props
 
-| 参数             | 描述                                                                            | 类型                                                                                                  | 默认值 |
-| ---------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------ |
-| schema           | **必填**，描述表单的 schema，详见 [schema 规范](./schema.md)                    | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16) | -      |
-| form             | **必填**，`useForm` 创建的表单实例，与 Form 一对一绑定                          | [FormInstance](#forminstance)                                                                         | -      |
-| onFinish         | 提交后的回调，执行 `form.submit()` 后触发                                       | `(data, errors: Error[]) => void`                                                                     | -      |
-| beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填                                  | `({ data, errors, schema, ...rest }) => Error[] \| Promise<Error[]>`                                  | -      |
-| onMount          | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)            | `() => void`                                                                                          | -      |
-| displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                  | `'column' \| 'row' \| 'inline'`                                                                       | column |
-| widgets          | 自定义组件，当内置组件无法满足时使用，详见[自定义组件](./../advanced/widget.md) | [Widgets](#widgets)                                                                                   | -      |
-| watch            | 类似于 vue 的 watch 的用法，详见[表单监听](/form-render/advanced/watch)         | [Watch](#watch)                                                                                       | -      |
-| removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                        | `boolean`                                                                                             | false  |
-| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                                      | `boolean`                                                                                             | false  |
-| className        | 顶层 className                                                                  | `string`                                                                                              | -      |
-| style            | 顶层 style                                                                      | `CSSProperties`                                                                                       | -      |
-| column           | 一行展示多少列                                                                  | `number`                                                                                              | 1      |
-| mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                               | `Record<string, string>`                                                                              | -      |
-| disabled         | 禁用全部表单项                                                                  | `boolean`                                                                                             | false  |
-| debugCss         | 用于 css 问题的调整，显示 css 布局提示线                                        | `boolean`                                                                                             | false  |
-| locale           | 展示语言，目前只支持中文、英文                                                  | `'cn' \| 'en'`                                                                                        | cn     |
-| configProvider   | antd 的 configProvider，配置透传                                                | [ConfigProviderProps](https://ant-design.antgroup.com/components/config-provider-cn/#API)             | -      |
-| allCollapsed     | 对象组件是否默认折叠（全局）                                                    | `boolean`                                                                                             | false  |
-| debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启                | `boolean`                                                                                             | false  |
-| validateMessages | 修改默认的校验提示信息                                                          | [ValidateMessages](#validatemessages)                                                                 | -      |
-| debug            | 开启 debug 模式，时时显示表单内部状态，**开发的时候强烈建议打开**               | `boolean`                                                                                             | false  |
-| id               | 表单的 id，一般用于标识一个表单的语义化名称                                     | `string \| number`                                                                                    | -      |
+| 参数             | 描述                                                                                      | 类型                                                                                                  | 默认值 |
+| ---------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------ |
+| schema           | **必填**，描述表单的 schema，详见 [schema 规范](./schema.md)                              | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16) | -      |
+| form             | **必填**，`useForm` 创建的表单实例，与 Form 一对一绑定，详见[Forminstance](#forminstance) | `FormInstance`                                                                                        | -      |
+| onFinish         | 提交后的回调，执行 `form.submit()` 后触发                                                 | `(data, errors: Error[]) => void`                                                                     | -      |
+| beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填                                            | `({ data, errors, schema, ...rest }) => Error[] \| Promise<Error[]>`                                  | -      |
+| onMount          | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)                      | `() => void`                                                                                          | -      |
+| displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                            | `'column' \| 'row' \| 'inline'`                                                                       | column |
+| widgets          | 自定义组件，当内置组件无法满足时使用，详见[Widgets](#widgets)                             | `Record<string, ReactNode>`                                                                           | -      |
+| watch            | 监听表单的数据变化，详见[Watch](#watch)                                                   | `Record<string, (val: any) => void \| { handler:(val:any) => void,immediate?: boolean }>`             | -      |
+| removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                                  | `boolean`                                                                                             | false  |
+| readOnly         | 只读模式，一般用于预览展示，全文 text 展示                                                | `boolean`                                                                                             | false  |
+| className        | 顶层 className                                                                            | `string`                                                                                              | -      |
+| style            | 顶层 style                                                                                | `CSSProperties`                                                                                       | -      |
+| column           | 一行展示多少列                                                                            | `number`                                                                                              | 1      |
+| mapping          | schema 与组件的映射关系表，当内置的表不满足时使用                                         | `Record<string, string>`                                                                              | -      |
+| disabled         | 禁用全部表单项                                                                            | `boolean`                                                                                             | false  |
+| debugCss         | 用于 css 问题的调整，显示 css 布局提示线                                                  | `boolean`                                                                                             | false  |
+| locale           | 展示语言，目前只支持中文、英文                                                            | `'cn' \| 'en'`                                                                                        | cn     |
+| configProvider   | antd 的 configProvider，配置透传                                                          | [ConfigProviderProps](https://ant-design.antgroup.com/components/config-provider-cn/#API)             | -      |
+| allCollapsed     | 对象组件是否默认折叠（全局）                                                              | `boolean`                                                                                             | false  |
+| debounceInput    | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启                          | `boolean`                                                                                             | false  |
+| validateMessages | 修改默认的校验提示信息，详见[ValidateMessages](#validatemessages)                         | `Record<string, string>`                                                                              | -      |
+| debug            | 开启 debug 模式，时时显示表单内部状态，**开发的时候强烈建议打开**                         | `boolean`                                                                                             | false  |
+| id               | 表单的 id，一般用于标识一个表单的语义化名称                                               | `string \| number`                                                                                    | -      |
 
 ### FormInstance
 
