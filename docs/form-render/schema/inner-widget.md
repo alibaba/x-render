@@ -8,7 +8,20 @@ toc: content
 
 # 内置组件
 
-有时，用户希望强制指定一个表单原件用某个内置或自定义的组件来展示，可使用 widget 字段来说明，这个指定的优先级是最高的，被指定的表单项一定会使用此 widget 来渲染，例如下面的 schema 如果不以 widget 指明，会默认用 input 输入框来渲染，但现在会用 select 下拉单选组件来渲染，即使没有下拉选项：
+From-render 内部使用了如下内置组件，根据规则匹配对应组件，例如
+
+```js
+const schema = {
+  // ...
+  // 此 item 会匹配 imageInput 图片输入框
+  img: {
+    type: 'string',
+    format: 'image',
+  },
+};
+```
+
+有时，用户希望强制指定一个表单原件用某个内置或自定义的组件来展示，可使用 widget 字段来说明，例如下面的 item 会用 select 下拉单选组件来渲染，即使没有下拉选项：
 
 ```js
 const schema = {
@@ -16,89 +29,136 @@ const schema = {
   string: {
     title: '下拉选框',
     type: 'string',
-    widget: 'select',
+    widget: 'select', // 会强制使用 select 组件
   }
 },
 ```
 
-## 内置组件
+下面是目前 FormRender 已经支持的内置组件，其中规则的格式为`${type}:${format}?${enum}/${readOnly}`
 
-下面是目前 FormRender 已经支持的内置组件，具体展示详见 [playground](/playground) - 基础控件，列表的展示见[展示的最佳实践](/form-render/advanced/display#列表的展示)
+具体展示详见 [playground](/playground) - 基础控件，列表的展示见[展示的最佳实践](/form-render/advanced/display#列表的展示)
 
-```sh
-# 输入类
-输入框 input
-多行输入框 textarea
-数字输入框 number
-链接输入框 url
-图片输入框 imageInput
+### input
 
-# 日期类
-日期组件 date
-时间组件 time
-日期范围 dateRange
-时间范围 timeRange
+- 组件：输入框
+- 规则：`string`
 
-# 选择类
-是否选择 checkbox
-下拉单选 select
-点击单选 radio
-下拉多选框 multiSelect
-点击多选框 checkboxes
-树形选择 treeSelect
+### textarea
 
-# 其他
-颜色选择 color
-上传组件 upload
-文本（只读展示）html
-滑动输入条 slider
-五星评分 rate
+- 组件：多行输入框
+- 规则：`string:textarea`
 
-# 结构类
-对象 map
-列表 cardList/simpleList/tableList/drawerList/tabList
-```
+### number
 
-## 匹配规则
+- 组件：数字输入框
+- 规则：`integer | number`
 
-几乎所有内置组件都与 schema 有默认匹配规则，左侧为匹配规则（格式为 `type:format?enum/readOnly`），右侧为匹配到的组件
+### url
 
-```js
-export const mapping = {
-  default: 'input',
-  string: 'input',
-  array: 'list',
-  boolean: 'checkbox',
-  integer: 'number',
-  number: 'number',
-  object: 'map',
-  html: 'html',
-  'string:upload': 'upload',
-  'string:url': 'url',
-  'string:dateTime': 'date',
-  'string:date': 'date',
-  'string:time': 'time',
-  'string:textarea': 'textarea',
-  'string:color': 'color',
-  'string:image': 'imageInput',
-  'range:time': 'timeRange',
-  'range:date': 'dateRange',
-  'range:dateTime': 'dateRange',
-  '*?enum': 'radio',
-  '*?enum_long': 'select',
-  'array?enum': 'checkboxes',
-  'array?enum_long': 'multiSelect',
-  '*?readOnly': 'html',
-};
+- 组件：链接输入框
+- 规则：`string:url`
 
-const schema = {
-  // ...
-  // 下面的 item 会匹配到下拉单选
-  string: {
-    title: '单选框',
-    type: 'string',
-    enum: ['a', 'b'],
-    enumNames: ['选项1', '选项2'],
-  },
-};
-```
+### imageInput
+
+- 组件：图片输入框
+- 规则：`string:image`
+
+### date
+
+- 组件：日期组件
+- 规则：`string:dateTime | string:date`
+
+### time
+
+- 组件：时间组件
+- 规则：`string:time`
+
+### dateRange
+
+- 组件：日期范围
+- 规则：`range:date | range:dateTime`
+
+### timeRange
+
+- 组件：时间范围
+- 规则：`range:time`
+
+### checkbox
+
+- 组件：是否选择
+- 规则：`checkbox`
+
+### checkboxes
+
+- 组件：点击多选
+- 规则：`array?enum`
+
+### select
+
+- 组件：下拉单选
+- 规则：`*?enum_long`
+
+### multiSelect
+
+- 组件：下拉多选
+- 规则：`array?enum_long`
+
+### radio
+
+- 组件：点击单选
+- 规则：`*?enum`
+
+### treeSelect
+
+- 组件：树形选择
+- 规则：-
+
+### color
+
+- 组件：颜色选择
+- 规则：`string:color`
+
+### upload
+
+- 组件：上传组件
+- 规则：`string:upload`
+
+### html
+
+- 组件：文本（只读展示）
+- 规则：`html`
+
+### slider
+
+- 组件：滑动输入条
+- 规则：-
+
+### rate
+
+- 组件：五星评分
+- 规则：-
+
+### cardList
+
+- 组件：卡片形式的列表
+- 规则：-
+
+### simpleList
+
+- 组件：列表组件
+- 规则：-
+
+### tableList
+
+- 组件：表格形式的列表组件
+- 规则：-
+
+### drawerList
+
+- 组件：使用抽屉的表格形式的列表组件
+- 规则：-
+
+### tabList
+
+- 组件：tab 形式的列表组件
+- 规则：-
