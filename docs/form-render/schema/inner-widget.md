@@ -1,5 +1,5 @@
 ---
-order: 4
+order: 3
 group:
   order: 3
   title: API
