@@ -16,6 +16,8 @@ toc: content
 | beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填                                            | `({ data, errors, schema, ...rest }) => Error[] \| Promise<Error[]>`                                  | -      |
 | onMount          | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)                      | `() => void`                                                                                          | -      |
 | displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                            | `'column' \| 'row' \| 'inline'`                                                                       | column |
+| labelAlign       | label 标签的文本对齐方式                                                                  | `'left' \| 'right'`                                                                                   | right  |
+| colon            | 是否显示 label 后面的冒号                                                                 | `boolean`                                                                                             | true   |
 | widgets          | 自定义组件，当内置组件无法满足时使用，详见[Widgets](#widgets)                             | `Record<string, ReactNode>`                                                                           | -      |
 | watch            | 监听表单的数据变化，详见[Watch](#watch)                                                   | `Record<string, (val: any) => void \| { handler:(val:any) => void,immediate?: boolean }>`             | -      |
 | removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                                  | `boolean`                                                                                             | false  |

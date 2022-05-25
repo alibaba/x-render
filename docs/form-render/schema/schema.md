@@ -361,6 +361,27 @@ const {
 } = props;
 ```
 
+### order
+
+- 类型：`number`
+- 详细：用于对 `item` 进行排序，值越小越靠前
+
+```js
+const schema = {
+  // ...
+  input1: {
+    title: '输入框',
+    type: 'string',
+    order: 2,
+  },
+  input2: {
+    title: '输入框但是更靠前',
+    type: 'string',
+    order: 1,
+  },
+};
+```
+
 ### placeholder
 
 - 类型：`string`
