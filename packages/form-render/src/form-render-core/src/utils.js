@@ -119,11 +119,11 @@ export function isListType(schema) {
 export function orderProperties(properties, orderKey = 'order') {
   const orderHash = new Map();
   // order不为数字的数据
-  const otherArr = [];
+  const unsortedList = [];
   const insert = item => {
     const [, value] = item;
     if (typeof value[orderKey] !== 'number') {
-      otherArr.push(item);
+      unsortedList.push(item);
       return;
     }
     if (orderHash.has(value[orderKey])) {
@@ -134,10 +134,10 @@ export function orderProperties(properties, orderKey = 'order') {
   };
 
   properties.forEach(item => insert(item));
-  const orderItems = Array.from(orderHash.entries())
-    .sort(([order1], [order2]) => order2 - order1)
+  const sortedList = Array.from(orderHash.entries())
+    .sort(([order1], [order2]) => order1 - order2) // order值越小越靠前
     .flatMap(([, items]) => items);
-  return orderItems.concat(otherArr);
+  return sortedList.concat(unsortedList);
 }
 
 export function extendProperties(properties, key, value) {
