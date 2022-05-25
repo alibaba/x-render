@@ -5,6 +5,7 @@ const RenderObject = ({
   children = [],
   dataIndex = [],
   displayType,
+  labelAlign,
   hideTitle,
 }) => {
   return (
@@ -12,6 +13,7 @@ const RenderObject = ({
       {children.map((child, i) => {
         const FRProps = {
           displayType,
+          labelAlign,
           id: child,
           dataIndex,
           hideTitle,

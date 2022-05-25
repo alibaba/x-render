@@ -161,6 +161,10 @@ export interface FRProps {
   widgets?: any;
   /** 标签元素和输入元素的排列方式，column-分两行展示，row-同行展示，inline-自然顺排，默认`'column'` */
   displayType?: 'column' | 'row' | 'inline';
+  /** 表示是否显示 label 后面的冒号 */
+  colon?: boolean;
+  /** label 标签的文本对齐方式	 */
+  labelAlign?: 'right' | 'left';
   /** 只读模式 */
   readOnly?: boolean;
   /** 禁用模式 */

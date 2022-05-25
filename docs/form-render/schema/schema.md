@@ -257,6 +257,24 @@ export default () => <FR schema={titleTrick} />;
 }
 ```
 
+### order
+
+- 类型：number
+- 详细：用于对 `schema` 进行排序，值越小越靠前：
+
+```js
+"input1": {
+  "title": "输入框",
+  "type": "string",
+  "order": 2
+}
+"input2": {
+  "title": "优先渲染",
+  "type": "string",
+  "order": 1
+}
+```
+
 ### bind
 
 - 类型：string | string[] | false

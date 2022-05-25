@@ -59,9 +59,14 @@
   }
 
   .fr-label-row {
-    text-align: right;
     flex-shrink: 0;
     margin-top: 5px;
+  }
+  .fr-label-align-right {
+    text-align: right;
+  }
+  .fr-label-align-left {
+    text-align: left;
   }
 
   .fr-label-column {
@@ -91,8 +96,8 @@
   }
 
   .fr-label-title.no-colon::after {
-    content: '';
-    margin: 0;
+    content: ' ';
+    margin: 0 10px 0 2px;
   }
 
   .fr-label-object .fr-label-title {
