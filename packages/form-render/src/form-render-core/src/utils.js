@@ -172,6 +172,13 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
         flattenSchema(value, uniqueName, _name, result);
       }
     );
+    Object.entries(schema.properties).forEach(([key, value]) => {
+      const _key = isListType(value) ? key + '[]' : key;
+      const uniqueName = _name === '#' ? _key : _name + '.' + _key;
+      children.push(uniqueName);
+
+      flattenSchema(value, uniqueName, _name, result);
+    });
 
     schema.properties = {};
   }
@@ -189,6 +196,12 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
         flattenSchema(value, uniqueName, _name, result);
       }
     );
+    Object.entries(schema.items.properties).forEach(([key, value]) => {
+      const _key = isListType(value) ? key + '[]' : key;
+      const uniqueName = _name === '#' ? _key : _name + '.' + _key;
+      children.push(uniqueName);
+      flattenSchema(value, uniqueName, _name, result);
+    });
 
     schema.items.properties = {};
   }

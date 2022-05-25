@@ -134,6 +134,7 @@ import Form, { useForm, connectForm } from 'form-render';
 
 ### \<Form \/> (常用 props)
 
+
 | 参数             | 描述                                                                           | 类型                                                                 | 是否必填 | 默认值   |
 | ---------------- | ------------------------------------------------------------------------------ | -------------------------------------------------------------------- | -------- | -------- |
 | id               | 表单的 id，一般用于标识一个表单的语义化名称                                    | `string`/`number`                                                    | 否       |          |
@@ -150,6 +151,7 @@ import Form, { useForm, connectForm } from 'form-render';
 | removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                       | `boolean`                                                            | 否       | false    |
 | debug            | 开启 debug 模式，时时显示表单内部状态，**开发的时候强烈建议打开**              | `boolean`                                                            | 否       | false    |
 | readOnly         | 只读模式，一般用于预览展示，全文 text 展示                                     | `boolean`                                                            | 否       | false    |
+
 
 注 1：
 
