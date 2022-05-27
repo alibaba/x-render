@@ -1,7 +1,7 @@
 ---
 order: 3
 group:
-  order: 3
+  order: 6
   title: API
 toc: content
 ---
