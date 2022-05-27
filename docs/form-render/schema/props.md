@@ -54,11 +54,11 @@ toc: content
 | removeErrorField | 外部手动删除某一个 path 下所有的校验信息            | `(path: Path) => void`                                                                                              |
 | formData         | 表单内部维护的数据，建议使用 getValues/setValues    | `Record<string, any>`                                                                                               |
 
-> react 更新机制导致，同时多次调用 `setSchemaByPath` 无效，所以请使用 `setSchema`，事实上`setSchema` 能完全覆盖 `setSchemaByPath` 的场景
+> react 更新机制导致，同时多次调用 `setSchemaByPath` 无效，所以请使用 `setSchema`，事实上`setSchema` 能完全覆盖 `setSchemaByPath` 的场景。
 
 ### Widgets
 
-当内置组件不能满足需求时，可以传入自定义组件
+当内置组件不能满足需求时，可以传入自定义组件。
 
 ```jsx | pure
 import { Cascader } from 'antd';
@@ -106,7 +106,7 @@ const watch: WatchProperties = {
 
 ### ValidateMessages
 
-Form-Render 为验证提供了默认的错误提示信息，你可以通过配置 `validateMessages` 属性，修改对应的提示模板。一种常见的使用方式，是配置国际化提示信息：
+Form-Render 为验证提供了默认的错误提示信息，你可以通过配置 `validateMessages` 属性，修改对应的提示模板。一种常见的使用方式，是配置国际化提示信息。
 
 ```jsx | pure
 const validateMessages = {
@@ -117,11 +117,11 @@ const validateMessages = {
 <Form validateMessages={validateMessages} />;
 ```
 
-目前可以用的转义字段为 `${title}`，`${min}`，`${max}`，`${len}`，`${pattern}`, 如果有更多需求请提 [issue](https://github.com/alibaba/x-render/issues/new/choose)
+目前可以用的转义字段为 `${title}`，`${min}`，`${max}`，`${len}`，`${pattern}`, 如果有更多需求请提 [issue](https://github.com/alibaba/x-render/issues/new/choose)。
 
 ### Path
 
-`path` 代表一个表单项在 schema 中的路径，在调用 `form.setSchemaByPath`，`watch` 等 api 时，需要用到
+`path` 代表一个表单项在 schema 中的路径，在调用 `form.setSchemaByPath`，`watch` 等 api 时，需要用到。
 
 ```js
 const schema = {
@@ -196,7 +196,7 @@ type Error = {
 
 ### UseForm
 
-`useForm` 用于创建表单实例，使用时需要创建实例，并传入与其对应的表单上
+`useForm` 用于创建表单实例，使用时需要创建实例，并传入与其对应的表单上。
 
 ```jsx | pure
 import Form, { useForm } from 'form-render';
@@ -207,7 +207,7 @@ const Demo = () => {
 };
 ```
 
-如果是 class 组件可以使用 `connectForm` ，作用与 `useForm` 相同
+如果是 class 组件可以使用 `connectForm` ，作用与 `useForm` 相同。
 
 ```jsx | pure
 import Form, { connectForm } from 'form-render';
@@ -219,7 +219,7 @@ const Demo = ({ form }) => {
 export default connectForm(Demo);
 ```
 
-`useForm` 可以传入以下参数，详见[表单健康度 & 提效](./../advanced/measure.md)
+`useForm` 可以传入以下参数，详见[表单健康度 & 提效](./../advanced/measure.md)。
 
 ```jsx | pure
 const form = useForm({
