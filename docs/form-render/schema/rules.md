@@ -49,6 +49,26 @@ toc: content
    },
    ```
 
+[参考 playground-动态函数](/playground)
+
+动态检验如果使用[JSON.stringify](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)序列化会丢失我们需要的函数,我们基于 [serialize-javascript](https://github.com/yahoo/serialize-javascript.git)提供
+
+```js
+import {
+  deserialize,
+  serialize,
+  serializeToDraft,
+  jsserialize,
+} from 'form-render';
+
+// deserialize 反序列化，类 JSON.parse()
+// serialize 序列化，类 JSON.stringify() 内部会过滤掉undefined
+// serializeToDraft 序列化，类 JSON.stringify() 内部会过滤掉undefined，并且格式化 space: 2
+// jsserialize, serialize-javascript 库的原样导出
+
+// 在需要把schema保存到接口的时候调用 serialize、在schema解析的时候deserialize进行解析即可
+```
+
 3. 作为 FormRender 书写的特别规则，由于以下个字段同时涉及到了展示和校验，所以已经放在“基础属性”中，而不需要在 rules 中特别注明
 
    ```text

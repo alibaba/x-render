@@ -1,11 +1,13 @@
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import copyTOClipboard from 'copy-text-to-clipboard';
+
 import {
   mapping as defaultMapping,
+  serializeToDraft,
   widgets as defaultWidgets,
 } from 'form-render';
-import React, {
+import {
   forwardRef,
   useEffect,
   useImperativeHandle,
@@ -164,7 +166,9 @@ function Provider(props, ref) {
     if (!isNewVersion) {
       displaySchema = newSchemaToOld(displaySchema);
     }
-    displaySchemaString = JSON.stringify(displaySchema, null, 2);
+    // displaySchemaString = JSON.stringify(displaySchema, null, 2);
+    // 支持直接保存函数之后(解决validtor不能正常保存的问题)，这里因为导入导出的问题，序列化也用内置的api序列化
+    displaySchemaString = serializeToDraft(displaySchema);
   } catch (error) {}
 
   const getValue = () => displaySchema;

@@ -1,6 +1,12 @@
 {
   "name": "root",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/x-render.git",
+    "branch": "master",
+    "platform": "github"
+  },
   "workspaces": [
     "packages/*",
     "widgets/*",
@@ -9,18 +15,26 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "doc": "dumi build",
+    "changelog": "lerna-changelog",
+    "clean": "lerna clean -y",
     "predeploy": "npm run build && npm run doc",
     "deploy": "gh-pages -d docs-dist",
-    "start": "PORT=8080 dumi dev",
-    "size": "ANALYZE=1 dumi build",
-    "clean": "lerna clean -y",
-    "changelog": "lerna-changelog",
-    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
+    "doc": "dumi build",
     "format": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
+    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
+    "size": "ANALYZE=1 dumi build",
+    "start": "cross-env PORT=8080 dumi dev",
     "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:clean": "jest --clearCache"
+    "test:clean": "jest --clearCache",
+    "test:coverage": "jest --coverage"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
@@ -40,6 +54,7 @@
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-no-debugger": "^0.0.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "cross-env": "^7.0.3",
     "dumi": "1.1.40",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
@@ -67,19 +82,5 @@
     "ts-node": "^10.5.0",
     "typescript": "^4.6.2",
     "yorkie": "^2.0.0"
-  },
-  "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/x-render.git",
-    "branch": "master",
-    "platform": "github"
   }
 }

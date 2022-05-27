@@ -1,5 +1,5 @@
 import { Radio, Select, Slider, Switch } from 'antd';
-import React, { Component } from 'react';
+import { Component } from 'react';
 import './index.css';
 // import GithubCorner from 'react-github-corner';
 import Demo from './main';
@@ -57,6 +57,7 @@ class Root extends Component {
             <Radio value="simplest">最简样例</Radio>
             <Radio value="basic">基础控件</Radio>
             <Radio value="format">校验</Radio>
+            <Radio value="dynamic-function">动态函数</Radio>
             <Radio value="new-feature">新功能</Radio>
             <Radio value="function">复杂联动</Radio>
             <Radio value="input">个性输入框</Radio>
