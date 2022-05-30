@@ -233,7 +233,7 @@ function App({
       // setErrorFields,
       // removeErrorField,
     }),
-    []
+    [widgets]
   );
 
   useEffect(() => {
