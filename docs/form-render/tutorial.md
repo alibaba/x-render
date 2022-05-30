@@ -4,15 +4,17 @@ title: 教程
 toc: content
 ---
 
-<!-- 施工中。。。 -->
-
 # 教程
 
-> 建议配合 playground 使用此教程。
+FormRender 是一个 Schema 驱动的表单组件。只需要传入一个包含各种描述信息的 Schema，就能渲染出一个完整的表单。
+
+我们从两个 FormRender 的必填属性：`schema` 和 `form` 开始学习 FormRender。前者用来描述表单，FormRender 根据其提供的信息渲染一个表单出来，是 FormRender 的核心。后者用来操作表单，比如提交，更改表单数据，状态等。只要熟练掌握这两个参数，就能满足大多数使用场景了。
+
+> TIP：在学习的过程中，随时进入 [PlayGround](/playground)，巩固练习。
 
 ## Schema
 
-`schema` 是 FormRender 的核心概念，FormRender 会根据 `schema` 的描述来渲染表单。通常情况下，`schema` 是一个 js 对象，结构如下。
+通常情况下，`schema` 是一个 js 对象，一个简单的 `schema` 的结构如下。
 
 ```js
 const schema = {
@@ -28,12 +30,12 @@ const schema = {
 };
 ```
 
-只要将这个 `schema` 和另一个必传参数，表单实例，`form` 传入 FormRender，就能得到这样一个简单的表单。
+只要将这个 `schema` 和另一个必传参数，表单实例，`form` 传入 FormRender，就能得到一个简单的表单。
 
 ```jsx
 /**
  * transform: true
- * defaultShowCode: false
+ * defaultShowCode: true
  */
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
@@ -64,6 +66,10 @@ export default Demo;
 我们可以按照这个格式添加更多的表单项，比如我们添加“日期”和“地区”这两个新的表单项。
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
 
@@ -107,11 +113,11 @@ const Demo = () => {
 export default Demo;
 ```
 
-可以看到，schema 的结构非常简洁明了，只需要填写少量的配置信息就可以渲染出一个完整的表单。你可以在 [API](./api/schema.md#item) 中找到所有的配置项。FormRender 会根据你提供的信息自动选择合适的组件去渲染。 
+可以看到，`schema` 的结构非常简洁明了，只需要填写少量的配置信息就可以渲染出一个完整的表单。FormRender 会根据你提供的信息自动选择合适的组件去渲染。 
 
-除了让 FormRender 自动匹配所需的组件外，你还可以通过 `widget` 字段手动指定渲染使用的组件。比如我们可以添加 `widget: 'select'` 将之前地区的单选组件变为下拉选择。所有可用的组件见 [内置组件](./api/inner-widget.md)。
+> 你可以在 [API](./api/schema.md#item) 中找到所有的配置项。
 
-> 如果自定义组件不能满足需求，可以使用 [自定义组件](./advanced/widget.md)。
+除了让 FormRender 自动匹配所需的组件外，你还可以通过 `widget` 字段手动指定渲染使用的组件。比如我们可以添加 `widget: 'select'` 将之前地区的单选组件变为下拉选择。FormRender 有丰富的 [内置组件](./api/inner-widget.md) 可供使用，你可以按需要选择合适的内置组件。如果内置组件不能满足需求，可以使用 [自定义组件](./advanced/widget.md)。
 
 ```js
 const schema = {
@@ -127,11 +133,11 @@ const schema = {
 }
 ```
 
-## 提交与回填
+## Form
 
 FormRender 使用 `useForm`，管理表单状态。你必须将 `useForm` 返回的 form 实例传入 FormRender。
 
-下面我们尝试提交刚才创建的表单。我们只需要调用 `form.submit()` 这个表单方法。之后，FormRender 会主动校验表单，触发 `onFinish` 回调，并传入表单数据。
+如果想提交刚才创建的表单，我们只需要在合适的位置调用 `form.submit()` 这个方法。FormRender 会主动校验表单，触发 `onFinish` 回调，并传入表单数据。
 
 ```jsx
 import React from 'react';
@@ -239,28 +245,6 @@ const Demo = () => {
 export default Demo;
 ```
 
-## Bind
+## 总结
 
-在表单数据的提交和回填中，经常会遇到后端字段与字段不符的情况，尤其是对于日期范围的数据。FormRender 考虑到了这种情况，加入了 `bind` 字段来自动处理提交和回填时数据字段不匹配的问题。
-
-例如在上面的例子中，后端要求日期的值需要分成两个字段 `startDate`，`endDate` 。也就是说，在提交时要把 `date` 分成两个部分，在回填时，又要将两个日期合并到一起。此时，就可以使用 `bind` 非常简单的解决这个问题。
-
-```js
-const schema = {
-  // ...
-  date: {
-    title: '日期',
-    type: 'range',
-    format: 'date',
-    placeholder: ['请选择开始日期', '请选择结束日期'],
-    // 没错，就是这么简单！
-    bind: ['startDate', 'endDate'],
-  }
-}
-```
-
-## 更多配置
-
-FormRender 使用 antd 组件作为内置组件的原料，所以支持传入所有 antd 组件的 props。方便对表单进行更细致的调整
-
-## 联动
+到此为止，你已经了解了 FormRender 的基本使用了，建议多多去 [PlayGround](/playground) 转转，能帮助你快速熟悉 `schema` 的写法。如果想继续了解表单联动、自定义组件等进阶使用，请前往 **高级用法**。
