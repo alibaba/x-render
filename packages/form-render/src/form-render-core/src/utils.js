@@ -142,7 +142,14 @@ export function orderProperties(properties, orderKey = 'order') {
 
 export function extendProperties(properties, key, value) {
   Object.keys(properties).forEach(item => {
-    properties[item][key] = value;
+    // properties[item][key] = value;
+    const hiddenStatus = properties[item][key];
+    if (isExpression(hiddenStatus)) {
+      const funcBody = hiddenStatus.substring(2, expression.length - 2);
+      properties[item][key] = `{{ (${value}) || (${funcBody}) }}`
+    } else {
+      properties[item][key] = `{{ (${value}) || ${!!hiddenStatus} }}`
+    }
   });
 }
 
@@ -159,8 +166,14 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   const children = [];
   if (isObjType(schema)) {
     // 若parent的hidden为true，则子项需继承hidden属性
-    if (schema.hidden) {
-      extendProperties(schema.properties, 'hidden', true);
+    // if (schema.hidden) {
+    //   extendProperties(schema.properties, 'hidden', true);
+    // }
+    if (isExpression(schema.hidden)) {
+      const funcBody = schema.hidden.substring(2, expression.length - 2)
+      extendProperties(schema.properties, 'hidden', funcBody)
+    } else if (typeof schema.hidden === 'boolean') {
+      extendProperties(schema.properties, 'hidden', schema.hidden)
     }
 
     orderProperties(Object.entries(schema.properties)).forEach(
@@ -177,8 +190,14 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   }
   if (isListType(schema)) {
     // 若parent的hidden为true，则子项需继承hidden属性
-    if (schema.hidden) {
-      extendProperties(schema.items.properties, 'hidden', true);
+    // if (schema.hidden) {
+    //   extendProperties(schema.items.properties, 'hidden', true);
+    // }
+    if (isExpression(schema.hidden)) {
+      const funcBody = schema.hidden.substring(2, expression.length - 2)
+      extendProperties(schema.items.properties, 'hidden', funcBody)
+    } else if (typeof schema.hidden === 'boolean') {
+      extendProperties(schema.items.properties, 'hidden', schema.hidden)
     }
 
     orderProperties(Object.entries(schema.items.properties)).forEach(
