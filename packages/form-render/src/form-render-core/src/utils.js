@@ -140,12 +140,6 @@ export function orderProperties(properties, orderKey = 'order') {
   return sortedList.concat(unsortedList);
 }
 
-export function extendProperties(properties, key, value) {
-  Object.keys(properties).forEach(item => {
-    properties[item][key] = value;
-  });
-}
-
 // TODO: more tests to make sure weird & wrong schema won't crush
 export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   // 排序
@@ -158,11 +152,6 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   }
   const children = [];
   if (isObjType(schema)) {
-    // 若parent的hidden为true，则子项需继承hidden属性
-    if (schema.hidden) {
-      extendProperties(schema.properties, 'hidden', true);
-    }
-
     orderProperties(Object.entries(schema.properties)).forEach(
       ([key, value]) => {
         const _key = isListType(value) ? key + '[]' : key;
@@ -176,11 +165,6 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
     schema.properties = {};
   }
   if (isListType(schema)) {
-    // 若parent的hidden为true，则子项需继承hidden属性
-    if (schema.hidden) {
-      extendProperties(schema.items.properties, 'hidden', true);
-    }
-
     orderProperties(Object.entries(schema.items.properties)).forEach(
       ([key, value]) => {
         const _key = isListType(value) ? key + '[]' : key;

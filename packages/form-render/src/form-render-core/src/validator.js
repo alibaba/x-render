@@ -133,6 +133,7 @@ export const validateAll = ({
 }) => {
   const paths = dataToKeys(formData);
   const allPaths = getAllPaths(paths, flatten);
+
   // console.log(formData, dataToKeys(formData), 'dataToKeysdataToKeys');
   // console.log('allPaths', allPaths);
   const promiseArray = allPaths.map(path => {
@@ -141,6 +142,16 @@ export const validateAll = ({
       const item = flatten[id] || flatten[`${id}[]`];
       const singleData = get(formData, path);
       let schema = item.schema || {};
+
+      // 若parent的hidden属性为true，则子项需继承 hidden
+      const relatedPaths = getRelatedPaths(path, flatten);
+      if (relatedPaths.length > 1) {
+        const parentPath = relatedPaths[relatedPaths.length - 1];
+        if (flatten[parentPath].schema.hidden) {
+          schema.hidden = true;
+        }
+      }
+
       const finalSchema = parseSchemaExpression(schema, formData, path);
       return validateSingle(singleData, finalSchema, path, options); // is a promise
     } else {
