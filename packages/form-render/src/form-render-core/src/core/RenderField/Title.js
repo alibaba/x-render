@@ -29,13 +29,30 @@ const Description = ({ displayType, schema }) => {
   }
 };
 
-const Title = ({ labelClass, labelStyle, schema, displayType }) => {
+const Title = ({
+  labelClass,
+  labelStyle,
+  schema,
+  displayType,
+  renderTitle,
+}) => {
   const { displayType: globalDisplayType, readOnly, colon } = useStore2();
   const { title, required, type } = schema;
   const isObjType = type === 'object';
 
   let _displayType =
     schema.displayType || displayType || globalDisplayType || 'column';
+
+  if (renderTitle) {
+    return renderTitle({
+      labelClass,
+      labelStyle,
+      schema,
+      displayType: _displayType,
+      readOnly,
+      colon,
+    });
+  }
 
   return (
     <div className={labelClass} style={labelStyle}>

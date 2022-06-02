@@ -21,7 +21,7 @@ npm start
 - 提交前注意必须**格式化**。提交前注意必须**格式化**。提交前注意必须**格式化**。请安装 prettier 插件，或者在提交前执行
 
 ```sh
-npm run prettier
+npm run format
 ```
 
 #### 4. 重新安装依赖

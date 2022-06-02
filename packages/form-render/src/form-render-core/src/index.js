@@ -54,6 +54,7 @@ function App({
   column,
   removeHiddenData = false,
   globalProps = {},
+  renderTitle,
   ...rest
 }) {
   try {
@@ -218,6 +219,7 @@ function App({
       widgets,
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
+      renderTitle,
       ...form,
       // setEditing,
       // touchKey,

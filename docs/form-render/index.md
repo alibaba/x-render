@@ -236,6 +236,7 @@ import Form, { useForm, connectForm } from 'form-render';
 | labelAlign       | 	label 标签的文本对齐方式                                                  | `string('left' / 'right')`                                           | 否       | 'right' |
 | colon            | 表示是否显示 label 后面的冒号                                              | `boolean`                                                             | 否       | true |
 | widgets          | 自定义组件，当内置组件无法满足时使用                                           | `object`                                                             | 否       | {}       |
+| renderTitle          | 自定义表单标题渲染                                          | `function`                                                             | 否       |        |
 | watch            | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                                             | 否       | {}       |
 | removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                       | `boolean`                                                            | 否       | false    |
 | debug            | 开启 debug 模式，时时显示表单内部状态，**开发的时候强烈建议打开**              | `boolean`                                                            | 否       | false    |
