@@ -36,8 +36,14 @@ const RenderField = props => {
     locale,
     watch,
   } = useStore2();
-  const { onValuesChange, onItemChange, setEditing, touchKey, _setErrors } =
-    useTools();
+  const {
+    onValuesChange,
+    onItemChange,
+    setEditing,
+    touchKey,
+    _setErrors,
+    renderTitle,
+  } = useTools();
   const formDataRef = useRef();
   formDataRef.current = formData;
   // console.log('<renderField>', $id);
@@ -120,6 +126,7 @@ const RenderField = props => {
     labelStyle: labelStyle,
     schema: _schema,
     displayType,
+    renderTitle,
   };
 
   const messageProps = {
