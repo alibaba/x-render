@@ -2,130 +2,148 @@
  * transform: true
  * defaultShowCode: true
  */
-import { Button, message, Space } from 'antd';
+import { Button, Space } from 'antd';
 import FormRender, { useForm } from 'form-render';
-import React, { useEffect, useState } from 'react';
-import { fakeApi } from './advanced/utils';
+import React from 'react';
 
 const Demo = () => {
   const form = useForm();
-  const [schema, setSchema] = useState({});
 
-  const getRemoteData = () => {
-    fakeApi('xxx/getForm').then(_ => {
-      form.setValues({ input1: 'hello world', select1: 'c' });
-    });
-  };
-
-  const test = {
+  const schema = {
     type: 'object',
+    labelWidth: 120,
+    displayType: 'row',
+    column: 1,
     properties: {
-      input1: {
-        title: '简单输入框',
-        type: 'string',
-        required: true,
-      },
-      input2: {
-        title: '简单输入框',
-        type: 'string',
-        format: 'color',
-        required: true,
-      },
-      b1: {
-        title: '判断',
-        type: 'boolean',
-      },
-      multiSelect: {
-        title: '多选',
-        description: '下拉多选',
-        type: 'array',
-        required: true,
-        items: {
-          type: 'string',
-        },
-        enum: ['A', 'B', 'C'],
-        enumNames: ['杭州', '武汉', '湖州'],
-        widget: 'multiSelect',
-      },
-      select1: {
-        title: '单选',
-        type: 'string',
-        enum: ['a', 'b', 'c'],
-        enumNames: ['早', '中', '晚'],
-      },
-    },
-  };
-
-  const test1 = {
-    displayType: 'column',
-    type: 'object',
-    properties: {
-      dateName: {
-        title: '时间选择',
-        type: 'string',
-        format: 'date',
-        required: true,
-      },
-      selectName: {
-        title: '单选',
-        type: 'string',
-        enum: ['a', 'b', 'c'],
-        enumNames: ['早', '中', '晚'],
-        widget: 'select',
-      },
-      inputName: {
-        title: '简单输入框',
-        type: 'string',
-        required: true,
-      },
-      inputName2: {
-        title: '简单输入框',
-        type: 'string',
-      },
-      inputName3: {
-        title: '简单输入框',
-        type: 'string',
-      },
-      listName: {
-        title: '对象数组',
-        description: '对象数组嵌套功能',
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            selectName: {
-              title: '单选',
-              type: 'string',
-              enum: ['a', 'b', 'c'],
-              enumNames: ['早', '中', '晚'],
-              widget: 'select',
-            },
-            inputName: {
-              title: '简单输入框',
-              type: 'string',
-            },
-            objectName: {
-              title: '对象',
-              description: '这是一个对象类型',
+      airlineData: {
+        title: '',
+        description: '',
+        type: 'object',
+        properties: {
+          airlineCode: {
+            title: '航司',
+            type: 'string',
+            enum: ['6J', '7G', 'FR', 'MM', 'PC', 'RS', 'TW'],
+            enumNames: [
+              '天网航空',
+              '星悦航空',
+              'Ryanair',
+              '乐桃航空',
+              '飞马航空',
+              '首尔航空',
+              '德威航空',
+            ],
+            widget: 'select',
+            description: '',
+            required: true,
+            placeholder: '选择航司',
+            labelWidth: 0,
+            displayType: 'column',
+          },
+          funcList: {
+            title: '代理',
+            description: '',
+            type: 'array',
+            items: {
               type: 'object',
               properties: {
-                radioName: {
-                  title: '单选radio',
+                bizType: {
+                  title: '功能类型',
                   type: 'string',
-                  enum: ['a', 'b', 'c'],
-                  enumNames: ['早', '中', '晚'],
-                  widget: 'radio',
+                  enum: [
+                    'Airline',
+                    'Book',
+                    'FlightShopping',
+                    'FlightPrice',
+                    'BookAndPayment',
+                    'OrderDetail',
+                    'CancelOrder',
+                  ],
+                  enumNames: [
+                    '航线获取',
+                    '机票预定',
+                    '机票报价',
+                    '机票询价',
+                    '预定并支付',
+                    '订单详情',
+                    '关闭订单',
+                  ],
+                  widget: 'select',
+                  required: true,
+                  displayType: 'column',
                 },
-                dateName: {
-                  title: '时间选择',
-                  type: 'string',
-                  format: 'date',
+                groupConfigs: {
+                  title: '代理分组',
+                  description: '',
+                  type: 'array',
+                  items: {
+                    type: 'object',
+                    properties: {
+                      groupId: {
+                        title: '代理',
+                        type: 'string',
+                        enum: ['a', 'b', 'c'],
+                        enumNames: ['早', '中', '晚'],
+                        widget: 'select',
+                        required: true,
+                        labelWidth: 55,
+                        width: '30%',
+                      },
+                      flag: {
+                        title: '标签',
+                        type: 'string',
+                        enum: ['a', 'b', 'c'],
+                        enumNames: ['早', '中', '晚'],
+                        widget: 'select',
+                        labelWidth: 55,
+                        width: '30%',
+                      },
+                      weight: {
+                        title: '权重',
+                        type: 'number',
+                        default: 1,
+                        labelWidth: 55,
+                        width: '30%',
+                      },
+                    },
+                  },
+                  required: true,
+                  props: {
+                    foldable: true,
+                  },
+                  displayType: 'row',
                 },
-                inputName: {
-                  title: '简单输入框',
+                url: {
+                  title: '测试链接',
                   type: 'string',
+                  required: true,
+                  props: {},
+                  pattern: '',
+                  displayType: 'column',
+                },
+                method: {
+                  title: '请求类型',
+                  type: 'string',
+                  enum: ['GET', 'POST'],
+                  enumNames: ['GET', 'POST'],
+                  widget: 'select',
+                  default: 'GET',
+                  required: true,
+                  displayType: 'column',
+                },
+                headers: {
+                  title: '请求头',
+                  type: 'string',
+                  format: 'textarea',
+                  placeholder: '请输入json格式的请求头信息',
+                  props: {},
+                  displayType: 'column',
                 },
               },
+            },
+            required: true,
+            props: {
+              foldable: true,
             },
           },
         },
@@ -133,36 +151,14 @@ const Demo = () => {
     },
   };
 
-  // const onMount = () => {
-  //   setSchema(test);
-  // };
-
-  useEffect(() => {
-    setSchema(test1);
-  }, []);
-
   const onFinish = (data, errors) => {
-    if (errors.length > 0) {
-      message.error(
-        '校验未通过：' + JSON.stringify(errors.map(item => item.name))
-      );
-    } else {
-      fakeApi('xxx/submit', data).then(_ => message.success('提交成功！'));
-    }
+    console.log(data, errors);
   };
 
   return (
     <div>
-      <FormRender
-        form={form}
-        schema={schema}
-        debug
-        theme="1"
-        // onMount={onMount}
-        onFinish={onFinish}
-      />
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
       <Space>
-        <Button onClick={getRemoteData}>加载服务端数据</Button>
         <Button type="primary" onClick={form.submit}>
           提交（见console）
         </Button>
