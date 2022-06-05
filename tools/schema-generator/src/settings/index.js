@@ -709,7 +709,7 @@ export const layouts = [
             type: 'string',
           },
           hideMove: {
-            title: '隐藏上下移动',
+            title: '隐藏上下移动按钮',
             type: 'string',
           },
         },
