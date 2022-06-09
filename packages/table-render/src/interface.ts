@@ -24,8 +24,6 @@ export interface TableContext<RecordType> {
 
 export type ProColumnsType<T extends object = any> = Array<
   ColumnsType<T>[number] & {
-    /** 是否自动缩略 */
-    ellipsis?: boolean;
     /** 是否支持复制 */
     copyable?: boolean;
     /** 值的类型 */
