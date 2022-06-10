@@ -217,6 +217,7 @@ columns 为 antd 已有的 props，支持 antd 所有的 [columns](https://ant.d
 
 | 属性      | 描述                                                | 类型                                                  | 默认值 |
 | --------- | --------------------------------------------------- | ----------------------------------------------------- | ------ |
+| ellipsis  | 是否自动缩略                                        | `boolean`                                               | -      |
 | copyable  | 是否支持复制                                        | `boolean`                                               | -      |
 | valueType | 值的类型，详见 [ValueType](#valuetype)                 | `'text' \| 'money' \| 'date' \| 'dateTime'` | text |
 | enum      | 当前列值的枚举，详见[Enum](#enum) | `object`                                              | -      |
