@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.3.4
+
+- [+] TS 类型定义删除`ellipsis`
+
 ### 1.3.3
 
 - [+] 修复 `date` 和 `dateTime` 未判空的 bug
