@@ -1,14 +1,11 @@
-import { Collapse } from 'antd';
+import { Collapse, Card } from 'antd';
 import React, { useEffect, useState } from 'react';
-// import { useStore2 } from '../../hooks';
+import { useStore2 } from '../../form-render-core/src/hooks';
 const { Panel } = Collapse;
 
-export default function Map({ children, title, schema, ...rest }) {
-  const { theme, displayType, allCollapsed } = {}; // TODO!
+export default function Map({ children, title, schema }) {
   const [collapsed, setCollapsed] = useState(schema.collapsed || false);
-  // useEffect(() => {
-  //   setCollapsed(allCollapsed);
-  // }, [allCollapsed]);
+  const { theme } = useStore2();
 
   useEffect(() => {
     if (schema.hasOwnProperty('collapsed')) {
@@ -41,22 +38,13 @@ export default function Map({ children, title, schema, ...rest }) {
   // }
 
   // 新增卡片视图
-  // if (theme == '2') {
-  //   const { id } = rest.schema;
-  //   return (
-  //     <div class="fr-theme-card-wrap">
-  //       <div>
-  //         {/* title 容器的 id，用来加锚点用 */}
-  //         <div id={id || title} class="fr-theme-card-title">
-  //           {title}
-  //         </div>
-  //         <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
-  //           {children}
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  if (theme === 'card') {
+    return (
+      <Card title={title} className="fr-theme-card-wrap">
+        {children}
+      </Card>
+    );
+  }
 
   const toggle = keyList => {
     if (keyList.length > 0) {
