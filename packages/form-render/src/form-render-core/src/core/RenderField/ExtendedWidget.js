@@ -41,7 +41,6 @@ const ExtendedWidget = ({
     setErrorFields,
     removeErrorField,
   } = useTools();
-  console.log('===> formData', formData);
 
   const { globalProps } = useStore();
 
