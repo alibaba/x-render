@@ -40,7 +40,7 @@ export default function Map({ children, title, schema }) {
   // 新增卡片视图
   if (theme === 'card') {
     return (
-      <Card title={title} className="fr-theme-card-wrap">
+      <Card id={title} title={title} className="fr-theme-card-wrap">
         {children}
       </Card>
     );
