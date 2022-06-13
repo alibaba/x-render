@@ -108,6 +108,13 @@ label 的宽度，数字值单位为 px，也可使用 `'20%'/'2rem'` 等，写�
 
 <Alert> 请不要 bind 一个数组结构下面的字段，目前没有对此进行处理，所以会无效（在未来这个限制会解除）。</Alert>
 
+### theme
+
+- 类型：`string`
+- 值: `default | card | tile`，详见[这里](/form-render/advanced/display#主题设置)
+
+设置嵌套表单的主题样式
+
 ### className
 
 - 类型：`string`
