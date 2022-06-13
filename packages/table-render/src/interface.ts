@@ -47,6 +47,7 @@ export interface TableRenderProps<RecordType extends Object = any>
   toolbarAction?: boolean;
   /** 切换分页时是否需要请求接口 */
   pageChangeWithRequest?: boolean;
+  onTabChange?: () => any;
 }
 
 export interface TableState<RecordType> {

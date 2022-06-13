@@ -1,5 +1,10 @@
 # Changelog
 
+### 1.3.5
+
+- [!] 修复全屏模式下，antd `Drowndown` 组件不显示的 bug
+- [+] Table 组件对外暴露 onTabChange 方法
+
 ### 1.3.4
 
 - [+] TS 类型定义删除`ellipsis`
