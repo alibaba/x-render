@@ -1,4 +1,4 @@
-import { Collapse, Card } from 'antd';
+import { Card, Collapse } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useStore2 } from '../../form-render-core/src/hooks';
 const { Panel } = Collapse;
