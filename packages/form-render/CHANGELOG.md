@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.12.0
+
+- [+] `schema` 新增`theme` 字段，支持切换嵌套表单的[主题样式](https://xrender.fun/form-render/advanced/display#%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE)。
+
 ## 1.11.3
 
 - [!] `schema` 中存在`type:array` 时，继承 hidden 属性时做兼容处理。
