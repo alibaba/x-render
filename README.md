@@ -167,9 +167,6 @@
 
 - 如果你觉得 XRender 还不错，可以通过 [Star](https://github.com/alibaba/form-render/stargazers) 来表示你的喜欢
 - 在公司或个人项目中使用 XRender，并帮忙推广给伙伴使用
-- 加入钉钉聊天群帮忙解答使用问题
-
-  <img src=https://img.alicdn.com/imgextra/i4/O1CN017IBm0t1qv9gou9qW9_!!6000000005557-2-tps-1170-1530.png width=250/>
 
 ## 贡献
 
