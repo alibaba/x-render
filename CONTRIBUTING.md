@@ -11,6 +11,8 @@ yarn
 npm run build
 # 将文档网站跑起来
 npm start
+# windows环境
+npm run start-win
 ```
 
 #### 3. 进入文档网站了，如何开发呢？
