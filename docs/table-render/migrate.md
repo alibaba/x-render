@@ -1,6 +1,7 @@
 ---
 order: 3
 title: 0.x 到 1.0
+hide: true
 ---
 
 #### 对于之前使用 0.x 的同学，考虑到代码使用合理性，我们对于 TableRender 1.0 有如下更新
