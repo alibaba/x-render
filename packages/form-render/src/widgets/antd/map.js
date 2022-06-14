@@ -73,7 +73,12 @@ export default function Map({ children, title, schema }) {
 
   return (
     <div className="w-100">
-      <Collapse activeKey={collapsed ? [] : ['1']} onChange={toggle}>
+      <Collapse
+        activeKey={collapsed ? [] : ['1']}
+        onChange={toggle}
+        bordered={theme !== 'collapse:pure'}
+        ghost={theme === 'collapse:ghost'}
+      >
         <Panel
           header={
             <span style={{ fontSize: 16, fontWeight: 500 }}>

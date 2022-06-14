@@ -372,9 +372,9 @@ export default Demo;
 
 ### 主题设置
 
-对于嵌套类型的表单，我们内置了三种主题，分别为 `default | card | tile `，default 为 antd 的折叠面板组件。
+对于嵌套类型的表单，我们内置了三种主题，分别为 `collapse | card | tile `, 默认为 `collapse` 主题
 
-1. `theme: 'default'` ，默认样式
+1. 默认样式：`theme: 'collapse'` ，支持`无边框模式: 'collapse:pure'`、`幽灵模式:'collapse:ghost'`
 
 ```jsx
 import React from 'react';
@@ -384,11 +384,53 @@ const schema = {
   type: 'object',
   properties: {
     objectName: {
-      title: '对象',
+      title: '默认样式',
       bind: 'obj',
       description: '这是一个对象类型',
       type: 'object',
-      collapsed: false,
+      collapsed: true,
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+        },
+      },
+    },
+    objectName2: {
+      title: '无边框样式',
+      bind: 'obj',
+      description: '这是一个对象类型',
+      type: 'object',
+      collapsed: true,
+      theme: 'collapse:pure',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+        },
+      },
+    },
+    objectName3: {
+      title: '幽灵模式',
+      bind: 'obj',
+      description: '这是一个对象类型',
+      type: 'object',
+      collapsed: true,
+      theme: 'collapse:ghost',
       properties: {
         input1: {
           title: '简单输入框',
@@ -413,7 +455,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-2. `theme: 'card'`，卡片样式
+2. 卡片模式： `theme: 'card'`
 
 ```jsx
 import React from 'react';
@@ -491,7 +533,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-3. `theme: 'tile'`，平铺样式
+3. 平铺模式：`theme: 'tile'`
 
 ```jsx
 import React from 'react';
