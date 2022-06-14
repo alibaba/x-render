@@ -78,3 +78,7 @@ npm run beta
 # ID 为 pr 的 id
 git fetch origin pull/ID/head && git checkout FETCH_HEAD
 ```
+
+#### 9. 编辑文档
+
+编辑文档请参考 [文档规范](https://github.com/alibaba/x-render/wiki/%E6%96%87%E6%A1%A3%E8%A7%84%E8%8C%83)

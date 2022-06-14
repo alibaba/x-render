@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11.3
+
+- [!] `schema` 中存在`type:array` 时，继承 hidden 属性时做兼容处理。
+
 ## 1.10.0
 
 - [+] `schema` 新增 `order` 属性，用于排序，值越小越靠前

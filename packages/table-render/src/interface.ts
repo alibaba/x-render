@@ -24,8 +24,6 @@ export interface TableContext<RecordType> {
 
 export type ProColumnsType<T extends object = any> = Array<
   ColumnsType<T>[number] & {
-    /** 是否自动缩略 */
-    ellipsis?: boolean;
     /** 是否支持复制 */
     copyable?: boolean;
     /** 值的类型 */
@@ -49,6 +47,7 @@ export interface TableRenderProps<RecordType extends Object = any>
   toolbarAction?: boolean;
   /** 切换分页时是否需要请求接口 */
   pageChangeWithRequest?: boolean;
+  onTabChange?: () => any;
 }
 
 export interface TableState<RecordType> {

@@ -10,6 +10,7 @@ const DesityIcon = () => {
 
   return (
     <Dropdown
+      getPopupContainer={() => document.getElementById('tr-table')}
       overlay={
         <Menu
           selectedKeys={[tableState.tableSize]}

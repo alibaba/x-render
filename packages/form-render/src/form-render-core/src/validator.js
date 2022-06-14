@@ -147,7 +147,8 @@ export const validateAll = ({
       const relatedPaths = getRelatedPaths(path, flatten);
       if (relatedPaths.length > 1) {
         const parentPath = relatedPaths[relatedPaths.length - 1];
-        if (flatten[parentPath].schema.hidden) {
+        const parentSchema = flatten[parentPath] || {};
+        if (get(parentSchema, 'schema.hidden', false)) {
           schema.hidden = true;
         }
       }
