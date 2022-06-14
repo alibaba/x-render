@@ -81,5 +81,6 @@
     "url": "git+https://github.com/alibaba/x-render.git",
     "branch": "master",
     "platform": "github"
-  }
+  },
+  "version": "1.11.3-beta.0"
 }
