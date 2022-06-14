@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.3.6
+
+- [+] 修复 tr 文档 bug
+
 ### 1.3.5
 
 - [!] 修复全屏模式下，antd `Drowndown` 组件不显示的 bug
