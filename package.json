@@ -1,6 +1,12 @@
 {
   "name": "root",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alibaba/x-render.git",
+    "branch": "master",
+    "platform": "github"
+  },
   "workspaces": [
     "packages/*",
     "widgets/*",
@@ -8,20 +14,29 @@
     "tools/form-render-excel"
   ],
   "scripts": {
+    "analyze": "ANALYZE=1 dumi build",
     "build": "lerna run build",
-    "doc": "dumi build",
+    "changelog": "lerna-changelog",
+    "clean": "lerna clean -y",
     "predeploy": "npm run build && npm run doc",
     "deploy": "gh-pages -d docs-dist",
-    "start-win": "set PORT=8080 && dumi dev",
-    "start": "PORT=8080 dumi dev",
-    "size": "ANALYZE=1 dumi build",
-    "clean": "lerna clean -y",
-    "changelog": "lerna-changelog",
-    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
+    "doc": "dumi build",
     "format": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
+    "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
+    "size": "ANALYZE=1 dumi build",
+    "start": "PORT=8080 dumi dev",
+    "start-win": "set PORT=8080 && dumi dev",
     "test": "jest",
-    "test:coverage": "jest --coverage",
-    "test:clean": "jest --clearCache"
+    "test:clean": "jest --clearCache",
+    "test:coverage": "jest --coverage"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
@@ -68,19 +83,5 @@
     "ts-node": "^10.5.0",
     "typescript": "^4.6.2",
     "yorkie": "^2.0.0"
-  },
-  "lint-staged": {
-    "*.{js,jsx,less,md,json}": [
-      "prettier --write"
-    ],
-    "*.ts?(x)": [
-      "prettier --parser=typescript --write"
-    ]
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/alibaba/x-render.git",
-    "branch": "master",
-    "platform": "github"
   }
 }
