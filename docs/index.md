@@ -25,6 +25,6 @@ footer: Please feel free to use and contribute to the development.
 
 ## 贡献者们
 
-<a href="https://github.com/alibaba/form-render/graphs/contributors">
+<a href="https://github.com/alibaba/x-render/graphs/contributors">
   <img style="width: 100%" src="https://contrib.rocks/image?repo=alibaba/form-render" />
 </a>

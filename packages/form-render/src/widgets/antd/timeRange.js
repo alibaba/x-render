@@ -30,7 +30,7 @@ const TimeRange = ({ onChange, format, value, style, ...rest }) => {
     style: { width: '100%', ...style },
     value: _value,
     onChange: handleChange,
-    ...rest,
+    ...(rest.schema.props || {}),
   };
 
   return <RangePicker {...timeParams} />;

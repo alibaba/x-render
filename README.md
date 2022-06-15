@@ -167,19 +167,16 @@
 
 - 如果你觉得 XRender 还不错，可以通过 [Star](https://github.com/alibaba/form-render/stargazers) 来表示你的喜欢
 - 在公司或个人项目中使用 XRender，并帮忙推广给伙伴使用
-- 加入钉钉聊天群帮忙解答使用问题
-
-  <img src=https://img.alicdn.com/imgextra/i4/O1CN017IBm0t1qv9gou9qW9_!!6000000005557-2-tps-1170-1530.png width=250/>
 
 ## 贡献
 
 想贡献代码、解 BUG 或者提高文档可读性？非常欢迎一起参与进来，在提交 PR 前阅读一下 [Contributing Guide](https://github.com/alibaba/form-render/blob/master/CONTRIBUTING.md)。
 
-![Alt](https://repobeats.axiom.co/api/embed/2b2e9f5fdcdddeea164ef615d55816d8c2d2dc66.svg "Repobeats analytics image")
+![Alt](https://repobeats.axiom.co/api/embed/2b2e9f5fdcdddeea164ef615d55816d8c2d2dc66.svg 'Repobeats analytics image')
 
 感谢给 XRender 贡献代码的你们：
 
-  <a href="https://github.com/alibaba/form-render/graphs/contributors">
+  <a href="https://github.com/alibaba/x-render/graphs/contributors">
     <img src="https://contrib.rocks/image?repo=alibaba/form-render" />
   </a>
 

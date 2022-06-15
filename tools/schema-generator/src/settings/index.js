@@ -704,6 +704,14 @@ export const layouts = [
             title: '隐藏新增/复制按钮',
             type: 'string',
           },
+          hideCopy: {
+            title: '隐藏复制按钮',
+            type: 'string',
+          },
+          hideMove: {
+            title: '隐藏上下移动按钮',
+            type: 'string',
+          },
         },
       },
     },

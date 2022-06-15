@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.13.0
+
+- [+] `时间范围` 组件接收 `format`
+- [+] 更新发包文件内容
+
+## 1.12.1
+
+- [+] `theme:'collapse'` 新增 `幽灵模式` 和 `无边框模式`
+
+## 1.12.0
+
+- [+] `schema` 新增`theme` 字段，支持切换嵌套表单的[主题样式](https://xrender.fun/form-render/advanced/display#%E4%B8%BB%E9%A2%98%E8%AE%BE%E7%BD%AE)。
+
+## 1.11.3
+
+- [!] `schema` 中存在`type:array` 时，继承 hidden 属性时做兼容处理。
+
 ## 1.10.0
 
 - [+] `schema` 新增 `order` 属性，用于排序，值越小越靠前

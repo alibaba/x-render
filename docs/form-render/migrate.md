@@ -2,6 +2,7 @@
 order: 6
 title: 0.x 到 1.x 升级方案
 toc: content
+hide: true
 ---
 
 # 升级方案

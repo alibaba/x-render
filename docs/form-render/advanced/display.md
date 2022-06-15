@@ -8,7 +8,7 @@ toc: content
 
 # 展示的最佳实践
 
-## `displayType`
+### `displayType`
 
 - 类型：'row' | 'column' | 'inline'
 - 默认值： 'column'
@@ -60,39 +60,7 @@ export default () => (
 );
 ```
 
-<!-- 非常特别的情况，会用到 display: inline -->
-
-<!-- ```jsx
-import React from 'react';
-import Form from '../demo/display';
-
-const schema = {
-  type: 'object',
-  displayType: 'inline',
-  properties: {
-    range1: {
-      title: '日期',
-      type: 'range',
-      format: 'date',
-    },
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚'],
-    },
-  },
-};
-
-export default () => <Form schema={schema} />;
-``` -->
-
-### ReadOnly
+### readOnly
 
 新增了只读模式，在 \<Form /\> 组件上用 props 声明
 
@@ -397,6 +365,247 @@ const schema = {
 
 const Demo = () => {
   return <Form schema={schema} />;
+};
+
+export default Demo;
+```
+
+### 主题设置
+
+对于嵌套类型的表单，我们内置了三种主题，分别为 `collapse | card | tile `, 默认为 `collapse` 主题
+
+1. 默认样式：`theme: 'collapse'` ，支持`无边框模式: 'collapse:pure'`、`幽灵模式:'collapse:ghost'`
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  properties: {
+    objectName: {
+      title: '默认样式',
+      bind: 'obj',
+      description: '这是一个对象类型',
+      type: 'object',
+      collapsed: true,
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+        },
+      },
+    },
+    objectName2: {
+      title: '无边框样式',
+      bind: 'obj',
+      description: '这是一个对象类型',
+      type: 'object',
+      collapsed: true,
+      theme: 'collapse:pure',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+        },
+      },
+    },
+    objectName3: {
+      title: '幽灵模式',
+      bind: 'obj',
+      description: '这是一个对象类型',
+      type: 'object',
+      collapsed: true,
+      theme: 'collapse:ghost',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  return <Form schema={schema} />;
+};
+
+export default Demo;
+```
+
+2. 卡片模式： `theme: 'card'`
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  displayType: 'row',
+  properties: {
+    objectName: {
+      title: '卡片主题',
+      description: '这是一个对象类型',
+      type: 'object',
+      theme: 'card',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+          width: '30%',
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+          width: '30%',
+        },
+        date: {
+          title: '时间选择',
+          type: 'string',
+          format: 'date',
+          width: '30%',
+        },
+      },
+    },
+    objectName2: {
+      title: '卡片主题',
+      description: '这是一个对象类型',
+      type: 'object',
+      theme: 'card',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+          width: '30%',
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+          width: '30%',
+        },
+        date: {
+          title: '时间选择',
+          type: 'string',
+          format: 'date',
+          width: '30%',
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  return (
+    <div>
+      <Form schema={schema} />
+    </div>
+  );
+};
+
+export default Demo;
+```
+
+3. 平铺模式：`theme: 'tile'`
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  displayType: 'row',
+  properties: {
+    objectName: {
+      title: '平铺主题',
+      description: '这是一个对象类型',
+      type: 'object',
+      theme: 'tile',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+          width: '30%',
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+          width: '30%',
+        },
+        date: {
+          title: '时间选择',
+          type: 'string',
+          format: 'date',
+          width: '30%',
+        },
+      },
+    },
+    objectName2: {
+      title: '平铺主题',
+      description: '这是一个对象类型',
+      type: 'object',
+      theme: 'tile',
+      properties: {
+        input1: {
+          title: '简单输入框',
+          type: 'string',
+          required: true,
+          width: '30%',
+        },
+        select1: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+          width: '30%',
+        },
+        date: {
+          title: '时间选择',
+          type: 'string',
+          format: 'date',
+          width: '30%',
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  return (
+    <div>
+      <Form schema={schema} />
+    </div>
+  );
 };
 
 export default Demo;

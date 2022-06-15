@@ -14,6 +14,7 @@
     "tools/form-render-excel"
   ],
   "scripts": {
+    "analyze": "ANALYZE=1 dumi build",
     "build": "lerna run build",
     "changelog": "lerna-changelog",
     "clean": "lerna clean -y",
@@ -23,7 +24,8 @@
     "format": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
     "size": "ANALYZE=1 dumi build",
-    "start": "cross-env PORT=8080 dumi dev",
+    "start": "PORT=8080 dumi dev",
+    "start-win": "set PORT=8080 && dumi dev",
     "test": "jest",
     "test:clean": "jest --clearCache",
     "test:coverage": "jest --coverage"

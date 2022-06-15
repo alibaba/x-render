@@ -11,6 +11,8 @@ yarn
 npm run build
 # 将文档网站跑起来
 npm start
+# windows环境
+npm run start-win
 ```
 
 #### 3. 进入文档网站了，如何开发呢？
@@ -21,7 +23,7 @@ npm start
 - 提交前注意必须**格式化**。提交前注意必须**格式化**。提交前注意必须**格式化**。请安装 prettier 插件，或者在提交前执行
 
 ```sh
-npm run prettier
+npm run format
 ```
 
 #### 4. 重新安装依赖
@@ -78,3 +80,7 @@ npm run beta
 # ID 为 pr 的 id
 git fetch origin pull/ID/head && git checkout FETCH_HEAD
 ```
+
+#### 9. 编辑文档
+
+编辑文档请参考 [文档规范](https://github.com/alibaba/x-render/wiki/%E6%96%87%E6%A1%A3%E8%A7%84%E8%8C%83)
