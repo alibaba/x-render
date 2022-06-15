@@ -27,6 +27,7 @@ const ExtendedWidget = ({
   disabled,
   dataIndex,
   watch,
+  hasError,
 }) => {
   const {
     widgets,
@@ -79,6 +80,7 @@ const ExtendedWidget = ({
     children,
     disabled,
     readOnly,
+    className: hasError ? 'fr-item-status-error' : '',
     ...schema.props,
     ...globalProps,
   };

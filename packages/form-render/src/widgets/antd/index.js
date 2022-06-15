@@ -1,5 +1,4 @@
 import { Checkbox, Input, InputNumber, Rate, Switch, TreeSelect } from 'antd';
-import React from 'react';
 import checkboxes from './checkboxes';
 import color from './color';
 import date from './date';

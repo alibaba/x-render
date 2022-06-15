@@ -56,7 +56,6 @@ const RenderField = props => {
     hasError && showValidate
       ? _contentClass + ' ant-form-item-has-error'
       : _contentClass;
-
   let contentStyle = {};
 
   const debouncedSetEditing = useDebouncedCallback(setEditing, 350);
@@ -167,6 +166,7 @@ const RenderField = props => {
     dataPath,
     children,
     watch,
+    hasError,
   };
 
   // if (_schema && _schema.default !== undefined) {

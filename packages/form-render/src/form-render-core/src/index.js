@@ -155,7 +155,7 @@ function App({
     }
   };
 
-  // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
+  // 组件 destroy 的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
     return () => {
       form.resetFields();
