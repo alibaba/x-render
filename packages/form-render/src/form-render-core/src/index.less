@@ -28,8 +28,7 @@
     align-items: center;
     min-height: 32px;
   }
-
-  .fr-item-status-error {
+  .fr-item-has-error {
     border-color: #ff4d4f;
     &:focus {
       border-color: #ff7875 !important;
@@ -39,27 +38,14 @@
       border-color: #ff7875 !important;
       box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
     }
+  }
+  .fr-item-status-error {
+    .fr-item-has-error;
     input[class~='ant-input'] {
-      border-color: #ff4d4f;
-      &:focus {
-        border-color: #ff7875 !important;
-        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
-      }
-      &:hover {
-        border-color: #ff7875 !important;
-        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
-      }
+      .fr-item-has-error;
     }
     div[class~='ant-select-selector'] {
-      border-color: #ff4d4f;
-      &:focus {
-        border-color: #ff7875 !important;
-        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
-      }
-      &:hover {
-        border-color: #ff7875 !important;
-        box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
-      }
+      .fr-item-has-error;
     }
   }
 
