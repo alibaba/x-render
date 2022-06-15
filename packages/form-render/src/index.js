@@ -1,5 +1,6 @@
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
+import React from 'react';
 import FRCore from './form-render-core/src';
 import { widgets as defaultWidgets } from './widgets/antd';
 

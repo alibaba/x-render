@@ -1,5 +1,5 @@
 import { Radio, Select, Slider, Switch } from 'antd';
-import { Component } from 'react';
+import React, { Component } from 'react';
 import './index.css';
 // import GithubCorner from 'react-github-corner';
 import Demo from './main';
