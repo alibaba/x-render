@@ -1,6 +1,8 @@
-import { Card, Collapse } from 'antd';
 import React, { useEffect, useState } from 'react';
+import { Card, Collapse } from 'antd';
+import cn from 'classnames';
 import { useStore2 } from '../../form-render-core/src/hooks';
+
 const { Panel } = Collapse;
 
 export default function Map({ children, title, schema }) {
@@ -91,7 +93,14 @@ export default function Map({ children, title, schema }) {
           key="1"
           className="fr-collapse-object"
         >
-          {children}
+          <div
+            className={cn({
+              'fr-collapse-object-child-row': displayType === 'row',
+              'fr-collapse-object-child-column': displayType === 'column',
+            })}
+          >
+            {children}
+          </div>
         </Panel>
       </Collapse>
     </div>
