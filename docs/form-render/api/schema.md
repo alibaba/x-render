@@ -540,7 +540,7 @@ const schema = {
 
 - 类型：`string`
 
-指定使用哪个组件来渲染，是优先级最高的一个字段。用于明确指定使用某个[内置组件](/form-render/schema/inner-widget)或[自定义组件](/form-render/advanced/widget)。
+指定使用哪个组件来渲染，是优先级最高的一个字段。用于明确指定使用某个[内置组件](./inner-widget)或[自定义组件](/form-render/advanced/widget)。
 
 ```js
 const schema = {
