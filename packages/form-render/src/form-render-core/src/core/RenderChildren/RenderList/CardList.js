@@ -1,5 +1,5 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 // import ArrowDown from '../../../components/ArrowDown';
+import React from 'react';
 import {
   ArrowDownOutlined,
   ArrowUpOutlined,
@@ -7,7 +7,7 @@ import {
   CopyOutlined,
 } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
-import React from 'react';
+import { useStore, useTools } from '../../../hooks';
 import Core from '../../index';
 
 const CardList = ({
@@ -24,6 +24,7 @@ const CardList = ({
   getFieldsProps,
 }) => {
   const { props = {}, itemProps } = schema;
+  const { methods } = useTools();
 
   let addBtnProps = {
     type: 'dashed',
@@ -72,7 +73,19 @@ const CardList = ({
                 {!props.hideDelete && (
                   <Popconfirm
                     title="确定删除?"
-                    onConfirm={() => deleteItem(idx)}
+                    onConfirm={() => {
+                      if (
+                        Boolean(props.onConfirm) &&
+                        typeof props.onConfirm === 'string'
+                      ) {
+                        const func = methods[props.onConfirm];
+                        const result = func();
+                        if (!result) {
+                          return;
+                        }
+                      }
+                      deleteItem(idx);
+                    }}
                     okText="确定"
                     cancelText="取消"
                   >
