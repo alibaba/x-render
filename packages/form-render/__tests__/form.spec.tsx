@@ -1,6 +1,6 @@
-import { configure, mount } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
 import React, { useState } from 'react';
+import { configure, mount } from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 import { act } from 'react-dom/test-utils';
 import FormRender, { useForm } from '../src/index';
 import { listSchema, normalSchema } from './schema';

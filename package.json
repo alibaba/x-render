@@ -14,7 +14,6 @@
     "tools/form-render-excel"
   ],
   "scripts": {
-    "analyze": "ANALYZE=1 dumi build",
     "build": "lerna run build",
     "changelog": "lerna-changelog",
     "clean": "lerna clean -y",
@@ -51,6 +50,7 @@
     "@umijs/plugin-esbuild": "1.x",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.0.5",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "antd": "^4.x",
     "babel-jest": "^27.4.4",
     "babel-plugin-import": "^1.13.0",
@@ -72,10 +72,10 @@
     "lint-staged": "^10.0.7",
     "monaco-editor-webpack-plugin": "^4.1.1",
     "prettier": "^2.6.0",
-    "prettier-plugin-organize-imports": "^2.3.4",
     "prettier-plugin-packagejson": "^2.2.16",
     "prismjs": "^1.27.0",
-    "react": "^16.12.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-monaco-editor": "^0.44.0",
     "react-simple-code-editor": "^0.11.0",
     "react-test-renderer": "^17.0.2",
