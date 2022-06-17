@@ -19,6 +19,28 @@
         "enum": ["a", "b", "c"],
         "enumNames": ["选项1", "选项2", "选项3"],
         "widget": "radio"
+      },
+      "listName2": {
+        "title": "对象数组",
+        "description": "对象数组嵌套功能",
+        "type": "array",
+        "min": 1,
+        "max": 3,
+        "items": {
+          "type": "object",
+          "properties": {
+            "input1": {
+              "title": "简单输入框",
+              "type": "string"
+            },
+            "select1": {
+              "title": "单选",
+              "type": "string",
+              "enum": ["a", "b", "c"],
+              "enumNames": ["早", "中", "晚"]
+            }
+          }
+        }
       }
     }
   }

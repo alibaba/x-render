@@ -73,7 +73,7 @@ const Search: <RecordType extends object = any>(
     searchText = '查询',
     resetText = '重置',
     searchWithError = true,
-    style = {}
+    style = {},
   } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
@@ -130,8 +130,6 @@ const Search: <RecordType extends object = any>(
       refresh();
     }
   }, []);
-
-  
 
   const btnProps = {
     searchBtnRender,
