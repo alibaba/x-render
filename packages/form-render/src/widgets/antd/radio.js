@@ -1,3 +1,4 @@
+import React from 'react';
 import { Radio } from 'antd';
 import React from 'react';
 import { getArray } from '../../utils';

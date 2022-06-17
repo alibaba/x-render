@@ -1,3 +1,4 @@
+import React from 'react';
 import { Select } from 'antd';
 import { isUndefined } from 'lodash-es';
 import { getArray } from '../../utils';
