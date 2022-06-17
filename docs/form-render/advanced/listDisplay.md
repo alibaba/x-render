@@ -70,6 +70,9 @@ const Demo = () => {
 export default Demo;
 ```
 
+<br>
+<br>
+
 2. widget: 'simpleList' 用于展示每行只有 1-3 个简单元素的情况
 
 ```jsx
@@ -110,6 +113,9 @@ const Demo = () => {
 
 export default Demo;
 ```
+
+<br>
+<br>
 
 3. widget: 'tableList' 用于展示每行只有 3 - n 个简单元素的情况，特别是数据量很大需要分页的
 
@@ -160,6 +166,9 @@ const Demo = () => {
 
 export default Demo;
 ```
+
+<br>
+<br>
 
 4. widget: 'drawerList' 用于展示存在列表套列表，列表套对象等复杂元素的情况
 
@@ -227,7 +236,10 @@ const Demo = () => {
 export default Demo;
 ```
 
-5. widget: 'tabList' 在展示上与 'cardList' 基本相同，但以虚拟滚动替代了传统的分页
+<br>
+<br>
+
+5. widget: 'tabList' 用于展示可新增/关闭页签的 Tabs 标签页
 
 ```jsx
 import React from 'react';
@@ -240,58 +252,6 @@ window.hello = ({ value }) => {
 const schema = {
   type: 'object',
   properties: {
-    listName2: {
-      title: '对象数组',
-      type: 'array',
-      widget: 'tabList',
-      props: {
-        tabName: '项目',
-      },
-      items: {
-        type: 'object',
-        properties: {
-          input1: {
-            title: '简单输入框',
-            type: 'string',
-            required: true,
-          },
-          input2: {
-            title: '简单输入框2',
-            type: 'string',
-          },
-          input3: {
-            title: '简单输入框3',
-            type: 'string',
-          },
-          select1: {
-            title: '单选',
-            type: 'string',
-            enum: ['a', 'b', 'c'],
-            enumNames: ['早', '中', '晚'],
-            widget: 'select',
-          },
-        },
-      },
-    },
-  },
-};
-
-const Demo = () => {
-  return <Form schema={schema} />;
-};
-
-export default Demo;
-```
-
-5. widget: 'tabList' 用于展示可新增/关闭页签的 Tabs 标签页
-
-```jsx
-import React from 'react';
-import Form from '../demo/display';
-
-const schema = {
-  type: 'object',
-  properties: {
     tabsName1: {
       title: '对象数组',
       description: '对象数组嵌套功能',
@@ -299,7 +259,8 @@ const schema = {
       widget: 'tabList',
       props: {
         type: 'editable-card',
-        tabName: '项目', // 选项卡头显示文字，对应antd中Tabs的tab属性。
+        tabName: '项目', // 选项卡显示文字，对应antd中Tabs的tab属性。 这里也可以是数组
+        draggable: true, //  是否可拖拽
       },
       items: {
         type: 'object',
@@ -348,6 +309,17 @@ const schema = {
 const Demo = () => <Form schema={schema} />;
 export default Demo;
 ```
+
+<br>
+
+| tabList 参数 | 描述                                               | 类型                 | 默认值 |
+| ------------ | -------------------------------------------------- | -------------------- | ------ |
+| tabName      | 选项卡头显示文字                                   | `string \| string[]` | '项目' |
+| type         | 页签的基本样式，可选 line、card editable-card 类型 | `string`             | 'line' |
+| draggable    | 是否可拖拽                                         | `boolean`            | false  |
+
+<br>
+<br>
 
 6. widget: 'virtualList' 在展示上与 'tableList' 基本相同，但以虚拟滚动替代了传统的分页
 
