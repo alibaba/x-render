@@ -1,4 +1,3 @@
-// import ArrowDown from '../../../components/ArrowDown';
 import React from 'react';
 import {
   ArrowDownOutlined,
@@ -7,7 +6,7 @@ import {
   CopyOutlined,
 } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
-import { useStore, useTools } from '../../../hooks';
+import { useTools } from '../../../hooks';
 import Core from '../../index';
 
 const CardList = ({
@@ -46,7 +45,7 @@ const CardList = ({
               className={`fr-card-item ${
                 displayType === 'row' ? 'fr-card-item-row' : ''
               }`}
-              key={idx}
+              key={Date.now()}
             >
               <div className="fr-card-index">{idx + 1}</div>
               <Core {...fieldsProps} />
