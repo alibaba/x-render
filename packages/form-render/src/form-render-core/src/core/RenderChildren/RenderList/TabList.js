@@ -7,13 +7,13 @@ import Core from '../../index';
 
 const { TabPane } = Tabs;
 
-const dragType = 'DraggableTabNode'
+const dragType = 'DraggableTabNode';
 
 const DraggableTabNode = ({ index, children, moveNode }) => {
   const ref = useRef(null);
   const [{ isOver, dropClassName }, drop] = useDrop({
     accept: dragType,
-    collect: (monitor) => {
+    collect: monitor => {
       const { index: dragIndex } = monitor.getItem() || {};
 
       if (dragIndex === index) {
@@ -25,16 +25,16 @@ const DraggableTabNode = ({ index, children, moveNode }) => {
         dropClassName: 'dropping',
       };
     },
-    drop: (item) => {
+    drop: item => {
       moveNode(item.index, index);
     },
   });
   const [, drag] = useDrag({
-    type:dragType,
+    type: dragType,
     item: {
       index,
     },
-    collect: (monitor) => ({
+    collect: monitor => ({
       isDragging: monitor.isDragging(),
     }),
   });
@@ -52,21 +52,25 @@ const DraggableTabNode = ({ index, children, moveNode }) => {
   );
 };
 
-const DraggableTabs = (props) => {
+const DraggableTabs = props => {
   const { children, changeList, displayList } = props;
 
   const moveTabNode = (dragKey, hoverKey) => {
     let newDisplayList = displayList.slice();
     newDisplayList.splice(dragKey, 1);
     newDisplayList.splice(hoverKey, 0, displayList[dragKey]);
-    
-    changeList(newDisplayList)
+
+    changeList(newDisplayList);
   };
 
   const renderTabBar = (tabBarProps, DefaultTabBar) => (
     <DefaultTabBar {...tabBarProps}>
-      {(node) => (
-        <DraggableTabNode key={node.key} index={node.key} moveNode={moveTabNode}>
+      {node => (
+        <DraggableTabNode
+          key={node.key}
+          index={node.key}
+          moveNode={moveTabNode}
+        >
           {node}
         </DraggableTabNode>
       )}
@@ -97,7 +101,7 @@ const TabList = ({
 }) => {
   const [activeKey, setActiveKey] = useState('0');
   const { props = {}, itemProps } = schema;
-  const { tabName, type, draggable=false, ...restProps } = props;
+  const { tabName, type, draggable = false, ...restProps } = props;
 
   const onEdit = (targetKey, action) => {
     if (action === 'add') {
@@ -118,44 +122,44 @@ const TabList = ({
       : `${tabName || '项目'} ${idx + 1}`;
   };
 
-  return (
-    draggable ?  (
-      <DraggableTabs 
-        type={type || 'line'}
-        onChange={setActiveKey}
-        activeKey={activeKey}
-        onEdit={onEdit}
-        changeList={changeList}
-        displayList={displayList}
-        {...restProps}
-      >
-        {displayList.map((item, idx) => {
-          const fieldsProps = getFieldsProps(idx);
-          fieldsProps.displayType = displayType;
-          return (
-            <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
-              <Core {...fieldsProps} />
-            </TabPane>
-          );
-        })}
-      </DraggableTabs>) : (
-      <Tabs
-        type={type || 'line'}
-        onChange={setActiveKey}
-        activeKey={activeKey}
-        onEdit={onEdit}
-        {...restProps}
-      >
-        {displayList.map((item, idx) => {
-          const fieldsProps = getFieldsProps(idx);
-          fieldsProps.displayType = displayType;
-          return (
-            <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
-              <Core {...fieldsProps} />
-            </TabPane>
-          );
-        })}
-      </Tabs>)
+  return draggable ? (
+    <DraggableTabs
+      type={type || 'line'}
+      onChange={setActiveKey}
+      activeKey={activeKey}
+      onEdit={onEdit}
+      changeList={changeList}
+      displayList={displayList}
+      {...restProps}
+    >
+      {displayList.map((item, idx) => {
+        const fieldsProps = getFieldsProps(idx);
+        fieldsProps.displayType = displayType;
+        return (
+          <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
+            <Core {...fieldsProps} />
+          </TabPane>
+        );
+      })}
+    </DraggableTabs>
+  ) : (
+    <Tabs
+      type={type || 'line'}
+      onChange={setActiveKey}
+      activeKey={activeKey}
+      onEdit={onEdit}
+      {...restProps}
+    >
+      {displayList.map((item, idx) => {
+        const fieldsProps = getFieldsProps(idx);
+        fieldsProps.displayType = displayType;
+        return (
+          <TabPane tab={getCurrentTabPaneName(idx)} key={`${idx}`}>
+            <Core {...fieldsProps} />
+          </TabPane>
+        );
+      })}
+    </Tabs>
   );
 };
 

@@ -69,6 +69,7 @@ const Demo = () => {
 
 export default Demo;
 ```
+
 <br>
 <br>
 
@@ -112,6 +113,7 @@ const Demo = () => {
 
 export default Demo;
 ```
+
 <br>
 <br>
 
@@ -164,6 +166,7 @@ const Demo = () => {
 
 export default Demo;
 ```
+
 <br>
 <br>
 
@@ -232,6 +235,7 @@ const Demo = () => {
 
 export default Demo;
 ```
+
 <br>
 <br>
 
@@ -256,7 +260,7 @@ const schema = {
       props: {
         type: 'editable-card',
         tabName: '项目', // 选项卡显示文字，对应antd中Tabs的tab属性。 这里也可以是数组
-        draggable: true, //  是否可拖拽 
+        draggable: true, //  是否可拖拽
       },
       items: {
         type: 'object',
@@ -305,17 +309,17 @@ const schema = {
 const Demo = () => <Form schema={schema} />;
 export default Demo;
 ```
-<br>
-
-| tabList参数           | 描述                                                             | 类型                 | 默认值  |
-| -------------------- | ---------------------------------------------------------------- | ------------------- | ------ |
-| tabName              | 选项卡头显示文字                                                   | `string \| string[]` | '项目'  |
-| type                 | 页签的基本样式，可选 line、card editable-card 类型                   | `string`             | 'line' |
-| draggable            | 是否可拖拽                                                        | `boolean`            | false  |
 
 <br>
-<br>
 
+| tabList 参数 | 描述                                               | 类型                 | 默认值 |
+| ------------ | -------------------------------------------------- | -------------------- | ------ |
+| tabName      | 选项卡头显示文字                                   | `string \| string[]` | '项目' |
+| type         | 页签的基本样式，可选 line、card editable-card 类型 | `string`             | 'line' |
+| draggable    | 是否可拖拽                                         | `boolean`            | false  |
+
+<br>
+<br>
 
 6. widget: 'virtualList' 在展示上与 'tableList' 基本相同，但以虚拟滚动替代了传统的分页
 
