@@ -54,6 +54,7 @@ function App({
   column,
   removeHiddenData = false,
   globalProps = {},
+  methods = {},
   renderTitle,
   ...rest
 }) {
@@ -220,6 +221,7 @@ function App({
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
       renderTitle,
+      methods,
       ...form,
       // setEditing,
       // touchKey,

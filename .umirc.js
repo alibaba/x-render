@@ -42,26 +42,23 @@ export default defineConfig({
         },
       ],
     },
-    // {
-    //   title: '更新日志',
-    //   children: [
-    //     {
-    //       title: 'FormRender',
-    //       path:
-    //         'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
-    //     },
-    //     {
-    //       title: 'TableRender',
-    //       path:
-    //         'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
-    //     },
-    //     {
-    //       title: 'ChartRender',
-    //       path:
-    //         'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
-    //     },
-    //   ],
-    // },
+    {
+      title: '更新日志',
+      children: [
+        {
+          title: 'FormRender',
+          path: 'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
+        },
+        {
+          title: 'TableRender',
+          path: 'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
+        },
+        {
+          title: 'ChartRender',
+          path: 'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
+        },
+      ],
+    },
 
     { title: 'GitHub', path: 'https://github.com/alibaba/x-render' },
   ],
