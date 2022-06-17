@@ -86,6 +86,9 @@ export default defineConfig({
       '@alifd/next',
     ],
   ],
+  sitemap: {
+    hostname: 'https://xrender.fun',
+  },
   chainWebpack(config, { webpack }) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
   },

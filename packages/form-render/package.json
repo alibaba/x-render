@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "1.13.4",
+  "version": "1.13.5",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -66,6 +66,8 @@
     "lodash-es": "^4.17.21",
     "moment": "^2.24.0",
     "rc-color-picker": "^1.2.6",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "virtualizedtableforantd4": "^1.1.2"
   },
   "devDependencies": {
