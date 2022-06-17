@@ -382,6 +382,7 @@ import Form from '../demo/display';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     objectName: {
       title: '默认样式',

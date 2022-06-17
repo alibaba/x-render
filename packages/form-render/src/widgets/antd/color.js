@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Input } from 'antd';
 import ColorPicker from 'rc-color-picker';
 import 'rc-color-picker/assets/index.css';

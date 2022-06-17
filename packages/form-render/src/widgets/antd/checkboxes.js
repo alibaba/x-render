@@ -1,5 +1,5 @@
 import { Checkbox } from 'antd';
-import React from 'react';
+import * as React from 'react';
 import { getArray } from '../../utils';
 
 const Checkboxes = ({ schema, options: _options, ...rest }) => {
