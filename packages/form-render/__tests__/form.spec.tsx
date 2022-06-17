@@ -62,31 +62,6 @@ const Form = () => {
   );
 };
 
-const ListForm = () => {
-  const [state, setState] = useState({
-    input1: 'fr',
-    select1: 'd',
-  });
-  const form = useForm();
-
-  const onFinish = (formData, errors) => {
-    setState(formData);
-  };
-
-  return (
-    <div>
-      <FormRender form={form} onFinish={onFinish} schema={listSchema as any} />
-      <div className="fr-value">
-        <div className="input">{state?.input1}</div>
-        <div className="select">{state?.select1}</div>
-      </div>
-      <button id="submit" onClick={form.submit}>
-        提交
-      </button>
-    </div>
-  );
-};
-
 function sleep(ms): Promise<never> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -107,25 +82,4 @@ describe('FormRender', () => {
       wrapper.unmount();
     });
   });
-  // it('📦  Render FR List Widget Success', async () => {
-  //   const wrapper = mount(<ListForm />);
-  //   act(() => {
-  //     wrapper.find('#submit').simulate('click');
-  //   });
-  //   await act(() => sleep(500));
-  //   // expect(wrapper.find('.input').text()).toEqual('简单输入框');
-  //   // expect(wrapper.find('.select').text()).toEqual('a');
-
-  //   act(() => {
-  //     wrapper.unmount();
-  //   });
-  // });
-  // it('📦  FR Validate Success', async () => {
-  //   const { getByText } = render(<Form />);
-
-  //   fireEvent.change(getByText('fr'), {
-  //     target: { value: '' },
-  //   });
-  //   fireEvent.click(getByText('提交'));
-  // });
 });
