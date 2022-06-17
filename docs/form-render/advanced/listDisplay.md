@@ -245,10 +245,6 @@ export default Demo;
 import React from 'react';
 import Form from '../demo/display';
 
-window.hello = ({ value }) => {
-  console.log(value);
-};
-
 const schema = {
   type: 'object',
   properties: {
@@ -326,10 +322,6 @@ export default Demo;
 ```jsx
 import React from 'react';
 import Form from '../demo/display';
-
-window.hello = ({ value }) => {
-  console.log(value);
-};
 
 const schema = {
   type: 'object',
