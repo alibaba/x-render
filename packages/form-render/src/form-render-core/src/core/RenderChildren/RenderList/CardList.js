@@ -45,7 +45,7 @@ const CardList = ({
               className={`fr-card-item ${
                 displayType === 'row' ? 'fr-card-item-row' : ''
               }`}
-              key={idx}
+              key={Date.now()}
             >
               <div className="fr-card-index">{idx + 1}</div>
               <Core {...fieldsProps} />
