@@ -306,13 +306,13 @@ const Demo = () => <Form schema={schema} />;
 export default Demo;
 ```
 
-<br>
+<!-- <br>
 
 | tabList 参数 | 描述                                               | 类型                 | 默认值 |
 | ------------ | -------------------------------------------------- | -------------------- | ------ |
 | tabName      | 选项卡头显示文字                                   | `string \| string[]` | '项目' |
 | type         | 页签的基本样式，可选 line、card editable-card 类型 | `string`             | 'line' |
-| draggable    | 是否可拖拽                                         | `boolean`            | false  |
+| draggable    | 是否可拖拽                                         | `boolean`            | false  | -->
 
 <br>
 <br>
