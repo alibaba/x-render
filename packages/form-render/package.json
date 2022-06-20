@@ -66,8 +66,6 @@
     "lodash-es": "^4.17.21",
     "moment": "^2.24.0",
     "rc-color-picker": "^1.2.6",
-    "react-dnd": "^16.0.1",
-    "react-dnd-html5-backend": "^16.0.1",
     "virtualizedtableforantd4": "^1.1.2"
   },
   "devDependencies": {
