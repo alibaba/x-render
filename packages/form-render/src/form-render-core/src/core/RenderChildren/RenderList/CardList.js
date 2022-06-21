@@ -73,14 +73,13 @@ const CardList = ({
                   <Popconfirm
                     title="确定删除?"
                     onConfirm={() => {
-                      if (
-                        Boolean(props.onConfirm) &&
-                        typeof props.onConfirm === 'string'
-                      ) {
-                        const func = methods[props.onConfirm];
-                        const result = func();
-                        if (!result) {
-                          return;
+                      if (typeof props.onConfirm === 'string') {
+                        const cb = methods[props.onConfirm];
+                        if (typeof cb === 'function') {
+                          const result = cb();
+                          if (!result) {
+                            return;
+                          }
                         }
                       }
                       deleteItem(idx);
