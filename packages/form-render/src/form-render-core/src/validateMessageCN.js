@@ -28,7 +28,7 @@ export const defaultValidateMessagesCN = {
     len: '${title}长度不是${len}',
     min: '${title}长度不能小于${min}',
     max: '${title}长度不能大于${max}',
-    range: '${title}长度需在${min}于${max}之间',
+    range: '${title}长度需在${min}与${max}之间',
   },
   number: {
     len: '${title}不等于${len}',
@@ -40,7 +40,7 @@ export const defaultValidateMessagesCN = {
     len: '${title}长度不是${len}',
     min: '${title}长度不能小于${min}',
     max: '${title}长度不能大于${max}',
-    range: '${title}长度需在${min}于${max}之间',
+    range: '${title}长度需在${min}与${max}之间',
   },
   pattern: {
     mismatch: '${title}未通过正则判断${pattern}',
