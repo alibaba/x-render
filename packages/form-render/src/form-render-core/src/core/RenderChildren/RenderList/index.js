@@ -26,7 +26,7 @@ const RenderList = ({
   const { formData, flatten } = useStore();
   const { onItemChange, removeTouched, methods } = useTools();
 
-  const { onMove } = schema;
+  const { props } = schema;
 
   let renderWidget = 'list';
   try {
@@ -75,8 +75,8 @@ const RenderList = ({
   };
 
   const handleMoving = () => {
-    if (typeof onMove === 'string') {
-      const cb = methods[onMove];
+    if (typeof props.onMove === 'string') {
+      const cb = methods[props.onMove];
       if (typeof method === 'function') {
         cb();
       }
@@ -85,6 +85,7 @@ const RenderList = ({
 
   //TODO1: 上线翻页要正确！！现在是错的
   const moveItemUp = idx => {
+    handleMoving();
     if (idx === 0) return;
     const currentItem = displayList[idx];
     const itemAbove = displayList[idx - 1];
@@ -94,10 +95,10 @@ const RenderList = ({
     onItemChange(dataPath, newList);
     // TODO: 这块懒了，之后要处理一下
     removeTouched(`${dataPath}[${idx}]`);
-    handleMoving();
   };
 
   const moveItemDown = idx => {
+    handleMoving();
     if (idx >= displayList.length - 1) return;
     const currentItem = displayList[idx];
     const itemBelow = displayList[idx + 1];
@@ -107,7 +108,6 @@ const RenderList = ({
     onItemChange(dataPath, newList);
     // TODO: 这块懒了，之后要处理一下
     removeTouched(`${dataPath}[${idx}]`);
-    handleMoving();
   };
 
   let itemSchema = {
