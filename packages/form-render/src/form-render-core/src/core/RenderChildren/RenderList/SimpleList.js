@@ -27,8 +27,18 @@ const SimpleList = ({
     children: '新增一条',
   };
 
+  let delConfirmProps = {
+    title: "确定删除?",
+    okText:"确定",
+    cancelText: "取消",
+  }
+
   if (props.addBtnProps && typeof props.addBtnProps === 'object') {
     addBtnProps = { ...addBtnProps, ...props.addBtnProps };
+  }
+
+  if (props.delConfirmProps && typeof props.delConfirmProps === 'object') {
+    delConfirmProps = { ...delConfirmProps, ...props.delConfirmProps };
   }
 
   return (
@@ -45,10 +55,8 @@ const SimpleList = ({
             <div style={{ marginTop: 6 }}>
               {!props.hideDelete && (
                 <Popconfirm
-                  title="确定删除?"
                   onConfirm={() => deleteItem(idx)}
-                  okText="确定"
-                  cancelText="取消"
+                  {...delConfirmProps}
                 >
                   <DeleteOutlined style={{ fontSize: 17, marginLeft: 8 }} />
                 </Popconfirm>
