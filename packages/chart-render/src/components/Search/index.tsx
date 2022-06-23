@@ -37,6 +37,9 @@ export interface ISearchProps
   /** 是否要挂载完毕后自动请求数据 */
   searchOnMount: boolean;
 
+  /** 是否要在表单项变化后自动请求数据，也可以指定哪些字段变化时自动请求 */
+  searchOnChange: boolean | string[];
+
   /** 请求方法，请尽量使用唯一通用的方法 */
   api: (params: {
     // schema: ISearchProps['schema'];
@@ -78,7 +81,9 @@ const Search: FC<Partial<ISearchProps>> = props => {
     filters = {},
     searchButton = true,
     searchOnMount = true,
+    searchOnChange = false,
     size,
+    watch,
     ...restProps
   } = props;
 
@@ -98,11 +103,6 @@ const Search: FC<Partial<ISearchProps>> = props => {
 
   useMemo(() => setStore({ form, refresh }), []);
 
-  const onFinish = (formData: any, errors: any) => {
-    if (errors.length) return;
-    refresh();
-  };
-
   useDeepCompareUpdateEffect(() => {
     refresh();
   }, [filters]);
@@ -121,8 +121,19 @@ const Search: FC<Partial<ISearchProps>> = props => {
         size={size}
         form={form}
         schema={schema || EMPTY_SCHEMA}
-        onFinish={onFinish}
-        onMount={searchOnMount ? form.submit : undefined}
+        onFinish={(_, errors) => !errors.length && refresh()}
+        onMount={searchOnMount && !searchOnChange ? form.submit : undefined}
+        watch={{
+          ...watch,
+          ...Object.fromEntries(
+            (Array.isArray(searchOnChange)
+              ? searchOnChange
+              : searchOnChange
+              ? ['#']
+              : []
+            ).map(key => [key, refresh!])
+          ),
+        }}
         {...restProps}
       />
 
