@@ -1,10 +1,12 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { defaultSettings } from '../../settings';
 import { useStore } from '../../utils/hooks';
 import Element from './Element';
 import './index.less';
 
 const Sidebar = props => {
+  const { t } = useTranslation();
   const { userProps = {} } = useStore();
   const { settings } = userProps;
   const _settings = Array.isArray(settings) ? settings : defaultSettings;
@@ -18,7 +20,7 @@ const Sidebar = props => {
           }
           return (
             <div key={idx}>
-              <p className="f6 b">{item.title}</p>
+              <p className="f6 b">{t(item.title, {ns: 'components'})}</p>
               <ul className="pl0">
                 {Array.isArray(item.widgets) ? (
                   item.widgets
@@ -29,14 +31,14 @@ const Sidebar = props => {
                       );
                     })
                 ) : (
-                  <div>此处配置有误</div>
+                  <div>{t('此处配置有误')}</div>
                 )}
               </ul>
             </div>
           );
         })
       ) : (
-        <div>配置错误：Setting不是数组</div>
+        <div>{t('配置错误：Setting不是数组')}</div>
       )}
     </div>
   );
