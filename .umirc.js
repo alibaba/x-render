@@ -89,6 +89,11 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://xrender.fun',
   },
+  algolia: {
+    appId: '8UKCDKKTXX',
+    apiKey: '1e4f33e2a77c8a10288baf01fcd91d50',
+    indexName: 'xrender',
+  },
   chainWebpack(config, { webpack }) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
   },
