@@ -20,7 +20,9 @@ const Pie: FC<IPieProps> = ({ className, style, ...props }) => {
       <AntPie
         loading={loading}
         data={data || []}
+        // @ts-ignore
         colorField={colorField || ''}
+        // @ts-ignore
         angleField={angleField || ''}
         {...props}
       />
