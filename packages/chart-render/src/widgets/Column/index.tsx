@@ -10,9 +10,7 @@ import { splitMeta } from '../../utils';
 import ChartContainer from '../../components/ChartContainer';
 
 export interface IColumnProps extends Omit<ColumnConfig, 'data'> {
-  /**
-   * 是否倒置，倒置后柱形图会表现成条形图
-   */
+  /** 是否倒置，倒置后柱形图会表现成条形图 */
   inverted?: boolean;
 }
 
@@ -108,8 +106,6 @@ const Column: React.FC<IColumnProps> = ({
   const loading = useChart(state => state.loading);
   const { meta = [], data = [] } = useChart(state => state.dataSource) || {};
   const { xField, yField, ...otherConfig } = generateConfig(meta, data);
-
-  console.log(meta, data, { xField, yField, ...otherConfig });
 
   return (
     <ChartContainer className={className} style={style}>

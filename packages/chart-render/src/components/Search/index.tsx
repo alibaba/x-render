@@ -91,18 +91,20 @@ const Search: FC<Partial<ISearchProps>> = props => {
     ...restProps
   } = props;
 
+  const loading = useChart(state => state.loading);
+  const setChart = useChart(state => state.setChart);
+
   const form = useForm();
-  const { setChart, loading } = useChart(({ setChart, loading }) => ({
-    setChart,
-    loading,
-  }));
 
   const refresh = useCallback(async () => {
     setChart({ loading: true });
-    const dataSource = await propsRef.current.api?.({
-      filters: { ...propsRef.current.filters, ...form.getValues() },
-    });
-    setChart({ loading: false, dataSource });
+    try {
+      const dataSource = await propsRef.current.api?.({
+        filters: { ...propsRef.current.filters, ...form.getValues() },
+      });
+      setChart({ dataSource });
+    } catch {}
+    setChart({ loading: false });
   }, []);
 
   useMemo(() => setChart({ form, refresh }), []);
