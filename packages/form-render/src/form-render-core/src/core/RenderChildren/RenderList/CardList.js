@@ -29,11 +29,12 @@ const CardList = ({
     type: 'dashed',
     children: '新增一条',
   };
+
   let delConfirmProps = {
-    title: "确定删除?",
-    okText:"确定",
-    cancelText: "取消",
-  }
+    title: '确定删除?',
+    okText: '确定',
+    cancelText: '取消',
+  };
 
   if (props.addBtnProps && typeof props.addBtnProps === 'object') {
     addBtnProps = { ...addBtnProps, ...props.addBtnProps };
