@@ -88,20 +88,20 @@ const Search: FC<Partial<ISearchProps>> = props => {
   } = props;
 
   const form = useForm();
-  const { setStore, loading } = useChart(({ setStore, loading }) => ({
-    setStore,
+  const { setChart, loading } = useChart(({ setChart, loading }) => ({
+    setChart,
     loading,
   }));
 
   const refresh = useCallback(async () => {
-    setStore({ loading: true });
+    setChart({ loading: true });
     const dataSource = await propsRef.current.api?.({
       filters: { ...propsRef.current.filters, ...form.getValues() },
     });
-    setStore({ loading: false, dataSource });
+    setChart({ loading: false, dataSource });
   }, []);
 
-  useMemo(() => setStore({ form, refresh }), []);
+  useMemo(() => setChart({ form, refresh }), []);
 
   useDeepCompareUpdateEffect(() => {
     refresh();

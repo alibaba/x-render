@@ -4,7 +4,7 @@ import createContext from 'zustand/context';
 import { DataSource } from './type';
 export interface IStore {
   /** 修改全局状态的工具函数 */
-  readonly setStore: (store: Partial<IStore>) => void;
+  readonly setChart: (store: Partial<IStore>) => void;
 
   /** FormRender 实例 */
   readonly form?: FormInstance;
@@ -23,8 +23,8 @@ export const { Provider, useStore: useChart } =
   createContext<StoreApi<IStore>>();
 
 export const createStore = () =>
-  create<IStore>(setStore => ({
-    setStore,
+  create<IStore>(setChart => ({
+    setChart,
     loading: false,
     dataSource: { meta: [], data: [] },
   }));
