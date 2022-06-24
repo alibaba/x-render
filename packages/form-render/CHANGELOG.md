@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.8
+
+- [+] `cardList` schema 支持透传 `delConfirmProps`
+
 ## 1.13.5
 
 - [+] `tabList` 支持拖拽
