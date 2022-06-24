@@ -56,6 +56,7 @@ function App({
   globalProps = {},
   methods = {},
   renderTitle,
+  requiredMark,
   ...rest
 }) {
   try {
@@ -221,6 +222,7 @@ function App({
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
       renderTitle,
+      requiredMark,
       methods,
       ...form,
       // setEditing,
