@@ -28,6 +28,9 @@ export interface ISearchProps
   /** 搜索头最外层容器的 style */
   style: CSSProperties;
 
+  /** 是否隐藏 */
+  hidden: boolean;
+
   /** 大小 */
   size: 'small' | undefined;
 
@@ -84,6 +87,7 @@ const Search: FC<Partial<ISearchProps>> = props => {
     searchOnChange = false,
     size,
     watch,
+    hidden = false,
     ...restProps
   } = props;
 
@@ -109,7 +113,7 @@ const Search: FC<Partial<ISearchProps>> = props => {
 
   return (
     <div
-      style={style}
+      style={{ display: hidden ? 'none' : undefined, ...style }}
       className={classNames('cr-search', className, {
         'cr-search-hidden': !Object.keys(schema.properties || {}).length,
         'cr-search-small': size === 'small',
