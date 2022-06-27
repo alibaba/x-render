@@ -35,9 +35,10 @@ const Title = ({
   schema,
   displayType,
   renderTitle,
+  requiredMark: globalRequiredMark,
 }) => {
   const { displayType: globalDisplayType, readOnly, colon } = useStore2();
-  const { title, required, type } = schema;
+  const { title, required, type, requiredMark: schemaRequiredMark } = schema;
   const isObjType = type === 'object';
 
   let _displayType =
@@ -54,6 +55,36 @@ const Title = ({
     });
   }
 
+  const requiredMark = typeof schemaRequiredMark === 'undefined' ? globalRequiredMark : schemaRequiredMark;
+
+  // 左侧的的 * 号提示
+  let TitleRequiredMark = null;
+  // 左侧的 option 提示
+  let TitleTextMark = null;
+
+  if(required) {
+    /**
+     * ant-design requiredMark 实现
+     * https://ant.design/components/form-cn/
+     */
+    if(requiredMark !== false && requiredMark !== 'optional') {
+      TitleRequiredMark = <span className="fr-label-required"> *</span>;
+      TitleTextMark = null;
+    }
+  } else {
+    if(requiredMark === 'optional') {
+      TitleRequiredMark = null;
+      TitleTextMark = <span className="fr-label-required-text">（可选）</span>;
+    }
+  }
+
+  // requiredMark 为 false 不展示必填符号
+  if(requiredMark === false) {
+    TitleRequiredMark = null;
+    TitleTextMark = null;
+  }
+
+
   return (
     <div className={labelClass} style={labelStyle}>
       {title ? (
@@ -67,7 +98,7 @@ const Title = ({
           }`} // checkbox不带冒号
           title={title}
         >
-          {required === true && <span className="fr-label-required"> *</span>}
+          {TitleRequiredMark}
           <span
             className={`${isObjType ? 'b' : ''} ${
               _displayType === 'column' ? 'flex-none' : ''
@@ -75,6 +106,7 @@ const Title = ({
           >
             <span dangerouslySetInnerHTML={{ __html: title }} />
           </span>
+          {TitleTextMark}
           <Description schema={schema} displayType={_displayType} />
         </label>
       ) : null}
