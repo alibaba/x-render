@@ -26,7 +26,7 @@ const RenderList = ({
   const { formData, flatten } = useStore();
   const { onItemChange, removeTouched, methods } = useTools();
 
-  const { props } = schema;
+  const { props = {} } = schema;
 
   let renderWidget = 'list';
   try {
@@ -75,9 +75,9 @@ const RenderList = ({
   };
 
   const handleMoving = () => {
-    if (typeof props.onMove === 'string') {
+    if (props.onMove && typeof props.onMove === 'string') {
       const cb = methods[props.onMove];
-      if (typeof method === 'function') {
+      if (typeof cb === 'function') {
         cb();
       }
     }

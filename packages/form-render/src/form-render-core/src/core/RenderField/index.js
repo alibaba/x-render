@@ -43,6 +43,7 @@ const RenderField = props => {
     touchKey,
     _setErrors,
     renderTitle,
+    requiredMark,
   } = useTools();
   const formDataRef = useRef();
   formDataRef.current = formData;
@@ -126,6 +127,7 @@ const RenderField = props => {
     schema: _schema,
     displayType,
     renderTitle,
+    requiredMark,
   };
 
   const messageProps = {
@@ -180,8 +182,9 @@ const RenderField = props => {
         {_showTitle && <div {...placeholderTitleProps} />}
         <div className={contentClass} style={contentStyle}>
           <ExtendedWidget {...widgetProps} />
-          <Extra {...widgetProps} />
           <ErrorMessage {...messageProps} />
+          <Extra {...widgetProps} />
+          <div className='field-block'></div>
         </div>
       </>
     );
@@ -194,6 +197,7 @@ const RenderField = props => {
       <div style={{ display: 'flex' }}>
         {titleElement}
         <ErrorMessage {...messageProps} />
+        <div className='field-block'></div>
       </div>
     );
     return (
@@ -216,8 +220,9 @@ const RenderField = props => {
         style={contentStyle}
       >
         <ExtendedWidget {...widgetProps} />
-        <Extra {...widgetProps} />
         <ErrorMessage {...messageProps} />
+        <Extra {...widgetProps} />
+        <div className='field-block'></div>
       </div>
     </>
   );
