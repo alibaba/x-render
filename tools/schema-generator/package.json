@@ -22,7 +22,6 @@
     ]
   },
   "dependencies": {
-    "antd": "^4.4.2",
     "clone": "^2.1.2",
     "copy-text-to-clipboard": "^2.2.0",
     "form-render": "^1.0.0",
