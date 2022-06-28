@@ -47,7 +47,7 @@ export default function Settings({ widgets }) {
     }
   }, [selected]);
 
-  const globalSettingIsEmpty = userProps.globalSettings && !Object.keys(userProps.globalSettings).length;
+  const globalSettingHide = userProps.globalSettings === null || (userProps.globalSettings && !Object.keys(userProps.globalSettings).length);
 
   return showRight ? (
     <div className="right-layout relative pl2">
@@ -58,7 +58,7 @@ export default function Settings({ widgets }) {
             <ItemSettings widgets={widgets} />
           </TabPane>
         )}
-        {!globalSettingIsEmpty && (
+        {!globalSettingHide && (
           <TabPane tab="表单配置" key="globalSettings">
             <GlobalSettings widgets={widgets} />
           </TabPane>
