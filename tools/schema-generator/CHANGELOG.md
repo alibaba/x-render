@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.7.9
+
+- [+] `globalSettings` 为空，隐藏 `设计器` 的表单配置模块
+
 ### 2.7.0
 
 - [+] 新增 `fieldRender` 及 `fieldWrapperRender`，支持自定义组件渲染
