@@ -88,7 +88,7 @@ const CardList = ({
                       ) {
                         const cb = methods[props.onConfirm];
                         if (typeof cb === 'function') {
-                          const result = cb();
+                          const result = cb(item, idx);
                           if (!result) {
                             return;
                           }
