@@ -1,5 +1,9 @@
 # Change Log
 
+### 1.0.0-alpha.3
+
+- [!] 修正依赖包
+
 ### 1.0.0-alpha.2
 
 - [!] 修复 Search 样式
