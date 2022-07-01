@@ -9,7 +9,7 @@ import { useChart } from '../../utils/store';
 import { splitMeta } from '../../utils';
 import ChartContainer from '../../components/ChartContainer';
 
-export interface IColumnProps extends Omit<ColumnConfig, 'data'> {
+export interface IColumnProps extends Omit<Partial<ColumnConfig>, 'data'> {
   /** 是否倒置，倒置后柱形图会表现成条形图 */
   inverted?: boolean;
 }
@@ -112,9 +112,7 @@ const Column: React.FC<IColumnProps> = ({
       {inverted ? (
         <AntBar
           loading={loading}
-          // @ts-ignore
           xField={yField || ''}
-          // @ts-ignore
           yField={xField || ''}
           {...otherConfig}
           {...props}
@@ -122,9 +120,7 @@ const Column: React.FC<IColumnProps> = ({
       ) : (
         <AntColumn
           loading={loading}
-          // @ts-ignore
           xField={xField || ''}
-          // @ts-ignore
           yField={yField || ''}
           {...otherConfig}
           {...props}

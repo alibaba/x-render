@@ -5,7 +5,7 @@ import ChartContainer from '../../components/ChartContainer';
 import { splitMeta } from '../../utils';
 import { useChart } from '../../utils/store';
 
-export interface IPieProps extends Omit<PieConfig, 'data'> {}
+export interface IPieProps extends Omit<Partial<PieConfig>, 'data'> {}
 
 const Pie: FC<IPieProps> = ({ className, style, ...props }) => {
   const loading = useChart(state => state.loading);
@@ -20,9 +20,7 @@ const Pie: FC<IPieProps> = ({ className, style, ...props }) => {
       <AntPie
         loading={loading}
         data={data || []}
-        // @ts-ignore
         colorField={colorField || ''}
-        // @ts-ignore
         angleField={angleField || ''}
         {...props}
       />
