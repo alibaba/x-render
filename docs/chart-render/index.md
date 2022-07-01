@@ -8,7 +8,7 @@ title: 使用教程
   <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">ChartRender</span>
 </div>
 
-<p style="display:flex;justify-content:space-between;width:440px">
+<p style="display:flex;justify-content:space-between;width:500px">
   <a href="https://www.npmjs.com/package/chart-render?_blank">
     <img alt="npm" src="https://img.shields.io/npm/v/chart-render.svg?maxAge=3600&style=flat-square">
   </a>
@@ -18,7 +18,7 @@ title: 使用教程
   <a href="https://npmjs.org/package/chart-render">
     <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/chart-render.svg?style=flat-square">
   </a>
-  <a>
+  <a href="https://github.com/alibaba/x-render" >
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
   </a>
 </p>
@@ -59,6 +59,7 @@ const schema = {
       enum: ['Windows', 'MacOS', 'Android', 'iOS'],
       enumNames: ['Windows', 'MacOS', 'Android', 'iOS'],
       props: { placeholder: '操作系统' },
+      required: true,
     },
     location: {
       type: 'string',

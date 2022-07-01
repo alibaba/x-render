@@ -184,7 +184,7 @@ const RenderField = props => {
           <ExtendedWidget {...widgetProps} />
           <ErrorMessage {...messageProps} />
           <Extra {...widgetProps} />
-          <div className='field-block'></div>
+          {!hasError && <div className="field-block"></div>}
         </div>
       </>
     );
@@ -197,7 +197,7 @@ const RenderField = props => {
       <div style={{ display: 'flex' }}>
         {titleElement}
         <ErrorMessage {...messageProps} />
-        <div className='field-block'></div>
+        {!hasError && <div className="field-block"></div>}
       </div>
     );
     return (
@@ -222,7 +222,7 @@ const RenderField = props => {
         <ExtendedWidget {...widgetProps} />
         <ErrorMessage {...messageProps} />
         <Extra {...widgetProps} />
-        <div className='field-block'></div>
+        {!hasError && <div className="field-block"></div>}
       </div>
     </>
   );
