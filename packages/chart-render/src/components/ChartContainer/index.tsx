@@ -3,6 +3,7 @@ import React, { CSSProperties, FC, memo } from 'react';
 import './index.less';
 
 const ChartContainer: FC<{
+  children: React.ReactNode;
   className?: string;
   style?: CSSProperties;
 }> = ({ children, className, style }) => (
