@@ -1,9 +1,8 @@
 import classNames from 'classnames';
-import React, { CSSProperties, FC, memo, ReactNode } from 'react';
+import React, { CSSProperties, FC, memo } from 'react';
 import './index.less';
 
 const ChartContainer: FC<{
-  children: ReactNode;
   className?: string;
   style?: CSSProperties;
 }> = ({ children, className, style }) => (
