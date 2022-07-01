@@ -40,17 +40,14 @@
     ]
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "@ant-design/plots": "^1.0.9",
     "ahooks": "^3.4.1",
     "classnames": "^2.3.1",
     "form-render": "1.x",
     "zustand": "^4.0.0-rc.1"
   },
-  "devDependencies": {
-    "@types/react": "^17.0.3",
-    "@umijs/test": "^3.0.5",
-    "father-build": "^1.17.2"
-  },
+  "devDependencies": {},
   "peerDependencies": {
     "antd": "4.x",
     "react": ">=16.8.0"
