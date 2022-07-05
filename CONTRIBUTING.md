@@ -8,11 +8,11 @@
 # 安装依赖，请使用yarn，会去重的安装所有 node_modules (注意安装必须用 yarn，其他命令无所谓)
 yarn
 # 首次开发需要 build 一下，否则有些仓库的 import 在 dumi 里会找不到
-npm run build
+yarn build
 # 将文档网站跑起来
-npm start
+yarn start
 # windows环境
-npm run start-win
+yarn start-win
 ```
 
 #### 3. 进入文档网站了，如何开发呢？
@@ -23,14 +23,14 @@ npm run start-win
 - 提交前注意必须**格式化**。提交前注意必须**格式化**。提交前注意必须**格式化**。请安装 prettier 插件，或者在提交前执行
 
 ```sh
-npm run format
+yarn format
 ```
 
 #### 4. 重新安装依赖
 
 ```sh
 # 先清空
-npm run clean
+yarn clean
 # 再安装
 yarn
 ```
