@@ -171,6 +171,16 @@ const RenderField = props => {
     hasError,
   };
 
+  const displayBlock = () => {
+    if (hasError) {
+      return false;
+    }
+    if (_schema.extra) {
+      return false;
+    }
+    return true;
+  };
+
   // if (_schema && _schema.default !== undefined) {
   //   widgetProps.value = _schema.default;
   // }
@@ -184,7 +194,7 @@ const RenderField = props => {
           <ExtendedWidget {...widgetProps} />
           <ErrorMessage {...messageProps} />
           <Extra {...widgetProps} />
-          {!hasError && <div className="field-block"></div>}
+          {displayBlock() && <div className="field-block"></div>}
         </div>
       </>
     );
@@ -197,7 +207,7 @@ const RenderField = props => {
       <div style={{ display: 'flex' }}>
         {titleElement}
         <ErrorMessage {...messageProps} />
-        {!hasError && <div className="field-block"></div>}
+        {displayBlock() && <div className="field-block"></div>}
       </div>
     );
     return (
@@ -222,7 +232,7 @@ const RenderField = props => {
         <ExtendedWidget {...widgetProps} />
         <ErrorMessage {...messageProps} />
         <Extra {...widgetProps} />
-        {!hasError && <div className="field-block"></div>}
+        {displayBlock() && <div className="field-block"></div>}
       </div>
     </>
   );
