@@ -9,22 +9,21 @@
   },
   "workspaces": [
     "packages/*",
-    "widgets/*",
     "tools/schema-generator",
     "tools/form-render-excel"
   ],
   "scripts": {
-    "build": "lerna run build",
+    "build": "turbo run build",
     "changelog": "lerna-changelog",
     "clean": "lerna clean -y",
     "predeploy": "npm run build && npm run doc",
     "deploy": "gh-pages -d docs-dist",
+    "dev": "PORT=8080 dumi dev",
     "doc": "dumi build",
     "format": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
     "size": "ANALYZE=1 dumi build",
     "start": "npm run dev",
-    "dev": "PORT=8080 dumi dev",
     "start-win": "set PORT=8080 && dumi dev",
     "test": "jest",
     "test:clean": "jest --clearCache",
@@ -83,8 +82,8 @@
     "react-test-renderer": "^17.0.2",
     "ts-jest": "^27.1.3",
     "ts-node": "^10.5.0",
+    "turbo": "^1.3.1",
     "typescript": "^4.6.2",
     "yorkie": "^2.0.0"
-  },
-  "version": "0.0.1"
+  }
 }
