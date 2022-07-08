@@ -7,6 +7,9 @@
 /yarn.lock
 /package-lock.json
 
+# turbo
+*/*/.turbo
+
 
 # production
 /dist
