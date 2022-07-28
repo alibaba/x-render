@@ -1,9 +1,9 @@
 import { Button } from 'antd';
 import SearchForm from 'form-render';
 import React, { useEffect, useRef, useState } from 'react';
-import { SearchProps } from '../interface';
+import { SearchProps } from '../types';
 import { useTable } from './hooks';
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep } from 'lodash-es';
 
 const SearchBtn = ({
   clearSearch,

@@ -3,7 +3,7 @@ import zh_CN from 'antd/lib/locale/zh_CN';
 import { useForm } from 'form-render';
 import _get from 'lodash.get';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
-import { SearchApi } from '../interface';
+import { SearchApi } from '../types';
 import { useSet } from './hooks';
 import './index.css';
 import { Ctx } from './store';

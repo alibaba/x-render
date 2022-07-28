@@ -1,6 +1,6 @@
 import { Radio, Space, Table, TableProps } from 'antd';
 import React, { useEffect, useRef } from 'react';
-import { TableRenderProps } from '../interface';
+import { TableRenderProps } from '../types';
 import { getDate, getDateTime, getMoneyType } from '../utils';
 import ErrorBoundary from './ErrorBoundary';
 import { renderDom } from './field';
