@@ -96,7 +96,7 @@ const useTableRoot = props => {
   };
 
   const refresh = (
-    params?: { tab: string | number; stay?: boolean },
+    params?: { tab?: string | number; stay?: boolean },
     moreSearch?: any
   ) => {
     const _stay = (params && params.stay) || false;
