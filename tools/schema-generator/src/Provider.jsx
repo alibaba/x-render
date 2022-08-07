@@ -44,6 +44,7 @@ function Provider(props, ref) {
     transformer: _transformer,
     extraButtons,
     controlButtons,
+    preview: _preview,
     hideId,
     getId = defaultGetId,
     settings,
@@ -108,7 +109,7 @@ function Provider(props, ref) {
   const _widgets = { ...defaultWidgets, ...widgets, list };
 
   const rootState = {
-    preview,
+    preview: _preview ?? preview,
     mapping: _mapping,
     widgets: _widgets,
     selected,
