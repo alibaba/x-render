@@ -47,7 +47,9 @@ export default function Settings({ widgets }) {
     }
   }, [selected]);
 
-  const globalSettingHide = userProps.globalSettings === null || (userProps.globalSettings && !Object.keys(userProps.globalSettings).length);
+  const globalSettingHide =
+    userProps.globalSettings === null ||
+    (userProps.globalSettings && !Object.keys(userProps.globalSettings).length);
 
   return showRight ? (
     <div className="right-layout relative pl2">
