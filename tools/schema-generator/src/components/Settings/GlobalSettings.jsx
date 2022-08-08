@@ -6,7 +6,12 @@ import { useGlobal, useStore } from '../../utils/hooks';
 export default function GlobalSettings({ widgets }) {
   const form = useForm();
   const [innerUpdate, setInnerUpdate] = useState(false);
-  const { widgets: globalWidgets, frProps, userProps = {} } = useStore();
+  const {
+    widgets: globalWidgets,
+    frProps,
+    userProps = {},
+    mapping,
+  } = useStore();
   const setGlobal = useGlobal();
   const globalSettings = userProps.globalSettings || defaultGlobalSettings;
 
@@ -36,6 +41,7 @@ export default function GlobalSettings({ widgets }) {
           '#': v => onDataChange(v),
         }}
         widgets={{ ...globalWidgets, ...widgets }}
+        mapping={mapping}
       />
     </div>
   );

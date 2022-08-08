@@ -57,7 +57,10 @@ const CardList = ({
               }`}
               key={idx}
             >
-              <div className="fr-card-index">{idx + 1}</div>
+              <div className="fr-card-index">
+                {/* <>{props.prefix}</> */}
+                {idx + 1}
+              </div>
               <Core {...fieldsProps} />
 
               <div direction="horizontal" className="fr-card-toolbar">
@@ -88,7 +91,7 @@ const CardList = ({
                       ) {
                         const cb = methods[props.onConfirm];
                         if (typeof cb === 'function') {
-                          const result = cb();
+                          const result = cb(item, idx);
                           if (!result) {
                             return;
                           }

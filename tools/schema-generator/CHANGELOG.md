@@ -1,5 +1,10 @@
 # Change Log
 
+### 2.7.9
+
+- [+] `globalSettings` 为空，隐藏 `设计器` 的表单配置模块
+- [+] 添加`preview`参数，用于在外部控制`预览/编辑态`
+
 ### 2.7.0
 
 - [+] 新增 `fieldRender` 及 `fieldWrapperRender`，支持自定义组件渲染

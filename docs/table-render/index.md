@@ -18,7 +18,7 @@ title: 使用教程
   <a href="https://npmjs.org/package/table-render">
     <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/table-render.svg?style=flat-square">
   </a>
-  <a>
+  <a href="https://github.com/alibaba/x-render" >
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
   </a>
 </p>
@@ -67,7 +67,7 @@ const schema = {
       title: '标题',
       type: 'string',
       width: '30%',
-      labelWidth: 45
+      labelWidth: 45,
     },
     created_at: {
       title: '创建时间',

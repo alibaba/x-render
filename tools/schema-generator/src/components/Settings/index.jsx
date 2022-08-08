@@ -16,7 +16,7 @@ export default function Settings({ widgets }) {
     showRight: true,
     showItemSettings: false,
   });
-  const { selected } = useStore();
+  const { selected, userProps = {} } = useStore();
   const { tabsKey, showRight, showItemSettings } = state;
 
   const toggleRight = () => setState({ showRight: !showRight });
@@ -49,6 +49,10 @@ export default function Settings({ widgets }) {
     }
   }, [selected]);
 
+  const globalSettingHide =
+    userProps.globalSettings === null ||
+    (userProps.globalSettings && !Object.keys(userProps.globalSettings).length);
+
   return showRight ? (
     <div className="right-layout relative pl2">
       <ToggleIcon />
@@ -58,9 +62,11 @@ export default function Settings({ widgets }) {
             <ItemSettings widgets={widgets} />
           </TabPane>
         )}
-        <TabPane tab={t("表单配置")} key="globalSettings">
-          <GlobalSettings widgets={widgets} />
-        </TabPane>
+        {!globalSettingHide && (
+          <TabPane tab="表单配置" key="globalSettings">
+            <GlobalSettings widgets={widgets} />
+          </TabPane>
+        )}
       </Tabs>
     </div>
   ) : (

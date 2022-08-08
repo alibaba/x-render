@@ -1,8 +1,9 @@
 import { Button } from 'antd';
 import SearchForm from 'form-render';
 import React, { useEffect, useRef, useState } from 'react';
-import { SearchProps } from '../interface';
+import { SearchProps } from '../types';
 import { useTable } from './hooks';
+import { cloneDeep } from 'lodash-es';
 
 const SearchBtn = ({
   clearSearch,
@@ -92,7 +93,7 @@ const Search: <RecordType extends object = any>(
     if (_schema && _schema.properties) {
       if (formSchema && noDiff) return;
       try {
-        const curSchema = JSON.parse(JSON.stringify(_schema));
+        const curSchema = cloneDeep(_schema);
         curSchema.properties.searchBtn = {
           type: 'string',
           widget: 'searchBtn',

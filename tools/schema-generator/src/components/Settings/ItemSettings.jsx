@@ -135,6 +135,7 @@ export default function ItemSettings({ widgets }) {
         form={form}
         schema={settingSchema}
         widgets={{ ..._widgets, ...widgets }}
+        mapping={globalMapping}
         watch={{
           '#': v => setTimeout(() => onDataChange(v), 0),
         }}

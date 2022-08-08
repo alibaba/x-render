@@ -1,9 +1,9 @@
 ---
 order: 3
-title: 柱状图
+title: 案例展示 - 柱状图
 group:
-  title: 案例展示
-  order: 2
+  title: 【归档】0.1.X 版本文档
+  order: 999
 ---
 
 ## 基本用法
@@ -12,7 +12,9 @@ group:
 
 - 图表渲染上，指标作为 `x 轴`，指标值作为 `y 轴`。
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/AoJ5DsaSH/376a4782-9b37-451e-bf48-b195c8fed794.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -35,7 +37,9 @@ export default () => (
 
 - 图表渲染上，维度作为 `x 轴`，指标作为 `y 轴`。
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/G%26xuWEl%24n/77bde577-afaa-4d70-997e-fd01f85dc97b.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -67,7 +71,9 @@ export default () => (
 - 图表渲染上，第一维度作为 `x 轴`，指标作为 `y 轴`，第二维度作为 `系列`。
 - 数据上，数据条数是 `「单指标 单维度」` 的两倍。
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/XZgpPdefS/8b174c13-360e-4132-a39f-435095a9b9fe.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -106,7 +112,9 @@ export default () => (
 
 - 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/1zwcEhRsN/9b5557d6-d8d7-482d-a8f8-29bfd96af727.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -138,7 +146,9 @@ export default () => (
 
 ### 图形上显示数字的条形图
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/ivJe7pr0L/d2974ff0-a380-47ec-be5d-31e9c268bd38.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true

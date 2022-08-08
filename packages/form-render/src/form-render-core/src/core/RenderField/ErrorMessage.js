@@ -12,7 +12,7 @@ const ErrorMessage = ({ message, schema, softHidden, hardHidden }) => {
   msg = translateMessage(msg, schema);
 
   // 无错误信息不渲染 msg 元素占位，表单之间的间隔通过 field-block 元素分隔
-  if(!msg) return null;
+  if (!msg) return null;
 
   if (hardHidden) return <div className={`error-message`}></div>;
 

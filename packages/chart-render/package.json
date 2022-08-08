@@ -1,6 +1,6 @@
 {
   "name": "chart-render",
-  "version": "0.1.9",
+  "version": "1.0.0-alpha.3",
   "keywords": [
     "Chart",
     "ChartRender",
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:alibaba/form-render.git"
+    "url": "git@github.com:alibaba/x-render.git"
   },
   "license": "MIT",
   "main": "dist/index.js",
@@ -40,15 +40,16 @@
     ]
   },
   "dependencies": {
-    "@ant-design/charts": "~1.2.14",
-    "ali-react-table": "^2.4.0",
-    "dvt-aggregation": "^0.2.8"
+    "@ant-design/icons": "^4.2.2",
+    "@ant-design/plots": "^1.0.9",
+    "ahooks": "^3.4.1",
+    "classnames": "^2.3.1",
+    "form-render": "1.x",
+    "zustand": "^4.0.0-rc.1"
   },
-  "devDependencies": {
-    "@types/react": "^17.0.3",
-    "@umijs/test": "^3.0.5"
-  },
+  "devDependencies": {},
   "peerDependencies": {
+    "antd": "4.x",
     "react": ">=16.8.0"
   },
   "gitHooks": {

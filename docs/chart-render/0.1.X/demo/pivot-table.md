@@ -1,16 +1,16 @@
 ---
 order: 4
-title: 交叉表
+title: 案例展示 - 交叉表
 group:
-  title: 案例展示
-  order: 2
+  title: 【归档】0.1.X 版本文档
+  order: 999
 ---
 
 ## 基本用法
 
 - 表格渲染上，维度作为 `左表头`，指标作为 `顶表头`。
 
-```jsx
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -159,7 +159,7 @@ export default () => (
 
 ### 自定义单元格渲染
 
-```jsx
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -322,7 +322,7 @@ export default () => (
 
 ### 可展开/收起
 
-```jsx
+```js
 /**
  * transform: true
  * defaultShowCode: true

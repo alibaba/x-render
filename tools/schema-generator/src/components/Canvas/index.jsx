@@ -20,18 +20,17 @@ const Canvas = ({ onSelect }) => {
     userProps,
     displaySchema,
     displaySchemaString,
+    preview,
     selected,
     flatten,
     onChange,
     onSchemaChange,
   } = useStore();
   const [local, setState] = useSet({
-    preview: false,
     showModal: false,
     showModal2: false,
     schemaForImport: '',
   });
-  const { preview } = local;
 
   const { transformer, extraButtons = [] } = userProps;
 
@@ -103,8 +102,7 @@ const Canvas = ({ onSelect }) => {
           <Button
             className="mr2 mb1"
             onClick={() => {
-              setState({ preview: !preview });
-              setGlobal({ selected: '#' });
+              setGlobal({ selected: '#', preview: !preview });
             }}
           >
             {getDefaultBtnText(
