@@ -1,12 +1,20 @@
-import React, { forwardRef } from 'react';
+import React, { useEffect, forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import Canvas from './components/Canvas';
 import Settings from './components/Settings';
 import Sidebar from './components/Sidebar';
 import Provider from './Provider';
+import './i18next';
 import './styles/index.less';
 
 const Generator = forwardRef(
-  ({ fixedName, settingsWidgets, onCanvasSelect, ...props }, ref) => {
+  ({ fixedName, settingsWidgets, onCanvasSelect, local = 'en', ...props }, ref) => {
+
+    const { i18n } = useTranslation();
+    useEffect(() => {
+      i18n.changeLanguage(local);
+    }, [local]);
+
     return (
       <Provider ref={ref} {...props}>
         <div className="fr-generator-container">
