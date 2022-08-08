@@ -8,12 +8,14 @@ import './i18next';
 import './styles/index.less';
 
 const Generator = forwardRef(
-  ({ fixedName, settingsWidgets, onCanvasSelect, local = 'en', ...props }, ref) => {
-
+  (
+    { fixedName, settingsWidgets, onCanvasSelect, locale = 'cn', ...props },
+    ref
+  ) => {
     const { i18n } = useTranslation();
     useEffect(() => {
-      i18n.changeLanguage(local);
-    }, [local]);
+      i18n.changeLanguage(locale);
+    }, [locale]);
 
     return (
       <Provider ref={ref} {...props}>

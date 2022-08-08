@@ -52,6 +52,8 @@ export interface Setting {
 
 export interface FRGeneratorProps {
   getId?: (name: string) => string;
+  /** 国际化配置 */
+  locale?: 'cn' | 'en';
   /** 隐藏组件 ID */
   hideId?: boolean;
   /** 固定 id */

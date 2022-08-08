@@ -18,10 +18,10 @@
     "配置错误：Setting不是数组": "Configuration error: setting is not an array"
   },
   "components": {
-    "基础组件": "BASIC",
-    "高级组件": "ADVANCED",
-    "布局组件": "LAYOUT",
-    "模板": "TEMPLATE",
+    "基础组件": "Basic",
+    "高级组件": "Advanced",
+    "布局组件": "Layout",
+    "模板": "Template",
 
     "输入框": "Input",
     "大输入框": "Textarea",
