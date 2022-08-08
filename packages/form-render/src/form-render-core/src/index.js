@@ -25,6 +25,7 @@ export { defaultMapping as mapping };
 function App({
   id,
   widgets,
+  layoutWidgets,
   mapping,
   form,
   className,
@@ -219,6 +220,7 @@ function App({
   const tools = useMemo(
     () => ({
       widgets,
+      layoutWidgets,
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
       renderTitle,
