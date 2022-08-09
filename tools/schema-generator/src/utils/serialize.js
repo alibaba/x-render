@@ -72,7 +72,8 @@ function deleteUndefined(obj) {
   }
 }
 
-module.exports = function serialize(obj, options) {
+
+function serializeUtil(obj, options) {
   options || (options = {});
 
   // Backwards-compatibility for `space` as the second argument.
@@ -332,4 +333,47 @@ module.exports = function serialize(obj, options) {
       return serializeFunc(fn);
     }
   );
-};
+}
+
+/**
+ * @description 使用serialize-javascript进行序列化，替代JSON.stringify()
+ * @description 组件rules里面会存储一些validator函数，如果用JSON.stringify提交给接口会丢失
+ * @param {*} obj 传入需要序列化的值
+ * @returns 序列化后的值
+ */
+function serialize(obj) {
+  return serializeUtil(obj, {
+    ignoreUndefined: true,
+  });
+}
+
+/**
+ * @description 序列化成编辑器需要的展示格式
+ * @param {*} obj  传入需要序列化的值
+ * @return {*}  序列化后的值
+ */
+function serializeToDraft(obj) {
+  return serializeUtil(obj, {
+    space: 2,
+    ignoreUndefined: true,
+  });
+}
+
+/**
+ * @description 对serialize-javascript序列化后的值进行反序列化化
+ * @param {*} serializedJavascript 反序列化后的值
+ * @returns
+ */
+function deserialize(serializedJavascript) {
+  return new Function('return ' + serializedJavascript)();
+}
+
+export { deserialize, serialize, serializeToDraft, serializeUtil };
+
+
+
+
+
+
+
+

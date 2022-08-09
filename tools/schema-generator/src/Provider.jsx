@@ -4,7 +4,6 @@ import copyTOClipboard from 'copy-text-to-clipboard';
 
 import {
   mapping as defaultMapping,
-  serializeToDraft,
   widgets as defaultWidgets,
 } from 'form-render';
 import {
@@ -29,6 +28,7 @@ import {
 } from './utils';
 import { Ctx, StoreCtx } from './utils/context';
 import { useSet } from './utils/hooks';
+import { serializeToDraft } from './utils/serialize'
 import list from './widgets/list';
 
 const DEFAULT_SCHEMA = {

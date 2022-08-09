@@ -474,13 +474,13 @@ import {
   deserialize,
   serialize,
   serializeToDraft,
-  jsserialize,
-} from 'form-render';
+  serializeUtil,
+} from 'fr-generator';
 
 // deserialize 反序列化，类 JSON.parse()
 // serialize 序列化，类 JSON.stringify() 内部会过滤掉undefined
 // serializeToDraft 序列化，类 JSON.stringify() 内部会过滤掉undefined，并且格式化 space: 2
-// jsserialize, serialize-javascript 库的原样导出
+// serializeUtil, serialize-javascript 库的原样导出
 
 // 设计时把schema保存到接口的时候调用 serialize序列化、运行时schema解析的时候deserialize进行解析即可
 ```

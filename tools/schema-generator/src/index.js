@@ -31,3 +31,5 @@ export {
 } from './settings';
 export { fromSetting, toSetting } from './transformer/form-render';
 export default Generator;
+
+export * from "./utils/serialize"

@@ -1,9 +1,6 @@
 import { Tabs } from 'antd';
-import FormRender, {
-  deserialize,
-  serializeToDraft,
-  useForm,
-} from 'form-render';
+import FormRender, { useForm } from 'form-render';
+import { deserialize, serializeToDraft } from "fr-generator"
 import parseJson from 'json-parse-better-errors';
 import { useEffect, useState } from 'react';
 import AsyncSelect from './customized/AsyncSelect';

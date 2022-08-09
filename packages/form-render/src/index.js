@@ -10,8 +10,7 @@ export {
   mapping,
   useForm,
 } from './form-render-core/src';
-export { default as jsserialize } from './serialize';
-export { deserialize, serialize, serializeToDraft } from './utils';
+
 export { defaultWidgets as widgets };
 
 const FR = ({ widgets, configProvider, ...rest }) => {
