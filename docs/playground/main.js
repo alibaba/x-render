@@ -1,10 +1,12 @@
 import { Tabs } from 'antd';
 import FormRender, { useForm } from 'form-render';
+import { deserialize, serializeToDraft } from "fr-generator"
 import parseJson from 'json-parse-better-errors';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AsyncSelect from './customized/AsyncSelect';
 import DefaultSchema from './json/simplest.json';
 import CodeBlock from './monaco';
+
 const { TabPane } = Tabs;
 
 // help functions
@@ -13,16 +15,34 @@ const schema2str = obj => JSON.stringify(obj, null, 2) || '';
 const Demo = ({ schemaName, theme, ...formProps }) => {
   const [schemaStr, set1] = useState(() => schema2str(DefaultSchema.schema));
   const [error, set2] = useState('');
+  const [isJs, setIsJs] = useState(false);
+
+  const updateSchemaStr = () => {
+    let schema = {};
+    try {
+      schema = require(`./json/${schemaName}.json`);
+      set1(schema2str(schema.schema));
+      setIsJs(false);
+    } catch (error) {
+      // 不存在，默认存储的是动态函数，取js文件
+      schema = require(`./json/${schemaName}.js`);
+      set1(serializeToDraft(schema.schema));
+      setIsJs(true);
+    }
+  };
 
   useEffect(() => {
-    const schema = require(`./json/${schemaName}.json`);
-    set1(schema2str(schema.schema));
+    updateSchemaStr();
   }, [schemaName]);
+
+  const parseSchema = str => {
+    return isJs ? deserialize(str) : parseJson(str);
+  };
 
   const tryParse = schemaStr => {
     let schema = {};
     try {
-      schema = parseJson(schemaStr);
+      schema = parseSchema(schemaStr);
       if (typeof schema !== 'object') {
         set2('schema非正确json');
         return;
@@ -41,7 +61,7 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
 
   let schema = {};
   try {
-    schema = parseJson(schemaStr);
+    schema = parseSchema(schemaStr);
   } catch (error) {
     console.log(error);
   }
