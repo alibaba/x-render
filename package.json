@@ -58,6 +58,7 @@
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-no-debugger": "^0.0.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
+    "cross-env": "^7.0.3",
     "dumi": "1.1.40",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
