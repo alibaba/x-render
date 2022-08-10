@@ -1,9 +1,9 @@
 ---
 order: 2
-title: 折线图
+title: 案例展示 - 折线图
 group:
-  title: 案例展示
-  order: 2
+  title: 【归档】0.1.X 版本文档
+  order: 999
 ---
 
 ## 基本用法
@@ -12,7 +12,9 @@ group:
 
 - 图表渲染上，维度作为 `x 轴`，指标作为 `y 轴`。
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/BuatJtOJ7/ff0e3f12-bc8a-49c9-bc60-175a8dbbdc82.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -44,7 +46,9 @@ export default () => (
 - 图表渲染上，第一维度作为 `x 轴`，指标作为 `y 轴`，第二维度作为 `系列`。
 - 数据上，数据条数是 `「单指标 单维度」` 的两倍。
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/LhXumsY5L/e5193c0f-900b-409c-ad4e-5fbf537b66bd.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -84,7 +88,9 @@ export default () => (
 - 图表渲染上，会以双 y 轴折线图展示。
 - 第一维度作为 `x 轴`，第二维度作为 `系列`，第一指标作为 `左 y 轴`，第二指标作为 `右 y 轴`。
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/A7OshJhkm/e54b3e35-0005-4956-8423-02791179b574.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -124,7 +130,9 @@ export default () => (
 
 - 图表渲染上，维度作为 `x 轴`，指标分 `系列` 展示。
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/NAOxh8EbB/7d536bd3-4b63-45c9-a96c-d918a61d9b56.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true
@@ -154,9 +162,11 @@ export default () => (
 
 ## 高级用法
 
-### 百分百堆叠面积图
+### 百分比堆叠面积图
 
-```jsx
+<img src="https://gw.alipayobjects.com/zos/antfincdn/XIcTikHf5/6b57f951-5f44-4cab-9b7c-8f70aa4f3207.png" style="border: 1px solid #ebedf1" />
+
+```js
 /**
  * transform: true
  * defaultShowCode: true

@@ -80,6 +80,8 @@ const ExtendedWidget = ({
     children,
     disabled,
     readOnly,
+    dataPath,
+    dataIndex,
     className: hasError ? 'fr-item-status-error' : '',
     ...schema.props,
     ...globalProps,

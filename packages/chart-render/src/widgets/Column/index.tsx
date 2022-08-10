@@ -1,24 +1,22 @@
-import { Bar, Column, ColumnConfig } from '@ant-design/charts';
-import React from 'react';
+import {
+  Bar as AntBar,
+  Column as AntColumn,
+  ColumnConfig,
+} from '@ant-design/plots';
+import React, { memo } from 'react';
+import { DataSource } from '../../utils/type';
+import { useChart } from '../../utils/store';
 import { splitMeta } from '../../utils';
-import { ICommonProps } from '../../utils/types';
-import ErrorTemplate from '../ErrorTemplate';
+import ChartContainer from '../../components/ChartContainer';
 
-export interface ICRColumnProps
-  extends ICommonProps,
-    Omit<
-      ColumnConfig,
-      keyof ICommonProps | 'xField' | 'yField' | 'seriesField'
-    > {
-  /**
-   * 是否倒置，倒置后柱形图会表现成条形图
-   */
+export interface IColumnProps extends Omit<Partial<ColumnConfig>, 'data'> {
+  /** 是否倒置，倒置后柱形图会表现成条形图 */
   inverted?: boolean;
 }
 
 export function generateConfig(
-  meta: ICommonProps['meta'],
-  data: ICommonProps['data'],
+  meta: DataSource['meta'],
+  data: DataSource['data']
 ): ColumnConfig {
   const { metaDim, metaInd } = splitMeta(meta);
 
@@ -30,7 +28,7 @@ export function generateConfig(
       xField,
       yField,
       data: data
-        .map((item) => {
+        .map(item => {
           return metaInd.map(({ id, name }) => {
             return {
               [xField]: id,
@@ -41,11 +39,12 @@ export function generateConfig(
         .flat(),
       meta: {
         [xField]: {
-          formatter: (label) =>
+          formatter: label =>
             meta.find(({ id }) => label === id)?.name || label,
         },
       },
       tooltip: {
+        // @ts-ignore
         formatter: ({ [xField]: type, [yField]: value }) => ({
           name: meta.find(({ id }) => type === id)?.name as string,
           value,
@@ -71,7 +70,7 @@ export function generateConfig(
     const seriesField = 'type';
     return {
       data: data
-        .map((item) => {
+        .map(item => {
           return metaInd.map(({ id, name }) => {
             return {
               [xField]: item[xField],
@@ -99,38 +98,37 @@ export function generateConfig(
   return { data, xField: '', yField: '' };
 }
 
-const CRColumn: React.FC<ICRColumnProps> = ({
+const Column: React.FC<IColumnProps> = ({
   className,
   style,
-  meta = [],
-  data = [],
   inverted,
   ...props
 }) => {
-  if (inverted) {
-    const { xField, yField, ...otherConfig } = generateConfig(meta, data);
+  const loading = useChart(state => state.loading);
+  const { meta = [], data = [] } = useChart(state => state.dataSource) || {};
+  const { xField, yField, ...otherConfig } = generateConfig(meta, data);
 
-    // 条形图 x、y 互换
-    return (
-      <Bar
-        xField={yField}
-        yField={xField}
-        {...otherConfig}
-        renderer="svg"
-        errorTemplate={() => <ErrorTemplate />}
-        {...props}
-      />
-    );
-  } else {
-    return (
-      <Column
-        {...generateConfig(meta, data)}
-        renderer="svg"
-        errorTemplate={() => <ErrorTemplate />}
-        {...props}
-      />
-    );
-  }
+  return (
+    <ChartContainer className={className} style={style}>
+      {inverted ? (
+        <AntBar
+          loading={loading}
+          xField={yField || ''}
+          yField={xField || ''}
+          {...otherConfig}
+          {...props}
+        />
+      ) : (
+        <AntColumn
+          loading={loading}
+          xField={xField || ''}
+          yField={yField || ''}
+          {...otherConfig}
+          {...props}
+        />
+      )}
+    </ChartContainer>
+  );
 };
 
-export default CRColumn;
+export default memo(Column);

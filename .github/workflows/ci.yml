@@ -20,13 +20,10 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Cache Node Dependencies
-        id: cache
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: node_modules
-          key: ${{runner.OS}}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-nodemodules-
+          key: ${{runner.OS}}-${{ hashFiles('**/yarn.lock') }}
       - name: Install
         run: yarn install
         if: steps.cache.outputs.cache-hit != 'true'

@@ -1,0 +1,39 @@
+.ant-card-extra > .cr-search {
+  display: flex;
+  align-items: center;
+  margin: -16px 0;
+
+  > .cr-search-button {
+    display: inline-block;
+    margin-left: 12px;
+  }
+
+  > .fr-container {
+    .fr-item-wrapper {
+      > div > div {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 12px;
+        > .fr-field {
+          width: auto;
+        }
+      }
+    }
+    .fr-label {
+      width: auto !important;
+    }
+    .error-message,
+    .field-block {
+      position: absolute;
+      top: 100%;
+    }
+  }
+}
+
+.cr-search-hidden {
+  display: none;
+}
+
+.cr-search-button {
+  display: none;
+}

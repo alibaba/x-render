@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.13.10
+
+- [!] 修复`list`类组件的占位符显示异常的问题
+
+## 1.13.9
+
+- [+] 调整表单占位符样式
+
 ## 1.13.8
 
 - [+] `cardList` schema 支持透传 `delConfirmProps`
