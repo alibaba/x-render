@@ -465,6 +465,65 @@ const schema = {
 };
 ```
 
+[参考 playground-动态函数](/playground)
+
+动态检验如果使用[JSON.stringify](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)序列化会丢失我们需要的函数,我们基于 [serialize-javascript](https://github.com/yahoo/serialize-javascript.git)提供
+
+```js
+import {
+  deserialize,
+  serialize,
+  serializeToDraft,
+  serializeUtil,
+} from 'fr-generator';
+
+// deserialize 反序列化，类 JSON.parse()
+// serialize 序列化，类 JSON.stringify() 内部会过滤掉undefined
+// serializeToDraft 序列化，类 JSON.stringify() 内部会过滤掉undefined，并且格式化 space: 2
+// serializeUtil, serialize-javascript 库的原样导出
+
+// 设计时把schema保存到接口的时候调用 serialize序列化、运行时schema解析的时候deserialize进行解析即可
+```
+
+其他注意事项
+
+deserialize 的解析的时候目前没有传递任何上下文，需要注意变量丢失的问题（后续如果需要考虑注入公共上下文变量等看实际情况再补充）。比如
+
+```js
+const emojiReg = /\p{Emoji_Presentation}/u;
+const schema = {
+  // ...
+  name: {
+    type: 'string',
+    required: true,
+    rules: [{
+        message: '不能输入表情，请重新输入',
+        name: '表情包',
+        validator: (_rule: any, value: any) => {
+          return !emojiRegex.test(value);
+        },
+     }],
+  },
+};
+
+// 上面这样保存后的validator，到解析执行的时候emojiRegex变量是找不到的。正确的做法应该是把正则这个变量定义在validator函数体里面
+const schema = {
+  // ...
+  name: {
+    type: 'string',
+    required: true,
+    rules: [{
+        message: '不能输入表情，请重新输入',
+        name: '表情包',
+        validator: (_rule: any, value: any) => {
+          const emojiRegex = /\p{Emoji_Presentation}/u;
+          return !emojiRegex.test(value);
+        },
+     }],
+  },
+};
+```
+
 ### required
 
 - 类型：`boolean`
