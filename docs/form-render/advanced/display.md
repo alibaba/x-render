@@ -26,6 +26,7 @@ const schema = displayType => ({
       title: '日期',
       type: 'range',
       format: 'date',
+      description: '<a>123</a>',
     },
     objectName: {
       title: '对象',
