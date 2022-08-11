@@ -106,6 +106,10 @@ export function isObjType(schema) {
   );
 }
 
+export function isCompType(schema) {
+  return schema && schema.type === 'component' && schema.widget;
+}
+
 // TODO: to support case that item is not an object
 export function isListType(schema) {
   return (
