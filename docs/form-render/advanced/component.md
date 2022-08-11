@@ -6,7 +6,7 @@ group:
 toc: content
 ---
 
-# 支持 schema 中嵌入代码片段
+# 支持 schema 中嵌入自定义内容
 
 当我们在 schema 的表单渲染中需要引用其他组件，例如使用公司的 antdForm 公共业务组件或是一些引导性的组件。我们在常规的 type 中新增加了 component ,留出一块区域支持用户自定义使用自己的内嵌组件。
 
