@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "form-render",
     "version": "1.13.11",
     "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
@@ -14,6 +15,33 @@
     "homepage": "https://xrender.fun/form-render",
     "bugs": {
         "url": "https://github.com/alibaba/x-render/issues"
+=======
+  "name": "form-render",
+  "version": "1.13.12",
+  "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
+  "keywords": [
+    "Form",
+    "FormRender",
+    "Render",
+    "XRender",
+    "React",
+    "Json Schema",
+    "Ant Design"
+  ],
+  "homepage": "https://xrender.fun/form-render",
+  "bugs": {
+    "url": "https://github.com/alibaba/x-render/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/form-render.git"
+  },
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Tw93",
+      "email": "tw93@qq.com"
+>>>>>>> 8112a1d58911b1d30aa611e749cf2376aec66e97
     },
     "repository": {
         "type": "git",
