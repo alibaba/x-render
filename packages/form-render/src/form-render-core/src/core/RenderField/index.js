@@ -1,7 +1,12 @@
 import React, { useRef } from 'react';
 import { useStore, useStore2, useTools } from '../../hooks';
 import useDebouncedCallback from '../../useDebounce';
-import { getValueByPath, isCheckBoxType, isObjType } from '../../utils';
+import {
+  getValueByPath,
+  isCheckBoxType,
+  isObjType,
+  isBlockType,
+} from '../../utils';
 import { validateField } from '../../validator';
 import ErrorMessage from './ErrorMessage';
 import ExtendedWidget from './ExtendedWidget';
@@ -219,6 +224,12 @@ const RenderField = props => {
         />
         <Extra {...widgetProps} />
       </div>
+    );
+  } else if (isBlockType(_schema)) {
+    return (
+      <>
+        <ExtendedWidget {...widgetProps} />
+      </>
     );
   }
 
