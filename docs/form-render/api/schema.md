@@ -490,7 +490,7 @@ const schema = {
 
 ### type
 
-- 类型：`'string' | 'number' | 'boolean' | 'array' | 'range' | 'html'`
+- 类型：`'string' | 'number' | 'boolean' | 'array' | 'range' | 'html' | 'block'`
 - 详细：type 描述里组件的值的数据类型。用于校验数据类型，也用于判断使用哪个组件来渲染，以及校验表单数据。
 
 ```js
@@ -507,6 +507,33 @@ const schema = {
     type: 'html',
     default: 'hello world',
   },
+};
+```
+
+- 特别说明: 我们在常规的 type 中新增了 block 这一类型，来增强 schema 的可扩展性,虽然不太符合 JSON Schema。其使用场景在于当 schema 的表单渲染内容中需要嵌入一块儿自定义的区块，例如使用公司的 antdForm 公共业务组件或是一些引导性的内容。当 type 为 block 时，我们不会渲染表单的 label，会留出一块空白区域让用户自由填充内容；该区域通过 widget 嵌入自定义的内容，它可以消费整个 form 示例，例如 formData，但它没有 onChange 事件，也不会进行表单校验
+
+```js
+const schema = {
+  type: 'object',
+  displayType: 'row',
+  title: 'schema中嵌入一块区域，通过widget传入用户自定义的内容',
+  properties: {
+    guide: {
+      type: 'block',
+      widget: 'siteBlock',
+    },
+  },
+};
+
+const Site = props => {
+  const color = sexEnums[props.addons.formData.sex].color;
+  const name = sexEnums[props.addons.formData.sex].name;
+  return (
+    <Tag color={color}>
+      我可以获取表单的示例内容，当你选择的性别为
+      {name} 时，我的颜色是{color}
+    </Tag>
+  );
 };
 ```
 

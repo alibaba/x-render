@@ -5,7 +5,7 @@ import {
   getValueByPath,
   isCheckBoxType,
   isObjType,
-  isCompType,
+  isBlockType,
 } from '../../utils';
 import { validateField } from '../../validator';
 import ErrorMessage from './ErrorMessage';
@@ -225,7 +225,7 @@ const RenderField = props => {
         <Extra {...widgetProps} />
       </div>
     );
-  } else if (isCompType(_schema)) {
+  } else if (isBlockType(_schema)) {
     return (
       <>
         <ExtendedWidget {...widgetProps} />

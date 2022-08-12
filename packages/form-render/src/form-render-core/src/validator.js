@@ -180,6 +180,10 @@ export const validateAll = ({
 };
 
 const validateSingle = (data, schema = {}, path, options = {}) => {
+  // 自定义区块不做rules校验
+  if (schema.type === 'block') {
+    return Promise.resolve();
+  }
   if (schema.hidden) {
     return Promise.resolve();
   }

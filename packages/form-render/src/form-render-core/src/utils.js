@@ -106,8 +106,8 @@ export function isObjType(schema) {
   );
 }
 
-export function isCompType(schema) {
-  return schema && schema.type === 'component' && schema.widget;
+export function isBlockType(schema) {
+  return schema && schema.type === 'block' && schema.widget;
 }
 
 // TODO: to support case that item is not an object

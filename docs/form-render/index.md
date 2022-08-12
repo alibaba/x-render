@@ -125,7 +125,7 @@ class Demo extends React.Component {
     const { form } = this.props;
     return (
       <div>
-        <FormRender form={form} schema={schema} onFinish={this.onFinish} widgets={{site: SiteInput}}/>
+        <FormRender form={form} schema={schema} onFinish={this.onFinish} />
         <Button type="primary" onClick={form.submit}>
           提交
         </Button>
