@@ -54,6 +54,7 @@ export default Demo;
 | transformer        | schema 双向转换          | `object`   | `{ from, to, fromSetting, toSetting }`                                                                                     |
 | extraButtons       | 操作栏按钮               | `array`    | `extraButton[]`                                                                                                            |
 | controlButtons     | 选中项操作按钮           | `array`    | `controlButton[]`                                                                                                          |
+| preview     | 预览态控制           | `boolean`    | -                                                                                                          |
 | settings           | 左右侧栏配置             | `array`    | [`defaultSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js)       |
 | commonSettings     | 通用配置                 | `object`   | [`defaultCommonSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js) |
 | globalSettings     | 全局配置                 | `object`   | [`defaultGlobalSettings`](https://github.com/alibaba/form-render/blob/master/tools/schema-generator/src/settings/index.js) |
@@ -62,6 +63,7 @@ export default Demo;
 | validation         | 是否启用配置表单校验     | `boolean`  | `true`                                                                                                                     |
 | fieldRender        | 自定义组件渲染函数       | `Function` | `(schema, widgetProps, children, originNode) => originNode`                                                                |
 | fieldWrapperRender | 自定义容器组件渲染函数   | `Function` | `(schema, isSelected, children, originNode) => originNode`                                                                 |
+| locale            | 国际化配置           || `string`   | [`cn`](https://github.com/alibaba/x-render/blob/master/tools/schema-generator/src/i18next/locales/resources.ts)|
 
 #### extraButton
 

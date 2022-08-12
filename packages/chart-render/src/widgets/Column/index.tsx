@@ -44,6 +44,7 @@ export function generateConfig(
         },
       },
       tooltip: {
+        // @ts-ignore
         formatter: ({ [xField]: type, [yField]: value }) => ({
           name: meta.find(({ id }) => type === id)?.name as string,
           value,

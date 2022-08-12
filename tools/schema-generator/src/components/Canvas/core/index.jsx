@@ -1,5 +1,6 @@
 import FormRender, { useForm } from 'form-render';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { dataToFlatten, flattenToData } from '../../../utils';
 import { useStore } from '../../../utils/hooks';
 import RenderChildren from './RenderChildren';
@@ -32,7 +33,7 @@ const PreviewFR = ({ schema, data }) => {
 
 const FR = ({ id = '#', preview, displaySchema }) => {
   const { flatten, frProps = {} } = useStore();
-
+  const { t } = useTranslation();
   if (preview) {
     const data = flattenToData(flatten);
     return <PreviewFR schema={displaySchema} data={data} />;
@@ -135,7 +136,7 @@ const FR = ({ id = '#', preview, displaySchema }) => {
         <div
           className={`${containerClass} h-100 f4 black-40 flex items-center justify-center`}
         >
-          点击/拖拽左侧栏的组件进行添加
+          {t('点击/拖拽左侧栏的组件进行添加')}
         </div>
       </Wrapper>
     );

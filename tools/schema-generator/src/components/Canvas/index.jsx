@@ -1,5 +1,6 @@
 import { Button, Input, message, Modal } from 'antd';
 import copyTOClipboard from 'copy-text-to-clipboard';
+import { useTranslation } from 'react-i18next';
 import React, { useEffect } from 'react';
 import {
   idToSchema,
@@ -13,23 +14,23 @@ import FR from './core';
 const { TextArea } = Input;
 
 const Canvas = ({ onSelect }) => {
+  const { t } = useTranslation();
   const setGlobal = useGlobal();
   const {
     userProps,
     displaySchema,
     displaySchemaString,
+    preview,
     selected,
     flatten,
     onChange,
     onSchemaChange,
   } = useStore();
   const [local, setState] = useSet({
-    preview: false,
     showModal: false,
     showModal2: false,
     schemaForImport: '',
   });
-  const { preview } = local;
 
   const { transformer, extraButtons = [] } = userProps;
 
@@ -51,14 +52,14 @@ const Canvas = ({ onSelect }) => {
       onSchemaChange(value);
     } catch (error) {
       console.error(error, 'catch');
-      message.info('格式不对哦，请重新尝试'); // 可以加个格式哪里不对的提示
+      message.info(t('格式不对哦，请重新尝试')); // 可以加个格式哪里不对的提示
     }
     toggleModal2();
   };
 
   const copySchema = () => {
     copyTOClipboard(displaySchemaString);
-    message.info('复制成功');
+    message.info(t('复制成功'));
     toggleModal();
   };
 
@@ -101,30 +102,29 @@ const Canvas = ({ onSelect }) => {
           <Button
             className="mr2 mb1"
             onClick={() => {
-              setState({ preview: !preview });
-              setGlobal({ selected: '#' });
+              setGlobal({ selected: '#', preview: !preview });
             }}
           >
             {getDefaultBtnText(
               _showDefaultBtns[0],
-              ['开始编辑', '最终展示'],
+              [t('开始编辑'), t('最终展示')],
               Number(!preview)
             )}
           </Button>
         )}
         {_showDefaultBtns[1] !== false && (
           <Button className="mr2" onClick={clearSchema}>
-            {getDefaultBtnText(_showDefaultBtns[1], '清空')}
+            {getDefaultBtnText(_showDefaultBtns[1], t('清空'))}
           </Button>
         )}
         {_showDefaultBtns[2] !== false && (
           <Button className="mr2" onClick={toggleModal2}>
-            {getDefaultBtnText(_showDefaultBtns[2], '导入')}
+            {getDefaultBtnText(_showDefaultBtns[2], t('导入'))}
           </Button>
         )}
         {_showDefaultBtns[3] !== false && (
           <Button type="primary" className="mr2" onClick={toggleModal}>
-            {getDefaultBtnText(_showDefaultBtns[3], '导出schema')}
+            {getDefaultBtnText(_showDefaultBtns[3], t('导出schema'))}
           </Button>
         )}
         {_extraBtns.map((item, idx) => {
@@ -143,8 +143,8 @@ const Canvas = ({ onSelect }) => {
         visible={local.showModal}
         onOk={copySchema}
         onCancel={toggleModal}
-        okText="复制"
-        cancelText="取消"
+        okText={t("复制")}
+        cancelText={t("取消")}
       >
         <div className="mt3">
           <TextArea
@@ -156,8 +156,8 @@ const Canvas = ({ onSelect }) => {
       </Modal>
       <Modal
         visible={local.showModal2}
-        okText="导入"
-        cancelText="取消"
+        okText={t("导入")}
+        cancelText={t("取消")}
         onOk={importSchema}
         onCancel={toggleModal2}
       >
@@ -165,7 +165,7 @@ const Canvas = ({ onSelect }) => {
           <TextArea
             style={{ fontSize: 12 }}
             value={local.schemaForImport}
-            placeholder="贴入需要导入的schema，模样可点击导出schema参考"
+            placeholder={t("贴入需要导入的schema，模样可点击导出schema参考")}
             onChange={onTextareaChange}
             autoSize={{ minRows: 10, maxRows: 30 }}
           />

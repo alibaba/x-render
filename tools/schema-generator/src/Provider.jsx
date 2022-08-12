@@ -1,11 +1,12 @@
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import copyTOClipboard from 'copy-text-to-clipboard';
+
 import {
   mapping as defaultMapping,
   widgets as defaultWidgets,
 } from 'form-render';
-import React, {
+import {
   forwardRef,
   useEffect,
   useImperativeHandle,
@@ -27,6 +28,7 @@ import {
 } from './utils';
 import { Ctx, StoreCtx } from './utils/context';
 import { useSet } from './utils/hooks';
+import { serializeToDraft } from './utils/serialize'
 import list from './widgets/list';
 
 const DEFAULT_SCHEMA = {
@@ -44,6 +46,7 @@ function Provider(props, ref) {
     transformer: _transformer,
     extraButtons,
     controlButtons,
+    preview: _preview,
     hideId,
     getId = defaultGetId,
     settings,
@@ -108,7 +111,7 @@ function Provider(props, ref) {
   const _widgets = { ...defaultWidgets, ...widgets, list };
 
   const rootState = {
-    preview,
+    preview: _preview ?? preview,
     mapping: _mapping,
     widgets: _widgets,
     selected,
@@ -164,7 +167,9 @@ function Provider(props, ref) {
     if (!isNewVersion) {
       displaySchema = newSchemaToOld(displaySchema);
     }
-    displaySchemaString = JSON.stringify(displaySchema, null, 2);
+    // displaySchemaString = JSON.stringify(displaySchema, null, 2);
+    // 支持直接保存函数之后(解决validtor不能正常保存的问题)，这里因为导入导出的问题，序列化也用内置的api序列化
+    displaySchemaString = serializeToDraft(displaySchema);
   } catch (error) {}
 
   const getValue = () => displaySchema;
