@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { set, sortedUniqBy } from 'lodash-es';
+import { set, sortedUniqBy, get, isEmpty } from 'lodash-es';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSet } from './hooks';
 import { processData, transformDataWithBind2 } from './processData';
@@ -9,6 +9,7 @@ import {
   generateDataSkeleton,
   parseAllExpression,
   schemaContainsExpression,
+  errorsToErrorFields,
 } from './utils';
 import { validateAll } from './validator';
 
@@ -332,6 +333,10 @@ const useForm = props => {
         locale: localeRef.current,
         validateMessages: validateMessagesRef.current,
       },
+      formInstance: {
+        setFieldValidating,
+        removeFieldValidating,
+      },
     })
       .then(errors => {
         setState({ errorFields: errors });
@@ -371,7 +376,12 @@ const useForm = props => {
             isSubmitting: true,
             submitData: res,
           });
-          return { data: res, errors: _errors };
+          // 添加errorFields，与antd的返回内容对齐
+          return {
+            data: res,
+            errors: _errors,
+            errorFields: errorsToErrorFields(_errors),
+          };
         });
       })
       .catch(err => {
@@ -420,7 +430,46 @@ const useForm = props => {
   const isFieldValidating = dataPath => {
     return _validatingFields.current.indexOf(dataPath) > -1;
   };
-  const validateFields = () => {};
+  const validateFields = nameList => {
+    const data = _data.current;
+    if (Array.isArray(nameList)) {
+      set(data, {});
+      nameList.forEach(path => {
+        set(data, path, get(_data.current, path));
+      });
+    }
+    return validateAll({
+      formData: data,
+      flatten: _finalFlatten.current,
+      options: {
+        locale: localeRef.current,
+        validateMessages: validateMessagesRef.current,
+      },
+      formInstance: {
+        setFieldValidating,
+        removeFieldValidating,
+      },
+    }).then(errors => {
+      if (!isEmpty(errors)) {
+        setState({ errorFields: errors });
+        const _errors = sortedUniqBy(
+          [...(errors || []), ..._outErrorFields.current],
+          item => item.name
+        );
+        return Promise.reject({
+          errors: _errors,
+          errorFields: errorsToErrorFields(_errors),
+          values: processData(
+            data,
+            _finalFlatten.current,
+            removeHiddenDataRef.current
+          ),
+        });
+      } else {
+        return Promise.resolve(data);
+      }
+    });
+  };
   /**
    * 参照antd rc-field-form的处理逻辑
    * 如果入参为空，则返回 是否有表单被触碰过

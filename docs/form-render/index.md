@@ -56,17 +56,14 @@ const schema = {
   type: 'object',
   properties: {
     input1: {
-          type: 'object',
-        properties: {
-            test:{
+      type: 'object',
+      properties: {
+      test:{
         title: '简单输入框',
-      type: 'string',
-      required: true,
-            } 
-        
-    
-        }
-      
+        type: 'string',
+        required: true,
+       } 
+      }
     },
     select1: {
       title: '单选',
@@ -79,14 +76,21 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
-  console.log('form',form.isFieldsTouched(['select1', 'input1'],true));
+  const handleClick = () => {
+    form.validateFields().then(err => {
+      console.log('then', err);
+    }).catch(values => {
+      console.log('catch', values);
+    })
+  }
+  // console.log('form',form.validateFields(['select1', 'input1']));
   const onFinish = (formData, errors) => {
     console.log('formData:', formData, 'errors', errors);
   };
   return (
     <div>
       <FormRender form={form} schema={schema} onFinish={onFinish} />
-      <Button type="primary" onClick={form.submit}>
+      <Button type="primary" onClick={handleClick}>
         提交
       </Button>
     </div>

@@ -98,7 +98,7 @@ export const validateField = ({
         .map(item => {
           const name = item[0].field;
           const error = item.map(m => m.message).filter(m => !!m);
-          return { name, error };
+          return { name, error, errors: error };
         });
       return errorFields;
     })
@@ -142,6 +142,7 @@ export const validateAll = ({
   formData,
   flatten,
   options, // {locale = 'cn', validateMessages = {}}
+  formInstance = {},
 }) => {
   const paths = dataToKeys(formData);
   const allPaths = getAllPaths(paths, flatten);
@@ -166,7 +167,13 @@ export const validateAll = ({
       }
 
       const finalSchema = parseSchemaExpression(schema, formData, path);
-      return validateSingle(singleData, finalSchema, path, options); // is a promise
+      return validateSingle(
+        singleData,
+        finalSchema,
+        path,
+        options,
+        formInstance
+      ); // is a promise
     } else {
       return Promise.resolve();
     }
@@ -182,7 +189,7 @@ export const validateAll = ({
         .map(item => {
           const name = item[0].field;
           const error = item.map(m => m.message).filter(m => !!m);
-          return { name, error };
+          return { name, error, errors: error };
         });
       return errorFields;
     })

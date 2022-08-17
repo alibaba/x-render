@@ -1118,3 +1118,13 @@ export const removeDups = arr => {
   }
   return array;
 };
+
+// 添加errorFields，返回结构与antd的errorFields对齐
+export const errorsToErrorFields = errors => {
+  return errors.map(error => {
+    return {
+      ...error,
+      name: [error.name],
+    };
+  });
+};
