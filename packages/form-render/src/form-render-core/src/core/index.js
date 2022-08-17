@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { useStore, useStore2 } from '../hooks';
+import { useStore, useStore2, useTools } from '../hooks';
 import {
   clone,
   getDataPath,
@@ -30,7 +30,7 @@ const Core = ({
 
   const { flatten, errorFields, isEditing, formData, allTouched } = useStore();
   const { displayType, column, labelWidth, readOnly, labelAlign } = useStore2();
-
+  //   console.log('useTools()', useTools());
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 

@@ -45,6 +45,7 @@ const useForm = props => {
     flatten: {}, // schema 的转换结构，便于处理
     finalFlatten: {}, // 表达式等被处理过的flatten，用于渲染
     firstMount: true,
+    validatingFields: [], // 在校验状态的表单fields
   });
 
   const schemaRef = useRef();
@@ -59,7 +60,7 @@ const useForm = props => {
   const _errorFields = useRef();
   const _outErrorFields = useRef();
   const _allErrors = useRef([]); // 内部和外部的错误的合并
-
+  const _validatingFields = useRef([]);
   const {
     formData: innerData,
     submitData,
@@ -74,6 +75,7 @@ const useForm = props => {
     flatten,
     finalFlatten,
     firstMount,
+    // validatingFields,
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
@@ -403,6 +405,67 @@ const useForm = props => {
       outsideValidating: false,
     });
 
+  const setFieldValidating = dataPath => {
+    if (_validatingFields.current.indexOf(dataPath) > -1) {
+      return;
+    }
+    _validatingFields.current = [..._validatingFields.current, dataPath];
+  };
+  const removeFieldValidating = dataPath => {
+    _validatingFields.current = _validatingFields.current.filter(item => {
+      return item !== dataPath;
+    });
+  };
+
+  const isFieldValidating = dataPath => {
+    return _validatingFields.current.indexOf(dataPath) > -1;
+  };
+  const validateFields = () => {};
+  /**
+   * 参照antd rc-field-form的处理逻辑
+   * 如果入参为空，则返回 是否有表单被触碰过
+   * 如果参数为一个
+   *    当args0 === Array，则返回当前表单list是否 >= 1个表单被触碰过
+   *    否则，args0 ? 返回 是否‘所有’表单被触碰过 ：是否有表单被触碰过
+   * 如果参数为两个
+   *    args1 ? args0中的’所有‘表单都被触碰过： args0中的表单 >= 1个被触碰过
+   * @returns
+   */
+  function isFieldsTouched() {
+    const argsLen = arguments.length;
+    var namePathList = [];
+    var isAllFieldsTouched = false;
+    const allTouchedKeys = _touchedKeys.current;
+    if (argsLen === 0) {
+      return _touchedKeys.current.length > 0;
+    } else if (argsLen === 1) {
+      if (Array.isArray(arguments[0])) {
+        namePathList = arguments[0];
+      } else {
+        return arguments[0] ? allTouched : _touchedKeys.current.length > 0;
+      }
+    } else {
+      namePathList = Array.isArray(arguments[0]) ? arguments[0] : [];
+      isAllFieldsTouched = arguments[1];
+    }
+    try {
+      const touchedFunc = key => {
+        return allTouchedKeys.indexOf(key) !== -1;
+      };
+      return isAllFieldsTouched
+        ? namePathList.every(touchedFunc)
+        : namePathList.some(touchedFunc);
+    } catch (e) {
+      console.error(
+        '>>>> isFieldsTouched error, check your input arguments',
+        e
+      );
+    }
+  }
+
+  const isFieldTouched = namePath => {
+    return _touchedKeys.current.indexOf(namePath) > -1;
+  };
   const form = {
     // state
     formData: _data.current,
@@ -444,6 +507,12 @@ const useForm = props => {
     logOnSubmit,
     // inner api, DON'T USE
     _setErrors,
+    validateFields,
+    isFieldTouched,
+    isFieldsTouched,
+    setFieldValidating,
+    removeFieldValidating,
+    isFieldValidating,
   };
 
   return form;

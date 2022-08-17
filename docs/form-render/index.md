@@ -56,9 +56,17 @@ const schema = {
   type: 'object',
   properties: {
     input1: {
-      title: '简单输入框',
+          type: 'object',
+        properties: {
+            test:{
+        title: '简单输入框',
       type: 'string',
       required: true,
+            } 
+        
+    
+        }
+      
     },
     select1: {
       title: '单选',
@@ -71,6 +79,7 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
+  console.log('form',form.isFieldsTouched(['select1', 'input1'],true));
   const onFinish = (formData, errors) => {
     console.log('formData:', formData, 'errors', errors);
   };

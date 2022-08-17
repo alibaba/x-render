@@ -41,6 +41,7 @@ const RenderField = props => {
     locale,
     watch,
   } = useStore2();
+
   const {
     onValuesChange,
     onItemChange,
@@ -49,6 +50,8 @@ const RenderField = props => {
     _setErrors,
     renderTitle,
     requiredMark,
+    setFieldValidating,
+    removeFieldValidating,
   } = useTools();
   const formDataRef = useRef();
   formDataRef.current = formData;
@@ -118,6 +121,10 @@ const RenderField = props => {
       options: {
         locale,
         validateMessages,
+      },
+      formInstance: {
+        setFieldValidating,
+        removeFieldValidating,
       },
     }).then(res => {
       _setErrors(errors => {
