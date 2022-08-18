@@ -1,15 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { set, sortedUniqBy, get, isEmpty } from 'lodash-es';
+import { set, sortedUniqBy, get, isEmpty, isFunction } from 'lodash-es';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSet } from './hooks';
 import { processData, transformDataWithBind2 } from './processData';
+import SmoothScroll from 'smooth-scroll';
 import {
   clone,
   flattenSchema,
   generateDataSkeleton,
   parseAllExpression,
   schemaContainsExpression,
-  errorsToErrorFields,
 } from './utils';
 import { validateAll } from './validator';
 
@@ -310,9 +310,55 @@ const useForm = props => {
     setState({ errorFields: newError, outErrorFields: newOutError });
   };
 
-  const getValues = () => {
+  /**
+   * (nameList?: NamePath[], filterFunc?: (meta: { touched: boolean, validating: boolean }) => boolean) => any
+   * 参考rc-field-form中的getFieldsValue
+   * 如果第一个参数为数组类型,则获取nameList数据并且做filterFunc过滤
+   * 如果第一个参数非数组类型,则获取所有数据并做filterFunc过滤
+   *
+   * @returns
+   */
+  const getValues = (nameList, filterFunc) => {
+    let flatten = _finalFlatten.current;
+    let data = _data.current;
+    let currentData = {};
+    let filterMetaKeys = []; // 当前符合filter条件的key
+
+    if (Array.isArray(nameList)) {
+      nameList.forEach(path => {
+        set(currentData, path, get(data, path));
+      });
+    } else {
+      currentData = data;
+    }
+    // 过滤出满足条件的path
+    if (filterFunc && isFunction(filterFunc)) {
+      if (Array.isArray) {
+        flatten = {};
+        nameList.forEach(path => {
+          flatten[path] = get(_finalFlatten.current, path);
+        });
+      }
+      const metas = {};
+      Object.keys(flatten).forEach(key => {
+        metas[key] = {
+          touched: isFieldTouched(key),
+          validating: isFieldValidating(key),
+        };
+      });
+      filterMetaKeys = Object.keys(metas).filter(k => filterFunc(metas[k]));
+      //  没有filter满足条件的就返回{}
+      currentData = {};
+
+      if (!isEmpty(filterMetaKeys)) {
+        filterMetaKeys.forEach(key => {
+          set(currentData, key, get(data, key));
+        });
+      }
+    }
+
     return processData(
-      _data.current,
+      currentData,
       _finalFlatten.current,
       removeHiddenDataRef.current
     );
@@ -380,7 +426,6 @@ const useForm = props => {
           return {
             data: res,
             errors: _errors,
-            errorFields: errorsToErrorFields(_errors),
           };
         });
       })
@@ -458,7 +503,6 @@ const useForm = props => {
         );
         return Promise.reject({
           errors: _errors,
-          errorFields: errorsToErrorFields(_errors),
           values: processData(
             data,
             _finalFlatten.current,
@@ -470,7 +514,9 @@ const useForm = props => {
       }
     });
   };
+
   /**
+   * (nameList?: NamePath[], allTouched?: boolean) => boolean
    * 参照antd rc-field-form的处理逻辑
    * 如果入参为空，则返回 是否有表单被触碰过
    * 如果参数为一个
@@ -515,6 +561,18 @@ const useForm = props => {
   const isFieldTouched = namePath => {
     return _touchedKeys.current.indexOf(namePath) > -1;
   };
+
+  const scrollToField = namePath => {
+    var scroll = new SmoothScroll();
+    const node = document.querySelector(`[datapath="${namePath}"]`);
+    if (node) {
+      scroll.animateScroll(node);
+    }
+  };
+
+  const getFieldError = namePath => {};
+  const getFieldsError = () => {};
+
   const form = {
     // state
     formData: _data.current,
@@ -549,6 +607,15 @@ const useForm = props => {
     setEditing,
     syncStuff,
     showValidate: _showValidate,
+    validateFields,
+    isFieldTouched,
+    isFieldsTouched,
+    setFieldValidating,
+    removeFieldValidating,
+    isFieldValidating,
+    scrollToField,
+    getFieldError,
+    getFieldsError,
     // firstMount,
     setFirstMount,
     // logs
@@ -556,12 +623,6 @@ const useForm = props => {
     logOnSubmit,
     // inner api, DON'T USE
     _setErrors,
-    validateFields,
-    isFieldTouched,
-    isFieldsTouched,
-    setFieldValidating,
-    removeFieldValidating,
-    isFieldValidating,
   };
 
   return form;
