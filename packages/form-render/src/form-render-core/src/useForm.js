@@ -184,6 +184,7 @@ const useForm = props => {
       return;
     }
     const newKeyList = [..._touchedKeys.current, key];
+    _touchedKeys.current = newKeyList;
     setState({ touchedKeys: newKeyList });
   };
 
@@ -191,6 +192,7 @@ const useForm = props => {
     let newTouch = _touchedKeys.current.filter(item => {
       return item.indexOf(key) === -1;
     });
+    _touchedKeys.current = newTouch;
     setState({ touchedKeys: newTouch });
   };
 
@@ -296,6 +298,7 @@ const useForm = props => {
       console.log('error format is wrong');
     }
     newErrorFields = sortedUniqBy(newErrorFields, item => item.name);
+    _outErrorFields.current = newErrorFields;
     setState({ outErrorFields: newErrorFields });
   };
 
@@ -422,7 +425,6 @@ const useForm = props => {
             isSubmitting: true,
             submitData: res,
           });
-          // 添加errorFields，与antd的返回内容对齐
           return {
             data: res,
             errors: _errors,
@@ -585,6 +587,38 @@ const useForm = props => {
       return nameList.indexOf(error.name) > -1;
     });
   };
+  /**
+   * fields: {error, name, touched, validating, value}
+   * @param {*} fields
+   * 设置一组字段状态
+   */
+  const setFields = fields => {
+    // 设置error调用统一的函数，直接设置数组，省去forEach
+    const errors = fields
+      .filter(field => {
+        return field.error;
+      })
+      .map(field => {
+        return {
+          name: field.name,
+          error: field.error,
+        };
+      });
+    !isEmpty(errors) && setErrorFields(errors);
+    // 对 value, touched, validating进行设置
+    fields.forEach(field => {
+      const { name, value, touched, validating } = field;
+      if ('value' in field) {
+        onItemChange(name, value);
+      }
+      if (typeof touched === 'boolean') {
+        touched ? touchKey(name) : removeTouched(name);
+      }
+      if (typeof validating === 'boolean') {
+        validating ? setFieldValidating(name) : removeFieldValidating(name);
+      }
+    });
+  };
 
   const form = {
     // state
@@ -629,6 +663,7 @@ const useForm = props => {
     scrollToField,
     getFieldError,
     getFieldsError,
+    setFields,
     // firstMount,
     setFirstMount,
     // logs
