@@ -570,8 +570,21 @@ const useForm = props => {
     }
   };
 
-  const getFieldError = namePath => {};
-  const getFieldsError = () => {};
+  const getFieldError = namePath => {
+    return (
+      _allErrors.current.find(error => {
+        return error.name === namePath;
+      })?.error || []
+    );
+  };
+  const getFieldsError = nameList => {
+    if (!nameList || !Array.isArray(nameList)) {
+      return _allErrors.current;
+    }
+    return _allErrors.current.filter(error => {
+      return nameList.indexOf(error.name) > -1;
+    });
+  };
 
   const form = {
     // state
