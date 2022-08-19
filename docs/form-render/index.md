@@ -62,6 +62,10 @@ const schema = {
         title: '简单输入框',
         type: 'string',
         required: true,
+        rules:[{
+          pattern: /\/s{9}/,
+          message: 'tetete',
+        }]
        } 
       }
     },
@@ -70,6 +74,10 @@ const schema = {
       type: 'string',
       enum: ['a', 'b', 'c'],
       enumNames: ['早', '中', '晚'],
+      rules:[{
+          pattern: /\/s{9}/,
+          message: 'xxxxxxxxxtetete',
+        }]
     },
   },
 };
@@ -77,6 +85,23 @@ const schema = {
 const Demo = () => {
   const form = useForm();
   const handleClick = () => {
+    form.scrollToPath('input1');
+    console.log('>>>', form.getFieldsError(['select1']));
+    form.setFields([{
+      name: 'input1.test',
+      touched: true,
+      value: 2
+    },{
+      name: 'select1',
+      validating: true,
+      error: ['dfdfdf'],
+    }])
+
+    console.log('touched', form.isFieldsTouched(['input1.test']));
+    console.log('validating', form.isFieldValidating('select1'));
+    console.log('form.getValues', form.getValues(['input1.test'],({touched, validating}) => {
+      return !touched;
+    }));
     form.validateFields().then(err => {
       console.log('then', err);
     }).catch(values => {
