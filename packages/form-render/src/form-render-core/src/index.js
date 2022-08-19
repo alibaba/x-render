@@ -246,6 +246,10 @@ function App({
       // setFieldValidating,
       // removeFieldValidating,
       // isFieldValidating,
+      // scrollToPath,
+      // getFieldError,
+      // getFieldsError,
+      // setFields,
     }),
     [widgets]
   );

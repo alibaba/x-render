@@ -202,7 +202,7 @@ const RenderField = props => {
     return (
       <>
         {_showTitle && <div {...placeholderTitleProps} />}
-        <div className={contentClass} style={contentStyle}>
+        <div className={contentClass} style={contentStyle} datapath={dataPath}>
           <ExtendedWidget {...widgetProps} />
           <ErrorMessage {...messageProps} />
           <Extra {...widgetProps} />
@@ -223,7 +223,7 @@ const RenderField = props => {
       </div>
     );
     return (
-      <div className={contentClass} style={contentStyle}>
+      <div className={contentClass} style={contentStyle} datapath={dataPath}>
         <ExtendedWidget
           {...widgetProps}
           message={errorMessage}
@@ -234,9 +234,9 @@ const RenderField = props => {
     );
   } else if (isBlockType(_schema)) {
     return (
-      <>
+      <div datapath={dataPath}>
         <ExtendedWidget {...widgetProps} />
-      </>
+      </div>
     );
   }
 
@@ -246,6 +246,7 @@ const RenderField = props => {
       <div
         className={`${contentClass} ${hideTitle ? 'fr-content-no-title' : ''}`}
         style={contentStyle}
+        datapath={dataPath}
       >
         <ExtendedWidget {...widgetProps} />
         <ErrorMessage {...messageProps} />

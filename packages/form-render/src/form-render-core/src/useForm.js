@@ -564,7 +564,7 @@ const useForm = props => {
     return _touchedKeys.current.indexOf(namePath) > -1;
   };
 
-  const scrollToField = namePath => {
+  const scrollToPath = namePath => {
     var scroll = new SmoothScroll();
     const node = document.querySelector(`[datapath="${namePath}"]`);
     if (node) {
@@ -588,12 +588,13 @@ const useForm = props => {
     });
   };
   /**
-   * fields: {error, name, touched, validating, value}
+   * fields: {error?, name, touched?, validating?, value?}
+   * 参照rc-field-form的实现逻辑
    * @param {*} fields
    * 设置一组字段状态
    */
   const setFields = fields => {
-    // 设置error调用统一的函数，直接设置数组，省去forEach
+    // 设置error调用统一的函数，直接设置数组，省去forEach频繁操作
     const errors = fields
       .filter(field => {
         return field.error;
@@ -660,7 +661,7 @@ const useForm = props => {
     setFieldValidating,
     removeFieldValidating,
     isFieldValidating,
-    scrollToField,
+    scrollToPath,
     getFieldError,
     getFieldsError,
     setFields,

@@ -41,6 +41,14 @@ const ExtendedWidget = ({
     resetFields,
     setErrorFields,
     removeErrorField,
+    validateFields,
+    isFieldTouched,
+    isFieldsTouched,
+    isFieldValidating,
+    scrollToPath,
+    getFieldError,
+    getFieldsError,
+    setFields,
   } = useTools();
 
   const { globalProps } = useStore();
@@ -139,12 +147,20 @@ const ExtendedWidget = ({
     resetFields,
     setErrorFields,
     removeErrorField,
+    validateFields,
+    isFieldTouched,
+    isFieldsTouched,
+    isFieldValidating,
+    scrollToPath,
+    getFieldError,
+    getFieldsError,
+    setFields,
     hideSelf,
     watch,
   };
 
   const finalProps = transformProps(widgetProps);
-
+  console.log(finalProps, 'finalProps');
   return (
     <Suspense fallback={<div></div>}>
       <div className="fr-item-wrapper">
