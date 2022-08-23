@@ -61,11 +61,6 @@ const schema = {
       test:{
         title: '简单输入框',
         type: 'string',
-        required: true,
-        rules:[{
-          pattern: /\/s{9}/,
-          message: 'tetete',
-        }]
        } 
       }
     },
@@ -74,10 +69,6 @@ const schema = {
       type: 'string',
       enum: ['a', 'b', 'c'],
       enumNames: ['早', '中', '晚'],
-      rules:[{
-          pattern: /\/s{9}/,
-          message: 'xxxxxxxxxtetete',
-        }]
     },
   },
 };
@@ -90,18 +81,22 @@ const Demo = () => {
     form.setFields([{
       name: 'input1.test',
       touched: true,
-      value: 2
+      error: ['set input1.test error'],
+      value: 'input1.test value'
     },{
       name: 'select1',
       validating: true,
-      error: ['dfdfdf'],
     }])
+    // setTimeout(() =>{
+    //         console.log('getFieldError', form.getFieldError('input1.test'));
+    // })
 
-    console.log('touched', form.isFieldsTouched(['input1.test']));
-    console.log('validating', form.isFieldValidating('select1'));
-    console.log('form.getValues', form.getValues(['input1.test'],({touched, validating}) => {
-      return !touched;
-    }));
+    // console.log('isFieldsTouched', form.isFieldsTouched(['input1.test', 'select1'], true));
+    // console.log('isFieldTouched', form.isFieldTouched('input1.test'));
+    // console.log('validating', form.isFieldValidating('select1'));
+    // console.log('form.getValues', form.getValues(['input1.test', 'select1'],({touched, validating}) => {
+    //   return touched;
+    // }));
     form.validateFields().then(err => {
       console.log('then', err);
     }).catch(values => {

@@ -101,9 +101,9 @@ interface Field {
   error?: string[];
   /**字段path */
   name?: string;
-  /**是否设置touched */
+  /**设置touched */
   touched?: boolean;
-  /**是否设置validating */
+  /**设置validating */
   validating?: boolean;
   /** value */
   value?: any;

@@ -160,7 +160,6 @@ const ExtendedWidget = ({
   };
 
   const finalProps = transformProps(widgetProps);
-  console.log(finalProps, 'finalProps');
   return (
     <Suspense fallback={<div></div>}>
       <div className="fr-item-wrapper">

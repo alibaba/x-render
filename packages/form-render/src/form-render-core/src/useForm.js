@@ -97,6 +97,7 @@ const useForm = props => {
   }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
 
   _allErrors.current = useMemo(() => {
+    debugger;
     if (
       Array.isArray(_errorFields.current) &&
       Array.isArray(_outErrorFields.current) &&
@@ -289,6 +290,7 @@ const useForm = props => {
 
   // TODO: better implementation needed
   const setErrorFields = error => {
+    debugger;
     let newErrorFields = [];
     if (Array.isArray(error)) {
       newErrorFields = [...error, ..._outErrorFields.current];
@@ -485,6 +487,7 @@ const useForm = props => {
         set(data, path, get(_data.current, path));
       });
     }
+    setState({ isValidating: true });
     return validateAll({
       formData: data,
       flatten: _finalFlatten.current,
@@ -497,12 +500,12 @@ const useForm = props => {
         removeFieldValidating,
       },
     }).then(errors => {
-      if (!isEmpty(errors)) {
-        setState({ errorFields: errors });
-        const _errors = sortedUniqBy(
-          [...(errors || []), ..._outErrorFields.current],
-          item => item.name
-        );
+      setState({ errorFields: errors });
+      const _errors = sortedUniqBy(
+        [...(errors || []), ..._outErrorFields.current],
+        item => item.name
+      );
+      if (!isEmpty(_errors)) {
         return Promise.reject({
           errors: _errors,
           values: processData(
@@ -512,7 +515,9 @@ const useForm = props => {
           ),
         });
       } else {
-        return Promise.resolve(data);
+        return Promise.resolve(
+          processData(data, _finalFlatten.current, removeHiddenDataRef.current)
+        );
       }
     });
   };
