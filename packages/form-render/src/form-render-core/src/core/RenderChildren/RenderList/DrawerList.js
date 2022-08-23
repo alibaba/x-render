@@ -96,7 +96,9 @@ const DrawerList = ({
       const index = (value && value.$idx) || 0;
       return (
         <div>
-          <a onClick={() => openDrawer(index)}>编辑</a>
+          {!props.hideEdit && (
+            <a onClick={() => openDrawer(index)}>编辑</a>
+          )}
           {!props.hideDelete && (
             <Popconfirm
               title="确定删除?"
