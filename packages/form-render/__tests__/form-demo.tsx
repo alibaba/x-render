@@ -26,11 +26,12 @@ const SimpleForm = () => {
   const form = useForm();
   const [state, setState] = useState();
   const setRes = data => {
-    let res = {};
+    let res;
     if (typeof data === 'object') {
       res = JSON.stringify(data);
     }
-    setState(res || data);
+    res = (res || data) + '';
+    setState(res);
   };
 
   const handleIsFieldTouched = () => {
