@@ -25,7 +25,7 @@
         "size": "ANALYZE=1 dumi build",
         "start": "npm run dev",
         "start-win": "set PORT=8080 && dumi dev",
-        "test": "jest /packages/form-render/__tests__/form-fields.spec.tsx",
+        "test": "jest",
         "test:clean": "jest --clearCache",
         "test:coverage": "jest --coverage"
     },

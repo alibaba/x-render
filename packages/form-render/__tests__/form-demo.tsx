@@ -60,6 +60,7 @@ const SimpleForm = () => {
       {
         name: 'select1',
         validating: true,
+        value: 'select1 value',
       },
     ]);
   };
@@ -70,25 +71,16 @@ const SimpleForm = () => {
   };
 
   const handleValidateFields = () => {
-    form
-      .validateFields()
-      .then(() => {})
-      .catch(data => {
-        // {
-        //     errors: [
-        //       {
-        //         name: 'input1.test',
-        //         error: ['set input1.test error'],
-        //       },
-        //     ],
-        //     values: {
-        //       input1: {
-        //         test: 'input1.test value',
-        //       },
-        //     },
-        //   }
-        setRes(data);
-      });
+    form.validateFields().then(data => {
+      // values:
+      // {
+      //     input1: {
+      //     test: 'input1.test value',
+      //     },
+      //     select1: 'select1 value,
+      // }
+      setRes(data);
+    });
   };
 
   const handleGetValues = () => {

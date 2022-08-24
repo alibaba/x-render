@@ -97,7 +97,6 @@ const useForm = props => {
   }, [JSON.stringify(formData), JSON.stringify(schemaRef.current)]);
 
   _allErrors.current = useMemo(() => {
-    debugger;
     if (
       Array.isArray(_errorFields.current) &&
       Array.isArray(_outErrorFields.current) &&
@@ -290,7 +289,6 @@ const useForm = props => {
 
   // TODO: better implementation needed
   const setErrorFields = error => {
-    debugger;
     let newErrorFields = [];
     if (Array.isArray(error)) {
       newErrorFields = [...error, ..._outErrorFields.current];
@@ -464,21 +462,26 @@ const useForm = props => {
       outsideValidating: false,
     });
 
-  const setFieldValidating = dataPath => {
-    if (_validatingFields.current.indexOf(dataPath) > -1) {
+  const setFieldValidating = namePath => {
+    if (_validatingFields.current.indexOf(namePath) > -1) {
       return;
     }
-    _validatingFields.current = [..._validatingFields.current, dataPath];
+    _validatingFields.current = [..._validatingFields.current, namePath];
   };
-  const removeFieldValidating = dataPath => {
+  const removeFieldValidating = namePath => {
     _validatingFields.current = _validatingFields.current.filter(item => {
-      return item !== dataPath;
+      return item !== namePath;
     });
   };
 
-  const isFieldValidating = dataPath => {
-    return _validatingFields.current.indexOf(dataPath) > -1;
+  const isFieldValidating = namePath => {
+    return _validatingFields.current.indexOf(namePath) > -1;
   };
+  /**
+   * 参考rc-field-form 校验不包含外部设置的error
+   * @param {*} nameList
+   * @returns
+   */
   const validateFields = nameList => {
     const data = _data.current;
     if (Array.isArray(nameList)) {
@@ -500,14 +503,10 @@ const useForm = props => {
         removeFieldValidating,
       },
     }).then(errors => {
-      setState({ errorFields: errors });
-      const _errors = sortedUniqBy(
-        [...(errors || []), ..._outErrorFields.current],
-        item => item.name
-      );
-      if (!isEmpty(_errors)) {
+      setState({ isValidating: false, errorFields: errors });
+      if (!isEmpty(errors)) {
         return Promise.reject({
-          errors: _errors,
+          errors: errors,
           values: processData(
             data,
             _finalFlatten.current,

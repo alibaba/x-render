@@ -56,13 +56,9 @@ const schema = {
   type: 'object',
   properties: {
     input1: {
-      type: 'object',
-      properties: {
-      test:{
-        title: '简单输入框',
-        type: 'string',
-       } 
-      }
+      title: '简单输入框',
+      type: 'string',
+      required: true,
     },
     select1: {
       title: '单选',
@@ -75,42 +71,13 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
-  const handleClick = () => {
-    form.scrollToPath('input1');
-    console.log('>>>', form.getFieldsError(['select1']));
-    form.setFields([{
-      name: 'input1.test',
-      touched: true,
-      error: ['set input1.test error'],
-      value: 'input1.test value'
-    },{
-      name: 'select1',
-      validating: true,
-    }])
-    // setTimeout(() =>{
-    //         console.log('getFieldError', form.getFieldError('input1.test'));
-    // })
-
-    // console.log('isFieldsTouched', form.isFieldsTouched(['input1.test', 'select1'], true));
-    // console.log('isFieldTouched', form.isFieldTouched('input1.test'));
-    // console.log('validating', form.isFieldValidating('select1'));
-    // console.log('form.getValues', form.getValues(['input1.test', 'select1'],({touched, validating}) => {
-    //   return touched;
-    // }));
-    form.validateFields().then(err => {
-      console.log('then', err);
-    }).catch(values => {
-      console.log('catch', values);
-    })
-  }
-  // console.log('form',form.validateFields(['select1', 'input1']));
   const onFinish = (formData, errors) => {
     console.log('formData:', formData, 'errors', errors);
   };
   return (
     <div>
       <FormRender form={form} schema={schema} onFinish={onFinish} />
-      <Button type="primary" onClick={handleClick}>
+      <Button type="primary" onClick={form.submit}>
         提交
       </Button>
     </div>

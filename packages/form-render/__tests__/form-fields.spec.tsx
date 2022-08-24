@@ -40,17 +40,10 @@ describe('FormRender API', () => {
     await act(() => sleep(500));
     expect(getByTestId('result')).toHaveTextContent(
       JSON.stringify({
-        errors: [
-          {
-            name: 'input1.test',
-            error: ['set input1.test error'],
-          },
-        ],
-        values: {
-          input1: {
-            test: 'input1.test value',
-          },
+        input1: {
+          test: 'input1.test value',
         },
+        select1: 'select1 value',
       })
     );
     act(() => {
