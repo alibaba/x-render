@@ -507,7 +507,7 @@ const useForm = props => {
       if (!isEmpty(errors)) {
         return Promise.reject({
           errors: errors,
-          values: processData(
+          data: processData(
             data,
             _finalFlatten.current,
             removeHiddenDataRef.current

@@ -72,7 +72,7 @@ const SimpleForm = () => {
 
   const handleValidateFields = () => {
     form.validateFields().then(data => {
-      // values:
+      // data:
       // {
       //     input1: {
       //     test: 'input1.test value',
