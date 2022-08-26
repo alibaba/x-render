@@ -80,7 +80,7 @@ validateFields()
     /*
     errorInfo:
       {
-        values: {
+        data: {
           input1: 'input1 输入的值',
           select1: 'select1 选择的值',
         },
