@@ -15,14 +15,7 @@ const Description = ({ displayType, schema }) => {
     ) : (
       description
     );
-  console.log('schema', schema);
   const RenderDesc = () => {
-    console.log(
-      'descWidget',
-      descWidget,
-      'schema.descWidget',
-      schema.descWidget
-    );
     const Widget = widgets[schema.descWidget];
     if (Widget) {
       return <Widget />;
