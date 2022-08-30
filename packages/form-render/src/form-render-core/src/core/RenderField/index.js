@@ -41,6 +41,7 @@ const RenderField = props => {
     locale,
     watch,
   } = useStore2();
+
   const {
     onValuesChange,
     onItemChange,
@@ -49,6 +50,8 @@ const RenderField = props => {
     _setErrors,
     renderTitle,
     requiredMark,
+    setFieldValidating,
+    removeFieldValidating,
   } = useTools();
   const formDataRef = useRef();
   formDataRef.current = formData;
@@ -118,6 +121,10 @@ const RenderField = props => {
       options: {
         locale,
         validateMessages,
+      },
+      formInstance: {
+        setFieldValidating,
+        removeFieldValidating,
       },
     }).then(res => {
       _setErrors(errors => {
@@ -195,7 +202,7 @@ const RenderField = props => {
     return (
       <>
         {_showTitle && <div {...placeholderTitleProps} />}
-        <div className={contentClass} style={contentStyle}>
+        <div className={contentClass} style={contentStyle} datapath={dataPath}>
           <ExtendedWidget {...widgetProps} />
           <ErrorMessage {...messageProps} />
           <Extra {...widgetProps} />
@@ -216,7 +223,7 @@ const RenderField = props => {
       </div>
     );
     return (
-      <div className={contentClass} style={contentStyle}>
+      <div className={contentClass} style={contentStyle} datapath={dataPath}>
         <ExtendedWidget
           {...widgetProps}
           message={errorMessage}
@@ -227,9 +234,9 @@ const RenderField = props => {
     );
   } else if (isBlockType(_schema)) {
     return (
-      <>
+      <div datapath={dataPath}>
         <ExtendedWidget {...widgetProps} />
-      </>
+      </div>
     );
   }
 
@@ -239,6 +246,7 @@ const RenderField = props => {
       <div
         className={`${contentClass} ${hideTitle ? 'fr-content-no-title' : ''}`}
         style={contentStyle}
+        datapath={dataPath}
       >
         <ExtendedWidget {...widgetProps} />
         <ErrorMessage {...messageProps} />

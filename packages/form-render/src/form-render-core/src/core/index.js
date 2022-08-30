@@ -30,7 +30,6 @@ const Core = ({
 
   const { flatten, errorFields, isEditing, formData, allTouched } = useStore();
   const { displayType, column, labelWidth, readOnly, labelAlign } = useStore2();
-
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 

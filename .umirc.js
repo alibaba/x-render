@@ -89,7 +89,7 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://xrender.fun',
   },
-
+  runtimePublicPath: true,
   chainWebpack(config, { webpack }) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
   },

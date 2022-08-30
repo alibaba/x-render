@@ -140,6 +140,14 @@ const {
   resetFields, // () => void
   setErrorFields, // (errors) => void
   removeErrorField, // () => void
+  validateFields, // (nameList?: string[]) => Promise<any>;
+  isFieldTouched, // (name: string) => boolean;
+  isFieldsTouched, //(nameList?: string[], allTouched?: boolean) => boolean;
+  isFieldValidating, //(name: string) => boolean;
+  scrollToPath, (name: string) => void;
+  getFieldError, (name: string) => string[];
+  getFieldsError, (nameList?: string[]) => Error[];
+  setFields, (nameList: string[]) => void;
 } = addons;
 ```
 

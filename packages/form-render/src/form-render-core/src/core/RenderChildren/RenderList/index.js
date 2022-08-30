@@ -25,7 +25,6 @@ const RenderList = ({
 }) => {
   const { formData, flatten } = useStore();
   const { onItemChange, removeTouched, methods, layoutWidgets } = useTools();
-
   const { props = {} } = schema;
 
   let renderWidget = 'list';
@@ -150,7 +149,7 @@ const RenderList = ({
 
   if (layoutWidgets && layoutWidgets[renderWidget]) {
     const Component = layoutWidgets[renderWidget];
-    return <Component  {...displayProps}/>
+    return <Component {...displayProps} />;
   }
 
   switch (renderWidget) {
