@@ -1,8 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { set, sortedUniqBy } from 'lodash-es';
+import { set, sortedUniqBy, get, isEmpty, isFunction } from 'lodash-es';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSet } from './hooks';
 import { processData, transformDataWithBind2 } from './processData';
+import SmoothScroll from 'smooth-scroll';
 import {
   clone,
   flattenSchema,
@@ -45,6 +46,7 @@ const useForm = props => {
     flatten: {}, // schema 的转换结构，便于处理
     finalFlatten: {}, // 表达式等被处理过的flatten，用于渲染
     firstMount: true,
+    validatingFields: [], // 在校验状态的表单fields
   });
 
   const schemaRef = useRef();
@@ -59,7 +61,7 @@ const useForm = props => {
   const _errorFields = useRef();
   const _outErrorFields = useRef();
   const _allErrors = useRef([]); // 内部和外部的错误的合并
-
+  const _validatingFields = useRef([]);
   const {
     formData: innerData,
     submitData,
@@ -74,6 +76,7 @@ const useForm = props => {
     flatten,
     finalFlatten,
     firstMount,
+    // validatingFields,
     // statusTree, // 和formData一个结构，但是每个元素是 { $touched } 存放那些在schema里无需表达的状态, 看看是否只有touched。目前statusTree没有被使用
   } = state;
 
@@ -181,6 +184,7 @@ const useForm = props => {
       return;
     }
     const newKeyList = [..._touchedKeys.current, key];
+    _touchedKeys.current = newKeyList;
     setState({ touchedKeys: newKeyList });
   };
 
@@ -188,6 +192,7 @@ const useForm = props => {
     let newTouch = _touchedKeys.current.filter(item => {
       return item.indexOf(key) === -1;
     });
+    _touchedKeys.current = newTouch;
     setState({ touchedKeys: newTouch });
   };
 
@@ -293,6 +298,7 @@ const useForm = props => {
       console.log('error format is wrong');
     }
     newErrorFields = sortedUniqBy(newErrorFields, item => item.name);
+    _outErrorFields.current = newErrorFields;
     setState({ outErrorFields: newErrorFields });
   };
 
@@ -307,9 +313,55 @@ const useForm = props => {
     setState({ errorFields: newError, outErrorFields: newOutError });
   };
 
-  const getValues = () => {
+  /**
+   * (nameList?: NamePath[], filterFunc?: (meta: { touched: boolean, validating: boolean }) => boolean) => any
+   * 参考rc-field-form中的getFieldsValue
+   * 如果第一个参数为数组类型,则获取nameList数据并且做filterFunc过滤
+   * 如果第一个参数非数组类型,则获取所有数据并做filterFunc过滤
+   *
+   * @returns
+   */
+  const getValues = (nameList, filterFunc) => {
+    let flatten = _finalFlatten.current;
+    let data = _data.current;
+    let currentData = {};
+    let filterMetaKeys = []; // 当前符合filter条件的key
+
+    if (Array.isArray(nameList)) {
+      nameList.forEach(path => {
+        set(currentData, path, get(data, path));
+      });
+    } else {
+      currentData = data;
+    }
+    // 过滤出满足条件的path
+    if (filterFunc && isFunction(filterFunc)) {
+      if (Array.isArray) {
+        flatten = {};
+        nameList.forEach(path => {
+          flatten[path] = get(_finalFlatten.current, path);
+        });
+      }
+      const metas = {};
+      Object.keys(flatten).forEach(key => {
+        metas[key] = {
+          touched: isFieldTouched(key),
+          validating: isFieldValidating(key),
+        };
+      });
+      filterMetaKeys = Object.keys(metas).filter(k => filterFunc(metas[k]));
+      //  没有filter满足条件的就返回{}
+      currentData = {};
+
+      if (!isEmpty(filterMetaKeys)) {
+        filterMetaKeys.forEach(key => {
+          set(currentData, key, get(data, key));
+        });
+      }
+    }
+
     return processData(
-      _data.current,
+      currentData,
       _finalFlatten.current,
       removeHiddenDataRef.current
     );
@@ -329,6 +381,10 @@ const useForm = props => {
       options: {
         locale: localeRef.current,
         validateMessages: validateMessagesRef.current,
+      },
+      formInstance: {
+        setFieldValidating,
+        removeFieldValidating,
       },
     })
       .then(errors => {
@@ -369,7 +425,10 @@ const useForm = props => {
             isSubmitting: true,
             submitData: res,
           });
-          return { data: res, errors: _errors };
+          return {
+            data: res,
+            errors: _errors,
+          };
         });
       })
       .catch(err => {
@@ -402,6 +461,169 @@ const useForm = props => {
       isValidating: false,
       outsideValidating: false,
     });
+
+  const setFieldValidating = namePath => {
+    if (_validatingFields.current.indexOf(namePath) > -1) {
+      return;
+    }
+    _validatingFields.current = [..._validatingFields.current, namePath];
+  };
+  const removeFieldValidating = namePath => {
+    _validatingFields.current = _validatingFields.current.filter(item => {
+      return item !== namePath;
+    });
+  };
+
+  const isFieldValidating = namePath => {
+    return _validatingFields.current.indexOf(namePath) > -1;
+  };
+  /**
+   * 参考rc-field-form 校验不包含外部设置的error
+   * @param {*} nameList
+   * @returns
+   */
+  const validateFields = nameList => {
+    const data = _data.current;
+    if (Array.isArray(nameList)) {
+      set(data, {});
+      nameList.forEach(path => {
+        set(data, path, get(_data.current, path));
+      });
+    }
+    setState({ isValidating: true });
+    return validateAll({
+      formData: data,
+      flatten: _finalFlatten.current,
+      options: {
+        locale: localeRef.current,
+        validateMessages: validateMessagesRef.current,
+      },
+      formInstance: {
+        setFieldValidating,
+        removeFieldValidating,
+      },
+    }).then(errors => {
+      setState({ isValidating: false, errorFields: errors });
+      if (!isEmpty(errors)) {
+        return Promise.reject({
+          errors: errors,
+          data: processData(
+            data,
+            _finalFlatten.current,
+            removeHiddenDataRef.current
+          ),
+        });
+      } else {
+        return Promise.resolve(
+          processData(data, _finalFlatten.current, removeHiddenDataRef.current)
+        );
+      }
+    });
+  };
+
+  /**
+   * (nameList?: NamePath[], allTouched?: boolean) => boolean
+   * 参照antd rc-field-form的处理逻辑
+   * 如果入参为空，则返回 是否有表单被触碰过
+   * 如果参数为一个
+   *    当args0 === Array，则返回当前表单list是否 >= 1个表单被触碰过
+   *    否则，args0 ? 返回 是否‘所有’表单被触碰过 ：是否有表单被触碰过
+   * 如果参数为两个
+   *    args1 ? args0中的’所有‘表单都被触碰过： args0中的表单 >= 1个被触碰过
+   * @returns
+   */
+  function isFieldsTouched() {
+    const argsLen = arguments.length;
+    var namePathList = [];
+    var isAllFieldsTouched = false;
+    const allTouchedKeys = _touchedKeys.current;
+    if (argsLen === 0) {
+      return _touchedKeys.current.length > 0;
+    } else if (argsLen === 1) {
+      if (Array.isArray(arguments[0])) {
+        namePathList = arguments[0];
+      } else {
+        return arguments[0] ? allTouched : _touchedKeys.current.length > 0;
+      }
+    } else {
+      namePathList = Array.isArray(arguments[0]) ? arguments[0] : [];
+      isAllFieldsTouched = arguments[1];
+    }
+    try {
+      const touchedFunc = key => {
+        return allTouchedKeys.indexOf(key) !== -1;
+      };
+      return isAllFieldsTouched
+        ? namePathList.every(touchedFunc)
+        : namePathList.some(touchedFunc);
+    } catch (e) {
+      console.error(
+        '>>>> isFieldsTouched error, check your input arguments',
+        e
+      );
+    }
+  }
+
+  const isFieldTouched = namePath => {
+    return _touchedKeys.current.indexOf(namePath) > -1;
+  };
+
+  const scrollToPath = namePath => {
+    var scroll = new SmoothScroll();
+    const node = document.querySelector(`[datapath="${namePath}"]`);
+    if (node) {
+      scroll.animateScroll(node);
+    }
+  };
+
+  const getFieldError = namePath => {
+    return (
+      _allErrors.current.find(error => {
+        return error.name === namePath;
+      })?.error || []
+    );
+  };
+  const getFieldsError = nameList => {
+    if (!nameList || !Array.isArray(nameList)) {
+      return _allErrors.current;
+    }
+    return _allErrors.current.filter(error => {
+      return nameList.indexOf(error.name) > -1;
+    });
+  };
+  /**
+   * fields: {error?, name, touched?, validating?, value?}
+   * 参照rc-field-form的实现逻辑
+   * @param {*} fields
+   * 设置一组字段状态
+   */
+  const setFields = fields => {
+    // 设置error调用统一的函数，直接设置数组，省去forEach频繁操作
+    const errors = fields
+      .filter(field => {
+        return field.error;
+      })
+      .map(field => {
+        return {
+          name: field.name,
+          error: field.error,
+        };
+      });
+    !isEmpty(errors) && setErrorFields(errors);
+    // 对 value, touched, validating进行设置
+    fields.forEach(field => {
+      const { name, value, touched, validating } = field;
+      if ('value' in field) {
+        onItemChange(name, value);
+      }
+      if (typeof touched === 'boolean') {
+        touched ? touchKey(name) : removeTouched(name);
+      }
+      if (typeof validating === 'boolean') {
+        validating ? setFieldValidating(name) : removeFieldValidating(name);
+      }
+    });
+  };
 
   const form = {
     // state
@@ -437,6 +659,16 @@ const useForm = props => {
     setEditing,
     syncStuff,
     showValidate: _showValidate,
+    validateFields,
+    isFieldTouched,
+    isFieldsTouched,
+    setFieldValidating,
+    removeFieldValidating,
+    isFieldValidating,
+    scrollToPath,
+    getFieldError,
+    getFieldsError,
+    setFields,
     // firstMount,
     setFirstMount,
     // logs

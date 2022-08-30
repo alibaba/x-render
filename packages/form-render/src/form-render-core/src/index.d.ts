@@ -68,6 +68,14 @@ export interface FormInstance {
   /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
   logOnSubmit: (args: any) => void;
   _setErrors: (args: any) => void;
+  validateFields: (nameList?: string[]) => Promise<any>;
+  isFieldTouched: (name: string) => boolean;
+  isFieldsTouched: (nameList?: string[], allTouched?: boolean) => boolean;
+  isFieldValidating: (name: string) => boolean;
+  scrollToPath: (name: string) => void;
+  getFieldError: (name: string) => string[];
+  getFieldsError: (nameList?: string[]) => Error[];
+  setFields: (nameList: string[]) => void;
 }
 
 export type WatchProperties = {

@@ -38,23 +38,77 @@ toc: content
 
 ### FormInstance
 
-| 参数             | 描述                                                | 类型                                                                                                                |
-| ---------------- | --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| submit           | 触发提交流程，一般在提交按钮上使用                  | `() => void`                                                                                                        |
-| resetFields      | 清空表单（也会清空一些内置状态，例如校验）          | `({formData?: any, submitData?: any, errorFields?: Error[], touchedKeys?: string[], allTouched?: boolean}) => void` |
-| errorFields      | 表单校验错误的数组                                  | `Error[]`                                                                                                           |
-| setErrorFields   | 外部手动修改 errorFields 校验信息，用于外部校验回填 | `(error: Error[]) => void`                                                                                          |
-| setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`                                                                                           |
-| setValueByPath   | 外部修改指定单个 field 的数据(原名 onItemChange)    | `(path: Path, value: any) => void`                                                                                  |
-| setSchemaByPath  | 指定路径修改 schema                                 | `(path: Path, value: any) => void`                                                                                  |
-| setSchema        | 指定多个路径修改 schema                             | `({ path: value }) => void`                                                                                         |
-| getValues        | 获取表单内部维护的数据 formData                     | `() => any`                                                                                                         |
-| schema           | 表单的 schema                                       | `object`                                                                                                            |
-| touchedKeys      | 已经触碰过的 field 的数据路径                       | `Path[]`                                                                                                            |
-| removeErrorField | 外部手动删除某一个 path 下所有的校验信息            | `(path: Path) => void`                                                                                              |
-| formData         | 表单内部维护的数据，建议使用 getValues/setValues    | `Record<string, any>`                                                                                               |
+| 参数              | 描述                                                                                                                  | 类型                                                                                                                |
+| ----------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| submit            | 触发提交流程，一般在提交按钮上使用                                                                                    | `() => void`                                                                                                        |
+| resetFields       | 清空表单（也会清空一些内置状态，例如校验）                                                                            | `({formData?: any, submitData?: any, errorFields?: Error[], touchedKeys?: string[], allTouched?: boolean}) => void` |
+| errorFields       | 表单校验错误的数组                                                                                                    | `Error[]`                                                                                                           |
+| setErrorFields    | 外部手动修改 errorFields 校验信息，用于外部校验回填                                                                   | `(error: Error[]) => void`                                                                                          |
+| setValues         | 外部手动修改 formData，用于已填写的表单的数据回填                                                                     | `(formData: any) => void`                                                                                           |
+| setValueByPath    | 外部修改指定单个 field 的数据(原名 onItemChange)                                                                      | `(path: Path, value: any) => void`                                                                                  |
+| setSchemaByPath   | 指定路径修改 schema                                                                                                   | `(path: Path, value: any) => void`                                                                                  |
+| setSchema         | 指定多个路径修改 schema                                                                                               | `({ path: value }) => void`                                                                                         |
+| getValues         | 获取表单内部维护的数据, 如果参数为空则返回当前所有数据                                                                | `(nameList?: Path[], filterFunc?: (meta: { touched: boolean, validating: boolean }) => boolean) => any`             |
+| schema            | 表单的 schema                                                                                                         | `object`                                                                                                            |
+| touchedKeys       | 已经触碰过的 field 的数据路径                                                                                         | `Path[]`                                                                                                            |
+| removeErrorField  | 外部手动删除某一个 path 下所有的校验信息                                                                              | `(path: Path) => void`                                                                                              |
+| formData          | 表单内部维护的数据, 建议使用 getValues/setValues                                                                      | `Record<string, any>`                                                                                               |
+| isFieldTouched    | 检查某个表单是否被用户操作过                                                                                          | `(name: Path) => boolean`                                                                                           |
+| isFieldsTouched   | 检查一组字段 fields 是否被用户操作过, allTouched 为 true 是检查是否所有字段都被操作过                                 | `(nameList?: Path[], allTouched?: boolean) => boolean`                                                              |
+| isFieldValidating | 检查对应字段 field 是否正在校验                                                                                       | `(name: Path) => boolean`                                                                                           |
+| scrollToPath      | 滚动到 path 对应的位置                                                                                                | `(name: Path) => void`                                                                                              |
+| getFieldError     | 获取对应字段 field 的错误信息                                                                                         | `(name: Path) => string[]`                                                                                          |
+| getFieldsError    | 获取一组字段 fields 对应的错误信息, 返回数组形式; 入参为空则获取所有字段对应的错误信息, 返回错误信息[Error](#error)[] | `(nameList: Path[]) => Error[]`                                                                                     |
+| setFields         | 设置一组字段状态, [Field](#field) []                                                                                  | `(nameList: Field[]) => void`                                                                                       |
+| validateFields    | 触发表单验证, [示例](#validatefields)                                                                                 | `(nameList?: Path[]) => Promise`                                                                                    |
 
 > react 更新机制导致，同时多次调用 `setSchemaByPath` 无效，所以请使用 `setSchema`，事实上`setSchema` 能完全覆盖 `setSchemaByPath` 的场景。
+
+##### validateFields
+
+```javascript
+validateFields()
+  .then(values => {
+    /*
+    values:{
+        input1: 'input1 输入的值',
+        select1: 'select1 选择的值',
+    }
+    */
+  })
+  .catch(errorInfo => {
+    /*
+    errorInfo:
+      {
+        data: {
+          input1: 'input1 输入的值',
+          select1: 'select1 选择的值',
+        },
+        errors: [
+          { name: 'input1', error: ['input1 的error信息'] },
+          { name: 'select1', error: ['select1 的error信息'] },
+        ],
+      }
+    */
+  });
+```
+
+##### field
+
+```ts
+interface Field {
+  /**错误信息 */
+  error?: string[];
+  /**字段path */
+  name?: string;
+  /**设置touched */
+  touched?: boolean;
+  /**设置validating */
+  validating?: boolean;
+  /** value */
+  value?: any;
+}
+```
 
 ### Widgets
 
