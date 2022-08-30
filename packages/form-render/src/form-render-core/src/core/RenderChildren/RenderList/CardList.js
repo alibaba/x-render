@@ -22,7 +22,7 @@ const CardList = ({
   displayType,
   getFieldsProps,
 }) => {
-  const { props = {}, itemProps } = schema;
+  const { props = {}, itemProps, min = 0, max = 9999 } = schema;
   const { methods } = useTools();
 
   let addBtnProps = {
@@ -82,7 +82,7 @@ const CardList = ({
                     onClick={() => copyItem(idx)}
                   />
                 )}
-                {!props.hideDelete && (
+                {!props.hideDelete && displayList.length > min && (
                   <Popconfirm
                     onConfirm={() => {
                       if (
@@ -110,7 +110,9 @@ const CardList = ({
         })}
       </div>
       <div style={{ marginTop: displayList.length > 0 ? 0 : 8 }}>
-        {!props.hideAdd && <Button onClick={addItem} {...addBtnProps} />}
+        {!props.hideAdd && displayList.length < max && (
+          <Button onClick={addItem} {...addBtnProps} />
+        )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
