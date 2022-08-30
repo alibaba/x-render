@@ -89,13 +89,10 @@ export default defineConfig({
   sitemap: {
     hostname: 'https://xrender.fun',
   },
-
+  runtimePublicPath: true,
   chainWebpack(config, { webpack }) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
   },
-  plugins: [
-    require.resolve('./scripts/dumi-plugin/redirect'),
-    require.resolve('./scripts/dumi-plugin/publicPath'),
-  ],
+  plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
   // more config: https://d.umijs.org/config
 });
