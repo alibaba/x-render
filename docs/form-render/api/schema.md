@@ -359,59 +359,6 @@ const schema = {
 
 ### order
 
-- 类型：number
-- 详细：用于对 `schema` 进行排序，值越小越靠前：
-
-```js
-"input1": {
-  "title": "输入框",
-  "type": "string",
-  "order": 2
-}
-"input2": {
-  "title": "优先渲染",
-  "type": "string",
-  "order": 1
-}
-```
-
-凡是包含 props（不区分大小写）的 schema 的 key 值，都会原样传递给自定义组件。方便在自定义组件中分类 props。
-
-```js
-const schema = {
-  // ...
-  percentInput: {
-    title: '百分比输入',
-    type: 'number',
-    props: {
-      showInput: false,
-    },
-    // inputProps 会原样传给自定义组件
-    inputProps: {
-      suffix: '%',
-    },
-    // percentProps 会原样传给自定义组件
-    percentProps: {
-      step: 10,
-    },
-  },
-};
-
-// 传递给自定义组件的 props 为
-const {
-  type: 'number',
-  showInput: false,
-  inputProps: {
-    suffix: '%'
-  },
-  percentProps: {
-    step: 10
-  }
-} = props;
-```
-
-### order
-
 - 类型：`number`
 
 用于对 `item` 进行排序，值越小越靠前。
