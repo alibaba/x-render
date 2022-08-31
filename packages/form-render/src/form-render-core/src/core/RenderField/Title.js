@@ -1,11 +1,13 @@
 import { Tooltip } from 'antd';
 import React from 'react';
-import { useStore2 } from '../../hooks';
+import { useStore2, useTools } from '../../hooks';
 import { isCheckBoxType } from '../../utils';
 
 const Description = ({ displayType, schema }) => {
-  const { description, descType } = schema;
-  if (!description) return null;
+  const { description, descType, descWidget } = schema;
+  if (!description && !descWidget) return null;
+
+  const { widgets } = useTools();
 
   const _description =
     typeof description === 'string' && /(^<|\/>)/.test(description) ? (
@@ -13,9 +15,19 @@ const Description = ({ displayType, schema }) => {
     ) : (
       description
     );
+  const RenderDesc = () => {
+    const Widget = widgets[schema.descWidget];
+    if (Widget) {
+      return <Widget />;
+    }
+    return null;
+  };
 
   switch (displayType) {
     case 'row':
+      if (descType === 'widget') {
+        return <RenderDesc />;
+      }
       return (
         <Tooltip title={_description}>
           <i className="fr-tooltip-icon" />
@@ -24,6 +36,9 @@ const Description = ({ displayType, schema }) => {
     case 'inline':
       return null;
     default:
+      if (descType === 'widget') {
+        return <RenderDesc />;
+      }
       if (descType === 'icon') {
         return (
           <Tooltip title={_description}>

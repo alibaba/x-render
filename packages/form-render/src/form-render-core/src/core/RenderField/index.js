@@ -184,10 +184,7 @@ const RenderField = props => {
   };
 
   const displayBlock = () => {
-    if (hasError) {
-      return false;
-    }
-    if (_schema.extra) {
+    if (hasError && !_schema.extra) {
       return false;
     }
     return true;

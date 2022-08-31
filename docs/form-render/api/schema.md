@@ -146,9 +146,36 @@ export default () => <FR schema={titleTrick} />;
 ### descType
 
 - 版本：`^1.7.0`
-- 类型：`'text' | 'icon'`
+- 类型：`'text' | 'icon' | 'widget'`
 
-当 displayType 为 `row` 时，无作用；但当 displayType 为 `column` （默认值）时，描述信息（description）的一般展示为文案形式，如果设定 descType 为 `icon`, 则会使用 tooltip 形式。
+当 displayType 为 `row` 时，无作用；但当 displayType 为 `column` （默认值）时，描述信息（description）的一般展示为文案形式，如果设定 descType 为 `icon`, 则会使用 tooltip 形式。当descType为`widget`时，会读取`descWidget` 指定使用哪个自定义组件来渲染。
+### descWidget
+- 版本 `^1.13.14`
+- 类型：`string`
+当descType 为 `widget`时，会读取descWidget指定使用哪个自定义组件来渲染。示例如下
+```js
+const schema = {
+  // ...
+  input: {
+    type: 'object',
+    properties: {
+      objectName: {
+        type: 'object',
+        collapsed: false,
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+            required: true,
+            descType: 'widget',
+            descWidget: 'customWidget',  // 只能使用自定义组件，从<Form widgets={{ customWidget: widget }} /> 中传入
+          },
+        },
+      },
+    },
+  },
+};
+```
 
 ### dependencies
 
