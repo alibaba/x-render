@@ -24,6 +24,36 @@ const TableList = ({
   const { buttons, ...columnProps } = itemProps;
   const { pagination = {}, ...rest } = props;
 
+  let actionColumnProps = {
+    colHeaderText: '操作',
+    copyText: '复制',
+    delText: '删除',
+  };
+
+  let delConfirmProps = {
+    title: '确定删除?',
+    okText: '确定',
+    cancelText: '取消',
+  };
+
+  let addBtnProps = {
+    type: 'primary',
+    children: '新增一条',
+    size: 'small',
+  };
+
+  if (props.actionColumnProps && typeof props.actionColumnProps === 'object') {
+    actionColumnProps = { ...actionColumnProps, ...props.actionColumnProps };
+  }
+
+  if (props.delConfirmProps && typeof props.delConfirmProps === 'object') {
+    delConfirmProps = { ...delConfirmProps, ...props.delConfirmProps };
+  }
+
+  if (props.addBtnProps && typeof props.addBtnProps === 'object') {
+    addBtnProps = { ...addBtnProps, ...props.addBtnProps };
+  }
+
   const paginationConfig = pagination && {
     size: 'small',
     hideOnSinglePage: true,
@@ -72,7 +102,7 @@ const TableList = ({
     !props.hideMove
   ) {
     columns.push({
-      title: '操作',
+      title: actionColumnProps.colHeaderText,
       key: '$action',
       fixed: 'right',
       width: 120,
@@ -81,16 +111,14 @@ const TableList = ({
         return (
           <div>
             {!props.hideAdd && !props.hideCopy && (
-              <a onClick={() => copyItem(idx)}>复制</a>
+              <a onClick={() => copyItem(idx)}>{actionColumnProps.copyText}</a>
             )}
             {!props.hideDelete && (
               <Popconfirm
-                title="确定删除?"
                 onConfirm={() => deleteItem(idx)}
-                okText="确定"
-                cancelText="取消"
+                {...delConfirmProps}
               >
-                <a style={{ marginLeft: 8 }}>删除</a>
+                <a style={{ marginLeft: 8 }}>{actionColumnProps.delText}</a>
               </Popconfirm>
             )}
             {!props.hideMove && (
@@ -114,11 +142,7 @@ const TableList = ({
   return (
     <>
       <div className="w-100 mb2 tr">
-        {!props.hideAdd && (
-          <Button type="primary" size="small" onClick={addItem}>
-            新增
-          </Button>
-        )}
+        {!props.hideAdd && <Button {...addBtnProps} onClick={addItem} />}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
