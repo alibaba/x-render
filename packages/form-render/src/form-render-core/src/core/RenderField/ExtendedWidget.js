@@ -78,7 +78,7 @@ const ExtendedWidget = ({
     widgetName = 'input';
     return <ErrorSchema schema={schema} />;
   }
-  const Widget = widgets[widgetName];
+  const Widget = widgets[widgetName] || widgets['html'];
   const extraSchema = extraSchemaList[widgetName];
 
   let widgetProps = {
