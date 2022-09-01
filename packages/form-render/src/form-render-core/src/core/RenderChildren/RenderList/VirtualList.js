@@ -23,6 +23,35 @@ const VirtualList = ({
   const { props = {}, itemProps = {} } = schema;
   const { scrollY = 600, ...rest } = props;
 
+  let actionColumnProps = {
+    colHeaderText: '操作',
+    delText: '删除',
+  };
+
+  let delConfirmProps = {
+    title: '确定删除?',
+    okText: '确定',
+    cancelText: '取消',
+  };
+
+  let addBtnProps = {
+    type: 'primary',
+    children: '新增一条',
+    size: 'small',
+  };
+
+  if (props.actionColumnProps && typeof props.actionColumnProps === 'object') {
+    actionColumnProps = { ...actionColumnProps, ...props.actionColumnProps };
+  }
+
+  if (props.delConfirmProps && typeof props.delConfirmProps === 'object') {
+    delConfirmProps = { ...delConfirmProps, ...props.delConfirmProps };
+  }
+
+  if (props.addBtnProps && typeof props.addBtnProps === 'object') {
+    addBtnProps = { ...addBtnProps, ...props.addBtnProps };
+  }
+
   const [vt, set_components] = useVT(() => ({ scroll: { y: scrollY } }), []);
 
   const dataSource = displayList.map((item, idx) => {
@@ -61,7 +90,7 @@ const VirtualList = ({
 
   if (!props.hideDelete || Array.isArray(itemProps.buttons)) {
     columns.push({
-      title: '操作',
+      title: actionColumnProps.colHeaderText,
       key: '$action',
       fixed: 'right',
       width: 120,
@@ -70,12 +99,10 @@ const VirtualList = ({
           <>
             {!props.hideDelete && (
               <Popconfirm
-                title="确定删除?"
                 onConfirm={() => deleteItem(idx)}
-                okText="确定"
-                cancelText="取消"
+                {...delConfirmProps}
               >
-                <a>删除</a>
+                <a>{actionColumnProps.delText}</a>
               </Popconfirm>
             )}
             {!props.hideMove && (
@@ -126,11 +153,7 @@ const VirtualList = ({
   return (
     <>
       <div className="w-100 mb2 tr">
-        {!props.hideAdd && (
-          <Button type="primary" size="small" onClick={addItem}>
-            新增
-          </Button>
-        )}
+        {!props.hideAdd && <Button {...addBtnProps} onClick={addItem} />}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
