@@ -1,7 +1,7 @@
 {
   "name": "vscode-plugin-fr-schema",
   "displayName": "FormRender generator",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "form-render 的表单设计器",
   "categories": [
     "Snippets",
@@ -183,7 +183,7 @@
     ]
   },
   "dependencies": {
-    "fr-generator": "^2.0.2",
+    "fr-generator": "^2.8.0",
     "lodash-es": "^4.17.15",
     "proptypes-to-json-schema": "^0.1.1",
     "react": "^16.8.6",
@@ -194,12 +194,12 @@
   },
   "devDependencies": {
     "@types/lodash-es": "^4.17.3",
-    "@types/node": "^12.12.0",
+    "@types/node": "^18.7.14",
     "@types/vscode": "^1.46.0",
     "@typescript-eslint/eslint-plugin": "^4.1.1",
     "@typescript-eslint/parser": "^4.1.1",
     "babel-eslint": "^9.0.0",
-    "copy-webpack-plugin": "^6.0.0",
+    "copy-webpack-plugin": "^11.0.0",
     "eslint": "^5.4.0",
     "eslint-config-umi": "^1.4.0",
     "eslint-plugin-flowtype": "^2.50.0",
@@ -208,9 +208,9 @@
     "eslint-plugin-react": "^7.11.1",
     "eslint-plugin-react-hooks": "^4.1.2",
     "ts-loader": "^8.0.4",
-    "typescript": "^3.9.4",
-    "webpack": "^4.4.0",
-    "webpack-cli": "^3.3.0"
+    "typescript": "^4.8.2",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "engines": {
     "vscode": "^1.46.0"
