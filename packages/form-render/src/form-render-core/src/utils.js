@@ -1035,7 +1035,7 @@ export const removeHiddenFromResult = (data, flatten) => {
   const keys = dataToKeys(result);
 
   keys.forEach(key => {
-    const { id, dataIndex } = destructDataPath(key);
+    const { id } = destructDataPath(key);
     if (flatten[id]) {
       let { hidden } = flatten[id].schema || {};
       if (isExpression(hidden)) {
