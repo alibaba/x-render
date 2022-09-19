@@ -8,8 +8,8 @@ import {
 } from './utils';
 // 提交前需要先处理formData的逻辑
 export const processData = (data, flatten, removeHiddenData) => {
-  // 1. 去掉 hidden = true 的元素
   let _data = clone(data);
+  // 1. 去掉 hidden = true 的元素
   if (removeHiddenData) {
     _data = removeHiddenFromResult(data, flatten);
   }

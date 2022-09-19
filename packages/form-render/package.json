@@ -81,5 +81,6 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
-  }
+  },
+  "sideEffect": false
 }
