@@ -10,6 +10,7 @@ import {
   generateDataSkeleton,
   parseAllExpression,
   schemaContainsExpression,
+  getHiddenData,
 } from './utils';
 import { validateAll } from './validator';
 
@@ -625,6 +626,10 @@ const useForm = props => {
     });
   };
 
+  const getHiddenValues = () => {
+    return getHiddenData(_data.current, _finalFlatten.current);
+  };
+
   const form = {
     // state
     formData: _data.current,
@@ -643,6 +648,7 @@ const useForm = props => {
     setSchema,
     setValues,
     getValues,
+    getHiddenValues,
     resetFields,
     submit,
     init: submit, // 简版的迁移方案里用，正常用不到，换个名字迁移的时候大家更好接受点
