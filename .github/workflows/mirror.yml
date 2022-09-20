@@ -1,20 +1,20 @@
-name: 🔀 Sync mirror to Vercel
+# name: 🔀 Sync mirror to Vercel
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  mirror:
-    runs-on: ubuntu-latest
-    steps:
-      - name: mirror actions
-        continue-on-error: true
-        uses: wearerequired/git-mirror-action@v1
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.FORK_PRIVATE_KEY }}
-        with:
-          source-repo: 'https://github.com/alibaba/x-render.git'
-          destination-repo: 'git@github.com:siyi98/x-render.git'
+# jobs:
+#   mirror:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: mirror actions
+#         continue-on-error: true
+#         uses: wearerequired/git-mirror-action@v1
+#         env:
+#           SSH_PRIVATE_KEY: ${{ secrets.FORK_PRIVATE_KEY }}
+#         with:
+#           source-repo: 'https://github.com/alibaba/x-render.git'
+#           destination-repo: 'git@github.com:siyi98/x-render.git'
       
