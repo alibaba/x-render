@@ -55,6 +55,10 @@ const Core = ({
 
   try {
     rootValue = getValueByPath(formData, parentPath);
+
+    if (dataIndex.length) {
+      rootValue.index = dataIndex[dataIndex.length - 1];
+    }
   } catch (error) {}
 
   // 节流部分逻辑，编辑时不执行
