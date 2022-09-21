@@ -374,3 +374,40 @@ const Demo = () => {
 
 export default Demo;
 ```
+<br>
+<br>
+
+7. 使用 index，用于展示列表每行的序号
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '礼物配置',
+      description: '可以有多套配置方案',
+      type: 'array',
+      widget: 'simpleList',
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '{{`配置方案${rootValue.index + 1}`}}',
+            type: 'string',
+            required: true,
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  return <Form schema={schema} />;
+};
+
+export default Demo;
+```
