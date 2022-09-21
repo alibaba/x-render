@@ -14,7 +14,8 @@ interface SchemaBase {
     | 'dateTime'
     | 'date'
     | 'time'
-    | 'upload';
+    | 'upload'
+    | (string & {});
   default: any;
   /** 是否必填，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   required: boolean | string;
