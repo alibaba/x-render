@@ -21,7 +21,7 @@ const useTableRoot = props => {
     pagination: {
       current: 1,
       pageSize: 10,
-      total: 1,
+      total: 0,
     },
     tableSize: 'default',
   });
