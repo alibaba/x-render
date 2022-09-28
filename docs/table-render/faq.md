@@ -1,6 +1,7 @@
 ---
 order: 4
 title: 常见问题
+hide: true
 ---
 
 # 常见问题
