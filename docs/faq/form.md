@@ -1,10 +1,9 @@
 ---
-order: 7
+order: 1
 toc: false
-hide: true
 ---
 
-# 常见问题
+# FormRender
 
 ### 1、我在 schema 里写的内容是按什么规则传递给自定义组件的？
 
