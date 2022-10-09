@@ -11,7 +11,8 @@ export type SchemaType =
   | 'void'
   | 'date'
   | 'datetime'
-  | (string & {});
+  | 'block'
+  | string;
 
 export interface SchemaBase {
   type: SchemaType;
