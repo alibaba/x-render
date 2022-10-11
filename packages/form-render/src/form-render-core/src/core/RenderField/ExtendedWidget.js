@@ -201,4 +201,4 @@ const ExtendedWidget = ({
 //   return false;
 // };
 
-export default React.memo(ExtendedWidget, areEqual);
+export default ExtendedWidget;
