@@ -169,36 +169,36 @@ const ExtendedWidget = ({
   );
 };
 
-const areEqual = (prev, current) => {
-  if (prev.schema && current.schema) {
-    if (prev.schema.$id === '#') {
-      return false;
-    }
-    if (prev.schema.hidden && current.schema.hidden) {
-      return true;
-    }
-  }
-  if (prev.readOnly !== current.readOnly) {
-    return false;
-  }
-  if (prev.disabled !== current.disabled) {
-    return false;
-  }
-  if (
-    JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
-  ) {
-    return false;
-  }
-  if (isObjType(prev.schema) && isObjType(current.schema)) {
-    return false;
-  }
-  if (
-    JSON.stringify(prev.value) === JSON.stringify(current.value) &&
-    JSON.stringify(prev.schema) === JSON.stringify(current.schema)
-  ) {
-    return true;
-  }
-  return false;
-};
+// const areEqual = (prev, current) => {
+//   if (prev.schema && current.schema) {
+//     if (prev.schema.$id === '#') {
+//       return false;
+//     }
+//     if (prev.schema.hidden && current.schema.hidden) {
+//       return true;
+//     }
+//   }
+//   if (prev.readOnly !== current.readOnly) {
+//     return false;
+//   }
+//   if (prev.disabled !== current.disabled) {
+//     return false;
+//   }
+//   if (
+//     JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
+//   ) {
+//     return false;
+//   }
+//   if (isObjType(prev.schema) && isObjType(current.schema)) {
+//     return false;
+//   }
+//   if (
+//     JSON.stringify(prev.value) === JSON.stringify(current.value) &&
+//     JSON.stringify(prev.schema) === JSON.stringify(current.schema)
+//   ) {
+//     return true;
+//   }
+//   return false;
+// };
 
 export default React.memo(ExtendedWidget, areEqual);

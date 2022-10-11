@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.13.15
+
+- [+] 新增获取隐藏表单值的方法：`form.getHiddenValues()`
+- [+] 补充`display: 'block'`类型声明
+
 ## 1.13.12
 
 - [+] `description`支持 html 字符
