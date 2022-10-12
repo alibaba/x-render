@@ -77,6 +77,8 @@ export default Demo;
 
 ```jsx
 import React from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import Form from '../demo/display';
 
 const schema = {
@@ -87,6 +89,7 @@ const schema = {
       description: '对象数组嵌套功能',
       type: 'array',
       widget: 'simpleList',
+      'add-widget': 'addBtn',
       items: {
         type: 'object',
         properties: {
@@ -107,8 +110,16 @@ const schema = {
   },
 };
 
+const AddBtn = props => {
+  return (
+    <Button {...props} style={{ width: '50%' }} icon={<PlusOutlined />}>
+      新增一条
+    </Button>
+  );
+};
+
 const Demo = () => {
-  return <Form schema={schema} />;
+  return <Form widgets={{ addBtn: AddBtn }} schema={schema} />;
 };
 
 export default Demo;
@@ -374,6 +385,7 @@ const Demo = () => {
 
 export default Demo;
 ```
+
 <br>
 <br>
 
