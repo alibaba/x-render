@@ -6,6 +6,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Popconfirm } from 'antd';
 import React from 'react';
+import { useTools } from '../../../hooks';
 import Core from '../../index';
 
 const SimpleList = ({
@@ -21,6 +22,11 @@ const SimpleList = ({
   getFieldsProps,
 }) => {
   const { props = {}, itemProps, min = 0, max = 99999 } = schema;
+  const { widgets } = useTools();
+
+  const CustomAddBtn = widgets[schema['add-widget']];
+
+  const AddWidget = CustomAddBtn || Button;
 
   let addBtnProps = {
     type: 'dashed',
@@ -36,6 +42,8 @@ const SimpleList = ({
   if (props.addBtnProps && typeof props.addBtnProps === 'object') {
     addBtnProps = { ...addBtnProps, ...props.addBtnProps };
   }
+
+  addBtnProps.onClick = addItem;
 
   if (props.delConfirmProps && typeof props.delConfirmProps === 'object') {
     delConfirmProps = { ...delConfirmProps, ...props.delConfirmProps };
@@ -85,7 +93,7 @@ const SimpleList = ({
       })}
       <div style={{ marginTop: displayList.length > 0 ? 0 : 8 }}>
         {!props.hideAdd && displayList.length < max && (
-          <Button onClick={addItem} {...addBtnProps} />
+          <AddWidget {...addBtnProps} />
         )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {

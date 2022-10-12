@@ -23,7 +23,11 @@ const CardList = ({
   getFieldsProps,
 }) => {
   const { props = {}, itemProps, min = 0, max = 9999 } = schema;
-  const { methods } = useTools();
+  const { methods, widgets } = useTools();
+
+  const CustomAddBtn = widgets[schema['add-widget']];
+
+  const AddWidget = CustomAddBtn || Button;
 
   let addBtnProps = {
     type: 'dashed',
@@ -111,7 +115,7 @@ const CardList = ({
       </div>
       <div style={{ marginTop: displayList.length > 0 ? 0 : 8 }}>
         {!props.hideAdd && displayList.length < max && (
-          <Button onClick={addItem} {...addBtnProps} />
+          <AddWidget {...addBtnProps} />
         )}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {

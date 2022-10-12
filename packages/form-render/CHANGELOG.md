@@ -2,6 +2,10 @@
 
 ## 1.13.15
 
+- [+] `simpleList` 和 `cardList` 支持自定义新增按钮
+
+## 1.13.15
+
 - [+] 新增获取隐藏表单值的方法：`form.getHiddenValues()`
 - [+] 补充`display: 'block'`类型声明
 
