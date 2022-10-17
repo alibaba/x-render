@@ -62,6 +62,8 @@ export interface SchemaBase {
   enumNames: Array<string | number> | string;
   rules: RuleItem | RuleItem[];
   props: Record<string, any>;
+  /**扩展字段 */
+  'add-widget'?: string;
 }
 
 export type Schema = Partial<SchemaBase>;
@@ -228,6 +230,8 @@ export interface FRProps {
   removeHiddenData?: boolean;
   /** 配置自定义layout组件 */
   layoutWidgets?: any;
+  /** 扩展方法 */
+  methods?: Record<string, Function>;
 }
 
 declare const FR: React.FC<FRProps>;
