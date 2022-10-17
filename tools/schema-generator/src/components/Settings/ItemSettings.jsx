@@ -1,5 +1,5 @@
 import FormRender, { useForm } from 'form-render';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   advancedElements,
   baseCommonSettings,
@@ -16,6 +16,7 @@ import * as frgWidgets from '../../widgets';
 export default function ItemSettings({ widgets }) {
   const setGlobal = useGlobal();
   const form = useForm();
+  const isReady = useRef(false);
   const {
     selected,
     flatten,
@@ -64,20 +65,14 @@ export default function ItemSettings({ widgets }) {
     }, []);
   };
 
-  const onDataChange = value => {
+  const onDataChange = (value = {}) => {
     try {
-      const item = flatten[selected];
-      if (!item || selected === '#') return;
-      if (item && item.schema) {
-        onItemChange(
-          selected,
-          {
-            ...item,
-            schema: transformer.fromSetting(value),
-          },
-          'schema'
-        );
-      }
+      if (selected === '#' || !isReady.current || !value.$id) return;
+      const item = {
+        ...flatten[selected],
+        schema: transformer.fromSetting(value),
+      };
+      onItemChange(selected, item, 'schema');
     } catch (error) {
       console.error(error, 'catch');
     }
@@ -86,6 +81,7 @@ export default function ItemSettings({ widgets }) {
   useEffect(() => {
     // setting 该显示什么的计算，要把选中组件的 schema 和它对应的 widgets 的整体 schema 进行拼接
     try {
+      isReady.current = false;
       const item = flatten[selected];
       if (!item || selected === '#') return;
       // 算 widgetList
@@ -115,8 +111,10 @@ export default function ItemSettings({ widgets }) {
         form.setValues(value);
         onDataChange(form.getValues());
         validation && form.submit();
+        isReady.current = true;
       }, 0);
     } catch (error) {
+      isReady.current = true;
       console.error(error);
     }
   }, [selected]);
