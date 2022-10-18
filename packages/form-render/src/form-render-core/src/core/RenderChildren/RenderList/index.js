@@ -156,7 +156,7 @@ const RenderList = ({
   // 外部定义：删除按钮事件
   const onRemove = methods[props.onRemove];
   if (isFunction(onRemove)) {
-    displayProps.deleteItem = () => onRemove(deleteItem, { schema })
+    displayProps.deleteItem = (idx) => onRemove(() => deleteItem(idx), { schema })
   }
 
   if (layoutWidgets && layoutWidgets[renderWidget]) {
