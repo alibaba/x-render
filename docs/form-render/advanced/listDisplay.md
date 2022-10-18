@@ -423,3 +423,55 @@ const Demo = () => {
 
 export default Demo;
 ```
+
+8. 自定义 onAdd(添加)、onRemove(删除)
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '礼物配置',
+      description: '可以有多套配置方案',
+      type: 'array',
+      widget: 'simpleList',
+      props: {
+        onAdd: 'addFunc',
+        onRemove: 'removeFunc'
+      },
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '{{`配置方案${rootValue.index + 1}`}}',
+            type: 'string',
+            required: true,
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  const methods = {
+    addFunc: (cb, { schema }) => {
+      alert('自定义新增');
+      // 处理完成，执行内置逻辑
+      cb();
+    },
+    removeFunc: (cb, { schema }) => {
+      alert('自定义删除');
+      // 处理完成，执行内置逻辑
+      cb();
+    }
+  };
+
+  return <Form schema={schema} methods={methods}/>;
+};
+
+export default Demo;
+```
