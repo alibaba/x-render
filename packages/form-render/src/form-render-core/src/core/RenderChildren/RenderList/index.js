@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { get } from 'lodash-es';
+import { get, isFunction } from 'lodash-es';
 import React from 'react';
 import { useStore, useTools } from '../../../hooks';
 import {
@@ -128,7 +128,7 @@ const RenderList = ({
     };
   };
 
-  const displayProps = {
+  let displayProps = {
     displayList,
     changeList,
     schema,
@@ -146,6 +146,18 @@ const RenderList = ({
     displayType,
     getFieldsProps,
   };
+
+  // 外部定义：添加按钮事件
+  const onAdd = methods[props.onAdd];
+  if (isFunction(onAdd)) {
+    displayProps.addItem = () => onAdd(addItem, { schema });
+  }
+
+  // 外部定义：删除按钮事件
+  const onRemove = methods[props.onRemove];
+  if (isFunction(onRemove)) {
+    displayProps.deleteItem = () => onRemove(deleteItem, { schema })
+  }
 
   if (layoutWidgets && layoutWidgets[renderWidget]) {
     const Component = layoutWidgets[renderWidget];
