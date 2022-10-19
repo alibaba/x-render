@@ -28,6 +28,7 @@
     "i18next": "^21.8.11",
     "moment": "^2.27.0",
     "nanoid": "^3.1.22",
+    "randombytes": "2.1.0",
     "rc-color-picker": "^1.2.6",
     "react-dnd": "^14.0.2",
     "react-dnd-html5-backend": "^14.0.0",
