@@ -225,7 +225,14 @@ export interface FRProps {
   /** 表单提交后钩子 */
   onFinish?: (formData: any, error: Error[]) => void;
   /** 时时与外部更新同步的钩子 */
-  onValuesChange?: (changedValues: any, formData: any) => void;
+  onValuesChange?: (
+    changedValues: {
+      dataPath: string;
+      value: any;
+      dataIndex: number[] | unknown;
+    },
+    formData: any
+  ) => void;
   /** 隐藏的数据是否去掉，默认不去掉（false） */
   removeHiddenData?: boolean;
   /** 配置自定义layout组件 */
