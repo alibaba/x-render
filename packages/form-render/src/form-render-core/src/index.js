@@ -53,7 +53,7 @@ function App({
   allCollapsed = false,
   onValuesChange,
   column,
-  removeHiddenData = false,
+  removeHiddenData = true,
   globalProps = {},
   methods = {},
   renderTitle,
