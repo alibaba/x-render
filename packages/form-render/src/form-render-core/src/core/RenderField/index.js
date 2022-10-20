@@ -111,7 +111,7 @@ const RenderField = props => {
     }
     // 先不暴露给外部，这个api
     if (typeof onValuesChange === 'function') {
-      onValuesChange({ [dataPath]: value }, formDataRef.current);
+      onValuesChange({ dataPath, value, dataIndex }, formDataRef.current);
     }
 
     validateField({

@@ -77,6 +77,8 @@ export default Demo;
 
 ```jsx
 import React from 'react';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import Form from '../demo/display';
 
 const schema = {
@@ -87,6 +89,7 @@ const schema = {
       description: '对象数组嵌套功能',
       type: 'array',
       widget: 'simpleList',
+      'add-widget': 'addBtn',
       items: {
         type: 'object',
         properties: {
@@ -107,8 +110,16 @@ const schema = {
   },
 };
 
+const AddBtn = props => {
+  return (
+    <Button {...props} style={{ width: '50%' }} icon={<PlusOutlined />}>
+      新增一条
+    </Button>
+  );
+};
+
 const Demo = () => {
-  return <Form schema={schema} />;
+  return <Form widgets={{ addBtn: AddBtn }} schema={schema} />;
 };
 
 export default Demo;
@@ -374,6 +385,7 @@ const Demo = () => {
 
 export default Demo;
 ```
+
 <br>
 <br>
 
@@ -407,6 +419,58 @@ const schema = {
 
 const Demo = () => {
   return <Form schema={schema} />;
+};
+
+export default Demo;
+```
+
+8. 自定义 onAdd(添加)、onRemove(删除)
+
+```jsx
+import React from 'react';
+import Form from '../demo/display';
+
+const schema = {
+  type: 'object',
+  properties: {
+    listName2: {
+      title: '礼物配置',
+      description: '可以有多套配置方案',
+      type: 'array',
+      widget: 'simpleList',
+      props: {
+        onAdd: 'addFunc',
+        onRemove: 'removeFunc'
+      },
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '{{`配置方案${rootValue.index + 1}`}}',
+            type: 'string',
+            required: true,
+          },
+        },
+      },
+    },
+  },
+};
+
+const Demo = () => {
+  const methods = {
+    addFunc: (cb, { schema }) => {
+      alert('自定义新增');
+      // 处理完成，执行内置逻辑
+      cb();
+    },
+    removeFunc: (cb, { schema }) => {
+      alert('自定义删除');
+      // 处理完成，执行内置逻辑
+      cb();
+    }
+  };
+
+  return <Form schema={schema} methods={methods}/>;
 };
 
 export default Demo;

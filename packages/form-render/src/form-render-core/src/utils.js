@@ -1063,7 +1063,6 @@ export const getHiddenData = (data, flatten) => {
         hidden = parseSingleExpression(hidden, result, key);
       }
       if (hidden) {
-        debugger;
         hiddenData[key] = result[key];
       }
     }
