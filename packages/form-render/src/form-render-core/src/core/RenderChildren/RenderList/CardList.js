@@ -48,6 +48,8 @@ const CardList = ({
     delConfirmProps = { ...delConfirmProps, ...props.delConfirmProps };
   }
 
+  addBtnProps.onClick = addItem;
+
   return (
     <>
       <div className="fr-card-list">
