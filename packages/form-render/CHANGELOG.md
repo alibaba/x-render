@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.18
+
+- [!] 修复 `cardList` 组件无法新增的 bug
+
 ## 1.13.17
 
 - [+] `simpleList` 和 `cardList` 支持自定义新增按钮
