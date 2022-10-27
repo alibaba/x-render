@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.19
+
+- [+] 删除 `formData` 中的 `index`
+
 ## 1.13.18
 
 - [!] 修复 `cardList` 组件无法新增的 bug
