@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.19
+
+- [+] 删除 `formData` 中的 `index`
+
 ## 1.13.17
 
 - [+] `simpleList` 和 `cardList` 支持自定义新增按钮
