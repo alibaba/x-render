@@ -82,16 +82,17 @@ const DrawerList = ({
     const item = flatten[child];
     const schema = (item && item.schema) || {};
     const _dataIndex = getKeyFromPath(child);
+    console.log(schema);
     return {
       dataIndex: _dataIndex,
-      title: schema.required ? (
-        <>
-          <span className="fr-label-required"> *</span>
-          <span>{schema.title}</span>
-        </>
-      ) : (
-        schema.title
-      ),
+      title: schema.required
+        ? () => (
+            <>
+              <span className="fr-label-required"> *</span>
+              <span>{schema.title}</span>
+            </>
+          )
+        : schema.title,
       width: FIELD_LENGTH,
       render: (value, record) => {
         const childPath = getDataPath(child, [record.$idx]);
