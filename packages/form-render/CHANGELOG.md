@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13.21
+
+- [!] 修复 `tableList` 和 `drawerList` 表头无法正常显示的问题
+
 ## 1.13.19
 
 - [+] 删除 `formData` 中的 `index`
