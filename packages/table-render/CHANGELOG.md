@@ -1,5 +1,9 @@
 # Changelog
 
+### 1.3.10
+
+- [+] `dateTime` 格式化为 `YYYY-MM-DD HH:mm:ss`
+
 ### 1.3.9
 
 - [+] 完善 `useTable` 类型定义
