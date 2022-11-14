@@ -119,18 +119,25 @@ const Search: <RecordType extends object = any>(
   }, [_schema]);
 
   useEffect(() => {
+    init();
+  }, []);
+
+  async function init() {
     syncMethods({
       searchApi: props.api,
       syncAfterSearch: props.afterSearch,
     });
     if (!props.hidden && searchOnMount) {
+      if (typeof searchFormProps.onMount === 'function') {
+        await searchFormProps.onMount();
+      }
       form.submit();
     }
     // 隐藏search组件时，不会触发form.submit
     if (props.hidden) {
       refresh();
     }
-  }, []);
+  }
 
   const btnProps = {
     searchBtnRender,
