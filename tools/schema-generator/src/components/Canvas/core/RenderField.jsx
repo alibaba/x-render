@@ -7,6 +7,7 @@ import {
 } from '../../../utils';
 import { useStore } from '../../../utils/hooks';
 import { getWidgetName } from '../../../utils/mapping';
+import cn from 'classnames';
 
 const RenderField = ({
   $id,
@@ -90,18 +91,17 @@ const RenderField = ({
       {schema.title ? (
         <div className={labelClass} style={labelStyle}>
           <label
-            className={`fr-label-title ${
-              widgetName === 'checkbox' || displayType === 'column'
-                ? 'no-colon'
-                : ''
-            }`} // checkbox不带冒号
+            className={cn('fr-label-title', {
+              'no-colon': widgetName === 'checkbox' || displayType === 'column',
+            })} // checkbox不带冒号
             title={title}
           >
             {required && <span className="fr-label-required"> *</span>}
             <span
-              className={`${isComplex ? 'b' : ''} ${
-                displayType === 'column' ? 'flex-none' : ''
-              }`}
+              className={cn({
+                b: isComplex,
+                'flex-none': displayType === 'column',
+              })}
             >
               <span dangerouslySetInnerHTML={{ __html: title }} />
             </span>

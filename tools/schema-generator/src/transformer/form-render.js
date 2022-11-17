@@ -47,8 +47,6 @@ const transformTo = schema => {
         label: schema.enumNames[idx],
       }));
       schema.enumList = list;
-      schema.enum;
-      schema.enumNames;
     }
   } else {
     const childrenList = getChildren2(schema);
