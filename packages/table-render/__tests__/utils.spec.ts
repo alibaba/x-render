@@ -7,7 +7,7 @@ describe('Test TableRender valueType', () => {
   });
   test('Test getDateTime', () => {
     const current = new Date().getTime();
-    expect(getDateTime(current)).toHaveLength(16);
+    expect(getDateTime(current)).toHaveLength(19);
   });
   test('Test getMoneyType', () => {
     expect(getMoneyType(10000)).toEqual('¥10,000');
