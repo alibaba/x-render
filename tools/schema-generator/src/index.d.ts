@@ -76,6 +76,8 @@ export interface FRGeneratorProps {
   commonSettings?: any;
   /** 全局配置 */
   globalSettings?: any;
+  /** 用户自定义formRender */
+  formRender?: any;
   /** 自定义组件 */
   widgets?: any;
   /** 配置栏自定义组件 */

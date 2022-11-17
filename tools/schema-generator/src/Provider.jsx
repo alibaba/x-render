@@ -1,6 +1,7 @@
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import copyTOClipboard from 'copy-text-to-clipboard';
+import FormRender from 'form-render';
 
 import {
   mapping as defaultMapping,
@@ -59,6 +60,7 @@ function Provider(props, ref) {
     fieldRender,
     fieldWrapperRender,
     elementRender,
+    formRender
   } = props;
 
   const transformer = {
@@ -218,6 +220,7 @@ function Provider(props, ref) {
     fieldRender,
     fieldWrapperRender,
     elementRender,
+    FormRender: formRender || FormRender,
     ...rootState,
   };
 

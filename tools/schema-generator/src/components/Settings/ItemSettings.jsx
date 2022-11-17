@@ -1,4 +1,4 @@
-import FormRender, { useForm } from 'form-render';
+import { useForm } from 'form-render';
 import React, { useEffect, useState, useRef } from 'react';
 import {
   advancedElements,
@@ -25,6 +25,7 @@ export default function ItemSettings({ widgets }) {
     userProps = {},
     widgets: globalWidgets,
     mapping: globalMapping,
+    FormRender
   } = useStore();
 
   const { settings, commonSettings, hideId, validation, transformer } =

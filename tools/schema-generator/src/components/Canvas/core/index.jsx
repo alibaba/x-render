@@ -1,4 +1,4 @@
-import FormRender, { useForm } from 'form-render';
+import { useForm } from 'form-render';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataToFlatten, flattenToData } from '../../../utils';
@@ -9,7 +9,7 @@ import Wrapper from './Wrapper';
 
 const PreviewFR = ({ schema, data }) => {
   const form = useForm();
-  const { flatten, widgets, mapping, userProps, onFlattenChange } = useStore();
+  const { flatten, widgets, mapping, userProps, onFlattenChange, FormRender } = useStore();
   const renderSchema = userProps.transformer.to(schema);
 
   useEffect(() => {

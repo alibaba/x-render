@@ -1,4 +1,4 @@
-import FormRender, { useForm } from 'form-render';
+import { useForm } from 'form-render';
 import React, { useEffect, useState } from 'react';
 import { defaultGlobalSettings } from '../../settings';
 import { useGlobal, useStore } from '../../utils/hooks';
@@ -11,6 +11,7 @@ export default function GlobalSettings({ widgets }) {
     frProps,
     userProps = {},
     mapping,
+    FormRender
   } = useStore();
   const setGlobal = useGlobal();
   const globalSettings = userProps.globalSettings || defaultGlobalSettings;

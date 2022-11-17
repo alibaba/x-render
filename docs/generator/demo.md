@@ -27,3 +27,7 @@ toc: menu
 使用 `transformer` 这个 props，进行 schema 的互转
 
 <code src='./demo/transformer.jsx' />
+
+### 自定义formRender
+
+<code src='./demo/formRender.jsx' />
