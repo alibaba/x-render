@@ -27,7 +27,7 @@ export default function Settings({ widgets }) {
       style={{ height: 30, width: 30, padding: '8px 0 0 8px' }}
       onClick={toggleRight}
     >
-      <RightOutlined className="f5" />
+      <RightOutlined style={{color: '#666'}} />
     </div>
   );
 
