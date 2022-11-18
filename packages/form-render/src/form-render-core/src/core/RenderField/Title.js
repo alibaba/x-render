@@ -2,6 +2,7 @@ import { Tooltip } from 'antd';
 import React from 'react';
 import { useStore2, useTools } from '../../hooks';
 import { isCheckBoxType } from '../../utils';
+import cn from 'classnames';
 
 const Description = ({ displayType, schema }) => {
   const { description, descType, descWidget } = schema;
@@ -113,20 +114,20 @@ const Title = ({
     <div className={labelClass} style={labelStyle}>
       {title ? (
         <label
-          className={`fr-label-title ${
-            isCheckBoxType(schema, readOnly) ||
-            _displayType === 'column' ||
-            !colon
-              ? 'no-colon'
-              : ''
-          }`} // checkbox不带冒号
+          className={cn( 'fr-label-title',{
+            'no-colon':
+              isCheckBoxType(schema, readOnly) ||
+              _displayType === 'column' ||
+              !colon,
+          })} // checkbox不带冒号
           title={title}
         >
           {TitleRequiredMark}
           <span
-            className={`${isObjType ? 'b' : ''} ${
-              _displayType === 'column' ? 'flex-none' : ''
-            }`}
+            className={cn({
+              b: isObjType,
+              'flex-none': _displayType === 'column',
+            })}
           >
             <span dangerouslySetInnerHTML={{ __html: title }} />
           </span>
