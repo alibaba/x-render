@@ -259,7 +259,7 @@ const CoreRender = ({
   };
 
   const objChildren = (
-    <div className={`flex flex-wrap`}>
+    <div className={`flex flex-wrap fr-core-obj`}>
       <RenderObject
         dataIndex={dataIndex}
         errorFields={errorFields}
