@@ -111,7 +111,7 @@ label 的宽度，数字值单位为 px，也可使用 `'20%'/'2rem'` 等，写�
 ### theme
 
 - 类型：`string`
-- 值: `default | card | tile`，详见[这里](/form-render/advanced/display#主题设置)
+- 值: `default | card | tile | flex`，详见[这里](/form-render/advanced/display#主题设置)
 
 设置嵌套表单的主题样式
 
