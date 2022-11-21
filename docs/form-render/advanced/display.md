@@ -622,38 +622,22 @@ const schema = {
   type: 'object',
   displayType: 'row',
   properties: {
-    objectName: {
-      title: '弹性布局',
-      description: '这是一个对象类型',
-      type: 'object',
-      theme: 'flex',
-      properties: {
-        input1: {
-          title: '简单输入框',
-          type: 'string',
-          required: true,
-          width: '30%',
-        },
-        select1: {
-          title: '单选',
-          type: 'string',
-          enum: ['a', 'b', 'c'],
-          enumNames: ['早', '中', '晚'],
-          width: '30%',
-        },
-        date: {
-          title: '时间选择',
-          type: 'string',
-          format: 'date',
-          width: '30%',
-        },
-      },
-    },
     objectName2: {
       title: '弹性布局',
       description: '这是一个对象类型',
       type: 'object',
       theme: 'flex',
+      props: {
+        style: {
+          flexDirection: 'column',
+          flexWrap: 'wrap',
+          margin: '0 0 0 0',
+          padding: '0 0 0 0',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          alignContent: 'flex-start',
+        },
+      },
       properties: {
         input1: {
           title: '简单输入框',
@@ -675,98 +659,6 @@ const schema = {
           width: '30%',
         },
       },
-    },
-    objectFlex: {
-      title: "对象",
-      type: "object",
-      theme: "flex",
-      props: {
-        style: {
-          flexDirection: "row",
-          flexWrap: "wrap",
-          margin: "0 0 0 0",
-          padding: "0 0 0 0",
-          justifyContent: "flex-start",
-          alignItems: "flex-start",
-          alignContent: "flex-start"
-        }
-      },
-      properties: {
-        object_2: {
-          title: "对象",
-          type: "object",
-          width: "40%",
-          theme: "flex",
-          props: {
-            style: {
-              flexDirection: "row",
-              flexWrap: "wrap",
-              margin: "0 0 0 0",
-              padding: "0 0 0 0",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              alignContent: "flex-start"
-            }
-          },
-          properties: {
-            html_1: {
-              title: "",
-              type: "block",
-              widget: "html",
-              labelWidth: 0,
-              props: {
-                value: "<div style=\"background: green;height:40px;border:1px solid black\">左1-宽40%高40px</div>"
-              }
-            },
-            html_2: {
-              title: "",
-              type: "block",
-              widget: "html",
-              labelWidth: 0,
-              props: {
-                value: "<div style=\"background: green;height:60px;border:1px solid black\">左2-宽40%高60px</div>"
-              }
-            }
-          }
-        },
-        object_3: {
-          title: "对象",
-          type: "object",
-          width: "60%",
-          theme: "flex",
-          props: {
-            style: {
-              flexDirection: "row",
-              flexWrap: "wrap",
-              margin: "0 0 0 0",
-              padding: "0 0 0 0",
-              justifyContent: "flex-start",
-              alignItems: "flex-start",
-              alignContent: "flex-start"
-            }
-          },
-          properties: {
-            html_3: {
-              title: "",
-              type: "block",
-              widget: "html",
-              labelWidth: 0,
-              props: {
-                value: "<div style=\"background: gold;height:70px;border:1px solid black\">右1-宽60%高70px</div>"
-              }
-            },
-            html_4: {
-              title: "",
-              type: "block",
-              widget: "html",
-              labelWidth: 0,
-              props: {
-                value: "<div style=\"background: gold;height:30px;border:1px solid black\">右2-宽60%高30px</div>"
-              }
-            }
-          }
-        }
-      }
     },
   },
 };
