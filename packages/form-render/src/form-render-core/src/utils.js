@@ -1,4 +1,5 @@
 import { cloneDeep, get, isEmpty, set } from 'lodash-es';
+import { getRealDataPath } from './void';
 
 export function getParamByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, '\\$&');
@@ -51,7 +52,8 @@ export function getValueByPath(formData, path) {
   if (path === '#' || !path) {
     return formData || {};
   } else if (typeof path === 'string') {
-    return get(formData, path);
+    const realPath = getRealDataPath(path);
+    return realPath && get(formData, realPath);
   } else {
     console.error('path has to be a string');
   }
@@ -97,7 +99,7 @@ export function getDataPath(id, dataIndex) {
       _id = _id.replace(/\[\]/, `[${item}]`);
     });
   }
-  return removeBrackets(_id);
+  return removeBrackets(getRealDataPath(_id));
 }
 
 export function isObjType(schema) {

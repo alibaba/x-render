@@ -232,7 +232,7 @@ const RenderField = props => {
     );
   } else if (isBlockType(_schema)) {
     return (
-      <div datapath={dataPath}>
+      <div className={contentClass} style={contentStyle} datapath={dataPath}>
         <ExtendedWidget {...widgetProps} />
       </div>
     );
