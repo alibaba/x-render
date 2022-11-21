@@ -11,8 +11,6 @@ yarn
 yarn build
 # 将文档网站跑起来
 yarn start
-# windows环境
-yarn start-win
 ```
 
 #### 3. 进入文档网站了，如何开发呢？

@@ -69,14 +69,14 @@ const TableList = ({
     const schema = (item && item.schema) || {};
     return {
       dataIndex: child,
-      title: schema.required ? (
-        <>
-          <span className="fr-label-required"> *</span>
-          <span>{schema.title}</span>
-        </>
-      ) : (
-        schema.title
-      ),
+      title: schema.required
+        ? () => (
+            <>
+              <span className="fr-label-required"> *</span>
+              <span>{schema.title}</span>
+            </>
+          )
+        : schema.title,
       width: FIELD_LENGTH,
       render: (value, record, index) => {
         // Check: record.index 似乎是antd自己会给的，不错哦

@@ -48,7 +48,7 @@ export const buildSchema = (schema, api) => {
 
 export const getDateTime = time => {
   if (!time) return null;
-  return dayjs(time).format('YYYY-MM-DD HH:mm');
+  return dayjs(time).format('YYYY-MM-DD HH:mm:ss');
 };
 export const getDate = time => {
   if (!time) return null;

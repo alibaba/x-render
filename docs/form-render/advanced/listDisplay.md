@@ -206,6 +206,7 @@ const schema = {
           select1: {
             title: '单选',
             type: 'string',
+            required: true,
             enum: ['a', 'b', 'c'],
             enumNames: ['早', '中', '晚'],
           },
@@ -213,6 +214,7 @@ const schema = {
             title: '对象数组',
             description: '对象数组嵌套功能',
             type: 'array',
+            required: true,
             widget: 'simpleList',
             props: {
               hideMove: true,
@@ -389,42 +391,7 @@ export default Demo;
 <br>
 <br>
 
-7. 使用 index，用于展示列表每行的序号
-
-```jsx
-import React from 'react';
-import Form from '../demo/display';
-
-const schema = {
-  type: 'object',
-  properties: {
-    listName2: {
-      title: '礼物配置',
-      description: '可以有多套配置方案',
-      type: 'array',
-      widget: 'simpleList',
-      items: {
-        type: 'object',
-        properties: {
-          input1: {
-            title: '{{`配置方案${rootValue.index + 1}`}}',
-            type: 'string',
-            required: true,
-          },
-        },
-      },
-    },
-  },
-};
-
-const Demo = () => {
-  return <Form schema={schema} />;
-};
-
-export default Demo;
-```
-
-8. 自定义 onAdd(添加)、onRemove(删除)
+7. 自定义 onAdd(添加)、onRemove(删除)
 
 ```jsx
 import React from 'react';
@@ -440,13 +407,13 @@ const schema = {
       widget: 'simpleList',
       props: {
         onAdd: 'addFunc',
-        onRemove: 'removeFunc'
+        onRemove: 'removeFunc',
       },
       items: {
         type: 'object',
         properties: {
           input1: {
-            title: '{{`配置方案${rootValue.index + 1}`}}',
+            title: '配置方案',
             type: 'string',
             required: true,
           },
@@ -467,10 +434,10 @@ const Demo = () => {
       alert('自定义删除');
       // 处理完成，执行内置逻辑
       cb();
-    }
+    },
   };
 
-  return <Form schema={schema} methods={methods}/>;
+  return <Form schema={schema} methods={methods} />;
 };
 
 export default Demo;

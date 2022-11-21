@@ -6,13 +6,11 @@ See the accompanying LICENSE file for terms.
 
 // fork自https://github.com/yahoo/serialize-javascript.git，新增 ignoreUndefined 参数的支持
 
-'use strict';
-
-var randomBytes = require('randombytes');
+import { customAlphabet } from 'nanoid';
+const nanoid = customAlphabet('1234567890abcdef');
 
 // Generate an internal UID to make the regexp pattern harder to guess.
-var UID_LENGTH = 16;
-var UID = generateUID();
+var UID = nanoid(32);
 var PLACE_HOLDER_REGEXP = new RegExp(
   '(\\\\)?"@__(F|R|D|M|S|A|U|I|B|L)-' + UID + '-(\\d+)__@"',
   'g'
@@ -37,15 +35,6 @@ var ESCAPED_CHARS = {
 
 function escapeUnsafeChars(unsafeChar) {
   return ESCAPED_CHARS[unsafeChar];
-}
-
-function generateUID() {
-  var bytes = randomBytes(UID_LENGTH);
-  var result = '';
-  for (var i = 0; i < UID_LENGTH; ++i) {
-    result += bytes[i].toString(16);
-  }
-  return result;
 }
 
 function deleteFunctions(obj) {

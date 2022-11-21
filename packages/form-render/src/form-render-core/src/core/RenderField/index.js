@@ -12,6 +12,7 @@ import ErrorMessage from './ErrorMessage';
 import ExtendedWidget from './ExtendedWidget';
 import Extra from './Extra';
 import FieldTitle from './Title';
+import cn from 'classnames';
 
 // TODO: 之后不要直接用get，收口到一个内部方法getValue，便于全局 ctrl + f 查找
 const RenderField = props => {
@@ -231,7 +232,7 @@ const RenderField = props => {
     );
   } else if (isBlockType(_schema)) {
     return (
-      <div datapath={dataPath}>
+      <div className={contentClass} style={contentStyle} datapath={dataPath}>
         <ExtendedWidget {...widgetProps} />
       </div>
     );
@@ -241,7 +242,7 @@ const RenderField = props => {
     <>
       {_showTitle && titleElement}
       <div
-        className={`${contentClass} ${hideTitle ? 'fr-content-no-title' : ''}`}
+        className={cn(contentClass, { 'fr-content-no-title': hideTitle })}
         style={contentStyle}
         datapath={dataPath}
       >
