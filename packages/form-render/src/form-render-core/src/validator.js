@@ -14,6 +14,7 @@ import {
 } from './utils';
 import { defaultValidateMessages } from './validateMessage';
 import { defaultValidateMessagesCN } from './validateMessageCN';
+import { getRealDataFlatten } from './void';
 
 export const parseSchemaExpression = (schema, formData, path) => {
   if (!isObject(schema)) return schema;
@@ -72,6 +73,8 @@ export const validateField = ({
 }) => {
   const paths = getRelatedPaths(path, flatten);
   // console.log('all relevant paths:', paths);
+
+  flatten = getRealDataFlatten(flatten);
   const promiseArray = paths.map(path => {
     const { id, dataIndex } = destructDataPath(path);
     if (flatten[id] || flatten[`${id}[]`]) {

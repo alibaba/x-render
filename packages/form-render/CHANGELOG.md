@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.14.0
+
+- [+] 为 `object` 类型添加 `flex` 主题
+- [+] 优化 `widgets` 下的组件路径
+- [+] 增加 `void` 支持
+- [!] 修复 `object` 宽度设置
+
 ## 1.13.21
 
 - [!] 修复 `tableList` 和 `drawerList` 表头无法正常显示的问题
@@ -7,6 +14,10 @@
 ## 1.13.19
 
 - [+] 删除 `formData` 中的 `index`
+
+## 1.13.18
+
+- [!] 修复 `cardList` 组件无法新增的 bug
 
 ## 1.13.17
 
