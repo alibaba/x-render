@@ -40,9 +40,8 @@ export default function Map({ children, title, schema }) {
           </span>
         </div>
         <div style={{ marginLeft: displayType == 'row' ? 0 : 12 }}>
-          <div className={`flex flex-wrap fr-core-obj`}>
-            {children}
-          </div>
+          {/* <div className={`flex flex-wrap fr-core-obj`}>{children}</div> */}
+          {children}
         </div>
       </div>
     );
@@ -63,16 +62,19 @@ export default function Map({ children, title, schema }) {
         }
         className="fr-theme-card-wrap"
       >
-        <div className={`flex flex-wrap fr-core-obj`}>
-          {children}
-        </div>
+        {children}
+        {/* <div className={`flex flex-wrap fr-core-obj`}>{children}</div> */}
       </Card>
     );
   }
 
   // 支持自定义弹性布局
   if (theme === 'flex') {
-    return <div className="flex w-100" {...props}>{children}</div>;
+    return (
+      <div className="flex w-100" {...props}>
+        {children}
+      </div>
+    );
   }
 
   const toggle = keyList => {
@@ -109,9 +111,10 @@ export default function Map({ children, title, schema }) {
               'fr-collapse-object-child-column': displayType === 'column',
             })}
           >
-            <div className={`flex flex-wrap fr-core-obj`}>
+            {/* <div className={`flex flex-wrap fr-core-obj`}>
               {children}
-            </div>
+            </div> */}
+            {children}
           </div>
         </Panel>
       </Collapse>

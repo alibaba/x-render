@@ -207,7 +207,7 @@ const CoreRender = ({
   if (schema.hidden) {
     columnStyle.display = 'none';
   }
-  
+
   if (width) {
     columnStyle.width = width;
   } else if (column > 1) {
@@ -218,15 +218,15 @@ const CoreRender = ({
   if ('object' === typeof schema?.style) {
     columnStyle = {
       ...columnStyle,
-      ...schema.style
-    }
+      ...schema.style,
+    };
   }
 
   const _labelWidth = isLooselyNumber(effectiveLabelWidth)
     ? Number(effectiveLabelWidth)
     : isCssLength(effectiveLabelWidth)
-      ? effectiveLabelWidth
-      : 110; // 默认是 110px 的长度
+    ? effectiveLabelWidth
+    : 110; // 默认是 110px 的长度
 
   let labelStyle = { width: _labelWidth };
   if (isComplex || _displayType === 'column') {
@@ -262,15 +262,17 @@ const CoreRender = ({
   };
 
   const objChildren = (
-    <RenderObject
-      dataIndex={dataIndex}
-      errorFields={errorFields}
-      displayType={_displayType}
-      labelAlign={_labelAlign}
-      hideTitle={hideTitle}
-    >
-      {item.children}
-    </RenderObject>
+    <div className={`flex flex-wrap`}>
+      <RenderObject
+        dataIndex={dataIndex}
+        errorFields={errorFields}
+        displayType={_displayType}
+        labelAlign={_labelAlign}
+        hideTitle={hideTitle}
+      >
+        {item.children}
+      </RenderObject>
+    </div>
   );
 
   const listChildren = (
