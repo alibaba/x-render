@@ -54,6 +54,7 @@ function Provider(props, ref) {
     globalSettings,
     widgets = {},
     mapping = {},
+    methods = {},
     validation = true,
     children,
     fieldRender,
@@ -114,6 +115,7 @@ function Provider(props, ref) {
     preview: _preview ?? preview,
     mapping: _mapping,
     widgets: _widgets,
+    methods,
     selected,
   };
 
