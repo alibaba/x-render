@@ -208,10 +208,14 @@ const CoreRender = ({
     columnStyle.display = 'none';
   }
 
-  if (width) {
-    columnStyle.width = width;
-  } else if (column > 1) {
-    columnStyle.width = `calc(100% /${column})`;
+  if (!isObj) {
+    if (width) {
+      columnStyle.width = width;
+      columnStyle.paddingRight = 8;
+    } else if (column > 1) {
+      columnStyle.width = `calc(100% /${column})`;
+      columnStyle.paddingRight = 8;
+    }
   }
 
   // 如果传入自定义样式则覆盖使用，object 外层样式使用 schema.style，内层样式使用 schema.props.style

@@ -57,12 +57,12 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   let contentClass = 'fr-content';
 
   let columnStyle = {};
-  if (width) {
+  if (!isComplex && width) {
     columnStyle = {
       width,
       paddingRight: '12px',
     };
-  } else if (column > 1) {
+  } else if (!isComplex && column > 1) {
     columnStyle = {
       width: `calc(100% /${column})`,
       paddingRight: '12px',
@@ -71,12 +71,15 @@ const FR = ({ id = '#', preview, displaySchema }) => {
 
   // 如果传入自定义样式则覆盖使用，object 外层样式使用 schema.style，内层样式使用 schema.props.style
   // 由于 form-render-core 使用多层 div，而这里只使用一层，所以合并内外层样式
-  if('object' === typeof schema?.style || 'object' === typeof schema?.props?.style) {
+  if (
+    'object' === typeof schema?.style ||
+    'object' === typeof schema?.props?.style
+  ) {
     columnStyle = {
       ...columnStyle,
       ...(schema?.style || {}),
-      ...(schema?.props?.style || {})
-    }
+      ...(schema?.props?.style || {}),
+    };
   }
 
   switch (schema.type) {
