@@ -49,6 +49,7 @@ const ExtendedWidget = ({
     getFieldError,
     getFieldsError,
     setFields,
+    methods
   } = useTools();
 
   const { globalProps } = useStore();
@@ -157,6 +158,7 @@ const ExtendedWidget = ({
     setFields,
     hideSelf,
     watch,
+    methods
   };
 
   const finalProps = transformProps(widgetProps);
