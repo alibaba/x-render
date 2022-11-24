@@ -162,9 +162,11 @@ const ExtendedWidget = ({
   const finalProps = transformProps(widgetProps);
   return (
     <Suspense fallback={<div></div>}>
-      <div className="fr-item-wrapper">
-        <Widget {...finalProps} />
-      </div>
+      {'flex' === schema?.theme ? // 如果有自定义样式则不再嵌套 fr-item-wrapper 样式
+        <Widget {...finalProps} /> :
+        <div className="fr-item-wrapper">
+          <Widget {...finalProps} />
+        </div>}
     </Suspense>
   );
 };

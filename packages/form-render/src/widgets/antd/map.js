@@ -70,11 +70,9 @@ export default function Map({ children, title, schema }) {
 
   // 支持自定义弹性布局
   if (theme === 'flex') {
-    return (
-      <div className="flex w-100" {...props}>
-        {children}
-      </div>
-    );
+    return (<>
+      {children && React.cloneElement(children, props)}
+    </>);
   }
 
   const toggle = keyList => {
