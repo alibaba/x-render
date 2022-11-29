@@ -397,13 +397,10 @@ export function isExpression(func) {
   //   );
   // }
   if (typeof func !== 'string') return false;
-  const pattern = /^{{(.+)}}$/;
-  const reg1 = /^{{function\(.+}}$/;
-  // const reg2 = /^{{(.+=>.+)}}$/;
-  if (typeof func === 'string' && func.match(pattern) && !func.match(reg1)) {
-    return true;
-  }
-  return false;
+  const pattern = /^{\s*{(.+)}\s*}$/;
+  const reg1 = /^{\s*{function\(.+}\s*}$/;
+
+  return func.match(pattern) && !func.match(reg1);
 }
 
 export const parseRootValueInSchema = (schema, rootValue) => {
@@ -426,7 +423,8 @@ export const parseRootValueInSchema = (schema, rootValue) => {
 // handle rootValue inside List
 export const parseSingleRootValue = (expression, rootValue = {}) => {
   if (typeof expression === 'string' && expression.indexOf('rootValue') > 0) {
-    const funcBody = expression.substring(2, expression.length - 2);
+    const funcBody = expression.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '');
+
     const str = `
     return ${funcBody.replace(/rootValue/g, JSON.stringify(rootValue))}`;
 
@@ -445,7 +443,8 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
   const parentPath = getParentPath(dataPath);
   const parent = getValueByPath(formData, parentPath) || {};
   if (typeof func === 'string') {
-    const funcBody = func.substring(2, func.length - 2);
+    const funcBody = func.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '');
+
     const str = `
     return ${funcBody
       .replace(/formData/g, JSON.stringify(formData))
