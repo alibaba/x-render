@@ -1,5 +1,6 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
+import { Options as ScrollOptions } from 'scroll-into-view-if-needed';
 
 export type { RuleItem } from 'async-validator';
 export type SchemaType =
@@ -13,6 +14,8 @@ export type SchemaType =
   | 'datetime'
   | 'block'
   | string;
+
+export { Options as ScrollOptions } from 'scroll-into-view-if-needed';
 
 export interface SchemaBase {
   type: SchemaType;
@@ -74,6 +77,7 @@ export interface Error {
   /** 错误的内容 */
   error: string[];
 }
+
 export interface FormParams {
   formData?: any;
   onChange?: (data: any) => void;
@@ -89,6 +93,7 @@ export interface ValidateParams {
   formData: any;
   schema: Schema;
   error: Error[];
+
   [k: string]: any;
 }
 
@@ -98,8 +103,10 @@ export interface ResetParams {
   errorFields?: Error[];
   touchedKeys?: any[];
   allTouched?: boolean;
+
   [k: string]: any;
 }
+
 export interface FieldParams {
   name: string;
   error?: string[];
@@ -148,7 +155,7 @@ export interface FormInstance {
   setFieldValidating: (namePath: string) => boolean;
   removeFieldValidating: (namePath: string) => void;
   isFieldValidating: (namePath: string) => boolean;
-  scrollToPath: (namePath: string) => boolean;
+  scrollToPath: (namePath: string, options?: ScrollOptions) => boolean;
   getFieldError: (namePath: string) => String[];
   getFieldsError: (nameList?: string[]) => Error[];
   setFields: (fields: FieldParams[]) => void;
@@ -189,7 +196,7 @@ export interface FRProps {
   displayType?: 'column' | 'row' | 'inline';
   /** 表示是否显示 label 后面的冒号 */
   colon?: boolean;
-  /** label 标签的文本对齐方式	 */
+  /** label 标签的文本对齐方式   */
   labelAlign?: 'right' | 'left';
   /** 只读模式 */
   readOnly?: boolean;
@@ -206,6 +213,8 @@ export interface FRProps {
   debug?: boolean;
   /** 显示css布局提示线 */
   debugCss?: boolean;
+  /** 提交失败自动滚动到第一个错误字段 */
+  scrollToFirstError?: boolean | ScrollOptions;
   locale?: 'cn' | 'en';
   column?: number;
   debounceInput?: boolean;

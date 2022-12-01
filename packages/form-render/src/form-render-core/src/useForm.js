@@ -3,7 +3,7 @@ import { set, sortedUniqBy, get, isEmpty, isFunction } from 'lodash-es';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSet } from './hooks';
 import { processData, transformDataWithBind2 } from './processData';
-import SmoothScroll from 'smooth-scroll';
+import scrollIntoView from 'scroll-into-view-if-needed';
 import {
   clone,
   flattenSchema,
@@ -569,12 +569,20 @@ const useForm = props => {
     return _touchedKeys.current.indexOf(namePath) > -1;
   };
 
-  const scrollToPath = namePath => {
-    var scroll = new SmoothScroll();
+  //options 滑动设置https://github.com/stipsan/scroll-into-view-if-needed
+  const scrollToPath = (namePath, options = {}) => {
     const node = document.querySelector(`[datapath="${namePath}"]`);
+
     if (node) {
-      scroll.animateScroll(node);
+      scrollIntoView(node, {
+        scrollMode: 'if-needed',
+        block: 'nearest',
+        ...options,
+      });
+
+      return true;
     }
+    return false;
   };
 
   const getFieldError = namePath => {
