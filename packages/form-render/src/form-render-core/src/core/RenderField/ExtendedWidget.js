@@ -51,8 +51,6 @@ const ExtendedWidget = ({
     setFields,
   } = useTools();
 
-  console.log(hasError);
-
   const { globalProps } = useStore();
 
   // if (isObjType(schema)) {
