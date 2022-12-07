@@ -17,6 +17,7 @@ const defaultFinish = (data, errors) => {
   console.log('onFinish:', { data, errors });
 };
 
+export { default as connectForm } from './connectForm';
 export { createWidget } from './createWidget';
 export { default as useForm } from './useForm';
 export { defaultMapping as mapping };
