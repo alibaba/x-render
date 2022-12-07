@@ -51,6 +51,8 @@ const ExtendedWidget = ({
     setFields,
   } = useTools();
 
+  console.log(hasError);
+
   const { globalProps } = useStore();
 
   // if (isObjType(schema)) {
@@ -191,6 +193,9 @@ const areEqual = (prev, current) => {
   }
   if (isObjType(prev.schema) && isObjType(current.schema)) {
     return false;
+  }
+  if (JSON.stringify(prev.hasError) === JSON.stringify(current.hasError)) {
+    return true;
   }
   if (
     JSON.stringify(prev.value) === JSON.stringify(current.value) &&
