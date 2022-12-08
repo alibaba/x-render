@@ -65,7 +65,7 @@ const transformProps = props => {
   return _props;
 };
 
-const FiledItem = (props: any) => {
+const FiledItem = (props) => {
   const {
     schema,
     onChange,

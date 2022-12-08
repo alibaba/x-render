@@ -1,8 +1,8 @@
 import React from 'react';
-import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Form, Input, Space } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Form } from 'antd';
 
-import renderer from '../../renderer';
+import renderer from '../../render-core';
 
 const App = (props) => {
   return (

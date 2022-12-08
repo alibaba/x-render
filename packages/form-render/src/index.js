@@ -5,8 +5,11 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import { widgets as defaultWidgets } from './widgets';
 import FRCore from './form-core';
 
-const { useForm } = Form;
 
+ const useForm = () => {
+  const [form] = Form.useForm();
+  return form;
+};
 export { useForm };
 export { default as connectForm } from './form-core/connect-form';
 export { createWidget } from './form-core/create-widget';
@@ -15,7 +18,8 @@ export { defaultWidgets as widgets };
 
 
 const FR = (props) => {
-  const { configProvider, ...otherProps } = props;
+  const { configProvider, widgets, ...otherProps } = props;
+  debugger;
 
   return (
     <ConfigProvider 
