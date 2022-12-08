@@ -9,7 +9,7 @@ import Wrapper from './Wrapper';
 
 const PreviewFR = ({ schema, data }) => {
   const form = useForm();
-  const { flatten, widgets, mapping, userProps, onFlattenChange } = useStore();
+  const { flatten, widgets, mapping, methods, userProps, onFlattenChange } = useStore();
   const renderSchema = userProps.transformer.to(schema);
 
   useEffect(() => {
@@ -22,6 +22,7 @@ const PreviewFR = ({ schema, data }) => {
       form={form}
       widgets={widgets}
       mapping={mapping}
+      methods={methods}
       watch={{
         '#': formData => {
           onFlattenChange(dataToFlatten(flatten, formData), 'data');
@@ -57,12 +58,12 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   let contentClass = 'fr-content';
 
   let columnStyle = {};
-  if (!isComplex && width) {
+  if (width) {
     columnStyle = {
       width,
       paddingRight: '12px',
     };
-  } else if (!isComplex && column > 1) {
+  } else if (column > 1) {
     columnStyle = {
       width: `calc(100% /${column})`,
       paddingRight: '12px',
