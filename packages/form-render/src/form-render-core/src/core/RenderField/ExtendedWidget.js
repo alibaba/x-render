@@ -192,6 +192,9 @@ const areEqual = (prev, current) => {
   if (isObjType(prev.schema) && isObjType(current.schema)) {
     return false;
   }
+  if (JSON.stringify(prev.hasError) === JSON.stringify(current.hasError)) {
+    return true;
+  }
   if (
     JSON.stringify(prev.value) === JSON.stringify(current.value) &&
     JSON.stringify(prev.schema) === JSON.stringify(current.schema)

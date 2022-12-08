@@ -37,6 +37,8 @@ function App({
   colon = true,
   schema,
   debug,
+  //提交失败自动滚动到第一个错误字段
+  scrollToFirstError = false,
   debugCss,
   locale = 'cn', // 'cn'/'en'
   debounceInput = false,
@@ -275,6 +277,18 @@ function App({
     if (isValidating === false && isSubmitting === true) {
       endSubmitting();
       onFinish(submitData, errorFields);
+
+      //平滑滚动到errorFields第一个项
+      if (scrollToFirstError && errorFields.length > 0) {
+        //展示到页面中间
+        let scrollOptions = { block: 'center' };
+        if (typeof scrollToFirstError === 'object') {
+          scrollOptions = scrollToFirstError;
+        }
+
+        form.scrollToPath(errorFields?.[0]?.name, scrollOptions);
+      }
+
       if (typeof logOnSubmit === 'function') {
         const start = sessionStorage.getItem('FORM_START');
         const mount = sessionStorage.getItem('FORM_MOUNT_TIME');
