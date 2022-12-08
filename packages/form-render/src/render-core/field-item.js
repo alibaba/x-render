@@ -1,9 +1,9 @@
 import React from 'react';
 import { Form, Col } from 'antd';
-import { widgets } from './widgets';
+import { widgets } from '../widgets';
 
-import { extraSchemaList, getWidgetName } from './form-render-core/src/mapping';
-import { isListType, isObject, isObjType } from './form-render-core/src/utils';
+import { extraSchemaList, getWidgetName } from '../form-render-core/src/mapping';
+import { isListType, isObject, isObjType } from '../form-render-core/src/utils';
 
 const ErrorSchema = schema => {
   return (
@@ -155,7 +155,7 @@ const FiledItem = (props: any) => {
   if (!name) {
     return (
       <Col span={24}>
-      <Widget {...finalProps} />
+        <Widget {...finalProps} />
       </Col>
     )
   }

@@ -1,12 +1,12 @@
 import React from 'react';
-import FiledItem from './FiledItem';
+import FiledItem from './field-item';
 
-const FRender = (props: any): any => {
+const FRender = (props) => {
   const { schema, _namePath = [] } = props;
 
-  return Object.keys(schema?.properties || {}).map((path: any, index: number) => {
+  return Object.keys(schema?.properties || {}).map((path, index) => {
     let children = null;
-    let namePath: any = [..._namePath, path];
+    let namePath = [..._namePath, path];
 
     console.log(namePath, '-----------')
     if (schema.properties[path]?.properties) {
