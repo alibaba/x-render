@@ -8,8 +8,13 @@ export {
   connectForm,
   createWidget,
   mapping,
-  useForm,
+//   useForm,
 } from './form-render-core/src';
+
+export const useForm = () => {
+  const [form] = Form.useForm();
+  return form;
+};
 
 const schema = {
   properties: {
@@ -1135,16 +1140,18 @@ const schema = {
   labelWidth: 130,
   displayType: 'row',
 };
+
 const FR = props => {
-  const { configProvider, ...otherProps } = props;
+  const { configProvider, form, ...otherProps } = props;
 
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
       <Form
         labelWrap={true}
         onFinish={values => {
-          console.log(values);
+          console.l`og(values);
         }}
+        form={form}
       >
         <Row style={{ margin: 0 }}>
           <FRender schema={schema} />
