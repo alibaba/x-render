@@ -22,6 +22,7 @@ export default function Map({ children, title, schema }) {
   if (!title) {
     return <div className="w-100">{children}</div>;
   }
+  
   if (theme === 'tile') {
     return (
       <div className="w-100">
@@ -86,7 +87,6 @@ export default function Map({ children, title, schema }) {
   };
 
   return (
-    <div className="w-100">
       <Collapse
         activeKey={collapsed ? [] : ['1']}
         onChange={toggle}
@@ -118,6 +118,5 @@ export default function Map({ children, title, schema }) {
           </div>
         </Panel>
       </Collapse>
-    </div>
   );
 }

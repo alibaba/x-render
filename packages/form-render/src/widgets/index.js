@@ -6,7 +6,7 @@ import date from './antd/date';
 import dateRange from './antd/dateRange';
 import Html from './html';
 import ImageInput from './antd/imageInput';
-import list from './list';
+import list from './RenderList';
 import map from './antd/map';
 import multiSelect from './antd/multiSelect';
 import radio from './antd/radio';
