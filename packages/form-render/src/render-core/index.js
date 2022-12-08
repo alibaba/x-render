@@ -16,16 +16,26 @@ const FRender = (props) => {
       
     }
 
+      console.log(namePath, '-----------');
+      if (schema.properties[path]?.properties) {
+        children = FRender({
+          schema: schema.properties[path],
+          _namePath: namePath,
+        });
+        namePath = null;
+      } else if (schema.properties[path]?.type) {
+      }
 
-    return (
-      <FiledItem
-        key={index}
-        schema={schema.properties[path]}
-        name={namePath}
-        children={children}
-      />
-    )
-  });
-}
+      return (
+        <FiledItem
+          key={index}
+          schema={schema.properties[path]}
+          name={namePath}
+          children={children}
+        />
+      );
+    }
+  );
+};
 
 export default FRender;

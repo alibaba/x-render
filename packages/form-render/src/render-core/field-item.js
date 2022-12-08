@@ -66,15 +66,8 @@ const transformProps = props => {
 };
 
 const FiledItem = (props) => {
-  const {
-    schema,
-    onChange,
-    children,
-    readOnly,
-    disabled,
-    name,
-  } = props;
-  
+  const { schema, onChange, children, readOnly, disabled, name } = props;
+
   let widgetName = getWidgetName(schema);
   const customName = schema.widget || schema['ui:widget'];
   if (customName && widgets[customName]) {
@@ -89,7 +82,7 @@ const FiledItem = (props) => {
     return <ErrorSchema schema={schema} />;
   }
   const Widget = widgets[widgetName] || widgets['html'];
- 
+
   const extraSchema = extraSchemaList[widgetName];
 
   let widgetProps = {
@@ -131,46 +124,30 @@ const FiledItem = (props) => {
     widgetProps.addonAfter = <AddonAfterWidget {...schema} />;
   }
 
-
   const finalProps = transformProps(widgetProps);
 
-  console.log(finalProps, '------------finalProps', name)
-
-
+  console.log(finalProps, '------------finalProps', name);
 
   const { title: label } = finalProps;
 
-
-
   if (widgetName === 'list') {
-
   }
-
-
-
-  
-
-
 
   if (!name) {
     return (
       <Col span={24}>
         <Widget {...finalProps} />
       </Col>
-    )
+    );
   }
 
   return (
     <Col span={24}>
-      <Form.Item
-        label={label}
-        name={name}
-        className={name}
-      >
+      <Form.Item label={label} name={name} className={name}>
         <Widget {...finalProps} />
       </Form.Item>
     </Col>
-  )
+  );
 };
 
 export default FiledItem;

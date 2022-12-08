@@ -29,7 +29,7 @@ const FR = (props) => {
 			<FRCore widgets={{ ...defaultWidgets, ...widgets }} {...otherProps} />
     </ConfigProvider>
   );
-}
+};
 
 export default FR;
 
