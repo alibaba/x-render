@@ -21,7 +21,7 @@ const FR = (props) => {
       onFinish={(values) => {
           console.log(values);
       }}
-      // {...formProps}
+      {...formProps}
     >
       <Row style={{ margin: 0 }}>
         <RenderCore schema={schema} />
