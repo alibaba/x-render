@@ -19,8 +19,7 @@ export { defaultWidgets as widgets };
 
 const FR = (props) => {
   const { configProvider, widgets, ...otherProps } = props;
-  debugger;
-
+  
   return (
     <ConfigProvider 
       locale={zhCN} 
