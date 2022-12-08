@@ -49,7 +49,7 @@ const ExtendedWidget = ({
     getFieldError,
     getFieldsError,
     setFields,
-    methods
+    methods,
   } = useTools();
 
   const { globalProps } = useStore();
@@ -158,7 +158,7 @@ const ExtendedWidget = ({
     setFields,
     hideSelf,
     watch,
-    methods
+    methods,
   };
 
   const finalProps = transformProps(widgetProps);
@@ -169,39 +169,39 @@ const ExtendedWidget = ({
   );
 };
 
-const areEqual = (prev, current) => {
-  if (prev.schema && current.schema) {
-    if (prev.schema.$id === '#') {
-      return false;
-    }
-    if (prev.schema.hidden && current.schema.hidden) {
-      return true;
-    }
-  }
-  if (prev.readOnly !== current.readOnly) {
-    return false;
-  }
-  if (prev.disabled !== current.disabled) {
-    return false;
-  }
-  if (
-    JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
-  ) {
-    return false;
-  }
-  if (isObjType(prev.schema) && isObjType(current.schema)) {
-    return false;
-  }
-  if (JSON.stringify(prev.hasError) === JSON.stringify(current.hasError)) {
-    return true;
-  }
-  if (
-    JSON.stringify(prev.value) === JSON.stringify(current.value) &&
-    JSON.stringify(prev.schema) === JSON.stringify(current.schema)
-  ) {
-    return true;
-  }
-  return false;
-};
+// const areEqual = (prev, current) => {
+//   if (prev.schema && current.schema) {
+//     if (prev.schema.$id === '#') {
+//       return false;
+//     }
+//     if (prev.schema.hidden && current.schema.hidden) {
+//       return true;
+//     }
+//   }
+//   if (prev.readOnly !== current.readOnly) {
+//     return false;
+//   }
+//   if (prev.disabled !== current.disabled) {
+//     return false;
+//   }
+//   if (
+//     JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
+//   ) {
+//     return false;
+//   }
+//   if (isObjType(prev.schema) && isObjType(current.schema)) {
+//     return false;
+//   }
+//   if (JSON.stringify(prev.hasError) === JSON.stringify(current.hasError)) {
+//     return true;
+//   }
+//   if (
+//     JSON.stringify(prev.value) === JSON.stringify(current.value) &&
+//     JSON.stringify(prev.schema) === JSON.stringify(current.schema)
+//   ) {
+//     return true;
+//   }
+//   return false;
+// };
 
-export default memo(ExtendedWidget, areEqual);
+export default ExtendedWidget;
