@@ -216,6 +216,9 @@ const CoreRender = ({
       columnStyle.width = `calc(100% /${column})`;
       columnStyle.paddingRight = 8;
     }
+  } else if ('flex' === schema?.theme) {
+    // 由于上面 if (!isObj) 判断使得 width 对 object 类型容器不生效，因此这里判断 flex 才添加宽度
+    columnStyle.width = width;
   }
 
   // 如果传入自定义样式则覆盖使用，object 外层样式使用 schema.style，内层样式使用 schema.props.style

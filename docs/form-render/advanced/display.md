@@ -622,7 +622,7 @@ const schema = {
   type: 'object',
   displayType: 'row',
   properties: {
-    objectName2: {
+    objectName: {
       title: '弹性布局',
       description: '这是一个对象类型',
       type: 'object',

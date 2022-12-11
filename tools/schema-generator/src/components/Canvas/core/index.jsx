@@ -68,18 +68,15 @@ const FR = ({ id = '#', preview, displaySchema }) => {
       width: `calc(100% /${column})`,
       paddingRight: '12px',
     };
+  } else if ('flex' === schema?.theme) {
+    columnStyle.width = width;
   }
 
   // 如果传入自定义样式则覆盖使用，object 外层样式使用 schema.style，内层样式使用 schema.props.style
-  // 由于 form-render-core 使用多层 div，而这里只使用一层，所以合并内外层样式
-  if (
-    'object' === typeof schema?.style ||
-    'object' === typeof schema?.props?.style
-  ) {
+  if ('object' === typeof schema?.style) {
     columnStyle = {
       ...columnStyle,
-      ...(schema?.style || {}),
-      ...(schema?.props?.style || {}),
+      ...schema.style,
     };
   }
 
@@ -138,7 +135,7 @@ const FR = ({ id = '#', preview, displaySchema }) => {
 
   const childrenElement =
     item.children && item.children.length > 0 ? (
-      <ul className={`flex flex-wrap pl0`}>
+      <ul className={`flex flex-wrap pl0`} style={schema?.props?.style}>
         <RenderChildren children={item.children} />
       </ul>
     ) : null;
