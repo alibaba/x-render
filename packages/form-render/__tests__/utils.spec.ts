@@ -1,3 +1,4 @@
+import { describe, test, expect } from 'vitest';
 import { getWidgetName } from '../src/form-render-core/src/mapping';
 import { getArray, getFormat, isUrl } from '../src/utils';
 

@@ -1,3 +1,4 @@
+import { describe, it, expect } from 'vitest';
 import { flattenSchema } from '../src/form-render-core/src/utils';
 
 describe('Test FormRender Utils', () => {
