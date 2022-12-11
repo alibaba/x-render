@@ -32,7 +32,7 @@ jobs:
         run: yarn install
         if: steps.cache.outputs.cache-hit != 'true'
       
-      - run: Build
+      - name: Build
         run: yarn build
 
       - name: Test
