@@ -20,6 +20,5 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - name: Install
-        run: yarn --ignore-engines
+      - name: Run Test
       - run: yarn run test
