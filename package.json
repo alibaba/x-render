@@ -25,7 +25,7 @@
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
     "size": "ANALYZE=1 dumi build",
     "start": "npm run dev",
-    "test": "vitest",
+    "test": "vitest run",
     "test:clean": "vitest clean cache",
     "test:coverage": "vitest --coverage",
     "test:ui": "vitest --ui"
