@@ -1,6 +1,7 @@
+import { describe, it, afterAll, expect } from 'vitest';
 import * as React from 'react';
-import '@testing-library/jest-dom';
 import { render, act, cleanup } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import Demo from './demo';
 
 function sleep(ms): Promise<never> {

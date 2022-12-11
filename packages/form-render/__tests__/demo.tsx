@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import FormRender, { useForm } from '../src/index';
+import FormRender, { useForm } from '../es';
 import { listSchema, normalSchema } from './schema';
 
 const SimpleForm = () => {
