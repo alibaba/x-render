@@ -28,7 +28,7 @@ import {
 } from './utils';
 import { Ctx, StoreCtx } from './utils/context';
 import { useSet } from './utils/hooks';
-import { serializeToDraft } from './utils/serialize'
+import { serializeToDraft } from './utils/serialize';
 import list from './widgets/list';
 
 const DEFAULT_SCHEMA = {
@@ -55,11 +55,13 @@ function Provider(props, ref) {
     widgets = {},
     mapping = {},
     methods = {},
+    configProvider = {},
     validation = true,
     children,
     fieldRender,
     fieldWrapperRender,
     elementRender,
+    prefixCls,
   } = props;
 
   const transformer = {
@@ -225,7 +227,7 @@ function Provider(props, ref) {
 
   return (
     <DndProvider backend={HTML5Backend} context={window}>
-      <ConfigProvider locale={zhCN}>
+      <ConfigProvider locale={zhCN} {...configProvider}>
         <Ctx.Provider value={setState}>
           <StoreCtx.Provider value={store}>{children}</StoreCtx.Provider>
         </Ctx.Provider>
