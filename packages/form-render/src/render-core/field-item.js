@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Form, Col } from 'antd';
 import { widgets } from '../widgets';
 
 import { extraSchemaList, getWidgetName } from '../form-render-core/src/mapping';
 import { isListType, isObject, isObjType } from '../form-render-core/src/utils';
+
+import { FormContext } from '../utils/context';
+
 
 const ErrorSchema = schema => {
   return (
@@ -23,6 +26,8 @@ const transformProps = props => {
     readOnly,
     ...rest
   } = props;
+
+  
 
   const schema = { ...ownSchema };
   const { trigger, valuePropName } = schema || {};
@@ -66,6 +71,8 @@ const transformProps = props => {
 };
 
 const FiledItem = (props) => {
+  const formProps = useContext(FormContext);
+
   const { schema, onChange, children, readOnly, disabled, name } = props;
 
   let widgetName = getWidgetName(schema);
@@ -133,17 +140,25 @@ const FiledItem = (props) => {
   if (widgetName === 'list') {
   }
 
+  
+  let span = 24;
+
+  if (formProps.column) {
+    span = 24 / formProps.column;
+  }
+
+
   if (!name) {
     return (
-      <Col span={24}>
+      <Col span={span}>
         <Widget {...finalProps} />
       </Col>
     );
   }
 
   return (
-    <Col span={24}>
-      <Form.Item label={label} name={name} className={name}>
+    <Col span={span}>
+      <Form.Item label={label} name={name}>
         <Widget {...finalProps} />
       </Form.Item>
     </Col>
