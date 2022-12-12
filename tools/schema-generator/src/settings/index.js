@@ -774,10 +774,10 @@ export const layouts = [
         title: '选项',
         type: 'object',
         properties: {
-          foldable: {
-            title: '是否可折叠',
-            type: 'boolean',
-          },
+          // foldable: {
+          //   title: '是否可折叠',
+          //   type: 'boolean',
+          // },
           hideDelete: {
             title: '隐藏删除按钮',
             type: 'string',
@@ -824,10 +824,10 @@ export const layouts = [
         title: '选项',
         type: 'object',
         properties: {
-          foldable: {
-            title: '是否可折叠',
-            type: 'boolean',
-          },
+          // foldable: {
+          //   title: '是否可折叠',
+          //   type: 'boolean',
+          // },
           hideTitle: {
             title: '隐藏标题',
             type: 'boolean',
@@ -878,10 +878,10 @@ export const layouts = [
         title: '选项',
         type: 'object',
         properties: {
-          foldable: {
-            title: '是否可折叠',
-            type: 'boolean',
-          },
+          // foldable: {
+          //   title: '是否可折叠',
+          //   type: 'boolean',
+          // },
           hideDelete: {
             title: '隐藏删除按钮',
             type: 'string',
@@ -936,10 +936,10 @@ export const layouts = [
         title: '选项',
         type: 'object',
         properties: {
-          foldable: {
-            title: '是否可折叠',
-            type: 'boolean',
-          },
+          // foldable: {
+          //   title: '是否可折叠',
+          //   type: 'boolean',
+          // },
           hideDelete: {
             title: '隐藏删除按钮',
             type: 'string',
