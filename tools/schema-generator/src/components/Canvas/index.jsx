@@ -140,11 +140,11 @@ const Canvas = ({ onSelect }) => {
         <FR preview={preview} displaySchema={displaySchema} />
       </div>
       <Modal
-        visible={local.showModal}
+        open={local.showModal}
         onOk={copySchema}
         onCancel={toggleModal}
-        okText={t("复制")}
-        cancelText={t("取消")}
+        okText={t('复制')}
+        cancelText={t('取消')}
       >
         <div className="mt3">
           <TextArea
@@ -155,9 +155,9 @@ const Canvas = ({ onSelect }) => {
         </div>
       </Modal>
       <Modal
-        visible={local.showModal2}
-        okText={t("导入")}
-        cancelText={t("取消")}
+        open={local.showModal2}
+        okText={t('导入')}
+        cancelText={t('取消')}
         onOk={importSchema}
         onCancel={toggleModal2}
       >
@@ -165,7 +165,7 @@ const Canvas = ({ onSelect }) => {
           <TextArea
             style={{ fontSize: 12 }}
             value={local.schemaForImport}
-            placeholder={t("贴入需要导入的schema，模样可点击导出schema参考")}
+            placeholder={t('贴入需要导入的schema，模样可点击导出schema参考')}
             onChange={onTextareaChange}
             autoSize={{ minRows: 10, maxRows: 30 }}
           />
