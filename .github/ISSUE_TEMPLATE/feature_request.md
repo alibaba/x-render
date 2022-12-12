@@ -3,8 +3,7 @@ name: Feature request
 about: Suggest an idea for this project
 title: ''
 labels: ''
-assignees: siyi98
-
+assignees: lhbxs
 ---
 
 ### 期望的新功能 (describe the expected new feature)

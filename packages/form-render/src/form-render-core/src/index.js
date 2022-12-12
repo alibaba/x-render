@@ -25,6 +25,7 @@ export { defaultMapping as mapping };
 function App({
   id,
   widgets,
+  layoutWidgets,
   mapping,
   form,
   className,
@@ -32,8 +33,12 @@ function App({
   beforeFinish,
   onFinish = defaultFinish,
   displayType = 'column',
+  labelAlign = 'right',
+  colon = true,
   schema,
   debug,
+  //提交失败自动滚动到第一个错误字段
+  scrollToFirstError = false,
   debugCss,
   locale = 'cn', // 'cn'/'en'
   debounceInput = false,
@@ -50,8 +55,11 @@ function App({
   allCollapsed = false,
   onValuesChange,
   column,
-  removeHiddenData = false,
+  removeHiddenData = true,
   globalProps = {},
+  methods = {},
+  renderTitle,
+  requiredMark,
   ...rest
 }) {
   try {
@@ -152,7 +160,7 @@ function App({
     }
   };
 
-  // 组件destroy的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
+  // 组件 destroy 的时候，destroy form，因为useForm可能在上层，所以不一定会跟着destroy
   useEffect(() => {
     return () => {
       form.resetFields();
@@ -177,6 +185,8 @@ function App({
   const store2 = useMemo(
     () => ({
       displayType,
+      labelAlign,
+      colon,
       theme,
       column: _column,
       debounceInput,
@@ -192,6 +202,8 @@ function App({
     }),
     [
       displayType,
+      labelAlign,
+      colon,
       theme,
       _column,
       debounceInput,
@@ -210,8 +222,12 @@ function App({
   const tools = useMemo(
     () => ({
       widgets,
+      layoutWidgets,
       mapping: { ...defaultMapping, ...mapping },
       onValuesChange,
+      renderTitle,
+      requiredMark,
+      methods,
       ...form,
       // setEditing,
       // touchKey,
@@ -226,10 +242,19 @@ function App({
       // resetFields,
       // setErrorFields,
       // removeErrorField,
+      // validateFields,
+      // isFieldTouched,
+      // isFieldsTouched,
+      // setFieldValidating,
+      // removeFieldValidating,
+      // isFieldValidating,
+      // scrollToPath,
+      // getFieldError,
+      // getFieldsError,
+      // setFields,
     }),
-    []
+    [widgets]
   );
-
   useEffect(() => {
     // 需要外部校验的情况，此时 submitting 还是 false
     if (outsideValidating === true) {
@@ -252,6 +277,18 @@ function App({
     if (isValidating === false && isSubmitting === true) {
       endSubmitting();
       onFinish(submitData, errorFields);
+
+      //平滑滚动到errorFields第一个项
+      if (scrollToFirstError && errorFields.length > 0) {
+        //展示到页面中间
+        let scrollOptions = { block: 'center' };
+        if (typeof scrollToFirstError === 'object') {
+          scrollOptions = scrollToFirstError;
+        }
+
+        form.scrollToPath(errorFields?.[0]?.name, scrollOptions);
+      }
+
       if (typeof logOnSubmit === 'function') {
         const start = sessionStorage.getItem('FORM_START');
         const mount = sessionStorage.getItem('FORM_MOUNT_TIME');
@@ -322,10 +359,11 @@ function App({
                     style={{
                       display: 'inline-block',
                       wordBreak: 'break-all',
+                      whiteSpace: 'pre-wrap',
                       maxWidth: 600,
                     }}
                   >
-                    {JSON.stringify(form.formData)}
+                    {JSON.stringify(form.formData, null, 4)}
                   </span>
                 </div>
                 <div>{'errorFields:' + JSON.stringify(form.errorFields)}</div>

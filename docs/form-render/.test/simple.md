@@ -1,0 +1,1 @@
+<code src='./simple.jsx' />

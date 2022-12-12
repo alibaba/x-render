@@ -26,11 +26,10 @@ const Core = ({
   debugCss,
   ...rest
 }) => {
-  // console.log('<Core>', id);
   const snapShot = useRef();
 
   const { flatten, errorFields, isEditing, formData, allTouched } = useStore();
-  const { displayType, column, labelWidth, readOnly } = useStore2();
+  const { displayType, column, labelWidth, readOnly, labelAlign } = useStore2();
   const item = _item ? _item : flatten[id];
   if (!item) return null;
 
@@ -91,6 +90,7 @@ const Core = ({
     errorFields,
     effectiveLabelWidth,
     allTouched,
+    labelAlign,
     ...rest,
   };
 
@@ -109,6 +109,7 @@ const CoreRender = ({
   _value,
   dependValues,
   displayType,
+  labelAlign,
   column,
   labelWidth,
   readOnly,
@@ -123,6 +124,8 @@ const CoreRender = ({
   // displayType 一层层网上找值
   const _displayType =
     schema.displayType || rest.displayType || displayType || 'column';
+  const _labelAlign =
+    schema.labelAlign || rest.labelAlign || labelAlign || 'right';
   const isList = isListType(schema);
   const isObj = isObjType(schema);
   const isComplex = isObj || isList;
@@ -188,7 +191,9 @@ const CoreRender = ({
     } else if (_displayType === 'row') {
       // row specific className
       containerClass += '';
-      labelClass += ' fr-label-row';
+      labelClass += ` fr-label-row ${
+        _labelAlign === 'right' ? 'fr-label-align-right' : 'fr-label-align-left'
+      }`;
       contentClass += ' fr-content-row';
       if (!isObj && !isCheckBox) {
         labelClass += ' flex-shrink-0 fr-label-row';
@@ -202,8 +207,7 @@ const CoreRender = ({
   if (schema.hidden) {
     columnStyle.display = 'none';
   }
-  // if (!isComplex) {
-  // }
+
   if (!isObj) {
     if (width) {
       columnStyle.width = width;
@@ -212,6 +216,14 @@ const CoreRender = ({
       columnStyle.width = `calc(100% /${column})`;
       columnStyle.paddingRight = 8;
     }
+  }
+
+  // 如果传入自定义样式则覆盖使用，object 外层样式使用 schema.style，内层样式使用 schema.props.style
+  if ('object' === typeof schema?.style) {
+    columnStyle = {
+      ...columnStyle,
+      ...schema.style,
+    };
   }
 
   const _labelWidth = isLooselyNumber(effectiveLabelWidth)
@@ -259,6 +271,7 @@ const CoreRender = ({
         dataIndex={dataIndex}
         errorFields={errorFields}
         displayType={_displayType}
+        labelAlign={_labelAlign}
         hideTitle={hideTitle}
       >
         {item.children}

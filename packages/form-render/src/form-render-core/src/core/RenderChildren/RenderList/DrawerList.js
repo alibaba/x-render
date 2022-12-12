@@ -30,6 +30,36 @@ const DrawerList = ({
   const { buttons, ...columnProps } = itemProps;
   const { pagination = {}, ...rest } = props;
 
+  let actionColumnProps = {
+    colHeaderText: '操作',
+    editText: '编辑',
+    delText: '删除',
+  };
+
+  let delConfirmProps = {
+    title: '确定删除?',
+    okText: '确定',
+    cancelText: '取消',
+  };
+
+  let addBtnProps = {
+    type: 'primary',
+    children: '新增一条',
+    size: 'small',
+  };
+
+  if (props.actionColumnProps && typeof props.actionColumnProps === 'object') {
+    actionColumnProps = { ...actionColumnProps, ...props.actionColumnProps };
+  }
+
+  if (props.delConfirmProps && typeof props.delConfirmProps === 'object') {
+    delConfirmProps = { ...delConfirmProps, ...props.delConfirmProps };
+  }
+
+  if (props.addBtnProps && typeof props.addBtnProps === 'object') {
+    addBtnProps = { ...addBtnProps, ...props.addBtnProps };
+  }
+
   const paginationConfig = pagination && {
     size: 'small',
     hideOnSinglePage: true,
@@ -52,16 +82,17 @@ const DrawerList = ({
     const item = flatten[child];
     const schema = (item && item.schema) || {};
     const _dataIndex = getKeyFromPath(child);
+    console.log(schema);
     return {
       dataIndex: _dataIndex,
-      title: schema.required ? (
-        <>
-          <span className="fr-label-required"> *</span>
-          <span>{schema.title}</span>
-        </>
-      ) : (
-        schema.title
-      ),
+      title: schema.required
+        ? () => (
+            <>
+              <span className="fr-label-required"> *</span>
+              <span>{schema.title}</span>
+            </>
+          )
+        : schema.title,
       width: FIELD_LENGTH,
       render: (value, record) => {
         const childPath = getDataPath(child, [record.$idx]);
@@ -88,7 +119,7 @@ const DrawerList = ({
   });
 
   columns.push({
-    title: '操作',
+    title: actionColumnProps.colHeaderText,
     key: '$action',
     fixed: 'right',
     width: 120,
@@ -96,26 +127,28 @@ const DrawerList = ({
       const index = (value && value.$idx) || 0;
       return (
         <div>
-          <a onClick={() => openDrawer(index)}>编辑</a>
+          {!props.hideEdit && (
+            <a onClick={() => openDrawer(index)}>
+              {actionColumnProps.editText}
+            </a>
+          )}
           {!props.hideDelete && (
             <Popconfirm
-              title="确定删除?"
               onConfirm={() => deleteItem(index)}
-              okText="确定"
-              cancelText="取消"
+              {...delConfirmProps}
             >
-              <a style={{ marginLeft: 8 }}>删除</a>
+              <a style={{ marginLeft: 8 }}>{actionColumnProps.delText}</a>
             </Popconfirm>
           )}
           {!props.hideMove && (
             <>
               <ArrowUpOutlined
                 style={{ color: '#1890ff', fontSize: 16, marginLeft: 8 }}
-                onClick={() => moveItemUp(idx)}
+                onClick={() => moveItemUp(index)}
               />
               <ArrowDownOutlined
                 style={{ color: '#1890ff', fontSize: 16, marginLeft: 8 }}
-                onClick={() => moveItemDown(idx)}
+                onClick={() => moveItemDown(index)}
               />
             </>
           )}
@@ -148,11 +181,7 @@ const DrawerList = ({
   return (
     <>
       <div className="w-100 mb2 tr">
-        {!props.hideAdd && (
-          <Button type="primary" size="small" onClick={handleAdd}>
-            新增
-          </Button>
-        )}
+        {!props.hideAdd && <Button {...addBtnProps} onClick={handleAdd} />}
         {Array.isArray(props.buttons)
           ? props.buttons.map((item, idx) => {
               const { callback, text, html } = item;
@@ -187,7 +216,7 @@ const DrawerList = ({
       </div>
       <Drawer
         width="600"
-        title="编辑"
+        title={actionColumnProps.colHeaderText}
         placement="right"
         onClose={closeDrawer}
         visible={showDrawer}

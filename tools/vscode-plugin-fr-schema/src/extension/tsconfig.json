@@ -5,7 +5,7 @@
     "lib": ["ES2019"],
     "outDir": "../../out/extension",
     "sourceMap": true,
-    "strict": true,
+    "strict": false,
     "rootDir": "./"
   },
   "exclude": ["src/pages", "examples", "node_modules", ".vscode-test"]

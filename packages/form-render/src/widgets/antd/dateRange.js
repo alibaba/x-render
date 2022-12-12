@@ -6,10 +6,16 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 import React from 'react';
 import { getFormat } from '../../utils';
+import { useTools } from '../../form-render-core/src/hooks';
+
 const { RangePicker } = DatePicker;
 
 const DateRange = ({ onChange, format, value, style, ...rest }) => {
+  const { methods } = useTools();
+  const { schema = {} } = rest;
+  const { props = {} } = schema;
   const dateFormat = getFormat(format);
+
   let [start, end] = Array.isArray(value) ? value : [];
   // week的时候会返回 2020-31周 quarter会返回 2020-Q2 需要处理之后才能被 moment
   if (typeof start === 'string' && typeof end === 'string') {
@@ -59,6 +65,20 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
 
   if (dateFormat === format) {
     dateParams.format = format;
+  }
+
+  if (props.disabledDate && typeof props.disabledDate === 'string') {
+    const func = methods[props.disabledDate];
+    if (typeof func === 'function') {
+      dateParams.disabledDate = func;
+    }
+  }
+
+  if (props.disabledTime && typeof props.disabledTime === 'string') {
+    const func = methods[props.disabledTime];
+    if (typeof func === 'function') {
+      dateParams.disabledTime = func;
+    }
   }
 
   return <RangePicker {...dateParams} />;

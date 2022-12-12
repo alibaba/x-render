@@ -140,6 +140,14 @@ const {
   resetFields, // () => void
   setErrorFields, // (errors) => void
   removeErrorField, // () => void
+  validateFields, // (nameList?: string[]) => Promise<any>;
+  isFieldTouched, // (name: string) => boolean;
+  isFieldsTouched, //(nameList?: string[], allTouched?: boolean) => boolean;
+  isFieldValidating, //(name: string) => boolean;
+  scrollToPath, (name: string) => void;
+  getFieldError, (name: string) => string[];
+  getFieldsError, (nameList?: string[]) => Error[];
+  setFields, (nameList: string[]) => void;
 } = addons;
 ```
 
@@ -246,4 +254,4 @@ const Demo1 = props => {
 
 ## 内置组件
 
-使用自定义组件前，也许已经有内置组件支持。具体见 [schema 与内置组件](/form-render/schema/inner-widget)
+使用自定义组件前，也许已经有内置组件支持。具体见 [schema 与内置组件](../api/inner-widget.md)

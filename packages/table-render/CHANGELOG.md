@@ -1,5 +1,42 @@
 # Changelog
 
+### 1.3.10
+
+- [+] `dateTime` 格式化为 `YYYY-MM-DD HH:mm:ss`
+
+### 1.3.9
+
+- [+] 完善 `useTable` 类型定义
+
+### 1.3.7
+
+- [+] 使用 `cloneDeep` 作为深拷贝函数
+
+### 1.3.6
+
+- [+] 修复 tr 文档 bug
+
+### 1.3.5
+
+- [!] 修复全屏模式下，antd `Drowndown` 组件不显示的 bug
+- [+] Table 组件对外暴露 onTabChange 方法
+
+### 1.3.4
+
+- [+] TS 类型定义删除`ellipsis`
+
+### 1.3.3
+
+- [+] 修复 `date` 和 `dateTime` 未判空的 bug
+
+### 1.3.1
+
+- [+] 修复 tooltip 失效的问题
+
+### 1.3.0
+
+- [+] 样式优化
+
 ### 1.2.6
 
 - [+] `Search`组件新增`searchWithError`属性

@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { get } from 'lodash-es';
+import { get, isFunction } from 'lodash-es';
 import React from 'react';
 import { useStore, useTools } from '../../../hooks';
 import {
@@ -24,7 +24,8 @@ const RenderList = ({
   displayType,
 }) => {
   const { formData, flatten } = useStore();
-  const { onItemChange, removeTouched } = useTools();
+  const { onItemChange, removeTouched, methods, layoutWidgets } = useTools();
+  const { props = {} } = schema;
 
   let renderWidget = 'list';
   try {
@@ -72,8 +73,18 @@ const RenderList = ({
     removeTouched(`${dataPath}[${idx}]`);
   };
 
+  const handleMoving = () => {
+    if (props.onMove && typeof props.onMove === 'string') {
+      const cb = methods[props.onMove];
+      if (typeof cb === 'function') {
+        cb();
+      }
+    }
+  };
+
   //TODO1: 上线翻页要正确！！现在是错的
   const moveItemUp = idx => {
+    handleMoving();
     if (idx === 0) return;
     const currentItem = displayList[idx];
     const itemAbove = displayList[idx - 1];
@@ -86,6 +97,7 @@ const RenderList = ({
   };
 
   const moveItemDown = idx => {
+    handleMoving();
     if (idx >= displayList.length - 1) return;
     const currentItem = displayList[idx];
     const itemBelow = displayList[idx + 1];
@@ -116,7 +128,7 @@ const RenderList = ({
     };
   };
 
-  const displayProps = {
+  let displayProps = {
     displayList,
     changeList,
     schema,
@@ -135,10 +147,24 @@ const RenderList = ({
     getFieldsProps,
   };
 
+  // 外部定义：添加按钮事件
+  const onAdd = methods[props.onAdd];
+  if (isFunction(onAdd)) {
+    displayProps.addItem = () => onAdd(addItem, { schema });
+  }
+
+  // 外部定义：删除按钮事件
+  const onRemove = methods[props.onRemove];
+  if (isFunction(onRemove)) {
+    displayProps.deleteItem = (idx) => onRemove(() => deleteItem(idx), { schema })
+  }
+
+  if (layoutWidgets && layoutWidgets[renderWidget]) {
+    const Component = layoutWidgets[renderWidget];
+    return <Component {...displayProps} />;
+  }
+
   switch (renderWidget) {
-    case 'list0':
-    case 'cardList':
-      return <CardList {...displayProps} />;
     case 'list1':
     case 'simpleList':
       return <SimpleList {...displayProps} />;
@@ -153,6 +179,8 @@ const RenderList = ({
       return <VirtualList {...displayProps} />;
     case 'tabList':
       return <TabList {...displayProps} />;
+    case 'list0':
+    case 'cardList':
     default:
       return <CardList {...displayProps} />;
   }

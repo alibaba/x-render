@@ -17,6 +17,7 @@
             "width": "70%"
           },
           "html3": {
+            "title": "html",
             "type": "html",
             "default": "<a>注意事项</a>",
             "width": "30%"

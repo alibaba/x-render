@@ -1,7 +1,7 @@
+import * as React from 'react';
 import { Input } from 'antd';
 import ColorPicker from 'rc-color-picker';
 import 'rc-color-picker/assets/index.css';
-import React from 'react';
 
 const alphaHexMap = {
   '1.00': 'FF',
@@ -149,6 +149,7 @@ export default function color(p) {
           placeholder="#ffffff"
           disabled={p.disabled}
           value={p.value}
+          className={p.className}
           onChange={onInputChange}
         />
       )}

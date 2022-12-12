@@ -381,7 +381,7 @@ export const elements = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       enumList: {
         title: '选项',
@@ -431,7 +431,7 @@ export const elements = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       enumList: {
         title: '选项',
@@ -553,7 +553,193 @@ export const layouts = [
       type: 'object',
       properties: {},
     },
-    setting: {},
+    setting: {
+      theme: {
+        title: '主题',
+        type: 'string',
+        enum: [
+          'collapse',
+          'collapse:pure',
+          'collapse:ghost',
+          'card',
+          'tile',
+          'flex',
+        ],
+        enumNames: ['默认', '无框', '幽灵', '卡片', '平铺', '弹性'],
+        default: 'collapse',
+        widget: 'radio',
+      },
+      props: {
+        title: '弹性布局',
+        hidden: '{{"flex" !== formData.theme}}',
+        type: 'object',
+        theme: 'tile',
+        properties: {
+          style: {
+            title: '布局样式',
+            type: 'object',
+            theme: 'flex',
+            props: {
+              style: {
+                flexDirection: 'column',
+              },
+            },
+            properties: {
+              height: {
+                title: '高度',
+                description: 'height',
+                type: 'string',
+                widget: 'input',
+              },
+              flexDirection: {
+                title: '布局方向',
+                description: 'flex-direction',
+                type: 'string',
+                enum: ['row', 'row-reverse', 'column', 'column-reverse'],
+                enumNames: ['横向', '横向反转', '纵向', '纵向反转'],
+                widget: 'select',
+              },
+              flexWrap: {
+                title: '换行方式',
+                description: 'flex-wrap',
+                type: 'string',
+                enum: ['wrap', 'nowrap', 'wrap-reverse'],
+                enumNames: ['换行', '不换行', '反向换行'],
+                widget: 'select',
+              },
+              justifyContent: {
+                title: '对齐方式',
+                description: 'justify-content',
+                type: 'string',
+                enum: [
+                  'flex-start',
+                  'flex-end',
+                  'center',
+                  'space-between',
+                  'space-around',
+                ],
+                enumNames: [
+                  '起点对齐',
+                  '终点对齐',
+                  '居中对齐',
+                  '两端对齐',
+                  '相同间距',
+                ],
+                widget: 'select',
+              },
+              alignItems: {
+                title: '轴对齐方式',
+                description: 'align-items',
+                type: 'string',
+                enum: [
+                  'flex-start',
+                  'flex-end',
+                  'center',
+                  'baseline',
+                  'stretch',
+                ],
+                enumNames: [
+                  '起点对齐',
+                  '终点对齐',
+                  '居中对齐',
+                  '基线对齐',
+                  '拉伸铺满',
+                ],
+                widget: 'select',
+              },
+              alignContent: {
+                title: '多轴线对齐',
+                description: 'align-content',
+                type: 'string',
+                enum: [
+                  'flex-start',
+                  'flex-end',
+                  'center',
+                  'space-between',
+                  'space-around',
+                  'stretch',
+                ],
+                enumNames: [
+                  '起点对齐',
+                  '终点对齐',
+                  '居中对齐',
+                  '两端对齐',
+                  '相同间距',
+                  '拉伸铺满',
+                ],
+                widget: 'select',
+              },
+            },
+          },
+        },
+      },
+      style: {
+        title: '元素样式',
+        type: 'object',
+        properties: {
+          background: {
+            title: '背景',
+            description: 'background',
+            type: 'string',
+            widget: 'color',
+          },
+          margin: {
+            title: '外边距',
+            description: 'margin',
+            type: 'string',
+            widget: 'input',
+          },
+          padding: {
+            title: '内边距',
+            description: 'padding',
+            type: 'string',
+            widget: 'input',
+          },
+          borderWidth: {
+            title: '边框宽',
+            description: 'border-width',
+            type: 'string',
+            widget: 'input',
+          },
+          borderStyle: {
+            title: '边框样式',
+            description: 'border-style',
+            type: 'string',
+            widget: 'input',
+          },
+          borderColor: {
+            title: '边框颜色',
+            description: 'border-color',
+            type: 'string',
+            widget: 'color',
+          },
+          borderRadius: {
+            title: '圆角',
+            description: 'border-radius',
+            type: 'string',
+            widget: 'input',
+          },
+          flex: {
+            title: '弹性伸缩',
+            description: 'flex',
+            type: 'string',
+            widget: 'input',
+          },
+          order: {
+            title: '排列顺序',
+            description: 'order',
+            type: 'string',
+            widget: 'input',
+          },
+          alignSelf: {
+            title: '自身对齐',
+            description: 'align-self',
+            type: 'string',
+            widget: 'input',
+          },
+        },
+      },
+    },
   },
   {
     text: '常规列表',
@@ -570,7 +756,7 @@ export const layouts = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       items: {
         type: 'object',
@@ -620,7 +806,7 @@ export const layouts = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       items: {
         type: 'object',
@@ -674,7 +860,7 @@ export const layouts = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       items: {
         type: 'object',
@@ -704,6 +890,14 @@ export const layouts = [
             title: '隐藏新增/复制按钮',
             type: 'string',
           },
+          hideCopy: {
+            title: '隐藏复制按钮',
+            type: 'string',
+          },
+          hideMove: {
+            title: '隐藏上下移动按钮',
+            type: 'string',
+          },
         },
       },
     },
@@ -724,7 +918,7 @@ export const layouts = [
       default: {
         title: '默认值',
         type: 'array',
-        widget: 'jsonInput'
+        widget: 'jsonInput',
       },
       items: {
         type: 'object',

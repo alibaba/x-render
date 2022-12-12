@@ -52,6 +52,8 @@ export interface Setting {
 
 export interface FRGeneratorProps {
   getId?: (name: string) => string;
+  /** 国际化配置 */
+  locale?: 'cn' | 'en';
   /** 隐藏组件 ID */
   hideId?: boolean;
   /** 固定 id */
@@ -66,6 +68,8 @@ export interface FRGeneratorProps {
   extraButtons?: (ExtraButton | boolean | string)[];
   /** 选中项操作按钮 */
   controlButtons?: (ControlButton | boolean | Function)[];
+  /** 预览态控制 */
+  preview?: boolean;
   /** 左右侧栏配置 */
   settings?: Setting[];
   /** 通用配置 */
@@ -130,7 +134,7 @@ export interface Generator
 }
 
 declare const FRGenerator: Generator;
-declare const defaultSettings: Setting;
+declare const defaultSettings: Setting[];
 declare const defaultCommonSettings: any;
 declare const defaultGlobalSettings: any;
 declare const fromSetting: (schema: any) => any;

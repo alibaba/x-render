@@ -1,8 +1,9 @@
 import { Button } from 'antd';
 import SearchForm from 'form-render';
 import React, { useEffect, useRef, useState } from 'react';
-import { SearchProps } from '../interface';
+import { SearchProps } from '../types';
 import { useTable } from './hooks';
+import { cloneDeep } from 'lodash-es';
 
 const SearchBtn = ({
   clearSearch,
@@ -73,6 +74,7 @@ const Search: <RecordType extends object = any>(
     searchText = '查询',
     resetText = '重置',
     searchWithError = true,
+    style = {},
   } = props;
   const [formSchema, setSchema] = useState({});
   const { refresh, syncMethods, setTable, form, tableState }: any = useTable();
@@ -91,7 +93,7 @@ const Search: <RecordType extends object = any>(
     if (_schema && _schema.properties) {
       if (formSchema && noDiff) return;
       try {
-        const curSchema = JSON.parse(JSON.stringify(_schema));
+        const curSchema = cloneDeep(_schema);
         curSchema.properties.searchBtn = {
           type: 'string',
           widget: 'searchBtn',
@@ -105,7 +107,7 @@ const Search: <RecordType extends object = any>(
       }
     } else {
       console.error(
-        'SearchForm 传入了不正确的 schema，参考文档: https://x-render.gitee.io/form-render/form-render/config/schema'
+        'SearchForm 传入了不正确的 schema，参考文档: https://xrender.fun/form-render/form-render/config/schema'
       );
     }
   };
@@ -117,18 +119,25 @@ const Search: <RecordType extends object = any>(
   }, [_schema]);
 
   useEffect(() => {
+    init();
+  }, []);
+
+  async function init() {
     syncMethods({
       searchApi: props.api,
       syncAfterSearch: props.afterSearch,
     });
     if (!props.hidden && searchOnMount) {
+      if (typeof searchFormProps.onMount === 'function') {
+        await searchFormProps.onMount();
+      }
       form.submit();
     }
     // 隐藏search组件时，不会触发form.submit
     if (props.hidden) {
       refresh();
     }
-  }, []);
+  }
 
   const btnProps = {
     searchBtnRender,
@@ -166,7 +175,7 @@ const Search: <RecordType extends object = any>(
   return (
     <div
       className={`tr-search ${props.className}`}
-      style={props.style}
+      style={style}
       onKeyDown={e => {
         if (e.keyCode === 13) {
           form.submit();

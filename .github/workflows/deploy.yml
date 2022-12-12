@@ -1,24 +1,24 @@
-name: Deploy CI
+# name: Deploy CI
 
-on:
-  push:
-    branches:
-      - master
+# on:
+#   push:
+#     branches:
+#       - master
 
-jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    name: deploy steps
-    steps:
-      - uses: actions/checkout@v2
-      - name: install 
-        run: yarn install
-      - name: build
-        run: yarn doc
-      - name: Deploy Action
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
-          publish_dir: ./docs-dist
-          force_orphan: true
+# jobs:
+#   build-and-deploy:
+#     runs-on: ubuntu-latest
+#     name: deploy steps
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: install 
+#         run: yarn install
+#       - name: build
+#         run: yarn doc
+#       - name: Deploy Action
+#         uses: peaceiris/actions-gh-pages@v3
+#         with:
+#           deploy_key: ${{ secrets.ACTIONS_DEPLOY_TOKEN }}
+#           publish_dir: ./docs-dist
+#           force_orphan: true
         

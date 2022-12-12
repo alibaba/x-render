@@ -1,6 +1,8 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
+import { Options as ScrollOptions } from 'scroll-into-view-if-needed';
 
+export type { RuleItem } from 'async-validator';
 export type SchemaType =
   | 'string'
   | 'object'
@@ -10,9 +12,12 @@ export type SchemaType =
   | 'void'
   | 'date'
   | 'datetime'
-  | (string & {});
+  | 'block'
+  | string;
 
-interface SchemaBase {
+export { Options as ScrollOptions } from 'scroll-into-view-if-needed';
+
+export interface SchemaBase {
   type: SchemaType;
   title: string;
   description: string;
@@ -26,15 +31,18 @@ interface SchemaBase {
     | 'dateTime'
     | 'date'
     | 'time'
-    | 'upload';
+    | 'upload'
+    | (string & {});
   default: any;
   /** 是否必填，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   required: boolean | string;
   placeholder: string;
   bind: false | string | string[];
   dependencies: string[];
-  min: number;
-  max: number;
+  /** 最小值，支持表达式 */
+  min: number | string;
+  /** 最大值，支持表达式 */
+  max: number | string;
   /** 是否禁用，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
   disabled: boolean | string;
   /** 是否只读，支持 `'{{ formData.xxx === "" }}'` 形式的表达式 */
@@ -51,10 +59,14 @@ interface SchemaBase {
   extra: string;
   properties: Record<string, Schema>;
   items: Schema;
-  enum: Array<string | number>;
-  enumNames: Array<string | number>;
+  /** 多选，支持表达式 */
+  enum: Array<string | number> | string;
+  /** 多选label，支持表达式 */
+  enumNames: Array<string | number> | string;
   rules: RuleItem | RuleItem[];
   props: Record<string, any>;
+  /**扩展字段 */
+  'add-widget'?: string;
 }
 
 export type Schema = Partial<SchemaBase>;
@@ -65,6 +77,7 @@ export interface Error {
   /** 错误的内容 */
   error: string[];
 }
+
 export interface FormParams {
   formData?: any;
   onChange?: (data: any) => void;
@@ -80,6 +93,7 @@ export interface ValidateParams {
   formData: any;
   schema: Schema;
   error: Error[];
+
   [k: string]: any;
 }
 
@@ -89,7 +103,16 @@ export interface ResetParams {
   errorFields?: Error[];
   touchedKeys?: any[];
   allTouched?: boolean;
+
   [k: string]: any;
+}
+
+export interface FieldParams {
+  name: string;
+  error?: string[];
+  touched?: boolean;
+  validating?: boolean;
+  value?: any;
 }
 
 export interface FormInstance {
@@ -104,7 +127,10 @@ export interface FormInstance {
   setSchemaByPath: (path: string, value: any) => void;
   setSchema: (settings: any) => void;
   setValues: (formData: any) => void;
-  getValues: () => any;
+  getValues: (
+    nameList?: string[],
+    filterFunc?: (meta: { touched: boolean; validating: boolean }) => boolean
+  ) => any;
   resetFields: (options?: ResetParams) => void;
   submit: () => Promise<{ data: any; errors: Error[] }>;
   submitData: any;
@@ -121,6 +147,18 @@ export interface FormInstance {
   isEditing: boolean;
   setEditing: (status: boolean) => void;
   syncStuff: (args: any) => void;
+  validateFields: (
+    nameList?: string[]
+  ) => Promise<{ data: any; errors: Error[] }>;
+  isFieldTouched: (namePath: string) => boolean;
+  isFieldsTouched: (nameList?: string[], allTouched?: boolean) => boolean;
+  setFieldValidating: (namePath: string) => boolean;
+  removeFieldValidating: (namePath: string) => void;
+  isFieldValidating: (namePath: string) => boolean;
+  scrollToPath: (namePath: string, options?: ScrollOptions) => boolean;
+  getFieldError: (namePath: string) => String[];
+  getFieldsError: (nameList?: string[]) => Error[];
+  setFields: (fields: FieldParams[]) => void;
   /** 折中升级方案中使用到，正常用不到 */
   init: () => void;
   /** 数据分析接口，表单展示完成渲染时触发 */
@@ -156,6 +194,10 @@ export interface FRProps {
   widgets?: any;
   /** 标签元素和输入元素的排列方式，column-分两行展示，row-同行展示，inline-自然顺排，默认`'column'` */
   displayType?: 'column' | 'row' | 'inline';
+  /** 表示是否显示 label 后面的冒号 */
+  colon?: boolean;
+  /** label 标签的文本对齐方式   */
+  labelAlign?: 'right' | 'left';
   /** 只读模式 */
   readOnly?: boolean;
   /** 禁用模式 */
@@ -171,6 +213,8 @@ export interface FRProps {
   debug?: boolean;
   /** 显示css布局提示线 */
   debugCss?: boolean;
+  /** 提交失败自动滚动到第一个错误字段 */
+  scrollToFirstError?: boolean | ScrollOptions;
   locale?: 'cn' | 'en';
   column?: number;
   debounceInput?: boolean;
@@ -190,9 +234,20 @@ export interface FRProps {
   /** 表单提交后钩子 */
   onFinish?: (formData: any, error: Error[]) => void;
   /** 时时与外部更新同步的钩子 */
-  onValuesChange?: (changedValues: any, formData: any) => void;
+  onValuesChange?: (
+    changedValues: {
+      dataPath: string;
+      value: any;
+      dataIndex: number[] | unknown;
+    },
+    formData: any
+  ) => void;
   /** 隐藏的数据是否去掉，默认不去掉（false） */
   removeHiddenData?: boolean;
+  /** 配置自定义layout组件 */
+  layoutWidgets?: any;
+  /** 扩展方法 */
+  methods?: Record<string, Function>;
 }
 
 declare const FR: React.FC<FRProps>;

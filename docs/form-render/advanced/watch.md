@@ -47,7 +47,7 @@ const Demo = () => {
   const watch = {
     // # 为全局
     '#': val => {
-      console.log('表单的时时数据为：', val);
+      console.log('表单的实时数据为：', val);
     },
     input1: val => {
       form.setValueByPath('input2', val);

@@ -7,6 +7,13 @@
 /yarn.lock
 /package-lock.json
 
+*/*/yarn-error.log
+
+.yarn
+
+# turbo
+*/*/.turbo
+
 
 # production
 /dist

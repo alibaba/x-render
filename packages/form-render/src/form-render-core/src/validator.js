@@ -14,6 +14,7 @@ import {
 } from './utils';
 import { defaultValidateMessages } from './validateMessage';
 import { defaultValidateMessagesCN } from './validateMessageCN';
+import { getRealDataFlatten } from './void';
 
 export const parseSchemaExpression = (schema, formData, path) => {
   if (!isObject(schema)) return schema;
@@ -63,9 +64,17 @@ const getRelatedPaths = (path, flatten) => {
   });
 };
 
-export const validateField = ({ path, formData, flatten, options }) => {
+export const validateField = ({
+  path,
+  formData,
+  flatten,
+  options,
+  formInstance = {},
+}) => {
   const paths = getRelatedPaths(path, flatten);
   // console.log('all relevant paths:', paths);
+
+  flatten = getRealDataFlatten(flatten);
   const promiseArray = paths.map(path => {
     const { id, dataIndex } = destructDataPath(path);
     if (flatten[id] || flatten[`${id}[]`]) {
@@ -73,7 +82,13 @@ export const validateField = ({ path, formData, flatten, options }) => {
       const singleData = get(formData, path);
       let schema = item.schema || {};
       const finalSchema = parseSchemaExpression(schema, formData, path);
-      return validateSingle(singleData, finalSchema, path, options); // is a promise
+      return validateSingle(
+        singleData,
+        finalSchema,
+        path,
+        options,
+        formInstance
+      ); // is a promise
     } else {
       return Promise.resolve();
     }
@@ -130,9 +145,11 @@ export const validateAll = ({
   formData,
   flatten,
   options, // {locale = 'cn', validateMessages = {}}
+  formInstance = {},
 }) => {
   const paths = dataToKeys(formData);
   const allPaths = getAllPaths(paths, flatten);
+
   // console.log(formData, dataToKeys(formData), 'dataToKeysdataToKeys');
   // console.log('allPaths', allPaths);
   const promiseArray = allPaths.map(path => {
@@ -141,8 +158,25 @@ export const validateAll = ({
       const item = flatten[id] || flatten[`${id}[]`];
       const singleData = get(formData, path);
       let schema = item.schema || {};
+
+      // 若parent的hidden属性为true，则子项需继承 hidden
+      const relatedPaths = getRelatedPaths(path, flatten);
+      if (relatedPaths.length > 1) {
+        const parentPath = relatedPaths[relatedPaths.length - 1];
+        const parentSchema = flatten[parentPath] || {};
+        if (get(parentSchema, 'schema.hidden', false)) {
+          schema.hidden = true;
+        }
+      }
+
       const finalSchema = parseSchemaExpression(schema, formData, path);
-      return validateSingle(singleData, finalSchema, path, options); // is a promise
+      return validateSingle(
+        singleData,
+        finalSchema,
+        path,
+        options,
+        formInstance
+      ); // is a promise
     } else {
       return Promise.resolve();
     }
@@ -167,7 +201,17 @@ export const validateAll = ({
     });
 };
 
-const validateSingle = (data, schema = {}, path, options = {}) => {
+const validateSingle = (
+  data,
+  schema = {},
+  path,
+  options = {},
+  formInstance = {}
+) => {
+  // 自定义区块不做rules校验
+  if (schema.type === 'block') {
+    return Promise.resolve();
+  }
   if (schema.hidden) {
     return Promise.resolve();
   }
@@ -184,6 +228,7 @@ const validateSingle = (data, schema = {}, path, options = {}) => {
   } catch (error) {
     return Promise.resolve();
   }
+  formInstance?.setFieldValidating(path);
   let messageFeed = locale === 'en' ? en : cn;
   merge(messageFeed, validateMessages);
   validator.messages(messageFeed);
@@ -194,5 +239,8 @@ const validateSingle = (data, schema = {}, path, options = {}) => {
     })
     .catch(({ errors, fields }) => {
       return errors;
+    })
+    .finally(() => {
+      formInstance?.removeFieldValidating(path);
     });
 };

@@ -16,7 +16,7 @@ export default function jsonInput({
     }
   };
 
-  const inputValue = typeof value === 'string' ? value : JSON.stringify(value)
+  const inputValue = typeof value === 'string' ? value : JSON.stringify(value);
 
   return (
     <Input

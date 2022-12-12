@@ -6,13 +6,18 @@ import {
   removeEmptyItemFromList,
   removeHiddenFromResult,
 } from './utils';
+import { removeVoidFromResult } from './void';
 // 提交前需要先处理formData的逻辑
 export const processData = (data, flatten, removeHiddenData) => {
-  // 1. 去掉 hidden = true 的元素
   let _data = clone(data);
+  // 1. 去掉 hidden = true 的元素
   if (removeHiddenData) {
     _data = removeHiddenFromResult(data, flatten);
   }
+
+  // 1.5. 去掉 void 元素
+  _data = removeVoidFromResult(_data);
+
   // 2. bind 的处理
   _data = transformDataWithBind(_data, flatten);
 
@@ -21,7 +26,6 @@ export const processData = (data, flatten, removeHiddenData) => {
 
   // 4. 去掉所有的 undefined
   _data = cleanEmpty(_data);
-
   return _data;
 };
 

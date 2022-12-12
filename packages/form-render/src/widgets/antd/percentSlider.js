@@ -1,5 +1,5 @@
+import * as React from 'react';
 import { InputNumber, Slider } from 'antd';
-import React from 'react';
 
 const PercentSlider = p => {
   const { max, min, step } = p.schema;

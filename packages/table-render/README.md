@@ -22,7 +22,7 @@
 
 ## 官网
 
-<https://x-render.gitee.io/table-render>
+<https://xrender.fun/table-render>
 
 ## 优势
 
@@ -124,20 +124,20 @@ export default withTable(Wrapper);
 
 **我们将搜索相关的能力放到 `<Search>` 上面配置，包括对应的搜索筛选表单的渲染**
 
-| 属性               | 描述                                                                                                           | 类型                                   | 默认值  | 必填 |
-| ------------------ | -------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------- | ---- |
-| schema             | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](https://x-render.gitee.io/form-render/config/schema) | `object`                               | -       | 是   |
-| api                | 初始化&点击查询时执行的函数                                                                                    | `Function` or `Array`                  | -       | 是   |
-| onSearch           | 在表格查询时执行一些额外的操作                                                                                 | `Function`                             | -       | 否   |
-| afterSearch        | 在表格查询结束后执行一些额外的操作                                                                             | `Function`                             | -       | 否   |
-| searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                                           | `boolean`                              | `true`  | 否   |
-| hidden             | 是否隐藏`<Search />`组件                                                                                       | `boolean`                              | `false` | 否   |
-| searchBtnRender    | 自定义表单查询按钮                                                                                             | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
-| searchBtnStyle     | 自定义表单操作按钮组的样式                                                                                     | `React.CSSProperties`                  | {}      | 否   |
-| searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                                               | `string`                               | ''      | 否   |
-| searchText         | 自定义查询按钮的文本                                                                                           | `string`                               | '查询'  | 否   |
-| resetText          | 自定义重置按钮的文本                                                                                           | `string`                               | '重置'  | 否   |
-| debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                                                  | `boolean`                              | `false` | 否   |
+| 属性               | 描述                                                                                                     | 类型                                   | 默认值  | 必填 |
+| ------------------ | -------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------- | ---- |
+| schema             | 用于渲染表单的 schema，具体的 api 参考 [form-render 文档](https://xrender.fun/form-render/config/schema) | `object`                               | -       | 是   |
+| api                | 初始化&点击查询时执行的函数                                                                              | `Function` or `Array`                  | -       | 是   |
+| onSearch           | 在表格查询时执行一些额外的操作                                                                           | `Function`                             | -       | 否   |
+| afterSearch        | 在表格查询结束后执行一些额外的操作                                                                       | `Function`                             | -       | 否   |
+| searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                                     | `boolean`                              | `true`  | 否   |
+| hidden             | 是否隐藏`<Search />`组件                                                                                 | `boolean`                              | `false` | 否   |
+| searchBtnRender    | 自定义表单查询按钮                                                                                       | `(refresh,clearSearch) => ReactNode[]` | -       | 否   |
+| searchBtnStyle     | 自定义表单操作按钮组的样式                                                                               | `React.CSSProperties`                  | {}      | 否   |
+| searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                                         | `string`                               | ''      | 否   |
+| searchText         | 自定义查询按钮的文本                                                                                     | `string`                               | '查询'  | 否   |
+| resetText          | 自定义重置按钮的文本                                                                                     | `string`                               | '重置'  | 否   |
+| debug              | 开启 debug 模式，时时显示内部状态，**开发的时候强烈建议打开**                                            | `boolean`                              | `false` | 否   |
 
 ### `<Table>` 参数
 
@@ -155,14 +155,14 @@ export default withTable(Wrapper);
 
 **columns 为 antd 已有的 props，所以支持 antd 所有的支持的 [columns](https://ant.design/components/table-cn/#Column) 的配置，同时也提供了一些更方便的 api，加快书写**
 
-| 属性      | 描述                                                                        | 类型                                                  | 默认值 |
-| --------- | --------------------------------------------------------------------------- | ----------------------------------------------------- | ------ |
-| ellipsis  | 是否自动缩略                                                                | boolean                                               | -      |
-| copyable  | 是否支持复制                                                                | boolean                                               | -      |
-| valueType | 值的类型，详见下方 `valueType 配置`                                         | `string`（`text` \| `money` \| `date` \| `dateTime`） | `text` |
-| enum      | 当前列值的枚举，详见[高级用法](https://x-render.gitee.io/table-render/demo) | `object`                                              | -      |
+| 属性      | 描述                                                                  | 类型                                                  | 默认值 |
+| --------- | --------------------------------------------------------------------- | ----------------------------------------------------- | ------ |
+| ellipsis  | 是否自动缩略                                                          | boolean                                               | -      |
+| copyable  | 是否支持复制                                                          | boolean                                               | -      |
+| valueType | 值的类型，详见下方 `valueType 配置`                                   | `string`（`text` \| `money` \| `date` \| `dateTime`） | `text` |
+| enum      | 当前列值的枚举，详见[高级用法](https://xrender.fun/table-render/demo) | `object`                                              | -      |
 
-- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [案例代码](https://x-render.gitee.io/table-render/demo)：
+- **valueType 值类型**：TableRender 封装了一些常用的值类型来减少重复的 render 操作，配置一个 valueType 即可展示格式化响应的数据，具体使用可参考 [案例代码](https://xrender.fun/table-render/demo)：
 
   | 属性     | 描述                                                               |
   | -------- | ------------------------------------------------------------------ |

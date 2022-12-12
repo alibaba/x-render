@@ -1,6 +1,7 @@
 /**
  * transform: true
- * defaultShowCode: true
+ * defaultShowCode: false
+ * background: 'rgb(245,245,245)'
  */
 
 import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
@@ -26,7 +27,7 @@ const schema = {
       width: '25%',
     },
   },
-  'ui:labelWidth': 80,
+  labelWidth: 80,
 };
 
 const Demo = () => {
@@ -132,7 +133,7 @@ const Demo = () => {
   };
 
   return (
-    <div style={{ background: 'rgb(245,245,245)' }}>
+    <div>
       <Search
         hidden
         schema={schema}

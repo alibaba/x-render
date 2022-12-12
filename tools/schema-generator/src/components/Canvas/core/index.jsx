@@ -1,5 +1,6 @@
 import FormRender, { useForm } from 'form-render';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { dataToFlatten, flattenToData } from '../../../utils';
 import { useStore } from '../../../utils/hooks';
 import RenderChildren from './RenderChildren';
@@ -32,7 +33,7 @@ const PreviewFR = ({ schema, data }) => {
 
 const FR = ({ id = '#', preview, displaySchema }) => {
   const { flatten, frProps = {} } = useStore();
-
+  const { t } = useTranslation();
   if (preview) {
     const data = flattenToData(flatten);
     return <PreviewFR schema={displaySchema} data={data} />;
@@ -65,6 +66,19 @@ const FR = ({ id = '#', preview, displaySchema }) => {
     columnStyle = {
       width: `calc(100% /${column})`,
       paddingRight: '12px',
+    };
+  }
+
+  // 如果传入自定义样式则覆盖使用，object 外层样式使用 schema.style，内层样式使用 schema.props.style
+  // 由于 form-render-core 使用多层 div，而这里只使用一层，所以合并内外层样式
+  if (
+    'object' === typeof schema?.style ||
+    'object' === typeof schema?.props?.style
+  ) {
+    columnStyle = {
+      ...columnStyle,
+      ...(schema?.style || {}),
+      ...(schema?.props?.style || {}),
     };
   }
 
@@ -135,7 +149,7 @@ const FR = ({ id = '#', preview, displaySchema }) => {
         <div
           className={`${containerClass} h-100 f4 black-40 flex items-center justify-center`}
         >
-          点击/拖拽左侧栏的组件进行添加
+          {t('点击/拖拽左侧栏的组件进行添加')}
         </div>
       </Wrapper>
     );

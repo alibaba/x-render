@@ -6,7 +6,7 @@ export default defineConfig({
   favicon: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
   outputPath: 'docs-dist',
-  hash: true,
+  hash: false,
   dynamicImport: {
     loading: '@/docs/Loading.js',
   },
@@ -28,11 +28,11 @@ export default defineConfig({
     { title: '表单设计器', path: '/generator' },
     {
       title: 'Playground',
-      // children: [
-      //   { title: 'Playground', path: '/playground' },
-      //   { title: 'Schema 编辑器', path: '/tools/generator/playground' },
-      // ],
       path: '/playground',
+    },
+    {
+      title: '常见问题',
+      path: '/faq',
     },
     {
       title: '周边工具',
@@ -51,31 +51,25 @@ export default defineConfig({
       children: [
         {
           title: 'FormRender',
-          path:
-            'https://github.com/alibaba/form-render/blob/master/packages/form-render/CHANGELOG.md',
+          path: 'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
         },
         {
           title: 'TableRender',
-          path:
-            'https://github.com/alibaba/form-render/blob/master/packages/table-render/CHANGELOG.md',
+          path: 'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
         },
         {
           title: 'ChartRender',
-          path:
-            'https://github.com/alibaba/form-render/blob/master/packages/chart-render/CHANGELOG.md',
+          path: 'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
         },
       ],
     },
 
-    { title: 'GitHub', path: 'https://github.com/alibaba/form-render' },
+    { title: 'GitHub', path: 'https://github.com/alibaba/x-render' },
   ],
   mode: 'site',
-  // alias: {
-  //   'form-render/dist': path.resolve(__dirname, 'packages/form-render/dist'),
-  // },
   esbuild: {},
   // base: '/x-render/',
-  publicPath: '/x-render/',
+  // publicPath: '/x-render/',
   exportStatic: {},
   extraBabelPlugins: [
     [
@@ -96,8 +90,13 @@ export default defineConfig({
       '@alifd/next',
     ],
   ],
+  sitemap: {
+    hostname: 'https://xrender.fun',
+  },
+  runtimePublicPath: true,
   chainWebpack(config, { webpack }) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
   },
+  plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
   // more config: https://d.umijs.org/config
 });

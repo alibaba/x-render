@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React, { memo, Suspense } from 'react';
 import { transformProps } from '../../createWidget';
 import { useStore, useTools } from '../../hooks';
 import { extraSchemaList, getWidgetName } from '../../mapping';
@@ -27,6 +27,7 @@ const ExtendedWidget = ({
   disabled,
   dataIndex,
   watch,
+  hasError,
 }) => {
   const {
     widgets,
@@ -40,6 +41,14 @@ const ExtendedWidget = ({
     resetFields,
     setErrorFields,
     removeErrorField,
+    validateFields,
+    isFieldTouched,
+    isFieldsTouched,
+    isFieldValidating,
+    scrollToPath,
+    getFieldError,
+    getFieldsError,
+    setFields,
   } = useTools();
 
   const { globalProps } = useStore();
@@ -69,7 +78,7 @@ const ExtendedWidget = ({
     widgetName = 'input';
     return <ErrorSchema schema={schema} />;
   }
-  const Widget = widgets[widgetName];
+  const Widget = widgets[widgetName] || widgets['html'];
   const extraSchema = extraSchemaList[widgetName];
 
   let widgetProps = {
@@ -79,6 +88,9 @@ const ExtendedWidget = ({
     children,
     disabled,
     readOnly,
+    // dataPath,
+    // dataIndex,
+    className: hasError ? 'fr-item-status-error' : '',
     ...schema.props,
     ...globalProps,
   };
@@ -135,12 +147,19 @@ const ExtendedWidget = ({
     resetFields,
     setErrorFields,
     removeErrorField,
+    validateFields,
+    isFieldTouched,
+    isFieldsTouched,
+    isFieldValidating,
+    scrollToPath,
+    getFieldError,
+    getFieldsError,
+    setFields,
     hideSelf,
     watch,
   };
 
   const finalProps = transformProps(widgetProps);
-
   return (
     <Suspense fallback={<div></div>}>
       <div className="fr-item-wrapper">
@@ -150,36 +169,39 @@ const ExtendedWidget = ({
   );
 };
 
-const areEqual = (prev, current) => {
-  if (prev.schema && current.schema) {
-    if (prev.schema.$id === '#') {
-      return false;
-    }
-    if (prev.schema.hidden && current.schema.hidden) {
-      return true;
-    }
-  }
-  if (prev.readOnly !== current.readOnly) {
-    return false;
-  }
-  if (prev.disabled !== current.disabled) {
-    return false;
-  }
-  if (
-    JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
-  ) {
-    return false;
-  }
-  if (isObjType(prev.schema) && isObjType(current.schema)) {
-    return false;
-  }
-  if (
-    JSON.stringify(prev.value) === JSON.stringify(current.value) &&
-    JSON.stringify(prev.schema) === JSON.stringify(current.schema)
-  ) {
-    return true;
-  }
-  return false;
-};
+// const areEqual = (prev, current) => {
+//   if (prev.schema && current.schema) {
+//     if (prev.schema.$id === '#') {
+//       return false;
+//     }
+//     if (prev.schema.hidden && current.schema.hidden) {
+//       return true;
+//     }
+//   }
+//   if (prev.readOnly !== current.readOnly) {
+//     return false;
+//   }
+//   if (prev.disabled !== current.disabled) {
+//     return false;
+//   }
+//   if (
+//     JSON.stringify(prev.dependValues) !== JSON.stringify(current.dependValues)
+//   ) {
+//     return false;
+//   }
+//   if (isObjType(prev.schema) && isObjType(current.schema)) {
+//     return false;
+//   }
+//   if (JSON.stringify(prev.hasError) === JSON.stringify(current.hasError)) {
+//     return true;
+//   }
+//   if (
+//     JSON.stringify(prev.value) === JSON.stringify(current.value) &&
+//     JSON.stringify(prev.schema) === JSON.stringify(current.schema)
+//   ) {
+//     return true;
+//   }
+//   return false;
+// };
 
-export default React.memo(ExtendedWidget, areEqual);
+export default ExtendedWidget;

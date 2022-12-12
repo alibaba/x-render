@@ -1,4 +1,5 @@
 import { cloneDeep, get, isEmpty, set } from 'lodash-es';
+import { getRealDataPath } from './void';
 
 export function getParamByName(name, url = window.location.href) {
   name = name.replace(/[\[\]]/g, '\\$&');
@@ -9,12 +10,12 @@ export function getParamByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-export function isUrl(string) {
-  const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
-  // const domainRE = /^[^\s\.]+\.\S{2,}$/;
-  if (typeof string !== 'string') return false;
-  return protocolRE.test(string);
-}
+// export function isUrl(string) {
+//   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
+//   // const domainRE = /^[^\s\.]+\.\S{2,}$/;
+//   if (typeof string !== 'string') return false;
+//   return protocolRE.test(string);
+// }
 
 export function isCheckBoxType(schema, readOnly) {
   if (readOnly) return false;
@@ -51,7 +52,8 @@ export function getValueByPath(formData, path) {
   if (path === '#' || !path) {
     return formData || {};
   } else if (typeof path === 'string') {
-    return get(formData, path);
+    const realPath = getRealDataPath(path);
+    return realPath && get(formData, realPath);
   } else {
     console.error('path has to be a string');
   }
@@ -97,13 +99,17 @@ export function getDataPath(id, dataIndex) {
       _id = _id.replace(/\[\]/, `[${item}]`);
     });
   }
-  return removeBrackets(_id);
+  return removeBrackets(getRealDataPath(_id));
 }
 
 export function isObjType(schema) {
   return (
     schema && schema.type === 'object' && schema.properties && !schema.widget
   );
+}
+
+export function isBlockType(schema) {
+  return schema && schema.type === 'block' && schema.widget;
 }
 
 // TODO: to support case that item is not an object
@@ -116,8 +122,35 @@ export function isListType(schema) {
   );
 }
 
+export function orderProperties(properties, orderKey = 'order') {
+  const orderHash = new Map();
+  // order不为数字的数据
+  const unsortedList = [];
+  const insert = item => {
+    const [, value] = item;
+    if (typeof value[orderKey] !== 'number') {
+      unsortedList.push(item);
+      return;
+    }
+    if (orderHash.has(value[orderKey])) {
+      orderHash.get(value[orderKey]).push(item);
+    } else {
+      orderHash.set(value[orderKey], [item]);
+    }
+  };
+
+  properties.forEach(item => insert(item));
+  const sortedList = Array.from(orderHash.entries())
+    .sort(([order1], [order2]) => order1 - order2) // order值越小越靠前
+    .flatMap(([, items]) => items);
+  return sortedList.concat(unsortedList);
+}
+
 // TODO: more tests to make sure weird & wrong schema won't crush
 export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
+  // 排序
+  // _schema = orderBy(_schema, item => item.order, ['asc']);
+
   const schema = clone(_schema);
   let _name = name;
   if (!schema.$id) {
@@ -125,21 +158,28 @@ export function flattenSchema(_schema = {}, name = '#', parent, result = {}) {
   }
   const children = [];
   if (isObjType(schema)) {
-    Object.entries(schema.properties).forEach(([key, value]) => {
-      const _key = isListType(value) ? key + '[]' : key;
-      const uniqueName = _name === '#' ? _key : _name + '.' + _key;
-      children.push(uniqueName);
-      flattenSchema(value, uniqueName, _name, result);
-    });
+    orderProperties(Object.entries(schema.properties)).forEach(
+      ([key, value]) => {
+        const _key = isListType(value) ? key + '[]' : key;
+        const uniqueName = _name === '#' ? _key : _name + '.' + _key;
+        children.push(uniqueName);
+
+        flattenSchema(value, uniqueName, _name, result);
+      }
+    );
+
     schema.properties = {};
   }
   if (isListType(schema)) {
-    Object.entries(schema.items.properties).forEach(([key, value]) => {
-      const _key = isListType(value) ? key + '[]' : key;
-      const uniqueName = _name === '#' ? _key : _name + '.' + _key;
-      children.push(uniqueName);
-      flattenSchema(value, uniqueName, _name, result);
-    });
+    orderProperties(Object.entries(schema.items.properties)).forEach(
+      ([key, value]) => {
+        const _key = isListType(value) ? key + '[]' : key;
+        const uniqueName = _name === '#' ? _key : _name + '.' + _key;
+        children.push(uniqueName);
+        flattenSchema(value, uniqueName, _name, result);
+      }
+    );
+
     schema.items.properties = {};
   }
 
@@ -227,40 +267,40 @@ export function isDeepEqual(param1, param2) {
   return true;
 }
 
-export function getFormat(format) {
-  let dateFormat;
-  switch (format) {
-    case 'date':
-      dateFormat = 'YYYY-MM-DD';
-      break;
-    case 'time':
-      dateFormat = 'HH:mm:ss';
-      break;
-    case 'dateTime':
-      dateFormat = 'YYYY-MM-DD HH:mm:ss';
-      break;
-    case 'week':
-      dateFormat = 'YYYY-w';
-      break;
-    case 'year':
-      dateFormat = 'YYYY';
-      break;
-    case 'quarter':
-      dateFormat = 'YYYY-Q';
-      break;
-    case 'month':
-      dateFormat = 'YYYY-MM';
-      break;
-    default:
-      // dateTime
-      if (typeof format === 'string') {
-        dateFormat = format;
-      } else {
-        dateFormat = 'YYYY-MM-DD';
-      }
-  }
-  return dateFormat;
-}
+// export function getFormat(format) {
+//   let dateFormat;
+//   switch (format) {
+//     case 'date':
+//       dateFormat = 'YYYY-MM-DD';
+//       break;
+//     case 'time':
+//       dateFormat = 'HH:mm:ss';
+//       break;
+//     case 'dateTime':
+//       dateFormat = 'YYYY-MM-DD HH:mm:ss';
+//       break;
+//     case 'week':
+//       dateFormat = 'YYYY-w';
+//       break;
+//     case 'year':
+//       dateFormat = 'YYYY';
+//       break;
+//     case 'quarter':
+//       dateFormat = 'YYYY-Q';
+//       break;
+//     case 'month':
+//       dateFormat = 'YYYY-MM';
+//       break;
+//     default:
+//       // dateTime
+//       if (typeof format === 'string') {
+//         dateFormat = format;
+//       } else {
+//         dateFormat = 'YYYY-MM-DD';
+//       }
+//   }
+//   return dateFormat;
+// }
 
 export function hasRepeat(list) {
   return list.find(
@@ -357,13 +397,10 @@ export function isExpression(func) {
   //   );
   // }
   if (typeof func !== 'string') return false;
-  const pattern = /^{{(.+)}}$/;
-  const reg1 = /^{{function\(.+}}$/;
-  // const reg2 = /^{{(.+=>.+)}}$/;
-  if (typeof func === 'string' && func.match(pattern) && !func.match(reg1)) {
-    return true;
-  }
-  return false;
+  const pattern = /^{\s*{(.+)}\s*}$/;
+  const reg1 = /^{\s*{function\(.+}\s*}$/;
+
+  return func.match(pattern) && !func.match(reg1);
 }
 
 export const parseRootValueInSchema = (schema, rootValue) => {
@@ -386,7 +423,8 @@ export const parseRootValueInSchema = (schema, rootValue) => {
 // handle rootValue inside List
 export const parseSingleRootValue = (expression, rootValue = {}) => {
   if (typeof expression === 'string' && expression.indexOf('rootValue') > 0) {
-    const funcBody = expression.substring(2, expression.length - 2);
+    const funcBody = expression.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '');
+
     const str = `
     return ${funcBody.replace(/rootValue/g, JSON.stringify(rootValue))}`;
 
@@ -405,7 +443,8 @@ export function parseSingleExpression(func, formData = {}, dataPath) {
   const parentPath = getParentPath(dataPath);
   const parent = getValueByPath(formData, parentPath) || {};
   if (typeof func === 'string') {
-    const funcBody = func.substring(2, func.length - 2);
+    const funcBody = func.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '');
+
     const str = `
     return ${funcBody
       .replace(/formData/g, JSON.stringify(formData))
@@ -594,10 +633,10 @@ export const getEnum = schema => {
   return itemEnum ? itemEnum : schemaEnum;
 };
 
-export const getArray = (arr, defaultValue = []) => {
-  if (Array.isArray(arr)) return arr;
-  return defaultValue;
-};
+// export const getArray = (arr, defaultValue = []) => {
+//   if (Array.isArray(arr)) return arr;
+//   return defaultValue;
+// };
 
 export const isEmail = value => {
   const regex = '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$';
@@ -997,7 +1036,7 @@ export const removeHiddenFromResult = (data, flatten) => {
   const keys = dataToKeys(result);
 
   keys.forEach(key => {
-    const { id, dataIndex } = destructDataPath(key);
+    const { id } = destructDataPath(key);
     if (flatten[id]) {
       let { hidden } = flatten[id].schema || {};
       if (isExpression(hidden)) {
@@ -1009,6 +1048,27 @@ export const removeHiddenFromResult = (data, flatten) => {
     }
   });
   return result;
+};
+
+export const getHiddenData = (data, flatten) => {
+  let result = clone(data);
+  let hiddenData = {};
+
+  const keys = dataToKeys(result);
+
+  keys.forEach(key => {
+    const { id } = destructDataPath(key);
+    if (flatten[id]) {
+      let { hidden } = flatten[id].schema || {};
+      if (isExpression(hidden)) {
+        hidden = parseSingleExpression(hidden, result, key);
+      }
+      if (hidden) {
+        hiddenData[key] = result[key];
+      }
+    }
+  });
+  return hiddenData;
 };
 
 export function msToTime(duration) {

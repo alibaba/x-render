@@ -1,0 +1,51 @@
+{
+  "translation": {
+    "导入": "Import",
+    "清除": "Clear",
+    "清空": "Clear",
+    "导出schema": "Export Schema",
+    "最终展示": "Preview",
+    "开始编辑": "Edit",
+    "复制": "Copy",
+    "取消": "Cancel",
+    "复制成功": "Copy Success",
+    "贴入需要导入的schema，模样可点击导出schema参考": "Paste the schema. Click export schema reference",
+    "格式不对哦，请重新尝试": "Wrong format, please try again",
+    "点击/拖拽左侧栏的组件进行添加": "Click / Drag the component in the left column to add",
+    "组件配置": "Component Setting",
+    "表单配置": "Form Setting",
+    "此处配置有误": "Incorrect configuration here",
+    "配置错误：Setting不是数组": "Configuration error: setting is not an array"
+  },
+  "components": {
+    "基础组件": "Basic",
+    "高级组件": "Advanced",
+    "布局组件": "Layout",
+    "模板": "Template",
+
+    "输入框": "Input",
+    "大输入框": "Textarea",
+    "日期选择": "Date Picker",
+    "数字输入框": "NumberInput",
+    "是否选择": "Checkbox",
+    "是否switch": "Switch",
+    "下拉单选": "SelectSingle",
+    "点击单选": "Radio",
+    "下拉多选": "SelectMultiple",
+    "点击多选": "CheckboxGroup",
+    "HTML": "HTML",
+
+    "日期范围": "DateRange",
+    "数字（slider）": "Slider",
+    "图片展示": "Image",
+    "颜色选择": "ColorPicker",
+
+    "对象": "Section",
+    "常规列表": "List",
+    "简单列表": "SimpleList",
+    "表格列表": "TableList",
+    "复杂表格列表": "DrawerList",
+
+    "复杂结构样例": "Example"
+  }
+}

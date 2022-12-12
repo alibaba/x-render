@@ -2,12 +2,16 @@ import { message, Tooltip, Typography } from 'antd';
 import React from 'react';
 
 export const renderEllipsis = (
-  dom: {} | null | undefined,
+  dom: JSX.Element,
   text: any,
   item: { ellipsis: any }
 ) => {
   if (!item.ellipsis) {
-    return <span>{dom}</span>;
+    return (
+      <span>
+        <>{dom}</>
+      </span>
+    );
   }
   return <Tooltip title={getEnumValue(text, item)}>{dom}</Tooltip>;
 };

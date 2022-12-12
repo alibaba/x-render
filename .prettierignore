@@ -54,3 +54,5 @@ node_modules
 old-doc
 test.json
 /docs/guide/.test
+/docs/*/*.md
+/docs/playground/monaco/index.js

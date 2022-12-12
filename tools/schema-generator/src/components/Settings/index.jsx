@@ -1,6 +1,7 @@
 import { RightOutlined } from '@ant-design/icons';
 import { Tabs } from 'antd';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSet, useStore } from '../../utils/hooks';
 import GlobalSettings from './GlobalSettings';
 import './index.less';
@@ -9,12 +10,13 @@ import ItemSettings from './ItemSettings';
 const { TabPane } = Tabs;
 
 export default function Settings({ widgets }) {
+  const { t } = useTranslation();
   const [state, setState] = useSet({
     tabsKey: 'globalSettings',
     showRight: true,
     showItemSettings: false,
   });
-  const { selected } = useStore();
+  const { selected, userProps = {} } = useStore();
   const { tabsKey, showRight, showItemSettings } = state;
 
   const toggleRight = () => setState({ showRight: !showRight });
@@ -25,7 +27,7 @@ export default function Settings({ widgets }) {
       style={{ height: 30, width: 30, padding: '8px 0 0 8px' }}
       onClick={toggleRight}
     >
-      <RightOutlined className="f5" />
+      <RightOutlined style={{color: '#666'}} />
     </div>
   );
 
@@ -47,18 +49,24 @@ export default function Settings({ widgets }) {
     }
   }, [selected]);
 
+  const globalSettingHide =
+    userProps.globalSettings === null ||
+    (userProps.globalSettings && !Object.keys(userProps.globalSettings).length);
+
   return showRight ? (
     <div className="right-layout relative pl2">
       <ToggleIcon />
       <Tabs activeKey={tabsKey} onChange={key => setState({ tabsKey: key })}>
         {showItemSettings && (
-          <TabPane tab="组件配置" key="itemSettings">
+          <TabPane tab={t("组件配置")} key="itemSettings">
             <ItemSettings widgets={widgets} />
           </TabPane>
         )}
-        <TabPane tab="表单配置" key="globalSettings">
-          <GlobalSettings widgets={widgets} />
-        </TabPane>
+        {!globalSettingHide && (
+          <TabPane tab="表单配置" key="globalSettings">
+            <GlobalSettings widgets={widgets} />
+          </TabPane>
+        )}
       </Tabs>
     </div>
   ) : (

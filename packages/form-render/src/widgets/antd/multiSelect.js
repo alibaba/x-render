@@ -1,5 +1,5 @@
+import * as React from 'react';
 import { Select } from 'antd';
-import React from 'react';
 import { getArray } from '../../utils';
 
 const MultiSelect = ({ schema, value, style, options: _options, ...rest }) => {

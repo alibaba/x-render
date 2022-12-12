@@ -1,5 +1,18 @@
 # Change Log
 
+### 2.8.1
+
+- [!] 支持 React18
+
+### 2.8.0
+
+- [+] 新增`locale`参数，支持国际化配置，默认为`cn`，可选值为`cn`或`en`
+
+### 2.7.9
+
+- [+] `globalSettings` 为空，隐藏 `设计器` 的表单配置模块
+- [+] 添加`preview`参数，用于在外部控制`预览/编辑态`
+
 ### 2.7.0
 
 - [+] 新增 `fieldRender` 及 `fieldWrapperRender`，支持自定义组件渲染

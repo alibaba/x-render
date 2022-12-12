@@ -1,6 +1,5 @@
 import FormRender, { useForm } from 'form-render';
 import React, { useEffect, useState, useRef } from 'react';
-import * as frgWidgets from '../../widgets';
 import {
   advancedElements,
   baseCommonSettings,
@@ -10,8 +9,9 @@ import {
   layouts,
 } from '../../settings';
 import { isObject, mergeInOrder } from '../../utils';
+import { useGlobal, useStore } from '../../utils/hooks';
 import { getWidgetName } from '../../utils/mapping';
-import { useStore, useGlobal } from '../../utils/hooks';
+import * as frgWidgets from '../../widgets';
 
 export default function ItemSettings({ widgets }) {
   const setGlobal = useGlobal();
@@ -65,20 +65,14 @@ export default function ItemSettings({ widgets }) {
     }, []);
   };
 
-  const onDataChange = value => {
+  const onDataChange = (value = {}) => {
     try {
-      const item = flatten[selected];
-      if (!isReady.current || !item || selected === '#') return;
-      if (item && item.schema) {
-        onItemChange(
-          selected,
-          {
-            ...item,
-            schema: transformer.fromSetting(value),
-          },
-          'schema'
-        );
-      }
+      if (selected === '#' || !isReady.current || !value.$id) return;
+      const item = {
+        ...flatten[selected],
+        schema: transformer.fromSetting(value),
+      };
+      onItemChange(selected, item, 'schema');
     } catch (error) {
       console.error(error, 'catch');
     }
@@ -87,7 +81,7 @@ export default function ItemSettings({ widgets }) {
   useEffect(() => {
     // setting 该显示什么的计算，要把选中组件的 schema 和它对应的 widgets 的整体 schema 进行拼接
     try {
-      isReady.current = false
+      isReady.current = false;
       const item = flatten[selected];
       if (!item || selected === '#') return;
       // 算 widgetList
@@ -139,6 +133,7 @@ export default function ItemSettings({ widgets }) {
         form={form}
         schema={settingSchema}
         widgets={{ ..._widgets, ...widgets }}
+        mapping={globalMapping}
         watch={{
           '#': v => setTimeout(() => onDataChange(v), 0),
         }}

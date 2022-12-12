@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "1.9.9",
+  "version": "1.14.7",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -11,7 +11,7 @@
     "Json Schema",
     "Ant Design"
   ],
-  "homepage": "https://x-render.gitee.io/form-render",
+  "homepage": "https://xrender.fun/form-render",
   "bugs": {
     "url": "https://github.com/alibaba/x-render/issues"
   },
@@ -36,9 +36,15 @@
   ],
   "main": "lib/index.js",
   "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
   "scripts": {
     "beta": "npm publish --tag beta",
     "build": "father-build",
+    "next": "npm publish --tag next",
     "prepare": "npm run build",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
     "postpublish": "git push --tags",
@@ -56,11 +62,12 @@
   "dependencies": {
     "@ant-design/icons": "^4.0.2",
     "async-validator": "^3.5.1",
+    "classnames": "^2.3.1",
     "color": "^3.1.2",
     "lodash-es": "^4.17.21",
     "moment": "^2.24.0",
-    "nanoid": "^3.1.20",
     "rc-color-picker": "^1.2.6",
+    "scroll-into-view-if-needed": "^2.2.29",
     "virtualizedtableforantd4": "^1.1.2"
   },
   "devDependencies": {
@@ -74,5 +81,6 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
-  }
+  },
+  "sideEffect": false
 }

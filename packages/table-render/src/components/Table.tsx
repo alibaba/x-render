@@ -1,6 +1,6 @@
 import { Radio, Space, Table, TableProps } from 'antd';
 import React, { useEffect, useRef } from 'react';
-import { TableRenderProps } from '../interface';
+import { TableRenderProps } from '../types';
 import { getDate, getDateTime, getMoneyType } from '../utils';
 import ErrorBoundary from './ErrorBoundary';
 import { renderDom } from './field';
@@ -106,6 +106,7 @@ const ProTable: <RecordType extends object = any>(
         className={`tr-table-wrapper ${className}`}
         style={style}
         ref={rootRef}
+        id="tr-table"
       >
         {debug ? (
           <div className="mv2 bg-black-05 pa2 br2">
@@ -118,7 +119,7 @@ const ProTable: <RecordType extends object = any>(
             className={showTableTop ? 'tr-table-top' : 'tr-table-top-nohead'}
           >
             <div className="tr-table-title">
-              <TableTitle title={headerTitle} />
+              <TableTitle title={headerTitle} {...props} />
             </div>
             <div
               style={{
@@ -146,11 +147,14 @@ const ProTable: <RecordType extends object = any>(
 
 export default ProTable;
 
-const TableTitle = ({ title }: any) => {
+const TableTitle = ({ title, ...rest }: any) => {
   const { tableState, setTable, doSearch } = useTable();
   const { tab, api } = tableState;
   const _tab = tab || 0;
   const onTabChange = (e: any) => {
+    if (rest.onTabChange && typeof rest.onTabChange === 'function') {
+      return rest.onTabChange(e);
+    }
     const _tab = e.target.value;
     setTable({ tab: _tab });
     doSearch({ tab: _tab });

@@ -1,9 +1,54 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
+import React, { useState, useRef } from 'react';
 import { Tabs } from 'antd';
-import React, { useState } from 'react';
 import Core from '../../index';
 
 const { TabPane } = Tabs;
+
+const dragType = 'DraggableTabNode';
+
+const DraggableTabNode = ({ index, children, moveNode }) => {
+  const ref = useRef(null);
+  const [{ isOver, dropClassName }, drop] = useDrop({
+    accept: dragType,
+    collect: monitor => {
+      const { index: dragIndex } = monitor.getItem() || {};
+
+      if (dragIndex === index) {
+        return {};
+      }
+
+      return {
+        isOver: monitor.isOver(),
+        dropClassName: 'dropping',
+      };
+    },
+    drop: item => {
+      moveNode(item.index, index);
+    },
+  });
+  const [, drag] = useDrag({
+    type: dragType,
+    item: {
+      index,
+    },
+    collect: monitor => ({
+      isDragging: monitor.isDragging(),
+    }),
+  });
+  drop(drag(ref));
+  return (
+    <div
+      ref={ref}
+      style={{
+        marginRight: 2,
+      }}
+      className={isOver ? dropClassName : ''}
+    >
+      {children}
+    </div>
+  );
+};
 
 const TabList = ({
   displayList = [],
@@ -20,7 +65,7 @@ const TabList = ({
 }) => {
   const [activeKey, setActiveKey] = useState('0');
   const { props = {}, itemProps } = schema;
-  const { tabName, type, ...restProps } = props;
+  const { tabName, type, draggable = false, ...restProps } = props;
 
   const onEdit = (targetKey, action) => {
     if (action === 'add') {
@@ -34,6 +79,7 @@ const TabList = ({
     }
   };
 
+  //  如果tabName传数组是可以「自定义」tab页的名字的。表单联动可以使用formrender的watch 配合 setSchemaByPath
   const getCurrentTabPaneName = idx => {
     return tabName instanceof Array
       ? tabName[idx] || idx + 1

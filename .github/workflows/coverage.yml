@@ -1,0 +1,24 @@
+# name: 💯 Coverage CI
+
+# on: 
+#   workflow_run:
+#     workflows: ["🚀 Build CI"]
+#     types:
+#       - completed
+
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         node: [ '14', '16' ]
+#     name: build steps
+#     steps:
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js ${{ matrix.node }}
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: ${{ matrix.node }}
+#       - name: Run Test
+#       - run: yarn run test

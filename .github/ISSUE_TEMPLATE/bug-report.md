@@ -3,8 +3,7 @@ name: Bug report
 about: Create a report to help us improve
 title: ''
 labels: ''
-assignees: siyi98
-
+assignees: lhbxs
 ---
 
 <!---
@@ -17,7 +16,7 @@ assignees: siyi98
 
 - react：
 - form-render：
-- table-render: 
+- table-render:
 - antd：
 
 **2.问题描述(Bug description)**：

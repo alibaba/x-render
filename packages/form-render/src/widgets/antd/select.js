@@ -1,6 +1,6 @@
+import * as React from 'react';
 import { Select } from 'antd';
 import { isUndefined } from 'lodash-es';
-import React from 'react';
 import { getArray } from '../../utils';
 
 const FrSelect = ({
