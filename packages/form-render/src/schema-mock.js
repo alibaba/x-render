@@ -1622,7 +1622,7 @@ export default {
   "type":"object",
   "labelWidth":130,
   "displayType":"row",
-  "column": 2,
+  "column": 1,
 }
 
 

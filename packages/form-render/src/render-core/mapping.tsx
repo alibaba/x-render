@@ -44,7 +44,7 @@ export function getWidgetName(schema, _mapping = mapping) {
   //   return schema['ui:widget'];
   // }
 
-  const list = [];
+  const list: string[] = [];
   if (readOnly) {
     list.push(`${type}?readOnly`);
     list.push('*?readOnly');

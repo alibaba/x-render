@@ -15,7 +15,7 @@ const useForm = () => {
 export { useForm };
 export { default as connectForm } from './form-core/connect-form';
 export { createWidget } from './form-core/create-widget';
-export { default as mapping } from './form-core/mapping';
+export { default as mapping } from './render-core/mapping';
 export { defaultWidgets as widgets };
 
 

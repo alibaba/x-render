@@ -8,8 +8,8 @@ const RenderCore = (props) => {
   return Object.keys(schema?.properties || {}).map((path, index) => {
     const fieldSchema = schema.properties[path];
 
-    let childContent = null;
-    let namePath = [...(parentNamePath || []), path];
+    let childContent: React.ReactNode = null;
+    let namePath: string[] | null = [...(parentNamePath || []), path];
 
     // 存在嵌套子协议
     if (fieldSchema?.properties) {

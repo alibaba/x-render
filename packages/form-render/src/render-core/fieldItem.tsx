@@ -66,8 +66,8 @@ const transformProps = props => {
   return _props;
 };
 
-const FiledItem = (props) => {
-  const formProps = useContext(FormContext);
+const FiledItem = (props: any) => {
+  const formProps: any = useContext(FormContext);
 
   const { schema, onChange, children, readOnly, disabled, name } = props;
 
