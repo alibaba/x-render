@@ -18,9 +18,9 @@ import urlInput from './antd/urlInput';
 
 
 // 容器
-import FCard from './container/FCard';
-import FCollapse from './container/FCollapse';
-import FLineTitle from './container/FLineTitle';
+import BoxCard from './container/BoxCard';
+import BoxCollapse from './container/BoxCollapse';
+import BoxLineTitle from './container/BoxLineTitle';
 
 
 const { TextArea } = Input;
@@ -73,9 +73,9 @@ export const widgets = {
   treeSelect: FrTreeSelect,
   // cascader: FrCascader,
 
-  card: FCard,
-  collapse: FCollapse,
-  lineTitle: FLineTitle
+  card: BoxCard,
+  collapse: BoxCollapse,
+  lineTitle: BoxLineTitle
 
 };
 
