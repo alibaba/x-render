@@ -37,7 +37,9 @@ const FR = (props) => {
         {...formProps}
       >
         <Row gutter={8}>
-          <RenderCore schema={schema} />
+          <RenderCore 
+            schema={schema}
+          />
         </Row>
         <Row>
           <Button type="primary" htmlType="submit">

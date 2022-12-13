@@ -137,16 +137,21 @@ const FiledItem = (props) => {
 
   const { title: label } = finalProps;
 
-  if (widgetName === 'list') {
+  if (['map', 'list'].includes(widgetName)) {
+    return (
+      <Col span={24} style={{ marginBottom: '20px' }}>
+        <Widget {...finalProps} />
+      </Col>
+    );
   }
+
+  console.log(widgetName, 'widgetName');
 
   
   let span = 24;
-
   if (formProps.column) {
     span = 24 / formProps.column;
   }
-
 
   if (!name) {
     return (
@@ -163,6 +168,6 @@ const FiledItem = (props) => {
       </Form.Item>
     </Col>
   );
-};
+}
 
 export default FiledItem;
