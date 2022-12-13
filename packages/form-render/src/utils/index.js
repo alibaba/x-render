@@ -44,3 +44,26 @@ export function getFormat(format) {
   }
   return dateFormat;
 }
+
+// TODO: to support case that item is not an object
+export function isListType(schema) {
+  return (
+    schema &&
+    schema.type === 'array' &&
+    isObjType(schema.items) &&
+    schema.enum === undefined
+  );
+}
+
+function stringContains(str, text) {
+  return str.indexOf(text) > -1;
+}
+
+export const isObject = a =>
+  stringContains(Object.prototype.toString.call(a), 'Object');
+
+export function isObjType(schema) {
+  return (
+    schema && schema.type === 'object' && schema.properties && !schema.widget
+  );
+}

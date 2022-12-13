@@ -7,7 +7,6 @@ import dateRange from './antd/dateRange';
 import Html from './html';
 import ImageInput from './antd/imageInput';
 import list from './RenderList';
-import map from './antd/map';
 import multiSelect from './antd/multiSelect';
 import radio from './antd/radio';
 import select from './antd/select';
@@ -17,7 +16,13 @@ import timeRange from './antd/timeRange';
 import upload from './antd/upload';
 import urlInput from './antd/urlInput';
 
-// const Cascader = React.lazy(() => import('antd/es/cascader'));
+
+
+// 容器
+import FCard from './container/FCard';
+import FCollapse from './container/FCollapse';
+import FLineTitle from './container/FLineTitle';
+
 
 const { TextArea } = Input;
 
@@ -57,7 +62,6 @@ export const widgets = {
   imageInput: ImageInput,
   url: urlInput,
   list,
-  map,
   multiSelect, // 下拉多选
   number: FrNumber,
   radio,
@@ -70,6 +74,11 @@ export const widgets = {
   rate: Rate,
   treeSelect: FrTreeSelect,
   // cascader: FrCascader,
+
+  card: FCard,
+  collapse: FCollapse,
+  lineTitle: FLineTitle
+
 };
 
 export const defaultWidgetNameList = Object.keys(widgets);

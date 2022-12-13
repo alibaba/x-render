@@ -2,6 +2,10 @@ import React from 'react';
 import { Card } from 'antd';
 
 const FCard = ({ children, title, schema }) => {
+  if (!title) {
+    return <div className="w-100">{children}</div>;
+  }
+  
   return (
     <Card
       id={title}

@@ -3,43 +3,33 @@ import { Row } from 'antd';
 import FiledItem from './fieldItem';
 
 const RenderCore = (props) => {
-  const { schema, _namePath = [] } = props;
+  const { schema, parentNamePath = [] } = props;
 
   return Object.keys(schema?.properties || {}).map((path, index) => {
-    let children = null;
-    let namePath = [...(_namePath || []), path];
+    const fieldSchema = schema.properties[path];
 
-    if (schema.properties[path]?.properties) {
-      children = RenderCore({ schema: schema.properties[path], _namePath: namePath });
-      namePath = null;
-    } else if (schema.properties[path]?.type) {
-      
-    }
+    let childContent = null;
+    let namePath = [...(parentNamePath || []), path];
 
-      if (schema.properties[path]?.properties) {
-        children = RenderCore({
-          schema: schema.properties[path],
-          _namePath: namePath,
-        });
-        namePath = null;
-      } else if (schema.properties[path]?.type === 'object') {
-        children = (
-          <Row gutter={8}>
-            {children}
-          </Row>
-        );
-      }
-
-      return (
-        <FiledItem
-          key={index}
-          schema={schema.properties[path]}
-          name={namePath}
-          children={children}
-        />
+    // 存在嵌套子协议
+    if (fieldSchema?.properties) {
+      childContent = (
+        <Row gutter={8}>
+          {RenderCore({ schema: fieldSchema, parentNamePath: namePath })}
+        </Row>
       );
-    }
-  );
+      namePath = null;
+    } 
+  
+    return (
+      <FiledItem
+        key={index}
+        schema={fieldSchema}
+        name={namePath}
+        children= {childContent}
+      />
+    );
+  });
 }
 
 export default RenderCore;

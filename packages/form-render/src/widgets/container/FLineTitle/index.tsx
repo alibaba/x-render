@@ -1,6 +1,11 @@
 import React from 'react';
 
 const FLineTitle = ({ children, title, schema }) => {
+
+  if (!title) {
+    return <div className="w-100">{children}</div>;
+  }
+  
   return (
     <div className='w-100'>
       <div
