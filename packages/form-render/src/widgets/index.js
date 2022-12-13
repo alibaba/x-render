@@ -6,7 +6,6 @@ import date from './antd/date';
 import dateRange from './antd/dateRange';
 import Html from './html';
 import ImageInput from './antd/imageInput';
-import list from './RenderList';
 import multiSelect from './antd/multiSelect';
 import radio from './antd/radio';
 import select from './antd/select';
@@ -61,7 +60,6 @@ export const widgets = {
   timeRange,
   imageInput: ImageInput,
   url: urlInput,
-  list,
   multiSelect, // 下拉多选
   number: FrNumber,
   radio,
