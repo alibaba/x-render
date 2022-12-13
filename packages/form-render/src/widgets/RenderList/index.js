@@ -2,16 +2,19 @@ import React from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, Form } from 'antd';
 
-import renderer from '../../render-core';
+import RenderCore from '../../render-core';
 
 const App = (props) => {
+  const { name: parentName } = props;
+ 
   return (
-    <Form.List name="users">
+    <Form.List name={parentName}>
       {(fields, { add, remove }) => (
         <>
-          {fields.map(({ key, name, ...restField }) => (
-            renderer({ schema: props.schema.items, namePath: [name]})
-          ))}
+          {fields.map(({ key, name, ...restField }) => {
+           
+            return RenderCore({ schema: props.schema.items, parentNamePath: [name]})
+          })}
           <Form.Item>
             <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
               Add field

@@ -71,8 +71,6 @@ export function getWidgetName(schema, _mapping = mapping) {
     list.push(`${type}:${_widget}`);
   }
 
-  debugger;
-
   if (type === 'object') {
     list.push(schema.theme || 'collapse');
   } else {

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Form, Col } from 'antd';
+import { Form, Col, Button } from 'antd';
 import { widgets } from '../widgets';
 
 import { extraSchemaList, getWidgetName } from './mapping';
@@ -66,10 +66,16 @@ const transformProps = props => {
   return _props;
 };
 
-const FiledItem = (props: any) => {
+const FieldItem = (props: any) => {
   const formProps: any = useContext(FormContext);
 
-  const { schema, onChange, children, readOnly, disabled, name } = props;
+  const { schema, onChange, children, readOnly, disabled, name, renderCore } = props;
+
+  console.log(props, 'fieldProps');
+
+
+
+
 
   let widgetName = getWidgetName(schema);
   const customName = schema.widget || schema['ui:widget'];
@@ -128,7 +134,10 @@ const FiledItem = (props: any) => {
   }
 
   const finalProps = transformProps(widgetProps);
+  console.log(finalProps, 'finalProps');
+
   const { title: label } = finalProps;
+
 
   if (children) {
     return (
@@ -143,6 +152,10 @@ const FiledItem = (props: any) => {
     span = 24 / formProps.column;
   }
 
+  if (schema.width === '100%') {
+    span = 24;
+  }
+
   return (
     <Col span={span}>
       <Form.Item label={label} name={name}>
@@ -152,4 +165,4 @@ const FiledItem = (props: any) => {
   );
 }
 
-export default FiledItem;
+export default FieldItem;

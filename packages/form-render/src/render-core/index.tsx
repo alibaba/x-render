@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row } from 'antd';
-import FiledItem from './fieldItem';
+import FieldItem from './fieldItem';
+import FieldList from './fieldList';
 
 const RenderCore = (props) => {
   const { schema, parentNamePath = [] } = props;
@@ -19,14 +20,27 @@ const RenderCore = (props) => {
         </Row>
       );
       namePath = null;
-    } 
-  
+    }
+
+    if (fieldSchema.type === 'array') {
+      return (
+        <FieldList
+          key={index}
+          schema={fieldSchema}
+          name={namePath}
+          children= {childContent}
+          renderCore={RenderCore}
+        />
+      );
+    }
+
     return (
-      <FiledItem
+      <FieldItem
         key={index}
         schema={fieldSchema}
         name={namePath}
         children= {childContent}
+        renderCore={RenderCore}
       />
     );
   });
