@@ -12,7 +12,7 @@ const valuePropNameMap = {
   switch: 'checked'
 };
 
-const fieldPropsList = ['placeholder', 'disabled', 'format', 'enum', 'enumNames']
+const fieldPropsList = ['placeholder', 'disabled', 'format', 'enum', 'enumNames'];
 
 const ErrorSchema = (schema: any) => {
   return (
@@ -24,15 +24,33 @@ const ErrorSchema = (schema: any) => {
 };
 
 const getRuleList = (schema: any) => {
-  const { required, type, max, rules = [] } = schema;
+  const { type, required, max, min, rules = [] } = schema;
   const result: any = [...rules];
 
-  if (type === 'string' && typeof max === 'number') {
-    result.push({ type, max, message: 'xxxxx' });
+  if (max) {
+    let message = `字符最大长度${min}`;
+    if (type === 'number') {
+      message = `数值最大值${min}`;
+    }
+    if (type === 'array') {
+      message = `数组最大长度${min}`;
+    }
+    result.push({ type, max: max * 1, message });
+  }
+
+  if (min) {
+    let message = `字符最小长度${min}`;
+    if (type === 'number') {
+      message = `数值最小值${min}`;
+    }
+    if (type === 'array') {
+      message = `数组最小长度${min}`;
+    }
+    result.push({ type, min: min * 1, message });
   }
   
   if (required) {
-    result.push({ required, message: '字段信息必填' });
+    result.push({ required: true, message: '字段信息必填' });
   }
 
   return result;
@@ -65,7 +83,7 @@ const getLabel = (schema: any) => {
       )}
     </>
   )
-}
+};
 
 const getTooltip = (schema: any) => {
   const { descType, description } = schema;
@@ -76,7 +94,7 @@ const getTooltip = (schema: any) => {
   }
 
   return null;
-}
+};
 
 const FieldView = (props: any) => {
   const { schema, children, path, renderCore } = props;
@@ -174,5 +192,5 @@ export default (props: any) => {
         return <FieldView schema={newSchema} {...otherProps} />
       }}
     </Form.Item>
-  )
-};
+  );
+}
