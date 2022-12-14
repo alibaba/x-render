@@ -116,7 +116,7 @@ const FieldView = (props: any) => {
 }
 
 export default (props: any) => {
-  const { schema, ...otherProps } = props;
+  const { schema, parentLitPath, ...otherProps } = props;
 
   // 不存在函数表达式
   if (!isHasExpression(schema)) {
