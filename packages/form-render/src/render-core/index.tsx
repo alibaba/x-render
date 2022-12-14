@@ -3,46 +3,51 @@ import { Row } from 'antd';
 import FieldItem from './fieldItem';
 import FieldList from './fieldList';
 
-const RenderCore = (props) => {
-  const { schema, parentNamePath = [] } = props;
+const renderItem = ({ schema, path, index }) => {
 
-  return Object.keys(schema?.properties || {}).map((path, index) => {
-    const fieldSchema = schema.properties[path];
+  let childContent: React.ReactNode = null;
 
-    let childContent: React.ReactNode = null;
-    let namePath: string[] | null = [...(parentNamePath || []), path];
+  // 存在嵌套子协议
+  if (schema?.properties) {
+    childContent = (
+      <Row gutter={8}>
+        {RenderCore({ schema, parentPath: path })}
+      </Row>
+    );
+    path = null;
+  }
 
-    // 存在嵌套子协议
-    if (fieldSchema?.properties) {
-      childContent = (
-        <Row gutter={8}>
-          {RenderCore({ schema: fieldSchema, parentNamePath: namePath })}
-        </Row>
-      );
-      namePath = null;
-    }
-
-    if (fieldSchema.type === 'array') {
-      return (
-        <FieldList
-          key={index}
-          schema={fieldSchema}
-          name={namePath}
-          children= {childContent}
-          renderCore={RenderCore}
-        />
-      );
-    }
-
+  if (schema.type === 'array') {
     return (
-      <FieldItem
+      <FieldList
         key={index}
-        schema={fieldSchema}
-        name={namePath}
+        schema={schema}
+        path={path}
         children= {childContent}
         renderCore={RenderCore}
       />
     );
+  }
+
+  return (
+    <FieldItem
+      key={index}
+      schema={schema}
+      path={path}
+      children= {childContent}
+      renderCore={RenderCore}
+    />
+  );
+}
+
+const RenderCore = (props: any) => {
+  const { schema, parentPath = [] } = props;
+
+  return Object.keys(schema?.properties || {}).map((key, index) => {
+    const itemSchema = schema.properties[key];
+    const path: string[] | null = [...(parentPath || []), key];
+
+    return renderItem({ schema: itemSchema, path, index })
   });
 }
 

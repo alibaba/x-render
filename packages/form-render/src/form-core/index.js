@@ -16,7 +16,8 @@ const FR = (props) => {
 	}, []);
 
   const context = {
-    column: column || schema?.column || 1
+    column: column || schema?.column || 1,
+    form: props.form
   };
 
   const labelCol = {};

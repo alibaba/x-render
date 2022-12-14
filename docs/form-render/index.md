@@ -87,7 +87,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks。
+<!-- 对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks。
 
 ```jsx
 /**
@@ -135,7 +135,7 @@ class Demo extends React.Component {
 }
 
 export default connectForm(Demo);
-```
+``` -->
 <!-- 
 **换一个更复杂一点的 schema，FR 支持数据绑定、antd 的 props 透传、表单联动等一系列功能：**
 

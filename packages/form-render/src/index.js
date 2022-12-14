@@ -21,7 +21,6 @@ export { defaultWidgets as widgets };
 
 const Main = (props) => {
   const { configProvider, widgets, ...otherProps } = props;
-  console.log(schema,'sccd');
 
   return (
     <ConfigProvider

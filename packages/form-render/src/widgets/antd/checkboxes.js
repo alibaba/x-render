@@ -24,6 +24,7 @@ const Checkboxes = ({ schema, options: _options, ...rest }) => {
     mode: 'multiple',
     ...rest,
   };
+ 
   return <Checkbox.Group {...checkboxesProps} />;
 };
 

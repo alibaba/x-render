@@ -1,12 +1,18 @@
 import React, { useContext } from 'react';
-import { Form, Col, Button } from 'antd';
+import { Form, Col } from 'antd';
 import { widgets } from '../widgets';
 
 import { extraSchemaList, getWidgetName } from './mapping';
-import { isListType, isObject, isObjType } from '../utils';
+import { isObject } from '../utils';
 import { FormContext } from '../utils/context';
+import { isHasExpression, parseAllExpression } from '../utils/expression';
 
-const ErrorSchema = schema => {
+const valuePropNameMap = {
+  checkbox: 'checked',
+  switch: 'checked'
+};
+
+const ErrorSchema = (schema: any) => {
   return (
     <div>
       <div style={{ color: 'red' }}>schema未匹配到展示组件：</div>
@@ -15,97 +21,37 @@ const ErrorSchema = schema => {
   );
 };
 
-const transformProps = props => {
-  const {
-    onChange,
-    value,
-    defaultValue,
-    schema: ownSchema,
-    readOnly,
-    ...rest
-  } = props;
-
-  const schema = { ...ownSchema };
-  const { trigger, valuePropName } = schema || {};
-  const controlProps = {};
-  let _valuePropName = 'value';
-
-  const _value = value === undefined ? defaultValue : value;
-  if (valuePropName && typeof valuePropName === 'string') {
-    _valuePropName = valuePropName;
-    controlProps[valuePropName] = _value;
-  } else {
-    controlProps.value = _value;
+const getRuleList = (schema: any) => {
+  const rules: any = [];
+  if (schema.type === 'string' && typeof schema.max === 'number') {
+    rules.push({ type: schema.type, max: schema.max });
   }
+  return rules;
+}
 
-  // const _onChange = (...args) => {
-  //   const newValue = defaultGetValueFromEvent(_valuePropName, ...args);
-  //   onChange(newValue);
-  // };
 
-  // if (trigger && typeof trigger === 'string') {
-  //   controlProps.onChange = _onChange;
-  //   controlProps[trigger] = _onChange;
-  // } else {
-  //   controlProps.onChange = _onChange;
-  // }
 
-  const usefulPropsFromSchema = {
-    disabled: schema.disabled || schema['ui:disabled'],
-    readOnly: schema.readOnly || schema['ui:readonly'] || readOnly,
-    hidden: schema.hidden || schema['ui:hidden'],
-  };
-
-  const _props = {
-    ...controlProps,
-    schema,
-    ...usefulPropsFromSchema,
-    ...rest,
-  };
-
-  return _props;
-};
-
-const FieldItem = (props: any) => {
+const FieldView = (props: any) => {
   const formProps: any = useContext(FormContext);
-
-  const { schema, onChange, children, readOnly, disabled, name, renderCore } = props;
+  const { schema, children, path, renderCore } = props;
+  const { title, hidden } = schema;
 
   console.log(props, 'fieldProps');
+  const widgetName = getWidgetName(schema);
 
-
-
-
-
-  let widgetName = getWidgetName(schema);
-  const customName = schema.widget || schema['ui:widget'];
-  if (customName && widgets[customName]) {
-    widgetName = customName;
-  }
-  const readOnlyName = schema.readOnlyWidget || 'html';
-  if (readOnly && !isObjType(schema) && !isListType(schema)) {
-    widgetName = readOnlyName;
-  }
+  // 未匹配到协议组件
   if (!widgetName) {
-    widgetName = 'input';
     return <ErrorSchema schema={schema} />;
   }
-  const Widget = widgets[widgetName] || widgets['html'];
 
-  const extraSchema = extraSchemaList[widgetName];
+  const Widget = widgets[widgetName] || widgets['html'];
+  
+  const ruleList = getRuleList(schema);
 
   let widgetProps = {
-    schema: { ...schema, ...extraSchema },
-    onChange,
     children,
-    disabled,
-    readOnly,
     ...schema.props,
   };
-
-  if (schema.type === 'string' && typeof schema.max === 'number') {
-    widgetProps.maxLength = schema.max;
-  }
 
   ['title', 'placeholder', 'disabled', 'format'].forEach(key => {
     if (schema[key]) {
@@ -133,16 +79,11 @@ const FieldItem = (props: any) => {
     widgetProps.addonAfter = <AddonAfterWidget {...schema} />;
   }
 
-  const finalProps = transformProps(widgetProps);
-  console.log(finalProps, 'finalProps');
-
-  const { title: label } = finalProps;
-
-
+ 
   if (children) {
     return (
       <Col span={24} style={{ marginBottom: '20px' }}>
-        <Widget {...finalProps} />
+        <Widget {...widgetProps} />
       </Col>
     );
   }
@@ -156,13 +97,45 @@ const FieldItem = (props: any) => {
     span = 24;
   }
 
+  const valuePropName = valuePropNameMap[widgetName] || undefined;
+
+  // 不涉及到函数表达式
   return (
     <Col span={span}>
-      <Form.Item label={label} name={name}>
-        <Widget {...finalProps} />
+      <Form.Item 
+        label={title} 
+        name={path} 
+        valuePropName={valuePropName}
+        rules={ruleList}
+        hidden={hidden}
+      >
+        <Widget {...widgetProps} />
       </Form.Item>
     </Col>
   );
+
 }
 
-export default FieldItem;
+export default (props: any) => {
+  const { schema, ...otherProps } = props;
+
+  // 不存在函数表达式
+  if (!isHasExpression(schema)) {
+    return <FieldView {...props} />
+  }
+
+  // 需要监听表单值，进行动态渲染
+  return (
+    <Form.Item shouldUpdate={(prevValues, curValues) => {
+      // 观察函数表达式依赖的值是否发生变更
+      // TODO 进行优化
+      return true;
+    }}>
+      {(form: any) => {
+        const formData = form.getFieldsValue(true);
+        const newSchema = parseAllExpression(schema, formData, '');
+        return <FieldView schema={newSchema} {...otherProps} />
+      }}
+    </Form.Item>
+  )
+};

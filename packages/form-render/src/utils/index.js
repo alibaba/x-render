@@ -1,3 +1,17 @@
+import { cloneDeep } from 'lodash-es';
+
+export const clone = cloneDeep;
+
+export const isObject = (data) => {
+  const str = Object.prototype.toString.call(data);
+  return str.indexOf('Object') > -1;
+}
+
+
+
+
+
+
 export function isUrl(string) {
   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
   // const domainRE = /^[^\s\.]+\.\S{2,}$/;
@@ -55,12 +69,6 @@ export function isListType(schema) {
   );
 }
 
-function stringContains(str, text) {
-  return str.indexOf(text) > -1;
-}
-
-export const isObject = a =>
-  stringContains(Object.prototype.toString.call(a), 'Object');
 
 export function isObjType(schema) {
   return (
