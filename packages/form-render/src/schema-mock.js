@@ -1670,7 +1670,8 @@ export default {
             title: '输入框',
             type: 'string',
             required: true,
-            hidden: '{{formData.select1 === true}}',
+            // hidden: '{{formData.select1 === true}}',
+            disabled: '{{formData.select1 === true}}'
           },
       },
     "labelWidth": 120,

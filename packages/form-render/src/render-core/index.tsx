@@ -3,7 +3,7 @@ import { Row } from 'antd';
 import FieldItem from './fieldItem';
 import FieldList from './fieldList';
 
-const renderItem = ({ schema, path, index }) => {
+const renderItem = ({ schema, path, index, parentLitPath }) => {
 
   let childContent: React.ReactNode = null;
 
@@ -23,6 +23,7 @@ const renderItem = ({ schema, path, index }) => {
         key={index}
         schema={schema}
         path={path}
+        parentLitPath={parentLitPath}
         children= {childContent}
         renderCore={RenderCore}
       />
@@ -36,18 +37,19 @@ const renderItem = ({ schema, path, index }) => {
       path={path}
       children= {childContent}
       renderCore={RenderCore}
+      parentLitPath={parentLitPath}
     />
   );
 }
 
 const RenderCore = (props: any) => {
-  const { schema, parentPath = [] } = props;
+  const { schema, parentPath = [], parentLitPath = [] } = props;
 
   return Object.keys(schema?.properties || {}).map((key, index) => {
     const itemSchema = schema.properties[key];
     const path: string[] | null = [...(parentPath || []), key];
 
-    return renderItem({ schema: itemSchema, path, index })
+    return renderItem({ schema: itemSchema, path, index, parentLitPath })
   });
 }
 

@@ -4,14 +4,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import renderCore from '../../../render-core';
 
 const CardList = (props: any) => {
-  const { name, schema } = props;
+  const { name: listName, schema } = props;
 
   return (
-    <Form.List name={name}>
+    <Form.List name={listName}>
       {(fields, { add, remove }) => (
         <>
           {fields.map(({ key, name, ...restField }) => {
-            return renderCore({ schema: schema.items, parentNamePath: [name]})
+            return renderCore({ schema: schema.items, parentPath: [name], parentLitPath: [...listName, name] })
           })}
           <Form.Item>
             <Button type='dashed' onClick={() => add()} block icon={<PlusOutlined />}>

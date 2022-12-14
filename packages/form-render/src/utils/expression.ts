@@ -1,5 +1,5 @@
 import { get } from 'lodash-es';
-import { isObject, clone } from './index';
+import { isObject, clone } from './common';
 
 export const isExpression = (str: string) => {
   if (typeof str !== 'string') {
@@ -32,9 +32,8 @@ export const isHasExpression = (schema: any) => {
 };
 
 
-export const parseExpression = (func: any, formData = {}, dataPath: string) => {
-  const parentPath = getParentPath(dataPath);
-  const parent = getValueByPath(formData, parentPath) || {};
+export const parseExpression = (func: any, formData = {}, parentPath: string) => {
+  const parentData = get(formData, parentPath) || {};
 
   if (typeof func === 'string') {
     const funcBody = func.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '');
@@ -42,13 +41,13 @@ export const parseExpression = (func: any, formData = {}, dataPath: string) => {
     const funcStr = `
       return ${funcBody
         .replace(/formData/g, JSON.stringify(formData))
-        .replace(/rootValue/g, JSON.stringify(parent))}
+        .replace(/rootValue/g, JSON.stringify(parentData))}
     `;
 
     try {
       return Function(funcStr)();
     } catch (error) {
-      console.log(error, func, dataPath);
+      console.log(error, func, parentPath);
       return null; // 如果计算有错误，return null 最合适
     }
   } 
@@ -69,18 +68,6 @@ export function getRealDataPath(path) {
   }
 
   return path.replace(/[$]void_[^.]+./g, '');
-}
-
-export function getParentPath(path) {
-  if (typeof path === 'string') {
-    const pathArr = path.split('.');
-    if (pathArr.length === 1) {
-      return '#';
-    }
-    pathArr.pop();
-    return pathArr.join('.');
-  }
-  return '#';
 }
 
 export function getValueByPath(formData, path) {

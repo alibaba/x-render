@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import { Form, Col } from 'antd';
 import { widgets } from '../widgets';
 
-import { extraSchemaList, getWidgetName } from './mapping';
-import { isObject } from '../utils';
+import { getWidgetName } from './mapping';
+import { isObject } from '../utils/common';
 import { FormContext } from '../utils/context';
 import { isHasExpression, parseAllExpression } from '../utils/expression';
 
@@ -29,14 +29,27 @@ const getRuleList = (schema: any) => {
   return rules;
 }
 
+const getColSpan = (formCtx: any, schema: any) => {
+  let span = 24;
+  if (formCtx.column) {
+    span = 24 / formCtx.column;
+  }
+
+  if (schema.width === '100%') {
+    span = 24;
+  }
+  return span;
+}
+
 
 
 const FieldView = (props: any) => {
-  const formProps: any = useContext(FormContext);
-  const { schema, children, path, renderCore } = props;
-  const { title, hidden } = schema;
+  const { schema, children, path, parentLitPath, renderCore } = props;
+  const formCtx: any = useContext(FormContext);
 
   console.log(props, 'fieldProps');
+ 
+  const { title, hidden } = schema;
   const widgetName = getWidgetName(schema);
 
   // 未匹配到协议组件
@@ -45,23 +58,17 @@ const FieldView = (props: any) => {
   }
 
   const Widget = widgets[widgetName] || widgets['html'];
-  
-  const ruleList = getRuleList(schema);
 
-  let widgetProps = {
+  const widgetProps = {
     children,
     ...schema.props,
   };
 
-  ['title', 'placeholder', 'disabled', 'format'].forEach(key => {
+  ['placeholder', 'disabled', 'format'].forEach(key => {
     if (schema[key]) {
       widgetProps[key] = schema[key];
     }
   });
-
-  if (schema.props) {
-    widgetProps = { ...widgetProps, ...schema.props };
-  }
 
   Object.keys(schema).forEach(key => {
     if (
@@ -79,7 +86,7 @@ const FieldView = (props: any) => {
     widgetProps.addonAfter = <AddonAfterWidget {...schema} />;
   }
 
- 
+  // 容器组件
   if (children) {
     return (
       <Col span={24} style={{ marginBottom: '20px' }}>
@@ -88,18 +95,11 @@ const FieldView = (props: any) => {
     );
   }
   
-  let span = 24;
-  if (formProps.column) {
-    span = 24 / formProps.column;
-  }
-
-  if (schema.width === '100%') {
-    span = 24;
-  }
-
   const valuePropName = valuePropNameMap[widgetName] || undefined;
+  const span = getColSpan(formCtx, schema);
+  const ruleList = getRuleList(schema);
 
-  // 不涉及到函数表达式
+
   return (
     <Col span={span}>
       <Form.Item 
@@ -113,7 +113,6 @@ const FieldView = (props: any) => {
       </Form.Item>
     </Col>
   );
-
 }
 
 export default (props: any) => {
@@ -126,14 +125,14 @@ export default (props: any) => {
 
   // 需要监听表单值，进行动态渲染
   return (
-    <Form.Item shouldUpdate={(prevValues, curValues) => {
+    <Form.Item noStyle shouldUpdate={(prevValues, curValues) => {
       // 观察函数表达式依赖的值是否发生变更
       // TODO 进行优化
       return true;
     }}>
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-        const newSchema = parseAllExpression(schema, formData, '');
+        const newSchema = parseAllExpression(schema, formData, parentLitPath);
         return <FieldView schema={newSchema} {...otherProps} />
       }}
     </Form.Item>

@@ -1,4 +1,4 @@
-import { defaultGetValueFromEvent } from '../utils';
+import { defaultGetValueFromEvent } from '../utils/common';
 
 export const createWidget = (mapProps, extraSchema) => Component => props => {
   const { schema, ...rest } = props;

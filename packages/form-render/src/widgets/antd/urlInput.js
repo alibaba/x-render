@@ -1,6 +1,6 @@
 import { Input } from 'antd';
 import React from 'react';
-import { isUrl } from '../../utils';
+import { isUrl } from '../../utils/common';
 
 const UrlNode = ({ value, addonText = '测试链接' }) => {
   const useUrl = isUrl(value);

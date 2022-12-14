@@ -1,6 +1,6 @@
 import React from 'react';
 import { Radio } from 'antd';
-import { getArray } from '../../utils';
+import { getArray } from '../../utils/common';
 
 const Radioes = ({ schema, options: _options, props, ...rest }) => {
   let options;
