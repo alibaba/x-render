@@ -12,6 +12,8 @@ const valuePropNameMap = {
   switch: 'checked'
 };
 
+const fieldPropsList = ['placeholder', 'disabled', 'format', 'enum', 'enumNames']
+
 const ErrorSchema = (schema: any) => {
   return (
     <div>
@@ -22,11 +24,18 @@ const ErrorSchema = (schema: any) => {
 };
 
 const getRuleList = (schema: any) => {
-  const rules: any = [];
-  if (schema.type === 'string' && typeof schema.max === 'number') {
-    rules.push({ type: schema.type, max: schema.max });
+  const { required, type, max, rules = [] } = schema;
+  const result: any = [...rules];
+
+  if (type === 'string' && typeof max === 'number') {
+    result.push({ type, max, message: 'xxxxx' });
   }
-  return rules;
+  
+  if (required) {
+    result.push({ required, message: '字段信息必填' });
+  }
+
+  return result;
 }
 
 const getColSpan = (formCtx: any, schema: any) => {
@@ -39,17 +48,43 @@ const getColSpan = (formCtx: any, schema: any) => {
     span = 24;
   }
   return span;
+};
+
+const getLabel = (schema: any) => {
+  const { title, description, descType } = schema;
+  if (descType === 'icon') {
+    return title;
+  }
+  return (
+    <>
+      {title}
+      {description && (
+        <span className='fr-desc ml2'>
+          ({description})
+        </span>
+      )}
+    </>
+  )
 }
 
+const getTooltip = (schema: any) => {
+  const { descType, description } = schema;
+  if (descType === 'icon' && description) {
+    return {
+      title: description
+    }
+  }
 
+  return null;
+}
 
 const FieldView = (props: any) => {
-  const { schema, children, path, parentLitPath, renderCore } = props;
+  const { schema, children, path, renderCore } = props;
   const formCtx: any = useContext(FormContext);
 
   console.log(props, 'fieldProps');
  
-  const { title, hidden } = schema;
+  const { hidden } = schema;
   const widgetName = getWidgetName(schema);
 
   // 未匹配到协议组件
@@ -64,7 +99,7 @@ const FieldView = (props: any) => {
     ...schema.props,
   };
 
-  ['placeholder', 'disabled', 'format'].forEach(key => {
+  fieldPropsList.forEach(key => {
     if (schema[key]) {
       widgetProps[key] = schema[key];
     }
@@ -98,16 +133,19 @@ const FieldView = (props: any) => {
   const valuePropName = valuePropNameMap[widgetName] || undefined;
   const span = getColSpan(formCtx, schema);
   const ruleList = getRuleList(schema);
-
+  const label = getLabel(schema);
+  const tooltip = getTooltip(schema);
 
   return (
     <Col span={span}>
-      <Form.Item 
-        label={title} 
+      <Form.Item
+        label={label} 
         name={path} 
         valuePropName={valuePropName}
         rules={ruleList}
         hidden={hidden}
+        tooltip={tooltip}
+        initialValue={schema.default}
       >
         <Widget {...widgetProps} />
       </Form.Item>

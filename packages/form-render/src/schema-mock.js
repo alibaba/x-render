@@ -1659,6 +1659,10 @@ export default {
         select1: {
           title: '隐藏输入框',
           type: 'boolean',
+          description: 'dfadffad',
+          descType: 'icon',
+          default: true,
+         
         },
         // input1: {
         //   title: '输入框',
@@ -1671,7 +1675,11 @@ export default {
             type: 'string',
             required: true,
             // hidden: '{{formData.select1 === true}}',
-            disabled: '{{formData.select1 === true}}'
+            //disabled: '{{formData.select1 === true}}',
+            placeholder: '请选择', 
+            props: {
+              disabled: true,
+            }
           },
       },
     "labelWidth": 120,
