@@ -45,7 +45,7 @@ const FrSelect = ({
     ...rest,
   };
 
-  if (rest.showSearch && !!schema.props.onSearch) {
+  if (rest.showSearch && !!schema.props.onSearch && typeof schema.props.onSearch === 'string') {
     finalProps.onSearch = search => {
       const _onSearch = methods[schema.props.onSearch] || addons.watch[schema.props.onSearch];
       if (typeof _onSearch === 'function') _onSearch(search);
