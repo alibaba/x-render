@@ -16,7 +16,7 @@ const Demo = () => {
     <div>
       <Modal
         destroyOnClose
-        visible={show}
+        open={show}
         onOk={form.submit}
         onCancel={() => {
           set1(false);

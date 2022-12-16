@@ -1,13 +1,11 @@
 import { Tabs } from 'antd';
 import FormRender, { useForm } from 'form-render';
-import { deserialize, serializeToDraft } from "fr-generator"
+import { deserialize, serializeToDraft } from 'fr-generator';
 import parseJson from 'json-parse-better-errors';
 import { useEffect, useState } from 'react';
 import AsyncSelect from './customized/AsyncSelect';
 import DefaultSchema from './json/simplest.json';
 import CodeBlock from './monaco';
-
-const { TabPane } = Tabs;
 
 // help functions
 const schema2str = obj => JSON.stringify(obj, null, 2) || '';
@@ -76,14 +74,23 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
           onChange={() => {}}
           className="flex flex-column"
           style={{ overflow: 'auto' }}
-        >
-          <TabPane tab="Schema" key="1">
-            <CodeBlock value={schemaStr} onChange={handleCodeChange} />
-          </TabPane>
-          <TabPane tab="Data" key="2">
-            <CodeBlock value={schema2str(form.getValues())} readOnly />
-          </TabPane>
-        </Tabs>
+          items={[
+            {
+              label: 'Schema',
+              key: '1',
+              children: (
+                <CodeBlock value={schemaStr} onChange={handleCodeChange} />
+              ),
+            },
+            {
+              label: 'Data',
+              key: '2',
+              children: (
+                <CodeBlock value={schema2str(form.getValues())} readOnly />
+              ),
+            },
+          ]}
+        />
       </div>
       <div className="w-50 h-100 flex flex-column pa2">
         <div
