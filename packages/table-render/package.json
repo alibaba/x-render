@@ -29,8 +29,7 @@
     "postpublish": "git push --tags",
     "site": "dumi build",
     "start": "dumi dev",
-    "test": "umi-test",
-    "test:coverage": "umi-test --coverage"
+    "test:ui": "vitest --ui"
   },
   "lint-staged": {
     "*.{js,jsx,less,md,json}": [
