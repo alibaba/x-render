@@ -50,6 +50,7 @@
     "@types/enzyme": "^3.10.11",
     "@types/enzyme-adapter-react-16": "^1.0.6",
     "@types/jest": "^27.0.3",
+    "@types/lodash-es": "^4.17.6",
     "@umijs/plugin-esbuild": "1.x",
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.0.5",
