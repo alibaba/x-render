@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.2",
+    "@babel/plugin-transform-react-jsx": "^7.19.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/preset-react": "^7.16.7",
     "@jest/types": "^27.5.1",
@@ -53,6 +54,7 @@
     "@umijs/preset-react": "1.x",
     "@umijs/test": "^3.0.5",
     "@vitejs/plugin-react": "^3.0.0",
+    "@vitest/coverage-c8": "^0.25.8",
     "@vitest/ui": "^0.25.7",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
     "antd": "^4.x",
