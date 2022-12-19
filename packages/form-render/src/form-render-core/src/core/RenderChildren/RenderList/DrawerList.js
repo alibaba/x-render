@@ -215,11 +215,11 @@ const DrawerList = ({
           : null}
       </div>
       <Drawer
-        width="600"
+        width={600}
         title={actionColumnProps.colHeaderText}
         placement="right"
         onClose={closeDrawer}
-        visible={showDrawer}
+        open={showDrawer}
         destroyOnClose // 必须要加，currentIndex不是一个state，Core不会重新渲染就跪了
       >
         <div className="fr-container">
