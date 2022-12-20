@@ -12,8 +12,7 @@ const CardList = (props: any) => {
         <div style={{ padding: '0 10px' }}>
           {fields.map(({ key, name  }) => {
             const length = fields.length;
-            debugger;
-            
+           
             return (
               <div key={key} style={{ display: 'flex', alignItems: 'flex-start', marginTop: name === 0 ? '52px' : 0 }}>
                 <div style={{ width: 0, flex: 1}}>
