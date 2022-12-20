@@ -9,17 +9,17 @@ import ListVirtual from '../widgets/container/ListVirtual';
 import ListTab from '../widgets/container/ListTab';
 
 const widgetModules = {
-  list0: ListCard,
-  list1: ListCard,
-  list2: ListTable,
-  list3: ListDrawer,
-  list4: ListVirtual,
+  // list0: ListCard,
+  // list1: ListCard,
+  // list2: ListTable,
+  // list3: ListDrawer,
+  // list4: ListVirtual,
   simpleList: ListCard,
   cardList: ListCard,
   tableList: ListTable,
   drawerList: ListDrawer,
   virtualList: ListVirtual,
-  tabList: ListTab
+  tabList: ListTab,
 };
 
 const FieldList = (props: any) => {
@@ -30,7 +30,6 @@ const FieldList = (props: any) => {
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';
   const Widget = widgetModules[widgetName] || ListCard;
-  
 
   let span = 24;
   if (formProps.column) {
@@ -44,14 +43,10 @@ const FieldList = (props: any) => {
   return (
     <Col span={span}>
       <Form.Item label={label}>
-        <Widget
-          name={path}
-          schema={schema}
-          form={formProps.form}
-        />
+        <Widget name={path} schema={schema} form={formProps.form} />
       </Form.Item>
     </Col>
   );
-}
+};
 
 export default FieldList;

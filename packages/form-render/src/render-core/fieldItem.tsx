@@ -9,10 +9,16 @@ import { isHasExpression, parseAllExpression } from '../utils/expression';
 
 const valuePropNameMap = {
   checkbox: 'checked',
-  switch: 'checked'
+  switch: 'checked',
 };
 
-const fieldPropsList = ['placeholder', 'disabled', 'format', 'enum', 'enumNames'];
+const fieldPropsList = [
+  'placeholder',
+  'disabled',
+  'format',
+  'enum',
+  'enumNames',
+];
 
 const ErrorSchema = (schema: any) => {
   return (
@@ -48,13 +54,13 @@ const getRuleList = (schema: any) => {
     }
     result.push({ type, min: min * 1, message });
   }
-  
+
   if (required) {
     result.push({ required: true, message: '字段信息必填' });
   }
 
   return result;
-}
+};
 
 const getColSpan = (formCtx: any, schema: any) => {
   let span = 24;
@@ -76,21 +82,17 @@ const getLabel = (schema: any) => {
   return (
     <>
       {title}
-      {description && (
-        <span className='fr-desc ml2'>
-          ({description})
-        </span>
-      )}
+      {description && <span className="fr-desc ml2">({description})</span>}
     </>
-  )
+  );
 };
 
 const getTooltip = (schema: any) => {
   const { descType, description } = schema;
   if (descType === 'icon' && description) {
     return {
-      title: description
-    }
+      title: description,
+    };
   }
 
   return null;
@@ -101,7 +103,7 @@ const FieldView = (props: any) => {
   const formCtx: any = useContext(FormContext);
 
   console.log(props, 'fieldProps');
- 
+
   const { hidden } = schema;
   const widgetName = getWidgetName(schema);
 
@@ -147,7 +149,7 @@ const FieldView = (props: any) => {
       </Col>
     );
   }
-  
+
   const valuePropName = valuePropNameMap[widgetName] || undefined;
   const span = getColSpan(formCtx, schema);
   const ruleList = getRuleList(schema);
@@ -157,8 +159,8 @@ const FieldView = (props: any) => {
   return (
     <Col span={span}>
       <Form.Item
-        label={label} 
-        name={path} 
+        label={label}
+        name={path}
         valuePropName={valuePropName}
         rules={ruleList}
         hidden={hidden}
@@ -169,28 +171,31 @@ const FieldView = (props: any) => {
       </Form.Item>
     </Col>
   );
-}
+};
 
 export default (props: any) => {
   const { schema, parentLitPath, ...otherProps } = props;
 
   // 不存在函数表达式
   if (!isHasExpression(schema)) {
-    return <FieldView {...props} />
+    return <FieldView {...props} />;
   }
 
   // 需要监听表单值，进行动态渲染
   return (
-    <Form.Item noStyle shouldUpdate={(prevValues, curValues) => {
-      // 观察函数表达式依赖的值是否发生变更
-      // TODO 进行优化
-      return true;
-    }}>
+    <Form.Item
+      noStyle
+      shouldUpdate={(prevValues, curValues) => {
+        // 观察函数表达式依赖的值是否发生变更
+        // TODO 进行优化
+        return true;
+      }}
+    >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
         const newSchema = parseAllExpression(schema, formData, parentLitPath);
-        return <FieldView schema={newSchema} {...otherProps} />
+        return <FieldView schema={newSchema} {...otherProps} />;
       }}
     </Form.Item>
   );
-}
+};
