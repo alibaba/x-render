@@ -24,7 +24,7 @@ const widgetModules = {
 
 const FieldList = (props: any) => {
   const formProps: any = useContext(FormContext);
-  const { schema, name, renderCore } = props;
+  const { schema, path, renderCore } = props;
 
   console.log(props, 'fieldProps');
   const { title: label, widget } = schema;
@@ -45,8 +45,9 @@ const FieldList = (props: any) => {
     <Col span={span}>
       <Form.Item label={label}>
         <Widget
-          name={name}
-          
+          name={path}
+          schema={schema}
+          form={formProps.form}
         />
       </Form.Item>
     </Col>

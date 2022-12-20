@@ -15,8 +15,6 @@ import timeRange from './antd/timeRange';
 import upload from './antd/upload';
 import urlInput from './antd/urlInput';
 
-
-
 // 容器
 import BoxCard from './container/BoxCard';
 import BoxCollapse from './container/BoxCollapse';

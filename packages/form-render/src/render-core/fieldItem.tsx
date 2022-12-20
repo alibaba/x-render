@@ -142,7 +142,7 @@ const FieldView = (props: any) => {
   // 容器组件
   if (children) {
     return (
-      <Col span={24} style={{ marginBottom: '20px' }}>
+      <Col span={24} style={{ marginBottom: '24px' }}>
         <Widget {...widgetProps} />
       </Col>
     );
