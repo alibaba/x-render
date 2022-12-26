@@ -15,18 +15,21 @@ const FR = (props) => {
 		onMount && onMount();
 	}, []);
 
+
+  const labelCol = { span : 6 };
+  // if (schema?.labelWidth) {
+  //   labelCol.flex = schema.labelWidth + 'px';
+  // } else {
+  //   labelCol.span = schema?.labelSpan || 6;
+  // }
+
+  const wrapperCol = { span: 18 };
+
   const context = {
     column: column || schema?.column || 1,
-    form: props.form
+    labelCol,
+    wrapperCol
   };
-
-  const labelCol = {};
-  if (schema?.labelWidth) {
-    labelCol.flex = schema.labelWidth + 'px';
-  } else {
-    labelCol.span = schema?.labelSpan || 6;
-  }
-
   return (
     <FormContext.Provider value={context}>
       <Form
@@ -35,6 +38,7 @@ const FR = (props) => {
           console.log(values);
         }}
         labelCol={labelCol}
+        wrapperCol={wrapperCol}
         {...formProps}
       >
         <Row gutter={8}>

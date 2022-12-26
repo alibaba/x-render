@@ -19,6 +19,8 @@ import urlInput from './antd/urlInput';
 import BoxCard from './container/BoxCard';
 import BoxCollapse from './container/BoxCollapse';
 import BoxLineTitle from './container/BoxLineTitle';
+import BoxLine from './container/BoxLine';
+
 
 
 const { TextArea } = Input;
@@ -73,8 +75,8 @@ export const widgets = {
 
   card: BoxCard,
   collapse: BoxCollapse,
-  lineTitle: BoxLineTitle
-
+  lineTitle: BoxLineTitle,
+  line: BoxLine,
 };
 
 export const defaultWidgetNameList = Object.keys(widgets);

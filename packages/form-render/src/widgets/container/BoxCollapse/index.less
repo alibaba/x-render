@@ -1,13 +1,14 @@
 .f-collapse {
   background-color: #fff;
   border-radius: 4px;
-  box-shadow: 0 2px 4px 2px #dde1e8;
-
+  // box-shadow: 0 2px 4px 2px #dde1e8;
+  // border-color: #f4f4f4;
+  border: 1px solid #f4f4f4;
   .collapse-title {
     height: 24px;
     margin-right: 16px;
-    color: #141414;
-    font-weight: bold;
+    color: #000000e0;
+    font-weight: 600;
     font-size: 16px;
     line-height: 24px;
   }
@@ -16,7 +17,7 @@
     height: 14px;
     margin-left: 30px;
     color: black;
-    font-weight: bold;
+    font-weight: 600;
     font-size: 14px;
     line-height: 14px;
     span {
@@ -24,14 +25,14 @@
     }
   }
 
-  .expand-icon-box {
-    position: absolute;
-    top: 20px;
-    right: 10px;
-    display: flex;
-    align-items: center;
-    color: #999;
-  }
+  // .expand-icon-box {
+  //   position: absolute;
+  //   top: 20px;
+  //   right: 10px;
+  //   display: flex;
+  //   align-items: center;
+  //   color: #999;
+  // }
 
   .expand-icon-desc {
     margin-left: 4px;
@@ -62,4 +63,8 @@
       animation: none !important;
     }
   }
+}
+
+.f-collapse:hover {
+  box-shadow: 0 2px 4px 2px #dde1e8;
 }

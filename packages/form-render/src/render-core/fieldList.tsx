@@ -24,8 +24,7 @@ const widgetModules = {
 
 const FieldList = (props: any) => {
   const formProps: any = useContext(FormContext);
-  const { schema, path, renderCore } = props;
-
+  const { schema, path, renderCore, max } = props;
   console.log(props, 'fieldProps');
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';
@@ -41,13 +40,24 @@ const FieldList = (props: any) => {
     span = 24;
   }
 
+ const handleOnAdd = () => {
+
+ }
+
+ const handleOnRemove = () => {
+
+ }
+
+ const handleOnMove = () => {
+
+ }
+
   return (
-    <Col span={span}>
-      <Form.Item label={label}>
+    <Col span={24}>
+      <Form.Item label={label} wrapperCol={{ span: 22 }} labelCol={{ span : 2 }}>
         <Widget
           name={path}
           schema={schema}
-          form={formProps.form}
         />
       </Form.Item>
     </Col>

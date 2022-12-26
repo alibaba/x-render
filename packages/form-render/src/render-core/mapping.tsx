@@ -10,6 +10,7 @@ export const mapping = {
   card: 'card',
   collapse: 'collapse',
   lineTitle: 'lineTitle',
+  line: 'line',
   'string:upload': 'upload',
   'string:url': 'url',
   'string:dateTime': 'date',

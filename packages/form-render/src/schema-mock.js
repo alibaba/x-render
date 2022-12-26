@@ -1631,30 +1631,124 @@
 export default {
     "type": "object",
     "properties": {
+      "input_3XWgl7": {
+        "title": "输入框",
+        "type": "string",
+        "props": {}
+      },
+      "input_3XW": {
+        "title": "输入框",
+        "type": "string",
+        "props": {}
+      },
+      "input_3XWgl27": {
+        "title": "输入框",
+        "type": "string",
+        "props": {}
+      },
+      "input_3X3W": {
+        "title": "输入框",
+        "type": "string",
+        "props": {}
+      },
+      "e2342234": {
+        "type": "object",
+        "theme": "line",
+        
+        "props": {
+          
+          "column": 3,
+          "labelCol": {
+            "span": 8
+          },
+          "wrapperCol": {
+            "span": 16
+          }
+        },
+        "properties": {
+          "input_3XWgl7": {
+            "title": "输入框",
+            "type": "string",
+            "props": {}
+          },
+          "input_3XW": {
+            "title": "输入框",
+            "type": "string",
+            "props": {}
+          },
+          "input_3XWgl27": {
+            "title": "输入框",
+            "type": "string",
+            "props": {}
+          },
+        },
+      },
       "list_ikPi2q": {
-        "title": "数组",
+        "title": "营销活动",
         "type": "array",
+        "max": "5",
         "items": {
           "type": "object",
           "theme": "collapse",
-          
           "props": {
-            "title":"xxxxx",
+            title: '活动模版',
+            "column": 3,
+            "labelCol": {
+              "span": 6
+            },
+            "wrapperCol": {
+              "span": 16
+            }
           },
           "properties": {
             "input_3XWgl7": {
               "title": "输入框",
               "type": "string",
               "props": {}
-            }
-          }
+            },
+            "input_3XW": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            },
+            "input_3XWgl27": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            },
+            "input_3XWgl71": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            },
+            "input_3XW1": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            },
+            "input_3XWgl271": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            },
+            "input_3XW14": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            },
+            "input_3XWgl271": {
+              "title": "输入框",
+              "type": "string",
+              "props": {}
+            },
+          },
         },
         "props": {}
       }
     },
     "labelWidth": 120,
     "displayType": "row",
-    "column": 1
+    "column": 3
   }
 
 // export default {

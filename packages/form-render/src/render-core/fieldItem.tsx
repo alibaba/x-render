@@ -4,7 +4,8 @@ import { widgets } from '../widgets';
 
 import { getWidgetName } from './mapping';
 import { isObject } from '../utils/common';
-import { FormContext } from '../utils/context';
+import { FormContext, BoxContext } from '../utils/context';
+
 import { isHasExpression, parseAllExpression } from '../utils/expression';
 
 const valuePropNameMap = {
@@ -56,9 +57,11 @@ const getRuleList = (schema: any) => {
   return result;
 }
 
-const getColSpan = (formCtx: any, schema: any) => {
+const getColSpan = (formCtx: any, schema: any, boxCtx) => {
   let span = 24;
-  if (formCtx.column) {
+  if (boxCtx.column) {
+    span = 24 / boxCtx.column;
+  }else if (formCtx.column) {
     span = 24 / formCtx.column;
   }
 
@@ -99,6 +102,12 @@ const getTooltip = (schema: any) => {
 const FieldView = (props: any) => {
   const { schema, children, path, renderCore } = props;
   const formCtx: any = useContext(FormContext);
+  const boxCtx: any = useContext(BoxContext);
+
+  const labelCol = boxCtx.labelCol || formCtx.labelCol;
+  const wrapperCol = boxCtx.wrapperCol || formCtx.wrapperCol;
+
+
 
   console.log(props, 'fieldProps');
  
@@ -142,14 +151,17 @@ const FieldView = (props: any) => {
   // 容器组件
   if (children) {
     return (
-      <Col span={24} style={{ marginBottom: '24px' }}>
-        <Widget {...widgetProps} />
+      // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
+      <Col span={24}>
+        <BoxContext.Provider value={{ column: widgetProps.column, labelCol: widgetProps.labelCol, wrapperCol: widgetProps.wrapperCol }}>
+          <Widget {...widgetProps} />
+        </BoxContext.Provider>
       </Col>
     );
   }
   
   const valuePropName = valuePropNameMap[widgetName] || undefined;
-  const span = getColSpan(formCtx, schema);
+  const span = getColSpan(formCtx, schema, boxCtx);
   const ruleList = getRuleList(schema);
   const label = getLabel(schema);
   const tooltip = getTooltip(schema);
@@ -164,6 +176,8 @@ const FieldView = (props: any) => {
         hidden={hidden}
         tooltip={tooltip}
         initialValue={schema.default}
+        labelCol={labelCol}
+        wrapperCol={wrapperCol}
       >
         <Widget {...widgetProps} />
       </Form.Item>

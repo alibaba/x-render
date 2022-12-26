@@ -31,8 +31,8 @@ const FCollapse: FC<IProps> = (props) => {
   const renderExpandIcon = ({ isActive }: any): JSX.Element => {
     return (
       <div className="expand-icon-box">
-        <DownOutlined rotate={isActive ? 180 : 0} />
-        <span className="expand-icon-desc">{isActive ? '收起' : '展开'}</span>
+        <DownOutlined rotate={isActive ? 0 : -90 } style={{ fontSize: '16px'}} />
+        {/* <span className="expand-icon-desc">{isActive ? '收起' : '展开'}</span> */}
       </div>
     );
   };
@@ -51,7 +51,7 @@ const FCollapse: FC<IProps> = (props) => {
       expandIcon={renderExpandIcon}
       onChange={() => setActiveKey(activeKey ? '' : 'single')}
     >
-      <Panel key="single" header={collapseHeader}>
+      <Panel key="single" header={collapseHeader} forceRender={true}>
         {children}
       </Panel>
     </Collapse>
