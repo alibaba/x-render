@@ -19,7 +19,8 @@ import urlInput from './antd/urlInput';
 import BoxCard from './container/BoxCard';
 import BoxCollapse from './container/BoxCollapse';
 import BoxLineTitle from './container/BoxLineTitle';
-import BoxLine from './container/BoxLine';
+import BoxSubItem from './container/BoxSubItem';
+import BoxPanel from './container/BoxPanel';
 
 
 
@@ -76,7 +77,8 @@ export const widgets = {
   card: BoxCard,
   collapse: BoxCollapse,
   lineTitle: BoxLineTitle,
-  line: BoxLine,
+  subItem: BoxSubItem,
+  panel: BoxPanel
 };
 
 export const defaultWidgetNameList = Object.keys(widgets);

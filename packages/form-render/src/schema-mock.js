@@ -1653,7 +1653,7 @@ export default {
       },
       "xxx": {
         "type": "object",
-        "theme": "lineTitle",
+        "theme": "subItem",
         "props": {
           title: '活动模版',
           "column": 3,
@@ -1709,7 +1709,7 @@ export default {
       },
       "xxx1": {
         "type": "object",
-        "theme": "collapse",
+        "theme": "subItem",
         "props": {
           title: '活动模版',
           "column": 3,
@@ -1765,7 +1765,7 @@ export default {
       },
       "xxx2": {
         "type": "object",
-        "theme": "card",
+        "theme": "subItem",
         "props": {
           title: '活动模版',
           "column": 3,
@@ -1857,9 +1857,9 @@ export default {
         "max": "5",
         "items": {
           "type": "object",
-          "theme": "lineTitle",
+          "theme": "panel",
           "props": {
-            title: '活动模版',
+            
             "column": 3,
             "labelCol": {
               "span": 6
@@ -1884,31 +1884,8 @@ export default {
               "type": "string",
               "props": {}
             },
-            "input_3XWgl71": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            },
-            "input_3XW1": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            },
-            "input_3XWgl271": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            },
-            "input_3XW14": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            },
-            "input_3XWgl271": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            },
+            
+           
           },
         },
         "props": {}

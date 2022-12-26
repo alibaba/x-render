@@ -27,7 +27,7 @@ const getOperateStyle = (schema: any) => {
 };
 
 const getHasBackground = (fields: any[], ) => {
-  let result = false;
+  let result = true;
   if (fields.length === 0) {
     result = false;
   }

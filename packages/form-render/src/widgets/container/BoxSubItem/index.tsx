@@ -1,12 +1,11 @@
 import React from 'react';
-import { Card, Form} from 'antd';
+import { Form } from 'antd';
 import classnames from 'classnames';
 import './index.less';
 
-const BoxCard = (props: any) => {
+const BoxSubItem = (props: any) => {
   const { children, title, hasBackground = true } = props;
-
-
+  
   return (
     <Form.Item
       className={classnames(undefined, {
@@ -22,4 +21,4 @@ const BoxCard = (props: any) => {
   )
 }
 
-export default BoxCard;
+export default BoxSubItem;

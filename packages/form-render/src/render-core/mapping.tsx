@@ -11,6 +11,8 @@ export const mapping = {
   collapse: 'collapse',
   lineTitle: 'lineTitle',
   line: 'line',
+  subItem: 'subItem',
+  panel: 'panel',
   'string:upload': 'upload',
   'string:url': 'url',
   'string:dateTime': 'date',

@@ -152,7 +152,7 @@ const FieldView = (props: any) => {
   if (children) {
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
-      <Col span={24} style={{ margin: '8px 0 12px 0' }}>
+      <Col span={24}>
         <BoxContext.Provider value={{ column: widgetProps.column, labelCol: widgetProps.labelCol, wrapperCol: widgetProps.wrapperCol }}>
           <Widget {...widgetProps} />
         </BoxContext.Provider>
