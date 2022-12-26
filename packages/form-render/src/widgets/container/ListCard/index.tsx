@@ -6,11 +6,22 @@ import classnames from 'classnames'
 
 import './index.less';
 
-
 const getOperateFixed = (schema: any) => {
   let result = false;
-  if (['card', 'collapse'].includes(schema.items.theme) && !schema?.items?.props?.extra) {
+  if (['card', 'collapse', 'lineTitle'].includes(schema.items.theme) && !schema?.items?.props?.extra) {
     result = true;
+  }
+  return result;
+};
+
+const getOperateStyle = (schema: any) => {
+  let result: any = {};
+  if (['card', 'collapse', 'lineTitle'].includes(schema.items.theme) && !schema?.items?.props?.extra) {
+    result.top = '15px';
+    if (['lineTitle'].includes(schema.items.theme)) {
+      result.top = 0;
+      result.padding = 0
+    }
   }
   return result;
 };
@@ -58,7 +69,7 @@ const CardList = (props: any) => {
                 <div style={{ width: 0, flex: 1}}>
                   {renderCore({ schema, parentPath: [name], parentLitPath: [...listName, name] })}
                 </div>
-                <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })}>
+                <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>
                   {moveable && (
                     <>
                       <ArrowUpOutlined

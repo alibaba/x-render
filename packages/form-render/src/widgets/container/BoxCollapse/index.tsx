@@ -16,29 +16,29 @@ interface IProps {
 /**
  * 折叠面板
  */
-const FCollapse: FC<IProps> = (props) => {
+const BoxCollapse: FC<IProps> = (props) => {
   const { style, children, title, header, defaultExpand = true } = props;
 
   const [activeKey, setActiveKey] = useState<string>(defaultExpand ? 'single' : '');
 
   const collapseHeader = (
     <>
-      {title && <div className="collapse-title">{title}</div>}
+      {title && <div className='collapse-title'>{title}</div>}
       {header && header}
     </>
   );
 
   const renderExpandIcon = ({ isActive }: any): JSX.Element => {
     return (
-      <div className="expand-icon-box">
+      <div className='expand-icon-box'>
         <DownOutlined rotate={isActive ? 0 : -90 } style={{ fontSize: '16px'}} />
-        {/* <span className="expand-icon-desc">{isActive ? '收起' : '展开'}</span> */}
+        {/* <span className='expand-icon-desc'>{isActive ? '收起' : '展开'}</span> */}
       </div>
     );
   };
 
   if (!title) {
-    return <div className="w-100">{children}</div>;
+    return <div className='w-100'>{children}</div>;
   }
 
   return (
@@ -51,11 +51,11 @@ const FCollapse: FC<IProps> = (props) => {
       expandIcon={renderExpandIcon}
       onChange={() => setActiveKey(activeKey ? '' : 'single')}
     >
-      <Panel key="single" header={collapseHeader} forceRender={true}>
+      <Panel key='single' header={collapseHeader} forceRender={true}>
         {children}
       </Panel>
     </Collapse>
   );
-};
+}
 
-export default FCollapse;
+export default BoxCollapse;
