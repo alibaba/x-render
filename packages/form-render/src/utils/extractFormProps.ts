@@ -2,14 +2,14 @@ const displayTypeEnum = {
   column: 'vertical',
   row: 'horizontal',
   inline: 'inline',
-}
+};
 
-export default (props) => {
+export default props => {
   const {
     schema,
     beforeFinish,
     onMount,
-    displayType, 
+    displayType,
     widgets,
     watch,
     removeHiddenData,
@@ -25,9 +25,9 @@ export default (props) => {
     debug,
     id,
 
-    // form,
-    // onFinish,
-    // labelAlign, 
+    form,
+    onFinish,
+    // labelAlign,
     // colon,
     // className,
     // style,
@@ -37,7 +37,7 @@ export default (props) => {
   } = props;
 
   const formProps = {
-    ...otherProps
+    ...otherProps,
   };
 
   if (displayType) {
@@ -62,10 +62,12 @@ export default (props) => {
     locale,
     configProvider,
 
+    form,
+
     allCollapsed,
     debounceInput, // 好像没用了
     validateMessages,
     debug, // 换成 form 还有用吗？
-    id
-  }
-}
+    id,
+  };
+};

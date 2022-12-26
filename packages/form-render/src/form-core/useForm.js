@@ -1,8 +1,37 @@
-import { Form } from 'antd';
+import { Form, FormInstance } from 'antd';
+import { isEmpty, set as _set, get as _get, cloneDeep } from 'lodash-es';
+import { useEffect } from 'react';
 import create from 'zustand';
+
+export const useStore = create((set, get) => ({
+  schema: {},
+  // form: {},
+  init: schema => {
+    return set({ schema });
+  },
+  setSchema: schema => {
+    return set({ schema });
+  },
+  setSchemaByPath: (path, modifiedSchema) => {
+    const newSchema = cloneDeep(get().schema);
+    let itemSchema = _get(newSchema, path, {});
+    console.log('itemSchema', itemSchema);
+    console.log('path', path);
+    itemSchema = { ...itemSchema, ...modifiedSchema };
+    _set(newSchema, path, itemSchema);
+    return set({ schema: newSchema });
+  },
+}));
 
 const useForm = () => {
   const [form] = Form.useForm();
+  const { init, setSchemaByPath } = useStore.getState();
+
+  form.init = schema => {
+    init(schema);
+  };
+  form.setValues = form.setFieldsValue;
+  form.setSchemaByPath = setSchemaByPath;
 
   // form = {
   //   ...form,

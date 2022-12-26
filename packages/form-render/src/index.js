@@ -1,5 +1,5 @@
-import React from 'react';
-import { Form, ConfigProvider } from 'antd';
+import React, { useEffect } from 'react';
+import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 
 import { widgets as defaultWidgets } from './widgets';
@@ -14,14 +14,23 @@ export { mapping } from './render-core/mapping';
 export { defaultWidgets as widgets };
 
 const Main = props => {
-  const { configProvider, widgets, ...otherProps } = props;
+  const { configProvider, widgets, form, ...otherProps } = props;
+  if (!form) {
+    console.warn('Please provide a form instance to FormRender');
+    return null;
+  }
+
+  useEffect(() => {
+    form.init(schema);
+  }, []);
 
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
       <FRCore
+        form={form}
         widgets={{ ...defaultWidgets, ...widgets }}
         {...otherProps}
-        schema={schema}
+        // schema={schema}
       />
     </ConfigProvider>
   );

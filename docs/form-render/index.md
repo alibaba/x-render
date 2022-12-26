@@ -74,9 +74,17 @@ const Demo = () => {
   const onFinish = (formData, errors) => {
     console.log('formData:', formData, 'errors', errors);
   };
+  const onMount = () => {
+    form.setValues({ input: String(Math.random()) });
+  };
+
+  setTimeout(() => {
+      form.setSchemaByPath('properties.input',  { title: '动态修改标题'});
+    }, 2000);
+  
   return (
     <div>
-      <FormRender form={form} schema={schema} onFinish={onFinish} />
+      <FormRender form={form} schema={schema} onFinish={onFinish} onMount={onMount} />
       <Button type="primary" onClick={form.submit}>
         提交
       </Button>

@@ -865,8 +865,6 @@
 //           "type":"object"
 //       },
 
-
-
 //       "activityBasicInfo4":{
 //         "properties":{
 //             "title":{
@@ -1053,13 +1051,6 @@
 //         "title":"基础信息",
 //         "type":"object"
 //     },
-
-
-
-
-
-
-
 
 //       "activityBasicInfo3":{
 //         "properties":{
@@ -1433,7 +1424,7 @@
 //         "title":"基础信息",
 //         "type":"object"
 //     },
-      
+
 //       "activityReleaseRuleInfo":{
 //           "properties":{
 //               "releaseChannels":{
@@ -1625,42 +1616,41 @@
 //   "column": 1,
 // }
 
-
-
-
 export default {
-    "type": "object",
-    "properties": {
-      "list_ikPi2q": {
-        "title": "数组",
-        "type": "array",
-        "items": {
-          "type": "object",
-          "theme": "collapse",
-          
-          "props": {
-            "title":"xxxxx",
-          },
-          "properties": {
-            "input_3XWgl7": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            }
-          }
-        },
-        "props": {}
-      }
+  type: 'object',
+  properties: {
+    input: {
+      type: 'string',
+      title: '输入框',
     },
-    "labelWidth": 120,
-    "displayType": "row",
-    "column": 1
-  }
+    list_ikPi2q: {
+      title: '数组',
+      type: 'array',
+      items: {
+        type: 'object',
+        theme: 'collapse',
+        props: {
+          title: 'xxxxx',
+        },
+        properties: {
+          input_3XWgl7: {
+            title: '输入框',
+            type: 'string',
+            props: {},
+          },
+        },
+      },
+      props: {},
+    },
+  },
+  labelWidth: 120,
+  displayType: 'row',
+  column: 1,
+};
 
 // export default {
 //     "type": "object",
-    
-      
+
 //     properties: {
 //         select1: {
 //           title: '隐藏输入框',
@@ -1668,7 +1658,7 @@ export default {
 //           description: 'dfadffad',
 //           descType: 'icon',
 //           default: true,
-         
+
 //         },
 //         // input1: {
 //         //   title: '输入框',
@@ -1682,7 +1672,7 @@ export default {
 //             required: true,
 //             // hidden: '{{formData.select1 === true}}',
 //             //disabled: '{{formData.select1 === true}}',
-//             placeholder: '请选择', 
+//             placeholder: '请选择',
 //             props: {
 //               disabled: true,
 //             }
@@ -1692,7 +1682,6 @@ export default {
 //     "displayType": "row",
 //     "column": 2,
 //   }
-
 
 // export default {
 //   "type": "object",
