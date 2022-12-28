@@ -17,8 +17,7 @@ const renderItem = ({ schema, path, index, rootPath }) => {
     path = null;
   }
 
-  if (schema.type === 'array') {
-    debugger
+  if (schema.type === 'array' && schema.items?.type === 'object') {
     return (
       <FieldList
         key={index}

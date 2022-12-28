@@ -1,13 +1,11 @@
 import React from 'react';
-import { Checkbox, Input, InputNumber, Rate, Switch, TreeSelect } from 'antd';
-import checkboxes from './antd/checkboxes';
+import { Checkbox, Input, InputNumber, Rate, Switch, TreeSelect, Radio } from 'antd';
 import color from './antd/color';
 import date from './antd/date';
 import dateRange from './antd/dateRange';
 import Html from './html';
 import ImageInput from './antd/imageInput';
 import multiSelect from './antd/multiSelect';
-import radio from './antd/radio';
 import select from './antd/select';
 import slider from './antd/slider';
 import time from './antd/time';
@@ -22,10 +20,7 @@ import BoxLineTitle from './container/BoxLineTitle';
 import BoxSubItem from './container/BoxSubItem';
 import BoxPanel from './container/BoxPanel';
 
-
-
 const { TextArea } = Input;
-
 const FrNumber = ({ style, ...rest }) => {
   return <InputNumber style={{ width: '100%', ...style }} {...rest} />;
 };
@@ -53,7 +48,7 @@ const FrTreeSelect = ({ style, ...rest }) => (
 export const widgets = {
   input: Input,
   checkbox: Checkbox,
-  checkboxes, // checkbox多选
+  checkboxes: Checkbox.Group, // checkbox多选
   color,
   date,
   time,
@@ -63,7 +58,7 @@ export const widgets = {
   url: urlInput,
   multiSelect, // 下拉多选
   number: FrNumber,
-  radio,
+  radio: Radio.Group,
   select,
   slider, // 带滚条的number
   switch: Switch,

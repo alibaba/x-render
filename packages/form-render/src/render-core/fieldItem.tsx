@@ -3,7 +3,7 @@ import { Form, Col } from 'antd';
 import { widgets } from '../widgets';
 
 import { getWidgetName } from './mapping';
-import { isObject } from '../utils/common';
+import { isObject, getArray } from '../utils/common';
 import { FormContext, BoxContext } from '../utils/context';
 
 import { isHasExpression, parseAllExpression } from '../utils/expression';
@@ -13,7 +13,7 @@ const valuePropNameMap = {
   switch: 'checked'
 };
 
-const fieldPropsList = ['placeholder', 'disabled', 'format', 'enum', 'enumNames'];
+const fieldPropsList = ['placeholder', 'disabled', 'format'];
 
 const ErrorSchema = (schema: any) => {
   return (
@@ -130,6 +130,18 @@ const FieldView = (props: any) => {
     }
   });
 
+  if (schema.enum && !schema.props?.options) {
+    const { enumNames, enum: enums } = schema;
+    widgetProps.options = getArray(enums).map((item: any, idx: number) => {
+      let label = enumNames && Array.isArray(enumNames) ? enumNames[idx] : item;
+      const isHtml = typeof label === 'string' && label[0] === '<';
+      if (isHtml) {
+        label = <span dangerouslySetInnerHTML={{ __html: label }} />;
+      }
+      return { label, value: item };
+    });
+  }
+
   Object.keys(schema).forEach(key => {
     if (
       typeof key === 'string' &&
@@ -163,7 +175,7 @@ const FieldView = (props: any) => {
   const ruleList = getRuleList(schema);
   const label = getLabel(schema);
   const tooltip = getTooltip(schema);
-
+  
   return (
     <Col span={span}>
       <Form.Item
@@ -185,7 +197,7 @@ const FieldView = (props: any) => {
 
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
-  debugger;
+  
   // 不存在函数表达式
   if (!isHasExpression(schema)) {
     return <FieldView {...props} />
@@ -200,7 +212,7 @@ export default (props: any) => {
     }}>
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-        debugger;
+       
         const newSchema = parseAllExpression(schema, formData, rootPath);
         return <FieldView schema={newSchema} {...otherProps} />
       }}

@@ -8,7 +8,8 @@ import extractFormProps from '../utils/extractFormProps';
 import { FormContext } from '../utils/context';
 
 const FR = (props) => {
-  const { formProps, onMount, schema, column } = extractFormProps(props);
+  const { properties, type, ...otherSchema } = props.schema || {};
+  const { formProps, onMount, schema, column } = extractFormProps({ ...props, ...otherSchema });
   console.log(props, 'formProps------');
 
 	useEffect(() => {
@@ -30,6 +31,7 @@ const FR = (props) => {
     labelCol,
     wrapperCol
   };
+
   return (
     <FormContext.Provider value={context}>
       <Form
@@ -46,11 +48,6 @@ const FR = (props) => {
             schema={schema}
           />
         </Row>
-        {/* <Row>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Row> */}
       </Form>
     </FormContext.Provider>
   );
