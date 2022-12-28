@@ -46,11 +46,11 @@ const FR = (props) => {
             schema={schema}
           />
         </Row>
-        <Row>
+        {/* <Row>
           <Button type="primary" htmlType="submit">
             Submit
           </Button>
-        </Row>
+        </Row> */}
       </Form>
     </FormContext.Provider>
   );

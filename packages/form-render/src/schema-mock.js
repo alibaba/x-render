@@ -1631,31 +1631,31 @@
 export default {
     "type": "object",
     "properties": {
-      "input_3XWgl7": {
+      "a": {
         "title": "输入框",
         "type": "string",
         "props": {}
       },
-      "input_3XW": {
+      "b": {
+        "title": "输入框",
+        "type": "string",
+        "props": {},
+        disabled: '{{formData.a === "1" }}',
+      },
+      "c": {
         "title": "输入框",
         "type": "string",
         "props": {}
       },
-      "input_3XWgl27": {
+      "d": {
         "title": "输入框",
         "type": "string",
         "props": {}
       },
-      "input_3X3W": {
-        "title": "输入框",
-        "type": "string",
-        "props": {}
-      },
-      "xxx": {
+      'xxx': {
         "type": "object",
-        "theme": "subItem",
+        "theme": "panel",
         "props": {
-          title: '活动模版',
           "column": 3,
           "labelCol": {
             "span": 6
@@ -1685,47 +1685,6 @@ export default {
             "type": "string",
             "props": {}
           },
-          "input_3XW1": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl271": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW14": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl271": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-        },
-      },
-      "xxx1": {
-        "type": "object",
-        "theme": "subItem",
-        "props": {
-          title: '活动模版',
-          "column": 3,
-          "labelCol": {
-            "span": 6
-          },
-          "wrapperCol": {
-            "span": 16
-          }
-        },
-        "properties": {
-          "input_3XWgl7": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
           "input_3XW": {
             "title": "输入框",
             "type": "string",
@@ -1735,157 +1694,46 @@ export default {
             "title": "输入框",
             "type": "string",
             "props": {}
-          },
-          "input_3XWgl71": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW1": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl271": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW14": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl271": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-        },
-      },
-      "xxx2": {
-        "type": "object",
-        "theme": "subItem",
-        "props": {
-          title: '活动模版',
-          "column": 3,
-          "labelCol": {
-            "span": 6
-          },
-          "wrapperCol": {
-            "span": 16
           }
-        },
-        "properties": {
-          "input_3XWgl7": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl27": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl71": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW1": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl271": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW14": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl271": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-        },
+        }
       },
-      "e2342234": {
-        "type": "object",
-        "theme": "line",
-        
-        "props": {
-          
-          "column": 3,
-          "labelCol": {
-            "span": 8
-          },
-          "wrapperCol": {
-            "span": 16
-          }
-        },
-        "properties": {
-          "input_3XWgl7": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl27": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-        },
-      },
-      "list_ikPi2q": {
+      "e": {
         "title": "营销活动模版",
         "type": "array",
         "max": "5",
         "items": {
-          "type": "object",
-          "theme": "panel",
-          "props": {
+         
+            "type": "object",
+            "theme": "panel",
             
-            "column": 3,
-            "labelCol": {
-              "span": 6
+            "props": {
+              "title": "订单信息",
+              "column": 3,
+              "labelCol": {
+                "span": 6
+              },
+              "wrapperCol": {
+                "span": 16
+              }
             },
-            "wrapperCol": {
-              "span": 16
-            }
-          },
-          "properties": {
-            "input_3XWgl7": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            },
-            "input_3XW": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            },
-            "input_3XWgl27": {
-              "title": "输入框",
-              "type": "string",
-              "props": {}
-            },
+            "properties": {
+              "input_3XWgl7": {
+                "title": "输入框",
+                "type": "string",
+                "props": {}
+              },
+              "input_3XW": {
+                "title": "输入框",
+                "type": "string",
+                "props": {}
+              },
+              "input_3XWgl27": {
+                "title": "输入框",
+                "type": "string",
+                "props": {}
+              },
+              
             
-           
           },
         },
         "props": {}

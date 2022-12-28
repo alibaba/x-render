@@ -26,30 +26,18 @@ const getOperateStyle = (schema: any) => {
   return result;
 };
 
-const getHasBackground = (fields: any[], ) => {
-  let result = true;
+const getHasBackground = (fields: any[], hasBackground: boolean) => {
+  let result = hasBackground;
   if (fields.length === 0) {
     result = false;
   }
   return result;
 }
 
-const getItemMargin = (schema: any, index: number): string => {
-  let result = '32px';
-  if (schema?.items?.props?.title) {
-    result = '0px';
-  }
-
-  if (index !== 0) {
-    result = '0px';
-  }
-  return result;
-};
-
-const CardList = (props: any) => {
+const SimpleList = (props: any) => {
   const { name: listName, schema } = props;
   const { max, props: listProps } = schema;
-  const { copyable = true, moveable = true } = listProps || {};
+  const { copyable = true, moveable = true, hasBackground = true } = listProps || {};
   const form = Form.useFormInstance();
 
   const handleOnCopy = (add: any, name: number) => () => {
@@ -60,14 +48,13 @@ const CardList = (props: any) => {
   return (
     <Form.List name={listName}>
       {(fields, { add, remove, move }) => (
-        <div className={classnames('fr-list-card', {'fr-list-card-background' : getHasBackground(fields) })}>
+        <div className={classnames('fr-list-card', {'fr-list-card-background' : getHasBackground(fields, hasBackground) })}>
           {fields.map(({ key, name  }) => {
             const length = fields.length;
             return (
               <div key={key} className='fr-list-item'>
-                {/* <div style={{ lineHeight : '32px', marginLeft: '24px'}}>{name+1}</div> */}
-                <div style={{ width: 0, flex: 1}}>
-                  {renderCore({ schema, parentPath: [name], parentLitPath: [...listName, name] })}
+                <div style={{ width: 0, flex: 1 }}>
+                  {renderCore({ schema, parentPath: [name], rootPath: [...listName, name] })}
                 </div>
                 <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>
                   {moveable && (
@@ -101,4 +88,4 @@ const CardList = (props: any) => {
   );
 }
 
-export default CardList;
+export default SimpleList;

@@ -57,7 +57,7 @@ const getRuleList = (schema: any) => {
   return result;
 }
 
-const getColSpan = (formCtx: any, schema: any, boxCtx) => {
+const getColSpan = (formCtx: any, schema: any, boxCtx: any) => {
   let span = 24;
   if (boxCtx.column) {
     span = 24 / boxCtx.column;
@@ -106,8 +106,6 @@ const FieldView = (props: any) => {
 
   const labelCol = boxCtx.labelCol || formCtx.labelCol;
   const wrapperCol = boxCtx.wrapperCol || formCtx.wrapperCol;
-
-
 
   console.log(props, 'fieldProps');
  
@@ -169,8 +167,8 @@ const FieldView = (props: any) => {
   return (
     <Col span={span}>
       <Form.Item
-        label={label} 
-        name={path} 
+        label={label}
+        name={path}
         valuePropName={valuePropName}
         rules={ruleList}
         hidden={hidden}
@@ -186,8 +184,8 @@ const FieldView = (props: any) => {
 }
 
 export default (props: any) => {
-  const { schema, parentLitPath, ...otherProps } = props;
-
+  const { schema, rootPath, ...otherProps } = props;
+  debugger;
   // 不存在函数表达式
   if (!isHasExpression(schema)) {
     return <FieldView {...props} />
@@ -202,7 +200,8 @@ export default (props: any) => {
     }}>
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-        const newSchema = parseAllExpression(schema, formData, parentLitPath);
+        debugger;
+        const newSchema = parseAllExpression(schema, formData, rootPath);
         return <FieldView schema={newSchema} {...otherProps} />
       }}
     </Form.Item>

@@ -2,33 +2,33 @@ import React, { useContext } from 'react';
 import { Form, Col } from 'antd';
 import { FormContext } from '../utils/context';
 
-import ListCard from '../widgets/container/ListCard';
-import ListDrawer from '../widgets/container/ListDrawer';
-import ListTable from '../widgets/container/ListTable';
-import ListVirtual from '../widgets/container/ListVirtual';
-import ListTab from '../widgets/container/ListTab';
+import SimpleList from '../widgets/container/ListSimple';
+import DrawerList from '../widgets/container/ListDrawer';
+import TableList from '../widgets/container/ListTable';
+import VirtualList from '../widgets/container/ListVirtual';
+import TabList from '../widgets/container/ListTab';
 
 const widgetModules = {
-  list0: ListCard,
-  list1: ListCard,
-  list2: ListTable,
-  list3: ListDrawer,
-  list4: ListVirtual,
-  simpleList: ListCard,
-  cardList: ListCard,
-  tableList: ListTable,
-  drawerList: ListDrawer,
-  virtualList: ListVirtual,
-  tabList: ListTab
+  list0: SimpleList,
+  list1: SimpleList,
+  list2: TableList,
+  list3: DrawerList,
+  list4: VirtualList,
+  simpleList: SimpleList,
+  cardList: SimpleList,
+  tableList: TableList,
+  drawerList: DrawerList,
+  virtualList: VirtualList,
+  tabList: TabList
 };
 
 const FieldList = (props: any) => {
   const formProps: any = useContext(FormContext);
-  const { schema, path, renderCore, max } = props;
+  const { schema, path, parentLitPath, renderCore, max } = props;
   console.log(props, 'fieldProps');
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';
-  const Widget = widgetModules[widgetName] || ListCard;
+  const Widget = widgetModules[widgetName] || SimpleList;
   
 
   let span = 24;
@@ -58,6 +58,7 @@ const FieldList = (props: any) => {
         <Widget
           name={path}
           schema={schema}
+          parentLitPath={parentLitPath}
         />
       </Form.Item>
     </Col>

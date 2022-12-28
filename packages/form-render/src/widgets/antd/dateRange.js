@@ -6,12 +6,13 @@ import { DatePicker } from 'antd';
 import moment from 'moment';
 import React from 'react';
 import { getFormat } from '../../utils/common';
-import { useTools } from '../../form-render-core/src/hooks';
+// import { useTools } from '../../form-render-core/src/hooks';
 
 const { RangePicker } = DatePicker;
 
 const DateRange = ({ onChange, format, value, style, ...rest }) => {
-  const { methods } = useTools();
+  //const { methods } = useTools();
+  const methods = {};
   const { schema = {} } = rest;
   const { props = {} } = schema;
   const dateFormat = getFormat(format);

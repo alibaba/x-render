@@ -31,7 +31,7 @@ const Main = (props) => {
         widgets={{ ...defaultWidgets, ...widgets }}
         
         {...otherProps}
-        schema={schema}
+        // schema={schema}
       />
     </ConfigProvider>
   );

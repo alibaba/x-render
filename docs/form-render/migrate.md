@@ -189,7 +189,7 @@ const MyWidget = props => {
 ```jsx
 import React, { useState } from 'react';
 import { Input, Button } from 'antd';
-import { updateSchemaToNewVersion } from 'form-render/src/form-render-core/src/utils.js';
+// import { updateSchemaToNewVersion } from 'form-render/src/form-render-core/src/utils.js';
 
 const TextArea = Input.TextArea;
 
@@ -216,7 +216,7 @@ const Translator = () => {
 
   const handleClick = () => {
     try {
-      const _newSchema = updateSchemaToNewVersion(JSON.parse(oldSchema));
+      const _newSchema = '' //updateSchemaToNewVersion(JSON.parse(oldSchema));
       setNew(_newSchema);
     } catch (err) {
       console.log(err);
