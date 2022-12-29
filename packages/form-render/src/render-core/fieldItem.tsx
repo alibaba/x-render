@@ -4,7 +4,7 @@ import { Form, Col } from 'antd';
 import { getWidgetName } from './mapping';
 import { FormContext, ParentContext } from '../utils/context';
 import { isHasExpression, parseAllExpression } from '../utils/expression';
-import { getParamValue, getColSpan, getLabel, getRuleList, getTooltip, getValuePropName, getWidgetProps, ErrorSchema } from './common';
+import { getParamValue, getColSpan, getLabel, getRuleList, getTooltip, getValuePropName, getWidgetProps, ErrorSchema } from './methods';
 
 const FieldItem = (props: any) => {
   const { schema, children, path } = props;

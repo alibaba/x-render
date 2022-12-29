@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { Form, Col } from 'antd';
 
 import { FormContext, ParentContext } from '../utils/context';
-import { getParamValue } from './common';
+import { getParamValue } from './methods';
 
 
 const FieldList = (props: any) => {
