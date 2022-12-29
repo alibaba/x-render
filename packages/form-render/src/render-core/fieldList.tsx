@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
 import { Form, Col } from 'antd';
-import { FormContext } from '../utils/context';
+import { FormContext, ParentContext } from '../utils/context';
 
 import SimpleList from '../widgets/container/ListSimple';
 import DrawerList from '../widgets/container/ListDrawer';
 import TableList from '../widgets/container/ListTable';
 import VirtualList from '../widgets/container/ListVirtual';
 import TabList from '../widgets/container/ListTab';
+
+
+import { getParamValue, getColSpan, getLabel, getRuleList, getTooltip, getValuePropName, getWidgetProps, ErrorSchema } from './common';
+
 
 const widgetModules = {
   list0: SimpleList,
@@ -23,7 +27,9 @@ const widgetModules = {
 };
 
 const FieldList = (props: any) => {
-  const formProps: any = useContext(FormContext);
+  const formCtx: any = useContext(FormContext);
+  const parentCtx: any = useContext(ParentContext);
+
   const { schema, path, parentLitPath, renderCore, max, rootPath } = props;
   console.log(props, 'fieldProps');
   const { title: label, widget } = schema;
@@ -32,8 +38,8 @@ const FieldList = (props: any) => {
   
 
   let span = 24;
-  if (formProps.column) {
-    span = 24 / formProps.column;
+  if (formCtx.column) {
+    span = 24 / formCtx.column;
   }
 
   if (schema.width === '100%') {
@@ -52,6 +58,18 @@ const FieldList = (props: any) => {
 
  }
 
+ const getValueFromKey = getParamValue(formCtx, parentCtx, schema);
+
+  //const span = getColSpan(formCtx, parentCtx, schema);
+  const labelCol = getValueFromKey('labelCol');
+  const wrapperCol = getValueFromKey('wrapperCol');
+  const readyOnly = getValueFromKey('readyOnly');
+
+
+
+
+
+
  const preRootPath = (rootPath || []).splice(0, rootPath.length-1);
 
 
@@ -63,6 +81,7 @@ const FieldList = (props: any) => {
           schema={schema}
           parentLitPath={parentLitPath}
           rootPath={preRootPath}
+          readyOnly={readyOnly}
         />
       </Form.Item>
     </Col>

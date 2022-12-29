@@ -29,7 +29,8 @@ const FR = (props) => {
   const context = {
     column: column || schema?.column || 1,
     labelCol,
-    wrapperCol
+    wrapperCol,
+    readyOnly: true,
   };
 
   return (
@@ -43,6 +44,14 @@ const FR = (props) => {
         labelCol={labelCol}
         wrapperCol={wrapperCol}
         {...formProps}
+        initialValues={{
+          a: "1",
+          b: "2",
+          c: "online",
+          e: [{
+            input_3XWgl7: '1111'
+          }]
+        }}
       >
         <Row gutter={8}>
           <RenderCore 

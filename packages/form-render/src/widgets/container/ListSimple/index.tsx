@@ -35,9 +35,7 @@ const getHasBackground = (fields: any[], hasBackground: boolean) => {
 }
 
 const SimpleList = (props: any) => {
-  const { name: listName, schema, rootPath = [] } = props;
-
-
+  const { name: listName, schema, rootPath = [], readyOnly } = props;
 
   const { max, props: listProps } = schema;
   const { copyable = true, moveable = true, hasBackground = true } = listProps || {};
@@ -59,7 +57,8 @@ const SimpleList = (props: any) => {
                 <div style={{ width: 0, flex: 1 }}>
                   {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, ...listName, name] })}
                 </div>
-                <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>
+                {!readyOnly && (
+                  <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>
                   {moveable && (
                     <>
                       <ArrowUpOutlined
@@ -74,11 +73,12 @@ const SimpleList = (props: any) => {
                   )}
                   {copyable && <CopyOutlined onClick={handleOnCopy(add, name)} /> }
                   <CloseOutlined onClick={() => remove(name)} />
-                </Space>
+                  </Space>
+                )}
               </div>
             );
           })}
-          {(!max || fields.length < max) && (
+          {(!max || fields.length < max) && !readyOnly && (
             <div className='add-btn'>
               <Button type='dashed' onClick={() => add()} icon={<PlusOutlined />}  block={fields.length > 0 ? true : false } >
                 新增一条

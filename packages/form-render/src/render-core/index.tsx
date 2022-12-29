@@ -3,58 +3,73 @@ import { Row } from 'antd';
 import FieldItem from './fieldItem';
 import FieldList from './fieldList';
 
-const renderItem = ({ schema, path, index, rootPath }) => {
+interface RenderCoreProps {
+  schema: any,
+  rootPath?: any[] | undefined,
+  parentPath?: any[] | undefined,
+}
 
+interface RenderItemProps {
+  schema: any,
+  rootPath?: any[] | undefined,
+  path?: any[] | undefined,
+  key?: string | undefined
+}
+
+const renderItem = (props: RenderItemProps) => {
+  let { schema, key, path, rootPath } = props;
+
+  // render List
+  if (schema.type === 'array' && schema.items?.type === 'object') {
+    return (
+      <FieldList
+        key={key}
+        schema={schema}
+        path={path}
+        rootPath={rootPath}
+        renderCore={RenderCore}
+      />
+    );
+  }
+
+  // render Objiect | field
   let childContent: React.ReactNode = null;
 
-  // 存在嵌套子协议
+  // has child schema
   if (schema?.properties) {
     childContent = (
       <Row gutter={8}>
         {RenderCore({ schema, parentPath: path, rootPath })}
       </Row>
     );
-    path = null;
-  }
-
-  if (schema.type === 'array' && schema.items?.type === 'object') {
-    return (
-      <FieldList
-        key={index}
-        schema={schema}
-        path={path}
-        rootPath={rootPath}
-        children= {childContent}
-        renderCore={RenderCore}
-      />
-    );
+    path = undefined;
   }
 
   return (
     <FieldItem
-      key={index}
+      key={key}
       schema={schema}
       path={path}
+      rootPath={rootPath}
       children= {childContent}
       renderCore={RenderCore}
-      rootPath={rootPath}
     />
   );
 }
 
-const RenderCore = (props: any) => {
-  const { schema, parentPath = [], rootPath = [], ...otherProps } = props;
+const RenderCore = (props: RenderCoreProps) => {
+  const { schema, parentPath = [], rootPath = [] } = props;
 
-  // 渲染 List.item
+  // render List.item
   if (schema.items) {
-    return renderItem({ schema: schema.items, path: parentPath, rootPath, ...otherProps });
+    return renderItem({ schema: schema.items, path: parentPath, rootPath });
   }
 
-  return Object.keys(schema?.properties || {}).map((key, index) => {
-    const itemSchema = schema.properties[key];
-    const path: string[] | null = [...(parentPath || []), key];
+  return Object.keys(schema?.properties || {}).map((key) => {
+    const item = schema.properties[key];
+    const path = [...parentPath, key];
 
-    return renderItem({ schema: itemSchema, path, index, rootPath, ...otherProps })
+    return renderItem({ schema: item, path, key, rootPath })
   });
 }
 

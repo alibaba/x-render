@@ -1651,10 +1651,22 @@ export default {
         required: true,
       },
       "c": {
-        "title": "输入框",
-        "type": "string",
-        "props": {}
+        "props": {},
+        "enum":[
+            "online",
+            "offline"
+        ],
+        "enumNames":[
+            "线上活动",
+            "线下活动"
+        ],
+      
+        "title":"活动范围",
+        "type":"array",
+        "required":true,
+        "widget":"checkboxes"
       },
+      
       "d": {
         "title": "输入框",
         "type": "string",
@@ -1713,16 +1725,16 @@ export default {
          
             "type": "object",
             "theme": "panel",
-            
-            "props": {
-              "title": "订单信息",
-              "column": 3,
+            "column": 3,
               "labelCol": {
                 "span": 6
               },
               "wrapperCol": {
                 "span": 16
-              }
+              },
+            "props": {
+              "title": "订单信息",
+              
             },
             "properties": {
               "input_3XWgl7": {
