@@ -1,16 +1,16 @@
 import React, { useEffect, useMemo } from 'react';
-import { Form, Row, Button } from 'antd';
 import { widgets as defaultWidgets } from '../widgets';
 
+import { Form, Row, Button, Col, Space } from 'antd';
+import shallow from 'zustand/shallow';
 import RenderCore from '../render-core';
 import extractFormProps from '../utils/extractFormProps';
 import { FormContext } from '../utils/context';
 import { useStore } from './useForm';
 
-const FR = (props) => {
-  const { properties, type, ...otherSchema } = props.schema || {};
-  const { formProps, onMount, schema, column, widgets } = extractFormProps({ ...props, ...otherSchema });
-  console.log(props, 'formProps------');
+const FR = props => {
+  const [schema] = useStore(state => [state.schema, state.form], shallow);
+  const { formProps, onMount, column, form, widgets, onFinish } = extractFormProps(props);
 
   useEffect(() => {
     onMount && onMount();
@@ -40,13 +40,12 @@ const FR = (props) => {
   return (
     <FormContext.Provider value={context}>
       <Form
-        labelWrap={true} 
-        onFinish={(values) => {
-          debugger;
+        labelWrap={true}
+        onFinish={values => {
           console.log(values);
         }}
         labelCol={labelCol}
-        wrapperCol={wrapperCol}
+        form={form}
         {...formProps}
         initialValues={{
           a: "1",
@@ -61,9 +60,12 @@ const FR = (props) => {
           <RenderCore schema={schema} />
         </Row>
         <Row>
-          <Button type="primary" htmlType="submit">
-            提交
-          </Button>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+            <Button onClick={() => form.resetFields()}>Reset</Button>
+          </Space>
         </Row>
       </Form>
     </FormContext.Provider>
