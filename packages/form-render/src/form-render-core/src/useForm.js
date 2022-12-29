@@ -114,7 +114,7 @@ const useForm = props => {
   ]);
 
   useEffect(() => {
-    if (schemaRef.current) {
+    if (schemaRef.current && firstMount) {
       const flatten = flattenSchema(schemaRef.current);
       setState({ flatten, firstMount: false });
     }
@@ -234,7 +234,12 @@ const useForm = props => {
     forceRender(renderCount + 1);
   };
 
-  const setSchema = settings => {
+  const setSchema = (settings, { override = false }) => {
+    if (override) {
+      const flatten = flattenSchema(settings);
+      setState({ flatten });
+      return;
+    }
     const newFlatten = clone(_flatten.current);
     try {
       Object.keys(settings).forEach(path => {
