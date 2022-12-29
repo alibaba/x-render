@@ -24,7 +24,7 @@ const widgetModules = {
 
 const FieldList = (props: any) => {
   const formProps: any = useContext(FormContext);
-  const { schema, path, parentLitPath, renderCore, max } = props;
+  const { schema, path, parentLitPath, renderCore, max, rootPath } = props;
   console.log(props, 'fieldProps');
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';
@@ -52,6 +52,9 @@ const FieldList = (props: any) => {
 
  }
 
+ const preRootPath = (rootPath || []).splice(0, rootPath.length-1);
+
+
   return (
     <Col span={24}>
       <Form.Item label={label} wrapperCol={{ span: 22 }} labelCol={{ span : 2 }}>
@@ -59,6 +62,7 @@ const FieldList = (props: any) => {
           name={path}
           schema={schema}
           parentLitPath={parentLitPath}
+          rootPath={preRootPath}
         />
       </Form.Item>
     </Col>

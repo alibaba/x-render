@@ -25,8 +25,11 @@ const ErrorSchema = (schema: any) => {
 };
 
 const getRuleList = (schema: any) => {
-  const { type, required, max, min, rules = [] } = schema;
-  const result: any = [...rules];
+  let { type, required, max, min, maxLength, minLength, rules: ruleList = [], title } = schema;
+  let rules: any = [...ruleList];
+
+  max = max ?? maxLength;
+  min = min ?? minLength;
 
   if (max) {
     let message = `字符最大长度${min}`;
@@ -36,7 +39,7 @@ const getRuleList = (schema: any) => {
     if (type === 'array') {
       message = `数组最大长度${min}`;
     }
-    result.push({ type, max: max * 1, message });
+    rules.push({ type, max: max * 1, message });
   }
 
   if (min) {
@@ -47,14 +50,26 @@ const getRuleList = (schema: any) => {
     if (type === 'array') {
       message = `数组最小长度${min}`;
     }
-    result.push({ type, min: min * 1, message });
+    rules.push({ type, min: min * 1, message });
   }
   
   if (required) {
-    result.push({ required: true, message: '字段信息必填' });
+    rules.push({ required: true, message: `${title}不能为空` });
   }
 
-  return result;
+  rules = rules.map(((item: any) => {
+    if (item.validator && !item.transformed) {
+      const validator = item.validator;
+      item.validator = async (_: any, value: any) => {
+        const result = await validator(_, value);
+        return result ? Promise.resolve() : Promise.reject(new Error(item.message));
+      };;
+      item.transformed = true;
+    }
+    return item;
+  }));
+
+  return rules;
 }
 
 const getColSpan = (formCtx: any, schema: any, boxCtx: any) => {
@@ -212,7 +227,7 @@ export default (props: any) => {
     }}>
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-       
+        console.log(formData, rootPath, '-----')
         const newSchema = parseAllExpression(schema, formData, rootPath);
         return <FieldView schema={newSchema} {...otherProps} />
       }}

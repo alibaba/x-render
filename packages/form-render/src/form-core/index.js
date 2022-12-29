@@ -37,6 +37,7 @@ const FR = (props) => {
       <Form
         labelWrap={true} 
         onFinish={(values) => {
+          debugger;
           console.log(values);
         }}
         labelCol={labelCol}
@@ -48,12 +49,18 @@ const FR = (props) => {
             schema={schema}
           />
         </Row>
+        <Row>
+          <Button type="primary" htmlType="submit">
+            提交
+          </Button>
+        </Row>
       </Form>
     </FormContext.Provider>
   );
 }
 
 export default FR;
+
 
 
 

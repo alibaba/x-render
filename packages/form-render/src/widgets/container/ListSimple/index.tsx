@@ -35,7 +35,10 @@ const getHasBackground = (fields: any[], hasBackground: boolean) => {
 }
 
 const SimpleList = (props: any) => {
-  const { name: listName, schema } = props;
+  const { name: listName, schema, rootPath = [] } = props;
+
+
+
   const { max, props: listProps } = schema;
   const { copyable = true, moveable = true, hasBackground = true } = listProps || {};
   const form = Form.useFormInstance();
@@ -54,7 +57,7 @@ const SimpleList = (props: any) => {
             return (
               <div key={key} className='fr-list-item'>
                 <div style={{ width: 0, flex: 1 }}>
-                  {renderCore({ schema, parentPath: [name], rootPath: [...listName, name] })}
+                  {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, ...listName, name] })}
                 </div>
                 <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>
                   {moveable && (
