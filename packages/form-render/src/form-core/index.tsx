@@ -30,7 +30,7 @@ const FR = props => {
     column: column || schema?.column || 1,
     labelCol,
     wrapperCol,
-    readyOnly: true,
+    // readyOnly: true,
     widgets: {
       ...defaultWidgets,
       widgets
