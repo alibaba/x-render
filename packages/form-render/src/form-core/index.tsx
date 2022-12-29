@@ -47,14 +47,6 @@ const FR = props => {
         labelCol={labelCol}
         form={form}
         {...formProps}
-        initialValues={{
-          a: "1",
-          b: "2",
-          c: "online",
-          e: [{
-            input_3XWgl7: '1111'
-          }]
-        }}
       >
         <Row gutter={8}>
           <RenderCore schema={schema} />
