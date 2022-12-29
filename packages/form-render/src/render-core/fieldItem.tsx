@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { Form, Col } from 'antd';
 
-import { widgets } from '../widgets';
 import { getWidgetName } from './mapping';
 import { FormContext, ParentContext } from '../utils/context';
 import { isHasExpression, parseAllExpression } from '../utils/expression';
@@ -12,6 +11,8 @@ const FieldItem = (props: any) => {
 
   const formCtx: any = useContext(FormContext);
   const parentCtx: any = useContext(ParentContext);
+
+  const widgets = formCtx.widgets;
 
   const { hidden } = schema;
   console.log(props, 'fieldProps');

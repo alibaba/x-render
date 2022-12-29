@@ -20,6 +20,13 @@ import BoxLineTitle from './container/BoxLineTitle';
 import BoxSubItem from './container/BoxSubItem';
 import BoxPanel from './container/BoxPanel';
 
+
+import SimpleList from './container/ListSimple';
+import DrawerList from './container/ListDrawer';
+import TableList from './container/ListTable';
+import VirtualList from './container/ListVirtual';
+import TabList from './container/ListTab';
+
 const { TextArea } = Input;
 const FrNumber = ({ style, ...rest }) => {
   return <InputNumber style={{ width: '100%', ...style }} {...rest} />;
@@ -73,7 +80,20 @@ export const widgets = {
   collapse: BoxCollapse,
   lineTitle: BoxLineTitle,
   subItem: BoxSubItem,
-  panel: BoxPanel
+  panel: BoxPanel,
+
+
+  list0: SimpleList,
+  list1: SimpleList,
+  list2: TableList,
+  list3: DrawerList,
+  list4: VirtualList,
+  simpleList: SimpleList,
+  cardList: SimpleList,
+  tableList: TableList,
+  drawerList: DrawerList,
+  virtualList: VirtualList,
+  tabList: TabList
 };
 
 export const defaultWidgetNameList = Object.keys(widgets);

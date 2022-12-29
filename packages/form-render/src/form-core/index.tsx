@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo } from 'react';
 import { Form, Row, Button } from 'antd';
-
-
+import { widgets as defaultWidgets } from '../widgets';
 
 import RenderCore from '../render-core';
 import extractFormProps from '../utils/extractFormProps';
@@ -9,7 +8,7 @@ import { FormContext } from '../utils/context';
 
 const FR = (props) => {
   const { properties, type, ...otherSchema } = props.schema || {};
-  const { formProps, onMount, schema, column } = extractFormProps({ ...props, ...otherSchema });
+  const { formProps, onMount, schema, column, widgets } = extractFormProps({ ...props, ...otherSchema });
   console.log(props, 'formProps------');
 
 	useEffect(() => {
@@ -31,6 +30,10 @@ const FR = (props) => {
     labelCol,
     wrapperCol,
     readyOnly: true,
+    widgets: {
+      ...defaultWidgets,
+      widgets
+    }
   };
 
   return (
