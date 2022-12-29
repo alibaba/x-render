@@ -39,7 +39,6 @@ const FieldItem = (props: any) => {
     );
   }
 
-
   const getValueFromKey = getParamValue(formCtx, parentCtx, schema);
 
   const span = getColSpan(formCtx, parentCtx, schema);
@@ -62,7 +61,7 @@ const FieldItem = (props: any) => {
         label={label}
         name={path}
         valuePropName={valuePropName}
-        rules={ruleList}
+        rules={readyOnly ? [] : ruleList}
         hidden={hidden}
         tooltip={tooltip}
         initialValue={schema.default}
