@@ -865,8 +865,6 @@
 //           "type":"object"
 //       },
 
-
-
 //       "activityBasicInfo4":{
 //         "properties":{
 //             "title":{
@@ -1053,13 +1051,6 @@
 //         "title":"基础信息",
 //         "type":"object"
 //     },
-
-
-
-
-
-
-
 
 //       "activityBasicInfo3":{
 //         "properties":{
@@ -1433,7 +1424,7 @@
 //         "title":"基础信息",
 //         "type":"object"
 //     },
-      
+
 //       "activityReleaseRuleInfo":{
 //           "properties":{
 //               "releaseChannels":{
@@ -1625,191 +1616,41 @@
 //   "column": 1,
 // }
 
-
-
-
 export default {
-    "type": "object",
-    "properties": {
-      "a": {
-        "title": "输入框",
-        "type": "string",
-        "props": {},
-        "rules": [
-          {
-            "validator": (e,n)=>n==="muji",
-            "message": "输入的值不等于muji,请重新输入！"
-          }
-        ],
-        required: true,
-      },
-      "b": {
-        "title": "输入框",
-        "type": "string",
-        "props": {},
-        disabled: '{{formData.a === "1" }}',
-        required: true,
-      },
-      "c": {
-        "props": {},
-        "enum":[
-            "online",
-            "offline"
-        ],
-        "enumNames":[
-            "线上活动",
-            "线下活动"
-        ],
-      
-        "title":"活动范围",
-        "type":"array",
-        "required":true,
-        "widget":"checkboxes"
-      },
-      
-      "d": {
-        "title": "输入框",
-        "type": "string",
-        "props": {}
-      },
-      'xxx': {
-        "type": "object",
-        "theme": "panel",
-        "props": {
-          "column": 3,
-          "labelCol": {
-            "span": 6
-          },
-          "wrapperCol": {
-            "span": 16
-          }
-        },
-        "properties": {
-          "input_3XWgl7": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl27": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl71": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XW": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          },
-          "input_3XWgl27": {
-            "title": "输入框",
-            "type": "string",
-            "props": {}
-          }
-        }
-      },
-      "e": {
-        "title": "营销活动模版",
-        "type": "array",
-        "max": "5",
-        "items": {
-         
-            "type": "object",
-            "theme": "panel",
-            "column": 3,
-              "labelCol": {
-                "span": 6
-              },
-              "wrapperCol": {
-                "span": 16
-              },
-            "props": {
-              "title": "订单信息",
-              
-            },
-            "properties": {
-              "input_3XWgl7": {
-                "title": "输入框",
-                "type": "string",
-                "props": {}
-              },
-              "input_3XW": {
-                "title": "输入框",
-                "type": "string",
-                "props": {}
-              },
-              "input_3XWgl27": {
-                "title": "输入框",
-                "type": "string",
-                "props": {}
-              },
-              "eee": {
-                "title": "营销活动模版",
-                "type": "array",
-                "max": "5",
-                "items": {
-                 
-                    "type": "object",
-                    "theme": "panel",
-                    
-                    "props": {
-                      "title": "订单信息",
-                      "column": 3,
-                      "labelCol": {
-                        "span": 6
-                      },
-                      "wrapperCol": {
-                        "span": 16
-                      }
-                    },
-                    "properties": {
-                      "input_3XWgl7": {
-                        "title": "输入框",
-                        "type": "string",
-                        "props": {}
-                      },
-                      "input_3XW": {
-                        "title": "输入框",
-                        "type": "string",
-                        "props": {},
-                         disabled: '{{rootValue.input_3XWgl7 === "1" }}',
-                      },
-                      "input_3XWgl27": {
-                        "title": "输入框",
-                        "type": "string",
-                        "props": {}
-                      },
-                      
-                    
-                  },
-                },
-                "props": {}
-              }
-              
-            
-          },
-        },
-        "props": {}
-      }
+  type: 'object',
+  properties: {
+    input: {
+      type: 'string',
+      title: '输入框',
     },
-    "labelWidth": 120,
-    "displayType": "row",
-    "column": 3
-  }
+    list_ikPi2q: {
+      title: '数组',
+      type: 'array',
+      items: {
+        type: 'object',
+        theme: 'collapse',
+        props: {
+          title: 'xxxxx',
+        },
+        properties: {
+          input_3XWgl7: {
+            title: '输入框',
+            type: 'string',
+            props: {},
+          },
+        },
+      },
+      props: {},
+    },
+  },
+  labelWidth: 120,
+  displayType: 'row',
+  column: 1,
+};
 
 // export default {
 //     "type": "object",
-    
-      
+
 //     properties: {
 //         select1: {
 //           title: '隐藏输入框',
@@ -1817,7 +1658,7 @@ export default {
 //           description: 'dfadffad',
 //           descType: 'icon',
 //           default: true,
-         
+
 //         },
 //         // input1: {
 //         //   title: '输入框',
@@ -1831,7 +1672,7 @@ export default {
 //             required: true,
 //             // hidden: '{{formData.select1 === true}}',
 //             //disabled: '{{formData.select1 === true}}',
-//             placeholder: '请选择', 
+//             placeholder: '请选择',
 //             props: {
 //               disabled: true,
 //             }
@@ -1842,4 +1683,32 @@ export default {
 //     "column": 2,
 //   }
 
-
+// export default {
+//   "type": "object",
+//   "properties": {
+//     "listName": {
+//       "title": "对象数组",
+//       "description": "对象数组嵌套功能",
+//       "type": "array",
+//       "items": {
+//         "type": "object",
+//         "properties": {
+//           "rangeName": {
+//             "title": "日期时间范围",
+//             "type": "range",
+//             "format": "date",
+//             "props": {
+//               "placeholder": [
+//                 "开始日期",
+//                 "结束日期"
+//               ]
+//             }
+//           }
+//         }
+//       },
+//       "props": {}
+//     }
+//   },
+//   "labelWidth": 120,
+//   "displayType": "row"
+// }

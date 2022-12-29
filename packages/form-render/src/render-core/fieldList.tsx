@@ -68,6 +68,6 @@ const FieldList = (props: any) => {
       </Form.Item>
     </Col>
   );
-}
+};
 
 export default FieldList;

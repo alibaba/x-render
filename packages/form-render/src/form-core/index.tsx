@@ -5,15 +5,16 @@ import { widgets as defaultWidgets } from '../widgets';
 import RenderCore from '../render-core';
 import extractFormProps from '../utils/extractFormProps';
 import { FormContext } from '../utils/context';
+import { useStore } from './useForm';
 
 const FR = (props) => {
   const { properties, type, ...otherSchema } = props.schema || {};
   const { formProps, onMount, schema, column, widgets } = extractFormProps({ ...props, ...otherSchema });
   console.log(props, 'formProps------');
 
-	useEffect(() => {
-		onMount && onMount();
-	}, []);
+  useEffect(() => {
+    onMount && onMount();
+  }, []);
 
 
   const labelCol = { span : 6 };
@@ -57,9 +58,7 @@ const FR = (props) => {
         }}
       >
         <Row gutter={8}>
-          <RenderCore 
-            schema={schema}
-          />
+          <RenderCore schema={schema} />
         </Row>
         <Row>
           <Button type="primary" htmlType="submit">
@@ -69,12 +68,6 @@ const FR = (props) => {
       </Form>
     </FormContext.Provider>
   );
-}
+};
 
 export default FR;
-
-
-
-
-
-

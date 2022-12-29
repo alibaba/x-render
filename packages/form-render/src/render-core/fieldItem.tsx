@@ -73,7 +73,7 @@ const FieldItem = (props: any) => {
       </Form.Item>
     </Col>
   );
-}
+};
 
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
@@ -85,11 +85,14 @@ export default (props: any) => {
 
   // 需要监听表单值，进行动态渲染
   return (
-    <Form.Item noStyle shouldUpdate={(prevValues, curValues) => {
-      // 观察函数表达式依赖的值是否发生变更
-      // TODO 进行优化
-      return true;
-    }}>
+    <Form.Item
+      noStyle
+      shouldUpdate={(prevValues, curValues) => {
+        // 观察函数表达式依赖的值是否发生变更
+        // TODO 进行优化
+        return true;
+      }}
+    >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
        
@@ -98,4 +101,4 @@ export default (props: any) => {
       }}
     </Form.Item>
   );
-}
+};
