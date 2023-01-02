@@ -24,8 +24,9 @@ export const useStore = create((set, get) => ({
 }));
 
 const useForm = () => {
+  const { getState } = useStore;
   const [form] = Form.useForm();
-  const { init, setSchemaByPath } = useStore.getState();
+  const { init, setSchemaByPath } = getState();
 
   form.init = schema => {
     init(schema);

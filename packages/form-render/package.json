@@ -68,7 +68,8 @@
     "moment": "^2.24.0",
     "rc-color-picker": "^1.2.6",
     "scroll-into-view-if-needed": "^2.2.29",
-    "virtualizedtableforantd4": "^1.1.2"
+    "virtualizedtableforantd4": "^1.1.2",
+    "zustand": "^4.x"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",

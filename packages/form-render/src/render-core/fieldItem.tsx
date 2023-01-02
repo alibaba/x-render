@@ -2,15 +2,27 @@ import React, { useContext } from 'react';
 import { Form, Col } from 'antd';
 
 import { getWidgetName } from './mapping';
-import { FormContext, ParentContext } from '../utils/context';
+// import { ParentContext } from '../utils/context';
+import { useRootStore, useParentStore } from '../store/form';
 import { isHasExpression, parseAllExpression } from '../utils/expression';
-import { getParamValue, getColSpan, getLabel, getRuleList, getTooltip, getValuePropName, getWidgetProps, ErrorSchema } from './methods';
+import {
+  getParamValue,
+  getColSpan,
+  getLabel,
+  getRuleList,
+  getTooltip,
+  getValuePropName,
+  getWidgetProps,
+  ErrorSchema,
+} from './methods';
 
 const FieldItem = (props: any) => {
   const { schema, children, path } = props;
 
-  const formCtx: any = useContext(FormContext);
-  const parentCtx: any = useContext(ParentContext);
+  // const formCtx: any = useContext(FormContext);
+  const formCtx: any = useRootStore(state => state);
+
+  const parentCtx: any = useParentStore(state => state);
 
   const widgets = formCtx.widgets;
 
@@ -24,8 +36,8 @@ const FieldItem = (props: any) => {
     return <ErrorSchema schema={schema} />;
   }
 
-  let Widget =  widgets[widgetName] || widgets['html'];
- 
+  let Widget = widgets[widgetName] || widgets['html'];
+
   const widgetProps = getWidgetProps({ schema, children, widgets });
 
   // 容器组件
@@ -33,9 +45,15 @@ const FieldItem = (props: any) => {
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
       <Col span={24}>
-        <ParentContext.Provider value={{ column: schema.column, labelCol: schema.labelCol, wrapperCol: schema.wrapperCol }}>
-          <Widget {...widgetProps} />
-        </ParentContext.Provider>
+        {/* <ParentContext.Provider
+          value={{
+            column: schema.column,
+            labelCol: schema.labelCol,
+            wrapperCol: schema.wrapperCol,
+          }}
+        > */}
+        <Widget {...widgetProps} />
+        {/* </ParentContext.Provider> */}
       </Col>
     );
   }
@@ -55,7 +73,7 @@ const FieldItem = (props: any) => {
   if (readyOnly) {
     Widget = widgets['html'];
   }
-  
+
   return (
     <Col span={span}>
       <Form.Item
@@ -77,10 +95,10 @@ const FieldItem = (props: any) => {
 
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
-  
+
   // 不存在函数表达式
   if (!isHasExpression(schema)) {
-    return <FieldItem {...props} />
+    return <FieldItem {...props} />;
   }
 
   // 需要监听表单值，进行动态渲染
@@ -95,9 +113,9 @@ export default (props: any) => {
     >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-       
+
         const newSchema = parseAllExpression(schema, formData, rootPath);
-        return <FieldItem schema={newSchema} {...otherProps} />
+        return <FieldItem schema={newSchema} {...otherProps} />;
       }}
     </Form.Item>
   );
