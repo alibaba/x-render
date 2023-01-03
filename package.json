@@ -13,7 +13,7 @@
         "tools/form-render-excel"
     ],
     "scripts": {
-        "build": "turbo run build",
+        "build": "lerna run build",
         "changelog": "lerna-changelog",
         "clean": "lerna clean -y",
         "predeploy": "npm run build && npm run doc",

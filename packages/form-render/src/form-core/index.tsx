@@ -6,17 +6,19 @@ import RenderCore from '../render-core';
 import extractFormProps from '../utils/extractFormProps';
 import { FormContext } from '../utils/context';
 import { useStore } from './useForm';
+import { useRootStore } from '../store/form';
 
 const FR = props => {
   const [schema] = useStore(state => [state.schema, state.form], shallow);
-  const { formProps, onMount, column, form, widgets, onFinish } = extractFormProps(props);
+  const setRootStore = useRootStore(state => state.setStore, shallow);
+  const { formProps, onMount, column, form, widgets, onFinish } =
+    extractFormProps(props);
 
   useEffect(() => {
     onMount && onMount();
   }, []);
 
-
-  const labelCol = { span : 6 };
+  const labelCol = { span: 6 };
   // if (schema?.labelWidth) {
   //   labelCol.flex = schema.labelWidth + 'px';
   // } else {
@@ -33,31 +35,32 @@ const FR = props => {
     widgets
   };
 
+  setRootStore(context);
+
   return (
-    <FormContext.Provider value={context}>
-      <Form
-        labelWrap={true}
-        onFinish={values => {
-          onFinish(values);
-          console.log(values);
-        }}
-        labelCol={labelCol}
-        form={form}
-        {...formProps}
-      >
-        <Row gutter={8}>
-          <RenderCore schema={schema} />
-        </Row>
-        <Row>
-          <Space>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-            <Button onClick={() => form.resetFields()}>Reset</Button>
-          </Space>
-        </Row>
-      </Form>
-    </FormContext.Provider>
+    // <FormContext.Provider value={context}>
+    <Form
+      labelWrap={true}
+      onFinish={values => {
+        console.log(values);
+      }}
+      labelCol={labelCol}
+      form={form}
+      {...formProps}
+    >
+      <Row gutter={8}>
+        <RenderCore schema={schema} />
+      </Row>
+      <Row>
+        <Space>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+          <Button onClick={() => form.resetFields()}>Reset</Button>
+        </Space>
+      </Row>
+    </Form>
+    // </FormContext.Provider>
   );
 };
 
