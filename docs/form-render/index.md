@@ -79,7 +79,7 @@ const Demo = () => {
   };
 
   setTimeout(() => {
-      form.setSchemaByPath('properties.input',  { title: '动态修改标题'});
+      form.setSchemaByPath('input',  { title: '动态修改标题'});
     }, 2000);
   
   return (
