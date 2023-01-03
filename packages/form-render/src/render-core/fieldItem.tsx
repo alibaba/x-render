@@ -15,7 +15,7 @@ import {
   getWidgetProps,
   ErrorSchema,
 } from './methods';
-import { shallow } from 'enzyme';
+import shallow from 'zustand/shallow';
 
 const FieldItem = (props: any) => {
   const { schema, children, path } = props;
