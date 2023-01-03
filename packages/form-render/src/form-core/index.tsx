@@ -1,7 +1,6 @@
-import React, { useEffect, useMemo } from 'react';
-import { widgets as defaultWidgets } from '../widgets';
+import React, { useEffect } from 'react';
 
-import { Form, Row, Button, Col, Space } from 'antd';
+import { Form, Row, Button, Space } from 'antd';
 import shallow from 'zustand/shallow';
 import RenderCore from '../render-core';
 import extractFormProps from '../utils/extractFormProps';
@@ -31,10 +30,7 @@ const FR = props => {
     labelCol,
     wrapperCol,
     // readyOnly: true,
-    widgets: {
-      ...defaultWidgets,
-      widgets
-    }
+    widgets
   };
 
   return (
@@ -42,6 +38,7 @@ const FR = props => {
       <Form
         labelWrap={true}
         onFinish={values => {
+          onFinish(values);
           console.log(values);
         }}
         labelCol={labelCol}

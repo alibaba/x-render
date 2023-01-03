@@ -11,7 +11,7 @@ export { useForm } from './form-core/useForm';
 export { default as connectForm } from './form-core/connect-form';
 export { createWidget } from './form-core/create-widget';
 export { mapping } from './render-core/mapping';
-export { defaultWidgets as widgets };
+export { defaultWidgets as widgets } from './widgets';
 
 const Main = props => {
   const { configProvider, widgets, form, ...otherProps } = props;
