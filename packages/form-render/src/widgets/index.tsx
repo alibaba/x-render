@@ -1,5 +1,13 @@
 import React from 'react';
-import { Checkbox, Input, InputNumber, Rate, Switch, TreeSelect, Radio } from 'antd';
+import {
+  Checkbox,
+  Input,
+  InputNumber,
+  Rate,
+  Switch,
+  TreeSelect,
+  Radio,
+} from 'antd';
 import color from './antd/color';
 import date from './antd/date';
 import dateRange from './antd/dateRange';
@@ -19,7 +27,6 @@ import BoxCollapse from './container/BoxCollapse';
 import BoxLineTitle from './container/BoxLineTitle';
 import BoxSubItem from './container/BoxSubItem';
 import BoxPanel from './container/BoxPanel';
-
 
 import SimpleList from './container/ListSimple';
 import DrawerList from './container/ListDrawer';
@@ -52,7 +59,10 @@ const FrTreeSelect = ({ style, ...rest }) => (
 //   <Cascader style={{ width: '100%', ...style }} {...rest} />
 // );
 
-export const widgets = {
+type Widgets = {
+  [key: string]: any;
+};
+export const widgets: Widgets = {
   input: Input,
   checkbox: Checkbox,
   checkboxes: Checkbox.Group, // checkbox多选
@@ -82,7 +92,6 @@ export const widgets = {
   subItem: BoxSubItem,
   panel: BoxPanel,
 
-
   list0: SimpleList,
   list1: SimpleList,
   list2: TableList,
@@ -93,7 +102,7 @@ export const widgets = {
   tableList: TableList,
   drawerList: DrawerList,
   virtualList: VirtualList,
-  tabList: TabList
+  tabList: TabList,
 };
 
 export const defaultWidgetNameList = Object.keys(widgets);
