@@ -15,6 +15,7 @@ import {
   getWidgetProps,
   ErrorSchema,
 } from './methods';
+import { shallow } from 'enzyme';
 
 const FieldItem = (props: any) => {
   const { schema, children, path } = props;
@@ -22,7 +23,8 @@ const FieldItem = (props: any) => {
   // const formCtx: any = useContext(FormContext);
   const formCtx: any = useRootStore(state => state);
 
-  const parentCtx: any = useParentStore(state => state);
+  const parentCtx: any = useParentStore(state => state, shallow);
+  const setParentStore: any = useParentStore(state => state.setStore);
 
   const widgets = formCtx.widgets;
 
@@ -42,6 +44,11 @@ const FieldItem = (props: any) => {
 
   // 容器组件
   if (children) {
+    setParentStore({
+      column: schema.column,
+      labelCol: schema.labelCol,
+      wrapperCol: schema.wrapperCol,
+    });
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
       <Col span={24}>
