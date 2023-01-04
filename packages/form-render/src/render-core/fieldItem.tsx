@@ -25,8 +25,6 @@ const FieldItem = (props: any) => {
   // const formCtx: any = useContext(FormContext);
   const formCtx: any = useStore(state => state.context);
 
-  debugger;
-
   const parentCtx: any = useParentStore(state => state, shallow);
   const setParentStore: any = useParentStore(state => state.setStore);
 
