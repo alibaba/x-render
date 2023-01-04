@@ -83,7 +83,7 @@ const useForm = () => {
   };
   form.onItemChange = form.setValueByPath;
   form.errorFields = form.getFieldsError;
-  form.isValidating = form.isFieldsValidating,
+  form.isValidating = form.isFieldsValidating;
 
 
   // form = {

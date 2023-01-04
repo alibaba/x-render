@@ -5,7 +5,7 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import { widgets as defaultWidgets } from './widgets';
 import FRCore from './form-core';
 
-import schema from './schema-mock';
+// import schema from './schema-mock';
 
 export { useForm } from './form-core/useForm';
 export { default as connectForm } from './form-core/connect-form';
@@ -14,13 +14,15 @@ export { mapping } from './render-core/mapping';
 export { widgets } from './widgets';
 
 const Main = props => {
-  const { configProvider, widgets, form, ...otherProps } = props;
+  const { configProvider, widgets, form, schema, ...otherProps } = props;
+
   if (!form) {
     console.warn('Please provide a form instance to FormRender');
     return null;
   }
 
   useEffect(() => {
+    debugger;
     form.init(schema);
   }, []);
 

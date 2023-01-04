@@ -1,6 +1,6 @@
 ---
 order: 1
-title: 开始使用
+title: 快速上手
 toc: content
 ---
 
