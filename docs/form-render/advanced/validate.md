@@ -72,18 +72,60 @@ const schema = {
   column: 1
 };
 
+const schema1 = {
+  type: 'object',
+  properties: {
+    
+    input4: {
+      title: '字符最大长度',
+      type: 'string',
+      max: 2,
+      required: true,
+    },
+    input5: {
+      title: '字符最小长度',
+      type: 'string',
+      min: 10,
+      required: true,
+    },
+    input6: {
+      title: 'url 校验',
+      type: 'string',
+      required: true,
+      format: 'url',
+    },
+    input7: {
+      title: 'email 校验',
+      type: 'string',
+      required: true,
+      format: 'email',
+    },
+    input7: {
+      title: '图片格式校验',
+      type: 'string',
+      required: true,
+      format: 'image',
+    }
+  },
+  column: 3
+};
+
+
 export default () => {
   const form = useForm();
+  const form1 = useForm();
   return (
     <div>
       <FormRender schema={schema} form={form} builtOperation={true} />
+      <FormRender schema={schema1} form={form1} builtOperation={true} />
+
     </div>
   )
 };
 ```
 
 
-### Rules 校验
+<!-- ### Rules 校验
 - 全面拥抱 Antd Form Rules 相关配置
 - 自定义校验 validator：做了一点小小的改变，validator 直接返回布尔值。（不再需要接收 Promise 作为返回值）
 
@@ -108,11 +150,11 @@ const schema = {
 };
 
 export default () => {
-  const form = useForm();
+  const form3 = useForm();
   return (
     <div>
-      <FormRender schema={schema} form={form} builtOperation={true} />
+      <FormRender schema={schema} form={form3} builtOperation={true} />
     </div>
   )
 };
-```
+``` -->

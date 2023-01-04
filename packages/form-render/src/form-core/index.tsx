@@ -4,18 +4,27 @@ import { Form, Row, Col, Button, Space } from 'antd';
 import shallow from 'zustand/shallow';
 import RenderCore from '../render-core';
 import extractFormProps from '../utils/extractFormProps';
-import { useStore } from './useForm';
-import { useRootStore } from '../store/form';
+
+import { useStore, useStoreApi } from './store/createStore';
+import { useRootStore } from './store/form';
 
 import './index.less';
 
-const FR = props => {
+const FR = (props: any) => {
   const [schema] = useStore(state => [state.schema, state.form], shallow);
-  const setRootStore = useRootStore(state => state.setStore, shallow);
-  const { formProps, onMount, column, form, widgets, onFinish, builtOperation } = extractFormProps(props);
+  const storeApi = useStoreApi();
+  const setContext = useStore(state => state.setContext, shallow);
 
+
+
+  const { formProps, onMount, column, form, widgets, onFinish, builtOperation } = extractFormProps(props);
+ 
   useEffect(() => {
     onMount && onMount();
+  }, []);
+
+  useEffect(() => {
+    form.init(props.schema, storeApi);
   }, []);
 
   const labelCol = { span: 4 };
@@ -34,8 +43,8 @@ const FR = props => {
     // readyOnly: true,
     widgets
   };
-  
-  setRootStore(context);
+
+  setContext(context);
 
   console.log(context, '------');
 

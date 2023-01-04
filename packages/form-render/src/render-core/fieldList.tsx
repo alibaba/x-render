@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Form, Col } from 'antd';
 
-import { useRootStore, useParentStore } from '../store/form';
+import { useRootStore, useParentStore } from '../form-core/store/form';
 import { getParamValue } from './methods';
 
 const FieldList = (props: any) => {

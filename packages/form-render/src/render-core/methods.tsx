@@ -121,7 +121,6 @@ export const getRuleList = (schema: any) => {
       const validator = item.validator;
       item.validator = async (_: any, value: any) => {
         const result = await validator(_, value);
-        debugger;
         return result ? Promise.resolve() : Promise.reject(new Error(item.message));
       };;
       item.transformed = true;

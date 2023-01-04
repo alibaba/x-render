@@ -5,6 +5,9 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import { widgets as defaultWidgets } from './widgets';
 import FRCore from './form-core';
 
+import { Provider, createStore } from './form-core/store/createStore';
+
+
 // import schema from './schema-mock';
 
 export { useForm } from './form-core/useForm';
@@ -20,20 +23,17 @@ const Main = props => {
     console.warn('Please provide a form instance to FormRender');
     return null;
   }
-
-  useEffect(() => {
-    debugger;
-    form.init(schema);
-  }, []);
-
   return (
     <ConfigProvider locale={zhCN} {...configProvider}>
-      <FRCore
-        form={form}
-        widgets={{ ...defaultWidgets, ...widgets }}
-        {...otherProps}
-        // schema={schema}
-      />
+      <Provider createStore={createStore}>
+        <FRCore
+          form={form}
+          widgets={{ ...defaultWidgets, ...widgets }}
+          {...otherProps}
+          schema={schema}
+        />
+      </Provider>
+      
     </ConfigProvider>
   );
 };
