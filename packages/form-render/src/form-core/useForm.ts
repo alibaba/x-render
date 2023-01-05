@@ -21,8 +21,8 @@ export const useStore = create<FormStore>((set, get) => ({
   setSchemaByPath: (path, modifiedSchema) => {
     const newSchema = cloneDeep(get().schema);
     let itemSchema = _get(newSchema, path, {});
-    console.log('itemSchema', itemSchema);
-    console.log('path', path);
+    // console.log('itemSchema', itemSchema);
+    // console.log('path', path);
     itemSchema = { ...itemSchema, ...modifiedSchema };
     // 需要改善
     _set(newSchema, 'properties.' + path, itemSchema);
@@ -83,7 +83,7 @@ const useForm = () => {
   };
   form.onItemChange = form.setValueByPath;
   form.errorFields = form.getFieldsError;
-  form.isValidating = form.isFieldsValidating,
+  form.isValidating = form.isFieldsValidating;
 
 
   // form = {

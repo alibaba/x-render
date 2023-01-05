@@ -1,42 +1,64 @@
 import React from "react";
-import { FormListFieldData, Drawer, Form } from "antd";
+import { Drawer, Form } from "antd";
 import renderCore from "../../../render-core";
-import { FormContext } from "../../../utils/context";
 
-const FormDrawer: React.FC<{
-  children: React.ReactNode,
+const FormDrawer = React.forwardRef<{
+  open: (params: { name: number, value?: any }) => void,
+}, {
   schema: any,
-  field: FormListFieldData,
-  listName: string,
-}> = ({ children, schema, field, listName }) => {
+  listName: (string | number)[],
+}>(({ schema, listName }, ref) => {
 
-  const [visible, setVisible] = React.useState(false);
-  const { form } = React.useContext(FormContext) as any;
+  const [visible, setVisible] = React.useState<boolean>(false);
+  const nameRef = React.useRef(null);
+
+  // create a new drawer form to sync values between table from and drawer form
+  const [drawerForm] = Form.useForm();
+  const tableForm = Form.useFormInstance();
+
+  React.useImperativeHandle(ref, () => ({
+    open: ({ name, value }) => {
+
+      if (value) {
+        drawerForm.setFieldsValue(value);
+      } else {
+        drawerForm.resetFields();
+      }
+
+      nameRef.current = name;
+      setVisible(true);
+    }
+  }))
 
   return (
     <>
-      <div onClick={() => setVisible(true)}>
-        {children}
-      </div>
       <Drawer
         visible={visible}
         title="操作"
         onClose={() => setVisible(false)}
       >
-        <Form onValuesChange={(value) => {
-          const name = Object.keys(value)[0];
-          form.setFields([
-            {
-              name: [listName, field.name, name],
-              value: value[name]
-            }
-          ])
-        }}>
-          {renderCore({ schema: schema.items, parentNamePath: [field.name] })}
+        <Form
+          layout="vertical"
+          form={drawerForm}
+          onValuesChange={(values) => {
+            if (nameRef.current === null) return;
+
+            const newFields = Object.keys(values).map(itemName => {
+              const namePath = listName?.concat([nameRef.current, itemName]);
+              return {
+                name: namePath,
+                value: values[itemName],
+              }
+            });
+
+            tableForm.setFields(newFields);
+          }}
+        >
+          {renderCore({ schema: schema.items })}
         </Form>
       </Drawer>
     </>
   )
-}
+})
 
 export default FormDrawer;
