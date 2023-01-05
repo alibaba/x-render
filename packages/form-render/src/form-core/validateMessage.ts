@@ -1,5 +1,5 @@
 const typeTemplate = "'${label}' is not a valid ${type}";
-const typeTemplateCN = '${label}的类型不是${label}';
+const typeTemplateCN = "数据类型必须是 ${type}";
 
 export const validateMessagesEN = {
   default: "Validation error on field '${label}'",
