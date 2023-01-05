@@ -36,6 +36,7 @@ import TabList from './container/ListTab';
 
 const { TextArea } = Input;
 const FrNumber = ({ style, ...rest }) => {
+ 
   return <InputNumber style={{ width: '100%', ...style }} {...rest} />;
 };
 

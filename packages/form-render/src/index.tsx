@@ -16,15 +16,17 @@ export { createWidget } from './form-core/create-widget';
 export { mapping } from './render-core/mapping';
 export { widgets } from './widgets';
 
+import { validateMessagesEN, validateMessagesCN } from './form-core/validateMessage';
+
 const Main = props => {
-  const { configProvider, widgets, form, schema, ...otherProps } = props;
+  const { configProvider, widgets, form, schema, validateMessages, ...otherProps } = props;
 
   if (!form) {
     console.warn('Please provide a form instance to FormRender');
     return null;
   }
   return (
-    <ConfigProvider locale={zhCN} {...configProvider}>
+    <ConfigProvider locale={zhCN} {...configProvider} form={{ validateMessages: { ...validateMessagesCN, ...validateMessages } }}>
       <Provider createStore={createStore}>
         <FRCore
           form={form}

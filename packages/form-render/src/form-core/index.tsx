@@ -6,7 +6,6 @@ import RenderCore from '../render-core';
 import extractFormProps from '../utils/extractFormProps';
 
 import { useStore, useStoreApi } from './store/createStore';
-import { useRootStore } from './store/form';
 
 import './index.less';
 
@@ -14,9 +13,6 @@ const FR = (props: any) => {
   const [schema] = useStore(state => [state.schema, state.form], shallow);
   const storeApi = useStoreApi();
   const setContext = useStore(state => state.setContext, shallow);
-
-
-
   const { formProps, onMount, column, form, widgets, onFinish, builtOperation } = extractFormProps(props);
  
   useEffect(() => {
@@ -27,17 +23,29 @@ const FR = (props: any) => {
     form.init(props.schema, storeApi);
   }, []);
 
-  const labelCol = { span: 4 };
+  let labelCol = { span: 4 };
   // if (schema?.labelWidth) {
   //   labelCol.flex = schema.labelWidth + 'px';
   // } else {
   //   labelCol.span = schema?.labelSpan || 6;
   // }
 
-  const wrapperCol = { span: 8 };
+  let wrapperCol = { span: 8 };
+
+  const _column = column || schema?.column || 1;
+  if (_column === 2) {
+    labelCol = { span: 8 };
+    wrapperCol = { span: 14 }
+  }
+
+  if (_column === 3) {
+    labelCol = { span: 8 };
+    wrapperCol = { span: 16 }
+  }
+
 
   const context = {
-    column: column || schema?.column || 1,
+    column: _column,
     labelCol,
     wrapperCol,
     // readyOnly: true,
@@ -45,8 +53,6 @@ const FR = (props: any) => {
   };
 
   setContext(context);
-
-  console.log(context, '------');
 
   return (
     <Form

@@ -17,6 +17,8 @@ export const ErrorSchema = (schema: any) => {
 
 export const getLabel = (schema: any) => {
   const { title, description, descType } = schema;
+
+  return title;
   if (descType === 'icon') {
     return title;
   }
@@ -52,42 +54,27 @@ export const getRuleList = (schema: any) => {
   min = min ?? minLength;
 
   if (max) {
-    let message = `字符最大长度${max}`;
-    if (type === 'number') {
-      message = `数值最大值${max}`;
-    }
-    if (type === 'array') {
-      message = `数组最大长度${max}`;
-    }
-    rules.push({ type, max: max * 1, message: msg || message });
+    rules.push({ type, max: max * 1 });
   }
 
   if (min) {
-    let message = `字符最小长度${min}`;
-    if (type === 'number') {
-      message = `数值最小值${min}`;
-    }
-    if (type === 'array') {
-      message = `数组最小长度${min}`;
-    }
-
-    rules.push({ type, min: min * 1, message: msg || message });
+    rules.push({ type, min: min * 1 });
   }
   
   if (required) {
-    rules.push({ required: true, message: msg || `${title}不能为空` });
+    rules.push({ type, required: true,  whitespace: true });
   }
 
   if (pattern) {
-    rules.push({ pattern, message: msg || '格式不匹配'});
+    rules.push({ pattern });
   }
 
   if (format === 'url') {
-    rules.push({ type: 'url', message: msg || '请输入正确的 url 格式' });
+    rules.push({ type: 'url' });
   }
 
   if (format === 'email') {
-    rules.push({ type: 'email', message: msg || '请输入正确的 email 格式' });
+    rules.push({ type: 'email' });
   }
 
   if (format === 'image') {
