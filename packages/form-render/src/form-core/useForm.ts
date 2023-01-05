@@ -55,8 +55,8 @@ const useForm = () => {
   form.getValues = () => form.getFieldsValue(true);
 
   form.setValueByPath = (path, value) => {
-    const _path = 'properties' + path;
-    form.setFieldValue(_path, value);
+    //const _path = 'properties' + path;
+    form.setFieldValue(path, value);
   };
   form.onItemChange = form.setValueByPath;
   form.errorFields = form.getFieldsError;

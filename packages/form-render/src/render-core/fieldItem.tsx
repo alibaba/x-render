@@ -43,14 +43,15 @@ const FieldItem = (props: any) => {
   let Widget = widgets[widgetName] || widgets['html'];
 
   const widgetProps = getWidgetProps({ schema, children, widgets });
-
+  
   // 容器组件
   if (children) {
-    setParentStore({
-      column: schema.column,
-      labelCol: schema.labelCol,
-      wrapperCol: schema.wrapperCol,
-    });
+    
+    // setParentStore({
+    //   column: schema.column,
+    //   labelCol: schema.labelCol,
+    //   wrapperCol: schema.wrapperCol,
+    // });
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
       <Col span={24}>

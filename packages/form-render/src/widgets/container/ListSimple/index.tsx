@@ -38,7 +38,7 @@ const SimpleList = (props: any) => {
   const { name: listName, schema, rootPath = [], readyOnly } = props;
 
   const { max, props: listProps } = schema;
-  const { copyable = true, moveable = true, hasBackground = true } = listProps || {};
+  const { copyable = true, moveable = true, hasBackground = false } = listProps || {};
   const form = Form.useFormInstance();
 
   const handleOnCopy = (add: any, name: number) => () => {
@@ -55,7 +55,7 @@ const SimpleList = (props: any) => {
             return (
               <div key={key} className='fr-list-item'>
                 <div style={{ width: 0, flex: 1 }}>
-                  {renderCore({ schema:schema.items, parentPath: [name], rootPath: [...rootPath, ...listName, name] })}
+                  {renderCore({ schema:schema, parentPath: [name], rootPath: [...rootPath, ...listName, name] })}
                 </div>
                 {!readyOnly && (
                   <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>

@@ -26,14 +26,22 @@ export const createStore = ()=> create<FormStore>((set, get) => ({
     return set({ context });
   },
   setSchemaByPath: (path, modifiedSchema) => {
-    const newSchema = cloneDeep(get().schema);
-    let itemSchema = _get(newSchema, path, {});
+    const _path = 'properties.' + path;
+    const schema = cloneDeep(get().schema);
+    let itemSchema = _get(schema, _path, {});
+
+    if (typeof modifiedSchema === 'function') {
+      itemSchema = { ...itemSchema, ...modifiedSchema(itemSchema) };
+    } else {
+      itemSchema = { ...itemSchema, ...modifiedSchema };
+    }
+
     console.log('itemSchema', itemSchema);
-    console.log('path', path);
-    itemSchema = { ...itemSchema, ...modifiedSchema };
+    console.log('path', _path);
+    
     // 需要改善
-    _set(newSchema, 'properties.' + path, itemSchema);
-    return set({ schema: newSchema });
+    _set(schema, _path, itemSchema);
+    return set({ schema });
   },
 }));
 
