@@ -1,4 +1,4 @@
-export const getFormItemLayout = (column: number) => {
+export const getFormItemLayout = (column: number, formProps: any) => {
   let labelCol = { span: 4 };
   let wrapperCol = { span: 8 };
 
@@ -12,6 +12,14 @@ export const getFormItemLayout = (column: number) => {
     wrapperCol = { span: 15 }
   }
 
+  // 自定义进行覆盖
+  if (formProps.labelCol) {
+    labelCol = formProps.labelCol;
+  }
+
+  if (formProps.wrapperCol) {
+    wrapperCol = formProps.wrapperCol;
+  }
 
   // if (schema?.labelWidth) {
   //   labelCol.flex = schema.labelWidth + 'px';

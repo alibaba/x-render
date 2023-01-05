@@ -7,7 +7,6 @@ import FRCore from './form-core';
 
 import { Provider, createStore } from './form-core/store/createStore';
 
-
 // import schema from './schema-mock';
 
 export { useForm } from './form-core/useForm';

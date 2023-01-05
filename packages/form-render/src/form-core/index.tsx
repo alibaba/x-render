@@ -10,13 +10,17 @@ import RenderCore from '../render-core';
 import './index.less';
 
 const FormCore = (props: any) => {
-  const [schema] = useStore(state => [state.schema, state.form], shallow);
   const storeApi = useStoreApi();
   const setContext = useStore(state => state.setContext, shallow);
-  const { formProps, onMount, column, form, widgets, onFinish, builtOperation } = extractFormProps(props);
+  const [schema] = useStore(state => [state.schema, state.form], shallow);
+  const { properties, ...schemProps } = schema;
+
+  debugger;
+
+  const { formProps, onMount, column, form, widgets, onFinish, builtOperation } = extractFormProps({ ...props, ...schemProps });
 
   const _column = column || schema?.column || 1;
-  const { labelCol, wrapperCol } = getFormItemLayout(_column)
+  const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps);
  
   useEffect(() => {
     onMount && onMount();
@@ -35,14 +39,12 @@ const FormCore = (props: any) => {
       widgets
     };
     setContext(context);
-  }, [_column]);
+  }, [_column, labelCol, wrapperCol]);
 
   return (
     <Form
       form={form}
       labelWrap={true}
-      labelCol={labelCol}
-      wrapperCol={wrapperCol}
       onFinish={values => {
         console.log(values);
         onFinish && onFinish();
