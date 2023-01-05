@@ -73,6 +73,7 @@ const FieldItem = (props: any) => {
   const labelCol = getValueFromKey('labelCol');
   const wrapperCol = getValueFromKey('wrapperCol');
   const readyOnly = getValueFromKey('readyOnly');
+  const noStyle = getValueFromKey('noStyle');
 
   const label = getLabel(schema);
   const tooltip = getTooltip(schema);
@@ -96,6 +97,7 @@ const FieldItem = (props: any) => {
         initialValue={schema.default}
         labelCol={labelCol}
         wrapperCol={wrapperCol}
+        noStyle={noStyle}
       >
         <Widget {...widgetProps} />
       </Form.Item>
