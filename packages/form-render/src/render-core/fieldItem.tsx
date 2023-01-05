@@ -31,7 +31,7 @@ const FieldItem = (props: any) => {
   const widgets = formCtx.widgets;
 
   const { hidden } = schema;
-  console.log(props, 'fieldProps');
+  // console.log(props, 'fieldProps');
 
   let widgetName = getWidgetName(schema);
 

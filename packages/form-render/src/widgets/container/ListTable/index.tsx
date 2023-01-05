@@ -1,23 +1,25 @@
 import React from 'react';
-import { Form, Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import renderCore from '../../../render-core';
+import { Button, Form } from 'antd';
+import ListTable from './listTable';
 
 const CardList = (props: any) => {
   const { name, schema } = props;
 
   return (
     <Form.List name={name}>
-      {(fields, { add, remove }) => (
+      {(fields, operation) => (
         <>
-          {fields.map(({ key, name, ...restField }) => {
-            return renderCore({ schema: schema.items, parentNamePath: [name]})
-          })}
-          <Form.Item>
-            <Button type='dashed' onClick={() => add()} block icon={<PlusOutlined />}>
-              新增一条
+          <Form.Item noStyle>
+            <Button type="primary" onClick={() => operation.add()} size="small" style={{ float: 'right', marginBottom: 10 }}>
+              增加一条
             </Button>
           </Form.Item>
+          <ListTable
+            fields={fields}
+            operation={operation}
+            schema={schema}
+            listName={name}
+          />
         </>
       )}
     </Form.List>

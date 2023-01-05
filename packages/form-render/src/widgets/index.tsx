@@ -56,10 +56,6 @@ const FrTreeSelect = ({ style, ...rest }) => (
   <TreeSelect style={{ width: '100%', ...style }} {...rest} />
 );
 
-// const FrCascader = ({ style, ...rest }) => (
-//   <Cascader style={{ width: '100%', ...style }} {...rest} />
-// );
-
 type Widgets = {
   [key: string]: any;
 };
@@ -85,7 +81,6 @@ export const widgets: Widgets = {
   html: Html,
   rate: Rate,
   treeSelect: FrTreeSelect,
-  // cascader: FrCascader,
 
   card: BoxCard,
   collapse: BoxCollapse,

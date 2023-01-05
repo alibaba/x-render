@@ -1,34 +1,25 @@
 import React from 'react';
-import { Form, Button, Drawer, Table, Space } from 'antd';
-import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
-import renderCore from '../../../render-core';
-import get from 'lodash-es/get';
-import keys from 'lodash-es/keys';
-import { ColumnsType } from 'antd/lib/table';
+import { Form, Button } from 'antd';
 import FormTable from './formTable';
 import './index.less';
 
-const prefix = 'fr-drawer-list';
+const prefix = 'fr-list-drawer';
 
 const DrawerList = (props: any) => {
-  const { name = 'name', schema } = props;
+  const { name, schema } = props;
 
   return (
     <Form.List name={name}>
       {(fields, operation) => (
-        <>
+        <div className={prefix}>
           <FormTable
+            prefix={prefix}
             listName={name}
             schema={schema}
             fields={fields}
             operation={operation}
           />
-          <Form.Item>
-            <Button type='dashed' onClick={() => operation.add()} block icon={<PlusOutlined />}>
-              新增一条
-            </Button>
-          </Form.Item>
-        </>
+        </div>
       )}
     </Form.List>
   );

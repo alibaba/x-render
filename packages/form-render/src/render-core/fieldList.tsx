@@ -3,6 +3,7 @@ import { Form, Col } from 'antd';
 
 import { useRootStore, useParentStore } from '../form-core/store/form';
 import { getParamValue } from './methods';
+import { widgets } from '..';
 
 const FieldList = (props: any) => {
   // const formCtx: any = useContext(FormContext);
@@ -10,10 +11,10 @@ const FieldList = (props: any) => {
 
   const parentCtx: any = useParentStore(state => state);
 
-  const widgets = formCtx.widgets;
+  // const widgets = formCtx.widgets;
 
   const { schema, path, parentLitPath, renderCore, max, rootPath } = props;
-  console.log(props, 'fieldProps');
+  // console.log(props, 'fieldProps');
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';
   const Widget = widgets[widgetName];
@@ -27,11 +28,11 @@ const FieldList = (props: any) => {
     span = 24;
   }
 
-  const handleOnAdd = () => {};
+  const handleOnAdd = () => { };
 
-  const handleOnRemove = () => {};
+  const handleOnRemove = () => { };
 
-  const handleOnMove = () => {};
+  const handleOnMove = () => { };
 
   const getValueFromKey = getParamValue(formCtx, parentCtx, schema);
 

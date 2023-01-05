@@ -27,7 +27,7 @@ interface FormInstanceExtends extends FormInstance {
 }
 
 const useForm = () => {
- 
+
   const [form] = Form.useForm() as [FormInstanceExtends];
 
   /**初始化 */
@@ -49,11 +49,11 @@ const useForm = () => {
       return _get(schema, 'properties' + path, {});
     };
   };
-  
+
   form.setValues = form.setFieldsValue;
-  
+
   form.getValues = () => form.getFieldsValue(true);
-  
+
   form.setValueByPath = (path, value) => {
     const _path = 'properties' + path;
     form.setFieldValue(_path, value);
