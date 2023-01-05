@@ -89,6 +89,7 @@ const FieldItem = (props: any) => {
       <Form.Item
         label={label}
         name={path}
+       
         valuePropName={valuePropName}
         rules={readyOnly ? [] : ruleList}
         hidden={hidden}
