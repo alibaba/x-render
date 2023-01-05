@@ -11,21 +11,37 @@ import { Provider, createStore } from './form-core/store/createStore';
 
 export { useForm } from './form-core/useForm';
 export { default as connectForm } from './form-core/connect-form';
-export { createWidget } from './form-core/create-widget';
+// export { createWidget } from './form-core/create-widget';
 export { mapping } from './render-core/mapping';
 export { widgets } from './widgets';
 
-import { validateMessagesEN, validateMessagesCN } from './form-core/validateMessage';
+import {
+  validateMessagesEN,
+  validateMessagesCN,
+} from './form-core/validateMessage';
 
 const Main = props => {
-  const { configProvider, widgets, form, schema, validateMessages, ...otherProps } = props;
+  const {
+    configProvider,
+    widgets,
+    form,
+    schema,
+    validateMessages,
+    ...otherProps
+  } = props;
 
   if (!form) {
     console.warn('Please provide a form instance to FormRender');
     return null;
   }
   return (
-    <ConfigProvider locale={zhCN} {...configProvider} form={{ validateMessages: { ...validateMessagesCN, ...validateMessages } }}>
+    <ConfigProvider
+      locale={zhCN}
+      {...configProvider}
+      form={{
+        validateMessages: { ...validateMessagesCN, ...validateMessages },
+      }}
+    >
       <Provider createStore={createStore}>
         <FRCore
           form={form}
@@ -34,7 +50,6 @@ const Main = props => {
           schema={schema}
         />
       </Provider>
-      
     </ConfigProvider>
   );
 };
