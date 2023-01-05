@@ -45,21 +45,21 @@ export const getTooltip = (schema: any) => {
 };
 
 export const getRuleList = (schema: any) => {
-  let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], title } = schema;
+  let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern, title, message: msg } = schema;
   let rules: any = [...ruleList];
 
   max = max ?? maxLength;
   min = min ?? minLength;
 
   if (max) {
-    let message = `字符最大长度${min}`;
+    let message = `字符最大长度${max}`;
     if (type === 'number') {
-      message = `数值最大值${min}`;
+      message = `数值最大值${max}`;
     }
     if (type === 'array') {
-      message = `数组最大长度${min}`;
+      message = `数组最大长度${max}`;
     }
-    rules.push({ type, max: max * 1, message });
+    rules.push({ type, max: max * 1, message: msg || message });
   }
 
   if (min) {
@@ -70,19 +70,24 @@ export const getRuleList = (schema: any) => {
     if (type === 'array') {
       message = `数组最小长度${min}`;
     }
-    rules.push({ type, min: min * 1, message });
+
+    rules.push({ type, min: min * 1, message: msg || message });
   }
   
   if (required) {
-    rules.push({ required: true, message: `${title}不能为空` });
+    rules.push({ required: true, message: msg || `${title}不能为空` });
+  }
+
+  if (pattern) {
+    rules.push({ pattern, message: msg || '格式不匹配'});
   }
 
   if (format === 'url') {
-    rules.push({ type: 'url', message: '请输入正确的url格式' });
+    rules.push({ type: 'url', message: msg || '请输入正确的 url 格式' });
   }
 
   if (format === 'email') {
-    rules.push({ type: 'email', message: '请输入正确的url格式' });
+    rules.push({ type: 'email', message: msg || '请输入正确的 email 格式' });
   }
 
   if (format === 'image') {

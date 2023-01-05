@@ -1,35 +1,5 @@
 import { Form, FormInstance } from 'antd';
-import { isEmpty, set as _set, get as _get, cloneDeep } from 'lodash-es';
-import { useEffect } from 'react';
-import create from 'zustand';
-
-type FormStore = {
-  schema?: any;
-  init?: (schema: FormStore['schema']) => any;
-  setSchema: (schema: any) => any;
-  setSchemaByPath: (path: string, schema: any) => any;
-};
-
-export const useStore = create<FormStore>((set, get) => ({
-  schema: {},
-  init: schema => {
-    return set({ schema });
-  },
-  setSchema: schema => {
-    return set({ schema });
-  },
-  setSchemaByPath: (path, modifiedSchema) => {
-    const newSchema = cloneDeep(get().schema);
-    let itemSchema = _get(newSchema, path, {});
-    // console.log('itemSchema', itemSchema);
-    // console.log('path', path);
-    itemSchema = { ...itemSchema, ...modifiedSchema };
-    // 需要改善
-    _set(newSchema, 'properties.' + path, itemSchema);
-    return set({ schema: newSchema });
-  },
-}));
-
+import { set as _set, get as _get } from 'lodash-es';
 interface FormInstanceExtends extends FormInstance {
   init: any;
   /** 设置表单值 */
@@ -57,26 +27,33 @@ interface FormInstanceExtends extends FormInstance {
 }
 
 const useForm = () => {
-  const { getState } = useStore;
+
   const [form] = Form.useForm() as [FormInstanceExtends];
-  const { init, setSchemaByPath, setSchema, schema } = getState();
 
   /**初始化 */
-  form.init = schema => {
-    init(schema);
+  form.init = (newSchema: any, useStore: any) => {
+    const { getState } = useStore;
+    const { init, setSchemaByPath, setSchema, schema } = getState();
+    init(newSchema);
+
+    form.setSchema = schema => {
+      setSchema(schema);
+    };
+
+    form.setSchemaByPath = setSchemaByPath;
+
+    form.getSchemaByPath = path => {
+      if (typeof path !== 'string') {
+        console.warn('请输入正确的路径');
+      }
+      return _get(schema, 'properties' + path, {});
+    };
   };
-  form.setSchema = schema => {
-    setSchema(schema);
-  };
+
   form.setValues = form.setFieldsValue;
-  form.setSchemaByPath = setSchemaByPath;
+
   form.getValues = () => form.getFieldsValue(true);
-  form.getSchemaByPath = path => {
-    if (typeof path !== 'string') {
-      console.warn('请输入正确的路径');
-    }
-    return _get(schema, 'properties' + path, {});
-  };
+
   form.setValueByPath = (path, value) => {
     const _path = 'properties' + path;
     form.setFieldValue(_path, value);

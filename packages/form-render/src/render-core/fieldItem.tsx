@@ -3,7 +3,9 @@ import { Form, Col } from 'antd';
 
 import { getWidgetName } from './mapping';
 // import { ParentContext } from '../utils/context';
-import { useRootStore, useParentStore } from '../store/form';
+import { useRootStore, useParentStore } from '../form-core/store/form';
+import { useStore, useStoreApi } from '../form-core/store/createStore';
+
 import { isHasExpression, parseAllExpression } from '../utils/expression';
 import {
   getParamValue,
@@ -21,7 +23,7 @@ const FieldItem = (props: any) => {
   const { schema, children, path } = props;
 
   // const formCtx: any = useContext(FormContext);
-  const formCtx: any = useRootStore(state => state);
+  const formCtx: any = useStore(state => state.context);
 
   const parentCtx: any = useParentStore(state => state, shallow);
   const setParentStore: any = useParentStore(state => state.setStore);

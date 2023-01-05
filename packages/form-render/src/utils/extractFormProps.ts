@@ -27,6 +27,7 @@ export default props => {
 
     form,
     onFinish,
+    builtOperation,
     // labelAlign,
     // colon,
     // className,
@@ -61,7 +62,7 @@ export default props => {
     debugCss, // 好像没用了
     locale,
     configProvider,
-
+    builtOperation,
     form,
 
     allCollapsed,
