@@ -4,9 +4,7 @@ import type { FormListFieldData, FormListOperation, TableColumnsType } from 'ant
 import keys from 'lodash-es/keys';
 import get from 'lodash-es/get';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
-import { getWidgetName } from 'form-render/render-core/mapping';
-import { getWidgetProps } from 'form-render/render-core/methods';
-import { widgets } from 'form-render/widgets';
+import renderCore from '../../../render-core';
 
 interface ListTableProps {
   fields: FormListFieldData[];
@@ -25,10 +23,6 @@ const ListTable: React.FC<ListTableProps> = ({ fields, schema, operation, listNa
 
     const { required, title } = itemsSchema[i];
 
-    const widgetName = getWidgetName(itemsSchema[i]);
-    const Widget = widgets[widgetName || 'html'];
-    const widgetProps = getWidgetProps({ schema: itemsSchema[i], widgets, children: null });
-
     return {
       dataIndex: i,
       title: (
@@ -37,11 +31,19 @@ const ListTable: React.FC<ListTableProps> = ({ fields, schema, operation, listNa
           <span>{title}</span>
         </>
       ),
-      render: (_, field) => (
-        <Form.Item {...field} name={[field.name, i]} noStyle >
-          <Widget {...widgetProps} />
-        </Form.Item>
-      )
+      render: (_,field) => {
+        const childSchema = {
+          type: 'object',
+          properties: {
+            [i]: {
+              ...itemsSchema[i],
+              title: '',
+              noStyle: true,
+            },
+          }
+        }
+        return renderCore({ schema: childSchema, parentPath: [field.name] })
+      },
     }
   });
 
