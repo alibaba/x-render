@@ -16,7 +16,7 @@ interface Props {
 }
 
 
-const Content: React.FC<{ value?: any }> = ({ value }) => value || '-';
+const Content: React.FC<{ value?: any }> = ({ value }) => (typeof value === 'string' || typeof value === 'number') ? <>{value || '-'}</> : null;
 
 const FormTable: React.FC<Props> = ({ schema, fields, operation, listName, prefix }) => {
 
