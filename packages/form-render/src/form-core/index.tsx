@@ -37,7 +37,7 @@ const doWatch = (watchKey: any, value: any, watch: any) => {
 };
 
 const watcher = (changedValues: any, allValues: any, watch: any) => {
-  if (Object.keys(watch).length === 0) {
+  if (Object.keys(watch || {})?.length === 0) {
     return;
   }
   const _changedValues = {
