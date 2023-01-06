@@ -1,15 +1,15 @@
-import React, { useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
 
-import { useRootStore, useParentStore } from '../form-core/store/form';
+import { useStore as useFormStore } from '../form-core/models/createFormStore';
 import { getParamValue } from './methods';
-import { widgets } from '..';
+
+const FieldContext = createContext(() => {});
 
 const FieldList = (props: any) => {
-  // const formCtx: any = useContext(FormContext);
-  const formCtx: any = useRootStore(state => state);
-
-  const parentCtx: any = useParentStore(state => state);
+  const formCtx: any = useFormStore(state => state.context);
+  const parentCtx: any = useContext(FieldContext);
+  const widgets = formCtx.widgets;
 
   // const widgets = formCtx.widgets;
 
