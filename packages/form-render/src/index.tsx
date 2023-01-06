@@ -1,49 +1,37 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 
+import FormCore from './form-core';
 import { widgets as defaultWidgets } from './widgets';
-import FRCore from './form-core';
+import { Provider, createStore } from './form-core/models/createFormStore';
+import { validateMessagesEN, validateMessagesCN } from './form-core/models/validateMessage';
 
-import { Provider, createStore } from './form-core/store/createStore';
-
-// import schema from './schema-mock';
-
-export { useForm } from './form-core/useForm';
-export { default as connectForm } from './form-core/connect-form';
-// export { createWidget } from './form-core/create-widget';
-export { mapping } from './render-core/mapping';
 export { widgets } from './widgets';
+export { mapping } from './render-core/mapping';
+export { connectForm, useForm } from './form-core';
 
-import {
-  validateMessagesEN,
-  validateMessagesCN,
-} from './form-core/validateMessage';
-
-const Main = props => {
-  const {
-    configProvider,
-    widgets,
-    form,
-    schema,
-    validateMessages,
-    ...otherProps
-  } = props;
+export default (props: any) => {
+  const { configProvider, widgets, form, schema, validateMessages, ...otherProps } = props;
 
   if (!form) {
     console.warn('Please provide a form instance to FormRender');
     return null;
   }
+
+  const locale = configProvider?.locale || zhCN;
+  const formValidateMessages = locale?.locale?.includes('en_') ? validateMessagesEN : validateMessagesCN;
+
   return (
     <ConfigProvider
-      locale={zhCN}
       {...configProvider}
+      locale={locale}
       form={{
-        validateMessages: { ...validateMessagesCN, ...validateMessages },
+        validateMessages: { ...formValidateMessages, ...validateMessages },
       }}
     >
       <Provider createStore={createStore}>
-        <FRCore
+        <FormCore
           form={form}
           widgets={{ ...defaultWidgets, ...widgets }}
           {...otherProps}
@@ -52,6 +40,4 @@ const Main = props => {
       </Provider>
     </ConfigProvider>
   );
-};
-
-export default Main;
+}

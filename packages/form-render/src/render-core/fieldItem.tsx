@@ -1,10 +1,8 @@
-import React, { useContext } from 'react';
+import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
 
 import { getWidgetName } from './mapping';
-// import { ParentContext } from '../utils/context';
-import { useRootStore, useParentStore } from '../form-core/store/form';
-import { useStore, useStoreApi } from '../form-core/store/createStore';
+import { useStore as useFormStore } from '../form-core/models/createFormStore';
 
 import { isHasExpression, parseAllExpression } from '../utils/expression';
 import {
@@ -17,57 +15,46 @@ import {
   getWidgetProps,
   ErrorSchema,
 } from './methods';
-import shallow from 'zustand/shallow';
+
+const FieldContext = createContext(() => {});
 
 const FieldItem = (props: any) => {
   const { schema, children, path } = props;
 
-  // const formCtx: any = useContext(FormContext);
-  const formCtx: any = useStore(state => state.context);
-
-  const parentCtx: any = useParentStore(state => state, shallow);
-  const setParentStore: any = useParentStore(state => state.setStore);
-
+  const formCtx: any = useFormStore(state => state.context);
+  const parentCtx: any = useContext(FieldContext);
   const widgets = formCtx.widgets;
-
   const { hidden } = schema;
-  // console.log(props, 'fieldProps');
-
+ 
   let widgetName = getWidgetName(schema);
 
-  // 未匹配到协议组件
+  // Component not found
   if (!widgetName) {
     return <ErrorSchema schema={schema} />;
   }
 
   let Widget = widgets[widgetName] || widgets['html'];
-
   const widgetProps = getWidgetProps({ schema, children, widgets });
   
-  // 容器组件
+  // Render Container Components
   if (children) {
-    
-    // setParentStore({
-    //   column: schema.column,
-    //   labelCol: schema.labelCol,
-    //   wrapperCol: schema.wrapperCol,
-    // });
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
-      <Col span={24}>
-        {/* <ParentContext.Provider
-          value={{
-            column: schema.column,
-            labelCol: schema.labelCol,
-            wrapperCol: schema.wrapperCol,
-          }}
-        > */}
-        <Widget {...widgetProps} />
-        {/* </ParentContext.Provider> */}
-      </Col>
+      <FieldContext.Provider
+        value={{
+          column: schema.column,
+          labelCol: schema.labelCol,
+          wrapperCol: schema.wrapperCol,
+        }}
+      > 
+        <Col span={24}>
+          <Widget {...widgetProps} />
+        </Col>
+      </FieldContext.Provider>
     );
   }
 
+  // Render formItem components
   const getValueFromKey = getParamValue(formCtx, parentCtx, schema);
 
   const span = getColSpan(formCtx, parentCtx, schema);
@@ -90,7 +77,6 @@ const FieldItem = (props: any) => {
       <Form.Item
         label={label}
         name={path}
-       
         valuePropName={valuePropName}
         rules={readyOnly ? [] : ruleList}
         hidden={hidden}
@@ -109,24 +95,23 @@ const FieldItem = (props: any) => {
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
 
-  // 不存在函数表达式
+  // No function expressions exist
   if (!isHasExpression(schema)) {
     return <FieldItem {...props} />;
   }
 
-  // 需要监听表单值，进行动态渲染
+  // Need to listen to form values for dynamic rendering
   return (
     <Form.Item
       noStyle
       shouldUpdate={(prevValues, curValues) => {
-        // 观察函数表达式依赖的值是否发生变更
+        // Observe whether the value of a function expression dependency has changed
         // TODO 进行优化
         return true;
       }}
     >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-
         const newSchema = parseAllExpression(schema, formData, rootPath);
         return <FieldItem schema={newSchema} {...otherProps} />;
       }}

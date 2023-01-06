@@ -2,12 +2,16 @@ import React, { useEffect } from 'react';
 import { Form, Row, Col, Button, Space } from 'antd';
 import shallow from 'zustand/shallow';
 
-import { useStore, useStoreApi } from './store/createStore';
+import { useStore, useStoreApi } from './models/createFormStore';
 import { getFormItemLayout } from '../utils/layout';
 import extractFormProps from '../utils/extractFormProps';
 import RenderCore from '../render-core';
 
 import './index.less';
+
+export { default as connectForm } from './models/connectForm';
+export { default as useForm } from './models/useForm';
+
 
 const doWatch = (watchKey: any, value: any, watch: any) => {
   const fieldWatch = watch[watchKey];
