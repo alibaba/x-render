@@ -1,5 +1,5 @@
 import { get } from 'lodash-es';
-import { isObject, clone } from '.';
+import { isObject, _cloneDeep } from './index';
 
 export const isExpression = (str: string) => {
   if (typeof str !== 'string') {
@@ -83,7 +83,7 @@ export function getValueByPath(formData, path) {
 
 
 export const parseAllExpression = (_schema: any, formData: any, dataPath: string) => {
-  const schema = clone(_schema);
+  const schema = _cloneDeep(_schema);
 
   Object.keys(schema).forEach(key => {
     const value = schema[key];

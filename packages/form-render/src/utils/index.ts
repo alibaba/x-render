@@ -1,6 +1,9 @@
-import { cloneDeep } from 'lodash-es';
+import { set, get, cloneDeep, has } from 'lodash-es';
 
-export const clone = cloneDeep;
+export const _set = set;
+export const _get = get;
+export const _cloneDeep = cloneDeep;
+export const _has = has;
 
 export const isObject = (data: any) => {
   const str = Object.prototype.toString.call(data);
@@ -12,7 +15,9 @@ export const isArray = (data: any) => {
   return str.indexOf('Array') > -1;
 }
 
-export function isUrl(string) {
+export const isFunction = (data: any) => typeof data === 'function';
+
+export function isUrl(string: string) {
   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
   // const domainRE = /^[^\s\.]+\.\S{2,}$/;
   if (typeof string !== 'string') return false;

@@ -1,70 +1,67 @@
 import { Form, FormInstance } from 'antd';
 import { set as _set, get as _get } from 'lodash-es';
-import { isObject, isArray } from '../../utils';
 import { transformFieldsError } from './common';
 
 interface FormInstanceExtends extends FormInstance {
   init: any;
+  schema: any;
   /** 设置表单值 */
-  setValues: FormInstance['setFieldValue'];
+  setValues: FormInstance['setFieldsValue'];
   /** 根据路径动态设置 Schema */
   setSchemaByPath: (path: string, schema: any) => any;
   getHiddenValues: () => any;
   /** 获取表单值 */
-  getValues: any;
+  getValues: FormInstance['getFieldsValue'];
   /** 设置 Schema */
   setSchema: (schema: any) => void;
   /** 根据路径修改表单值 */
-  setValueByPath: (path: string, value: unknown) => void;
+  setValueByPath: FormInstance['setFieldValue'];
   /**
    * @deprecated 即将弃用，请勿使用此api，使用setValueByPath
    */
-  onItemChange: (path: string, value: unknown) => void;
+  onItemChange: FormInstance['setFieldValue'];
   /** 根据路径获取 Schema */
   getSchemaByPath: (path: string) => any;
   setErrorFields: (erros: any[]) => void;
+  removeErrorField: (path: string) => any;
   errorFields: FormInstance['getFieldsError'];
   /**
    * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
    */
-  isValidating: FormInstance['isFieldsValidating'];
+  scrollToPath: FormInstance['scrollToField']
 }
 
 const useForm = () => {
-
   const [form] = Form.useForm() as [FormInstanceExtends];
 
   /**初始化 */
-  form.init = (newSchema: any, useStore: any) => {
+  form.init = (schema: any, useStore: any) => {
     const { getState } = useStore;
-    const { init, setSchemaByPath, setSchema, schema } = getState();
-    init(newSchema);
-
+    const { init, setSchemaByPath, setSchema } = getState();
+    form.schema = schema;
+    init(schema);
+  
     form.setSchema = schema => {
-      setSchema(schema);
+      setSchema(schema, (newSchema: any) => {
+        form.schema = newSchema;
+      });
     };
 
-    form.setSchemaByPath = setSchemaByPath;
-
-    form.getSchemaByPath = path => {
-      if (typeof path !== 'string') {
-        console.warn('请输入正确的路径');
-      }
-      return _get(schema, 'properties' + path, {});
-    };
+    form.setSchemaByPath = (path: any, value: any) => setSchemaByPath(path, value, (newSchema: any) => {
+      form.schema = newSchema;
+    });
   };
 
   form.setValues = form.setFieldsValue;
+  form.getValues = form.getFieldsValue;
+  form.setValueByPath = form.setFieldValue;
 
-  form.getValues = () => form.getFieldsValue(true);
-
-  form.setValueByPath = (path, value) => {
-    //const _path = 'properties' + path;
-    form.setFieldValue(path, value);
+  form.getSchemaByPath = path => {
+    if (typeof path !== 'string') {
+      console.warn('请输入正确的路径');
+    }
+    return _get(form.schema, 'properties.' + path, {});
   };
-  form.onItemChange = form.setValueByPath;
-  form.errorFields = form.getFieldsError;
-  form.isValidating = form.isFieldsValidating;
 
   form.setErrorFields = (_fieldsError: any[]) => {
     const fieldsError = transformFieldsError(_fieldsError);
@@ -72,8 +69,15 @@ const useForm = () => {
       return;
     }
     form.setFields(fieldsError);
-  }
+  };
 
+  form.removeErrorField = (path: any) => {
+    form.setFields([{ name: path, errors: []}]);
+  };
+
+  // 老 API 兼容
+  form.scrollToPath = form.scrollToField;
+  form.onItemChange = form.setFieldValue;
   // form = {
   //   // touchedKeys: _touchedKeys.current,
   //   // allTouched,
@@ -81,10 +85,7 @@ const useForm = () => {
   //   // touchKey,
   //   // removeTouched,
   //   // changeTouchedKeys,
-  //   // setErrorFields,   // 自创API
-  //   // removeErrorField, // 自创API
   // };
-
   return form;
 };
 

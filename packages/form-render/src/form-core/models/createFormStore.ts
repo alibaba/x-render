@@ -1,15 +1,15 @@
 import create from 'zustand';
 import createContext from 'zustand/context';
 import type { StoreApi } from 'zustand';
-import { set as _set, get as _get, cloneDeep } from 'lodash-es';
+import { _set, _get, _has, _cloneDeep, isFunction } from '../../utils';
 
 type FormStore = {
   schema?: any;
   context?: any;
   init?: (schema: FormStore['schema']) => any;
   setContext: (context: any) => any;
-  setSchema: (schema: any) => any;
-  setSchemaByPath: (path: string, schema: any) => any;
+  setSchema: (schema: any, callBack: () => void) => any;
+  setSchemaByPath: (path: string, schema: any, callBack: (schema: any) => void) => any;
 };
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
@@ -19,15 +19,34 @@ export const createStore = ()=> create<FormStore>((set, get) => ({
   init: schema => {
     return set({ schema });
   },
-  setSchema: schema => {
-    return set({ schema });
-  },
   setContext: context => {
     return set({ context });
   },
-  setSchemaByPath: (path, modifiedSchema) => {
+  setSchema: (obj: any, callBack: any) => { // { path: value }
+    const schema = _cloneDeep(get().schema);
+
+    Object.keys(obj || {}).forEach(path => {
+      const item = obj[path];
+      const oldSchema = _get(schema, path);
+      const newSchema = isFunction(item) ? item(oldSchema) : item;
+      const isHas = _has(schema, path);
+  
+      if (!isHas) {
+        _set(schema, path, newSchema);
+        
+      } else {
+        _set(schema, path, {
+          ...oldSchema,
+          ...newSchema
+        });
+      }
+    });
+    callBack(schema);
+    return set({ schema });
+  },
+  setSchemaByPath: (path, modifiedSchema, callBack) => {
     const _path = 'properties.' + path;
-    const schema = cloneDeep(get().schema);
+    const schema = _cloneDeep(get().schema);
     let itemSchema = _get(schema, _path, {});
 
     if (typeof modifiedSchema === 'function') {
@@ -41,6 +60,7 @@ export const createStore = ()=> create<FormStore>((set, get) => ({
     
     // 需要改善
     _set(schema, _path, itemSchema);
+    callBack(schema);
     return set({ schema });
   },
 }));

@@ -46,9 +46,18 @@ export default () => {
   
   // 服务端校验在这里做
   const beforeFinish = ({ data, errors, schema, ...rest }) => {
+    
     return [{ name: 'input1', error: ['外部校验错误'] }];
   };
 
+  const watch = {
+    input2: () => {
+      form.setSchemaByPath('input4', { props: { namex: 1}})
+    },
+    input3: () => {
+      console.log(form.getSchemaByPath('input4'))
+    }
+  }
 
   return (
      <FormRender 
@@ -57,6 +66,9 @@ export default () => {
       // column={3}
       beforeFinish={beforeFinish}
       builtOperation={true}
+      watch={
+        watch
+      }
     />
   )
 };
