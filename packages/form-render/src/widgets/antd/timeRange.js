@@ -5,7 +5,7 @@
 import { TimePicker } from 'antd';
 import moment from 'moment';
 import React from 'react';
-import { getFormat } from '../../utils/common';
+import { getFormat } from '../../utils';
 
 const { RangePicker } = TimePicker;
 

@@ -1,5 +1,5 @@
 import { get } from 'lodash-es';
-import { isObject, clone } from './common';
+import { isObject, clone } from '.';
 
 export const isExpression = (str: string) => {
   if (typeof str !== 'string') {

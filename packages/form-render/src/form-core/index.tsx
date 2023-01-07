@@ -3,68 +3,29 @@ import { Form, Row, Col, Button, Space } from 'antd';
 import shallow from 'zustand/shallow';
 
 import { useStore, useStoreApi } from './models/createFormStore';
+import { transformFieldsError, valuesWatch, transformProps } from './models/common';
 import { getFormItemLayout } from '../utils/layout';
-import extractFormProps from '../utils/extractFormProps';
 import RenderCore from '../render-core';
-
 import './index.less';
 
 export { default as connectForm } from './models/connectForm';
 export { default as useForm } from './models/useForm';
 
-
-const doWatch = (watchKey: any, value: any, watch: any) => {
-  const fieldWatch = watch[watchKey];
-  if (!fieldWatch) {
-    return;
-  }
-
-  if (typeof fieldWatch === 'function') {
-    try {
-      fieldWatch(value);
-    } catch (error) {
-      console.log(`${watchKey}对应的watch函数执行报错：`, error);
-    }
-  } 
-  
-  if (typeof fieldWatch.handler === 'function') {
-    try {
-      fieldWatch.handler(value);
-    } catch (error) {
-      console.log(`${watchKey}对应的watch函数执行报错：`, error);
-    }
-  }
-};
-
-const watcher = (changedValues: any, allValues: any, watch: any) => {
-  if (Object.keys(watch || {})?.length === 0) {
-    return;
-  }
-  const _changedValues = {
-    '#': allValues,
-    ...changedValues
-  }
-  Object.keys(_changedValues).forEach(key => doWatch(key, _changedValues[key], watch))
-  
-}
-
 const FormCore = (props: any) => {
   const storeApi = useStoreApi();
   const setContext = useStore(state => state.setContext, shallow);
   const [schema] = useStore(state => [state.schema, state.form], shallow);
+
   const { properties, ...schemProps } = schema;
-
-  const { formProps, watch, onMount, column, form, widgets, onFinish, builtOperation } = extractFormProps({ ...props, ...schemProps });
-
+  const { formProps, beforeFinish, watch, onMount, column, form, widgets, onFinish, builtOperation } = transformProps({ ...props, ...schemProps });
   const _column = column || schema?.column || 1;
   const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps);
  
   useEffect(() => {
-    onMount && onMount();
-  }, []);
-
-  useEffect(() => {
     form.init(props.schema, storeApi);
+    setTimeout(() => {
+      onMount && onMount();
+    }, 0);
   }, []);
 
   useEffect(() => {
@@ -78,26 +39,29 @@ const FormCore = (props: any) => {
     setContext(context);
   }, [_column, labelCol, wrapperCol]);
 
-  const handleOnValuesChange = (changedValues: any, allValues: any) => {
-    
-    watcher(changedValues, allValues, watch)
-  }
+  const handleValuesChange = (changedValues: any, allValues: any) => {
+    valuesWatch(changedValues, allValues, watch);
+  };
 
-  
+  const handleFinish = async (values: any) => {
+    let fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
+    fieldsError = transformFieldsError(fieldsError);
 
-  
-  
+    console.log(values);
+    // Stop submit
+    if (fieldsError) {
+      form.setFields(fieldsError);
+    }
+    onFinish && onFinish(values);
+  };
 
   return (
     <Form
       form={form}
       labelWrap={true}
-      onFinish={values => {
-        console.log(values);
-        onFinish && onFinish();
-      }}
+      onFinish={handleFinish}
       {...formProps}
-      onValuesChange={handleOnValuesChange}
+      onValuesChange={handleValuesChange}
     >
       <Row gutter={8}>
         <RenderCore schema={schema} />
@@ -105,18 +69,15 @@ const FormCore = (props: any) => {
       {builtOperation && (
         <Row gutter={8}>
           <Col span={24/_column}>
-              <Form.Item label='xxx' labelCol={labelCol} className='xxxx'>
-                
-                <Space>
-                  <Button type='primary' htmlType='submit'>
-                    提交
-                  </Button>
-                  <Button onClick={() => form.resetFields()}>重置</Button>
-                </Space>
-            
+            <Form.Item label='xxx' labelCol={labelCol} className='xxxx'>
+              <Space>
+                <Button type='primary' htmlType='submit'>
+                  提交
+                </Button>
+                <Button onClick={() => form.resetFields()}>重置</Button>
+              </Space>
             </Form.Item>
           </Col>
-          
         </Row>
       )}
     </Form>

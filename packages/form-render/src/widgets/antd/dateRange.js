@@ -5,7 +5,7 @@
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import React from 'react';
-import { getFormat } from '../../utils/common';
+import { getFormat } from '../../utils';
 // import { useTools } from '../../form-render-core/src/hooks';
 
 const { RangePicker } = DatePicker;

@@ -1,5 +1,8 @@
 import { Form, FormInstance } from 'antd';
 import { set as _set, get as _get } from 'lodash-es';
+import { isObject, isArray } from '../../utils';
+import { transformFieldsError } from './common';
+
 interface FormInstanceExtends extends FormInstance {
   init: any;
   /** 设置表单值 */
@@ -19,6 +22,7 @@ interface FormInstanceExtends extends FormInstance {
   onItemChange: (path: string, value: unknown) => void;
   /** 根据路径获取 Schema */
   getSchemaByPath: (path: string) => any;
+  setErrorFields: (erros: any[]) => void;
   errorFields: FormInstance['getFieldsError'];
   /**
    * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
@@ -62,6 +66,13 @@ const useForm = () => {
   form.errorFields = form.getFieldsError;
   form.isValidating = form.isFieldsValidating;
 
+  form.setErrorFields = (_fieldsError: any[]) => {
+    const fieldsError = transformFieldsError(_fieldsError);
+    if (!fieldsError) {
+      return;
+    }
+    form.setFields(fieldsError);
+  }
 
   // form = {
   //   // touchedKeys: _touchedKeys.current,

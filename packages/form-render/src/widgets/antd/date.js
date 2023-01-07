@@ -1,7 +1,7 @@
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import React, { useMemo } from 'react';
-import { getFormat } from '../../utils/common';
+import { getFormat } from '../../utils';
 
 // TODO: 不要使用 moment，使用 dayjs
 export default ({ onChange, format, value, style, ...rest }) => {

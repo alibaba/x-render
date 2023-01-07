@@ -2,15 +2,15 @@ import { cloneDeep } from 'lodash-es';
 
 export const clone = cloneDeep;
 
-export const isObject = (data) => {
+export const isObject = (data: any) => {
   const str = Object.prototype.toString.call(data);
   return str.indexOf('Object') > -1;
 }
 
-
-
-
-
+export const isArray = (data: any) => {
+  const str = Object.prototype.toString.call(data);
+  return str.indexOf('Array') > -1;
+}
 
 export function isUrl(string) {
   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;

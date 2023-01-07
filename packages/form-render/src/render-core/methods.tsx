@@ -1,7 +1,7 @@
 import React from 'react';
 import Color from 'color';
 
-import { isObject, getArray, isUrl } from '../utils/common';
+import { isObject, getArray, isUrl } from '../utils';
 
 const fieldPropsList = ['placeholder', 'disabled', 'format'];
 
