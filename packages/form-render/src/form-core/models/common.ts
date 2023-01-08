@@ -27,6 +27,7 @@ export const transformProps =  (props: any) => {
     validateMessages,
     debug,
     id,
+    labelWidth,
 
     form,
     onFinish,
@@ -67,7 +68,7 @@ export const transformProps =  (props: any) => {
     configProvider,
     builtOperation,
     form,
-
+    labelWidth,
     allCollapsed,
     debounceInput, // 好像没用了
     validateMessages,

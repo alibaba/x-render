@@ -35,14 +35,24 @@ export const getLabel = (schema: any) => {
 };
 
 
-export const getTooltip = (schema: any) => {
+export const getTooltip = (schema: any, layout: string) => {
   const { descType, description } = schema;
-  if (descType === 'icon' && description) {
+
+  if (descType === 'widget' || !description) {
+    return null;
+  }
+
+  if (layout === 'horizontal') {
     return {
       title: description
     }
   }
 
+  if (layout === 'vertical' && descType === 'icon') {
+    return {
+      title: description
+    }
+  }
   return null;
 };
 

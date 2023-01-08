@@ -1,10 +1,12 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom';
 import { Form, Col } from 'antd';
 
 import { getWidgetName } from './mapping';
 import { useStore as useFormStore } from '../form-core/models/createFormStore';
 
 import { isHasExpression, parseAllExpression } from '../utils/expression';
+import { isCheckBoxType } from '../utils/index';
 import {
   getParamValue,
   getColSpan,
@@ -23,11 +25,12 @@ const FieldItem = (props: any) => {
 
   const formCtx: any = useFormStore(state => state.context);
   const parentCtx: any = useContext(FieldContext);
-  const widgets = formCtx.widgets;
-  const { hidden } = schema;
+  const fieldRef = useRef();
+  const { widgets, layout } = formCtx;
+  const { hidden, properties, ...otherSchema } = schema;
  
   let widgetName = getWidgetName(schema);
-
+  
   // Component not found
   if (!widgetName) {
     return <ErrorSchema schema={schema} />;
@@ -48,7 +51,7 @@ const FieldItem = (props: any) => {
         }}
       > 
         <Col span={24}>
-          <Widget {...widgetProps} />
+          <Widget {...widgetProps} {...otherSchema} layout={layout} />
         </Col>
       </FieldContext.Provider>
     );
@@ -60,17 +63,37 @@ const FieldItem = (props: any) => {
   const span = getColSpan(formCtx, parentCtx, schema);
   const labelCol = getValueFromKey('labelCol');
   const wrapperCol = getValueFromKey('wrapperCol');
-  const readyOnly = getValueFromKey('readyOnly');
+  const readOnly = getValueFromKey('readOnly');
   const noStyle = getValueFromKey('noStyle');
 
-  const label = getLabel(schema);
-  const tooltip = getTooltip(schema);
+  let label = getLabel(schema);
+  const tooltip = getTooltip(schema, layout);
   const valuePropName = getValuePropName(widgetName);
   const ruleList = getRuleList(schema);
 
-  if (readyOnly) {
+  if (readOnly) {
     Widget = widgets['html'];
   }
+
+  // useEffect(() => {
+  //   const dom = document.querySelector(`.${path}`);
+  //   if (!dom ){
+  //     return;
+  //   }
+   
+  //   const conx = dom.children[0].children[0].children[0];
+  //   conx.append('1111');
+   
+
+   
+  // }, [schema.description]);
+
+  // checkbox 布局有点特殊
+if (isCheckBoxType(schema, readOnly)) {
+  widgetProps.title = label;
+  label = null;
+}
+
 
   return (
     <Col span={span}>
@@ -78,14 +101,16 @@ const FieldItem = (props: any) => {
         label={label}
         name={path}
         valuePropName={valuePropName}
-        rules={readyOnly ? [] : ruleList}
+        rules={readOnly ? [] : ruleList}
         hidden={hidden}
         tooltip={tooltip}
         initialValue={schema.default}
         labelCol={labelCol}
         wrapperCol={wrapperCol}
         noStyle={noStyle}
+        className={path}
       >
+        
         <Widget {...widgetProps} />
       </Form.Item>
     </Col>

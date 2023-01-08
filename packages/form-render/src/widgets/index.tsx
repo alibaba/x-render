@@ -20,6 +20,7 @@ import time from './antd/time';
 import timeRange from './antd/timeRange';
 import upload from './antd/upload';
 import urlInput from './antd/urlInput';
+import checkbox from './antd/checkbox';
 
 // 容器
 import BoxCard from './container/BoxCard';
@@ -61,7 +62,7 @@ type Widgets = {
 };
 export const widgets: Widgets = {
   input: Input,
-  checkbox: Checkbox,
+  checkbox,
   checkboxes: Checkbox.Group, // checkbox多选
   color,
   date,

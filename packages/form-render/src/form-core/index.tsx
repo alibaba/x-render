@@ -17,9 +17,9 @@ const FormCore = (props: any) => {
   const [schema] = useStore(state => [state.schema, state.form], shallow);
 
   const { properties, ...schemProps } = schema;
-  const { formProps, beforeFinish, watch, onMount, column, form, widgets, onFinish, builtOperation } = transformProps({ ...props, ...schemProps });
+  const { formProps, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
   const _column = column || schema?.column || 1;
-  const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps);
+  const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, labelWidth);
  
   useEffect(() => {
     form.init(props.schema, storeApi);
@@ -33,8 +33,9 @@ const FormCore = (props: any) => {
       column: _column,
       labelCol,
       wrapperCol,
-      // readyOnly: true,
-      widgets
+      readOnly,
+      widgets,
+      layout: formProps.layout
     };
     setContext(context);
   }, [_column, labelCol, wrapperCol]);
