@@ -14,7 +14,7 @@ toc: content
 
 
 ## SimpleList
-- 用于展示每行只有 1-3 个简单元素的情况
+- 用于展示每行只有 1-3 个简单控件的情况，紧凑排列
 
 ```jsx
 import React from 'react';
@@ -27,20 +27,19 @@ const schema ={
       title: '数组',
       type: 'array',
       widget: 'simpleList',
-      props: {
-        hasBackground: true,
-      },
       items: {
         type: 'object',
-        column: 3,
-       
         properties: {
-          inputA: {
+          input1: {
             title: '输入框 A',
             type: 'string'
           },
-          inputB: {
+          input2: {
             title: '输入框 B',
+            type: 'string'
+          },
+          input3: {
+            title: '输入框 C',
             type: 'string'
           }
         }

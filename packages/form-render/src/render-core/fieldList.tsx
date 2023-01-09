@@ -15,7 +15,7 @@ const FieldList = (props: any) => {
   // const widgets = formCtx.widgets;
 
   const { schema, path, parentLitPath, renderCore, max, rootPath } = props;
-  const { display = 'inline'} = schema;
+  const { display } = schema;
   // console.log(props, 'fieldProps');
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';

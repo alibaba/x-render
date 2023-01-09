@@ -6,7 +6,6 @@ import classnames from 'classnames'
 
 import './index.less';
 
-
 const getHasBackground = (fields: any[], hasBackground: boolean) => {
   let result = hasBackground;
   if (fields.length === 0) {
@@ -15,15 +14,16 @@ const getHasBackground = (fields: any[], hasBackground: boolean) => {
   return result;
 }
 
-let defaultDelConfirmProps = {
+const defaultDelConfirmProps = {
   title: '确定删除?',
   okText: '确定',
   cancelText: '取消',
 };
 
 const SimpleList = (props: any) => {
+  const form = Form.useFormInstance();
+
   const { name: listName, schema, rootPath = [], readyOnly } = props;
-  const { max } = schema;
   let { hideAdd, hideCopy, hideMove, hideDelete, hasBackground = false, delConfirmProps } = schema.props || {};
 
   if (readyOnly) {
@@ -37,18 +37,15 @@ const SimpleList = (props: any) => {
     schema.items.layout = 'inline';
   }
 
-  const form = Form.useFormInstance();
-
-  const handleOnCopy = (add: any, name: number) => () => {
-    const initialValue = form.getFieldValue([...listName, name]);
-    add(initialValue);
-  };
-
   const _delConfirmProps = {
     ...defaultDelConfirmProps,
     ...delConfirmProps
   };
 
+  const handleOnCopy = (add: any, name: number) => () => {
+    const initialValue = form.getFieldValue([...listName, name]);
+    add(initialValue);
+  };
 
   return (
     <Form.List name={listName}>
@@ -79,15 +76,15 @@ const SimpleList = (props: any) => {
                         onConfirm={() => remove(name) }
                         {..._delConfirmProps}
                       >
-                      <CloseOutlined  />
-                    </Popconfirm>
+                        <CloseOutlined  />
+                      </Popconfirm>
                     )}
                   </Space>
                 )}
               </div>
             );
           })}
-          {(!max || fields.length < max) && !hideAdd && (
+          {(!schema.max || fields.length < schema.max) && !hideAdd && (
             <div className='add-btn'>
               <Button 
                 type='dashed' 
