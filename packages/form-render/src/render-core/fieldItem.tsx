@@ -6,7 +6,7 @@ import { getWidgetName } from './mapping';
 import { useStore as useFormStore } from '../form-core/models/createFormStore';
 
 import { isHasExpression, parseAllExpression } from '../utils/expression';
-import { isCheckBoxType } from '../utils/index';
+import { isCheckBoxType, _get } from '../utils/index';
 import { getFormItemLayout } from '../utils/layout';
 import {
   getParamValue,
@@ -22,13 +22,14 @@ import {
 const FieldContext = createContext(() => {});
 
 const FieldItem = (props: any) => {
-  const { schema, children, path } = props;
+  const { schema, children, path, dependValues } = props;
 
+  const form = Form.useFormInstance();
   const formCtx: any = useFormStore(state => state.context);
   const parentCtx: any = useContext(FieldContext);
   const fieldRef = useRef();
   const { widgets, layout } = formCtx;
-  const { hidden, properties, ...otherSchema } = schema;
+  const { hidden, properties, dependencies, ...otherSchema } = schema;
  
   let widgetName = getWidgetName(schema);
   
@@ -39,6 +40,15 @@ const FieldItem = (props: any) => {
 
   let Widget = widgets[widgetName] || widgets['html'];
   const widgetProps = getWidgetProps({ schema, children, widgets });
+  
+  widgetProps.addons = {
+    ...form,
+    dependValues
+  };
+
+  if (dependValues?.length > 0) {
+    widgetProps.dependValues = dependValues;
+  }
   
   // Render Container Components
   if (children) {
@@ -78,7 +88,7 @@ const FieldItem = (props: any) => {
   let label = getLabel(schema);
   const tooltip = getTooltip(schema, layout);
   const valuePropName = getValuePropName(widgetName);
-  const ruleList = getRuleList(schema);
+  const ruleList = getRuleList(schema, form);
 
   if (readOnly) {
     Widget = widgets['html'];
@@ -116,6 +126,7 @@ const FieldItem = (props: any) => {
         wrapperCol={wrapperCol}
         noStyle={noStyle}
         className={path}
+        dependencies={dependencies}
       >
         <Widget {...widgetProps} />
       </Form.Item>
@@ -136,7 +147,7 @@ export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
 
   // No function expressions exist
-  if (!isHasExpression(schema)) {
+  if (!isHasExpression(schema) && !schema.dependencies) {
     return <FieldItem {...props} />;
   }
 
@@ -144,6 +155,7 @@ export default (props: any) => {
   return (
     <Form.Item
       noStyle
+      //dependencies={schema.dependencies}
       shouldUpdate={(prevValues, curValues) => {
         // Observe whether the value of a function expression dependency has changed
         // TODO 进行优化
@@ -152,8 +164,9 @@ export default (props: any) => {
     >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
+        const dependValues = (schema.dependencies || []).map((item: any) => _get(formData, item))
         const newSchema = parseAllExpression(schema, formData, rootPath);
-        return <FieldItem schema={newSchema} {...otherProps} />;
+        return <FieldItem schema={newSchema} {...otherProps} dependValues={dependValues} />;
       }}
     </Form.Item>
   );

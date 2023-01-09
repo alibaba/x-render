@@ -2,6 +2,7 @@ import create from 'zustand';
 import createContext from 'zustand/context';
 import type { StoreApi } from 'zustand';
 import { _set, _get, _has, _cloneDeep, isFunction } from '../../utils';
+import { getSchemaFullPath } from './common';
 
 type FormStore = {
   schema?: any;
@@ -44,22 +45,31 @@ export const createStore = ()=> create<FormStore>((set, get) => ({
     callBack(schema);
     return set({ schema });
   },
-  setSchemaByPath: (path, modifiedSchema, callBack) => {
-    const _path = 'properties.' + path;
+  setSchemaByPath: (_path, modifiedSchema, callBack) => {
     const schema = _cloneDeep(get().schema);
-    let itemSchema = _get(schema, _path, {});
+    const path = getSchemaFullPath(_path, schema)
+    
+    let itemSchema = _get(schema, path, {});
+    let updateSchema = modifiedSchema;
 
     if (typeof modifiedSchema === 'function') {
-      itemSchema = { ...itemSchema, ...modifiedSchema(itemSchema) };
-    } else {
-      itemSchema = { ...itemSchema, ...modifiedSchema };
+      updateSchema = modifiedSchema(itemSchema);
+    }
+
+    itemSchema = { 
+      ...itemSchema, 
+      ...updateSchema,
+      props: {
+        ...itemSchema?.props,
+        ...updateSchema?.props
+      }
     }
 
     console.log('itemSchema', itemSchema);
-    console.log('path', _path);
+    console.log('path', path);
     
     // 需要改善
-    _set(schema, _path, itemSchema);
+    _set(schema, path, itemSchema);
     callBack(schema);
     return set({ schema });
   },

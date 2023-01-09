@@ -1,5 +1,5 @@
 
-import { isObject, isArray } from '../../utils';
+import { isObject, isArray, _get } from '../../utils';
 
 const displayTypeEnum = {
   column: 'vertical',
@@ -124,3 +124,30 @@ export const valuesWatch = (changedValues: any, allValues: any, watch: any) => {
 
   Object.keys(_changedValues).forEach(key => registerField(key, _changedValues[key], watch))
 };
+
+export const getSchemaFullPath = (path: string, schema: any) => {
+  if (!path || !path.includes('.')) {
+    return 'properties.' + path;
+  }
+
+  // 补全 list 类型 path 路径
+  while(path.includes('[]')) {
+    const index = path.indexOf('[]');
+    path = path.substring(0, index) + '.items' + path.substring(index + 2);
+  }
+
+  // 补全 object 类型 path 路径
+  let result = 'properties';
+  (path.split('.')).forEach(item => {
+    const key = result + '.' + item;
+    const itemSchema = _get(schema, key, {});
+
+    if (itemSchema?.type === 'object') {
+      result = key + '.properties';
+      return ;
+    }
+    result = key;
+  });
+
+  return result;
+}

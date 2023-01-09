@@ -56,7 +56,7 @@ export const getTooltip = (schema: any, layout: string) => {
   return null;
 };
 
-export const getRuleList = (schema: any) => {
+export const getRuleList = (schema: any, form: any) => {
   let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern, title, message: msg } = schema;
   let rules: any = [...ruleList];
 
@@ -117,7 +117,7 @@ export const getRuleList = (schema: any) => {
     if (item.validator && !item.transformed) {
       const validator = item.validator;
       item.validator = async (_: any, value: any) => {
-        const result = await validator(_, value);
+        const result = await validator(_, value, { form });
         return result ? Promise.resolve() : Promise.reject(new Error(item.message));
       };;
       item.transformed = true;

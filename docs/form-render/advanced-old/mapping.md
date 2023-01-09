@@ -1,9 +1,9 @@
 ---
-order: 3
+order: 1
 group:
-  order: 3
-  title: 高级用法
-toc: content
+  order: 10
+  title: 高级用法 old
+toc: false
 ---
 
 # 覆盖默认组件（mapping）

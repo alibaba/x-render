@@ -1,7 +1,7 @@
 ---
-order: 8
+order: 3
 group:
-  order: 3
+  order: 5
   title: 高级用法
 toc: content
 ---
@@ -29,7 +29,6 @@ toc: content
 总结：
 
 ### 1.2 formData 示例
-当输入框 A 的值等于 'xxx' 时，输入框 B 不可编辑
 ```jsx
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
@@ -37,14 +36,16 @@ import FormRender, { useForm } from 'form-render';
 const schema = {
   type: 'object',
   properties: {
-    input1: {
-      title: '输入框 A',
-      type: 'string',
+    switch1: {
+      title: '隐藏输入框',
+      type: 'boolean',
+      widget: 'switch'
     },
-    input2: {
-      title: '输入框 B',
+    input1: {
+      title: '输入框',
       type: 'string',
-      disabled: "{{ formData.input1 === 'xxx' }}"
+      required: true,
+      hidden: '{{ formData.switch1 === true }}',
     }
   }
 };
@@ -55,15 +56,13 @@ export default () => {
   return (
      <FormRender 
       schema={schema} 
-      form={form} 
-      builtOperation={true}
+      form={form}
     />
   )
 };
 ```
 
 ### 1.3 rootValue 示例
-当输入框 A 的值等于 'xxx' 时，输入框 B 不可编辑
 ```jsx
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
@@ -74,27 +73,28 @@ const schema = {
     list: {
       title: '会员活动',
       type: 'array',
+      display: 'inline',
       items: {
         type: 'object',
-        theme: 'lineTitle',
         properties: {
-          input1: {
-            title: '输入框 A',
-            type: 'string',
+          switch1: {
+            title: '隐藏输入框',
+            type: 'boolean',
+            widget: 'switch'
           },
-          input2: {
-            title: '输入框 B',
+          input1: {
+            title: '输入框',
             type: 'string',
-            disabled: "{{ rootValue.input1 === 'xxx' }}"
+            required: true,
+            hidden: '{{ rootValue.switch1 === true }}',
           }
-        },
+        }
       },
       props: {
         hasBackground: true,
       }
     }
-  },
-  column: 2,
+  }
 };
 
 export default () => {
@@ -103,14 +103,14 @@ export default () => {
   return (
      <FormRender 
       schema={schema} 
-      form={form} 
-      builtOperation={true}
-      initialValues={{ list: [{ }]}}
+      form={form}
     />
   )
 };
 ```
-## 二、复杂联动
+
+### 1.2 
+## 二、watch 复杂联动
 
 ### 2.1 watch 监听
 watch: 用于监听表单数据改变从而唤起回调，它是一个对象集合，根据 path 路径注册相应的表单项监听事件
@@ -229,6 +229,188 @@ export default () => {
       form={form}
       schema={schema}
       watch={watch}
+    />
+  );
+};
+```
+
+## 三、依赖项关联
+dependencies：用于完成组件内部复杂的联动逻辑，依赖的字段更新时，该组件将自动触发更新与校验。
+- 类型：path[]，设置依赖字段，支持多个依赖字段
+- 获取依赖值：组件内通过 props.dependValues 获取依赖值集合
+
+### 3.1 触发更新
+依赖值发生变化，自定义组件触发更新
+```jsx
+import React from 'react';
+import { Input, } from 'antd';
+import FormRender, { useForm } from 'form-render';
+
+const { TextArea } = Input;
+
+const CustomTextArea = props => {
+  const { dependValues } = props;
+
+  console.log(dependValues, 'dependValues');
+
+  return <TextArea rows={dependValues?.[0] || 2} />;
+};
+
+export default () => {
+  const form = useForm();
+
+  const schema = {
+    type: 'object',
+    displayType: 'row',
+    properties: {
+      input1: {
+        title: '输入框高度',
+        type: 'number'
+      },
+      select1: {
+        title: '输入框',
+        type: 'string',
+        dependencies: ['input1'],
+        widget: 'CustomTextArea'
+      }
+    }
+  };
+
+  return (
+    <FormRender
+      form={form}
+      schema={schema}
+      widgets={{ CustomTextArea }}
+    />
+  );
+}
+```
+
+### 3.2 触发校验
+依赖值发生变化，自定义校验触发校验
+
+```jsx
+import React from 'react';
+import { Input, } from 'antd';
+import FormRender, { useForm } from 'form-render';
+
+const { TextArea } = Input;
+
+const CustomTextArea = props => {
+  const { dependValues } = props;
+
+  console.log(dependValues, 'dependValues');
+
+  return <TextArea rows={dependValues?.[0] || 2} />;
+};
+
+export default () => {
+  const form = useForm();
+
+  const schema = {
+  type: 'object',
+  properties: {
+    input1: {
+      title: '密码',
+      type: 'string',
+      required: true,
+    },
+    input2: {
+      title: '确认密码',
+      type: 'string',
+      dependencies: ['input1'],
+      required: true,
+      rules: [
+        { 
+          validator: (_, value, { form }) => {
+            if (!value || form.getFieldValue('input1') === value) {
+              return true;
+            }
+            return false;
+          }, 
+           message: '你输入的两个密码不匹配' 
+        }
+      ]
+    }
+  }
+};
+
+  return (
+    <FormRender
+      form={form}
+      schema={schema}
+      widgets={{ CustomTextArea }}
+    />
+  );
+}
+```
+
+### 3.3 双向绑定
+- addons：简单理解就是 form 实例
+- dependValues：依赖值集合
+
+
+```jsx
+import { Button, Checkbox } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import React from 'react';
+
+const CustomCheckbox = ({ addons, dependValues }) => {
+  const { setValueByPath } = addons;
+  console.log(dependValues);
+
+  const checked = dependValues?.[0]?.length === 4;
+
+  const onChange = e => {
+    const val = e.target.checked;
+    console.log(val);
+
+    if (val === false) {
+      setValueByPath('boxes', []);
+    } else if (val === true) {
+      setValueByPath('boxes', [1, 2, 3, 4]);
+    }
+  };
+
+  return <Checkbox checked={checked} onChange={onChange} />;
+};
+
+export default () => {
+  const form = useForm();
+
+  const schema = {
+    type: 'object',
+    properties: {
+      select1: {
+        title: '是否全选',
+        type: 'boolean',
+        dependencies: ['boxes'],
+        widget: 'CustomCheckbox',
+      },
+      boxes: {
+        title: '可用操作',
+        description: '多选',
+        type: 'array',
+        items: {
+          type: 'number',
+        },
+        enum: [1, 2, 3, 4],
+        enumNames: ['增', '删', '改', '查'],
+        widget: 'checkboxes',
+      },
+    },
+  };
+
+  const onFinish = (data, errors) => {
+    console.log(data, errors);
+  };
+
+  return (
+    <FormRender
+      form={form}
+      schema={schema}
+      onFinish={onFinish}
+      widgets={{ CustomCheckbox }}
     />
   );
 };

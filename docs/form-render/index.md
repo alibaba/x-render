@@ -1,6 +1,6 @@
 ---
 order: 1
-title: 快速上手
+title: 开始使用
 toc: content
 ---
 
@@ -74,17 +74,9 @@ const Demo = () => {
   const onFinish = (formData, errors) => {
     console.log('formData:', formData, 'errors', errors);
   };
-  const onMount = () => {
-    form.setValues({ input: String(Math.random()) });
-  };
-
-  setTimeout(() => {
-      form.setSchemaByPath('input',  { title: '动态修改标题'});
-    }, 2000);
-  
   return (
     <div>
-      <FormRender form={form} schema={schema} onFinish={onFinish} onMount={onMount} />
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
       <Button type="primary" onClick={form.submit}>
         提交
       </Button>
@@ -95,7 +87,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-<!-- 对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks。
+对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks。
 
 ```jsx
 /**
@@ -143,7 +135,7 @@ class Demo extends React.Component {
 }
 
 export default connectForm(Demo);
-``` -->
+```
 <!-- 
 **换一个更复杂一点的 schema，FR 支持数据绑定、antd 的 props 透传、表单联动等一系列功能：**
 
