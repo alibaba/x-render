@@ -1,10 +1,16 @@
 import React from 'react';
 import { Card } from 'antd';
+import BoxPanel from '../BoxPanel';
+
 import './index.less';
 
 const BoxCard = ({ children, title, schema }) => {
   if (!title) {
-    return <div className='w-100'>{children}</div>;
+    return (
+      <BoxPanel schema={schema}>
+        {children}
+      </BoxPanel>
+    )
   }
   return (
     <Card

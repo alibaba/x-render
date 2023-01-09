@@ -1,9 +1,9 @@
 import React from 'react';
-import { Card } from 'antd';
+import classnames from 'classnames'
 import './index.less';
 
-const BoxPanel = ({ children, title, schema }) => {
-  return <div className='w-100'>{children}</div>;
+const BoxPanel = ({ children, title, schema } : any) => {
+  return <div className={classnames('fr-panel', {'fr-panel-bordered' : true })}>{children}</div>;
 }
 
 export default BoxPanel;

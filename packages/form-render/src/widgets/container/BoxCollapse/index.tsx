@@ -3,6 +3,7 @@ import { Collapse } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import './index.less';
+import BoxPanel from '../BoxPanel';
 
 const { Panel } = Collapse;
 interface IProps {
@@ -40,8 +41,16 @@ const BoxCollapse: FC<IProps> = (props) => {
   };
 
   if (!title) {
-    //return <div className='w-100'>{children}</div>;
-    return children;
+
+    return <div className='w-100'>{children}</div>;
+  }
+
+  if (!title) {
+    return (
+      <BoxPanel schema={props}>
+        {children}
+      </BoxPanel>
+    )
   }
 
   return (

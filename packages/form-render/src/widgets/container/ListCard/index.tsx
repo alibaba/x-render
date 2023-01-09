@@ -45,10 +45,6 @@ const SimpleList = (props: any) => {
     hideMove = true;
   }
 
-  if (!schema.items.layout) {
-    schema.items.layout = 'inline';
-  }
-
   const _delConfirmProps = {
     ...defaultDelConfirmProps,
     ...delConfirmProps
@@ -61,7 +57,7 @@ const SimpleList = (props: any) => {
 
 
   return (
-    <Form.List name={listName}>
+    <Form.List name={listName} initialValue={[{}]}>
       {(fields, { add, remove, move }) => (
         <div className={classnames('fr-list-card', {'fr-list-card-background' : hasBackground })}>
           {fields.map(({ key, name  }) => {

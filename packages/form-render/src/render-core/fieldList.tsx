@@ -49,7 +49,7 @@ const FieldList = (props: any) => {
   if (!value) {
     isInline = true;
   }
-  
+ 
   return (
     <Col span={24}>
       {!isInline && (

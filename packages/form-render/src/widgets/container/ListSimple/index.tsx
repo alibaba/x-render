@@ -48,7 +48,7 @@ const SimpleList = (props: any) => {
   };
 
   return (
-    <Form.List name={listName}>
+    <Form.List name={listName} initialValue={[{}]}>
       {(fields, { add, remove, move }) => (
         <div className={classnames('fr-list-simple', {'fr-list-simple-background' : getHasBackground(fields, hasBackground) })}>
           {fields.map(({ key, name  }) => {

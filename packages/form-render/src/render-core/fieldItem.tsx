@@ -53,9 +53,9 @@ const FieldItem = (props: any) => {
           layout: schema.layout
         }}
       > 
-        {/* <Col span={24}> */}
+        <Col span={24}>
           <Widget {...widgetProps} {...otherSchema} layout={layout} />
-        {/* </Col> */}
+        </Col>
       </FieldContext.Provider>
     );
   }
@@ -116,9 +116,9 @@ const FieldItem = (props: any) => {
       </Form.Item>
   );
 
-  if (_layout === 'inline') {
-    return formItem;
-  }
+  // if (_layout === 'inline') {
+  //   return formItem;
+  // }
  
   return (
     <Col span={span}>

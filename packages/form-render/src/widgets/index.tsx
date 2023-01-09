@@ -27,7 +27,6 @@ import BoxCard from './container/BoxCard';
 import BoxCollapse from './container/BoxCollapse';
 import BoxLineTitle from './container/BoxLineTitle';
 import BoxSubItem from './container/BoxSubItem';
-import BoxPanel from './container/BoxPanel';
 
 import SimpleList from './container/ListSimple';
 import CardList from './container/ListCard';
@@ -88,10 +87,9 @@ export const widgets: Widgets = {
   collapse: BoxCollapse,
   lineTitle: BoxLineTitle,
   subItem: BoxSubItem,
-  panel: BoxPanel,
 
   list0: SimpleList,
-  list1: SimpleList,
+  list1: CardList,
   list2: TableList,
   list3: DrawerList,
   list4: VirtualList,
