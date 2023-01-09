@@ -2,45 +2,54 @@
 import React from 'react';
 import Form from '../demo/display';
 
-const schema = displayType => ({
+const schema = {
   type: 'object',
-  displayType: displayType,
   properties: {
-    range1: {
-      title: '日期',
-      type: 'range',
-      format: 'date',
-      description: '<a>123</a>',
-    },
-    objectName: {
-      title: '对象',
-      bind: 'obj',
-      description: '这是一个对象类型',
-      type: 'object',
-      collapsed: false,
-      properties: {
-        input1: {
-          title: '简单输入框',
-          type: 'string',
-          required: true,
-        },
-        select1: {
-          title: '单选',
-          type: 'string',
-          enum: ['a', 'b', 'c'],
-          enumNames: ['早', '中', '晚'],
+    listName2: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      // widget: 'cardList',
+      items: {
+        type: 'object',
+        properties: {
+          input1: {
+            title: '简单输入框',
+            type: 'string',
+            required: true,
+          },
+          select1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+          },
+          obj: {
+            title: '对象',
+            type: 'object',
+            properties: {
+              input1: {
+                title: '简单输入框',
+                type: 'string',
+                required: true,
+              },
+              select1: {
+                title: '单选',
+                type: 'string',
+                enum: ['a', 'b', 'c'],
+                enumNames: ['早', '中', '晚'],
+              },
+            },
+          },
         },
       },
     },
   },
-});
+};
 
-export default () => (
-  <div>
-    <h2>display: row</h2>
-    <Form schema={schema('row')} />
-    <h2>display: column</h2>
-    <Form schema={schema('column')} />
-  </div>
-);
+const Demo = () => {
+  return <Form schema={schema} />;
+};
+
+export default Demo;
 ```

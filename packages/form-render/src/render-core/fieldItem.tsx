@@ -7,6 +7,7 @@ import { useStore as useFormStore } from '../form-core/models/createFormStore';
 
 import { isHasExpression, parseAllExpression } from '../utils/expression';
 import { isCheckBoxType } from '../utils/index';
+import { getFormItemLayout } from '../utils/layout';
 import {
   getParamValue,
   getColSpan,
@@ -41,18 +42,20 @@ const FieldItem = (props: any) => {
   
   // Render Container Components
   if (children) {
+    const { labelCol, wrapperCol } = getFormItemLayout(schema.column, schema, schema.labelWidth);
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
       <FieldContext.Provider
         value={{
           column: schema.column,
-          labelCol: schema.labelCol,
-          wrapperCol: schema.wrapperCol,
+          labelCol: labelCol,
+          wrapperCol: wrapperCol,
+          layout: schema.layout
         }}
       > 
-        <Col span={24}>
+        {/* <Col span={24}> */}
           <Widget {...widgetProps} {...otherSchema} layout={layout} />
-        </Col>
+        {/* </Col> */}
       </FieldContext.Provider>
     );
   }
@@ -65,6 +68,7 @@ const FieldItem = (props: any) => {
   const wrapperCol = getValueFromKey('wrapperCol');
   const readOnly = getValueFromKey('readOnly');
   const noStyle = getValueFromKey('noStyle');
+  const _layout = getValueFromKey('layout');
 
   let label = getLabel(schema);
   const tooltip = getTooltip(schema, layout);
@@ -89,15 +93,13 @@ const FieldItem = (props: any) => {
   // }, [schema.description]);
 
   // checkbox 布局有点特殊
-if (isCheckBoxType(schema, readOnly)) {
-  widgetProps.title = label;
-  label = null;
-}
+  if (isCheckBoxType(schema, readOnly)) {
+    widgetProps.title = label;
+    label = null;
+  }
 
-
-  return (
-    <Col span={span}>
-      <Form.Item
+  const formItem = (
+    <Form.Item
         label={label}
         name={path}
         valuePropName={valuePropName}
@@ -110,9 +112,17 @@ if (isCheckBoxType(schema, readOnly)) {
         noStyle={noStyle}
         className={path}
       >
-        
         <Widget {...widgetProps} />
       </Form.Item>
+  );
+
+  if (_layout === 'inline') {
+    return formItem;
+  }
+ 
+  return (
+    <Col span={span}>
+      {formItem}
     </Col>
   );
 };

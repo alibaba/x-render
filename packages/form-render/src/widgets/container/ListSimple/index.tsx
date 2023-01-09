@@ -1,30 +1,11 @@
 import React from 'react';
-import { Form, Button, Space } from 'antd';
+import { Form, Button, Space, Popconfirm } from 'antd';
 import { PlusOutlined, CloseOutlined,  ArrowUpOutlined, ArrowDownOutlined, CopyOutlined } from '@ant-design/icons';
 import renderCore from '../../../render-core';
 import classnames from 'classnames'
 
 import './index.less';
 
-const getOperateFixed = (schema: any) => {
-  let result = false;
-  if (['card', 'collapse', 'lineTitle'].includes(schema.items.theme) && !schema?.items?.props?.extra) {
-    result = true;
-  }
-  return result;
-};
-
-const getOperateStyle = (schema: any) => {
-  let result: any = {};
-  if (['card', 'collapse', 'lineTitle'].includes(schema.items.theme) && !schema?.items?.props?.extra) {
-    result.top = '15px';
-    if (['lineTitle'].includes(schema.items.theme)) {
-      result.top = 0;
-      result.padding = 0
-    }
-  }
-  return result;
-};
 
 const getHasBackground = (fields: any[], hasBackground: boolean) => {
   let result = hasBackground;
@@ -34,11 +15,28 @@ const getHasBackground = (fields: any[], hasBackground: boolean) => {
   return result;
 }
 
+let defaultDelConfirmProps = {
+  title: '确定删除?',
+  okText: '确定',
+  cancelText: '取消',
+};
+
 const SimpleList = (props: any) => {
   const { name: listName, schema, rootPath = [], readyOnly } = props;
+  const { max } = schema;
+  let { hideAdd, hideCopy, hideMove, hideDelete, hasBackground = false, delConfirmProps } = schema.props || {};
 
-  const { max, props: listProps } = schema;
-  const { copyable = true, moveable = true, hasBackground = false } = listProps || {};
+  if (readyOnly) {
+    hideAdd = true;
+    hideCopy = true;
+    hideDelete = true;
+    hideMove = true;
+  }
+
+  if (!schema.items.layout) {
+    schema.items.layout = 'inline';
+  }
+
   const form = Form.useFormInstance();
 
   const handleOnCopy = (add: any, name: number) => () => {
@@ -46,41 +44,57 @@ const SimpleList = (props: any) => {
     add(initialValue);
   };
 
+  const _delConfirmProps = {
+    ...defaultDelConfirmProps,
+    ...delConfirmProps
+  };
+
+
   return (
     <Form.List name={listName}>
       {(fields, { add, remove, move }) => (
-        <div className={classnames('fr-list-card', {'fr-list-card-background' : getHasBackground(fields, hasBackground) })}>
+        <div className={classnames('fr-list-simple', {'fr-list-simple-background' : getHasBackground(fields, hasBackground) })}>
           {fields.map(({ key, name  }) => {
             const length = fields.length;
             return (
               <div key={key} className='fr-list-item'>
-                <div style={{ width: 0, flex: 1 }}>
-                  {renderCore({ schema:schema, parentPath: [name], rootPath: [...rootPath, ...listName, name] })}
-                </div>
+                {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, ...listName, name] })}
                 {!readyOnly && (
-                  <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>
-                  {moveable && (
-                    <>
-                      <ArrowUpOutlined
-                        style={{ color: name !== 0 ? '#1890ff' : '#c5c5c5' }}
-                        onClick={() => name !== 0 && move(name, name - 1)}
-                      />
-                      <ArrowDownOutlined
-                        style={{ color: name !== length - 1 && length !== 1 ? '#1890ff' : '#c5c5c5'}}
-                        onClick={() => name !== length - 1 && length !== 1 && move(name, name + 1)}
-                      />
-                    </>
-                  )}
-                  {copyable && <CopyOutlined onClick={handleOnCopy(add, name)} /> }
-                  <CloseOutlined onClick={() => remove(name)} />
+                  <Space className={classnames('fr-list-item-operate')}>
+                    {!hideMove && (
+                      <>
+                        <ArrowUpOutlined
+                          style={{ color: name !== 0 ? '#1890ff' : '#c5c5c5' }}
+                          onClick={() => name !== 0 && move(name, name - 1)}
+                        />
+                        <ArrowDownOutlined
+                          style={{ color: name !== length - 1 && length !== 1 ? '#1890ff' : '#c5c5c5'}}
+                          onClick={() => name !== length - 1 && length !== 1 && move(name, name + 1)}
+                        />
+                      </>
+                    )}
+                    {!hideCopy && <CopyOutlined onClick={handleOnCopy(add, name)} /> }
+                    {!hideDelete && (
+                      <Popconfirm
+                        onConfirm={() => remove(name) }
+                        {..._delConfirmProps}
+                      >
+                      <CloseOutlined  />
+                    </Popconfirm>
+                    )}
                   </Space>
                 )}
               </div>
             );
           })}
-          {(!max || fields.length < max) && !readyOnly && (
+          {(!max || fields.length < max) && !hideAdd && (
             <div className='add-btn'>
-              <Button type='dashed' onClick={() => add()} icon={<PlusOutlined />}  block={fields.length > 0 ? true : false } >
+              <Button 
+                type='dashed' 
+                onClick={() => add()} 
+                icon={<PlusOutlined />}
+                block={fields.length > 0 ? true : false }
+              >
                 新增一条
               </Button>
             </div>

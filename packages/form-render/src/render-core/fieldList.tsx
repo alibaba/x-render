@@ -9,11 +9,13 @@ const FieldContext = createContext(() => {});
 const FieldList = (props: any) => {
   const formCtx: any = useFormStore(state => state.context);
   const parentCtx: any = useContext(FieldContext);
+
   const widgets = formCtx.widgets;
 
   // const widgets = formCtx.widgets;
 
   const { schema, path, parentLitPath, renderCore, max, rootPath } = props;
+  const { display = 'inline'} = schema;
   // console.log(props, 'fieldProps');
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';
@@ -28,6 +30,10 @@ const FieldList = (props: any) => {
     span = 24;
   }
 
+
+  const form = Form.useFormInstance();
+  const value = Form.useWatch(path, form);
+
   const handleOnAdd = () => { };
 
   const handleOnRemove = () => { };
@@ -36,16 +42,26 @@ const FieldList = (props: any) => {
 
   const getValueFromKey = getParamValue(formCtx, parentCtx, schema);
 
-  //const span = getColSpan(formCtx, parentCtx, schema);
   const labelCol = getValueFromKey('labelCol');
-  const wrapperCol = getValueFromKey('wrapperCol');
   const readyOnly = getValueFromKey('readyOnly');
-
   const preRootPath = (rootPath || []).splice(0, rootPath.length - 1);
-
+  let isInline = display === 'inline';
+  if (!value) {
+    isInline = true;
+  }
+  
   return (
     <Col span={24}>
-      <Form.Item label={label} wrapperCol={{ span: 22 }} labelCol={{ span: 2 }}>
+      {!isInline && (
+        <Form.Item 
+          label={label}
+          labelAlign={'left'}
+          colon={false}
+          style={{ marginBottom: 0 }}
+        >
+        </Form.Item>
+      )}
+      <Form.Item label={label} wrapperCol={{ flex: 1 }} labelCol={labelCol} noStyle={!isInline}>
         <Widget
           name={path}
           schema={schema}

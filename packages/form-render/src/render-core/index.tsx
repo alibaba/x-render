@@ -43,6 +43,8 @@ const renderItem = (props: RenderItemProps) => {
         {RenderCore({ schema, parentPath: path, rootPath })}
       </Row>
     );
+    
+    //childContent = RenderCore({ schema, parentPath: path, rootPath })
     path = undefined;
   }
 

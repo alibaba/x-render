@@ -30,6 +30,7 @@ import BoxSubItem from './container/BoxSubItem';
 import BoxPanel from './container/BoxPanel';
 
 import SimpleList from './container/ListSimple';
+import CardList from './container/ListCard';
 import DrawerList from './container/ListDrawer';
 import TableList from './container/ListTable';
 import VirtualList from './container/ListVirtual';
@@ -95,7 +96,7 @@ export const widgets: Widgets = {
   list3: DrawerList,
   list4: VirtualList,
   simpleList: SimpleList,
-  cardList: SimpleList,
+  cardList: CardList,
   tableList: TableList,
   drawerList: DrawerList,
   virtualList: VirtualList,
