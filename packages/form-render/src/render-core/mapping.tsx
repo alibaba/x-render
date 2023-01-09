@@ -42,10 +42,10 @@ export const mapping = {
 export function getWidgetName(schema, _mapping = mapping) {
   const { type, format, enum: enums, readOnly, widget } = schema;
 
-  // 如果已经注明了渲染widget，那最好
-  // if (schema['ui:widget']) {
-  //   return schema['ui:widget'];
-  // }
+  //如果已经注明了渲染widget，那最好
+  if (schema['ui:widget'] || schema.widget) {
+    return schema['ui:widget'] || schema.widget;
+  }
 
   const list: string[] = [];
   if (readOnly) {
@@ -69,11 +69,11 @@ export function getWidgetName(schema, _mapping = mapping) {
     }
   }
 
-  const _widget = widget || format;
+  const _widget = format;
   if (_widget) {
     list.push(`${type}:${_widget}`);
   }
-
+  
   if (type === 'object') {
     list.push(schema.theme || 'collapse');
   } else {

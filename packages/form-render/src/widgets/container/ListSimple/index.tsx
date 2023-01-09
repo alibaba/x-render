@@ -57,7 +57,7 @@ const SimpleList = (props: any) => {
               <div key={key} className='fr-list-item'>
                 {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, ...listName, name] })}
                 {!readyOnly && (
-                  <Space className={classnames('fr-list-item-operate')}>
+                  <Space className={classnames('fr-list-item-operate')} >
                     {!hideMove && (
                       <>
                         <ArrowUpOutlined

@@ -43,6 +43,7 @@ const FieldItem = (props: any) => {
   // Render Container Components
   if (children) {
     const { labelCol, wrapperCol } = getFormItemLayout(schema.column, schema, schema.labelWidth);
+    
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
       <FieldContext.Provider
@@ -53,9 +54,13 @@ const FieldItem = (props: any) => {
           layout: schema.layout
         }}
       > 
-        <Col span={24}>
+        {schema.layout === 'inline' ? (
           <Widget {...widgetProps} {...otherSchema} layout={layout} />
-        </Col>
+        ) : (
+          <Col span={24}>
+            <Widget {...widgetProps} {...otherSchema} layout={layout} />
+          </Col>
+        )}
       </FieldContext.Provider>
     );
   }
@@ -116,9 +121,9 @@ const FieldItem = (props: any) => {
       </Form.Item>
   );
 
-  // if (_layout === 'inline') {
-  //   return formItem;
-  // }
+  if (_layout === 'inline') {
+    return formItem;
+  }
  
   return (
     <Col span={span}>

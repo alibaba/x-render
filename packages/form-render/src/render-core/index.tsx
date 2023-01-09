@@ -71,7 +71,7 @@ const RenderCore = (props: RenderCoreProps) => {
   return Object.keys(schema?.properties || {}).map((key) => {
     const item = schema.properties[key];
     const path = [...parentPath, key];
-
+    
     return renderItem({ schema: item, path, key, rootPath })
   });
 }

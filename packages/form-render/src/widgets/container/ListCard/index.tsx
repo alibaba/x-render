@@ -13,18 +13,20 @@ const defaultDelConfirmProps = {
 };
 
 const getOperateFixed = (schema: any) => {
-  let result = false;
-  if (['card', 'collapse', 'lineTitle'].includes(schema.items.theme) && !schema?.items?.props?.extra) {
-    result = true;
+  let fixed = true;
+
+  if (schema?.items?.props?.extra) {
+    fixed = false;
   }
-  return result;
+  return fixed;
 };
 
 const getOperateStyle = (schema: any) => {
   let result: any = {};
-  if (['card', 'collapse', 'lineTitle'].includes(schema.items.theme) && !schema?.items?.props?.extra) {
+  const widgetName = schema?.items?.theme || schema?.items?.widget || 'collapse';
+  if (['card', 'collapse', 'lineTitle'].includes(widgetName) && !schema?.items?.props?.extra) {
     result.top = '15px';
-    if (['lineTitle'].includes(schema.items.theme)) {
+    if (['lineTitle'].includes(widgetName)) {
       result.top = 0;
       result.padding = 0
     }

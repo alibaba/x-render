@@ -5,48 +5,40 @@ import Form from '../demo/display';
 const schema = {
   type: 'object',
   properties: {
-    listName2: {
+    list: {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
+      display: 'inline',
       // widget: 'cardList',
       items: {
         type: 'object',
+        title: '卡片主题',
+        description: '这是一个对象类型',
+        column: 3,
+        widget: 'card',
         properties: {
           input1: {
-            title: '简单输入框',
+            title: '输入框 A',
             type: 'string',
-            required: true,
           },
-          select1: {
-            title: '单选',
+          input2: {
+            title: '输入框 B',
             type: 'string',
-            enum: ['a', 'b', 'c'],
-            enumNames: ['早', '中', '晚'],
           },
-          obj: {
-            title: '对象',
-            type: 'object',
-            properties: {
-              input1: {
-                title: '简单输入框',
-                type: 'string',
-                required: true,
-              },
-              select1: {
-                title: '单选',
-                type: 'string',
-                enum: ['a', 'b', 'c'],
-                enumNames: ['早', '中', '晚'],
-              },
-            },
+          input3: {
+            title: '输入框 B',
+            type: 'string',
           },
-        },
-      },
-    },
-  },
+          input4: {
+            title: '输入框 C',
+            type: 'string',
+          },
+        }
+      }
+    }
+  }
 };
-
 const Demo = () => {
   return <Form schema={schema} />;
 };
