@@ -3,7 +3,7 @@ import { Collapse } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import './index.less';
-import BoxPanel from '../BoxPanel';
+import BoxPanel from '../../components/PanelView';
 
 const { Panel } = Collapse;
 interface IProps {
@@ -22,8 +22,15 @@ interface IProps {
 const BoxCollapse: FC<IProps> = (props) => {
   const { style, children, title, description, defaultExpand = true, layout } = props;
 
+  if (!title) {
+    return (
+      <BoxPanel>
+        {children}
+      </BoxPanel>
+    )
+  }
+  
   const [activeKey, setActiveKey] = useState<string>(defaultExpand ? 'single' : '');
-
   const collapseHeader = (
     <>
       {title && <div className='collapse-title'>{title}</div>}
@@ -35,27 +42,13 @@ const BoxCollapse: FC<IProps> = (props) => {
     return (
       <div className='expand-icon-box'>
         <DownOutlined rotate={isActive ? 0 : -90 } style={{ fontSize: '16px'}} />
-        {/* <span className='expand-icon-desc'>{isActive ? '收起' : '展开'}</span> */}
       </div>
     );
   };
 
-  if (!title) {
-
-    return <div className='w-100'>{children}</div>;
-  }
-
-  if (!title) {
-    return (
-      <BoxPanel schema={props}>
-        {children}
-      </BoxPanel>
-    )
-  }
-
   return (
     <Collapse
-      className={classnames('f-collapse', { 'f-collapse-vertical' : layout === 'vertical'})}
+      className={classnames('fr-obj-collapse', { 'fr-obj-collapse-vertical' : layout === 'vertical'})}
       style={style}
       bordered={false}
       ghost={true}

@@ -27,7 +27,7 @@ const getOperateStyle = (schema: any) => {
   if (['card', 'collapse', 'lineTitle'].includes(widgetName) && !schema?.items?.props?.extra) {
     result.top = '15px';
     if (['lineTitle'].includes(widgetName)) {
-      result.top = 0;
+      result.top = '3px';
       result.padding = 0
     }
   }

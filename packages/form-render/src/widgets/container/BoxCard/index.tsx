@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import BoxPanel from '../BoxPanel';
+import BoxPanel from '../../components/PanelView';
 
 import './index.less';
 
@@ -14,7 +14,7 @@ const BoxCard = ({ children, title, schema }) => {
   }
   return (
     <Card
-      className='fr-card'
+      className='fr-obj-card'
       title={
         <>
           {title}

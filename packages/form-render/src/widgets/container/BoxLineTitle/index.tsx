@@ -1,24 +1,23 @@
 import React from 'react';
-import BoxPanel from '../BoxPanel';
+import HeaderTitle from '../../components/HeaderTitle';
+import PanelView from '../../components/PanelView';
 import './index.less';
 
-const FLineTitle = ({ children, title, schema }) => {
+const FLineTitle = ({ children, title, description }) => {
 
   if (!title) {
     return (
-      <BoxPanel schema={schema}>
+      <PanelView>
         {children}
-      </BoxPanel>
+      </PanelView>
     );
   }
-  
+
   return (
-    <div className='fr-box-line-title'>
-      <div className='fr-line-header'>
-        {title}
-        <span className='fr-desc ml2'>
-          {schema?.description ? `( ${schema.description} )` : ''}
-        </span>
+    <div className='fr-obj-line-title'>
+      <div className='fr-obj-header'>
+        <span className='fr-header-title'>{title}</span>
+        {description && <span className='fr-header-desc'>( {description} )</span>}
       </div>
       {children}
     </div>

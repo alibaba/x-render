@@ -1,0 +1,140 @@
+---
+order: 3
+group:
+  order: 5
+  title: 最佳展示
+toc: content
+---
+
+# 嵌套展示
+
+对于嵌套类型的表单，我们内置了四种主题，分别为 collapse | card | tile | flex, 默认为 collapse 主题
+
+
+#### collapse
+```jsx
+import React from 'react';
+import FormRender, { useForm } from 'form-render';
+
+const schema = {
+  type: 'object',
+  properties: {
+    obj: {
+      type: 'object',
+      title: '卡片主题',
+      description: '这是一个对象类型',
+      column: 3,
+      properties: {
+        input1: {
+          title: '输入框 A',
+          type: 'string',
+        },
+        input2: {
+          title: '输入框 B',
+          type: 'string',
+        },
+        input3: {
+          title: '输入框 C',
+          type: 'string',
+        },
+        input4: {
+          title: '输入框 D',
+          type: 'string',
+        }
+      }
+    }
+  }
+};
+
+export default () => {
+  const form = useForm();
+
+  return  <FormRender schema={schema} form={form} />
+};
+```
+
+#### card
+```jsx
+import React from 'react';
+import FormRender, { useForm } from 'form-render';
+
+const schema = {
+  type: 'object',
+  properties: {
+    obj: {
+      type: 'object',
+      widget: 'card',
+      title: '卡片主题',
+      description: '这是一个对象类型',
+      column: 3,
+      properties: {
+        input1: {
+          title: '输入框 A',
+          type: 'string',
+        },
+        input2: {
+          title: '输入框 B',
+          type: 'string',
+        },
+        input3: {
+          title: '输入框 C',
+          type: 'string',
+        },
+        input4: {
+          title: '输入框 D',
+          type: 'string',
+        }
+      }
+    }
+  }
+};
+
+export default () => {
+  const form = useForm();
+
+  return  <FormRender schema={schema} form={form} />
+};
+```
+
+#### lineTitle
+```jsx
+import React from 'react';
+import FormRender, { useForm } from 'form-render';
+
+const schema = {
+  type: 'object',
+  properties: {
+    obj: {
+      type: 'object',
+      title: '卡片主题',
+      widget: 'lineTitle',
+      description: '这是一个对象类型',
+      column: 3,
+      properties: {
+        input1: {
+          title: '输入框 A',
+          type: 'string',
+        },
+        input2: {
+          title: '输入框 B',
+          type: 'string',
+        },
+        input3: {
+          title: '输入框 C',
+          type: 'string',
+        },
+        input4: {
+          title: '输入框 D',
+          type: 'string',
+        }
+      }
+    }
+  }
+};
+
+export default () => {
+  const form = useForm();
+
+  return  <FormRender schema={schema} form={form} />
+};
+```
