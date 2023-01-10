@@ -115,21 +115,21 @@ const FieldItem = (props: any) => {
 
   const formItem = (
     <Form.Item
-        label={label}
-        name={path}
-        valuePropName={valuePropName}
-        rules={readOnly ? [] : ruleList}
-        hidden={hidden}
-        tooltip={tooltip}
-        initialValue={schema.default}
-        labelCol={labelCol}
-        wrapperCol={wrapperCol}
-        noStyle={noStyle}
-        className={path}
-        dependencies={dependencies}
-      >
-        <Widget {...widgetProps} />
-      </Form.Item>
+      label={label}
+      name={path}
+      valuePropName={valuePropName}
+      rules={readOnly ? [] : ruleList}
+      hidden={hidden}
+      tooltip={tooltip}
+      initialValue={schema.default}
+      labelCol={labelCol}
+      wrapperCol={wrapperCol}
+      noStyle={noStyle}
+      className={path}
+      dependencies={dependencies}
+    >
+      <Widget {...widgetProps} />
+    </Form.Item>
   );
 
   if (_layout === 'inline') {

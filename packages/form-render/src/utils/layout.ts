@@ -27,7 +27,7 @@ export const getFormItemLayout = (column: number, schema: any, labelWidth: numbe
     wrapperCol = schema.wrapperCol;
   }
 
-  if (schema.layout === 'inline') {
+  if (schema.layout === 'inline' || !schema.title) {
     labelCol = { offset: 1 };
     wrapperCol = {};
   }

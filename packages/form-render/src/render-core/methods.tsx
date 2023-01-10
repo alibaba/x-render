@@ -143,6 +143,8 @@ export const getColSpan = (formCtx: any, parentCtx: any, schema: any) => {
       span = 24;
     } else if (schema.width === '50%') {
       span = 12;
+    } else if (schema.width === '20%') {
+      span = 5;
     } else if (schema.width < '50%') {
       span = 8;
     }
