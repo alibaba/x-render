@@ -12,7 +12,7 @@ export const transformProps =  (props: any) => {
     schema,
     beforeFinish,
     onMount,
-    displayType,
+    displayType = 'column',
     widgets,
     watch,
     removeHiddenData,
@@ -46,7 +46,7 @@ export const transformProps =  (props: any) => {
   };
 
   if (displayType) {
-    formProps.layout = displayTypeEnum[displayType];
+    formProps.layout = displayTypeEnum[displayType] || 'horizontal';
   }
 
   if (removeHiddenData !== undefined) {

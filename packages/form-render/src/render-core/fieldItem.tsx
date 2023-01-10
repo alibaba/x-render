@@ -26,6 +26,8 @@ const FieldItem = (props: any) => {
 
   const form = Form.useFormInstance();
   const formCtx: any = useFormStore(state => state.context);
+  
+  
   const parentCtx: any = useContext(FieldContext);
   const fieldRef = useRef();
   const { widgets, layout } = formCtx;
@@ -145,6 +147,7 @@ const FieldItem = (props: any) => {
 
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
+  const formSchema = useFormStore(state => state.schema);
 
   // No function expressions exist
   if (!isHasExpression(schema) && !schema.dependencies) {
@@ -165,7 +168,8 @@ export default (props: any) => {
       {(form: any) => {
         const formData = form.getFieldsValue(true);
         const dependValues = (schema.dependencies || []).map((item: any) => _get(formData, item))
-        const newSchema = parseAllExpression(schema, formData, rootPath);
+        const newSchema = parseAllExpression(schema, formData, rootPath, formSchema);
+      
         return <FieldItem schema={newSchema} {...otherProps} dependValues={dependValues} />;
       }}
     </Form.Item>

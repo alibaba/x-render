@@ -14,7 +14,9 @@ toc: content
 
 ```jsx
 import React from 'react';
-import FormRender, { useForm } from 'form-render';
+import FormRender from '../demo/FormRender';
+
+
 
 const schema = {
   type: 'object',
@@ -41,17 +43,14 @@ const schema = {
 };
 
 export default () => {
-  const form = useForm();
-  
   return (
-     <FormRender 
+    <FormRender 
       schema={schema} 
-      form={form}
       // column={3}
       builtOperation={true}
     />
-  )
-};
+  );
+}
 ```
 
 
@@ -106,17 +105,12 @@ const schema = {
 };
 
 export default () => {
-  const form = useForm();
-  
   return (
-     <FormRender 
+    <FormRender 
       schema={schema} 
-      form={form}
       builtOperation={true}
       // labelCol={{ span: 9 }}
     />
   )
 };
 ```
-
-

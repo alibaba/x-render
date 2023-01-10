@@ -1,8 +1,8 @@
 ---
 order: 1
 group:
-  order: 10
-  title: 高级用法 old
+  order: 3
+  title: 高级用法
 toc: false
 ---
 
@@ -39,7 +39,6 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
-  displayType: 'column',
   properties: {
     checkbox1: {
       title: '展示更多内容',

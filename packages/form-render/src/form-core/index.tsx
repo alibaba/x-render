@@ -15,6 +15,8 @@ const FormCore = (props: any) => {
   const storeApi = useStoreApi();
   const setContext = useStore(state => state.setContext, shallow);
   const [schema] = useStore(state => [state.schema, state.form], shallow);
+  const isInit = useStore(state => state.isInit, shallow);
+  
 
   const { type, properties, ...schemProps } = schema;
   const { formProps, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
@@ -28,6 +30,13 @@ const FormCore = (props: any) => {
       onMount && onMount();
     }, 0);
   }, []);
+
+  useEffect(() => {
+    if (!isInit) {
+      return;
+    }
+    form.resetSchema(props.schema)
+  }, [props.schema]);
 
   useEffect(() => {
     const context = {

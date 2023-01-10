@@ -1,5 +1,6 @@
 import { get } from 'lodash-es';
 import { isObject, _cloneDeep } from './index';
+import { createDataSkeleton } from './formDataSkeleton';
 
 export const isExpression = (str: string) => {
   if (typeof str !== 'string') {
@@ -55,9 +56,6 @@ export const parseExpression = (func: any, formData = {}, parentPath: string) =>
   return func;
 }
 
-
-
-
 export function getRealDataPath(path) {
   if (typeof path !== 'string') {
     throw Error(`id ${path} is not a string!!! Something wrong here`);
@@ -82,8 +80,12 @@ export function getValueByPath(formData, path) {
 }
 
 
-export const parseAllExpression = (_schema: any, formData: any, dataPath: string) => {
+export const parseAllExpression = (_schema: any, _formData: any, dataPath: string, formSchema?: any) => {
   const schema = _cloneDeep(_schema);
+  let formData = _formData;
+  if (formSchema) {
+    formData = createDataSkeleton(formSchema, formData);
+  }
 
   Object.keys(schema).forEach(key => {
     const value = schema[key];
@@ -102,7 +104,7 @@ export const parseAllExpression = (_schema: any, formData: any, dataPath: string
         Object.keys(propsObj).forEach(k => {
           schema[key][k] = parseExpression(
             propsObj[k],
-            formData,
+            _formData,
             dataPath
           );
         });

@@ -28,9 +28,11 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, lay
   }
 
   if (schema.layout === 'inline' || (Object.keys(schema).length > 0 && !schema.title)) {
-    if (layout === 'vertical') {
-      labelCol = { offset: 1 };
-    }
+    labelCol = { offset: 1 };
+  }
+
+  if (schema.layout === 'vertical') {
+    labelCol = {};
     wrapperCol = {};
   }
 

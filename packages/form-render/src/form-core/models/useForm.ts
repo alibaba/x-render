@@ -1,12 +1,17 @@
+import React, { useRef } from 'react';
 import { Form, FormInstance } from 'antd';
-import { set as _set, get as _get } from 'lodash-es';
-import { transformFieldsError } from './common';
+import { transformFieldsError, getSchemaFullPath } from './common';
+import { transformValueBind } from '../../utils/valueBind';
+import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../../utils';
+
 
 interface FormInstanceExtends extends FormInstance {
   init: any;
   schema: any;
+  _getStoreState: () => any;
   /** 设置表单值 */
   setValues: FormInstance['setFieldsValue'];
+  setSchemaByFullPath: (path: string, schema: any) => any;
   /** 根据路径动态设置 Schema */
   setSchemaByPath: (path: string, schema: any) => any;
   getHiddenValues: () => any;
@@ -14,6 +19,7 @@ interface FormInstanceExtends extends FormInstance {
   getValues: FormInstance['getFieldsValue'];
   /** 设置 Schema */
   setSchema: (schema: any) => void;
+  resetSchema: (schema: any) => void;
   /** 根据路径修改表单值 */
   setValueByPath: FormInstance['setFieldValue'];
   /**
@@ -29,38 +35,83 @@ interface FormInstanceExtends extends FormInstance {
    * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
    */
   scrollToPath: FormInstance['scrollToField']
-}
+};
+
+const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => {
+  const path = getSchemaFullPath(_path, formSchema);
+  const currSchema = _get(formSchema, path, {});
+  const newSchema = isFunction(_newSchema) ? _newSchema(currSchema) : _newSchema;
+
+  const result = _merge(currSchema, newSchema);
+  _set(formSchema, path, result);
+};
 
 const useForm = () => {
   const [form] = Form.useForm() as [FormInstanceExtends];
+  const formStoreRef: any = useRef();
 
   /**初始化 */
   form.init = (schema: any, useStore: any) => {
     const { getState } = useStore;
-    const { init, setSchemaByPath, setSchema } = getState();
-    form.schema = schema;
+    const { init } = getState();
+    formStoreRef.current = { getState };
     init(schema);
-  
-    form.setSchema = schema => {
-      setSchema(schema, (newSchema: any) => {
-        form.schema = newSchema;
-      });
-    };
-
-    form.setSchemaByPath = (path: any, value: any) => setSchemaByPath(path, value, (newSchema: any) => {
-      form.schema = newSchema;
-    });
+    form.schema = Object.freeze(schema);
   };
 
-  form.setValues = form.setFieldsValue;
+  form.resetSchema = schema => {
+    const { setSchema } = formStoreRef.current.getState();
+    setSchema(schema);
+    form.schema = Object.freeze(schema);
+  }
+
+  form.setSchema = (obj: any) => {
+    if (!isObject(obj)) {
+      return;
+    }
+    const { schema, setSchema } = formStoreRef.current.getState();
+    Object.keys(obj || {}).forEach(path => {
+      updateSchemaByPath(path, obj[path], schema);
+    });
+
+    setSchema(schema);
+    form.schema = Object.freeze(schema);
+  }
+
+  form.setSchemaByPath = (_path: string, _newSchema: any) => {
+    const { schema, setSchema } = formStoreRef.current.getState();
+   
+    updateSchemaByPath(_path, _newSchema, schema);
+
+    setSchema(schema);
+    form.schema = Object.freeze(schema);
+  }
+
+  form.setSchemaByFullPath = (path: string, newSchema: any) => {
+    const { schema, setSchema } = formStoreRef.current.getState();
+    const currSchema = _get(schema, path, {});
+    const result = _merge(newSchema, currSchema);
+
+    _set(schema, path, result);
+    setSchema(schema);
+    form.schema = Object.freeze(schema);
+  }
+
+  form.setValues = (_values: any) => {
+    const { flattenSchema } = formStoreRef.current.getState();
+    const values = transformValueBind(_values, flattenSchema);
+    form.setFieldsValue(values);
+  }
+
   form.getValues = form.getFieldsValue;
   form.setValueByPath = form.setFieldValue;
 
-  form.getSchemaByPath = path => {
-    if (typeof path !== 'string') {
+  form.getSchemaByPath = _path => {
+    if (typeof _path !== 'string') {
       console.warn('请输入正确的路径');
     }
-    return _get(form.schema, 'properties.' + path, {});
+    const path = getSchemaFullPath(_path, form.schema);
+    return _get(form.schema, path);
   };
 
   form.setErrorFields = (_fieldsError: any[]) => {
