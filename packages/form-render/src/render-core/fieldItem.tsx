@@ -52,7 +52,7 @@ const FieldItem = (props: any) => {
   
   // Render Container Components
   if (children) {
-    const { labelCol, wrapperCol } = getFormItemLayout(schema.column, schema, schema.labelWidth);
+    const { labelCol, wrapperCol } = getFormItemLayout(schema.column, schema, { layout, labelWidth: schema.labelWidth });
     
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>

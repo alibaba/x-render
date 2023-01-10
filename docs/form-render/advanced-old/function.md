@@ -39,6 +39,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+  displayType: 'column',
   properties: {
     checkbox1: {
       title: '展示更多内容',

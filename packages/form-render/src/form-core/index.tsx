@@ -20,7 +20,7 @@ const FormCore = (props: any) => {
   const { formProps, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
   const _column = column || schema?.column || 1;
 
-  const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, labelWidth);
+  const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth });
   
   useEffect(() => {
     form.init(props.schema, storeApi);

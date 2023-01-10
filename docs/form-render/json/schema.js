@@ -26,6 +26,7 @@ export const basic = {
 
 export const expression = {
   type: 'object',
+  displayType: 'column',
   properties: {
     input: {
       title: '{{formData.config.title || "输入框"}}',

@@ -1,4 +1,4 @@
-export const getFormItemLayout = (column: number, schema: any, labelWidth: number) => {
+export const getFormItemLayout = (column: number, schema: any, { labelWidth, layout }) => {
   let labelCol: any = { span: 3 };
   let wrapperCol: any = { span: 8 };
 
@@ -28,7 +28,9 @@ export const getFormItemLayout = (column: number, schema: any, labelWidth: numbe
   }
 
   if (schema.layout === 'inline' || (Object.keys(schema).length > 0 && !schema.title)) {
-    labelCol = { offset: 1 };
+    if (layout === 'vertical') {
+      labelCol = { offset: 1 };
+    }
     wrapperCol = {};
   }
 
