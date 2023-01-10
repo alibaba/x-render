@@ -19,7 +19,7 @@ const FormCore = (props: any) => {
   const { type, properties, ...schemProps } = schema;
   const { formProps, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
   const _column = column || schema?.column || 1;
-  debugger;
+
   const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, labelWidth);
   
   useEffect(() => {

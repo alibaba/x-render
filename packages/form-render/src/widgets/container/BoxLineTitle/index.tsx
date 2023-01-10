@@ -17,9 +17,11 @@ const FLineTitle = ({ children, title, description }) => {
     <div className='fr-obj-line-title'>
       <div className='fr-obj-header'>
         <span className='fr-header-title'>{title}</span>
-        {description && <span className='fr-header-desc'>( {description} )</span>}
+        {description && <span className='fr-header-desc'>{description}</span>}
       </div>
-      {children}
+      <div className='fr-obj-content'>
+        {children}
+      </div>
     </div>
   );
 }
