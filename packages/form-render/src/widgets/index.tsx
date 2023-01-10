@@ -26,7 +26,7 @@ import checkbox from './antd/checkbox';
 import BoxCard from './container/BoxCard';
 import BoxCollapse from './container/BoxCollapse';
 import BoxLineTitle from './container/BoxLineTitle';
-import BoxSubItem from './container/BoxSubItem';
+import BoxSubInline from './container/BoxSubInline';
 
 import SimpleList from './container/ListSimple';
 import CardList from './container/ListCard';
@@ -86,7 +86,7 @@ export const widgets: Widgets = {
   card: BoxCard,
   collapse: BoxCollapse,
   lineTitle: BoxLineTitle,
-  subItem: BoxSubItem,
+  subInline: BoxSubInline,
 
   list0: SimpleList,
   list1: CardList,

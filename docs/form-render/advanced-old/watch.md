@@ -90,6 +90,22 @@ const schema = {
       title: '对象',
       description: '这是一个对象类型',
       type: 'object',
+      widget: 'card',
+      properties: {
+        select: {
+          title: '单选',
+          type: 'string',
+          enum: ['a', 'b', 'c'],
+          enumNames: ['早', '中', '晚'],
+          widget: 'radio',
+        },
+      },
+    },
+    obj2: {
+      title: '对象',
+      description: '这是一个对象类型',
+      type: 'object',
+      widget: 'card',
       properties: {
         select: {
           title: '单选',

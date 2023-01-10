@@ -34,7 +34,7 @@ const BoxCollapse: FC<IProps> = (props) => {
   const collapseHeader = (
     <>
       {title && <div className='collapse-title'>{title}</div>}
-      {description && description}
+      {description && <span className='fr-header-desc '>{description}</span>}
     </>
   );
 

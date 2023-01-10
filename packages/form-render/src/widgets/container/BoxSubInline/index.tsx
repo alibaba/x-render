@@ -9,12 +9,12 @@ const BoxSubItem = (props: any) => {
   return (
     <Form.Item
       className={classnames(undefined, {
-        'fr-item-label-hidden': !title,
-        'fr-boxline-background': hasBackground
+        'fr-obj-subitem-label-hidden': !title,
+        'fr-obj-subitem-background': hasBackground
       })}
       label={title || 'notitle'}
       labelCol={{ span: 2}}
-      wrapperCol={{ span: 22 }}
+      wrapperCol={{ span: 24 }}
     >
       {children}
     </Form.Item>

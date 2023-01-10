@@ -16,9 +16,10 @@ const FormCore = (props: any) => {
   const setContext = useStore(state => state.setContext, shallow);
   const [schema] = useStore(state => [state.schema, state.form], shallow);
 
-  const { properties, ...schemProps } = schema;
+  const { type, properties, ...schemProps } = schema;
   const { formProps, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
   const _column = column || schema?.column || 1;
+  debugger;
   const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, labelWidth);
   
   useEffect(() => {

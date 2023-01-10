@@ -4,10 +4,10 @@ import BoxPanel from '../../components/PanelView';
 
 import './index.less';
 
-const BoxCard = ({ children, title, schema }) => {
+const BoxCard = ({ children, title, description }) => {
   if (!title) {
     return (
-      <BoxPanel schema={schema}>
+      <BoxPanel>
         {children}
       </BoxPanel>
     )
@@ -18,9 +18,11 @@ const BoxCard = ({ children, title, schema }) => {
       title={
         <>
           {title}
-          <span className='fr-desc ml2'>
-            {schema?.description ? `( ${schema.description} )` : ''}
-          </span>
+          {description && (
+            <span className='fr-header-desc '>
+              {description}
+            </span>
+          )}
         </>
       }
       hoverable={true}
