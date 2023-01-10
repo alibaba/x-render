@@ -8,6 +8,7 @@ interface RenderCoreProps {
   schema: any,
   rootPath?: any[] | undefined,
   parentPath?: any[] | undefined,
+  [key: string]: any
 }
 
 interface RenderItemProps {
@@ -60,7 +61,7 @@ const renderItem = (props: RenderItemProps) => {
   );
 }
 
-const RenderCore = (props: RenderCoreProps) => {
+const RenderCore = (props: RenderCoreProps) : any => {
   const { schema, parentPath = [], rootPath = [] } = props;
 
   // render List.item

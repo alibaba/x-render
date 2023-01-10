@@ -1,4 +1,4 @@
-export const getFormItemLayout = (column: number, schema: any, { labelWidth, layout }) => {
+export const getFormItemLayout = (column: number, schema: any, { labelWidth, layout }: any) => {
   let labelCol: any = { span: 3 };
   let wrapperCol: any = { span: 8 };
 
@@ -14,6 +14,7 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, lay
 
   // 兼容一下 1.0 版本
   if (labelWidth) {
+    debugger;
     labelCol = { flex : labelWidth + 'px' };
     wrapperCol = { flex: '0.95 1 auto' };
   }
@@ -33,7 +34,7 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, lay
 
   if (schema.layout === 'vertical') {
     labelCol = {};
-    wrapperCol = {};
+    // wrapperCol = {};
   }
 
   return { labelCol, wrapperCol }

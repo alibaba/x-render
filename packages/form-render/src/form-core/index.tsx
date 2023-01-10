@@ -14,12 +14,10 @@ export { default as useForm } from './models/useForm';
 
 const FormCore = (props: any) => {
   const storeApi = useStoreApi();
-  const setContext = useStore(state => state.setContext, shallow);
-  const [schema] = useStore(state => [state.schema, state.form], shallow);
+  const schema = useStore(state => state.schema, shallow);
   const isInit = useStore(state => state.isInit, shallow);
   const flattenSchema = useStore(state => state.flattenSchema, shallow);
-
-  
+  const setContext = useStore(state => state.setContext, shallow);
 
   const { type, properties, ...schemProps } = schema;
   const { formProps, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
@@ -38,7 +36,7 @@ const FormCore = (props: any) => {
     if (!isInit) {
       return;
     }
-    form.resetSchema(props.schema)
+    form.resetSchema(props.schema);
   }, [props.schema]);
 
   useEffect(() => {
@@ -48,10 +46,11 @@ const FormCore = (props: any) => {
       wrapperCol,
       readOnly,
       widgets,
+      labelWidth,
       layout: formProps.layout
     };
     setContext(context);
-  }, [_column, labelCol, wrapperCol]);
+  }, [_column, labelCol, wrapperCol, formProps.layout, labelWidth]);
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
     valuesWatch(changedValues, allValues, watch);
