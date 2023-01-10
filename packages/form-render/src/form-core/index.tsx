@@ -5,6 +5,7 @@ import shallow from 'zustand/shallow';
 import { useStore, useStoreApi } from './models/createFormStore';
 import { transformFieldsError, valuesWatch, transformProps } from './models/common';
 import { getFormItemLayout } from '../utils/layout';
+import { parseValuesWithBind } from '../utils/value-bind';
 import RenderCore from '../render-core';
 import './index.less';
 
@@ -16,6 +17,8 @@ const FormCore = (props: any) => {
   const setContext = useStore(state => state.setContext, shallow);
   const [schema] = useStore(state => [state.schema, state.form], shallow);
   const isInit = useStore(state => state.isInit, shallow);
+  const flattenSchema = useStore(state => state.flattenSchema, shallow);
+
   
 
   const { type, properties, ...schemProps } = schema;
@@ -54,7 +57,8 @@ const FormCore = (props: any) => {
     valuesWatch(changedValues, allValues, watch);
   };
 
-  const handleFinish = async (values: any) => {
+  const handleFinish = async (_values: any) => {
+    const values = parseValuesWithBind(_values, flattenSchema)
     let fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
     fieldsError = transformFieldsError(fieldsError);
 

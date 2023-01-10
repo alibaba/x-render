@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Form, FormInstance } from 'antd';
 import { transformFieldsError, getSchemaFullPath } from './common';
-import { transformValueBind } from '../../utils/valueBind';
+import { transformValueBind, parseValuesWithBind } from '../../utils/value-bind';
 import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../../utils';
 
 
@@ -103,7 +103,12 @@ const useForm = () => {
     form.setFieldsValue(values);
   }
 
-  form.getValues = form.getFieldsValue;
+  form.getValues = (nameList?: any, filterFunc?: any) => {
+    const { flattenSchema } = formStoreRef.current.getState();
+    const values = form.getFieldsValue(nameList, filterFunc);
+    return parseValuesWithBind(values, flattenSchema);
+  }
+
   form.setValueByPath = form.setFieldValue;
 
   form.getSchemaByPath = _path => {
