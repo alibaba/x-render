@@ -127,7 +127,7 @@ const Search: FC<Partial<ISearchProps>> = props => {
         size={size}
         form={form}
         schema={schema || EMPTY_SCHEMA}
-        onFinish={(_, errors) => !errors.length && refresh()}
+        onFinish={(_: any, errors: any) => !errors.length && refresh()}
         onMount={searchOnMount && !searchOnChange ? form.submit : undefined}
         watch={{
           ...watch,

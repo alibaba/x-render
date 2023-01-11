@@ -9,8 +9,8 @@ import renderCore from '../../../render-core';
 interface ListTableProps {
   fields: FormListFieldData[];
   schema: any;
-  operation: FormListOperation
-  listName: string[];
+  operation: FormListOperation;
+  listName: any[];
 }
 
 const ListTable: React.FC<ListTableProps> = ({ fields, schema, operation, listName }) => {

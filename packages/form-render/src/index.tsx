@@ -11,6 +11,24 @@ export { widgets } from './widgets';
 export { mapping } from './render-core/mapping';
 export { connectForm, useForm } from './form-core';
 
+
+export type  { 
+  default as FR,
+  Schema,
+  FRProps,
+  FormInstance,
+  FormParams,
+  FieldParams,
+  WatchProperties,
+  SchemaType,
+  SchemaBase,
+  ValidateParams,
+  ResetParams,
+  RuleItem,
+  ScrollOptions,
+} from './index.d';
+
+
 export default (props: any) => {
   const { configProvider, widgets, form, schema, validateMessages, ...otherProps } = props;
 
@@ -41,3 +59,6 @@ export default (props: any) => {
     </ConfigProvider>
   );
 }
+
+
+

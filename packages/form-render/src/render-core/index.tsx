@@ -4,17 +4,17 @@ import FieldItem from './fieldItem';
 import FieldList from './fieldList';
 
 interface RenderCoreProps {
-  schema: any,
-  rootPath?: any[] | undefined,
-  parentPath?: any[] | undefined,
+  schema: any;
+  rootPath?: any[] | undefined;
+  parentPath?: any[] | undefined;
   [key: string]: any
 }
 
 interface RenderItemProps {
   schema: any;
   rootPath?: any[] | undefined;
-  path?: any[] | undefined
-  key?: string | undefined
+  path?: any[] | undefined;
+  key?: string | undefined;
 }
 
 const renderItem = (props: RenderItemProps) => {

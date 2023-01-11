@@ -19,7 +19,7 @@ import {
   ErrorSchema,
 } from './methods';
 
-const FieldContext = createContext(() => {});
+const FieldContext: any = createContext(() => {});
 
 const FieldItem = (props: any) => {
   const { schema, children, path, dependValues } = props;

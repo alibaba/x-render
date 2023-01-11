@@ -8,11 +8,11 @@ import FormDrawer from './formDrawer';
 import './index.less';
 
 interface Props {
-  schema: any,
-  fields: FormListFieldData[],
-  operation: FormListOperation,
-  listName: (string | number)[],
-  prefix: string,
+  schema: any;
+  fields: FormListFieldData[];
+  operation: FormListOperation;
+  listName: (string | number)[];
+  prefix: string;
 }
 
 

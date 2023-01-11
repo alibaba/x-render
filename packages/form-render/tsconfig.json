@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": "./",
+    "skipLibCheck": true,
     // "strict": true,
     "declaration": true,
     "paths": {

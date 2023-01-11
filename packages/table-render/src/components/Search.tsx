@@ -160,7 +160,7 @@ const Search: <RecordType extends object = any>(
     refresh({ ...data, sorter: tableState?.sorter });
   };
 
-  const searchFormProps = {
+  const searchFormProps: any = {
     displayType: 'row',
     onFinish,
     ...props,
