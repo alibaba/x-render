@@ -12,18 +12,12 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
     wrapperCol = { span: 16 }
   }
 
-  // 自定义进行覆盖
-  if (schema.labelCol) {
-    labelCol = schema.labelCol;
-  }
-
-  if (schema.wrapperCol) {
-    wrapperCol = schema.wrapperCol;
-  }
-
   if (displayType === 'column') {
-    labelCol = {};
-    wrapperCol = {};
+    labelCol = { xl: 9, xxl: 6 };
+    if (column > 1) {
+      labelCol = {};
+      wrapperCol = {};
+    }
     // wrapperCol = { flex: 1 };
   }
 
@@ -36,6 +30,15 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
   if (labelWidth) {
     labelCol = { flex : labelWidth + 'px' };
     wrapperCol = { flex: 1 };
+  }
+
+  // 自定义进行覆盖
+  if (schema.labelCol) {
+    labelCol = schema.labelCol;
+  }
+
+  if (schema.wrapperCol) {
+    wrapperCol = schema.wrapperCol;
   }
 
   return { labelCol, wrapperCol }
