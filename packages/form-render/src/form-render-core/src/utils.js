@@ -10,13 +10,6 @@ export function getParamByName(name, url = window.location.href) {
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
 
-// export function isUrl(string) {
-//   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
-//   // const domainRE = /^[^\s\.]+\.\S{2,}$/;
-//   if (typeof string !== 'string') return false;
-//   return protocolRE.test(string);
-// }
-
 export function isCheckBoxType(schema, readOnly) {
   if (readOnly) return false;
   if (schema.widget === 'checkbox') return true;
@@ -266,41 +259,6 @@ export function isDeepEqual(param1, param2) {
   }
   return true;
 }
-
-// export function getFormat(format) {
-//   let dateFormat;
-//   switch (format) {
-//     case 'date':
-//       dateFormat = 'YYYY-MM-DD';
-//       break;
-//     case 'time':
-//       dateFormat = 'HH:mm:ss';
-//       break;
-//     case 'dateTime':
-//       dateFormat = 'YYYY-MM-DD HH:mm:ss';
-//       break;
-//     case 'week':
-//       dateFormat = 'YYYY-w';
-//       break;
-//     case 'year':
-//       dateFormat = 'YYYY';
-//       break;
-//     case 'quarter':
-//       dateFormat = 'YYYY-Q';
-//       break;
-//     case 'month':
-//       dateFormat = 'YYYY-MM';
-//       break;
-//     default:
-//       // dateTime
-//       if (typeof format === 'string') {
-//         dateFormat = format;
-//       } else {
-//         dateFormat = 'YYYY-MM-DD';
-//       }
-//   }
-//   return dateFormat;
-// }
 
 export function hasRepeat(list) {
   return list.find(
@@ -638,14 +596,6 @@ export const getEnum = schema => {
 //   return defaultValue;
 // };
 
-export const isEmail = value => {
-  const regex = '^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(.[a-zA-Z0-9_-]+)+$';
-  if (value && new RegExp(regex).test(value)) {
-    return true;
-  }
-  return false;
-};
-
 export function defaultGetValueFromEvent(valuePropName, ...args) {
   const event = args[0];
   if (event && event.target && valuePropName in event.target) {
@@ -706,63 +656,6 @@ export const removeEmptyItemFromList = formData => {
     result = formData;
   }
   return result;
-};
-
-export const getDescriptorSimple = (schema = {}, path) => {
-  let result = {};
-  if (isObject(schema)) {
-    if (schema.type) {
-      switch (schema.type) {
-        case 'range':
-          result.type = 'array';
-          break;
-        case 'html':
-          result.type = 'string';
-          break;
-        default:
-          result.type = schema.type;
-          break;
-      }
-    }
-    ['pattern', 'min', 'max', 'len', 'required'].forEach(key => {
-      if (Object.keys(schema).indexOf(key) > -1) {
-        result[key] = schema[key];
-      }
-    });
-
-    switch (schema.format) {
-      case 'email':
-      case 'url':
-        result.type = schema.format;
-        break;
-      default:
-        break;
-    }
-
-    const handleRegx = desc => {
-      if (desc.pattern && typeof desc.pattern === 'string') {
-        desc.pattern = new RegExp(desc.pattern);
-      }
-      return desc;
-    };
-    // result be array
-    if (schema.rules) {
-      if (Array.isArray(schema.rules)) {
-        const requiredRule = schema.rules.find(rule => rule.required === true);
-        if (requiredRule) {
-          result = { ...result, ...requiredRule };
-        }
-        result = [result, ...schema.rules];
-        result = result.map(r => handleRegx(r));
-      } else if (isObject(schema.rules)) {
-        result = [result, schema.rules];
-        result = result.map(r => handleRegx(r));
-      }
-    } else {
-      result = [result];
-    }
-  }
-  return { [path]: result };
 };
 
 // _path 只供内部递归使用

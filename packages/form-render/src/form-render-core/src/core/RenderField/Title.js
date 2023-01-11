@@ -61,7 +61,16 @@ const Title = ({
   requiredMark: globalRequiredMark,
 }) => {
   const { displayType: globalDisplayType, readOnly, colon } = useStore2();
-  const { title, required, type, requiredMark: schemaRequiredMark } = schema;
+  const {
+    title,
+    required: schemaRequired,
+    type,
+    requiredMark: schemaRequiredMark,
+  } = schema;
+
+  const required =
+    schemaRequired || schema?.rules?.some(r => r?.required === true);
+
   const isObjType = type === 'object';
 
   let _displayType =
@@ -114,7 +123,7 @@ const Title = ({
     <div className={labelClass} style={labelStyle}>
       {title ? (
         <label
-          className={cn( 'fr-label-title',{
+          className={cn('fr-label-title', {
             'no-colon':
               isCheckBoxType(schema, readOnly) ||
               _displayType === 'column' ||
