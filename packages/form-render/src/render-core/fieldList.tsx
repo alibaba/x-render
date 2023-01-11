@@ -10,7 +10,8 @@ const FieldList = (props: any) => {
   const formCtx: any = useFormStore(state => state.context);
   const parentCtx: any = useContext(FieldContext);
 
-  const widgets = formCtx.widgets;
+  const { displayType, widgets } = formCtx;
+  const isDisplayColumn = displayType === 'column';
 
   // const widgets = formCtx.widgets;
 
@@ -45,15 +46,15 @@ const FieldList = (props: any) => {
   const labelCol = getValueFromKey('labelCol');
   const readyOnly = getValueFromKey('readyOnly');
   const preRootPath = (rootPath || []).splice(0, rootPath.length - 1);
+
   let isInline = display === 'inline';
   if (!value) {
     isInline = true;
   }
-
- 
+  
   return (
     <Col span={24}>
-      {!isInline && (
+      {!isInline && !isDisplayColumn && (
         <Form.Item 
           label={label}
           labelAlign={'left'}
@@ -62,7 +63,7 @@ const FieldList = (props: any) => {
         >
         </Form.Item>
       )}
-      <Form.Item label={label} wrapperCol={{ flex: 1 }} labelCol={labelCol} noStyle={!isInline}>
+      <Form.Item label={label} wrapperCol={{ flex: 1 }} labelCol={labelCol} noStyle={!isInline} >
         <Widget
           name={path}
           schema={schema}

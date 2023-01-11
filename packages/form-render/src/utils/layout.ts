@@ -9,13 +9,7 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
 
   if (column > 2) {
     labelCol = { span: 8 };
-    wrapperCol = { flex: 1 }
-  }
-
-  // 兼容一下 1.0 版本
-  if (labelWidth) {
-    labelCol = { flex : labelWidth + 'px' };
-    wrapperCol = { flex: '0.95 1 auto' };
+    wrapperCol = { span: 16 }
   }
 
   // 自定义进行覆盖
@@ -27,12 +21,19 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
     wrapperCol = schema.wrapperCol;
   }
 
-  if (schema.layout === 'inline' || (Object.keys(schema).length > 0 && !schema.title)) {
-    labelCol = { offset: 1 };
-  }
-
   if (displayType === 'column') {
     labelCol = {};
+    wrapperCol = { flex: 1 };
+  }
+
+  if (displayType === 'inline') {
+    labelCol = { };
+    wrapperCol = { };
+  }
+
+  // 兼容一下 1.0 版本
+  if (labelWidth) {
+    labelCol = { flex : labelWidth + 'px' };
     wrapperCol = { flex: 1 };
   }
 

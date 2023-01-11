@@ -142,7 +142,7 @@ export default () => {
 };
 ```
 
-### 内联表单 subInline
+### 内联 subInline
 ```jsx
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
@@ -316,7 +316,7 @@ export default () => {
 };
 ```
 
-### 内联表单 subInline
+### 内联 subInline
 ```jsx
 import React from 'react';
 import FormRender, { useForm } from 'form-render';

@@ -33,8 +33,8 @@ const SimpleList = (props: any) => {
     hideMove = true;
   }
 
-  if (!schema.items.layout) {
-    schema.items.layout = 'inline';
+  if (!schema.items.displayType) {
+    schema.items.displayType = 'inline';
   }
 
   const _delConfirmProps = {

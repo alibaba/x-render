@@ -30,9 +30,9 @@ const FieldItem = (props: any) => {
   
   const parentCtx: any = useContext(FieldContext);
   const fieldRef = useRef();
-  const { widgets, displayType, labelWidth } = formCtx;
+  const { widgets, labelWidth } = formCtx;
   const { hidden, properties, dependencies, ...otherSchema } = schema;
- 
+
   let widgetName = getWidgetName(schema);
   
   // Component not found
@@ -42,6 +42,10 @@ const FieldItem = (props: any) => {
 
   let Widget = widgets[widgetName] || widgets['html'];
   const widgetProps = getWidgetProps({ schema, children, widgets });
+  const getValueFromKey = getParamValue(formCtx, parentCtx, schema);
+  const displayType = getValueFromKey('displayType');
+  const isInline = displayType === 'inline';
+
   
   widgetProps.addons = {
     ...form,
@@ -55,19 +59,24 @@ const FieldItem = (props: any) => {
   // Render Container Components
   if (children) {
     // const { labelCol, wrapperCol } = getFormItemLayout(schema.column, schema, { layout, labelWidth });
-    const childContent = (
-      <Row gutter={displayType === 'row' ? 16 : 24}>
+
+    let childJsx = (
+      <div style={{ display: 'flex'}}>
         {children}
-      </Row>
+      </div>
     );
 
-    widgetProps.children = childContent;
-
-
-
-
+    if (!isInline) {
+      const gutter = { row: 16, column: 24 }[displayType];
+      childJsx = (
+        <Row gutter={gutter}>
+          {children}
+        </Row>
+      );
+    }
+    widgetProps.children = childJsx;
+   
     return (
-      // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
       <FieldContext.Provider
         value={{
           column: schema.column,
@@ -76,27 +85,26 @@ const FieldItem = (props: any) => {
           displayType: schema.displayType
         }}
       > 
-        {schema.displayType === 'inline' ? (
-          <Widget {...widgetProps} {...otherSchema} displayType={displayType} />
-        ) : (
+       {isInline ? (
+         <Widget {...widgetProps} {...otherSchema} displayType={schema.displayType} />
+
+       ) : (
+
           <Col span={24}>
-            <Widget {...widgetProps} {...otherSchema} displayType={displayType} />
+          <Widget {...widgetProps} {...otherSchema} displayType={schema.displayType} />
           </Col>
-        )}
+       )}
+       
       </FieldContext.Provider>
     );
   }
 
   // Render formItem components
-  const getValueFromKey = getParamValue(formCtx, parentCtx, schema);
-
   const span = getColSpan(formCtx, parentCtx, schema);
   // const labelCol = getValueFromKey('labelCol');
   // const wrapperCol = getValueFromKey('wrapperCol');
   const readOnly = getValueFromKey('readOnly');
   const noStyle = getValueFromKey('noStyle');
-  const _layout = getValueFromKey('layout');
-
   const { labelCol, wrapperCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth });
 
 
@@ -117,9 +125,6 @@ const FieldItem = (props: any) => {
    
   //   const conx = dom.children[0].children[0].children[0];
   //   conx.append('1111');
-   
-
-   
   // }, [schema.description]);
 
   // checkbox 布局有点特殊
@@ -132,6 +137,7 @@ const FieldItem = (props: any) => {
     <Form.Item
       label={label}
       name={path}
+      style={isInline ? { marginRight: '16px' } : null}
       valuePropName={valuePropName}
       rules={readOnly ? [] : ruleList}
       hidden={hidden}
@@ -147,7 +153,7 @@ const FieldItem = (props: any) => {
     </Form.Item>
   );
 
-  if (_layout === 'inline') {
+  if (isInline) {
     return formItem;
   }
  
