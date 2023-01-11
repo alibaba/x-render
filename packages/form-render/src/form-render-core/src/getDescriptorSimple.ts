@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash-es/lodash';
 import { getAlphaFromHex } from '../../widgets/antd/color';
-import * as moment from 'moment';
+import moment from 'moment';
 import { isObject } from './utils';
 import { Schema } from '../../index';
 import { RuleItem, RuleType } from 'async-validator';
@@ -110,7 +110,7 @@ export const getDescriptorSimple = (schema: Schema = {}, path) => {
     // ==================== 处理校验参数 =========================
     // async-validator预设好的类型
     const presetsFormat = ['email', 'url', 'textarea'];
-    if (presetsFormat.includes(schema.format)) {
+    if (presetsFormat.includes(schema.format ?? '')) {
       ruleItem.type =
         schema.format === 'textarea' ? 'string' : (schema.format as RuleType);
     }
@@ -128,7 +128,7 @@ export const getDescriptorSimple = (schema: Schema = {}, path) => {
     }
 
     // 校验时间格式
-    if (['date', 'dateTime', 'time'].includes(schema.format)) {
+    if (['date', 'dateTime', 'time'].includes(schema.format ?? '')) {
       ruleItem.message = '${title}的格式错误';
       ruleItem.validator = (_rule, value) => validatorTime(value);
     }
