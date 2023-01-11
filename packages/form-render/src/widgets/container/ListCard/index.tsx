@@ -22,16 +22,20 @@ const getOperateFixed = (schema: any) => {
 };
 
 const getOperateStyle = (schema: any) => {
-  let result: any = {};
+  let style: any = {};
   const widgetName = schema?.items?.theme || schema?.items?.widget || 'collapse';
   if (['card', 'collapse', 'lineTitle'].includes(widgetName) && !schema?.items?.props?.extra) {
-    result.top = '15px';
+    style.top = '15px';
     if (['lineTitle'].includes(widgetName)) {
-      result.top = '3px';
-      result.padding = 0
+      style.top = '3px';
+      style.padding = 0
+    }
+
+    if (!schema?.items?.title) {
+      style.right = '24px';
     }
   }
-  return result;
+  return style;
 };
 
 const CardList = (props: any) => {

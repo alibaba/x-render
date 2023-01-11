@@ -35,6 +35,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     switch1: {
       title: '隐藏输入框',
@@ -69,6 +70,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     list: {
       title: '会员活动',
@@ -145,6 +147,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     input1: {
       title: '输入框 A',
@@ -190,6 +193,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     input1: {
       title: '输入框',
@@ -262,6 +266,7 @@ export default () => {
   const schema = {
     type: 'object',
     displayType: 'row',
+    displayType: 'row',
     properties: {
       input1: {
         title: '输入框高度',
@@ -309,6 +314,7 @@ export default () => {
 
   const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     input1: {
       title: '密码',
@@ -380,6 +386,7 @@ export default () => {
 
   const schema = {
     type: 'object',
+    displayType: 'row',
     properties: {
       select1: {
         title: '是否全选',

@@ -28,6 +28,7 @@ const Demo = () => {
 
   const schema = {
     type: 'object',
+    displayType: 'row',
     properties: {
       radio : {
         title: '选择框',
@@ -63,6 +64,7 @@ const Demo = () => {
 
   const schema = {
     type: 'object',
+    displayType: 'row',
     properties: {
       x: {
         type: 'object',
@@ -111,6 +113,7 @@ const Demo = () => {
 
   const schema = {
     type: 'object',
+    displayType: 'row',
     properties: {
       x: {
         title: '对象数组',
@@ -161,6 +164,7 @@ const Demo = () => {
 
   const schema = {
     type: 'object',
+    displayType: 'row',
     properties: {
       select1: {
         title: '输入框 A',

@@ -21,6 +21,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     input1: {
       title: '必填',
@@ -97,6 +98,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     input1: {
       title: '正则表达式',
@@ -146,6 +148,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
     input1: {
       title: '地址（必填）',

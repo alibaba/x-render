@@ -16,11 +16,10 @@ toc: content
 import React from 'react';
 import FormRender from '../demo/FormRender';
 
-
-
 const schema = {
   type: 'object',
   column: 3,
+  displayType: 'row',
   properties: {
     input1: {
       title: '姓名',
@@ -79,6 +78,7 @@ import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
+   displayType: 'row',
   column: 1,
   labelCol: {
     span: 9

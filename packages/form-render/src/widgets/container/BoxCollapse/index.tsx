@@ -13,18 +13,18 @@ interface IProps {
   title?: string;
   description?: any;
   defaultExpand?: boolean;
-  layout?: any
+  displayType?: any
 }
 
 /**
  * 折叠面板
  */
 const BoxCollapse: FC<IProps> = (props) => {
-  const { style, children, title, description, defaultExpand = true, layout } = props;
-
+  const { style, children, title, description, defaultExpand = true, displayType } = props;
+ 
   if (!title) {
     return (
-      <BoxPanel>
+      <BoxPanel bordered={displayType !== 'inline'}>
         {children}
       </BoxPanel>
     )
@@ -48,7 +48,7 @@ const BoxCollapse: FC<IProps> = (props) => {
 
   return (
     <Collapse
-      className={classnames('fr-obj-collapse', { 'fr-obj-collapse-vertical' : layout === 'vertical'})}
+      className='fr-obj-collapse'
       style={style}
       bordered={false}
       ghost={true}

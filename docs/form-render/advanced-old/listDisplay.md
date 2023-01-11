@@ -18,6 +18,8 @@ import Form from '../demo/display';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
+  column: 3,
   properties: {
     listName2: {
       title: '对象数组',
@@ -33,6 +35,12 @@ const schema = {
             required: true,
           },
           select1: {
+            title: '单选',
+            type: 'string',
+            enum: ['a', 'b', 'c'],
+            enumNames: ['早', '中', '晚'],
+            default: 'a',
+          }, select2: {
             title: '单选',
             type: 'string',
             enum: ['a', 'b', 'c'],
