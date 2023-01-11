@@ -75,7 +75,7 @@ export function getWidgetName(schema, _mapping = mapping) {
   }
   
   if (type === 'object') {
-    list.push(schema.theme || 'collapse');
+    list.push((schema.theme === 'tile' ? 'lineTitle' : schema.theme) || 'collapse');
   } else {
     list.push(type); // 放在最后兜底，其他都不match时使用type默认的组件
   }

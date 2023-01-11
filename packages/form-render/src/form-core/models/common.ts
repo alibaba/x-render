@@ -45,8 +45,6 @@ export const transformProps =  (props: any) => {
     ...otherProps,
   };
 
-  debugger;
-
   if (displayType) {
 
     formProps.layout = displayTypeEnum[displayType] || 'horizontal';
