@@ -23,12 +23,13 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
 
   if (displayType === 'column') {
     labelCol = {};
-    wrapperCol = { flex: 1 };
+    wrapperCol = {};
+    // wrapperCol = { flex: 1 };
   }
 
   if (displayType === 'inline') {
-    labelCol = { };
-    wrapperCol = { };
+    labelCol = {};
+    wrapperCol = {};
   }
 
   // 兼容一下 1.0 版本
