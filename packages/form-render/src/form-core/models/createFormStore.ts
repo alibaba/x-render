@@ -2,7 +2,7 @@ import create from 'zustand';
 import createContext from 'zustand/context';
 import type { StoreApi } from 'zustand';
 import { _set, _get, _has, _cloneDeep } from '../../utils';
-import { flattenSchema as flatten } from '../../utils/flatten-schema';
+import { flattenSchema as flatten } from '../../utils/flattenSchema';
 
 type FormStore = {
   schema?: any;

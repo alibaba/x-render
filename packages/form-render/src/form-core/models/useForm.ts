@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Form, FormInstance } from 'antd';
 import { transformFieldsError, getSchemaFullPath } from './common';
-import { transformValueBind, parseValuesWithBind } from '../../utils/value-bind';
+import { transformValueBind, parseValuesWithBind } from '../../utils/bindValues';
 import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../../utils';
 
 

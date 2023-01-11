@@ -5,7 +5,7 @@ import shallow from 'zustand/shallow';
 import { useStore, useStoreApi } from './models/createFormStore';
 import { transformFieldsError, valuesWatch, transformProps } from './models/common';
 import { getFormItemLayout } from '../utils/layout';
-import { parseValuesWithBind } from '../utils/value-bind';
+import { parseValuesWithBind } from '../utils/bindValues';
 import RenderCore from '../render-core';
 import './index.less';
 
