@@ -48,7 +48,6 @@ export const transformProps =  (props: any) => {
   if (displayType) {
     formProps.layout = displayTypeEnum[displayType] || 'horizontal';
   }
-  
 
   if (removeHiddenData !== undefined) {
     formProps.preserve = removeHiddenData;
