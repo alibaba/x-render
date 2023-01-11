@@ -46,7 +46,6 @@ export const transformProps =  (props: any) => {
   };
 
   if (displayType) {
-
     formProps.layout = displayTypeEnum[displayType] || 'horizontal';
   }
 
@@ -57,6 +56,7 @@ export const transformProps =  (props: any) => {
   return {
     formProps,
     schema,
+    displayType,
     onFinish,
     beforeFinish, // form 没有这个 api, 感觉找不到时机
     onMount,

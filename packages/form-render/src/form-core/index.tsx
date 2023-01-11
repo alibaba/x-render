@@ -20,7 +20,7 @@ const FormCore = (props: any) => {
   const setContext = useStore(state => state.setContext, shallow);
 
   const { type, properties, ...schemProps } = schema;
-  const { formProps, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
+  const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
   const _column = column || schema?.column || 1;
 
   const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth });
@@ -47,10 +47,10 @@ const FormCore = (props: any) => {
       readOnly,
       widgets,
       labelWidth,
-      layout: formProps.layout
+      displayType,
     };
     setContext(context);
-  }, [_column, labelCol, wrapperCol, formProps.layout, labelWidth]);
+  }, [_column, labelCol, wrapperCol, displayType, labelWidth]);
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
     valuesWatch(changedValues, allValues, watch);
@@ -77,11 +77,11 @@ const FormCore = (props: any) => {
       {...formProps}
       onValuesChange={handleValuesChange}
     >
-      <Row gutter={8}>
+      <Row gutter={displayType === 'row' ? 16 : 24}>
         <RenderCore schema={schema} />
       </Row>
       {builtOperation && (
-        <Row gutter={8}>
+        <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24/_column}>
             <Form.Item label='xxx' labelCol={labelCol} className='xxxx'>
               <Space>

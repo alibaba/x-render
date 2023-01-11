@@ -35,20 +35,20 @@ export const getLabel = (schema: any) => {
 };
 
 
-export const getTooltip = (schema: any, layout: string) => {
+export const getTooltip = (schema: any, displayType: string) => {
   const { descType, description } = schema;
 
   if (descType === 'widget' || !description) {
     return null;
   }
 
-  if (layout === 'horizontal') {
+  if (displayType === 'row') {
     return {
       title: description
     }
   }
 
-  if (layout === 'vertical' && descType === 'icon') {
+  if (displayType === 'column' && descType === 'icon') {
     return {
       title: description
     }

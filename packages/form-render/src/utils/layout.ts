@@ -1,15 +1,15 @@
-export const getFormItemLayout = (column: number, schema: any, { labelWidth, layout }: any) => {
-  let labelCol: any = { span: 3 };
+export const getFormItemLayout = (column: number, schema: any, { labelWidth, displayType }: any) => {
+  let labelCol: any = { xl: 4, xxl: 3 };
   let wrapperCol: any = { span: 8 };
 
   if (column === 2) {
-    labelCol = { span: 6 };
-    wrapperCol = { span: 14 }
+    labelCol = { xl: 8, xxl: 6 };
+    wrapperCol = { xl: 16, xxl: 14 }
   }
 
   if (column > 2) {
-    labelCol = { span: 7 };
-    wrapperCol = { span: 15 }
+    labelCol = { span: 8 };
+    wrapperCol = { flex: 1 }
   }
 
   // 兼容一下 1.0 版本
@@ -31,9 +31,9 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, lay
     labelCol = { offset: 1 };
   }
 
-  if (schema.layout === 'vertical') {
+  if (displayType === 'column') {
     labelCol = {};
-    wrapperCol = {};
+    wrapperCol = { flex: 1 };
   }
 
   return { labelCol, wrapperCol }

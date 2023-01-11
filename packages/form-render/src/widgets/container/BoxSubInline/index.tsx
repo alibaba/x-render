@@ -3,22 +3,22 @@ import { Form } from 'antd';
 import classnames from 'classnames';
 import './index.less';
 
-const BoxSubItem = (props: any) => {
+const BoxSubInline = (props: any) => {
   const { children, title, hasBackground = true } = props;
   
   return (
     <Form.Item
-      className={classnames(undefined, {
-        'fr-obj-subitem-label-hidden': !title,
-        'fr-obj-subitem-background': hasBackground
+      className={classnames('fr-obj-subinline', {
+        'fr-obj-subinline-label-hidden': !title,
+        'fr-obj-subinline-background': hasBackground
       })}
       label={title || 'notitle'}
-      labelCol={{ span: 2}}
+      labelCol={{ xl: 3, xxl: 2 }}
       wrapperCol={{ span: 24 }}
     >
       {children}
     </Form.Item>
-  )
+  );
 }
 
-export default BoxSubItem;
+export default BoxSubInline;

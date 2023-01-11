@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
-import { Form, Col } from 'antd';
+import { Form, Col, Row } from 'antd';
 
 import { getWidgetName } from './mapping';
 import { useStore as useFormStore } from '../form-core/models/createFormStore';
@@ -30,7 +30,7 @@ const FieldItem = (props: any) => {
   
   const parentCtx: any = useContext(FieldContext);
   const fieldRef = useRef();
-  const { widgets, layout, labelWidth } = formCtx;
+  const { widgets, displayType, labelWidth } = formCtx;
   const { hidden, properties, dependencies, ...otherSchema } = schema;
  
   let widgetName = getWidgetName(schema);
@@ -55,7 +55,17 @@ const FieldItem = (props: any) => {
   // Render Container Components
   if (children) {
     // const { labelCol, wrapperCol } = getFormItemLayout(schema.column, schema, { layout, labelWidth });
-    
+    const childContent = (
+      <Row gutter={displayType === 'row' ? 16 : 24}>
+        {children}
+      </Row>
+    );
+
+    widgetProps.children = childContent;
+
+
+
+
     return (
       // <Col span={24} style={{ margin: '8px 0 12px 0' }}>
       <FieldContext.Provider
@@ -63,14 +73,14 @@ const FieldItem = (props: any) => {
           column: schema.column,
           labelCol: schema.labelCol,
           wrapperCol: schema.wrapperCol,
-          layout: schema.layout
+          displayType: schema.displayType
         }}
       > 
-        {schema.layout === 'inline' ? (
-          <Widget {...widgetProps} {...otherSchema} layout={layout} />
+        {schema.displayType === 'inline' ? (
+          <Widget {...widgetProps} {...otherSchema} displayType={displayType} />
         ) : (
           <Col span={24}>
-            <Widget {...widgetProps} {...otherSchema} layout={layout} />
+            <Widget {...widgetProps} {...otherSchema} displayType={displayType} />
           </Col>
         )}
       </FieldContext.Provider>
@@ -87,11 +97,11 @@ const FieldItem = (props: any) => {
   const noStyle = getValueFromKey('noStyle');
   const _layout = getValueFromKey('layout');
 
-  const { labelCol, wrapperCol } = getFormItemLayout(Math.floor(24/span*1), schema, { layout, labelWidth });
+  const { labelCol, wrapperCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth });
 
 
   let label = getLabel(schema);
-  const tooltip = getTooltip(schema, layout);
+  const tooltip = getTooltip(schema, displayType);
   const valuePropName = getValuePropName(widgetName);
   const ruleList = getRuleList(schema, form);
 

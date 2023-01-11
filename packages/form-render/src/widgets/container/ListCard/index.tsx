@@ -34,7 +34,7 @@ const getOperateStyle = (schema: any) => {
   return result;
 };
 
-const SimpleList = (props: any) => {
+const CardList = (props: any) => {
   const form = Form.useFormInstance();
 
   const { name: listName, schema = {}, rootPath = [], readyOnly } = props;
@@ -56,7 +56,6 @@ const SimpleList = (props: any) => {
     const initialValue = form.getFieldValue([...listName, name]);
     add(initialValue);
   };
-
 
   return (
     <Form.List name={listName} initialValue={[{}]}>
@@ -110,4 +109,4 @@ const SimpleList = (props: any) => {
   );
 }
 
-export default SimpleList;
+export default CardList;

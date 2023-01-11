@@ -1,5 +1,4 @@
 import React from 'react';
-import { Row } from 'antd';
 
 import FieldItem from './fieldItem';
 import FieldList from './fieldList';
@@ -12,9 +11,9 @@ interface RenderCoreProps {
 }
 
 interface RenderItemProps {
-  schema: any,
-  rootPath?: any[] | undefined,
-  path?: any[] | undefined,
+  schema: any;
+  rootPath?: any[] | undefined;
+  path?: any[] | undefined
   key?: string | undefined
 }
 
@@ -39,13 +38,7 @@ const renderItem = (props: RenderItemProps) => {
 
   // has child schema
   if (schema?.properties) {
-    childContent = (
-      <Row gutter={8}>
-        {RenderCore({ schema, parentPath: path, rootPath })}
-      </Row>
-    );
-    
-    //childContent = RenderCore({ schema, parentPath: path, rootPath })
+    childContent = RenderCore({ schema, parentPath: path, rootPath })
     path = undefined;
   }
 
