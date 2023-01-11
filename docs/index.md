@@ -2,7 +2,7 @@
 title: 首页
 hero:
   title: XRender
-  desc: 阿里巴巴 - 飞猪中后台「表单/表格/图表」开箱即用解决方案
+  desc: 阿里巴巴 - 中后台「表单/表格/图表」开箱即用解决方案
   actions:
     - text: Playground
       link: /playground

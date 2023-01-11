@@ -53,60 +53,84 @@ const useForm = () => {
   /**初始化 */
   form.init = (schema: any, useStore: any) => {
     const { getState } = useStore;
-    const { init } = getState();
+    const { init, isInit } = getState();
+    if (isInit) {
+      return;
+    }
     formStoreRef.current = { getState };
     init(schema);
     form.schema = Object.freeze(schema);
   };
 
   form.resetSchema = schema => {
-    const { setSchema } = formStoreRef.current.getState();
-    setSchema(schema);
-    form.schema = Object.freeze(schema);
+    try {
+      const { setSchema } = formStoreRef.current.getState();
+      setSchema(schema);
+      form.schema = Object.freeze(schema);
+    } catch (error) {
+    }
   }
 
   form.setSchema = (obj: any) => {
-    if (!isObject(obj)) {
-      return;
+    try {
+      if (!isObject(obj)) {
+        return;
+      }
+      const { schema, setSchema } = formStoreRef.current.getState();
+      Object.keys(obj || {}).forEach(path => {
+        updateSchemaByPath(path, obj[path], schema);
+      });
+  
+      setSchema(schema);
+      form.schema = Object.freeze(schema);
+      
+    } catch (error) {
     }
-    const { schema, setSchema } = formStoreRef.current.getState();
-    Object.keys(obj || {}).forEach(path => {
-      updateSchemaByPath(path, obj[path], schema);
-    });
-
-    setSchema(schema);
-    form.schema = Object.freeze(schema);
   }
 
   form.setSchemaByPath = (_path: string, _newSchema: any) => {
-    const { schema, setSchema } = formStoreRef.current.getState();
-   
-    updateSchemaByPath(_path, _newSchema, schema);
-
-    setSchema(schema);
-    form.schema = Object.freeze(schema);
+    try {
+      const { schema, setSchema } = formStoreRef.current.getState();
+      updateSchemaByPath(_path, _newSchema, schema);
+      setSchema(schema);
+      form.schema = Object.freeze(schema);
+    } catch (error) {
+      
+    }
   }
 
   form.setSchemaByFullPath = (path: string, newSchema: any) => {
-    const { schema, setSchema } = formStoreRef.current.getState();
-    const currSchema = _get(schema, path, {});
-    const result = _merge(newSchema, currSchema);
+    try {
+      const { schema, setSchema } = formStoreRef.current.getState();
+      const currSchema = _get(schema, path, {});
+      const result = _merge(newSchema, currSchema);
 
-    _set(schema, path, result);
-    setSchema(schema);
-    form.schema = Object.freeze(schema);
+      _set(schema, path, result);
+      setSchema(schema);
+      form.schema = Object.freeze(schema);
+    } catch (error) {
+      
+    }
   }
 
   form.setValues = (_values: any) => {
-    const { flattenSchema } = formStoreRef.current.getState();
-    const values = transformValueBind(_values, flattenSchema);
-    form.setFieldsValue(values);
+    try {
+      const { flattenSchema } = formStoreRef.current.getState();
+      const values = transformValueBind(_values, flattenSchema);
+      form.setFieldsValue(values);
+    } catch (error) {
+      form.setFieldsValue(_values);
+    }
   }
 
   form.getValues = (nameList?: any, filterFunc?: any) => {
-    const { flattenSchema } = formStoreRef.current.getState();
-    const values = form.getFieldsValue(nameList, filterFunc);
-    return parseValuesWithBind(values, flattenSchema);
+    try {
+      const { flattenSchema } = formStoreRef.current.getState();
+      const values = form.getFieldsValue(nameList, filterFunc);
+      return parseValuesWithBind(values, flattenSchema);
+    } catch (error) {
+      return {}
+    }
   }
 
   form.setValueByPath = form.setFieldValue;
