@@ -1,23 +1,27 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { Form, Row, Col, Button, Space } from 'antd';
 import shallow from 'zustand/shallow';
+import { createStore, useStore } from 'zustand'
 
-import { useStore, useStoreApi } from './models/createFormStore';
 import { transformFieldsError, valuesWatch, transformProps } from './models/common';
 import { getFormItemLayout } from '../utils/layout';
 import { parseValuesWithBind } from '../utils/bindValues';
 import RenderCore from '../render-core';
 import './index.less';
 
+import { FormRenderContext } from '../utils/context'
+
 export { default as connectForm } from './models/connectForm';
 export { default as useForm } from './models/useForm';
 
 const FormCore = (props: any) => {
-  const storeApi = useStoreApi();
-  const schema = useStore(state => state.schema, shallow);
-  const isInit = useStore(state => state.isInit, shallow);
-  const flattenSchema = useStore(state => state.flattenSchema, shallow);
-  const setContext = useStore(state => state.setContext, shallow);
+  const store = useContext(FormRenderContext);
+
+ 
+  const schema = useStore(store, state => state.schema );
+  const isInit = useStore(store, state => state.isInit, shallow);
+  const flattenSchema = useStore(store, state => state.flattenSchema, shallow);
+  const setContext = useStore(store, state => state.setContext, shallow);
 
   const { type, properties, ...schemProps } = schema;
   const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
@@ -27,7 +31,7 @@ const FormCore = (props: any) => {
   
   
   useEffect(() => {
-    form.init(props.schema, storeApi);
+    form.init(props.schema, store);
     setTimeout(() => {
       onMount && onMount();
     }, 0);

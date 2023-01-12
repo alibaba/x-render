@@ -1,9 +1,12 @@
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Form, Col, Row } from 'antd';
+import { createStore, useStore } from 'zustand'
+
 
 import { getWidgetName } from './mapping';
 import { useStore as useFormStore } from '../form-core/models/createFormStore';
+import { FormRenderContext } from '../utils/context'
 
 import { isHasExpression, parseAllExpression } from '../utils/expression';
 import { isCheckBoxType, _get } from '../utils/index';
@@ -25,7 +28,10 @@ const FieldItem = (props: any) => {
   const { schema, children, path, dependValues } = props;
 
   const form = Form.useFormInstance();
-  const formCtx: any = useFormStore(state => state.context);
+
+  const store = useContext(FormRenderContext);
+
+  const formCtx: any = useStore(store, state => state.context);
   
   
   const parentCtx: any = useContext(FieldContext);
