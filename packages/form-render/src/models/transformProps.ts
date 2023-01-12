@@ -1,0 +1,81 @@
+import { isObject, isArray, _get } from '../utils';
+
+const displayTypeEnum = {
+  column: 'vertical',
+  row: 'horizontal',
+  inline: 'inline',
+};
+
+const transformProps =  (props: any) => {
+  const {
+    schema,
+    beforeFinish,
+    onMount,
+    displayType = 'column',
+    widgets,
+    watch,
+    removeHiddenData,
+    readOnly,
+    column,
+    mapping,
+    debugCss,
+    locale,
+    configProvider,
+    allCollapsed,
+    debounceInput,
+    validateMessages,
+    debug,
+    id,
+    labelWidth,
+
+    form,
+    onFinish,
+    builtOperation,
+    // labelAlign,
+    // colon,
+    // className,
+    // style,
+    // disabled,
+    // scrollToFirstError,
+    ...otherProps
+  } = props;
+
+  const formProps = {
+    ...otherProps,
+  };
+
+  if (displayType) {
+    formProps.layout = displayTypeEnum[displayType] || 'horizontal';
+  }
+
+  if (removeHiddenData !== undefined) {
+    formProps.preserve = removeHiddenData;
+  }
+
+  return {
+    formProps,
+    schema,
+    displayType,
+    onFinish,
+    beforeFinish, // form 没有这个 api, 感觉找不到时机
+    onMount,
+    widgets,
+    watch,
+    readOnly,
+    column,
+    mapping,
+    debugCss, // 好像没用了
+    locale,
+    configProvider,
+    builtOperation,
+    form,
+    labelWidth,
+    allCollapsed,
+    debounceInput, // 好像没用了
+    validateMessages,
+    debug, // 换成 form 还有用吗？
+    id,
+  };
+};
+
+export default transformProps;

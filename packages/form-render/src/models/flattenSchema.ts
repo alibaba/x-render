@@ -1,6 +1,6 @@
 
 
-import { _cloneDeep, isObjType, isListType } from './index';
+import { _cloneDeep, isObjType, isListType } from '../utils/index';
 
 export function orderProperties(properties, orderKey = 'order') {
   const orderHash = new Map();

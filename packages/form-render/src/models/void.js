@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash-es';
-import { dataToKeys } from './index';
+import { dataToKeys } from '../utils/index';
 
 // a.b => a.b
 // $volid_1.b => b

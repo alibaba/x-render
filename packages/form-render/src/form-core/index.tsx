@@ -1,34 +1,29 @@
 import React, { useEffect, useContext } from 'react';
 import { Form, Row, Col, Button, Space } from 'antd';
+import { useStore } from 'zustand';
 import shallow from 'zustand/shallow';
-import { createStore, useStore } from 'zustand'
 
-import { transformFieldsError, valuesWatch, transformProps } from './models/common';
-import { getFormItemLayout } from '../utils/layout';
-import { parseValuesWithBind } from '../utils/bindValues';
+import { FRContext } from '../models/context';
+import transformProps from '../models/transformProps';
+import { getFormItemLayout } from '../models/layout';
+import { parseValuesWithBind } from '../models/bindValues';
+import { transformFieldsError, valuesWatch, } from '../models/formCoreUtils';
 import RenderCore from '../render-core';
+
 import './index.less';
 
-import { FormRenderContext } from '../utils/context'
-
-export { default as connectForm } from './models/connectForm';
-export { default as useForm } from './models/useForm';
-
 const FormCore = (props: any) => {
-  const store = useContext(FormRenderContext);
-
- 
-  const schema = useStore(store, (state: any) => state.schema );
-  const isInit = useStore(store, (state: any) => state.isInit, shallow);
-  const flattenSchema = useStore(store, (state: any) => state.flattenSchema, shallow);
-  const setContext = useStore(store, (state: any) => state.setContext, shallow);
+  const store = useContext(FRContext);
+  const schema = useStore(store, (state: any) => state.schema);
+  const isInit = useStore(store, (state: any) => state.isInit);
+  const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
+  const setContext = useStore(store, (state: any) => state.setContext);
 
   const { type, properties, ...schemProps } = schema;
   const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
   const _column = column || schema?.column || 1;
 
   const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth, displayType });
-  
   
   useEffect(() => {
     form.init(props.schema, store);
@@ -76,10 +71,10 @@ const FormCore = (props: any) => {
 
   return (
     <Form
-      form={form}
       labelWrap={true}
-      onFinish={handleFinish}
       {...formProps}
+      form={form}
+      onFinish={handleFinish}
       onValuesChange={handleValuesChange}
     >
       <Row gutter={displayType === 'row' ? 16 : 24}>

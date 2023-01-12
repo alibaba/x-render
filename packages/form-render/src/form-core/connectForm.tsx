@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react';
-import useForm from './useForm';
+import useForm from '../models/useForm';
 
 export default (Component: React.FC<any>) => {
   return forwardRef((props, ref) => {

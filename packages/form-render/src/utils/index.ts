@@ -1,5 +1,4 @@
 import { set, get, cloneDeep, has, merge } from 'lodash-es';
-import { parseExpression, isExpression } from './expression';
 
 export const _set = set;
 export const _get = get;

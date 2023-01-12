@@ -2,17 +2,18 @@ import React, { useRef } from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 
+import { FRContext } from './models/context';
+import { createStore } from './models/store';
+import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
 
-import { FormRenderContext } from './utils/context';
 import FormCore from './form-core';
 import { widgets as defaultWidgets } from './widgets';
-import { createStore } from './form-core/models/createFormStore';
-import { validateMessagesEN, validateMessagesCN } from './form-core/models/validateMessage';
 
 export { widgets } from './widgets';
 export { mapping } from './render-core/mapping';
-export { connectForm, useForm } from './form-core';
 
+export { default as useForm } from './models/useForm';
+export { default as connectForm }  from './form-core/connectForm';
 
 export type  { 
   default as FR,
@@ -32,9 +33,9 @@ export type  {
 
 
 export default (props: any) => {
-  const { configProvider, widgets, form, schema, validateMessages, ...otherProps } = props;
+  const { configProvider, widgets, form, validateMessages, ...otherProps } = props;
   const storeRef = useRef(createStore());
-  const context: any = storeRef.current;
+  const store: any = storeRef.current;
 
   if (!form) {
     console.warn('Please provide a form instance to FormRender');
@@ -52,17 +53,13 @@ export default (props: any) => {
         validateMessages: { ...formValidateMessages, ...validateMessages },
       }}
     >
-      <FormRenderContext.Provider value={context}>
+      <FRContext.Provider value={store}>
         <FormCore
           form={form}
           widgets={{ ...defaultWidgets, ...widgets }}
           {...otherProps}
-          schema={schema}
         />
-      </FormRenderContext.Provider>
+      </FRContext.Provider>
     </ConfigProvider>
   );
 }
-
-
-

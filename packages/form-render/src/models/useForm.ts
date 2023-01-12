@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { Form, FormInstance } from 'antd';
-import { transformFieldsError, getSchemaFullPath } from './common';
-import { transformValueBind, parseValuesWithBind } from '../../utils/bindValues';
-import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../../utils';
+import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
+import { transformValueBind, parseValuesWithBind } from './bindValues';
+import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../utils';
 
 
 interface FormInstanceExtends extends FormInstance {

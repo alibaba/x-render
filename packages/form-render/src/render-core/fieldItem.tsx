@@ -5,11 +5,11 @@ import { useStore } from 'zustand'
 
 
 import { getWidgetName } from './mapping';
-import { FormRenderContext } from '../utils/context'
+import { FRContext } from '../models/context'
 
-import { isHasExpression, parseAllExpression } from '../utils/expression';
+import { isHasExpression, parseAllExpression } from '../models/expression';
 import { isCheckBoxType, _get } from '../utils/index';
-import { getFormItemLayout } from '../utils/layout';
+import { getFormItemLayout } from '../models/layout';
 import {
   getParamValue,
   getColSpan,
@@ -28,7 +28,7 @@ const FieldItem = (props: any) => {
 
   const form = Form.useFormInstance();
 
-  const store = useContext(FormRenderContext);
+  const store = useContext(FRContext);
 
   const formCtx: any = useStore(store, (state: any) => state.context);
   
@@ -171,7 +171,7 @@ const FieldItem = (props: any) => {
 
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
-  const store = useContext(FormRenderContext);
+  const store = useContext(FRContext);
   const { schema: formSchema } = store.getState();
 
   

@@ -1,8 +1,5 @@
 import { createStore as createx } from 'zustand';
-
-import { createContext, useContext } from 'react'
-import { _set, _get, _has, _cloneDeep } from '../../utils';
-import { flattenSchema as flatten } from '../../utils/flattenSchema';
+import { flattenSchema as flatten } from './flattenSchema';
 
 type FormStore = {
   schema?: any;
@@ -13,8 +10,6 @@ type FormStore = {
   setContext: (context: any) => any;
   setSchema: (schema: any) => any;
 };
-
-console.log(createx, '-------createx')
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
 export const createStore = () => createx<FormStore>((set: any, get: any) => ({
@@ -39,4 +34,4 @@ export const createStore = () => createx<FormStore>((set: any, get: any) => ({
 }));
 
 
-export const useStore = () => {}
+
