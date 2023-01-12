@@ -4,6 +4,7 @@ import { flattenSchema as flatten } from './flattenSchema';
 type FormStore = {
   schema?: any;
   flattenSchema: any;
+  widgets: any;
   context?: any;
   isInit: boolean,
   init?: (schema: FormStore['schema']) => any;
@@ -12,24 +13,29 @@ type FormStore = {
 };
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
-export const createStore = () => createx<FormStore>((set: any, get: any) => ({
+export const createStore = () => createx<FormStore>((setState: any, get: any) => ({
   isInit: false,
   schema: {},
   flattenSchema: {},
   context: {},
-  
-  init: schema => {
+  widgets: null,
+  init: ({ schema, widgets }) => {
     const flattenSchema = flatten(schema);
-    return set({ schema, isInit: true, flattenSchema });
+    return setState({ 
+      isInit: true, 
+      schema,
+      widgets,
+      flattenSchema 
+    });
   },
 
   setContext: context => {
-    return set({ context });
+    return setState({ context });
   },
 
   setSchema: (schema: any) => {
     const flattenSchema = flatten(schema);
-    return set({ schema, flattenSchema });
+    return setState({ schema, flattenSchema });
   }
 }));
 

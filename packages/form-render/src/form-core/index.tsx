@@ -21,12 +21,14 @@ const FormCore = (props: any) => {
 
   const { type, properties, ...schemProps } = schema;
   const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
-  const _column = column || schema?.column || 1;
+ 
+  // const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth, displayType });
+  const { labelCol, wrapperCol } = formProps;
 
-  const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth, displayType });
   
   useEffect(() => {
     form.init(props.schema, store);
+
     setTimeout(() => {
       onMount && onMount();
     }, 0);
@@ -41,23 +43,23 @@ const FormCore = (props: any) => {
 
   useEffect(() => {
     const context = {
-      column: _column,
+      column,
       labelCol,
       wrapperCol,
       readOnly,
-      widgets,
       labelWidth,
       displayType,
     };
     setContext(context);
-  }, [_column, labelCol, wrapperCol, displayType, labelWidth]);
+  }, [column, labelCol, wrapperCol, displayType, labelWidth]);
+
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
     valuesWatch(changedValues, allValues, watch);
   };
 
   const handleFinish = async (_values: any) => {
-    const values = parseValuesWithBind(_values, flattenSchema)
+    const values = parseValuesWithBind(_values, flattenSchema);
     let fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
     fieldsError = transformFieldsError(fieldsError);
 
@@ -82,8 +84,8 @@ const FormCore = (props: any) => {
       </Row>
       {builtOperation && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
-          <Col span={24/_column}>
-            <Form.Item label='xxx' labelCol={labelCol} className='xxxx'>
+          <Col span={24/column}>
+            <Form.Item label='hideLabel' labelCol={labelCol} className='fr-oper-hide-label'>
               <Space>
                 <Button type='primary' htmlType='submit'>
                   提交

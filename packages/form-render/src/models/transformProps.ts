@@ -16,7 +16,7 @@ const transformProps =  (props: any) => {
     watch,
     removeHiddenData,
     readOnly,
-    column,
+    column = 1,
     mapping,
     debugCss,
     locale,

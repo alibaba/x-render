@@ -51,15 +51,15 @@ const useForm = () => {
   const formStoreRef: any = useRef();
 
   /**初始化 */
-  form.init = (schema: any, useStore: any) => {
+  form.init = (storeData: any, useStore: any) => {
     const { getState } = useStore;
     const { init, isInit } = getState();
     if (isInit) {
       return;
     }
     formStoreRef.current = { getState };
-    init(schema);
-    form.schema = Object.freeze(schema);
+    init(storeData);
+    form.schema = Object.freeze(storeData?.schema);
   };
 
   form.resetSchema = schema => {

@@ -25,17 +25,15 @@ const FieldContext: any = createContext(() => {});
 
 const FieldItem = (props: any) => {
   const { schema, children, path, dependValues } = props;
-
   const form = Form.useFormInstance();
-
   const store = useContext(FRContext);
 
   const formCtx: any = useStore(store, (state: any) => state.context);
-  
+  const widgets = useStore(store, (state: any) => state.widgets)
   
   const parentCtx: any = useContext(FieldContext);
   const fieldRef = useRef();
-  const { widgets, labelWidth } = formCtx;
+  const { labelWidth } = formCtx;
   const { hidden, properties, dependencies, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);

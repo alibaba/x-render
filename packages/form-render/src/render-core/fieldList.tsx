@@ -13,8 +13,10 @@ const FieldList = (props: any) => {
 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const parentCtx: any = useContext(FieldContext);
+  const widgets = useStore(store, (state: any) => state.widgets)
 
-  const { displayType, widgets } = formCtx;
+
+  const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
 
   // const widgets = formCtx.widgets;
