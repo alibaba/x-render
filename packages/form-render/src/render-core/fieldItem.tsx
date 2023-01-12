@@ -1,11 +1,10 @@
 import React, { createContext, useContext, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
 import { Form, Col, Row } from 'antd';
-import { createStore, useStore } from 'zustand'
+import { useStore } from 'zustand'
 
 
 import { getWidgetName } from './mapping';
-import { useStore as useFormStore } from '../form-core/models/createFormStore';
 import { FormRenderContext } from '../utils/context'
 
 import { isHasExpression, parseAllExpression } from '../utils/expression';
@@ -172,7 +171,10 @@ const FieldItem = (props: any) => {
 
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
-  const formSchema = useFormStore(state => state.schema);
+  const store = useContext(FormRenderContext);
+  const { schema: formSchema } = store.getState();
+
+  
 
   // No function expressions exist
   if (!isHasExpression(schema) && !schema.dependencies) {

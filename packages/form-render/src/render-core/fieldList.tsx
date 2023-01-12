@@ -1,5 +1,8 @@
 import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
+import { useStore } from 'zustand'
+
+import { FormRenderContext } from '../utils/context'
 
 import { useStore as useFormStore } from '../form-core/models/createFormStore';
 import { getParamValue } from './methods';
@@ -7,7 +10,9 @@ import { getParamValue } from './methods';
 const FieldContext = createContext(() => {});
 
 const FieldList = (props: any) => {
-  const formCtx: any = useFormStore(state => state.context);
+  const store = useContext(FormRenderContext);
+
+  const formCtx: any = useStore(store, state => state.context);
   const parentCtx: any = useContext(FieldContext);
 
   const { displayType, widgets } = formCtx;
