@@ -24,9 +24,10 @@ const FormCore = (props: any) => {
   const _column = column || schema?.column || 1;
 
   const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth, displayType });
-  form.init(props.schema, storeApi);
+  
   
   useEffect(() => {
+    form.init(props.schema, storeApi);
     setTimeout(() => {
       onMount && onMount();
     }, 0);
