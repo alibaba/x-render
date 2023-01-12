@@ -12,7 +12,7 @@ const FieldContext = createContext(() => {});
 const FieldList = (props: any) => {
   const store = useContext(FormRenderContext);
 
-  const formCtx: any = useStore(store, state => state.context);
+  const formCtx: any = useStore(store, (state: any) => state.context);
   const parentCtx: any = useContext(FieldContext);
 
   const { displayType, widgets } = formCtx;

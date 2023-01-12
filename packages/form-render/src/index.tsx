@@ -34,6 +34,7 @@ export type  {
 export default (props: any) => {
   const { configProvider, widgets, form, schema, validateMessages, ...otherProps } = props;
   const storeRef = useRef(createStore());
+  const context: any = storeRef.current;
 
   if (!form) {
     console.warn('Please provide a form instance to FormRender');
@@ -51,7 +52,7 @@ export default (props: any) => {
         validateMessages: { ...formValidateMessages, ...validateMessages },
       }}
     >
-      <FormRenderContext.Provider value={storeRef.current}>
+      <FormRenderContext.Provider value={context}>
         <FormCore
           form={form}
           widgets={{ ...defaultWidgets, ...widgets }}

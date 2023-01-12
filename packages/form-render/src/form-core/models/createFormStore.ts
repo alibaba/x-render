@@ -15,7 +15,7 @@ type FormStore = {
 };
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
-export const createStore = () => create<FormStore>((set, get) => ({
+export const createStore = () => create<FormStore>((set: any, get: any) => ({
   isInit: false,
   schema: {},
   flattenSchema: {},

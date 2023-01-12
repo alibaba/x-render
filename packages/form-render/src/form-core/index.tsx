@@ -18,10 +18,10 @@ const FormCore = (props: any) => {
   const store = useContext(FormRenderContext);
 
  
-  const schema = useStore(store, state => state.schema );
-  const isInit = useStore(store, state => state.isInit, shallow);
-  const flattenSchema = useStore(store, state => state.flattenSchema, shallow);
-  const setContext = useStore(store, state => state.setContext, shallow);
+  const schema = useStore(store, (state: any) => state.schema );
+  const isInit = useStore(store, (state: any) => state.isInit, shallow);
+  const flattenSchema = useStore(store, (state: any) => state.flattenSchema, shallow);
+  const setContext = useStore(store, (state: any) => state.setContext, shallow);
 
   const { type, properties, ...schemProps } = schema;
   const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
