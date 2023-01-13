@@ -1,13 +1,16 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Form, FormInstance } from 'antd';
+
 import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
 import { transformValueBind, parseValuesWithBind } from './bindValues';
 import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../utils';
+import { flattenSchema as flatten } from './flattenSchema';
+
 
 interface FormInstanceExtends extends FormInstance {
   init: any;
-  schema: any;
-  _getStoreState: () => any;
+  __schema: any;
+  __setStore: (data: any) => any;
   /** 设置表单值 */
   setValues: FormInstance['setFieldsValue'];
   setSchemaByFullPath: (path: string, schema: any) => any;
@@ -45,16 +48,34 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   _set(formSchema, path, result);
 };
 
-const init = (data: any, store: any, form: any) => {
-  const { getState } = store;
-  const { init, setSchema } = getState();
 
-  init(data);
-  form.schema = Object.freeze(data?.schema);
 
-  form.resetSchema = (schema: any) => {
-    setSchema(schema);
-    form.schema = Object.freeze(schema);
+const useForm = () => {
+  const [form] = Form.useForm() as [FormInstanceExtends];
+  const [schema, setSchema] = useState(null);
+  const flattenSchemaRef = useRef({});
+  const storeRef: any = useRef();
+
+  const setStoreData = (data: any) => {
+    const { setState } = storeRef.current;
+    if (!setState) {
+      setTimeout(() => {
+        setState({ schema, flattenSchema: flattenSchemaRef.current });
+      }, 0)
+    }
+
+    setState(data);
+  };
+
+  const handleSchemaUpdate = (newSchema: any) => {
+    // form.__schema = Object.freeze(newSchema);
+    flattenSchemaRef.current = flatten(newSchema) || {};
+    setSchema(newSchema);
+    setStoreData({ schema: newSchema, flattenSchema: flattenSchemaRef.current });
+  };
+
+  form.resetSchema = (schema:any) => {
+    handleSchemaUpdate(schema);
   }
 
   form.setSchema = (obj: any) => {
@@ -62,52 +83,37 @@ const init = (data: any, store: any, form: any) => {
       return;
     }
 
-    const { schema } = getState();
     Object.keys(obj || {}).forEach(path => {
       updateSchemaByPath(path, obj[path], schema);
     });
 
-    setSchema(schema);
-    form.schema = Object.freeze(schema);
+    handleSchemaUpdate(schema);
   }
 
   form.setSchemaByPath = (_path: string, _newSchema: any) => {
-    const { schema } = getState();
     updateSchemaByPath(_path, _newSchema, schema);
     setSchema(schema);
-    form.schema = Object.freeze(schema);
+    handleSchemaUpdate(schema);
   }
 
   form.setSchemaByFullPath = (path: string, newSchema: any) => {
-    const { schema } = getState();
     const currSchema = _get(schema, path, {});
     const result = _merge(newSchema, currSchema);
 
     _set(schema, path, result);
     setSchema(schema);
-    form.schema = Object.freeze(schema);
+    handleSchemaUpdate(schema);
   }
 
   form.setValues = (_values: any) => {
-    const { flattenSchema } = getState();;
-    const values = transformValueBind(_values, flattenSchema);
+    const values = transformValueBind(_values, flattenSchemaRef.current);
     form.setFieldsValue(values);
   }
 
   form.getValues = (nameList?: any, filterFunc?: any) => {
-    const { flattenSchema } = getState();;
     const values = form.getFieldsValue(nameList, filterFunc);
-    return parseValuesWithBind(values, flattenSchema);
+    return parseValuesWithBind(values, flattenSchemaRef.current);
   }
-}
-
-const useForm = () => {
-  const [form] = Form.useForm() as [FormInstanceExtends];
-
-  /**初始化 */
-  form.init = (data: any, store: any) => {
-    init(data, store, form);
-  };
 
   form.setValueByPath = form.setFieldValue;
 
@@ -115,8 +121,8 @@ const useForm = () => {
     if (typeof _path !== 'string') {
       console.warn('请输入正确的路径');
     }
-    const path = getSchemaFullPath(_path, form.schema);
-    return _get(form.schema, path);
+    const path = getSchemaFullPath(_path, schema);
+    return _get(schema, path);
   };
 
   form.setErrorFields = (_fieldsError: any[]) => {
@@ -130,6 +136,10 @@ const useForm = () => {
   form.removeErrorField = (path: any) => {
     form.setFields([{ name: path, errors: []}]);
   };
+
+  form.__setStore = (store: any) => {
+    storeRef.current = store;
+  }
 
   // 老 API 兼容
   form.scrollToPath = form.scrollToField;

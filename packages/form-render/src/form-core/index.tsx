@@ -13,7 +13,6 @@ import './index.less';
 const FormCore = (props: any) => {
   const store = useContext(FRContext);
   const schema = useStore(store, (state: any) => state.schema);
-  const isInit = useStore(store, (state: any) => state.isInit);
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
   const setContext = useStore(store, (state: any) => state.setContext);
 
@@ -22,17 +21,13 @@ const FormCore = (props: any) => {
   const { labelCol, wrapperCol } = formProps;
 
   useEffect(() => {
-    form.init({ schema: props.schema, widgets }, store);
+    form.setStore(store);
+    store.setState({ widgets });
 
-    setTimeout(() => {
-      onMount && onMount();
-    }, 0);
+    onMount && onMount();
   }, []);
 
   useEffect(() => {
-    if (!isInit) {
-      return;
-    }
     form.resetSchema(props.schema);
   }, [props.schema]);
 

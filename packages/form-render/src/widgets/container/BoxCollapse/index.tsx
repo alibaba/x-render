@@ -12,7 +12,7 @@ interface IProps {
   children: any;
   title?: string;
   description?: any;
-  defaultExpand?: boolean;
+  collapsed?: boolean;
   displayType?: any
 }
 
@@ -20,7 +20,7 @@ interface IProps {
  * 折叠面板
  */
 const BoxCollapse: FC<IProps> = (props) => {
-  const { style, children, title, description, defaultExpand = true, displayType } = props;
+  const { style, children, title, description, collapsed = true, displayType } = props;
  
   if (!title) {
     return (
@@ -30,7 +30,7 @@ const BoxCollapse: FC<IProps> = (props) => {
     )
   }
   
-  const [activeKey, setActiveKey] = useState<string>(defaultExpand ? 'single' : '');
+  const [activeKey, setActiveKey] = useState<string>(collapsed ? 'single' : '');
   const collapseHeader = (
     <>
       {title && <div className='collapse-title'>{title}</div>}

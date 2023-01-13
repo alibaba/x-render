@@ -111,7 +111,6 @@ export default () => {
 };
 ```
 
-### 1.2 
 ## 二、watch 复杂联动
 
 ### 2.1 watch 监听
