@@ -2,34 +2,34 @@ import Color from 'color';
 import { isUrl } from '../utils';
 
 const getRuleList = (schema: any, form: any) => {
-  let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern } = schema;
+  let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern, message } = schema;
   let rules: any = [...ruleList];
 
   max = max ?? maxLength;
   min = min ?? minLength;
 
   if (max) {
-    rules.push({ type, max: max * 1 });
+    rules.push({ type, max, message: message?.max });
   }
 
   if (min) {
-    rules.push({ type, min: min * 1 });
+    rules.push({ type, min, message: message?.min });
   }
   
   if (required) {
-    rules.push({ type, required: true,  whitespace: true });
+    rules.push({ type, required: true,  whitespace: true, message: message?.required });
   }
 
   if (pattern) {
-    rules.push({ pattern });
+    rules.push({ pattern, message: message?.pattern });
   }
 
   if (format === 'url') {
-    rules.push({ type: 'url' });
+    rules.push({ type: 'url', message: message?.url });
   }
 
   if (format === 'email') {
-    rules.push({ type: 'email' });
+    rules.push({ type: 'email', message: message?.email });
   }
 
   if (format === 'image') {
@@ -40,7 +40,7 @@ const getRuleList = (schema: any, form: any) => {
         const _isImg = new RegExp(imagePattern).test(value);
         return _isUrl && _isImg;
       }, 
-      message: '请输入正确的图片格式'
+      message: message?.email ?? '请输入正确的图片格式'
     });
   }
 
@@ -54,7 +54,7 @@ const getRuleList = (schema: any, form: any) => {
           return false;
         }
       }, 
-      message: '请填写正确的颜色格式'
+      message: message?.color ?? '请填写正确的颜色格式'
     });
   }
 
