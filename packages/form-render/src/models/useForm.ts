@@ -4,7 +4,6 @@ import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
 import { transformValueBind, parseValuesWithBind } from './bindValues';
 import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../utils';
 
-
 interface FormInstanceExtends extends FormInstance {
   init: any;
   schema: any;
@@ -46,94 +45,69 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   _set(formSchema, path, result);
 };
 
-const useForm = () => {
-  const [form] = Form.useForm() as [FormInstanceExtends];
-  const formStoreRef: any = useRef();
+const init = (data: any, store: any, form: any) => {
+  const { getState } = store;
+  const { init, setSchema } = getState();
 
-  /**初始化 */
-  form.init = (storeData: any, useStore: any) => {
-    debugger;
-    const { getState } = useStore;
-    debugger;
-    const { init, isInit } = getState();
-    if (isInit) {
-      return;
-    }
-    formStoreRef.current = { getState };
-    init(storeData);
-    form.schema = Object.freeze(storeData?.schema);
-  };
+  init(data);
+  form.schema = Object.freeze(data?.schema);
 
-  form.resetSchema = schema => {
-    try {
-      const { setSchema } = formStoreRef.current.getState();
-      setSchema(schema);
-      form.schema = Object.freeze(schema);
-    } catch (error) {
-    }
+  form.resetSchema = (schema: any) => {
+    setSchema(schema);
+    form.schema = Object.freeze(schema);
   }
 
   form.setSchema = (obj: any) => {
-    try {
-      if (!isObject(obj)) {
-        return;
-      }
-      const { schema, setSchema } = formStoreRef.current.getState();
-      Object.keys(obj || {}).forEach(path => {
-        updateSchemaByPath(path, obj[path], schema);
-      });
-  
-      setSchema(schema);
-      form.schema = Object.freeze(schema);
-      
-    } catch (error) {
+    if (!isObject(obj)) {
+      return;
     }
+
+    const { schema } = getState();
+    Object.keys(obj || {}).forEach(path => {
+      updateSchemaByPath(path, obj[path], schema);
+    });
+
+    setSchema(schema);
+    form.schema = Object.freeze(schema);
   }
 
   form.setSchemaByPath = (_path: string, _newSchema: any) => {
-    try {
-      const { schema, setSchema } = formStoreRef.current.getState();
-      updateSchemaByPath(_path, _newSchema, schema);
-      setSchema(schema);
-      form.schema = Object.freeze(schema);
-    } catch (error) {
-      
-    }
+    const { schema } = getState();
+    updateSchemaByPath(_path, _newSchema, schema);
+    setSchema(schema);
+    form.schema = Object.freeze(schema);
   }
 
   form.setSchemaByFullPath = (path: string, newSchema: any) => {
-    try {
-      const { schema, setSchema } = formStoreRef.current.getState();
-      const currSchema = _get(schema, path, {});
-      const result = _merge(newSchema, currSchema);
+    const { schema } = getState();
+    const currSchema = _get(schema, path, {});
+    const result = _merge(newSchema, currSchema);
 
-      _set(schema, path, result);
-      setSchema(schema);
-      form.schema = Object.freeze(schema);
-    } catch (error) {
-      
-    }
+    _set(schema, path, result);
+    setSchema(schema);
+    form.schema = Object.freeze(schema);
   }
 
   form.setValues = (_values: any) => {
-    try {
-      const { flattenSchema } = formStoreRef.current.getState();
-      const values = transformValueBind(_values, flattenSchema);
-      form.setFieldsValue(values);
-    } catch (error) {
-      form.setFieldsValue(_values);
-    }
+    const { flattenSchema } = getState();;
+    const values = transformValueBind(_values, flattenSchema);
+    form.setFieldsValue(values);
   }
 
   form.getValues = (nameList?: any, filterFunc?: any) => {
-    try {
-      const { flattenSchema } = formStoreRef.current.getState();
-      const values = form.getFieldsValue(nameList, filterFunc);
-      return parseValuesWithBind(values, flattenSchema);
-    } catch (error) {
-      return {}
-    }
+    const { flattenSchema } = getState();;
+    const values = form.getFieldsValue(nameList, filterFunc);
+    return parseValuesWithBind(values, flattenSchema);
   }
+}
+
+const useForm = () => {
+  const [form] = Form.useForm() as [FormInstanceExtends];
+
+  /**初始化 */
+  form.init = (data: any, store: any) => {
+    init(data, store, form);
+  };
 
   form.setValueByPath = form.setFieldValue;
 

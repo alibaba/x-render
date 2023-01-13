@@ -7,7 +7,7 @@ type FormStore = {
   flattenSchema: any;
   widgets: any;
   context?: any;
-  isInit: boolean,
+  initialized: boolean,
   init?: (schema: FormStore['schema']) => any;
   setContext: (context: any) => any;
   setSchema: (schema: any) => any;
@@ -15,7 +15,7 @@ type FormStore = {
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
 export const createStore = () => createx<FormStore>((setState: any, get: any) => ({
-  isInit: false,
+  initialized: false,
   schema: {},
   flattenSchema: {},
   context: {},
@@ -23,19 +23,17 @@ export const createStore = () => createx<FormStore>((setState: any, get: any) =>
   init: data => {
     const { schema, widgets } = data;
     const flattenSchema = flatten(data?.schema);
-    debugger;
+
     return setState({ 
-      isInit: true, 
+      initialized: true,
       schema,
       widgets,
-      flattenSchema 
+      flattenSchema
     });
   },
-
   setContext: context => {
     return setState({ context });
   },
-
   setSchema: (schema: any) => {
     const flattenSchema = flatten(schema);
     return setState({ schema, flattenSchema });

@@ -1,11 +1,9 @@
 import React, { useEffect, useContext } from 'react';
 import { Form, Row, Col, Button, Space } from 'antd';
 import { useStore } from 'zustand';
-import shallow from 'zustand/shallow';
 
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
-import { getFormItemLayout } from '../models/layout';
 import { parseValuesWithBind } from '../models/bindValues';
 import { transformFieldsError, valuesWatch, } from '../models/formCoreUtils';
 import RenderCore from '../render-core';
@@ -21,8 +19,6 @@ const FormCore = (props: any) => {
 
   const { type, properties, ...schemProps } = schema || {};
   const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
- 
-  // const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth, displayType });
   const { labelCol, wrapperCol } = formProps;
 
   useEffect(() => {
@@ -84,7 +80,7 @@ const FormCore = (props: any) => {
       {builtOperation && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24/column}>
-            <Form.Item label='hideLabel' labelCol={labelCol} className='fr-oper-hide-label'>
+            <Form.Item label='hideLabel' labelCol={labelCol} className='fr-operate-hide-label'>
               <Space>
                 <Button type='primary' htmlType='submit'>
                   提交
