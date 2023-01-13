@@ -17,6 +17,6 @@ const SliderWithNumber = ({
       {title}
     </div>
   );
-};
+}
 
 export default SliderWithNumber;

@@ -83,7 +83,7 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
 }
 
-const getWidgetProps = (schema: any, widgets: any, { form, dependValues }) => {
+const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues }) => {
   const widgetProps = {
     ...schema.props,
     addons: {
@@ -132,6 +132,25 @@ const getWidgetProps = (schema: any, widgets: any, { form, dependValues }) => {
     widgetProps.addonAfter = <AddonAfterWidget {...schema} />;
   }
 
+  if (['treeSelect', 'number', 'multiSelect', 'select'].includes(widgetName)) {
+    widgetProps.style = {
+      width: '100%',
+      ...widgetProps.style
+    }
+  }
+
+  if (widgetName === 'multiSelect') {
+    widgetProps.mode = 'multiple';
+  }
+
+  // Dynamic Mapping of Methods
+  if (isObject(schema.methods)) {
+    Object.keys(schema.methods).forEach(key => {
+      const name = schema.methods[key];
+      widgetProps[key] = methods[name];
+    });
+  }
+
   widgetProps.schema = schema;
   return widgetProps;
 }
@@ -140,7 +159,8 @@ export default (props: any) => {
   const { store, schema, path, children, dependValues } = props;
   const form = Form.useFormInstance();
 
-  const widgets = useStore(store, (state: any) => state.widgets)
+  const widgets = useStore(store, (state: any) => state.widgets);
+  const methods = useStore(store, (state: any) => state.methods)
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const fieldRef = useRef();
@@ -157,7 +177,7 @@ export default (props: any) => {
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   let Widget = widgets[widgetName] || widgets['html'];
-  const widgetProps = getWidgetProps(schema, widgets, { form, dependValues });
+  const widgetProps = getWidgetProps(widgetName, schema, { widgets, methods, form, dependValues });
   const displayType = getValueFromKey('displayType');
   const inlineMode = displayType === 'inline';
 

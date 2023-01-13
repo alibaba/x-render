@@ -1,26 +1,17 @@
-import React from 'react';
-import {
-  Checkbox,
-  Input,
-  InputNumber,
-  Rate,
-  Switch,
-  TreeSelect,
-  Radio,
-} from 'antd';
+import React, { ComponentType } from 'react';
+import { Checkbox, Input, InputNumber, Rate, Switch, TreeSelect, Radio, Select } from 'antd';
+
 import color from './antd/color';
 import date from './antd/date';
 import dateRange from './antd/dateRange';
 import Html from './html';
 import ImageInput from './antd/imageInput';
-import multiSelect from './antd/multiSelect';
-import select from './antd/select';
 import slider from './antd/slider';
 import time from './antd/time';
 import timeRange from './antd/timeRange';
 import upload from './antd/upload';
 import urlInput from './antd/urlInput';
-import checkbox from './antd/checkbox';
+import singelCheckbox from './antd/checkbox';
 
 // 容器
 import BoxCard from './container/BoxCard';
@@ -34,16 +25,11 @@ import DrawerList from './container/ListDrawer';
 import TableList from './container/ListTable';
 import VirtualList from './container/ListVirtual';
 import TabList from './container/ListTab';
-
 import { ErrorSchema } from './components/ErrorSchema';
 
 const { TextArea } = Input;
-const FrNumber = ({ style, ...rest }) => {
- 
-  return <InputNumber style={{ width: '100%', ...style }} {...rest} />;
-};
 
-const FrTextArea = props => {
+const FrTextArea = (props: any) => {
   let finalProps = {
     autoSize: {
       minRows: 3,
@@ -55,17 +41,24 @@ const FrTextArea = props => {
   return <TextArea {...finalProps} />;
 };
 
-const FrTreeSelect = ({ style, ...rest }) => (
-  <TreeSelect style={{ width: '100%', ...style }} {...rest} />
-);
+
 
 type Widgets = {
   [key: string]: any;
 };
+
+export function withWrap(Comp: ComponentType<any>) {
+  return (props: any) => {
+    const { addons, schema, ...otherProps } = props;
+    return <Comp {...otherProps} />;
+  };
+}
+
+
 export const widgets: Widgets = {
-  input: Input,
-  checkbox,
-  checkboxes: Checkbox.Group, // checkbox多选
+  input: withWrap(Input),
+  checkbox: singelCheckbox,
+  checkboxes: withWrap(Checkbox.Group), // checkbox多选
   color,
   date,
   time,
@@ -73,23 +66,22 @@ export const widgets: Widgets = {
   timeRange,
   imageInput: ImageInput,
   url: urlInput,
-  multiSelect, // 下拉多选
-  number: FrNumber,
-  radio: Radio.Group,
-  select,
+  select: withWrap(Select),
+  multiSelect: withWrap(Select), // 下拉多选
+  number: withWrap(InputNumber),
+  radio: withWrap(Radio.Group),
   slider, // 带滚条的number
-  switch: Switch,
+  switch: withWrap(Switch),
   textarea: FrTextArea,
   upload,
   html: Html,
-  rate: Rate,
-  treeSelect: FrTreeSelect,
+  rate: withWrap(Rate),
+  treeSelect: withWrap(TreeSelect),
 
   card: BoxCard,
   collapse: BoxCollapse,
   lineTitle: BoxLineTitle,
   subInline: BoxSubInline,
-
   list0: SimpleList,
   list1: CardList,
   list2: TableList,
@@ -101,7 +93,6 @@ export const widgets: Widgets = {
   drawerList: DrawerList,
   virtualList: VirtualList,
   tabList: TabList,
-
   errorSchemaWidget: ErrorSchema
 };
 

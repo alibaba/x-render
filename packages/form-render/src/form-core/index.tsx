@@ -17,12 +17,26 @@ const FormCore = (props: any) => {
   const setContext = useStore(store, (state: any) => state.setContext);
 
   const { type, properties, ...schemProps } = schema || {};
-  const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
+  const { 
+    formProps, 
+    displayType, 
+    beforeFinish, 
+    watch, 
+    onMount, 
+    column, 
+    labelWidth, 
+    form, 
+    widgets, 
+    onFinish, 
+    readOnly, 
+    builtOperation,
+    methods
+  } = transformProps({ ...props, ...schemProps });
   const { labelCol, wrapperCol } = formProps;
 
   useEffect(() => {
     form.__setStore(store);
-    store.setState({ widgets });
+    store.setState({ widgets, methods });
 
     onMount && onMount();
   }, []);

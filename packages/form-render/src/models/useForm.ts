@@ -70,6 +70,10 @@ const useForm = () => {
   const handleSchemaUpdate = (newSchema: any) => {
     // form.__schema = Object.freeze(newSchema);
     flattenSchemaRef.current = flatten(newSchema) || {};
+
+
+
+    
     setSchema(newSchema);
     setStoreData({ schema: newSchema, flattenSchema: flattenSchemaRef.current });
   };
