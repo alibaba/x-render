@@ -21,7 +21,7 @@ const FormCore = (props: any) => {
   const { labelCol, wrapperCol } = formProps;
 
   useEffect(() => {
-    form.setStore(store);
+    form.__setStore(store);
     store.setState({ widgets });
 
     onMount && onMount();
