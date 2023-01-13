@@ -1,3 +1,4 @@
+import { d } from 'vitest/dist/index-761e769b';
 import { createStore as createx } from 'zustand';
 import { flattenSchema as flatten } from './flattenSchema';
 
@@ -19,8 +20,10 @@ export const createStore = () => createx<FormStore>((setState: any, get: any) =>
   flattenSchema: {},
   context: {},
   widgets: null,
-  init: ({ schema, widgets }) => {
-    const flattenSchema = flatten(schema);
+  init: data => {
+    const { schema, widgets } = data;
+    const flattenSchema = flatten(data?.schema);
+    debugger;
     return setState({ 
       isInit: true, 
       schema,

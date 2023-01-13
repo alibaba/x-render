@@ -35,6 +35,8 @@ import TableList from './container/ListTable';
 import VirtualList from './container/ListVirtual';
 import TabList from './container/ListTab';
 
+import { ErrorSchema } from './components/ErrorSchema';
+
 const { TextArea } = Input;
 const FrNumber = ({ style, ...rest }) => {
  
@@ -99,6 +101,8 @@ export const widgets: Widgets = {
   drawerList: DrawerList,
   virtualList: VirtualList,
   tabList: TabList,
+
+  errorSchemaWidget: ErrorSchema
 };
 
 export const defaultWidgetNameList = Object.keys(widgets);

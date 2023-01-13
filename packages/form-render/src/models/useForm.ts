@@ -52,7 +52,9 @@ const useForm = () => {
 
   /**初始化 */
   form.init = (storeData: any, useStore: any) => {
+    debugger;
     const { getState } = useStore;
+    debugger;
     const { init, isInit } = getState();
     if (isInit) {
       return;

@@ -10,7 +10,7 @@ import FormCore from './form-core';
 import { widgets as defaultWidgets } from './widgets';
 
 export { widgets } from './widgets';
-export { mapping } from './render-core/mapping';
+export { mapping } from './models/mapping';
 
 export { default as useForm } from './models/useForm';
 export { default as connectForm }  from './form-core/connectForm';

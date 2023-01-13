@@ -1,29 +1,27 @@
 import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand'
+import { FRContext } from '../../models/context';
 
-import { FRContext } from '../models/context'
+const UpperContext = createContext(() => {});
 
-import { getParamValue } from './methods';
+const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
+  return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
+}
 
-const FieldContext = createContext(() => {});
-
-const FieldList = (props: any) => {
+export default (props: any) => {
   const store = useContext(FRContext);
 
   const formCtx: any = useStore(store, (state: any) => state.context);
-  const parentCtx: any = useContext(FieldContext);
-  const widgets = useStore(store, (state: any) => state.widgets)
+  const upperCtx: any = useContext(UpperContext);
 
+  const widgets = useStore(store, (state: any) => state.widgets)
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
-
-  // const widgets = formCtx.widgets;
-
   const { schema, path, parentLitPath, renderCore, max, rootPath } = props;
   const { display } = schema;
-  // console.log(props, 'fieldProps');
+  
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';
   const Widget = widgets[widgetName];
@@ -47,7 +45,7 @@ const FieldList = (props: any) => {
 
   const handleOnMove = () => { };
 
-  const getValueFromKey = getParamValue(formCtx, parentCtx, schema);
+  const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
 
   const labelCol = getValueFromKey('labelCol');
   const readyOnly = getValueFromKey('readyOnly');
@@ -80,6 +78,4 @@ const FieldList = (props: any) => {
       </Form.Item>
     </Col>
   );
-};
-
-export default FieldList;
+}

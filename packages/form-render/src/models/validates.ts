@@ -1,0 +1,76 @@
+import Color from 'color';
+import { isUrl } from '../utils';
+
+const getRuleList = (schema: any, form: any) => {
+  let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern } = schema;
+  let rules: any = [...ruleList];
+
+  max = max ?? maxLength;
+  min = min ?? minLength;
+
+  if (max) {
+    rules.push({ type, max: max * 1 });
+  }
+
+  if (min) {
+    rules.push({ type, min: min * 1 });
+  }
+  
+  if (required) {
+    rules.push({ type, required: true,  whitespace: true });
+  }
+
+  if (pattern) {
+    rules.push({ pattern });
+  }
+
+  if (format === 'url') {
+    rules.push({ type: 'url' });
+  }
+
+  if (format === 'email') {
+    rules.push({ type: 'email' });
+  }
+
+  if (format === 'image') {
+    rules.push({
+      validator: (_: any, value: any) => {
+        const imagePattern = '([/|.|w|s|-])*.(?:jpg|gif|png|bmp|apng|webp|jpeg|json)';
+        const _isUrl = isUrl(value);
+        const _isImg = new RegExp(imagePattern).test(value);
+        return _isUrl && _isImg;
+      }, 
+      message: '请输入正确的图片格式'
+    });
+  }
+
+  if (format === 'color') {
+    rules.push({
+      validator: (_: any, value: any) => {
+        try {
+          Color(value || null); // 空字符串无法解析会报错，出现空的情况传 null
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }, 
+      message: '请填写正确的颜色格式'
+    });
+  }
+
+  rules = rules.map(((item: any) => {
+    if (item.validator && !item.transformed) {
+      const validator = item.validator;
+      item.validator = async (_: any, value: any) => {
+        const result = await validator(_, value, { form });
+        return result ? Promise.resolve() : Promise.reject(new Error(item.message));
+      };;
+      item.transformed = true;
+    }
+    return item;
+  }));
+
+  return rules;
+}
+
+export default getRuleList;

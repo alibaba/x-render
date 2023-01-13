@@ -19,15 +19,14 @@ const FormCore = (props: any) => {
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
   const setContext = useStore(store, (state: any) => state.setContext);
 
-  const { type, properties, ...schemProps } = schema;
+  const { type, properties, ...schemProps } = schema || {};
   const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
  
   // const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth, displayType });
   const { labelCol, wrapperCol } = formProps;
 
-  
   useEffect(() => {
-    form.init(props.schema, store);
+    form.init({ schema: props.schema, widgets }, store);
 
     setTimeout(() => {
       onMount && onMount();
@@ -70,7 +69,7 @@ const FormCore = (props: any) => {
     }
     onFinish && onFinish(values);
   };
-
+ 
   return (
     <Form
       labelWrap={true}
