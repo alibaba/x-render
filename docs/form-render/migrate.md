@@ -1,5 +1,5 @@
 ---
-order: 3
+order: 7
 title: V2 升级方案
 toc: content
 hide: true

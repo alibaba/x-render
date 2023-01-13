@@ -1,7 +1,7 @@
 ---
 order: 2
 group:
-  order: 6
+  order: 7
   title: 最佳展示
 toc: content
 ---

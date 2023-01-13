@@ -1,7 +1,7 @@
 ---
 order: 1
 group:
-  order: 7
+  order: 6
   title: 示例
 toc: false
 ---
