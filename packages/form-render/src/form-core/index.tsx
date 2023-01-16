@@ -72,7 +72,7 @@ const FormCore = (props: any) => {
     if (fieldsError) {
       form.setFields(fieldsError);
     }
-    onFinish && onFinish(values);
+    onFinish && onFinish(values, []);
   };
  
   return (
@@ -89,7 +89,7 @@ const FormCore = (props: any) => {
       {builtOperation && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24/column}>
-            <Form.Item label='hideLabel' labelCol={labelCol} className='fr-operate-hide-label'>
+            <Form.Item label='hideLabel' labelCol={labelCol} className='fr-hide-label'>
               <Space>
                 <Button type='primary' htmlType='submit'>
                   提交

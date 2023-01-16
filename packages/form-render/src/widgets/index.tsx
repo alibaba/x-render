@@ -27,6 +27,9 @@ import VirtualList from './container/ListVirtual';
 import TabList from './container/ListTab';
 import { ErrorSchema } from './components/ErrorSchema';
 
+import './index.less';
+
+
 const { TextArea } = Input;
 
 const FrTextArea = (props: any) => {

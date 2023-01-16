@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useRef } from 'react';
 import { Form, Col, Row } from 'antd';
 import { useStore } from 'zustand';
+import classnames from 'classnames';
 
 import { isCheckBoxType, _get, isObject, getArray } from '../../utils';
 import { getWidgetName } from '../../models/mapping';
@@ -257,11 +258,16 @@ export default (props: any) => {
   // checkbox 布局有点特殊
   if (isCheckBoxType(schema, readOnly)) {
     widgetProps.title = label;
-    label = null;
+
+    label = 'fr-hide-label';
+    if (displayType === 'inline') {
+      label = null;
+    }
   }
 
   const content = (
     <Form.Item
+      className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label'})}
       label={label}
       name={path}
       style={inlineMode ? { marginRight: '16px' } : null}

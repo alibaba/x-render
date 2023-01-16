@@ -9,6 +9,7 @@ import { validateMessagesEN, validateMessagesCN } from './models/validateMessage
 import FormCore from './form-core';
 import { widgets as defaultWidgets } from './widgets';
 
+
 export { widgets } from './widgets';
 export { mapping } from './models/mapping';
 

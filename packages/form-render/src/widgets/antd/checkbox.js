@@ -14,7 +14,7 @@ const SliderWithNumber = ({
   return (
     <div className="fr-slider">
       <Checkbox {...rest} />
-      {title}
+      <span style={{ marginLeft: '6px'}}>{title}</span>
     </div>
   );
 }

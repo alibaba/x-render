@@ -4,8 +4,16 @@ import classnames from 'classnames';
 import './index.less';
 
 const BoxSubInline = (props: any) => {
-  const { children, title, hasBackground = true } = props;
-  
+  const { children, title, hasBackground = true, description, tooltip } = props;
+  let _tooltip = null;
+
+  if (description) {
+    _tooltip = { title: description };
+  }
+  if (tooltip) {
+    _tooltip = tooltip;
+  }
+
   return (
     <Form.Item
       className={classnames('fr-obj-subinline', {
@@ -15,6 +23,7 @@ const BoxSubInline = (props: any) => {
       label={title || 'notitle'}
       labelCol={{ xl: 3, xxl: 2 }}
       wrapperCol={{ span: 24 }}
+      tooltip={_tooltip}
     >
       {children}
     </Form.Item>
