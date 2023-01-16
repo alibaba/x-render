@@ -12,6 +12,11 @@ const defaultDelConfirmProps = {
   cancelText: '取消',
 };
 
+const defaultAddBtnProps = {
+  type: 'dashed',
+  children: '新增一条',
+};
+
 const getOperateFixed = (schema: any) => {
   let fixed = true;
 
@@ -41,8 +46,8 @@ const getOperateStyle = (schema: any) => {
 const CardList = (props: any) => {
   const form = Form.useFormInstance();
 
-  const { name: listName, schema = {}, rootPath = [], readyOnly } = props;
-  let { hideAdd, hideCopy, hideMove, hideDelete, hasBackground = false, delConfirmProps } = schema.props || {};
+  const { name: listName, schema = {}, rootPath = [], readyOnly, methods } = props;
+  let { hideAdd, hideCopy, hideMove, hideDelete, hasBackground = false, delConfirmProps, addBtnProps, onAdd, onRemove } = schema.props || {};
 
   if (readyOnly) {
     hideAdd = true;
@@ -55,6 +60,11 @@ const CardList = (props: any) => {
     ...defaultDelConfirmProps,
     ...delConfirmProps
   };
+
+  const _addBtnProps = {
+    ...defaultAddBtnProps,
+    ...addBtnProps
+  }
 
   const handleOnCopy = (add: any, name: number) => () => {
     const initialValue = form.getFieldValue([...listName, name]);
@@ -102,9 +112,12 @@ const CardList = (props: any) => {
           })}
           {(!schema.max || fields.length < schema.max) && !readyOnly && (
             <div className='add-btn'>
-              <Button type='dashed' onClick={() => add()} icon={<PlusOutlined />}  block={fields.length > 0 ? true : false } >
-                新增一条
-              </Button>
+              <Button
+                onClick={() => add()} 
+                icon={<PlusOutlined />}  
+                block={fields.length > 0 ? true : false }
+                {..._addBtnProps}
+              />
             </div>
           )}
         </div>

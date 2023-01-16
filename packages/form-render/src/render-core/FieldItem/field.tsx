@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom';
+import React, { createContext, useContext, useRef } from 'react';
 import { Form, Col, Row } from 'antd';
 import { useStore } from 'zustand';
 
@@ -14,27 +13,47 @@ const valuePropNameMap = {
   switch: 'checked'
 }
 
-const getLabel = (schema: any) => {
-  const { title, description, descType } = schema;
+const getLabel = (schema: any, displayType: string, widgets: any) => {
+  const { title, description, descWidget } = schema;
 
-  return title;
-  // if (descType === 'icon') {
-  //   return title;
-  // }
-  // return (
-  //   <>
-  //     {title}
-  //     {description && (
-  //       <span className='fr-desc ml2'>
-  //         ({description})
-  //       </span>
-  //     )}
-  //   </>
-  // )
+  if ((!description && !descWidget)) {
+    return title;
+  }
+
+  const RenderDesc = () => {
+    const Widget = widgets[descWidget];
+    if (Widget) {
+      return <Widget schema={schema} />;
+    }
+
+    if (description) {
+      return (
+        <span className='fr-desc ml2'>
+          ({description})
+        </span>
+      )
+    }
+    return null;
+  };
+
+  if (displayType === 'inline') {
+    return title;
+  }
+
+  return (
+    <>
+      {title}
+      <RenderDesc />
+    </>
+  )
 }
 
 const getTooltip = (schema: any, displayType: string) => {
-  const { descType, description } = schema;
+  const { descType, description, tooltip } = schema;
+
+  if (tooltip) {
+    return tooltip;
+  }
 
   if (descType === 'widget' || !description) {
     return null;
@@ -160,7 +179,7 @@ export default (props: any) => {
   const form = Form.useFormInstance();
 
   const widgets = useStore(store, (state: any) => state.widgets);
-  const methods = useStore(store, (state: any) => state.methods)
+  const methods = useStore(store, (state: any) => state.methods);
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const fieldRef = useRef();
@@ -218,18 +237,8 @@ export default (props: any) => {
     );
   }
 
-  // useEffect(() => {
-  //   const dom = document.querySelector(`.${path}`);
-  //   if (!dom ){
-  //     return;
-  //   }
-   
-  //   const conx = dom.children[0].children[0].children[0];
-  //   conx.append('1111');
-  // }, [schema.description]);
-
   // Render field components
-  let label = getLabel(schema);
+  let label = getLabel(schema, displayType, widgets);
   const span = getColSpan(formCtx, upperCtx, schema);
   const tooltip = getTooltip(schema, displayType);
   const ruleList = getRuleList(schema, form);
@@ -264,7 +273,6 @@ export default (props: any) => {
       labelCol={labelCol}
       wrapperCol={wrapperCol}
       noStyle={noStyle}
-      className={path}
       dependencies={dependencies}
     >
       <Widget {...widgetProps} />

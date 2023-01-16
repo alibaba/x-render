@@ -13,6 +13,8 @@ export default (props: any) => {
   const store = useContext(FRContext);
 
   const formCtx: any = useStore(store, (state: any) => state.context);
+  const methods = useStore(store, (state: any) => state.methods);
+
   const upperCtx: any = useContext(UpperContext);
 
   const widgets = useStore(store, (state: any) => state.widgets)
@@ -74,6 +76,7 @@ export default (props: any) => {
           parentLitPath={parentLitPath}
           rootPath={preRootPath}
           readyOnly={readyOnly}
+          methods={methods}
         />
       </Form.Item>
     </Col>

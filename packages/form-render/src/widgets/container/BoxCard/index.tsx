@@ -25,7 +25,7 @@ const BoxCard = ({ children, title, description }) => {
           )}
         </>
       }
-      hoverable={true}
+      // hoverable={true}
     >
       {children}
     </Card>
