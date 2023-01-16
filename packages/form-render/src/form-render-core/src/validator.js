@@ -6,7 +6,6 @@ import {
   dataToKeys,
   destructDataPath,
   getDataPath,
-  getDescriptorSimple,
   isExpression,
   isObject,
   parseSingleExpression,
@@ -15,6 +14,7 @@ import {
 import { defaultValidateMessages } from './validateMessage';
 import { defaultValidateMessagesCN } from './validateMessageCN';
 import { getRealDataFlatten } from './void';
+import { getDescriptorSimple } from './getDescriptorSimple';
 
 export const parseSchemaExpression = (schema, formData, path) => {
   if (!isObject(schema)) return schema;

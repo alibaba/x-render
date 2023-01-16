@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "ES2015",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "jsx": "react",
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "baseUrl": "./",
+    "declaration": true,
+    "paths": {
+      "@/*": [
+        "src/*"
+      ],
+      "@@/*": [
+        "src/.umi/*"
+      ]
+    },
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+  ],
+  "exclude": [
+    "node_modules",
+    "lib",
+    "es",
+    "dist",
+    "typings",
+    "**/__test__",
+    "test",
+    "tests",
+    "docs",
+    "**/*.js"
+  ]
+}
