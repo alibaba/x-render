@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Select } from 'antd';
 import { isUndefined } from 'lodash-es';
 import { getArray } from '../../utils';
+import { useTools } from '../../form-render-core/src/hooks';
 
 const FrSelect = ({
   schema,
@@ -12,6 +13,8 @@ const FrSelect = ({
   addons,
   ...rest
 }) => {
+  const { methods } = useTools();
+
   let options;
 
   // 如果已经有外部注入的options了，内部的schema就会被忽略
@@ -42,9 +45,9 @@ const FrSelect = ({
     ...rest,
   };
 
-  if (rest.showSearch && !!schema.props.onSearch) {
+  if (rest.showSearch && !!schema.props.onSearch && typeof schema.props.onSearch === 'string') {
     finalProps.onSearch = search => {
-      const _onSearch = addons.watch[schema.props.onSearch];
+      const _onSearch = methods[schema.props.onSearch] || addons.watch[schema.props.onSearch];
       if (typeof _onSearch === 'function') _onSearch(search);
     };
   }
