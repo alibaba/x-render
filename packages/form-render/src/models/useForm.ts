@@ -20,8 +20,7 @@ interface FormInstanceExtends extends FormInstance {
   /** 获取表单值 */
   getValues: FormInstance['getFieldsValue'];
   /** 设置 Schema */
-  setSchema: (schema: any) => void;
-  resetSchema: (schema: any) => void;
+  setSchema: (schema: any, cover: boolean) => void;
   /** 根据路径修改表单值 */
   setValueByPath: FormInstance['setFieldValue'];
   /**
@@ -52,41 +51,38 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
 
 const useForm = () => {
   const [form] = Form.useForm() as [FormInstanceExtends];
-  const [schema, setSchema] = useState(null);
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
+  const schemaRef = useRef({});
 
   const setStoreData = (data: any) => {
     const { setState } = storeRef.current;
     if (!setState) {
       setTimeout(() => {
-        setState({ schema, flattenSchema: flattenSchemaRef.current });
+        setState({ schema: schemaRef.current, flattenSchema: flattenSchemaRef.current });
       }, 0)
     }
-
     setState(data);
   };
 
   const handleSchemaUpdate = (newSchema: any) => {
     // form.__schema = Object.freeze(newSchema);
     flattenSchemaRef.current = flatten(newSchema) || {};
-
-
-
-    
-    setSchema(newSchema);
+    schemaRef.current = newSchema;
     setStoreData({ schema: newSchema, flattenSchema: flattenSchemaRef.current });
   };
 
-  form.resetSchema = (schema:any) => {
-    handleSchemaUpdate(schema);
-  }
-
-  form.setSchema = (obj: any) => {
+  form.setSchema = (obj: any, cover: boolean) => {
     if (!isObject(obj)) {
       return;
     }
 
+    if (cover) {
+      handleSchemaUpdate(obj);
+      return;
+    }
+
+    const schema = _cloneDeep(schemaRef.current);
     Object.keys(obj || {}).forEach(path => {
       updateSchemaByPath(path, obj[path], schema);
     });
@@ -95,17 +91,18 @@ const useForm = () => {
   }
 
   form.setSchemaByPath = (_path: string, _newSchema: any) => {
+    const schema = _cloneDeep(schemaRef.current);
     updateSchemaByPath(_path, _newSchema, schema);
-    setSchema(schema);
+   
     handleSchemaUpdate(schema);
   }
 
   form.setSchemaByFullPath = (path: string, newSchema: any) => {
+    const schema = _cloneDeep(schemaRef.current);
     const currSchema = _get(schema, path, {});
     const result = _merge(newSchema, currSchema);
 
     _set(schema, path, result);
-    setSchema(schema);
     handleSchemaUpdate(schema);
   }
 
@@ -125,8 +122,8 @@ const useForm = () => {
     if (typeof _path !== 'string') {
       console.warn('请输入正确的路径');
     }
-    const path = getSchemaFullPath(_path, schema);
-    return _get(schema, path);
+    const path = getSchemaFullPath(_path, schemaRef.current);
+    return _get(schemaRef.current, path);
   };
 
   form.setErrorFields = (_fieldsError: any[]) => {

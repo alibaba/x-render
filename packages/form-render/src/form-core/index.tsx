@@ -37,12 +37,13 @@ const FormCore = (props: any) => {
   useEffect(() => {
     form.__setStore(store);
     store.setState({ widgets, methods });
-
-    onMount && onMount();
+    setTimeout(() => {
+      onMount && onMount();
+    }, 0);
   }, []);
 
   useEffect(() => {
-    form.resetSchema(props.schema);
+    form.setSchema(props.schema, true);
   }, [props.schema]);
 
   useEffect(() => {
