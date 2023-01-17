@@ -3,7 +3,7 @@ import {
   _cloneDeep,
   isArray,
   isObject,
-} from './index';
+} from '../utils/index';
 
 const isMultiBind = (binds: string[]) => isArray(binds) && binds.every(item => typeof item === 'string');
 

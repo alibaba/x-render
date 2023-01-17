@@ -1,68 +1,70 @@
 import React, { useEffect, useContext } from 'react';
 import { Form, Row, Col, Button, Space } from 'antd';
-import shallow from 'zustand/shallow';
-import { createStore, useStore } from 'zustand'
+import { useStore } from 'zustand';
 
-import { transformFieldsError, valuesWatch, transformProps } from './models/common';
-import { getFormItemLayout } from '../utils/layout';
-import { parseValuesWithBind } from '../utils/bindValues';
+import { FRContext } from '../models/context';
+import transformProps from '../models/transformProps';
+import { parseValuesWithBind } from '../models/bindValues';
+import { transformFieldsError, valuesWatch, } from '../models/formCoreUtils';
 import RenderCore from '../render-core';
+
 import './index.less';
 
-import { FormRenderContext } from '../utils/context'
-
-export { default as connectForm } from './models/connectForm';
-export { default as useForm } from './models/useForm';
-
 const FormCore = (props: any) => {
-  const store = useContext(FormRenderContext);
+  const store = useContext(FRContext);
+  const schema = useStore(store, (state: any) => state.schema);
+  const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
+  const setContext = useStore(store, (state: any) => state.setContext);
 
- 
-  const schema = useStore(store, (state: any) => state.schema );
-  const isInit = useStore(store, (state: any) => state.isInit, shallow);
-  const flattenSchema = useStore(store, (state: any) => state.flattenSchema, shallow);
-  const setContext = useStore(store, (state: any) => state.setContext, shallow);
+  const { type, properties, ...schemProps } = schema || {};
+  const { 
+    formProps, 
+    displayType, 
+    beforeFinish, 
+    watch, 
+    onMount, 
+    column, 
+    labelWidth, 
+    form, 
+    widgets, 
+    onFinish, 
+    readOnly, 
+    builtOperation,
+    methods
+  } = transformProps({ ...props, ...schemProps });
+  const { labelCol, wrapperCol } = formProps;
 
-  const { type, properties, ...schemProps } = schema;
-  const { formProps, displayType, beforeFinish, watch, onMount, column, labelWidth, form, widgets, onFinish, readOnly, builtOperation } = transformProps({ ...props, ...schemProps });
-  const _column = column || schema?.column || 1;
-
-  const { labelCol, wrapperCol } = getFormItemLayout(_column, formProps, { labelWidth, displayType });
-  
-  
   useEffect(() => {
-    form.init(props.schema, store);
+    form.__setStore(store);
+    store.setState({ widgets, methods });
     setTimeout(() => {
       onMount && onMount();
     }, 0);
   }, []);
 
   useEffect(() => {
-    if (!isInit) {
-      return;
-    }
-    form.resetSchema(props.schema);
+    form.setSchema(props.schema, true);
   }, [props.schema]);
 
   useEffect(() => {
     const context = {
-      column: _column,
+      column,
       labelCol,
       wrapperCol,
       readOnly,
-      widgets,
       labelWidth,
       displayType,
     };
     setContext(context);
-  }, [_column, labelCol, wrapperCol, displayType, labelWidth]);
+  }, [column, labelCol, wrapperCol, displayType, labelWidth]);
+
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
     valuesWatch(changedValues, allValues, watch);
   };
 
   const handleFinish = async (_values: any) => {
-    const values = parseValuesWithBind(_values, flattenSchema)
+    const values = parseValuesWithBind(_values, flattenSchema);
     let fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
     fieldsError = transformFieldsError(fieldsError);
 
@@ -71,15 +73,15 @@ const FormCore = (props: any) => {
     if (fieldsError) {
       form.setFields(fieldsError);
     }
-    onFinish && onFinish(values);
+    onFinish && onFinish(values, []);
   };
-
+ 
   return (
     <Form
-      form={form}
       labelWrap={true}
-      onFinish={handleFinish}
       {...formProps}
+      form={form}
+      onFinish={handleFinish}
       onValuesChange={handleValuesChange}
     >
       <Row gutter={displayType === 'row' ? 16 : 24}>
@@ -87,8 +89,8 @@ const FormCore = (props: any) => {
       </Row>
       {builtOperation && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
-          <Col span={24/_column}>
-            <Form.Item label='xxx' labelCol={labelCol} className='xxxx'>
+          <Col span={24/column}>
+            <Form.Item label='hideLabel' labelCol={labelCol} className='fr-hide-label'>
               <Space>
                 <Button type='primary' htmlType='submit'>
                   提交

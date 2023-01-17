@@ -1,5 +1,5 @@
 
-import { _cloneDeep, isObjType, isListType } from './index';
+import { _cloneDeep, isObjType, isListType } from '../utils/index';
 
 export const createDataSkeleton = (schema: any, formData?: any) => {
   let _formData = _cloneDeep(formData);

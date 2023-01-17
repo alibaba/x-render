@@ -1,6 +1,6 @@
 
 
-import { _cloneDeep, isObjType, isListType } from './index';
+import { _cloneDeep, isObjType, isListType } from '../utils/index';
 
 export function orderProperties(properties, orderKey = 'order') {
   const orderHash = new Map();
@@ -67,9 +67,7 @@ export function flattenSchema(_schema = {}, name?: any, parent?: any, _result?: 
 
   const result = _result || {};
 
-
-
-  const schema = _cloneDeep(_schema);
+  const schema = _cloneDeep(_schema) || {};
   let _name = name || '#';
   if (!schema.$id) {
     schema.$id = _name; // path as $id, for easy access to path in schema

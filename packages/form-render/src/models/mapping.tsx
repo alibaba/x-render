@@ -40,7 +40,7 @@ export const mapping = {
 };
 
 export function getWidgetName(schema, _mapping = mapping) {
-  const { type, format, enum: enums, readOnly, widget } = schema;
+  const { type, format, enum: enums, readOnly, widget, props } = schema;
 
   //如果已经注明了渲染widget，那最好
   if (schema['ui:widget'] || schema.widget) {
@@ -68,6 +68,25 @@ export function getWidgetName(schema, _mapping = mapping) {
       list.push('*?enum');
     }
   }
+
+  if (props?.options) {
+    if ((type === 'array' && props.options.length > 6) || (type !== 'array' && props.options.length > 2)) {
+
+      list.push(`${type}?enum_long`);
+      list.push('*?enum_long');
+    } else {
+      list.push(`${type}?enum`);
+      // array 默认使用 list，array?enum 默认使用 checkboxes，*?enum 默认使用select
+      list.push('*?enum');
+    }
+  }
+  
+
+
+
+
+
+
 
   const _widget = format;
   if (_widget) {

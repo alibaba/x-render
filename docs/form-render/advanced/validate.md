@@ -7,7 +7,9 @@ toc: content
 ---
 
 # 表单校验
-
+- 通过内置校验字段配置，实现简单校验逻辑
+- 通过 rules 配置，实现复杂校验逻辑
+- 通过 validateMessages 实现校验提示模版定制
 ### 内置校验
 
 - required：必填

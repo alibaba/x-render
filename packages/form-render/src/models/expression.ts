@@ -1,5 +1,5 @@
 import { get } from 'lodash-es';
-import { isObject, _cloneDeep } from './index';
+import { isObject, _cloneDeep } from '../utils/index';
 import { createDataSkeleton } from './formDataSkeleton';
 
 export const isExpression = (str: string) => {

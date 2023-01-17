@@ -1,14 +1,16 @@
-import React, { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Form, FormInstance } from 'antd';
-import { transformFieldsError, getSchemaFullPath } from './common';
-import { transformValueBind, parseValuesWithBind } from '../../utils/bindValues';
-import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../../utils';
+
+import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
+import { transformValueBind, parseValuesWithBind } from './bindValues';
+import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../utils';
+import { flattenSchema as flatten } from './flattenSchema';
 
 
 interface FormInstanceExtends extends FormInstance {
   init: any;
-  schema: any;
-  _getStoreState: () => any;
+  __schema: any;
+  __setStore: (data: any) => any;
   /** 设置表单值 */
   setValues: FormInstance['setFieldsValue'];
   setSchemaByFullPath: (path: string, schema: any) => any;
@@ -18,8 +20,7 @@ interface FormInstanceExtends extends FormInstance {
   /** 获取表单值 */
   getValues: FormInstance['getFieldsValue'];
   /** 设置 Schema */
-  setSchema: (schema: any) => void;
-  resetSchema: (schema: any) => void;
+  setSchema: (schema: any, cover: boolean) => void;
   /** 根据路径修改表单值 */
   setValueByPath: FormInstance['setFieldValue'];
   /**
@@ -46,91 +47,73 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   _set(formSchema, path, result);
 };
 
+
+
 const useForm = () => {
   const [form] = Form.useForm() as [FormInstanceExtends];
-  const formStoreRef: any = useRef();
+  const flattenSchemaRef = useRef({});
+  const storeRef: any = useRef();
+  const schemaRef = useRef({});
 
-  /**初始化 */
-  form.init = (schema: any, useStore: any) => {
-    const { getState } = useStore;
-    const { init, isInit } = getState();
-    if (isInit) {
-      return;
+  const setStoreData = (data: any) => {
+    const { setState } = storeRef.current;
+    if (!setState) {
+      setTimeout(() => {
+        setState({ schema: schemaRef.current, flattenSchema: flattenSchemaRef.current });
+      }, 0)
     }
-    formStoreRef.current = { getState };
-    init(schema);
-    form.schema = Object.freeze(schema);
+    setState(data);
   };
 
-  form.resetSchema = schema => {
-    try {
-      const { setSchema } = formStoreRef.current.getState();
-      setSchema(schema);
-      form.schema = Object.freeze(schema);
-    } catch (error) {
-    }
-  }
+  const handleSchemaUpdate = (newSchema: any) => {
+    // form.__schema = Object.freeze(newSchema);
+    flattenSchemaRef.current = flatten(newSchema) || {};
+    schemaRef.current = newSchema;
+    setStoreData({ schema: newSchema, flattenSchema: flattenSchemaRef.current });
+  };
 
-  form.setSchema = (obj: any) => {
-    try {
-      if (!isObject(obj)) {
-        return;
-      }
-      const { schema, setSchema } = formStoreRef.current.getState();
-      Object.keys(obj || {}).forEach(path => {
-        updateSchemaByPath(path, obj[path], schema);
-      });
-  
-      setSchema(schema);
-      form.schema = Object.freeze(schema);
-      
-    } catch (error) {
+  form.setSchema = (obj: any, cover: boolean) => {
+    if (!isObject(obj)) {
+      return;
     }
+
+    if (cover) {
+      handleSchemaUpdate(obj);
+      return;
+    }
+
+    const schema = _cloneDeep(schemaRef.current);
+    Object.keys(obj || {}).forEach(path => {
+      updateSchemaByPath(path, obj[path], schema);
+    });
+
+    handleSchemaUpdate(schema);
   }
 
   form.setSchemaByPath = (_path: string, _newSchema: any) => {
-    try {
-      const { schema, setSchema } = formStoreRef.current.getState();
-      updateSchemaByPath(_path, _newSchema, schema);
-      setSchema(schema);
-      form.schema = Object.freeze(schema);
-    } catch (error) {
-      
-    }
+    const schema = _cloneDeep(schemaRef.current);
+    updateSchemaByPath(_path, _newSchema, schema);
+   
+    handleSchemaUpdate(schema);
   }
 
   form.setSchemaByFullPath = (path: string, newSchema: any) => {
-    try {
-      const { schema, setSchema } = formStoreRef.current.getState();
-      const currSchema = _get(schema, path, {});
-      const result = _merge(newSchema, currSchema);
+    const schema = _cloneDeep(schemaRef.current);
+    const currSchema = _get(schema, path, {});
+    const result = _merge(newSchema, currSchema);
 
-      _set(schema, path, result);
-      setSchema(schema);
-      form.schema = Object.freeze(schema);
-    } catch (error) {
-      
-    }
+    _set(schema, path, result);
+    handleSchemaUpdate(schema);
   }
 
   form.setValues = (_values: any) => {
-    try {
-      const { flattenSchema } = formStoreRef.current.getState();
-      const values = transformValueBind(_values, flattenSchema);
-      form.setFieldsValue(values);
-    } catch (error) {
-      form.setFieldsValue(_values);
-    }
+    const values = transformValueBind(_values, flattenSchemaRef.current);
+    form.setFieldsValue(values);
   }
 
   form.getValues = (nameList?: any, filterFunc?: any) => {
-    try {
-      const { flattenSchema } = formStoreRef.current.getState();
-      const values = form.getFieldsValue(nameList, filterFunc);
-      return parseValuesWithBind(values, flattenSchema);
-    } catch (error) {
-      return {}
-    }
+    const values = form.getFieldsValue(nameList, filterFunc);
+    return parseValuesWithBind(values, flattenSchemaRef.current);
   }
 
   form.setValueByPath = form.setFieldValue;
@@ -139,8 +122,8 @@ const useForm = () => {
     if (typeof _path !== 'string') {
       console.warn('请输入正确的路径');
     }
-    const path = getSchemaFullPath(_path, form.schema);
-    return _get(form.schema, path);
+    const path = getSchemaFullPath(_path, schemaRef.current);
+    return _get(schemaRef.current, path);
   };
 
   form.setErrorFields = (_fieldsError: any[]) => {
@@ -154,6 +137,10 @@ const useForm = () => {
   form.removeErrorField = (path: any) => {
     form.setFields([{ name: path, errors: []}]);
   };
+
+  form.__setStore = (store: any) => {
+    storeRef.current = store;
+  }
 
   // 老 API 兼容
   form.scrollToPath = form.scrollToField;

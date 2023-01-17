@@ -1,7 +1,7 @@
 import React from 'react';
 
-import FieldItem from './fieldItem';
-import FieldList from './fieldList';
+import FieldItem from './FieldItem';
+import FieldList from './FieldList';
 
 interface RenderCoreProps {
   schema: any;
@@ -56,16 +56,18 @@ const renderItem = (props: RenderItemProps) => {
 
 const RenderCore = (props: RenderCoreProps) : any => {
   const { schema, parentPath = [], rootPath = [] } = props;
-
+  if (!schema || Object.keys(schema).length === 0) {
+    return null;
+  }
+  
   // render List.item
-  if (schema.items) {
+  if (schema?.items) {
     return renderItem({ schema: schema.items, path: parentPath, rootPath });
   }
 
   return Object.keys(schema?.properties || {}).map((key) => {
     const item = schema.properties[key];
     const path = [...parentPath, key];
-    
     return renderItem({ schema: item, path, key, rootPath })
   });
 }

@@ -30,10 +30,10 @@ export default defineConfig({
       title: 'Playground',
       path: '/playground',
     },
-    {
-      title: '常见问题',
-      path: '/faq',
-    },
+    // {
+    //   title: '常见问题',
+    //   path: '/faq',
+    // },
     {
       title: '周边工具',
       path: '/tools',

@@ -8,7 +8,7 @@ toc: content
 
 ## Props
 
-| 参数             | 描述                                                                                      | 类型                                                                                                  | 默认值 |
+| 参数             | 说明                                                                                     | 类型                                                                                                  | 默认值 |
 | ---------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------ |
 | schema           | **必填**，描述表单的 schema，详见 [schema 规范](./schema.md)                              | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16) | -      |
 | form             | **必填**，`useForm` 创建的表单实例，与 Form 一对一绑定，详见[Forminstance](#forminstance) | `FormInstance`                                                                                        | -      |
