@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import FormRender, { useForm } from '../es';
+import * as React from 'react';
+import { useState } from 'react';
+import FormRender, { useForm } from '../src/index';
 
 const schema = {
   type: 'object',

@@ -1,5 +1,5 @@
 import { describe, test, afterAll, expect } from 'vitest';
-import React from 'react';
+import * as React from 'react';
 import '@testing-library/jest-dom';
 import { render, act, cleanup } from '@testing-library/react';
 import Demo from './form-demo';

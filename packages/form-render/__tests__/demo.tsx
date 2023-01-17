@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import FormRender, { useForm } from '../es';
-import { listSchema, normalSchema } from './schema';
+import * as React from 'react';
+import { useState } from 'react';
+import FormRender, { useForm } from '../src/index';
+import { normalSchema } from './schema';
 
 const SimpleForm = () => {
   const form = useForm();

@@ -12,7 +12,6 @@ const Demo = () => {
       province: {
         type: 'string',
         placeholder: 'province',
-        required: 'true',
         rules: [
           { required: true, message: "province can't be empty" },
           { pattern: '^[a-z]+$', message: 'incorrect province' },
@@ -22,7 +21,6 @@ const Demo = () => {
       city: {
         type: 'string',
         placeholder: 'city',
-        required: 'true',
         rules: [
           { required: true, message: "city can't be empty" },
           { pattern: '^[a-z]+$', message: 'incorrect city' },
