@@ -1,6 +1,6 @@
 import { Button, Input, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const { TextArea } = Input;
 
@@ -10,21 +10,33 @@ const Demo = () => {
   const schema = {
     type: 'object',
     displayType: 'row',
+
     properties: {
-      select1: {
-        title: '输入框',
+      // select1: {
+      //   title: '输入框',
+      //   type: 'string',
+      //   dependencies: ['useSelect'],
+      //   widget: 'MyTextEditor',
+      //   width: '60%',
+      // },
+      // useSelect: {
+      //   title: '输入框高度',
+      //   type: 'number',
+      //   width: '60%',
+      // },
+      image1: {
+        title: '图片展示',
         type: 'string',
-        dependencies: ['useSelect'],
-        widget: 'MyTextEditor',
-        width: '60%',
-      },
-      useSelect: {
-        title: '输入框高度',
-        type: 'number',
-        width: '60%',
+        format: 'image'
       },
     },
   };
+
+  useEffect(() => {
+    form.setValues({
+      image1: 'https://img.alicdn.com/imgextra/i3/O1CN01J3IrQO1PrUx7YIpuM_!!6000000001894-2-tps-1136-674.png'
+    })
+  }, [])
 
   const onFinish = (data, errors) => {
     if (errors.length > 0) {
@@ -43,6 +55,7 @@ const Demo = () => {
         schema={schema}
         widgets={{ MyTextEditor }}
         onFinish={onFinish}
+        readOnly={true}
       />
       <Button type="primary" onClick={form.submit}>
         提交
