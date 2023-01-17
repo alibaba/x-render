@@ -9,17 +9,20 @@ const CardList = (props: any) => {
     <Form.List name={name}>
       {(fields, operation) => (
         <>
-          <Form.Item noStyle>
-            <Button type="primary" onClick={() => operation.add()} size="small" style={{ float: 'right', marginBottom: 10 }}>
-              增加一条
-            </Button>
-          </Form.Item>
           <ListTable
             fields={fields}
             operation={operation}
             schema={schema}
             listName={name}
           />
+          <Form.Item noStyle>
+            <Button 
+              onClick={() => operation.add()}
+              style={{ borderStyle: 'dashed', width: '100%', marginTop: 10}}
+            >
+              增加一条
+            </Button>
+          </Form.Item>
         </>
       )}
     </Form.List>

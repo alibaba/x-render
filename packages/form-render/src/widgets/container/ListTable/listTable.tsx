@@ -69,7 +69,6 @@ const ListTable: React.FC<ListTableProps> = ({ fields, schema, operation, listNa
 
   return (
     <Table
-      size='small'
       columns={columns}
       dataSource={fields}
       pagination={false}
