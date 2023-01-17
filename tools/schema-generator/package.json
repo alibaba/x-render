@@ -1,6 +1,6 @@
 {
   "name": "fr-generator",
-  "version": "2.8.4",
+  "version": "2.8.5-beta.3",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/index.d.ts",
