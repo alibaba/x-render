@@ -76,6 +76,10 @@ const ExtendedWidget = ({
     widgetName = readOnlyName;
   }
   if (!widgetName) {
+    const CustomErrorSchema = widgets['errorSchemaWidget'];
+    if (CustomErrorSchema) {
+      return <CustomErrorSchema schema={schema} />;
+    }
     widgetName = 'input';
     return <ErrorSchema schema={schema} />;
   }
