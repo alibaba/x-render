@@ -12,7 +12,7 @@ export default (props: any) => {
 
   const store = useContext(FRContext);
   const { schema: formSchema } = store.getState();
-
+ 
   // No function expressions exist
   if (!isHasExpression(schema) && !schema?.dependencies) {
     return <Field {...props} store={store} />;

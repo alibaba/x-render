@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef } from 'react';
+import React, { createContext, useContext, useEffect, useRef } from 'react';
 import { Form, Col, Row } from 'antd';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
@@ -116,7 +116,7 @@ const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, for
     widgetProps.dependValues = dependValues;
   }
 
-  ['placeholder', 'disabled', 'format'].forEach(key => {
+  ['placeholder', 'disabled', 'format', 'onStatusChange'].forEach(key => {
     if (schema[key]) {
       widgetProps[key] = schema[key];
     }
@@ -175,8 +175,20 @@ const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, for
   return widgetProps;
 }
 
+const createWidget = (Component: any, props: any, form: any, path: any, rootPath: any) => {
+  const { onStatusChange, ...otherProps } = props;
+  const { status } = Form.Item.useStatus();
+
+  useEffect(() => {
+    const errors = form.getFieldError([...rootPath, ...path]);
+    onStatusChange && onStatusChange(status, errors);
+  }, [status]);
+
+  return <Component { ...otherProps} />
+};
+
 export default (props: any) => {
-  const { store, schema, path, children, dependValues } = props;
+  const { store, schema, path, children, dependValues, rootPath } = props;
   const form = Form.useFormInstance();
 
   const widgets = useStore(store, (state: any) => state.widgets);
@@ -196,7 +208,7 @@ export default (props: any) => {
   }
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  let Widget = widgets[widgetName] || widgets['html'];
+  let widget = widgets[widgetName] || widgets['html'];
   const widgetProps = getWidgetProps(widgetName, schema, { widgets, methods, form, dependValues });
   const displayType = getValueFromKey('displayType');
   const inlineMode = displayType === 'inline';
@@ -256,7 +268,7 @@ export default (props: any) => {
   }
 
   if (readOnly) {
-    Widget = widgets['html'];
+    widget = widgets['html'];
   }
 
   // checkbox 布局有点特殊
@@ -268,7 +280,7 @@ export default (props: any) => {
       label = null;
     }
   }
-
+ 
   const content = (
     <Form.Item
       className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label'})}
@@ -285,7 +297,7 @@ export default (props: any) => {
       noStyle={noStyle}
       dependencies={dependencies}
     >
-      <Widget {...widgetProps} />
+      {createWidget(widget, widgetProps, form, path, rootPath)}
     </Form.Item>
   );
 

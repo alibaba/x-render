@@ -6,17 +6,6 @@ import classnames from 'classnames'
 
 import './index.less';
 
-const defaultDelConfirmProps = {
-  title: '确定删除?',
-  okText: '确定',
-  cancelText: '取消',
-};
-
-const defaultAddBtnProps = {
-  type: 'dashed',
-  children: '新增一条',
-};
-
 const getOperateFixed = (schema: any) => {
   let fixed = true;
 
@@ -48,23 +37,6 @@ const CardList = (props: any) => {
 
   const { name: listName, schema = {}, rootPath = [], readyOnly, methods } = props;
   let { hideAdd, hideCopy, hideMove, hideDelete, hasBackground = false, delConfirmProps, addBtnProps, onAdd, onRemove } = schema.props || {};
-
-  if (readyOnly) {
-    hideAdd = true;
-    hideCopy = true;
-    hideDelete = true;
-    hideMove = true;
-  }
-
-  const _delConfirmProps = {
-    ...defaultDelConfirmProps,
-    ...delConfirmProps
-  };
-
-  const _addBtnProps = {
-    ...defaultAddBtnProps,
-    ...addBtnProps
-  }
 
   const handleOnCopy = (add: any, name: number) => () => {
     const initialValue = form.getFieldValue([...listName, name]);
@@ -100,7 +72,7 @@ const CardList = (props: any) => {
                     {!hideDelete && (
                       <Popconfirm
                         onConfirm={() => remove(name) }
-                        {..._delConfirmProps}
+                        {...delConfirmProps}
                       >
                         <CloseOutlined  />
                       </Popconfirm>
@@ -113,10 +85,10 @@ const CardList = (props: any) => {
           {(!schema.max || fields.length < schema.max) && !readyOnly && (
             <div className='add-btn'>
               <Button
+                {...addBtnProps}
                 onClick={() => add()} 
-                icon={<PlusOutlined />}  
+                icon={<PlusOutlined />}
                 block={fields.length > 0 ? true : false }
-                {..._addBtnProps}
               />
             </div>
           )}

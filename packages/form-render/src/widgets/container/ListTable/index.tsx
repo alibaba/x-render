@@ -1,32 +1,41 @@
 import React from 'react';
 import { Button, Form } from 'antd';
-import ListTable from './listTable';
+import { PlusOutlined } from '@ant-design/icons';
+import TableList from './tableList';
+import './index.less'
 
-const CardList = (props: any) => {
-  const { name, schema } = props;
+export default (props: any) => {
+  const { name, schema, readyOnly, renderCore, rootPath, form } = props;
+  const { addBtnProps, hideAdd, addItem, removeItem, moveItem, copyItem } = schema?.props || {};
 
   return (
     <Form.List name={name}>
       {(fields, operation) => (
         <>
-          <ListTable
+          <TableList
+            {...schema?.props}
+            form={form}
             fields={fields}
-            operation={operation}
-            schema={schema}
+            schema={schema?.items?.properties}
             listName={name}
+            renderCore={renderCore}
+            rootPath={rootPath}
+            readyOnly={readyOnly}
+            removeItem={removeItem(operation.remove)}
+            moveItem={moveItem(operation.move)}
+            copyItem={copyItem(operation.add)}
           />
-          <Form.Item noStyle>
-            <Button 
-              onClick={() => operation.add()}
-              style={{ borderStyle: 'dashed', width: '100%', marginTop: 10}}
-            >
-              增加一条
-            </Button>
-          </Form.Item>
+          {!hideAdd && (
+            <Form.Item noStyle>
+              <Button
+                icon={<PlusOutlined />}
+                onClick={addItem(operation.add)}
+                {...addBtnProps}
+              />
+            </Form.Item>
+          )}
         </>
       )}
     </Form.List>
   );
 }
-
-export default CardList;
