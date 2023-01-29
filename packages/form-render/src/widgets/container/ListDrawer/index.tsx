@@ -1,28 +1,165 @@
-import React from 'react';
-import { Form, Button } from 'antd';
-import FormTable from './formTable';
+
+
+
+
+import React, { useState, useRef } from 'react';
+import { Space, Table, Form, Button, Popconfirm } from 'antd';
+import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
+import type { FormListFieldData, FormListOperation, TableColumnsType } from 'antd';
+import FormDrawer from './drawerForm';
+
 import './index.less';
+interface Props {
+  schema: any;
+  fields: FormListFieldData[];
+  operation: FormListOperation;
+  prefix: string;
+  [key:string]: any
+};
 
-const prefix = 'fr-list-drawer';
+const TableList: React.FC<Props> = (props: any) => {
+  const { 
+    schema,
+    fields,
+    rootPath,
+    renderCore,
+    readOnly,
+    widgets,
+    addBtnProps,
+    delConfirmProps, 
+    actionColumnProps,
+    pagination,
+    
+    hideDelete, 
+    hideCopy, 
+    hideMove, 
+    hideAdd,
+    hideEdit,
+    
+    addItem,
+    copyItem,
+    moveItem, 
+    removeItem, 
+  } = props;
 
-const DrawerList = (props: any) => {
-  const { name, schema } = props;
+  const form = Form.useFormInstance();
+
+
+  const paginationConfig = {
+    size: 'small',
+    hideOnSinglePage: true,
+    ...pagination,
+  };
+
+  const columnSchema = schema?.items?.properties || {};
+
+  const [visible, setVisible] = useState(false);
+  const [itemData, setItemData] = useState(null);
+  const indexRef = useRef(null);
+
+  const handleCopy = (name: number) => {
+    const value = form.getFieldValue(rootPath.concat(name));
+    copyItem(value);
+  };
+
+  const handleAdd = () => {
+    addItem();
+    indexRef.current = fields.length;
+    setVisible(true);
+  };
+  
+  const columns: TableColumnsType<FormListFieldData> = Object.keys(columnSchema).map(dataIndex => {
+    const { title } = columnSchema[dataIndex];
+    return {
+      dataIndex,
+      title,
+      render: (_, field) => {
+        const fieldSchema = {
+          type: 'object',
+         
+          properties: {
+            [dataIndex]: {
+              ...columnSchema[dataIndex],
+              noStyle: true,
+              readOnly: true,
+            }
+          }
+        };
+        return renderCore({ schema: fieldSchema, parentPath: [field.name], rootPath });
+      }
+    }
+  });
+
+  if (!readOnly) {
+    columns.push({
+      title: actionColumnProps.colHeaderText,
+      width: 170,
+      render: (_, field) => (
+        <Form.Item>
+          <Space>
+            {!hideCopy && <a onClick={() => handleCopy(field.name)}>{actionColumnProps.copyText}</a>}
+            {!hideEdit && <a onClick={() => {
+              setVisible(true);
+              indexRef.current = field.name;
+              setItemData(form.getFieldValue(rootPath.concat(field.name)));
+            }}>编辑</a>}
+            {!hideDelete && (
+              <Popconfirm
+                {...delConfirmProps}
+                onConfirm={() => removeItem(field.name)}
+              >
+                <a>{actionColumnProps.delText}</a>          
+              </Popconfirm>
+            )}
+            {!hideMove && (
+              <>
+                <ArrowUpOutlined  style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name - 1)} />
+                <ArrowDownOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name + 1)} />
+              </>
+            )}
+          </Space>
+        </Form.Item>
+      )
+    });
+  }
 
   return (
-    <Form.List name={name}>
-      {(fields, operation) => (
-        <div className={prefix}>
-          <FormTable
-            prefix={prefix}
-            listName={name}
-            schema={schema}
-            fields={fields}
-            operation={operation}
-          />
-        </div>
+    <>
+      <Table
+        className='fr-list-drawer'
+        size='middle'
+        dataSource={fields}
+        columns={columns}
+        style={{ marginBottom: '12px'}}
+        scroll={{ x: 'max-content' }}
+        pagination={paginationConfig}
+      />
+      {(!schema.max || fields.length < schema.max) && !hideAdd && (
+        <Button
+          icon={<PlusOutlined />}
+          onClick={handleAdd}
+          {...addBtnProps}
+        />
       )}
-    </Form.List>
+      {visible && (
+         <FormDrawer
+          schema={schema}
+          data={itemData}
+          widgets={widgets}
+          onClose={() => {
+            setVisible(false);
+            setItemData(null);
+          }}
+          valueChange={(value: any) => {
+            form.setFieldValue([...rootPath, indexRef.current], value);
+          }}
+        />
+      )}
+    </>
   );
 }
 
-export default DrawerList;
+export default TableList;
+
+
+

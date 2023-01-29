@@ -1,4 +1,4 @@
-export const getFormItemLayout = (column: number, schema: any, { labelWidth, displayType }: any) => {
+export const getFormItemLayout = (column: number, schema: any, { labelWidth, displayType, _labelCol, _wrapperCol }: any) => {
   let labelCol: any = { xl: 5, xxl: 3 };
   let wrapperCol: any = { xl: 9, xxl: 6 };
 
@@ -21,6 +21,15 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
     // wrapperCol = { flex: 1 };
   }
 
+  if (_labelCol) {
+    labelCol = _labelCol;
+  }
+
+  if (_wrapperCol) {
+    wrapperCol = _wrapperCol;
+  }
+
+
   if (displayType === 'inline') {
     labelCol = {};
     wrapperCol = {};
@@ -40,6 +49,6 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
   if (schema.wrapperCol) {
     wrapperCol = schema.wrapperCol;
   }
-
+  
   return { labelCol, wrapperCol }
 }

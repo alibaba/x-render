@@ -2,7 +2,8 @@ import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand'
 import { FRContext } from '../../models/context';
-import { isFunction } from '../../utils';
+
+import Main from './main';
 
 const UpperContext = createContext(() => {});
 
@@ -10,23 +11,6 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
 };
 
-const defaultAddBtnProps = {
-  type: 'dashed',
-  block: true,
-  children: '新增一条',
-};
-
-const defaultDelConfirmProps = {
-  title: '确定删除?',
-  okText: '确定',
-  cancelText: '取消',
-};
-
-let defaultActionColumnProps = {
-  colHeaderText: '操作',
-  copyText: '复制',
-  delText: '删除',
-};
 
 export default (props: any) => {
   const store = useContext(FRContext);
@@ -40,12 +24,10 @@ export default (props: any) => {
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
-  const { schema, path, parentLitPath, renderCore, max, rootPath } = props;
-  const { display } = schema;
+  const { schema, path } = props;
   
   const { title: label, widget } = schema;
   let widgetName = widget || 'list1';
-  const Widget = widgets[widgetName];
 
   let span = 24;
   if (formCtx.column) {
@@ -56,97 +38,16 @@ export default (props: any) => {
     span = 24;
   }
 
-  const listProps = schema?.props || {};
-  let { 
-    addBtnProps, delConfirmProps, actionColumnProps, 
-    hideAdd, hideCopy, hideMove, hideDelete,
-    onAdd, onRemove, onMove, onCopy
-  } = listProps;
-
-
   const form = Form.useFormInstance();
   const value = Form.useWatch(path, form);
-
-  const handleOnAdd = (add: any) => () => {
-    let addFunc = onAdd;
-    if (typeof onAdd === 'string') {
-      addFunc = methods[onAdd];
-    }
-
-    if (isFunction(addFunc)) {
-      addFunc(() => add(), { schema });
-      return;
-    }
-
-    add();
-  };
-
-  const handleOnRemove = (remove: any) => (index: number) => { 
-    let removeFunc = onRemove;
-    if (typeof onRemove === 'string') {
-      removeFunc = methods[onRemove];
-    }
-
-    if (isFunction(removeFunc)) {
-      removeFunc(() => remove(index), { schema, index });
-      return;
-    }
-
-    remove(index);
-  };
-
-  const handleOnMove = (move: any) => (form: number, to: number) => { 
-    let moveFunc = onMove;
-    if (typeof moveFunc === 'string') {
-      moveFunc = methods[onMove];
-    }
-    debugger;
-
-    if (isFunction(moveFunc)) {
-      moveFunc(() => move(form, to), { schema,  form, to });
-      return;
-    }
-
-    move(form, to);
-  };
-
-  const handleOnCopy = (add: any) => (value: any) => {
-    let copyFunc = onCopy;
-    if (typeof onAdd === 'string') {
-      copyFunc = methods[onAdd];
-    }
-
-    if (isFunction(copyFunc)) {
-      copyFunc(() => add(value), { schema });
-      return;
-    }
-    add(value);
-  };
-
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
 
   const labelCol = getValueFromKey('labelCol');
-  const readyOnly = getValueFromKey('readyOnly');
-  const preRootPath = (rootPath || []).splice(0, rootPath.length - 1);
 
-  let isInline = display === 'inline';
-  if (!value) {
+  let isInline = schema.display === 'inline';
+  if (!value && widgetName !== 'drawerList') {
     isInline = true;
-  }
-
-
-  
-
-  if (hideAdd) {
-    hideCopy = true;
-  }
-
-  if (readyOnly) {
-    hideAdd = true;
-    hideCopy = true;
-    hideDelete = true;
-    hideMove = true;
   }
 
   return (
@@ -160,41 +61,18 @@ export default (props: any) => {
         >
         </Form.Item>
       )}
-      <Form.Item label={label} wrapperCol={{ flex: 1 }} labelCol={labelCol} noStyle={!isInline} >
-        <Widget
-          name={path}
+      <Form.Item 
+        label={label} 
+        labelCol={labelCol} 
+        noStyle={!isInline && !isDisplayColumn}
+      >
+        <Main
+          {...props}
           form={form}
-          schema={{
-            ...schema,
-            props: {
-              ...schema?.props,
-              addBtnProps: {
-                ...defaultAddBtnProps,
-                ...addBtnProps
-              },
-              delConfirmProps: {
-                ...defaultDelConfirmProps,
-                ...delConfirmProps
-              },
-              actionColumnProps: {
-                ...defaultActionColumnProps,
-                ...actionColumnProps
-              },
-              hideAdd,
-              hideCopy,
-              hideDelete,
-              hideMove,
-              addItem: handleOnAdd,
-              removeItem: handleOnRemove,
-              moveItem: handleOnMove,
-              copyItem: handleOnCopy
-            }
-          }}
-          parentLitPath={parentLitPath}
-          rootPath={preRootPath}
-          readyOnly={readyOnly}
           methods={methods}
-          renderCore={renderCore}
+          formCtx={formCtx}
+          upperCtx={upperCtx}
+          widgets={widgets}
         />
       </Form.Item>
     </Col>

@@ -248,6 +248,7 @@ export interface FRProps {
   layoutWidgets?: any;
   /** 扩展方法 */
   methods?: Record<string, Function>;
+  [key: string]: any
 }
 
 declare const FR: React.FC<FRProps>;

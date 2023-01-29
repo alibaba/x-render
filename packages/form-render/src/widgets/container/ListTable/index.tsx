@@ -1,41 +1,139 @@
 import React from 'react';
-import { Button, Form } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
-import TableList from './tableList';
-import './index.less'
+import { Table, Form, Space, Popconfirm, Button } from 'antd';
+import type { FormListFieldData, TableColumnsType } from 'antd';
+import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
+import TableCell from './tableCell';
 
-export default (props: any) => {
-  const { name, schema, readyOnly, renderCore, rootPath, form } = props;
-  const { addBtnProps, hideAdd, addItem, removeItem, moveItem, copyItem } = schema?.props || {};
+import './index.less';
+
+interface ListTableProps {
+  fields: FormListFieldData[];
+  schema: any;
+  delConfirmProps: any;
+  renderCore: any;
+  rootPath: any;
+  [key: string]: any;
+};
+
+const TableList: React.FC<ListTableProps> = (props) => {
+  const { 
+    schema,
+    fields,
+    rootPath,
+    renderCore,
+    readOnly,
+
+    addBtnProps,
+    delConfirmProps, 
+    actionColumnProps,
+    pagination,
+    
+    hideDelete, 
+    hideCopy, 
+    hideMove, 
+    hideAdd,
+
+    addItem,
+    copyItem,
+    moveItem, 
+    removeItem, 
+  } = props;
+
+  const form = Form.useFormInstance();
+
+  const itemSchema = schema?.items?.properties || {};
+
+  const paginationConfig = {
+    size: 'small',
+    hideOnSinglePage: true,
+    ...pagination,
+  };
+
+  const handleCopy = (name: number) => {
+    const value = form.getFieldValue(rootPath.concat(name));
+    copyItem(value);
+  };
+
+  const columns: TableColumnsType<FormListFieldData> = Object.keys(itemSchema).map((dataIndex: string) => {
+    const { required, title } = itemSchema[dataIndex];
+    return {
+      dataIndex,
+      title: (
+        <>
+          {required && <span style={{ color: 'red', marginRight: '3px' }}>*</span>}
+          <span>{title}</span>
+        </>
+      ),
+      render: (_, field) => {
+        const fieldSchema = {
+          type: 'object',
+          properties: {
+            [dataIndex]: {
+              ...itemSchema[dataIndex],
+              noStyle: true,
+            }
+          }
+        };
+        return (
+          <TableCell 
+            renderCore={renderCore}
+            schema={fieldSchema}
+            parentPath={[field.name]}
+            rootPath={rootPath}
+            dataIndex={dataIndex}
+          />
+        );
+      }
+    };
+  });
+
+  if (!readOnly) {
+    columns.push({
+      title: actionColumnProps.colHeaderText,
+      width: 150,
+      render: (_, field) => (
+        <Form.Item>
+          <Space>
+            {!hideCopy && <a onClick={() => handleCopy(field.name)}>{actionColumnProps.copyText}</a>}
+            {!hideDelete && (
+              <Popconfirm
+                {...delConfirmProps}
+                onConfirm={() => removeItem(field.name)}
+              >
+                <a>{actionColumnProps.delText}</a>          
+              </Popconfirm>
+            )}
+            {!hideMove && (
+              <>
+                <ArrowUpOutlined  style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name - 1)} />
+                <ArrowDownOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name + 1)} />
+              </>
+            )}
+          </Space>
+        </Form.Item>
+      )
+    });
+  }
 
   return (
-    <Form.List name={name}>
-      {(fields, operation) => (
-        <>
-          <TableList
-            {...schema?.props}
-            form={form}
-            fields={fields}
-            schema={schema?.items?.properties}
-            listName={name}
-            renderCore={renderCore}
-            rootPath={rootPath}
-            readyOnly={readyOnly}
-            removeItem={removeItem(operation.remove)}
-            moveItem={moveItem(operation.move)}
-            copyItem={copyItem(operation.add)}
-          />
-          {!hideAdd && (
-            <Form.Item noStyle>
-              <Button
-                icon={<PlusOutlined />}
-                onClick={addItem(operation.add)}
-                {...addBtnProps}
-              />
-            </Form.Item>
-          )}
-        </>
+    <>
+      <Table
+        className='fr-table-list'
+        size='middle'
+        columns={columns}
+        dataSource={fields}
+        pagination={paginationConfig}
+        scroll={{ x: 'max-content' }}
+      />
+      {(!schema.max || fields.length < schema.max) && !hideAdd && (
+        <Button
+          icon={<PlusOutlined />}
+          onClick={addItem}
+          {...addBtnProps}
+        />
       )}
-    </Form.List>
+    </>
   );
 }
+
+export default TableList;

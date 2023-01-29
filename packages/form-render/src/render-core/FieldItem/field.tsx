@@ -231,6 +231,7 @@ export default (props: any) => {
     }
 
     widgetProps.children = childElement;
+    const Widget = widget;
     const content = <Widget {...widgetProps} {...otherSchema} displayType={schema.displayType} />;
     return (
       <UpperContext.Provider
@@ -256,12 +257,16 @@ export default (props: any) => {
   const tooltip = getTooltip(schema, displayType);
   const ruleList = getRuleList(schema, form);
   const readOnly = getValueFromKey('readOnly');
+ 
   let noStyle = getValueFromKey('noStyle');
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
-  const { labelCol, wrapperCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth });
 
-  // const labelCol = getValueFromKey('labelCol');
-  // const wrapperCol = getValueFromKey('wrapperCol');
+  const _labelCol = getValueFromKey('labelCol');
+  const _wrapperCol = getValueFromKey('wrapperCol');
+
+  const { labelCol, wrapperCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth, _labelCol, _wrapperCol });
+
+  
 
   if (!label) {
     noStyle = true;

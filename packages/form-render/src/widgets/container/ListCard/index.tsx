@@ -35,43 +35,61 @@ const getOperateStyle = (schema: any) => {
 const CardList = (props: any) => {
   const form = Form.useFormInstance();
 
-  const { name: listName, schema = {}, rootPath = [], readyOnly, methods } = props;
-  let { hideAdd, hideCopy, hideMove, hideDelete, hasBackground = false, delConfirmProps, addBtnProps, onAdd, onRemove } = schema.props || {};
+  const { 
+    schema,
+    fields,
+    rootPath,
+    renderCore,
+    readOnly,
+    hasBackground,
+    addBtnProps,
+    delConfirmProps, 
+    
+    hideDelete, 
+    hideCopy, 
+    hideMove, 
+    hideAdd,
 
-  const handleOnCopy = (add: any, name: number) => () => {
-    const initialValue = form.getFieldValue([...listName, name]);
-    add(initialValue);
+    addItem,
+    copyItem,
+    moveItem, 
+    removeItem, 
+  } = props;
+
+
+  const handleCopy = (name: number) => {
+    const value = form.getFieldValue(rootPath.concat(name));
+    copyItem(value);
   };
 
   return (
-    <Form.List name={listName} initialValue={[{}]}>
-      {(fields, { add, remove, move }) => (
-        <div className={classnames('fr-list-card', {'fr-list-card-background' : hasBackground })}>
+    <>
+      <div className={classnames('fr-list-card', {'fr-list-card-background' : hasBackground })}>
           {fields.map(({ key, name  }) => {
             const length = fields.length;
             return (
               <div key={key} className='fr-list-item'>
                 <div style={{ width: 0, flex: 1 }}>
-                  {renderCore({ schema:schema, parentPath: [name], rootPath: [...rootPath, ...listName, name] })}
+                  {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
                 </div>
-                {!readyOnly && (
+                {!readOnly && (
                   <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>
                     {!hideMove && (
                       <>
                         <ArrowUpOutlined
                           style={{ color: name !== 0 ? '#1890ff' : '#c5c5c5' }}
-                          onClick={() => name !== 0 && move(name, name - 1)}
+                          onClick={() => name !== 0 && moveItem(name, name - 1)}
                         />
                         <ArrowDownOutlined
                           style={{ color: name !== length - 1 && length !== 1 ? '#1890ff' : '#c5c5c5'}}
-                          onClick={() => name !== length - 1 && length !== 1 && move(name, name + 1)}
+                          onClick={() => name !== length - 1 && length !== 1 && moveItem(name, name + 1)}
                         />
                       </>
                     )}
-                    {!hideCopy && <CopyOutlined onClick={handleOnCopy(add, name)} /> }
+                    {!hideCopy && <CopyOutlined onClick={() => handleCopy(name)} /> }
                     {!hideDelete && (
                       <Popconfirm
-                        onConfirm={() => remove(name) }
+                        onConfirm={() => removeItem(name) }
                         {...delConfirmProps}
                       >
                         <CloseOutlined  />
@@ -82,19 +100,18 @@ const CardList = (props: any) => {
               </div>
             );
           })}
-          {(!schema.max || fields.length < schema.max) && !readyOnly && (
+          {(!schema.max || fields.length < schema.max) && !hideAdd && (
             <div className='add-btn'>
               <Button
                 {...addBtnProps}
-                onClick={() => add()} 
+                onClick={() => addItem()} 
                 icon={<PlusOutlined />}
                 block={fields.length > 0 ? true : false }
               />
             </div>
           )}
         </div>
-      )}
-    </Form.List>
+    </>
   );
 }
 
