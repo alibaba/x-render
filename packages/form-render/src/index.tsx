@@ -8,6 +8,7 @@ import { validateMessagesEN, validateMessagesCN } from './models/validateMessage
 
 import FormCore from './form-core';
 import { widgets as defaultWidgets } from './widgets';
+import { FRProps } from './index.d';
 
 
 export { widgets } from './widgets';
@@ -33,7 +34,7 @@ export type  {
 } from './index.d';
 
 
-export default (props: any) => {
+export default (props: FRProps) => {
   const { configProvider, widgets, form, validateMessages, ...otherProps } = props;
   const storeRef = useRef(createStore());
   const store: any = storeRef.current;
