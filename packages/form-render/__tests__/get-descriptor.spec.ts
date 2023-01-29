@@ -141,4 +141,46 @@ describe('get-descriptor utils', () => {
       '{"count":[{"required":true},{"type":"string","message":"${title}的格式错误"},{"pattern":{},"message":"incorrect province"}]}';
     expect(JSON.stringify(res)).toEqual(expectData);
   });
+
+  it('transform test 10', () => {
+    const schema = {
+      title: '代号',
+      type: 'string',
+      required: true,
+      rules: { pattern: '^[a-z]+$', message: 'incorrect province' },
+    };
+
+    const res = getDescriptorSimple(schema, 'count');
+    const expectData = {
+      count: [
+        { required: true, type: 'string' },
+        { pattern: /^[a-z]+$/, message: 'incorrect province' },
+      ],
+    };
+
+    expect(res).toEqual(expectData);
+  });
+
+  it('transform test 11', () => {
+    const schema = {
+      title: '代号',
+      type: 'string',
+
+      rules: {
+        required: true,
+        pattern: '^[a-z]+$',
+        message: 'incorrect province',
+      },
+    };
+
+    const res = getDescriptorSimple(schema, 'count');
+    const expectData = {
+      count: [
+        { required: true, pattern: /^[a-z]+$/, message: 'incorrect province' },
+        { type: 'string' },
+      ],
+    };
+
+    expect(res).toEqual(expectData);
+  });
 });

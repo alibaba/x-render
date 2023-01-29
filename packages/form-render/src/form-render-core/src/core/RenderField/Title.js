@@ -68,8 +68,12 @@ const Title = ({
     requiredMark: schemaRequiredMark,
   } = schema;
 
+  // FormItem required
   const required =
-    schemaRequired || schema?.rules?.some(r => r?.required === true);
+    schemaRequired ||
+    (Array.isArray(schema?.rules)
+      ? schema?.rules?.some(r => r?.required === true)
+      : schema?.rules?.required);
 
   const isObjType = type === 'object';
 

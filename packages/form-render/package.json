@@ -60,7 +60,7 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.2",
-    "async-validator": "^3.5.1",
+    "async-validator": "^4.2.5",
     "classnames": "^2.3.1",
     "color": "^3.1.2",
     "lodash-es": "^4.17.21",

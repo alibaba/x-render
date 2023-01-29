@@ -145,30 +145,25 @@ export const getDescriptorSimple = (schema: Schema = {}, path) => {
     const isExistValidator = typeof ruleItem.validator === 'function';
 
     if (schema.rules) {
-      if (Array.isArray(schema.rules)) {
-        const hasRequired = schema.rules.some(rule => rule.required === true);
+      const mergeRules = Array.isArray(schema.rules)
+        ? schema.rules
+        : [schema.rules];
 
-        if (hasRequired) {
-          result = orderBy(schema.rules, r => (r.required ? 0 : 1)).concat(
-            ruleItem
-          );
-        } else if (!!schema?.required) {
-          result = isExistValidator
-            ? [{ required: true }, ruleItem, ...schema.rules]
-            : [{ required: true, ...ruleItem }, ...schema.rules];
-        } else {
-          result = [ruleItem, ...schema.rules];
-        }
+      const hasRequired = mergeRules.some(rule => rule.required === true);
 
-        result = result.map(r => handleRegx(r));
-      } else if (isObject(schema.rules)) {
-        // TODO:实际上渲染UI并未支持这种情况，后期需适配
-        result = schema.rules?.required
-          ? [{ required: true }, ruleItem, schema.rules]
-          : [ruleItem, schema.rules];
-
-        result = result.map(r => handleRegx(r));
+      if (hasRequired) {
+        result = orderBy(mergeRules, r => (r.required ? 0 : 1)).concat(
+          ruleItem
+        );
+      } else if (!!schema?.required) {
+        result = isExistValidator
+          ? [{ required: true }, ruleItem, ...mergeRules]
+          : [{ required: true, ...ruleItem }, ...mergeRules];
+      } else {
+        result = [ruleItem, ...mergeRules];
       }
+
+      result = result.map(r => handleRegx(r));
     } else {
       if (!!schema?.required) {
         result = isExistValidator

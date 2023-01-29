@@ -703,19 +703,25 @@ export const translateMessage = (msg, schema) => {
     msg = msg.replace('${max}', schema.max);
   }
   if (schema.rules) {
-    const minRule = schema.rules.find(r => r.min !== undefined);
+    const mergeRules = Array.isArray(schema.rules)
+      ? schema.rules
+      : [schema.rules];
+
+    const minRule = mergeRules.find(r => r.min !== undefined);
     if (minRule) {
       msg = msg.replace('${min}', minRule.min);
     }
-    const maxRule = schema.rules.find(r => r.max !== undefined);
+
+    const maxRule = mergeRules.find(r => r.max !== undefined);
     if (maxRule) {
       msg = msg.replace('${max}', maxRule.max);
     }
-    const lenRule = schema.rules.find(r => r.len !== undefined);
+
+    const lenRule = mergeRules.find(r => r.len !== undefined);
     if (lenRule) {
       msg = msg.replace('${len}', lenRule.len);
     }
-    const patternRule = schema.rules.find(r => r.pattern !== undefined);
+    const patternRule = mergeRules.find(r => r.pattern !== undefined);
     if (patternRule) {
       msg = msg.replace('${pattern}', patternRule.pattern);
     }

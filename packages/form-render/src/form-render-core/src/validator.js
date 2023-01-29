@@ -220,7 +220,7 @@ const validateSingle = (
   const cn = defaultValidateMessagesCN;
   const en = defaultValidateMessages;
   const descriptor = getDescriptorSimple(schema, path);
-  // console.log('descriptor, schema, path', descriptor, schema, path, data);
+
   // TODO: 有些情况会出现没有rules，需要看一下，先兜底
   let validator;
   try {
@@ -234,10 +234,10 @@ const validateSingle = (
   validator.messages(messageFeed);
   return validator
     .validate({ [path]: data })
-    .then(res => {
+    .then(() => {
       return [{ field: path, message: null }];
     })
-    .catch(({ errors, fields }) => {
+    .catch(({ errors }) => {
       return errors;
     })
     .finally(() => {
