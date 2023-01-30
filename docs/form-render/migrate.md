@@ -8,11 +8,12 @@ toc: content
 
 2.x 不在兼容 0.x 版本
 
-
 ## 重大改变
-- formRender 底层不再自行处理表单数据的收集、校验等逻辑，而是通过接入 antd form 来实现
-- [formRender UI样式升级](/form-render/disaply/row)
+formRender 底层不再自行处理表单数据的收集、校验等逻辑，而是通过接入 antd form 来实现
 
+- 表单性能提升
+- [表单UI样式升级](/form-render/disaply/row)
+- 国际化支持 (开发中)
 
 ## 二、有哪些不兼容的变化
 ### 布局调整
