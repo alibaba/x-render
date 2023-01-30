@@ -38,7 +38,8 @@ export default (props: any) => {
     initialValue = [{}]
   }
 
-  let {
+
+  let { 
     addBtnProps, delConfirmProps, actionColumnProps,
     hideAdd, hideCopy, hideMove, hideDelete,
     onAdd, onRemove, onMove, onCopy,
