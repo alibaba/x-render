@@ -4,9 +4,14 @@
   padding: 24px 24px 0;
   margin-bottom: 16px;
 }
-.tr-search .search-btn {
+.tr-search .search-action-col {
   flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 24px;
 }
+
+
 
 .tr-table-wrapper {
   background: #fff;

@@ -248,6 +248,8 @@ export interface FRProps {
   layoutWidgets?: any;
   /** 扩展方法 */
   methods?: Record<string, Function>;
+  operateExtra?: any;
+  onFinishFailed?: any;
   [key: string]: any
 }
 

@@ -28,11 +28,13 @@ const FormCore = (props: any) => {
     labelWidth, 
     form, 
     widgets, 
-    onFinish, 
+    onFinish,
+    onFinishFailed,
     readOnly, 
     builtOperation,
     removeHiddenData,
-    methods
+    methods,
+    operateExtra
   } = transformProps({ ...props, ...schemProps });
   const { labelCol, wrapperCol } = formProps;
 
@@ -85,6 +87,17 @@ const FormCore = (props: any) => {
 
     onFinish && onFinish(values, []);
   };
+
+  const handleFinishFailed = async (params: any) => {
+    let values = cloneDeep(params?.values);
+    if (!removeHiddenData) {
+      values = cloneDeep(form.getFieldsValue(true));
+    }
+    values = parseValuesWithBind(values, flattenSchema);
+    values = omitBy(values, isUndefined);
+
+    onFinishFailed({ ...params, values });
+  };
  
   return (
     <Form
@@ -92,10 +105,12 @@ const FormCore = (props: any) => {
       {...formProps}
       form={form}
       onFinish={handleFinish}
+      onFinishFailed={handleFinishFailed}
       onValuesChange={handleValuesChange}
     >
       <Row gutter={displayType === 'row' ? 16 : 24}>
         <RenderCore schema={schema} />
+        {operateExtra}
       </Row>
       {builtOperation && (
         <Row gutter={displayType === 'row' ? 16 : 24}>

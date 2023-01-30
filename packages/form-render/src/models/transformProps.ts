@@ -30,7 +30,9 @@ const transformProps =  (props: any) => {
     methods = {},
     form,
     onFinish,
+    onFinishFailed,
     builtOperation,
+    operateExtra,
     // labelAlign,
     // colon,
     // className,
@@ -73,8 +75,10 @@ const transformProps =  (props: any) => {
     validateMessages,
     debug, // 换成 form 还有用吗？
     id,
+    onFinishFailed,
     removeHiddenData,
-    methods
+    methods,
+    operateExtra
   };
 };
 
