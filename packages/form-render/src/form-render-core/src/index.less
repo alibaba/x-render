@@ -31,12 +31,12 @@
   .fr-item-has-error {
     border-color: #ff4d4f;
     &:focus {
-      border-color: #ff7875 !important;
-      box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
+      border-color: #ff7875;
+      box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
     }
     &:hover {
-      border-color: #ff7875 !important;
-      box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2) !important;
+      border-color: #ff7875;
+      box-shadow: 0 0 0 2px rgba(255, 77, 79, 0.2);
     }
   }
   .fr-item-status-error {
@@ -46,6 +46,18 @@
     }
     div[class~='ant-select-selector'] {
       .fr-item-has-error;
+    }
+  }
+
+  .ant-input-affix-wrapper > .fr-item-status-error {
+    border: none;
+    &:focus {
+      border: none;
+      box-shadow: 0 0 0 0;
+    }
+    &:hover {
+      border: none;
+      box-shadow: 0 0 0 0;
     }
   }
 

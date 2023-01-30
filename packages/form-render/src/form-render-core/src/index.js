@@ -346,6 +346,17 @@ function App({
   const isPre = location.href.indexOf('pre') > -1;
 
   const watchList = Object.keys(watch);
+
+  if ((isPre && debugForm) || debug) {
+    console.log('-----debug-info-start-----');
+    console.log('formData:', JSON.stringify(form.formData, null, 4));
+    console.log('errorFields', JSON.stringify(form.errorFields));
+    console.log('touchedKeys', JSON.stringify(form.touchedKeys));
+    console.log('allTouched', JSON.stringify(form.allTouched));
+    console.log('descriptor', JSON.stringify(window.descriptor));
+    console.log('-----debug-info-end-----');
+  }
+
   return (
     <StoreCtx.Provider value={store}>
       <Store2Ctx.Provider value={store2}>
