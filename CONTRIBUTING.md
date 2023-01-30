@@ -33,6 +33,7 @@ yarn clean
 yarn
 ```
 
+
 注意 lerna clean 不会清除顶层的 node_modules，所以如果因为特殊原因要彻底清空依赖，请执行 `rm -rf node_modules`
 
 #### 5. 发布

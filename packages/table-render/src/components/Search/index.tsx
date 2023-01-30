@@ -29,7 +29,7 @@ const Search: <RecordType extends object = any>(
     afterSearch,
     className,
     ...otherProps
-  } = props;
+  } : any = props;
 
   const { refresh, syncMethods, form, tableState }: any = useTable();
 

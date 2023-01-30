@@ -232,7 +232,7 @@ export interface FRProps {
   /** 表单提交前钩子 */
   beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
   /** 表单提交后钩子 */
-  onFinish?: (formData: any, error: Error[]) => void;
+  onFinish?: (formData: any) => void;
   /** 时时与外部更新同步的钩子 */
   onValuesChange?: (
     changedValues: {
@@ -249,7 +249,7 @@ export interface FRProps {
   /** 扩展方法 */
   methods?: Record<string, Function>;
   operateExtra?: any;
-  onFinishFailed?: any;
+  onFinishFailed?: () => void;
   [key: string]: any
 }
 
