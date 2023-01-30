@@ -9,10 +9,6 @@ import Field from './field';
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
 
-  if (schema.hidden) {
-    return null;
-  }
-
   const store = useContext(FRContext);
   const { schema: formSchema } = store.getState();
 
@@ -36,7 +32,7 @@ export default (props: any) => {
         const formData = form.getFieldsValue(true);
         const dependValues = (schema.dependencies || []).map((item: any) => _get(formData, item))
         const newSchema = parseAllExpression(schema, formData, rootPath, formSchema);
-      
+        
         return <Field schema={newSchema} {...otherProps} dependValues={dependValues} store={store} />;
       }}
     </Form.Item>

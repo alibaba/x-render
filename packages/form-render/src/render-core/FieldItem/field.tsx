@@ -189,8 +189,12 @@ const createWidget = (Component: any, props: any, form: any, path: any, rootPath
 
 export default (props: any) => {
   const { store, schema, path, children, dependValues, rootPath } = props;
-  const form = Form.useFormInstance();
 
+  if (schema.hidden) {
+    return null;
+  }
+
+  const form = Form.useFormInstance();
   const widgets = useStore(store, (state: any) => state.widgets);
   const methods = useStore(store, (state: any) => state.methods);
   const formCtx: any = useStore(store, (state: any) => state.context);
