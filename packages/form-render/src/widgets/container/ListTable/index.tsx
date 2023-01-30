@@ -3,7 +3,6 @@ import { Table, Form, Space, Popconfirm, Button } from 'antd';
 import type { FormListFieldData, TableColumnsType } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import TableCell from './tableCell';
-
 import './index.less';
 
 interface ListTableProps {
@@ -16,7 +15,7 @@ interface ListTableProps {
 };
 
 const TableList: React.FC<ListTableProps> = (props) => {
-  const { 
+  const {
     schema,
     fields,
     rootPath,
@@ -24,19 +23,19 @@ const TableList: React.FC<ListTableProps> = (props) => {
     readOnly,
 
     addBtnProps,
-    delConfirmProps, 
+    delConfirmProps,
     actionColumnProps,
     pagination,
-    
-    hideDelete, 
-    hideCopy, 
-    hideMove, 
+
+    hideDelete,
+    hideCopy,
+    hideMove,
     hideAdd,
 
     addItem,
     copyItem,
-    moveItem, 
-    removeItem, 
+    moveItem,
+    removeItem,
   } = props;
 
   const form = Form.useFormInstance();
@@ -75,7 +74,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
           }
         };
         return (
-          <TableCell 
+          <TableCell
             renderCore={renderCore}
             schema={fieldSchema}
             parentPath={[field.name]}
@@ -100,12 +99,12 @@ const TableList: React.FC<ListTableProps> = (props) => {
                 {...delConfirmProps}
                 onConfirm={() => removeItem(field.name)}
               >
-                <a>{actionColumnProps.delText}</a>          
+                <a>{actionColumnProps.delText}</a>
               </Popconfirm>
             )}
             {!hideMove && (
               <>
-                <ArrowUpOutlined  style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name - 1)} />
+                <ArrowUpOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name - 1)} />
                 <ArrowDownOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name + 1)} />
               </>
             )}

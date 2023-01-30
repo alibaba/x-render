@@ -1,7 +1,6 @@
 import React from 'react';
 import { Form, Button, Space, Popconfirm } from 'antd';
-import { PlusOutlined, CloseOutlined,  ArrowUpOutlined, ArrowDownOutlined, CopyOutlined } from '@ant-design/icons';
-import renderCore from '../../../render-core';
+import { PlusOutlined, CloseOutlined, ArrowUpOutlined, ArrowDownOutlined, CopyOutlined } from '@ant-design/icons';
 import classnames from 'classnames'
 
 import './index.less';
@@ -35,7 +34,7 @@ const getOperateStyle = (schema: any) => {
 const CardList = (props: any) => {
   const form = Form.useFormInstance();
 
-  const { 
+  const {
     schema,
     fields,
     rootPath,
@@ -43,17 +42,17 @@ const CardList = (props: any) => {
     readOnly,
     hasBackground,
     addBtnProps,
-    delConfirmProps, 
-    
-    hideDelete, 
-    hideCopy, 
-    hideMove, 
+    delConfirmProps,
+
+    hideDelete,
+    hideCopy,
+    hideMove,
     hideAdd,
 
     addItem,
     copyItem,
-    moveItem, 
-    removeItem, 
+    moveItem,
+    removeItem,
   } = props;
 
 
@@ -64,53 +63,53 @@ const CardList = (props: any) => {
 
   return (
     <>
-      <div className={classnames('fr-list-card', {'fr-list-card-background' : hasBackground })}>
-          {fields.map(({ key, name  }) => {
-            const length = fields.length;
-            return (
-              <div key={key} className='fr-list-item'>
-                <div style={{ width: 0, flex: 1 }}>
-                  {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
-                </div>
-                {!readOnly && (
-                  <Space className={classnames('fr-list-item-operate', {'fr-list-item-operate-fixed' : getOperateFixed(schema) })} style={getOperateStyle(schema)}>
-                    {!hideMove && (
-                      <>
-                        <ArrowUpOutlined
-                          style={{ color: name !== 0 ? '#1890ff' : '#c5c5c5' }}
-                          onClick={() => name !== 0 && moveItem(name, name - 1)}
-                        />
-                        <ArrowDownOutlined
-                          style={{ color: name !== length - 1 && length !== 1 ? '#1890ff' : '#c5c5c5'}}
-                          onClick={() => name !== length - 1 && length !== 1 && moveItem(name, name + 1)}
-                        />
-                      </>
-                    )}
-                    {!hideCopy && <CopyOutlined onClick={() => handleCopy(name)} /> }
-                    {!hideDelete && (
-                      <Popconfirm
-                        onConfirm={() => removeItem(name) }
-                        {...delConfirmProps}
-                      >
-                        <CloseOutlined  />
-                      </Popconfirm>
-                    )}
-                  </Space>
-                )}
+      <div className={classnames('fr-list-card', { 'fr-list-card-background': hasBackground })}>
+        {fields.map(({ key, name }) => {
+          const length = fields.length;
+          return (
+            <div key={key} className='fr-list-item'>
+              <div style={{ width: 0, flex: 1 }}>
+                {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
               </div>
-            );
-          })}
-          {(!schema.max || fields.length < schema.max) && !hideAdd && (
-            <div className='add-btn'>
-              <Button
-                {...addBtnProps}
-                onClick={() => addItem()} 
-                icon={<PlusOutlined />}
-                block={fields.length > 0 ? true : false }
-              />
+              {!readOnly && (
+                <Space className={classnames('fr-list-item-operate', { 'fr-list-item-operate-fixed': getOperateFixed(schema) })} style={getOperateStyle(schema)}>
+                  {!hideMove && (
+                    <>
+                      <ArrowUpOutlined
+                        style={{ color: name !== 0 ? '#1890ff' : '#c5c5c5' }}
+                        onClick={() => name !== 0 && moveItem(name, name - 1)}
+                      />
+                      <ArrowDownOutlined
+                        style={{ color: name !== length - 1 && length !== 1 ? '#1890ff' : '#c5c5c5' }}
+                        onClick={() => name !== length - 1 && length !== 1 && moveItem(name, name + 1)}
+                      />
+                    </>
+                  )}
+                  {!hideCopy && <CopyOutlined onClick={() => handleCopy(name)} />}
+                  {!hideDelete && (
+                    <Popconfirm
+                      onConfirm={() => removeItem(name)}
+                      {...delConfirmProps}
+                    >
+                      <CloseOutlined />
+                    </Popconfirm>
+                  )}
+                </Space>
+              )}
             </div>
-          )}
-        </div>
+          );
+        })}
+        {(!schema.max || fields.length < schema.max) && !hideAdd && (
+          <div className='add-btn'>
+            <Button
+              {...addBtnProps}
+              onClick={() => addItem()}
+              icon={<PlusOutlined />}
+              block={fields.length > 0 ? true : false}
+            />
+          </div>
+        )}
+      </div>
     </>
   );
 }
