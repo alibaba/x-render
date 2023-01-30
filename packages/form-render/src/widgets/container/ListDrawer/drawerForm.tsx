@@ -12,7 +12,12 @@ const DrawerForm = (props: any) => {
   };
 
   const handleClose = () => {
-    form.submit();
+    form.validateFields().then(() => {
+      onClose();
+    }).catch(() => {
+      const flag = !data;
+      onClose(flag);
+    })
   };
 
   return (
@@ -23,9 +28,14 @@ const DrawerForm = (props: any) => {
       open={true}
       onClose={handleClose}
       extra={
-        <Button type='primary' onClick={form.submit}>
-          确定
-        </Button>
+        <Space>
+          <Button onClick={handleClose}>
+            取消
+          </Button>
+          <Button type='primary' onClick={form.submit}>
+            确定
+          </Button>
+        </Space>
       }
     >
       <FRender

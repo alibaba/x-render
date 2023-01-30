@@ -146,9 +146,12 @@ const TableList: React.FC<Props> = (props: any) => {
           schema={schema}
           data={itemData}
           widgets={widgets}
-          onClose={() => {
+          onClose={(remove: boolean) => {
             setVisible(false);
             setItemData(null);
+            if (remove) {
+              removeItem(indexRef.current);
+            }
           }}
           valueChange={(value: any) => {
             form.setFieldValue([...rootPath, indexRef.current], value);
