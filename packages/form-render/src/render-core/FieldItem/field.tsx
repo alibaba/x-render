@@ -181,7 +181,6 @@ const createWidget = (Component: any, props: any, form: any, path: any, rootPath
 
   useEffect(() => {
     const errors = form.getFieldError([...(rootPath || []), ...path]);
-    debugger;
     onStatusChange && onStatusChange(status, errors);
   }, [status]);
 
