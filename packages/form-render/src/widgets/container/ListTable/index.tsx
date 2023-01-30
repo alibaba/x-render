@@ -74,6 +74,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
             }
           }
         };
+        debugger;
         return (
           <TableCell 
             renderCore={renderCore}

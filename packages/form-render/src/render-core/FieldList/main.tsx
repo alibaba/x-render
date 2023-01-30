@@ -128,7 +128,7 @@ export default (props: any) => {
           path={path}
           listName={path}
           parentLitPath={parentLitPath}
-          rootPath={[...preRootPath, path]}
+          rootPath={[...preRootPath, ...path]}
           
           readOnly={readOnly}
           methods={methods}
