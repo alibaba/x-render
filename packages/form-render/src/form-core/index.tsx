@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Form, Row, Col, Button, Space } from 'antd';
 import { useStore } from 'zustand';
+import { isUndefined, omitBy, cloneDeep } from 'lodash-es';
 
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
@@ -65,12 +66,13 @@ const FormCore = (props: any) => {
   };
 
   const handleFinish = async (_values: any) => {
-    let values = _values;
+    let values = cloneDeep(_values);
     if (!removeHiddenData) {
-      values = form.getFieldsValue(true);
+      values = cloneDeep(form.getFieldsValue(true));
     }
-   
     values = parseValuesWithBind(values, flattenSchema);
+    values = omitBy(values, isUndefined);
+
     let fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
     fieldsError = transformFieldsError(fieldsError);
 

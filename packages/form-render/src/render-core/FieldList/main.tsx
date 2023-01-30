@@ -33,6 +33,11 @@ export default (props: any) => {
 
   const { props: listProps, ...otherSchema } = schema;
 
+  let initialValue = schema.default;
+  if (!initialValue && !['drawerList', 'list1'].includes(widgetName)) {
+    initialValue = [{}]
+  }
+
   let { 
     addBtnProps, delConfirmProps, actionColumnProps, 
     hideAdd, hideCopy, hideMove, hideDelete,
@@ -111,10 +116,11 @@ export default (props: any) => {
   }
  
   return (
-    <Form.List name={path} initialValue={[{}]}>
+    <Form.List name={path} initialValue={initialValue}>
       {(fields, operation) => (
         <Widget
           {...otherListProps}
+          form={form}
           schema={otherSchema}
           fields={fields}
           operation={operation}

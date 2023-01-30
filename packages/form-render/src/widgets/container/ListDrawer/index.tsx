@@ -124,9 +124,8 @@ const TableList: React.FC<Props> = (props: any) => {
   }
 
   return (
-    <>
+    <div  className='fr-list-drawer'>
       <Table
-        className='fr-list-drawer'
         size='middle'
         dataSource={fields}
         columns={columns}
@@ -158,7 +157,7 @@ const TableList: React.FC<Props> = (props: any) => {
           }}
         />
       )}
-    </>
+    </div>
   );
 }
 

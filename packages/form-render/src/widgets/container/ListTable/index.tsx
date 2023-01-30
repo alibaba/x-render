@@ -116,14 +116,14 @@ const TableList: React.FC<ListTableProps> = (props) => {
   }
 
   return (
-    <>
+    <div className='fr-table-list'>
       <Table
-        className='fr-table-list'
         size='middle'
         columns={columns}
         dataSource={fields}
         pagination={paginationConfig}
         scroll={{ x: 'max-content' }}
+        style={{ marginBottom: '12px'}}
       />
       {(!schema.max || fields.length < schema.max) && !hideAdd && (
         <Button
@@ -132,7 +132,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
           {...addBtnProps}
         />
       )}
-    </>
+    </div>
   );
 }
 
