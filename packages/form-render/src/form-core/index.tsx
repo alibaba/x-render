@@ -30,6 +30,7 @@ const FormCore = (props: any) => {
     onFinish, 
     readOnly, 
     builtOperation,
+    removeHiddenData,
     methods
   } = transformProps({ ...props, ...schemProps });
   const { labelCol, wrapperCol } = formProps;
@@ -64,7 +65,12 @@ const FormCore = (props: any) => {
   };
 
   const handleFinish = async (_values: any) => {
-    const values = parseValuesWithBind(_values, flattenSchema);
+    let values = _values;
+    if (!removeHiddenData) {
+      values = form.getFieldsValue(true);
+    }
+   
+    values = parseValuesWithBind(values, flattenSchema);
     let fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
     fieldsError = transformFieldsError(fieldsError);
 
@@ -72,7 +78,9 @@ const FormCore = (props: any) => {
     // Stop submit
     if (fieldsError) {
       form.setFields(fieldsError);
+      return;
     }
+
     onFinish && onFinish(values, []);
   };
  

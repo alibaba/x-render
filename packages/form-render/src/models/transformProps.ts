@@ -14,7 +14,7 @@ const transformProps =  (props: any) => {
     displayType = 'column',
     widgets,
     watch,
-    removeHiddenData,
+    removeHiddenData = true,
     readOnly,
     column = 1,
     mapping,
@@ -48,9 +48,7 @@ const transformProps =  (props: any) => {
     formProps.layout = displayTypeEnum[displayType] || 'horizontal';
   }
 
-  if (removeHiddenData !== undefined) {
-    formProps.preserve = removeHiddenData;
-  }
+  
 
   return {
     formProps,
@@ -75,6 +73,7 @@ const transformProps =  (props: any) => {
     validateMessages,
     debug, // 换成 form 还有用吗？
     id,
+    removeHiddenData,
     methods
   };
 };

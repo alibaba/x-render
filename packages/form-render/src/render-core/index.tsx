@@ -69,7 +69,7 @@ const RenderCore = (props: RenderCoreProps) : any => {
     const item = schema.properties[key];
     const path = [...parentPath, key];
    
-    return renderItem({ schema: item, path, key, rootPath })
+    return renderItem({ schema: item, path, key, rootPath });
   });
 }
 
