@@ -2,7 +2,6 @@ import React from 'react';
 import { Form } from 'antd';
 import { isFunction } from '../../utils';
 
-
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
 };
@@ -40,8 +39,6 @@ export default (props: any) => {
     onAdd, onRemove, onMove, onCopy,
     ...otherListProps
   } = listProps || {};
-
-
 
   const handleAdd = (add: any) => () => {
     let addFunc = onAdd;

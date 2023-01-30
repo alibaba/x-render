@@ -180,7 +180,7 @@ const createWidget = (Component: any, props: any, form: any, path: any, rootPath
   const { status } = Form.Item.useStatus();
 
   useEffect(() => {
-    const errors = form.getFieldError([...rootPath, ...path]);
+    const errors = form.getFieldError([...(rootPath || []), ...path]);
     onStatusChange && onStatusChange(status, errors);
   }, [status]);
 

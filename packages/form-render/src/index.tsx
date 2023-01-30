@@ -10,7 +10,6 @@ import FormCore from './form-core';
 import { widgets as defaultWidgets } from './widgets';
 import { FRProps } from './index.d';
 
-
 export { widgets } from './widgets';
 export { mapping } from './models/mapping';
 

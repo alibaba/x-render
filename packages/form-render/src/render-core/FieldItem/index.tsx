@@ -6,7 +6,6 @@ import { FRContext } from '../../models/context';
 import { isHasExpression, parseAllExpression } from '../../models/expression';
 import Field from './field';
 
-
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
 
