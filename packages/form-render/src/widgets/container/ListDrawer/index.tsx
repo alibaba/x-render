@@ -14,11 +14,11 @@ interface Props {
   fields: FormListFieldData[];
   operation: FormListOperation;
   prefix: string;
-  [key:string]: any
+  [key: string]: any
 };
 
 const TableList: React.FC<Props> = (props: any) => {
-  const { 
+  const {
     schema,
     fields,
     rootPath,
@@ -26,20 +26,20 @@ const TableList: React.FC<Props> = (props: any) => {
     readOnly,
     widgets,
     addBtnProps,
-    delConfirmProps, 
+    delConfirmProps,
     actionColumnProps,
     pagination,
-    
-    hideDelete, 
-    hideCopy, 
-    hideMove, 
+
+    hideDelete,
+    hideCopy,
+    hideMove,
     hideAdd,
     hideEdit,
-    
+
     addItem,
     copyItem,
-    moveItem, 
-    removeItem, 
+    moveItem,
+    removeItem,
   } = props;
 
   const form = Form.useFormInstance();
@@ -67,7 +67,7 @@ const TableList: React.FC<Props> = (props: any) => {
     indexRef.current = fields.length;
     setVisible(true);
   };
-  
+
   const columns: TableColumnsType<FormListFieldData> = Object.keys(columnSchema).map(dataIndex => {
     const { title } = columnSchema[dataIndex];
     return {
@@ -76,7 +76,6 @@ const TableList: React.FC<Props> = (props: any) => {
       render: (_, field) => {
         const fieldSchema = {
           type: 'object',
-         
           properties: {
             [dataIndex]: {
               ...columnSchema[dataIndex],
@@ -108,12 +107,12 @@ const TableList: React.FC<Props> = (props: any) => {
                 {...delConfirmProps}
                 onConfirm={() => removeItem(field.name)}
               >
-                <a>{actionColumnProps.delText}</a>          
+                <a>{actionColumnProps.delText}</a>
               </Popconfirm>
             )}
             {!hideMove && (
               <>
-                <ArrowUpOutlined  style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name - 1)} />
+                <ArrowUpOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name - 1)} />
                 <ArrowDownOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name + 1)} />
               </>
             )}
@@ -130,7 +129,7 @@ const TableList: React.FC<Props> = (props: any) => {
         size='middle'
         dataSource={fields}
         columns={columns}
-        style={{ marginBottom: '12px'}}
+        style={{ marginBottom: '12px' }}
         scroll={{ x: 'max-content' }}
         pagination={paginationConfig}
       />
@@ -142,7 +141,7 @@ const TableList: React.FC<Props> = (props: any) => {
         />
       )}
       {visible && (
-         <FormDrawer
+        <FormDrawer
           schema={schema}
           data={itemData}
           widgets={widgets}
