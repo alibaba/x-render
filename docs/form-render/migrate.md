@@ -10,7 +10,7 @@ toc: content
 
 
 ## 重大改变
-- formRender 底层不再自行处理表单数据的收集、校验等逻辑，而是通过 接入 antd form 来实现
+- formRender 底层不再自行处理表单数据的收集、校验等逻辑，而是通过接入 antd form 来实现
 - [formRender UI样式升级](/form-render/disaply/row)
 
 

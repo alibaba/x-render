@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'antd';
+import { Form, message } from 'antd';
 import { isFunction } from '../../utils';
 
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
@@ -26,7 +26,7 @@ let defaultActionColumnProps = {
 
 export default (props: any) => {
   const { form, schema, path, parentLitPath, renderCore, rootPath, methods, widgets, upperCtx, formCtx } = props;
-  
+
   const { widget } = schema;
   let widgetName = widget || 'list1';
   const Widget = widgets[widgetName];
@@ -38,8 +38,9 @@ export default (props: any) => {
     initialValue = [{}]
   }
 
+
   let { 
-    addBtnProps, delConfirmProps, actionColumnProps, 
+    addBtnProps, delConfirmProps, actionColumnProps,
     hideAdd, hideCopy, hideMove, hideDelete,
     onAdd, onRemove, onMove, onCopy,
     ...otherListProps
@@ -58,7 +59,7 @@ export default (props: any) => {
     add();
   };
 
-  const handleRemove = (remove: any) => (index: number) => { 
+  const handleRemove = (remove: any) => (index: number) => {
     let removeFunc = onRemove;
     if (typeof onRemove === 'string') {
       removeFunc = methods[onRemove];
@@ -72,24 +73,27 @@ export default (props: any) => {
     remove(index);
   };
 
-  const handleMove = (move: any) => (form: number, to: number) => { 
+  const handleMove = (move: any) => (form: number, to: number) => {
     let moveFunc = onMove;
     if (typeof moveFunc === 'string') {
       moveFunc = methods[onMove];
     }
 
     if (isFunction(moveFunc)) {
-      moveFunc(() => move(form, to), { schema,  form, to });
+      moveFunc(() => move(form, to), { schema, form, to });
       return;
     }
 
     move(form, to);
   };
 
-  const handleCopy = (add: any) => (value: any) => {
+  const handleCopy = (add: any, fields: any) => (value: any) => {
+    if (schema.max && fields.length === schema.max) {
+      return message.warning('已达表单项数量上限，无法复制')
+    }
     let copyFunc = onCopy;
-    if (typeof onAdd === 'string') {
-      copyFunc = methods[onAdd];
+    if (typeof onCopy === 'string') {
+      copyFunc = methods[onCopy];
     }
 
     if (isFunction(copyFunc)) {
@@ -114,7 +118,7 @@ export default (props: any) => {
     hideDelete = true;
     hideMove = true;
   }
- 
+
   return (
     <Form.List name={path} initialValue={initialValue}>
       {(fields, operation) => (
@@ -143,9 +147,9 @@ export default (props: any) => {
           addItem={handleAdd(operation.add)}
           removeItem={handleRemove(operation.remove)}
           moveItem={handleMove(operation.move)}
-          copyItem={handleCopy(operation.add)}
+          copyItem={handleCopy(operation.add, fields)}
 
-          addBtnProps= {{
+          addBtnProps={{
             ...defaultAddBtnProps,
             ...addBtnProps
           }}
