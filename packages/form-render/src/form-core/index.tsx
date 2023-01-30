@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Form, Row, Col, Button, Space } from 'antd';
 import { useStore } from 'zustand';
+import { isUndefined, omitBy, cloneDeep } from 'lodash-es';
 
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
@@ -27,10 +28,13 @@ const FormCore = (props: any) => {
     labelWidth, 
     form, 
     widgets, 
-    onFinish, 
+    onFinish,
+    onFinishFailed,
     readOnly, 
     builtOperation,
-    methods
+    removeHiddenData,
+    methods,
+    operateExtra
   } = transformProps({ ...props, ...schemProps });
   const { labelCol, wrapperCol } = formProps;
 
@@ -64,7 +68,13 @@ const FormCore = (props: any) => {
   };
 
   const handleFinish = async (_values: any) => {
-    const values = parseValuesWithBind(_values, flattenSchema);
+    let values = cloneDeep(_values);
+    if (!removeHiddenData) {
+      values = cloneDeep(form.getFieldsValue(true));
+    }
+    values = parseValuesWithBind(values, flattenSchema);
+    values = omitBy(values, isUndefined);
+
     let fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
     fieldsError = transformFieldsError(fieldsError);
 
@@ -72,8 +82,21 @@ const FormCore = (props: any) => {
     // Stop submit
     if (fieldsError) {
       form.setFields(fieldsError);
+      return;
     }
+
     onFinish && onFinish(values, []);
+  };
+
+  const handleFinishFailed = async (params: any) => {
+    let values = cloneDeep(params?.values);
+    if (!removeHiddenData) {
+      values = cloneDeep(form.getFieldsValue(true));
+    }
+    values = parseValuesWithBind(values, flattenSchema);
+    values = omitBy(values, isUndefined);
+
+    onFinishFailed({ ...params, values });
   };
  
   return (
@@ -82,10 +105,12 @@ const FormCore = (props: any) => {
       {...formProps}
       form={form}
       onFinish={handleFinish}
+      onFinishFailed={handleFinishFailed}
       onValuesChange={handleValuesChange}
     >
       <Row gutter={displayType === 'row' ? 16 : 24}>
         <RenderCore schema={schema} />
+        {operateExtra}
       </Row>
       {builtOperation && (
         <Row gutter={displayType === 'row' ? 16 : 24}>

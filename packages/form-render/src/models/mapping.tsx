@@ -81,13 +81,6 @@ export function getWidgetName(schema, _mapping = mapping) {
     }
   }
   
-
-
-
-
-
-
-
   const _widget = format;
   if (_widget) {
     list.push(`${type}:${_widget}`);

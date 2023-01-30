@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, message } from 'antd';
 import { isFunction } from '../../utils';
 
-
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
 };
@@ -34,14 +33,17 @@ export default (props: any) => {
 
   const { props: listProps, ...otherSchema } = schema;
 
+  let initialValue = schema.default;
+  if (!initialValue && !['drawerList', 'list1'].includes(widgetName)) {
+    initialValue = [{}]
+  }
+
   let {
     addBtnProps, delConfirmProps, actionColumnProps,
     hideAdd, hideCopy, hideMove, hideDelete,
     onAdd, onRemove, onMove, onCopy,
     ...otherListProps
   } = listProps || {};
-
-
 
   const handleAdd = (add: any) => () => {
     let addFunc = onAdd;
@@ -117,10 +119,11 @@ export default (props: any) => {
   }
 
   return (
-    <Form.List name={path} initialValue={[{}]}>
+    <Form.List name={path} initialValue={initialValue}>
       {(fields, operation) => (
         <Widget
           {...otherListProps}
+          form={form}
           schema={otherSchema}
           fields={fields}
           operation={operation}

@@ -3,7 +3,7 @@ import { Form, FormInstance } from 'antd';
 
 import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
 import { transformValueBind, parseValuesWithBind } from './bindValues';
-import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject } from '../utils';
+import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject, isArray } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
 
 
@@ -137,6 +137,36 @@ const useForm = () => {
   form.removeErrorField = (path: any) => {
     form.setFields([{ name: path, errors: []}]);
   };
+
+  form.getHiddenValues = () => {
+    const values = form.getFieldsValue();
+    const allValues = form.getFieldsValue(true);
+    const hiddenValues = {};
+
+    const recursion = (obj1: any, obj2: any, path: any) => {
+      Object.keys(obj1).forEach((key: string) => {
+        const value = obj1[key];
+        const _path = path ? `${path}.${key}` : key;
+        if (!obj2.hasOwnProperty(key)) {
+          _set(hiddenValues, _path, value);
+          return;
+        } 
+
+        if (isObject(value)) {
+          recursion(value, obj2[key], _path);
+        }
+
+        if (isArray(value)) {
+          value.map((item: any, index: number) => {
+            recursion(item, _get(obj2, `${key}[${index}]`, []), `${_path}[${index}]`)
+          });
+        }
+      });
+    };
+
+    recursion(allValues, values, null);
+    return hiddenValues;
+  }
 
   form.__setStore = (store: any) => {
     storeRef.current = store;
