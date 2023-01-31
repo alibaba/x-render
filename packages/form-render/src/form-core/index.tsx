@@ -6,7 +6,7 @@ import { isUndefined, omitBy, cloneDeep } from 'lodash-es';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesWithBind } from '../models/bindValues';
-import { transformFieldsError, valuesWatch, } from '../models/formCoreUtils';
+import { transformFieldsError, valuesWatch, immediateWatch } from '../models/formCoreUtils';
 import RenderCore from '../render-core';
 
 import './index.less';
@@ -43,6 +43,9 @@ const FormCore = (props: any) => {
     store.setState({ widgets, methods });
     setTimeout(() => {
       onMount && onMount();
+
+      const values = omitBy(form.getValus(), isUndefined);
+      immediateWatch(watch, values);
     }, 0);
   }, []);
 

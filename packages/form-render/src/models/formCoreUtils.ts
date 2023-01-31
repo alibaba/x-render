@@ -14,6 +14,25 @@ export const transformFieldsError = (_fieldsError: any) => {
   return fieldsError.map((field: any) => ({ errors: field.error, ...field }));
 };
 
+export const immediateWatch = (watch: any, values: any) => {
+  if (Object.keys(watch || {})?.length === 0) {
+    return;
+  }
+
+  Object.keys(watch).forEach(path => {
+    const value = _get(values, path);
+    const watchItem = watch[path];
+
+    if (watchItem?.immediate && isFunction(watchItem?.handler)) {
+      try {
+        watchItem.handler(value);
+      } catch (error) {
+        console.log(`${path}对应的watch函数执行报错：`, error);
+      }
+    }
+  });
+};
+
 export const valuesWatch = (_changedValues: any, allValues: any, watch: any) => {
   if (Object.keys(watch || {})?.length === 0) {
     return;
@@ -30,22 +49,20 @@ export const valuesWatch = (_changedValues: any, allValues: any, watch: any) => 
     }
     const value = _get(changedValues, path);
 
-    const callBack = watch[path];
-    if (!callBack) {
-      return;
-    }
+    const watchItem = watch[path];
+    
 
-    if (isFunction(callBack)) {
+    if (isFunction(watchItem)) {
       try {
-        callBack(value);
+        watchItem(value);
       } catch (error) {
         console.log(`${path}对应的watch函数执行报错：`, error);
       }
     } 
     
-    if (isFunction(callBack?.handler)) {
+    if (isFunction(watchItem?.handler)) {
       try {
-        callBack.handler(value);
+        watchItem.handler(value);
       } catch (error) {
         console.log(`${path}对应的watch函数执行报错：`, error);
       }
