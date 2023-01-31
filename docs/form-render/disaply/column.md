@@ -594,9 +594,9 @@ export default () => {
 };
 ```
 
-### 3. TableList
+### 3. DrawerList
 
-用于展示每行只有 3 - n 个简单元素的情况，特别是数据量很大需要分页的
+用于展示存在列表套列表，列表套对象等复杂元素的情况
 
 ```jsx
 import React from 'react';
@@ -609,7 +609,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'tableList',
+      widget: 'drawerList',
       items: {
         type: 'object',
         properties: {
@@ -645,9 +645,9 @@ export default () => {
 };
 ```
 
-### 4. DrawerList
+### 4. TableList
 
-用于展示存在列表套列表，列表套对象等复杂元素的情况
+用于展示每行只有 3 - n 个简单元素的情况，特别是数据量很大需要分页的
 
 ```jsx
 import React from 'react';
@@ -660,7 +660,7 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'drawerList',
+      widget: 'tableList',
       items: {
         type: 'object',
         properties: {
