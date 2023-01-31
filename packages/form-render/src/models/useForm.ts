@@ -3,7 +3,7 @@ import { Form, FormInstance } from 'antd';
 
 import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
 import { transformValueBind, parseValuesWithBind } from './bindValues';
-import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject, isArray } from '../utils';
+import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject, isArray, _omitBy, _isUndefined } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
 
 
@@ -112,7 +112,8 @@ const useForm = () => {
   }
 
   form.getValues = (nameList?: any, filterFunc?: any) => {
-    const values = form.getFieldsValue(nameList, filterFunc);
+    let values = form.getFieldsValue(nameList, filterFunc);
+    values = _omitBy(values, _isUndefined);
     return parseValuesWithBind(values, flattenSchemaRef.current);
   }
 

@@ -24,6 +24,9 @@ formRender 底层不再自行处理表单数据的收集、校验等逻辑，而
 
 
 ### API 调整
+
+#### form.formData 弃用
+改用 form.getValues() 方式获取
 #### onFinish 提交函数
 只有校验通过 onFinish 才会被触发，不在返回错误信息参数，为了兼容1.0版本，错误信息默认返回 []
 

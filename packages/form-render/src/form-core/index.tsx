@@ -64,7 +64,8 @@ const FormCore = (props: any) => {
 
 
   const handleValuesChange = (changedValues: any, allValues: any) => {
-    valuesWatch(changedValues, allValues, watch);
+    const _allValues = omitBy(allValues, isUndefined);
+    valuesWatch(changedValues, _allValues, watch);
   };
 
   const handleFinish = async (_values: any) => {

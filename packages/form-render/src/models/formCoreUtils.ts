@@ -1,6 +1,5 @@
 
-import { isObject, isArray, _get } from '../utils';
-
+import { isObject, isArray, _get, _has, isFunction } from '../utils';
 
 export const transformFieldsError = (_fieldsError: any) => {
   let fieldsError = _fieldsError;
@@ -15,39 +14,43 @@ export const transformFieldsError = (_fieldsError: any) => {
   return fieldsError.map((field: any) => ({ errors: field.error, ...field }));
 };
 
-export const valuesWatch = (changedValues: any, allValues: any, watch: any) => {
+export const valuesWatch = (_changedValues: any, allValues: any, watch: any) => {
   if (Object.keys(watch || {})?.length === 0) {
     return;
   }
-  const _changedValues = {
-    '#': allValues,
-    ...changedValues
-  }
 
-  const registerField = (watchKey: any, value: any, watch: any) => {
-    const callBack = watch[watchKey];
+  const changedValues = {
+    '#': allValues,
+    ..._changedValues
+  };
+
+  Object.keys(watch).forEach(path => {
+    if (!_has(changedValues, path)) {
+      return;
+    }
+    const value = _get(changedValues, path);
+
+    const callBack = watch[path];
     if (!callBack) {
       return;
     }
 
-    if (typeof callBack === 'function') {
+    if (isFunction(callBack)) {
       try {
         callBack(value);
       } catch (error) {
-        console.log(`${watchKey}对应的watch函数执行报错：`, error);
+        console.log(`${path}对应的watch函数执行报错：`, error);
       }
     } 
     
-    if (typeof callBack.handler === 'function') {
+    if (isFunction(callBack?.handler)) {
       try {
         callBack.handler(value);
       } catch (error) {
-        console.log(`${watchKey}对应的watch函数执行报错：`, error);
+        console.log(`${path}对应的watch函数执行报错：`, error);
       }
     }
-  };
-
-  Object.keys(_changedValues).forEach(key => registerField(key, _changedValues[key], watch))
+  });
 };
 
 export const getSchemaFullPath = (path: string, schema: any) => {

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useRef } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { Form, Col, Row } from 'antd';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
@@ -60,11 +60,11 @@ const getTooltip = (schema: any, displayType: string) => {
     return null;
   }
 
-  if (displayType === 'row') {
-    return {
-      title: description
-    }
-  }
+  // if (displayType === 'row') {
+  //   return {
+  //     title: description
+  //   }
+  // }
 
   if (displayType === 'column' && descType === 'icon') {
     return {
@@ -199,8 +199,7 @@ export default (props: any) => {
   const methods = useStore(store, (state: any) => state.methods);
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
-  const fieldRef = useRef();
-
+  
   const { labelWidth } = formCtx;
   const { hidden, properties, dependencies, ...otherSchema } = schema;
 
@@ -213,6 +212,7 @@ export default (props: any) => {
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   let widget = widgets[widgetName] || widgets['html'];
+ 
   const widgetProps = getWidgetProps(widgetName, schema, { widgets, methods, form, dependValues });
   const displayType = getValueFromKey('displayType');
   const inlineMode = displayType === 'inline';
