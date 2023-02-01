@@ -43,7 +43,7 @@
     </td>
     <td width="160" align="center">
       <img
-        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/xbUbPU/alipay-2.png"
+        src="https://gw.alipayobjects.com/zos/k/sx/kJRfKV.jpg"
         width="160"
       />
     </td>
@@ -67,7 +67,7 @@
     </td>
     <td width="160" align="center">
       <img
-        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/3GrqSz/unnamed.png"
+        src="https://gw.alipayobjects.com/zos/k/dl/zJ2uhY.jpg"
         width="160"
       />
     </td>
@@ -81,13 +81,13 @@
     </td>
     <td width="160" align="center">
       <img
-        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/s0Bo8z/tower-logo.png"
+        src="https://gw.alipayobjects.com/zos/k/9l/RZCG03.jpg"
         width="160"
       />
     </td>
     <td width="160" align="center">
       <img
-        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/yosqel/Ic2iIh.png"
+        src="https://gw.alipayobjects.com/zos/k/rh/4PXvlp.jpg"
         width="160"
       />
     </td>
@@ -99,7 +99,7 @@
     </td>
     <td width="160" align="center">
       <img
-        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/QFRKki/006PG13yly8fh2je18cv0j308c08caa2.jpg"
+        src="https://gw.alipayobjects.com/zos/k/wu/TzIbI0.jpg"
         width="160"
       />
     </td>
@@ -113,7 +113,7 @@
   <tr>
     <td width="160" align="center">
       <img
-        src="https://qpluspicture.oss-cn-beijing.aliyuncs.com/up/hU257o.png"
+        src="https://gw.alipayobjects.com/zos/k/w7/02gpTA.jpg"
         width="160"
       />
     </td>
