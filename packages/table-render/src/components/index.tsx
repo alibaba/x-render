@@ -26,10 +26,13 @@ const useTableRoot = props => {
     tableSize: 'default',
   });
 
+
+
   const api = useRef<SearchApi<typeof state.api[number]>>();
   const afterSearch = useRef<any>();
+  const paginationRef = useRef<any>(state.pagination)
 
-  const { pagination, tab: currentTab } = state;
+  const { tab: currentTab } = state;
 
   const doSearch = (
     params: {
@@ -105,9 +108,9 @@ const useTableRoot = props => {
     doSearch(
       {
         ...params,
-        current: _stay ? pagination.current : 1,
+        current: _stay ? paginationRef?.current?.current : 1,
         tab: _tab,
-        pageSize: pagination.pageSize,
+        pageSize: paginationRef?.current?.pageSize,
       },
       _search
     );
@@ -132,7 +135,11 @@ const useTableRoot = props => {
 
   const context = {
     tableState: { ...state, search: form.getValues() },
-    setTable: set,
+    
+    setTable: (newState: any) => {
+      newState.pagination && (paginationRef.current = newState.pagination);
+      set(newState);
+    },
     doSearch,
     refresh,
     changeTab,
