@@ -6,7 +6,11 @@ import { isUndefined, omitBy, cloneDeep } from 'lodash-es';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesWithBind } from '../models/bindValues';
-import { transformFieldsError, valuesWatch, immediateWatch } from '../models/formCoreUtils';
+import {
+  transformFieldsError,
+  valuesWatch,
+  immediateWatch,
+} from '../models/formCoreUtils';
 import RenderCore from '../render-core';
 
 import './index.less';
@@ -18,23 +22,23 @@ const FormCore = (props: any) => {
   const setContext = useStore(store, (state: any) => state.setContext);
 
   const { type, properties, ...schemProps } = schema || {};
-  const { 
-    formProps, 
-    displayType, 
-    beforeFinish, 
-    watch, 
-    onMount, 
-    column, 
-    labelWidth, 
-    form, 
-    widgets, 
+  const {
+    formProps,
+    displayType,
+    beforeFinish,
+    watch,
+    onMount,
+    column,
+    labelWidth,
+    form,
+    widgets,
     onFinish,
     onFinishFailed,
-    readOnly, 
+    readOnly,
     builtOperation,
     removeHiddenData,
     methods,
-    operateExtra
+    operateExtra,
   } = transformProps({ ...props, ...schemProps });
   const { labelCol, wrapperCol } = formProps;
 
@@ -44,7 +48,7 @@ const FormCore = (props: any) => {
     setTimeout(() => {
       onMount && onMount();
 
-      const values = omitBy(form.getValus(), isUndefined);
+      const values = omitBy(form.getValues(), isUndefined);
       immediateWatch(watch, values);
     }, 0);
   }, []);
@@ -65,7 +69,6 @@ const FormCore = (props: any) => {
     setContext(context);
   }, [column, labelCol, wrapperCol, displayType, labelWidth]);
 
-
   const handleValuesChange = (changedValues: any, allValues: any) => {
     const _allValues = omitBy(allValues, isUndefined);
     valuesWatch(changedValues, _allValues, watch);
@@ -79,7 +82,9 @@ const FormCore = (props: any) => {
     values = parseValuesWithBind(values, flattenSchema);
     values = omitBy(values, isUndefined);
 
-    let fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
+    let fieldsError = beforeFinish
+      ? await beforeFinish({ data: values, schema, errors: [] })
+      : null;
     fieldsError = transformFieldsError(fieldsError);
 
     console.log(values);
@@ -102,7 +107,7 @@ const FormCore = (props: any) => {
 
     onFinishFailed({ ...params, values });
   };
- 
+
   return (
     <Form
       labelWrap={true}
@@ -118,10 +123,14 @@ const FormCore = (props: any) => {
       </Row>
       {builtOperation && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
-          <Col span={24/column}>
-            <Form.Item label='hideLabel' labelCol={labelCol} className='fr-hide-label'>
+          <Col span={24 / column}>
+            <Form.Item
+              label="hideLabel"
+              labelCol={labelCol}
+              className="fr-hide-label"
+            >
               <Space>
-                <Button type='primary' htmlType='submit'>
+                <Button type="primary" htmlType="submit">
                   提交
                 </Button>
                 <Button onClick={() => form.resetFields()}>重置</Button>
@@ -132,6 +141,6 @@ const FormCore = (props: any) => {
       )}
     </Form>
   );
-}
+};
 
 export default FormCore;
