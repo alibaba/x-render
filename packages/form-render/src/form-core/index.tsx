@@ -44,7 +44,7 @@ const FormCore = (props: any) => {
     setTimeout(() => {
       onMount && onMount();
 
-      const values = omitBy(form.getValus(), isUndefined);
+      const values = omitBy(form.getValues(), isUndefined);
       immediateWatch(watch, values);
     }, 0);
   }, []);
