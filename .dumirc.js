@@ -2,8 +2,9 @@ import { defineConfig } from 'dumi';
 
 export default defineConfig({
   favicons: ['https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png'],
-  autoAlias: false,
+  // autoAlias: false,
   outputPath: 'docs-dist',
+  locales: [{ id: 'zh-CN', name: '中文' }],
   themeConfig: {
     name: 'XRender',
     logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
@@ -62,7 +63,9 @@ export default defineConfig({
       { title: 'GitHub', link: 'https://github.com/alibaba/x-render' },
     ]
   },
-  outputPath: 'docs-dist'
+  // docDirs: ['docs'],
+  // atomDirs: [{ type: 'component', dir: 'src' }],
+  // codeBlockMode: 'passive',
 });
 
 

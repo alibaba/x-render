@@ -24,7 +24,7 @@
 .vscode
 
 # umi
-.dumi
+.dumi/tmp
 .dumi-production
 .dumi-test
 .env.local
