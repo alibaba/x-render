@@ -62,10 +62,7 @@ export default defineConfig({
   
       { title: 'GitHub', link: 'https://github.com/alibaba/x-render' },
     ]
-  },
-  // docDirs: ['docs'],
-  // atomDirs: [{ type: 'component', dir: 'src' }],
-  // codeBlockMode: 'passive',
+  }
 });
 
 

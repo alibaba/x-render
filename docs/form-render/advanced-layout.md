@@ -1,9 +1,8 @@
 ---
-order: 1
-group:
-  order: 5
+order: 0
+group: 
   title: 高级用法
-toc: content
+  order: 1
 ---
 
 # 表单布局
@@ -70,7 +69,7 @@ export default () => {
 
 ```jsx
 import React from 'react';
-import FormRender from '../demo/FormRender';
+import FormRender from './demo/FormRender';
 
 const schema = {
   type: 'object',

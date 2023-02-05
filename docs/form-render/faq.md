@@ -1,7 +1,17 @@
 ---
-order: 8
-toc: false
+order: 1
+toc: content
+group: 
+  title: 其他
+  order: 5
 ---
+
+
+
+<!-- ---
+order: 11
+toc: false
+--- -->
 # 常见问题
 
 ### 1、我在 schema 里写的内容是按什么规则传递给自定义组件的？
