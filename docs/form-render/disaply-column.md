@@ -642,11 +642,7 @@ const schema = {
 export default () => {
   const form = useForm();
   return (
-    <FormRender
-      schema={schema}
-      form={form}
-      configProvider={{ locale: 'enUS' }}
-    />
+    <FormRender schema={schema} form={form} />
   );
 };
 ```
@@ -700,11 +696,7 @@ const schema = {
 export default () => {
   const form = useForm();
   return (
-    <FormRender
-      schema={schema}
-      form={form}
-      configProvider={{ locale: 'enUS' }}
-    />
+    <FormRender schema={schema} form={form} />
   );
 };
 ```
@@ -762,11 +754,7 @@ export default () => {
   const form = useForm();
 
   return (
-    <FormRender
-      schema={schema}
-      form={form}
-      configProvider={{ locale: 'enUS' }}
-    />
+    <FormRender schema={schema} form={form} />
   );
 };
 ```
@@ -819,11 +807,7 @@ const schema = {
 export default () => {
   const form = useForm();
   return (
-    <FormRender
-      schema={schema}
-      form={form}
-      configProvider={{ locale: 'enUS' }}
-    />
+    <FormRender schema={schema} form={form} />
   );
 };
 ```
