@@ -4,7 +4,7 @@ export default defineConfig({
   favicons: ['https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png'],
   // autoAlias: false,
   outputPath: 'docs-dist',
-  locales: [{ id: 'zh-CN', name: '中文' }],
+  locales: [{ id: 'zh-CN', name: '中文', base: '/' }, { id: 'en-US', name: '英文' }],
   themeConfig: {
     name: 'XRender',
     logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
@@ -12,54 +12,104 @@ export default defineConfig({
     socialLinks: {
       github: 'https://github.com/alibaba/x-render',
     },
-    nav: [
-      {
-        title: 'FormRender',
-        link: '/form-render',
-      },
-      {
-        title: 'TableRender',
-        link: '/table-render',
-      },
-      {
-        title: 'ChartRender',
-        link: '/chart-render',
-      },
-      { title: '表单设计器', link: '/generator' },
-      {
-        title: 'Playground',
-        link: '/playground',
-      },
-      // {
-      //   title: '周边工具',
-      //   link: '/tools',
-      //   children: [
-      //     { title: 'PropToSchema', link: '/tools/proptypes' },
-      //     { title: 'VSCode 插件', link: '/tools/vscode' },
-      //     {
-      //       title: '旧版文档',
-      //       link: 'https://x-components.gitee.io/form-render/',
-      //     },
-      //   ],
-      // },
-      // {
-      //   title: '更新日志',
-      //   children: [
-      //     {
-      //       title: 'FormRender',
-      //       link: 'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
-      //     },
-      //     {
-      //       title: 'TableRender',
-      //       link: 'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
-      //     },
-      //     {
-      //       title: 'ChartRender',
-      //       link: 'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
-      //     },
-      //   ],
-      // },
-    ]
+    nav: {
+      'zh-CN': [
+        {
+          title: 'FormRender',
+          link: '/form-render',
+        },
+        {
+          title: 'TableRender',
+          link: '/table-render',
+        },
+        {
+          title: 'ChartRender',
+          link: '/chart-render',
+        },
+        { title: '表单设计器', link: '/generator' },
+        {
+          title: 'Playground',
+          link: '/playground',
+        },
+        // {
+        //   title: '周边工具',
+        //   link: '/tools',
+        //   children: [
+        //     { title: 'PropToSchema', link: '/tools/proptypes' },
+        //     { title: 'VSCode 插件', link: '/tools/vscode' },
+        //     {
+        //       title: '旧版文档',
+        //       link: 'https://x-components.gitee.io/form-render/',
+        //     },
+        //   ],
+        // },
+        // {
+        //   title: '更新日志',
+        //   children: [
+        //     {
+        //       title: 'FormRender',
+        //       link: 'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
+        //     },
+        //     {
+        //       title: 'TableRender',
+        //       link: 'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
+        //     },
+        //     {
+        //       title: 'ChartRender',
+        //       link: 'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
+        //     },
+        //   ],
+        // },
+      ],
+      'en-US': [
+        {
+          title: 'FormRender',
+          link: '/en/form-render',
+        },
+        // {
+        //   title: 'TableRender',
+        //   link: '/table-render',
+        // },
+        // {
+        //   title: 'ChartRender',
+        //   link: '/chart-render',
+        // },
+        // { title: '表单设计器', link: '/generator' },
+        // {
+        //   title: 'Playground',
+        //   link: '/playground',
+        // },
+        // {
+        //   title: '周边工具',
+        //   link: '/tools',
+        //   children: [
+        //     { title: 'PropToSchema', link: '/tools/proptypes' },
+        //     { title: 'VSCode 插件', link: '/tools/vscode' },
+        //     {
+        //       title: '旧版文档',
+        //       link: 'https://x-components.gitee.io/form-render/',
+        //     },
+        //   ],
+        // },
+        // {
+        //   title: '更新日志',
+        //   children: [
+        //     {
+        //       title: 'FormRender',
+        //       link: 'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
+        //     },
+        //     {
+        //       title: 'TableRender',
+        //       link: 'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
+        //     },
+        //     {
+        //       title: 'ChartRender',
+        //       link: 'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
+        //     },
+        //   ],
+        // },
+      ]
+    }
   }
 });
 
