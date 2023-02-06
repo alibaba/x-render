@@ -46,17 +46,17 @@ export default (props: any) => {
     ...otherListProps
   } = listProps || {};
 
-  const handleAdd = (add: any) => () => {
+  const handleAdd = (add: any) => (data?: any) => {
     let addFunc = onAdd;
     if (typeof onAdd === 'string') {
       addFunc = methods[onAdd];
     }
 
     if (isFunction(addFunc)) {
-      addFunc(() => add(), { schema });
+      addFunc((funData?: any) => add(funData || data), { schema, data });
       return;
     }
-    add();
+    add(data);
   };
 
   const handleRemove = (remove: any) => (index: number) => {

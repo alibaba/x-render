@@ -3,21 +3,15 @@ import { Drawer, Space, Button } from 'antd';
 import FRender, { useForm } from '../../../index';
 
 const DrawerForm = (props: any) => {
-  const { schema , widgets, valueChange, onClose, data } = props;
+  const { schema , widgets, onClose, data } = props;
   const form: any = useForm();
 
   const handleFinish = (data: any) => {
-    valueChange(data);
-    onClose();
+    onClose(data);
   };
 
   const handleClose = () => {
-    form.validateFields().then(() => {
-      onClose();
-    }).catch(() => {
-      const flag = !data;
-      onClose(flag);
-    })
+    onClose();
   };
 
   return (

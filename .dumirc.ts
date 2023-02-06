@@ -71,7 +71,7 @@ export default defineConfig({
     'table-render':  path.resolve(__dirname, 'packages/table-render/src'),
     'chart-render':  path.resolve(__dirname, 'packages/chart-render/src')
   },
-  ...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),
+  //...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),
 });
 
 // import { defineConfig } from 'dumi';
