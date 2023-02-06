@@ -8,6 +8,10 @@ export default defineConfig({
   themeConfig: {
     name: 'XRender',
     logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
+    footer: ' Please feel free to use and contribute to the development.',
+    socialLinks: {
+      github: 'https://github.com/alibaba/x-render',
+    },
     nav: [
       {
         title: 'FormRender',
@@ -27,40 +31,34 @@ export default defineConfig({
         link: '/playground',
       },
       // {
-      //   title: '常见问题',
-      //   path: '/faq',
+      //   title: '周边工具',
+      //   link: '/tools',
+      //   children: [
+      //     { title: 'PropToSchema', link: '/tools/proptypes' },
+      //     { title: 'VSCode 插件', link: '/tools/vscode' },
+      //     {
+      //       title: '旧版文档',
+      //       link: 'https://x-components.gitee.io/form-render/',
+      //     },
+      //   ],
       // },
-      {
-        title: '周边工具',
-        link: '/tools',
-        children: [
-          { title: 'PropToSchema', link: '/tools/proptypes' },
-          { title: 'VSCode 插件', link: '/tools/vscode' },
-          {
-            title: '旧版文档',
-            link: 'https://x-components.gitee.io/form-render/',
-          },
-        ],
-      },
-      {
-        title: '更新日志',
-        children: [
-          {
-            title: 'FormRender',
-            link: 'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
-          },
-          {
-            title: 'TableRender',
-            link: 'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
-          },
-          {
-            title: 'ChartRender',
-            link: 'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
-          },
-        ],
-      },
-  
-      { title: 'GitHub', link: 'https://github.com/alibaba/x-render' },
+      // {
+      //   title: '更新日志',
+      //   children: [
+      //     {
+      //       title: 'FormRender',
+      //       link: 'https://github.com/alibaba/x-render/blob/master/packages/form-render/CHANGELOG.md',
+      //     },
+      //     {
+      //       title: 'TableRender',
+      //       link: 'https://github.com/alibaba/x-render/blob/master/packages/table-render/CHANGELOG.md',
+      //     },
+      //     {
+      //       title: 'ChartRender',
+      //       link: 'https://github.com/alibaba/x-render/blob/master/packages/chart-render/CHANGELOG.md',
+      //     },
+      //   ],
+      // },
     ]
   }
 });
