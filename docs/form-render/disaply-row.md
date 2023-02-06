@@ -1,6 +1,5 @@
 ---
 order: 0
-toc: content
 group: 
   title: 最佳展示
   order: 3

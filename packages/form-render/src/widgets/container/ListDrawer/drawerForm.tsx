@@ -1,25 +1,19 @@
+import { Button, Drawer, Space } from 'antd';
 import React from 'react';
-import { Drawer, Space, Button } from 'antd';
-import FRender, { useForm } from '../../../index';
 import { useTranslation } from 'react-i18next';
+import FRender, { useForm } from '../../../index';
 
 const DrawerForm = (props: any) => {
-  const { schema, widgets, valueChange, onClose, data } = props;
+  const { schema, widgets, onClose, data } = props;
   const form: any = useForm();
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const handleFinish = (data: any) => {
-    valueChange(data);
-    onClose();
+    onClose(data);
   };
 
   const handleClose = () => {
-    form.validateFields().then(() => {
-      onClose();
-    }).catch(() => {
-      const flag = !data;
-      onClose(flag);
-    })
+    onClose();
   };
 
   return (
@@ -31,10 +25,8 @@ const DrawerForm = (props: any) => {
       onClose={handleClose}
       extra={
         <Space>
-          <Button onClick={handleClose}>
-            {t('cancel')}
-          </Button>
-          <Button type='primary' onClick={form.submit}>
+          <Button onClick={handleClose}>{t('cancel')}</Button>
+          <Button type="primary" onClick={form.submit}>
             {t('confirm')}
           </Button>
         </Space>
@@ -51,6 +43,6 @@ const DrawerForm = (props: any) => {
       />
     </Drawer>
   );
-}
+};
 
 export default DrawerForm;

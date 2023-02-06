@@ -1,16 +1,28 @@
-import React from 'react';
 import { Form, message } from 'antd';
-import { isFunction } from '../../utils';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { isFunction } from '../../utils';
 
-const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
-  return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
-};
+const getParamValue =
+  (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
+    return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
+  };
 
 export default (props: any) => {
-  const { form, schema, path, parentLitPath, renderCore, rootPath, methods, widgets, upperCtx, formCtx } = props;
+  const {
+    form,
+    schema,
+    path,
+    parentLitPath,
+    renderCore,
+    rootPath,
+    methods,
+    widgets,
+    upperCtx,
+    formCtx,
+  } = props;
 
-  const { t } = useTranslation()
+  const { t } = useTranslation();
 
   const defaultAddBtnProps = {
     type: 'dashed',
@@ -38,28 +50,35 @@ export default (props: any) => {
 
   let initialValue = schema.default;
   if (!initialValue && !['drawerList', 'list1'].includes(widgetName)) {
-    initialValue = [{}]
+    initialValue = [{}];
   }
 
-
   let {
-    addBtnProps, delConfirmProps, actionColumnProps,
-    hideAdd, hideCopy, hideMove, hideDelete,
-    onAdd, onRemove, onMove, onCopy,
+    addBtnProps,
+    delConfirmProps,
+    actionColumnProps,
+    hideAdd,
+    hideCopy,
+    hideMove,
+    hideDelete,
+    onAdd,
+    onRemove,
+    onMove,
+    onCopy,
     ...otherListProps
   } = listProps || {};
 
-  const handleAdd = (add: any) => () => {
+  const handleAdd = (add: any) => (data?: any) => {
     let addFunc = onAdd;
     if (typeof onAdd === 'string') {
       addFunc = methods[onAdd];
     }
 
     if (isFunction(addFunc)) {
-      addFunc(() => add(), { schema });
+      addFunc((funData?: any) => add(funData || data), { schema, data });
       return;
     }
-    add();
+    add(data);
   };
 
   const handleRemove = (remove: any) => (index: number) => {
@@ -92,7 +111,7 @@ export default (props: any) => {
 
   const handleCopy = (add: any, fields: any) => (value: any) => {
     if (schema.max && fields.length === schema.max) {
-      return message.warning(t('copy_max_tip'))
+      return message.warning(t('copy_max_tip'));
     }
     let copyFunc = onCopy;
     if (typeof onCopy === 'string') {
@@ -123,49 +142,72 @@ export default (props: any) => {
   }
 
   return (
-    <Form.List name={path} initialValue={initialValue}>
-      {(fields, operation) => (
-        <Widget
-          {...otherListProps}
-          form={form}
-          schema={otherSchema}
-          fields={fields}
-          operation={operation}
-
-          path={path}
-          listName={path}
-          parentLitPath={parentLitPath}
-          rootPath={[...preRootPath, ...path]}
-
-          readOnly={readOnly}
-          methods={methods}
-          renderCore={renderCore}
-          widgets={widgets}
-
-          hideAdd={hideAdd}
-          hideCopy={hideCopy}
-          hideDelete={hideDelete}
-          hideMove={hideMove}
-
-          addItem={handleAdd(operation.add)}
-          removeItem={handleRemove(operation.remove)}
-          moveItem={handleMove(operation.move)}
-          copyItem={handleCopy(operation.add, fields)}
-
-          addBtnProps={{
-            ...defaultAddBtnProps,
-            ...addBtnProps
-          }}
-          delConfirmProps={{
-            ...defaultDelConfirmProps,
-            ...delConfirmProps
-          }}
-          actionColumnProps={{
-            ...defaultActionColumnProps,
-            ...actionColumnProps
-          }}
-        />
+    <Form.List
+      name={path}
+      initialValue={initialValue}
+      rules={
+        otherSchema?.min
+          ? [
+              {
+                validator: async (_, data) => {
+                  if (!data || data.length < otherSchema.min) {
+                    return Promise.reject(
+                      new Error(
+                        otherSchema?.message?.min ||
+                          `数据长度必须大于等于${otherSchema.min}`
+                      )
+                    );
+                  }
+                },
+              },
+            ]
+          : null
+      }
+    >
+      {(fields, operation, { errors }) => (
+        <>
+          <Widget
+            {...otherListProps}
+            form={form}
+            schema={otherSchema}
+            fields={fields}
+            operation={operation}
+            path={path}
+            listName={path}
+            parentLitPath={parentLitPath}
+            rootPath={[...preRootPath, ...path]}
+            readOnly={readOnly}
+            methods={methods}
+            renderCore={renderCore}
+            widgets={widgets}
+            hideAdd={hideAdd}
+            hideCopy={hideCopy}
+            hideDelete={hideDelete}
+            hideMove={hideMove}
+            addItem={handleAdd(operation.add)}
+            removeItem={handleRemove(operation.remove)}
+            moveItem={handleMove(operation.move)}
+            copyItem={handleCopy(operation.add, fields)}
+            addBtnProps={{
+              ...defaultAddBtnProps,
+              ...addBtnProps,
+            }}
+            delConfirmProps={{
+              ...defaultDelConfirmProps,
+              ...delConfirmProps,
+            }}
+            actionColumnProps={{
+              ...defaultActionColumnProps,
+              ...actionColumnProps,
+            }}
+          />
+          {errors?.length !== 0 && (
+            <div style={{ marginBottom: '12px' }}>
+              <Form.ErrorList errors={errors} />
+            </div>
+          )}
+        </>
       )}
     </Form.List>
-  )
-}
+  );
+};

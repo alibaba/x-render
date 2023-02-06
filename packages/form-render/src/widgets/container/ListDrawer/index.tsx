@@ -64,9 +64,23 @@ const TableList: React.FC<Props> = (props: any) => {
   };
 
   const handleAdd = () => {
-    addItem();
-    indexRef.current = fields.length;
+    indexRef.current = -1;
     setVisible(true);
+  };
+
+  const handleDrawerClose = (data: any) => {
+    setVisible(false);
+    setItemData(null);
+    if (!data) {
+      return;
+    }
+   
+    if (indexRef.current === -1) {
+      addItem(data);
+    } else {
+      form.setFieldValue([...rootPath, indexRef.current], data);
+    }
+    indexRef.current === null;
   };
 
   const columns: TableColumnsType<FormListFieldData> = Object.keys(columnSchema).map(dataIndex => {
@@ -145,16 +159,7 @@ const TableList: React.FC<Props> = (props: any) => {
           schema={schema}
           data={itemData}
           widgets={widgets}
-          onClose={(remove: boolean) => {
-            setVisible(false);
-            setItemData(null);
-            if (remove) {
-              removeItem(indexRef.current);
-            }
-          }}
-          valueChange={(value: any) => {
-            form.setFieldValue([...rootPath, indexRef.current], value);
-          }}
+          onClose={handleDrawerClose}
         />
       )}
     </div>
