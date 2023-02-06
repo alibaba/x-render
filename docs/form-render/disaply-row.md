@@ -1096,7 +1096,7 @@ export default () => {
 };
 ```
 
-#### tableList：标签内联
+#### virtualList：标签内联
 
 ```jsx
 import React from 'react';
@@ -1199,7 +1199,7 @@ export default () => {
 };
 ```
 
-#### tableList：标签内联
+#### tabList：标签内联
 
 ```jsx
 import React from 'react';
