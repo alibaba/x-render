@@ -6,7 +6,10 @@
     "skipLibCheck": false,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "jsx": "react"
+    "jsx": "react",
+    "paths": {
+      "@@/*": [".dumi/tmp/*"]
+    }
   },
   "exclude": ["./packages/*/esm", "./packages/*/lib"]
 }

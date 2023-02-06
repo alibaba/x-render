@@ -7,4 +7,4 @@ sidemenu: false
 gapless: true
 ---
 
-<code src='./index.jsx' />
+<code src='./index.jsx'></code>

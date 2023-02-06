@@ -1,9 +1,8 @@
 ---
-order: 1
-group:
-  order: 5
+order: 0
+group: 
   title: 高级用法
-toc: content
+  order: 1
 ---
 
 # 表单布局
@@ -11,7 +10,7 @@ toc: content
 - 通过 column 实现表单多列布局
 - 通过 labelCol、wrapperCol 实现表单项内部布局
 
-## 表单排列布局
+## 标签排列
 ```jsx
 import React from 'react';
 import { Button, Space } from 'antd';
@@ -64,13 +63,13 @@ export default () => {
 }
 ```
 
-## 表单多列布局
+## 多列布局
 
 - column: 一行多列，默认值 1 （通过 props 或者 schema.column 配置）
 
 ```jsx
 import React from 'react';
-import FormRender from '../demo/FormRender';
+import FormRender from './demo/FormRender';
 
 const schema = {
   type: 'object',
@@ -109,7 +108,7 @@ export default () => {
 ```
 
 
-## 表单项布局
+<!-- ## 表单项布局
 
 - labelCol: label 标签布局，同 Col 组件，设置 span 值，如 { span: 6 }
 - wrapperCol: 需要为输入控件设置布局样式时，使用该属性，用法同 labelCol
@@ -169,4 +168,4 @@ export default () => {
     />
   )
 };
-```
+``` -->

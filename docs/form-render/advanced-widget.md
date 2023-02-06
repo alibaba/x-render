@@ -1,9 +1,8 @@
 ---
-order: 5
-group:
-  order: 5
+order: 4
+group: 
   title: 高级用法
-toc: content
+  order: 1
 ---
 
 # 自定义组件（widget）

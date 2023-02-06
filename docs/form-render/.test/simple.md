@@ -1,1 +1,1 @@
-<code src='./simple.jsx' />
+<code src='./simple.jsx'></code>

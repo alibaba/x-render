@@ -1,9 +1,8 @@
 ---
-order: 1
-group:
-  order: 6
+order: 0
+group: 
   title: 示例
-toc: content
+  order: 2
 ---
 
 # 表单常用交互
@@ -14,7 +13,7 @@ toc: content
 - 表单服务端校验错误信息回填
 - 表单数据字段转换
 
-## 1. 表单提交
+## 表单提交
 ```jsx
 import React from 'react';
 import { Button, message } from 'antd';
@@ -59,14 +58,14 @@ export default () => {
 }
 ```
 
-## 2. 表单数据异步加载
+## 表单数据异步加载
 
 通过 `form.setValues` 方法进行加载
 ```jsx
 import React, { useState, useEffect } from 'react';
 import { Button, Space, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
-import { fakeApi, delay } from '../advanced/utils';
+import { fakeApi, delay } from './utils';
 
 const schema = {
   type: 'object',
@@ -102,7 +101,7 @@ export default () => {
 }
 ```
 
-## 3. 下拉选项异步加载
+## 下拉选项异步加载
 通过服务端获取数据后展示下拉选项的选项值
 
 ### 单个加载
@@ -220,14 +219,14 @@ export default () => {
 }
 ```
 
-## 4. 表单协议异步加载
+## 表单协议异步加载
 通过 `form.setSchema(schema, true)` 方法进行加载
 
 ```jsx
 import React, { useState, useEffect } from 'react';
 import { Button, Space, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
-import { fakeApi, delay } from '../advanced/utils';
+import { fakeApi, delay } from './utils';
 
 const Demo = () => {
   const form = useForm();
@@ -274,7 +273,7 @@ export default Demo;
 
 
 
-## 5. 表单服务端校验
+## 表单服务端校验
 通过 `beforeFinish` 从外部回填 error 信息到表单，注意 `beforeFinish` 需返回要回填的 error
 
 ```jsx
@@ -338,7 +337,7 @@ export default () => {
 }
 ```
 
-## 6. 表单数据字段转换
+## 表单数据字段转换
 服务端数据与展示经常会不符，通过配置 `bind` 字段进行转换
 
 - 例如：日期范围组件接收的是一个数组，而服务端的数据是 startDate，endDate 两个字段。

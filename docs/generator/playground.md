@@ -6,4 +6,4 @@ sidemenu: false
 gapless: true
 ---
 
-<code src='./demo/playground.jsx' />
+<code src='./demo/playground.jsx'></code>

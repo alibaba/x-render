@@ -1,9 +1,9 @@
 ---
-order: 1
-group:
-  order: 7
-  title: 最佳展示
+order: 0
 toc: content
+group: 
+  title: 最佳展示
+  order: 3
 ---
 
 # 横向布局
@@ -161,7 +161,7 @@ export default () => {
 
 对于嵌套类型的表单，我们内置了四种主题，分别为 collapse | card | tile | flex, 默认为 collapse 主题
 
-### 1. 折叠 collapse
+### 折叠 collapse
 
 ```jsx
 import React from 'react';
@@ -206,7 +206,7 @@ export default () => {
 };
 ```
 
-### 2. 卡片 card
+### 卡片 card
 
 ```jsx
 import React from 'react';
@@ -251,7 +251,7 @@ export default () => {
 };
 ```
 
-### 3. 标题线 lineTitle
+### 标题线 lineTitle
 
 ```jsx
 import React from 'react';
@@ -296,7 +296,7 @@ export default () => {
 };
 ```
 
-### 4. 内联 subInline
+### 内联 subInline
 
 ```jsx
 import React from 'react';
@@ -346,7 +346,7 @@ export default () => {
 列表的展示对于简单需求占位太多，复杂需求定制不够一直是痛点。所以我们给出了 5 种展示，充分满足从极简到复杂的所有需求。
 默认使用 widget: 'cardList'，卡片类型
 
-### 1. SimpleList
+### SimpleList
 
 用于展示每行只有 1-3 个简单控件的情况，紧凑排列
 
@@ -526,7 +526,7 @@ export default () => {
 };
 ```
 
-### 2. CardList
+### CardList
 
 用于展示结构复杂，但数量不太多的 list
 
@@ -837,7 +837,7 @@ export default () => {
 };
 ```
 
-### 3. DrawerList
+### DrawerList
 
 用于展示存在列表套列表，列表套对象等复杂元素的情况
 
@@ -940,7 +940,7 @@ export default () => {
 };
 ```
 
-### 4. TableList
+### TableList
 
 用于展示每行只有 3 - n 个简单元素的情况，特别是数据量很大需要分页的
 
@@ -1043,7 +1043,7 @@ export default () => {
 };
 ```
 
-### 5. VirtualList
+### VirtualList
 
 用于展示每行只有 3 - n 个简单元素的情况，数据量大时使用滚动加载
 
@@ -1146,7 +1146,7 @@ export default () => {
 };
 ```
 
-### 6. TabList
+### TabList
 
 用于多标签页展示表单的情况
 

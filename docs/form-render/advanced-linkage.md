@@ -1,9 +1,9 @@
 ---
-order: 3
-group:
-  order: 5
-  title: 高级用法
+order: 1
 toc: content
+group: 
+  title: 高级用法
+  order: 1
 ---
 
 # 表单联动
@@ -12,7 +12,7 @@ toc: content
 - 通过 dependencies 实现组件之间复杂联动
 
 ## 一、简单联动
-### 1.1 函数表达式
+### 函数表达式
 
 表单联动是开发中常见的交互，为此我们创造了这种简洁的配置方式来支持联动。通过函数表达式来控制表单项的隐藏、是否可编辑等联动交互。
 
@@ -31,7 +31,7 @@ toc: content
 
 总结：
 
-### 1.2 formData 示例
+### formData 示例
 ```jsx
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
@@ -66,7 +66,7 @@ export default () => {
 };
 ```
 
-### 1.3 rootValue 示例
+### rootValue 示例
 ```jsx
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
@@ -114,9 +114,9 @@ export default () => {
 };
 ```
 
-## 二、watch 复杂联动
+## 二、 watch 复杂联动
 
-### 2.1 watch 监听
+### watch 监听
 watch: 用于监听表单数据改变从而唤起回调，它是一个对象集合，根据 path 路径注册相应的表单项监听事件
 ```js
 const watch = {
@@ -139,7 +139,7 @@ const watch = {
 };
 ```
 
-### 2.2 修改 value 
+### 修改 value 
 
 form.setValueByPath：指定路径对值进行修改。[path 路径详见](/form-render/advanced/path)。
 
@@ -185,7 +185,7 @@ export default () => {
 };
 ```
 
-### 2.3 修改 schema
+### 修改 schema
 
 form.setSchemaByPath：指定路径对 schema 进行修改 (不允许通过此 API 修改 value、defalut)。[path 路径详见](/form-render/advanced/path)。
 
@@ -245,7 +245,7 @@ dependencies：用于完成组件内部复杂的联动逻辑，依赖的字段�
 - 类型：path[]，设置依赖字段，支持多个依赖字段
 - 获取依赖值：组件内通过 props.dependValues 获取依赖值集合
 
-### 3.1 触发更新
+### 触发更新
 依赖值发生变化，自定义组件触发更新
 ```jsx
 import React from 'react';
@@ -293,7 +293,7 @@ export default () => {
 }
 ```
 
-### 3.2 触发校验
+### 触发校验
 依赖值发生变化，自定义校验触发校验
 
 ```jsx
@@ -353,7 +353,7 @@ export default () => {
 }
 ```
 
-### 3.3 双向绑定
+### 双向绑定
 - addons：简单理解就是 form 实例
 - dependValues：依赖值集合
 
