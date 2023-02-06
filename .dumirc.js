@@ -4,7 +4,7 @@ export default defineConfig({
   favicons: ['https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png'],
   // autoAlias: false,
   outputPath: 'docs-dist',
-  locales: [{ id: 'zh-CN', name: '中文', base: '/' }, { id: 'en-US', name: '英文' }],
+  locales: [{ id: 'zh-CN', name: '中文', base: '/' }, { id: 'en-US', name: 'English' }],
   themeConfig: {
     name: 'XRender',
     logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
