@@ -33,7 +33,7 @@
 
 ## 谁在使用？
 
-<table>
+<table style="background: #fff">
   <tr>
     <td width="160" align="center">
       <img
@@ -68,7 +68,7 @@
     <td width="160" align="center">
       <img
         src="https://gw.alipayobjects.com/zos/k/dl/zJ2uhY.jpg"
-        width="160"
+        width="110"
       />
     </td>
   </tr>
