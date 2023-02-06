@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
+import enUS from 'antd/lib/locale/en_US';
 
 import { FRContext } from './models/context';
 import { createStore } from './models/store';
@@ -9,14 +10,15 @@ import { validateMessagesEN, validateMessagesCN } from './models/validateMessage
 import FormCore from './form-core';
 import { widgets as defaultWidgets } from './widgets';
 import { FRProps } from './index.d';
+import i18n from './i18next';
 
 export { widgets } from './widgets';
 export { mapping } from './models/mapping';
 
 export { default as useForm } from './models/useForm';
-export { default as connectForm }  from './form-core/connectForm';
+export { default as connectForm } from './form-core/connectForm';
 
-export type  { 
+export type {
   default as FR,
   Schema,
   FRProps,
@@ -43,13 +45,20 @@ export default (props: FRProps) => {
     return null;
   }
 
-  const locale = configProvider?.locale || zhCN;
-  const formValidateMessages = locale?.locale?.includes('en_') ? validateMessagesEN : validateMessagesCN;
+  const locale = configProvider?.locale || 'zhCN';
+
+  useEffect(() => {
+    const lang = locale === 'enUS' ? 'en' : 'zh'
+    i18n.changeLanguage(lang)
+  }, [locale])
+
+  const antdLocale = locale === 'zhCN' ? zhCN : enUS
+  const formValidateMessages = antdLocale?.locale?.includes('en') ? validateMessagesEN : validateMessagesCN;
 
   return (
     <ConfigProvider
       {...configProvider}
-      locale={locale}
+      locale={antdLocale}
       form={{
         validateMessages: { ...formValidateMessages, ...validateMessages },
       }}

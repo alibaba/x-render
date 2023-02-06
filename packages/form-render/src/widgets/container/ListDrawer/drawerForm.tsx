@@ -1,10 +1,12 @@
 import React from 'react';
 import { Drawer, Space, Button } from 'antd';
 import FRender, { useForm } from '../../../index';
+import { useTranslation } from 'react-i18next';
 
 const DrawerForm = (props: any) => {
-  const { schema , widgets, valueChange, onClose, data } = props;
+  const { schema, widgets, valueChange, onClose, data } = props;
   const form: any = useForm();
+  const { t } = useTranslation()
 
   const handleFinish = (data: any) => {
     valueChange(data);
@@ -23,17 +25,17 @@ const DrawerForm = (props: any) => {
   return (
     <Drawer
       width={600}
-      title='操作'
+      title={t('operate')}
       visible={true}
       open={true}
       onClose={handleClose}
       extra={
         <Space>
           <Button onClick={handleClose}>
-            取消
+            {t('cancel')}
           </Button>
           <Button type='primary' onClick={form.submit}>
-            确定
+            {t('confirm')}
           </Button>
         </Space>
       }

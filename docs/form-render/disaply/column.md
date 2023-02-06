@@ -641,7 +641,13 @@ const schema = {
 
 export default () => {
   const form = useForm();
-  return <FormRender schema={schema} form={form} />;
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      configProvider={{ locale: 'enUS' }}
+    />
+  );
 };
 ```
 
@@ -661,6 +667,7 @@ const schema = {
       description: '对象数组嵌套功能',
       type: 'array',
       widget: 'tableList',
+      max: 4,
       items: {
         type: 'object',
         properties: {
@@ -692,7 +699,13 @@ const schema = {
 
 export default () => {
   const form = useForm();
-  return <FormRender schema={schema} form={form} />;
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      configProvider={{ locale: 'enUS' }}
+    />
+  );
 };
 ```
 
@@ -729,7 +742,8 @@ const schema = {
           },
           input3: {
             title: '简单输入框3',
-            type: 'string',
+            type: 'range',
+            format: 'date',
           },
           select1: {
             title: '单选',
@@ -746,7 +760,14 @@ const schema = {
 
 export default () => {
   const form = useForm();
-  return <FormRender schema={schema} form={form} />;
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      configProvider={{ locale: 'enUS' }}
+    />
+  );
 };
 ```
 
@@ -797,6 +818,12 @@ const schema = {
 
 export default () => {
   const form = useForm();
-  return <FormRender schema={schema} form={form} />;
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      configProvider={{ locale: 'enUS' }}
+    />
+  );
 };
 ```

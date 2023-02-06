@@ -1,8 +1,11 @@
 import { Input } from 'antd';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { isUrl } from '../../utils';
 
-const UrlNode = ({ value, addonText = '测试链接' }) => {
+const UrlNode = (props) => {
+  const { t } = useTranslation()
+  const { value, addonText = t('test_src')} = props
   const useUrl = isUrl(value);
 
   if (useUrl) {

@@ -1,31 +1,34 @@
 import React from 'react';
 import { Form, message } from 'antd';
 import { isFunction } from '../../utils';
+import { useTranslation } from 'react-i18next';
 
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
 };
 
-const defaultAddBtnProps = {
-  type: 'dashed',
-  block: true,
-  children: '新增一条',
-};
-
-const defaultDelConfirmProps = {
-  title: '确定删除?',
-  okText: '确定',
-  cancelText: '取消',
-};
-
-let defaultActionColumnProps = {
-  colHeaderText: '操作',
-  copyText: '复制',
-  delText: '删除',
-};
-
 export default (props: any) => {
   const { form, schema, path, parentLitPath, renderCore, rootPath, methods, widgets, upperCtx, formCtx } = props;
+
+  const { t } = useTranslation()
+
+  const defaultAddBtnProps = {
+    type: 'dashed',
+    block: true,
+    children: t('add_item'),
+  };
+
+  const defaultDelConfirmProps = {
+    title: t('confirm_delete'),
+    okText: t('confirm'),
+    cancelText: t('cancel'),
+  };
+
+  let defaultActionColumnProps = {
+    colHeaderText: t('operate'),
+    copyText: t('copy'),
+    delText: t('delete'),
+  };
 
   const { widget } = schema;
   let widgetName = widget || 'list1';
@@ -39,7 +42,7 @@ export default (props: any) => {
   }
 
 
-  let { 
+  let {
     addBtnProps, delConfirmProps, actionColumnProps,
     hideAdd, hideCopy, hideMove, hideDelete,
     onAdd, onRemove, onMove, onCopy,
@@ -89,7 +92,7 @@ export default (props: any) => {
 
   const handleCopy = (add: any, fields: any) => (value: any) => {
     if (schema.max && fields.length === schema.max) {
-      return message.warning('已达表单项数量上限，无法复制')
+      return message.warning(t('copy_max_tip'))
     }
     let copyFunc = onCopy;
     if (typeof onCopy === 'string') {
@@ -133,7 +136,7 @@ export default (props: any) => {
           listName={path}
           parentLitPath={parentLitPath}
           rootPath={[...preRootPath, ...path]}
-          
+
           readOnly={readOnly}
           methods={methods}
           renderCore={renderCore}

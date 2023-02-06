@@ -69,7 +69,9 @@
     "rc-color-picker": "^1.2.6",
     "scroll-into-view-if-needed": "^2.2.29",
     "virtualizedtableforantd4": "^1.1.2",
-    "zustand": "4.1.5"
+    "zustand": "4.1.5",
+    "i18next": "^21.8.11",
+    "react-i18next": "^11.17.2"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",
