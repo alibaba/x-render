@@ -1,10 +1,12 @@
 import { defineConfig } from 'dumi';
+import path from 'path';
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 
 export default defineConfig({
   favicons: ['https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png'],
   // autoAlias: false,
   outputPath: 'docs-dist',
-  locales: [{ id: 'zh-CN', name: '中文', base: '/' }, { id: 'en-US', name: 'English' }],
+  locales: [{ id: 'zh-CN', name: '中文' }, { id: 'en-US', name: 'English' }],
   themeConfig: {
     name: 'XRender',
     logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
@@ -38,12 +40,38 @@ export default defineConfig({
           link: '/en/form-render',
         }
       ]
-    }
+    },
+  },
+  extraBabelPlugins: [
+    [
+      'import',
+      {
+        libraryName: 'antd',
+        libraryDirectory: 'lib',
+        style: true,
+      },
+      'antd',
+    ],
+    [
+      'import',
+      {
+        libraryName: '@alifd/next',
+        libraryDirectory: 'lib',
+      },
+      '@alifd/next',
+    ],
+  ],
+  chainWebpack(config, { webpack }) {
+    config.plugin('monaco-editor').use(MonacoWebpackPlugin);
+  },
+  plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
+  // more config: https://d.umijs.org/config
+  alias: { 
+    'form-render':  path.resolve(__dirname, 'packages/form-render/src'),
+    'table-render':  path.resolve(__dirname, 'packages/table-render/src'),
+    'chart-render':  path.resolve(__dirname, 'packages/chart-render/src')
   }
 });
-
-
-
 
 // import { defineConfig } from 'dumi';
 // import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';

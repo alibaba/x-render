@@ -37,7 +37,7 @@ export default (props: FRProps) => {
   const { configProvider, widgets, form, validateMessages, ...otherProps } = props;
   const storeRef = useRef(createStore());
   const store: any = storeRef.current;
-
+ 
   if (!form) {
     console.warn('Please provide a form instance to FormRender');
     return null;

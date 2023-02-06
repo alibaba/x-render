@@ -1,10 +1,10 @@
 export const getFormItemLayout = (column: number, schema: any, { labelWidth, displayType, _labelCol, _wrapperCol }: any) => {
-  let labelCol: any = { xl: 5, xxl: 3 };
-  let wrapperCol: any = { xl: 9, xxl: 6 };
+  let labelCol: any = { span: 5 };
+  let wrapperCol: any = { span: 9 };
 
   if (column === 2) {
-    labelCol = { xl: 8, xxl: 6 };
-    wrapperCol = { xl: 16, xxl: 14 }
+    labelCol = { span: 6 };
+    wrapperCol = { span: 14 }
   }
 
   if (column > 2) {
