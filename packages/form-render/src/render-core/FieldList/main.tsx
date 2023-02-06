@@ -120,48 +120,67 @@ export default (props: any) => {
   }
 
   return (
-    <Form.List name={path} initialValue={initialValue}>
-      {(fields, operation) => (
-        <Widget
-          {...otherListProps}
-          form={form}
-          schema={otherSchema}
-          fields={fields}
-          operation={operation}
+    <Form.List 
+      name={path} 
+      initialValue={initialValue}
+      rules={otherSchema?.min ? [
+        {
+          validator: async (_, data) => {
+            if (!data || data.length < otherSchema.min) {
+              return Promise.reject(new Error(otherSchema?.message?.min || `数据长度必须大于等于${otherSchema.min}`));
+            }
+          }
+        },
+      ]: null}
+    >
+      {(fields, operation, { errors }) => (
+        <>
+          <Widget
+            {...otherListProps}
+            form={form}
+            schema={otherSchema}
+            fields={fields}
+            operation={operation}
 
-          path={path}
-          listName={path}
-          parentLitPath={parentLitPath}
-          rootPath={[...preRootPath, ...path]}
-          
-          readOnly={readOnly}
-          methods={methods}
-          renderCore={renderCore}
-          widgets={widgets}
+            path={path}
+            listName={path}
+            parentLitPath={parentLitPath}
+            rootPath={[...preRootPath, ...path]}
+            
+            readOnly={readOnly}
+            methods={methods}
+            renderCore={renderCore}
+            widgets={widgets}
 
-          hideAdd={hideAdd}
-          hideCopy={hideCopy}
-          hideDelete={hideDelete}
-          hideMove={hideMove}
+            hideAdd={hideAdd}
+            hideCopy={hideCopy}
+            hideDelete={hideDelete}
+            hideMove={hideMove}
 
-          addItem={handleAdd(operation.add)}
-          removeItem={handleRemove(operation.remove)}
-          moveItem={handleMove(operation.move)}
-          copyItem={handleCopy(operation.add, fields)}
+            addItem={handleAdd(operation.add)}
+            removeItem={handleRemove(operation.remove)}
+            moveItem={handleMove(operation.move)}
+            copyItem={handleCopy(operation.add, fields)}
 
-          addBtnProps={{
-            ...defaultAddBtnProps,
-            ...addBtnProps
-          }}
-          delConfirmProps={{
-            ...defaultDelConfirmProps,
-            ...delConfirmProps
-          }}
-          actionColumnProps={{
-            ...defaultActionColumnProps,
-            ...actionColumnProps
-          }}
-        />
+            addBtnProps={{
+              ...defaultAddBtnProps,
+              ...addBtnProps
+            }}
+            delConfirmProps={{
+              ...defaultDelConfirmProps,
+              ...delConfirmProps
+            }}
+            actionColumnProps={{
+              ...defaultActionColumnProps,
+              ...actionColumnProps
+            }}
+          />
+          {errors?.length !== 0 && (
+            <div style={{ marginBottom: '12px'}}>
+              <Form.ErrorList errors={errors} />
+            </div>
+          )}
+        </>
       )}
     </Form.List>
   )

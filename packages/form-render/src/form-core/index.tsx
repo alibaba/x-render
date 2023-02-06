@@ -98,6 +98,9 @@ const FormCore = (props: any) => {
   };
 
   const handleFinishFailed = async (params: any) => {
+    if (!onFinishFailed) {
+      return;
+    }
     let values = cloneDeep(params?.values);
     if (!removeHiddenData) {
       values = cloneDeep(form.getFieldsValue(true));
