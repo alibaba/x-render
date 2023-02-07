@@ -1,12 +1,13 @@
-import { TimePicker } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import React from 'react';
-import { getFormat } from '../../utils';
+
+import TimePicker from './timePicker';
+import { getFormat } from '../utils';
 
 // TODO: 不要使用moment，使用dayjs
 export default ({ onChange, format, value, style, ...rest }) => {
   const timeFormat = getFormat(format);
-  const _value = value ? moment(value, timeFormat) : undefined;
+  const _value = value ? dayjs(value, timeFormat) : undefined;
 
   const handleChange = (value, string) => {
     onChange(string);

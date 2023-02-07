@@ -65,6 +65,7 @@
     "classnames": "^2.3.1",
     "color": "^3.1.2",
     "lodash-es": "^4.17.21",
+    "dayjs": "^1.11.7",
     "moment": "^2.24.0",
     "rc-color-picker": "^1.2.6",
     "scroll-into-view-if-needed": "^2.2.29",

@@ -94,6 +94,7 @@
     "vitest": "^0.26.3",
     "yorkie": "^2.0.0",
     "zustand": "4.1.5",
-    "less": "^3.0.0"
+    "less": "^3.0.0",
+    "antd-dayjs-webpack-plugin": "^1.0.6"
   }
 }

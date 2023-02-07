@@ -1,37 +1,33 @@
-import { DatePicker } from 'antd';
-import moment from 'moment';
-import React, { useMemo } from 'react';
-import { getFormat } from '../../utils';
 
-// TODO: 不要使用 moment，使用 dayjs
+import React, { useMemo } from 'react';
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn';
+import quarterOfYear from 'dayjs/plugin/quarterOfYear';
+import { getFormat, transformDateValue } from '../utils';
+import DatePicker from './datePicker';
+
+dayjs.extend(quarterOfYear);
+dayjs.locale('zh-cn');
+
 export default ({ onChange, format, value, style, ...rest }) => {
   const dateFormat = getFormat(format);
-
+  
   const valueObj = useMemo(() => {
-    // week 的时候会返回 2020-31周 quarter 会返回 2020-Q2 需要处理之后才能被 moment
-    let _value = value || undefined;
-    if (typeof _value === 'string') {
-      if (format === 'week') {
-        _value = _value ? _value.substring(0, _value.length - 1) : _value;
-      }
-      if (format === 'quarter') {
-        _value = _value.replace('Q', '');
-      }
-    }
-    if (_value) {
-      _value = moment(_value, dateFormat);
-    }
-    return _value;
+    return transformDateValue(value, format, dateFormat);
   }, [value]);
 
-  const handleChange = (value, string) => {
-    onChange(string);
+  const handleChange = (dateValue, dateString) => {
+    let newValue = dateString;
+    if (format === 'week' || format === 'quarter') {
+      newValue = dayjs(dateValue).format(dateFormat);
+    }
+    onChange(newValue);
   };
 
   const dateParams = {
-    value: valueObj,
+    // value: valueObj,
     style: { width: '100%', ...style },
-    onChange: handleChange,
+    // onChange: handleChange,
   };
 
   // TODO: format 是在 options 里自定义的情况，是否要判断一下要不要 showTime
