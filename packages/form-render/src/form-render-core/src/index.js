@@ -167,19 +167,26 @@ function App({
     };
   }, []);
 
-  const store = useMemo(
-    () => ({
-      ...valuesThatWillChange,
-      globalProps,
-      ...rest,
-    }),
-    [
-      JSON.stringify(flatten),
-      JSON.stringify(formData),
-      JSON.stringify(errorFields),
-      JSON.stringify(globalProps),
-    ]
-  );
+  // flatten schema.props 里面的方法改变根本无法监测
+  // const store = useMemo(
+  //   () => ({
+  //     ...valuesThatWillChange,
+  //     globalProps,
+  //     ...rest,
+  //   }),
+  //   [
+  //     JSON.stringify(flatten),
+  //     JSON.stringify(formData),
+  //     JSON.stringify(errorFields),
+  //     JSON.stringify(globalProps),
+  //   ]
+  // );
+
+  const store = {
+    ...valuesThatWillChange,
+    globalProps,
+    ...rest,
+  };
 
   // 不常用的context单独放一个地方
   const store2 = useMemo(

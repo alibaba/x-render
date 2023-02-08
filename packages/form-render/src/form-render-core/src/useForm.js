@@ -125,8 +125,18 @@ const useForm = props => {
     if (firstMount) {
       return;
     }
-    let newFlatten = clone(_flatten.current);
-    Object.entries(_flatten.current).forEach(([path, info]) => {
+    detailExpression();
+  }, [
+    JSON.stringify(_flatten.current),
+    JSON.stringify(_data.current),
+    firstMount,
+  ]);
+
+
+  const detailExpression = (_newSchema) => {
+    const schemObj = _newSchema || _flatten.current;
+    let newFlatten = clone(schemObj);
+    Object.entries(schemObj).forEach(([path, info]) => {
       if (schemaContainsExpression(info.schema)) {
         const arrayLikeIndex = path.indexOf(']');
         const isArrayItem =
@@ -145,11 +155,7 @@ const useForm = props => {
       }
     });
     setState({ finalFlatten: newFlatten });
-  }, [
-    JSON.stringify(_flatten.current),
-    JSON.stringify(_data.current),
-    firstMount,
-  ]);
+  };
 
   // All form methods are down here ----------------------------------------------------------------
   // 两个兼容 0.x 的函数
@@ -257,7 +263,9 @@ const useForm = props => {
           };
         }
       });
+      detailExpression(newFlatten);
       setState({ flatten: newFlatten });
+
       _flatten.current = newFlatten;
     } catch (error) {
       console.error(error, 'setSchema');
@@ -277,6 +285,8 @@ const useForm = props => {
           ? newSchema(newFlatten[path].schema)
           : newSchema;
       newFlatten[path].schema = { ...newFlatten[path].schema, ..._newSchema };
+
+      detailExpression(newFlatten);
       setState({ flatten: newFlatten });
       _flatten.current = newFlatten;
     } catch (error) {
