@@ -1,7 +1,7 @@
 import { defineConfig } from 'dumi';
 import path from 'path';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
-import AntdDayjsWebpackPlugin from 'antd-dayjs-webpack-plugin';
+// import AntdDayjsWebpackPlugin from 'antd-dayjs-webpack-plugin';
 
 
 export default defineConfig({
@@ -66,8 +66,7 @@ export default defineConfig({
   ignoreMomentLocale: true,
   chainWebpack(config, { webpack }) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
-    config.plugin('dayjs').use(AntdDayjsWebpackPlugin);
-
+    // config.plugin('dayjs').use(AntdDayjsWebpackPlugin);
   },
   plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
   // more config: https://d.umijs.org/config
