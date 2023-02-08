@@ -3,6 +3,7 @@ import { Popconfirm, Tabs } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import type { FormListFieldData } from 'antd';
 import './index.less';
+import { useTranslation } from 'react-i18next';
 
 const TabPane = Tabs.TabPane
 
@@ -34,11 +35,12 @@ const TabList: React.FC<ListTabProps> = (props) => {
   } = props;
 
   const [activeKey, setActiveKey] = useState('0');
+  const { t } = useTranslation()
 
   const getCurrentTabPaneName = idx => {
     return tabName instanceof Array
       ? tabName[idx] || idx + 1
-      : `${tabName || '项目'} ${idx + 1}`;
+      : `${tabName || t('item')} ${idx + 1}`;
   };
 
   const handleDelete = (targetKey: number) => {

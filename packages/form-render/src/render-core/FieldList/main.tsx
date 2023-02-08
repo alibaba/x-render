@@ -1,31 +1,46 @@
-import React from 'react';
 import { Form, message } from 'antd';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { isFunction } from '../../utils';
 
-const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
-  return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
-};
-
-const defaultAddBtnProps = {
-  type: 'dashed',
-  block: true,
-  children: '新增一条',
-};
-
-const defaultDelConfirmProps = {
-  title: '确定删除?',
-  okText: '确定',
-  cancelText: '取消',
-};
-
-let defaultActionColumnProps = {
-  colHeaderText: '操作',
-  copyText: '复制',
-  delText: '删除',
-};
+const getParamValue =
+  (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
+    return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
+  };
 
 export default (props: any) => {
-  const { form, schema, path, parentLitPath, renderCore, rootPath, methods, widgets, upperCtx, formCtx } = props;
+  const {
+    form,
+    schema,
+    path,
+    parentLitPath,
+    renderCore,
+    rootPath,
+    methods,
+    widgets,
+    upperCtx,
+    formCtx,
+  } = props;
+
+  const { t } = useTranslation();
+
+  const defaultAddBtnProps = {
+    type: 'dashed',
+    block: true,
+    children: t('add_item'),
+  };
+
+  const defaultDelConfirmProps = {
+    title: t('confirm_delete'),
+    okText: t('confirm'),
+    cancelText: t('cancel'),
+  };
+
+  let defaultActionColumnProps = {
+    colHeaderText: t('operate'),
+    copyText: t('copy'),
+    delText: t('delete'),
+  };
 
   const { widget } = schema;
   let widgetName = widget || 'list1';
@@ -35,14 +50,21 @@ export default (props: any) => {
 
   let initialValue = schema.default;
   if (!initialValue && !['drawerList', 'list1'].includes(widgetName)) {
-    initialValue = [{}]
+    initialValue = [{}];
   }
 
-
-  let { 
-    addBtnProps, delConfirmProps, actionColumnProps,
-    hideAdd, hideCopy, hideMove, hideDelete,
-    onAdd, onRemove, onMove, onCopy,
+  let {
+    addBtnProps,
+    delConfirmProps,
+    actionColumnProps,
+    hideAdd,
+    hideCopy,
+    hideMove,
+    hideDelete,
+    onAdd,
+    onRemove,
+    onMove,
+    onCopy,
     ...otherListProps
   } = listProps || {};
 
@@ -89,7 +111,7 @@ export default (props: any) => {
 
   const handleCopy = (add: any, fields: any) => (value: any) => {
     if (schema.max && fields.length === schema.max) {
-      return message.warning('已达表单项数量上限，无法复制')
+      return message.warning(t('copy_max_tip'));
     }
     let copyFunc = onCopy;
     if (typeof onCopy === 'string') {
@@ -120,18 +142,27 @@ export default (props: any) => {
   }
 
   return (
-    <Form.List 
-      name={path} 
+    <Form.List
+      name={path}
       initialValue={initialValue}
-      rules={otherSchema?.min ? [
-        {
-          validator: async (_, data) => {
-            if (!data || data.length < otherSchema.min) {
-              return Promise.reject(new Error(otherSchema?.message?.min || `数据长度必须大于等于${otherSchema.min}`));
-            }
-          }
-        },
-      ]: null}
+      rules={
+        otherSchema?.min
+          ? [
+              {
+                validator: async (_, data) => {
+                  if (!data || data.length < otherSchema.min) {
+                    return Promise.reject(
+                      new Error(
+                        otherSchema?.message?.min ||
+                          `数据长度必须大于等于${otherSchema.min}`
+                      )
+                    );
+                  }
+                },
+              },
+            ]
+          : null
+      }
     >
       {(fields, operation, { errors }) => (
         <>
@@ -141,47 +172,42 @@ export default (props: any) => {
             schema={otherSchema}
             fields={fields}
             operation={operation}
-
             path={path}
             listName={path}
             parentLitPath={parentLitPath}
             rootPath={[...preRootPath, ...path]}
-            
             readOnly={readOnly}
             methods={methods}
             renderCore={renderCore}
             widgets={widgets}
-
             hideAdd={hideAdd}
             hideCopy={hideCopy}
             hideDelete={hideDelete}
             hideMove={hideMove}
-
             addItem={handleAdd(operation.add)}
             removeItem={handleRemove(operation.remove)}
             moveItem={handleMove(operation.move)}
             copyItem={handleCopy(operation.add, fields)}
-
             addBtnProps={{
               ...defaultAddBtnProps,
-              ...addBtnProps
+              ...addBtnProps,
             }}
             delConfirmProps={{
               ...defaultDelConfirmProps,
-              ...delConfirmProps
+              ...delConfirmProps,
             }}
             actionColumnProps={{
               ...defaultActionColumnProps,
-              ...actionColumnProps
+              ...actionColumnProps,
             }}
           />
           {errors?.length !== 0 && (
-            <div style={{ marginBottom: '12px'}}>
+            <div style={{ marginBottom: '12px' }}>
               <Form.ErrorList errors={errors} />
             </div>
           )}
         </>
       )}
     </Form.List>
-  )
-}
+  );
+};

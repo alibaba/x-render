@@ -7,8 +7,9 @@ import { Space, Table, Form, Button, Popconfirm } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import type { FormListFieldData, FormListOperation, TableColumnsType } from 'antd';
 import FormDrawer from './drawerForm';
-
+import { useTranslation } from 'react-i18next';
 import './index.less';
+
 interface Props {
   schema: any;
   fields: FormListFieldData[];
@@ -43,7 +44,7 @@ const TableList: React.FC<Props> = (props: any) => {
   } = props;
 
   const form = Form.useFormInstance();
-
+  const { t } = useTranslation()
 
   const paginationConfig = {
     size: 'small',
@@ -115,7 +116,7 @@ const TableList: React.FC<Props> = (props: any) => {
               setVisible(true);
               indexRef.current = field.name;
               setItemData(form.getFieldValue(rootPath.concat(field.name)));
-            }}>编辑</a>}
+            }}>{t('edit')}</a>}
             {!hideDelete && (
               <Popconfirm
                 {...delConfirmProps}
@@ -137,7 +138,7 @@ const TableList: React.FC<Props> = (props: any) => {
   }
 
   return (
-    <div  className='fr-list-drawer'>
+    <div className='fr-list-drawer'>
       <Table
         size='middle'
         dataSource={fields}
