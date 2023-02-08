@@ -1,6 +1,8 @@
 import { defineConfig } from 'dumi';
 import path from 'path';
 import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
+import AntdDayjsWebpackPlugin from 'antd-dayjs-webpack-plugin';
+
 
 export default defineConfig({
   favicons: ['https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png'],
@@ -61,8 +63,11 @@ export default defineConfig({
       '@alifd/next',
     ],
   ],
+  ignoreMomentLocale: true,
   chainWebpack(config, { webpack }) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
+    config.plugin('dayjs').use(AntdDayjsWebpackPlugin);
+
   },
   plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
   // more config: https://d.umijs.org/config

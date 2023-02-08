@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "2.0.0-alpha.14",
+  "version": "2.0.0-alpha.16",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -65,7 +65,7 @@
     "classnames": "^2.3.1",
     "color": "^3.1.2",
     "lodash-es": "^4.17.21",
-    "moment": "^2.24.0",
+    "dayjs": "^1.11.7",
     "rc-color-picker": "^1.2.6",
     "scroll-into-view-if-needed": "^2.2.29",
     "virtualizedtableforantd4": "^1.1.2",

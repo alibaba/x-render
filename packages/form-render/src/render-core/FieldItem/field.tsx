@@ -116,7 +116,7 @@ const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, for
     widgetProps.dependValues = dependValues;
   }
 
-  ['placeholder', 'disabled', 'format', 'onStatusChange'].forEach(key => {
+  ['placeholder', 'disabled', 'format', 'onStatusChange', 'className'].forEach(key => {
     if (schema[key]) {
       widgetProps[key] = schema[key];
     }
