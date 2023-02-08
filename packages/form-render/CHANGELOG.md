@@ -1,5 +1,7 @@
 # Changelog
 
+## 1.14.11 
+- [+] 修复 setSchemaByPath 无法单独只修改 schema.props 下面的方法实例
 ## 1.14.1
 
 - [+] 修复样式问题
