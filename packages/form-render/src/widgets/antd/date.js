@@ -1,13 +1,11 @@
 
 import React, { useMemo } from 'react';
 import dayjs from 'dayjs';
-import 'dayjs/locale/zh-cn';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
 import { getFormat, transformDateValue } from '../utils';
 import DatePicker from './datePicker';
 
 dayjs.extend(quarterOfYear);
-dayjs.locale('zh-cn');
 
 export default ({ onChange, format, value, style, ...rest }) => {
   const dateFormat = getFormat(format);

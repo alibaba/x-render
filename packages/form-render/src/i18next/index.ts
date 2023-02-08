@@ -5,8 +5,8 @@ import resources from './locales/resources';
 i18n.use(initReactI18next).init({
   debug: false,
   resources: resources,
-  lng: 'zh',
-  fallbackLng: 'zh',
+  lng: 'zh_CN',
+  fallbackLng: 'zh_CN',
   interpolation: {
     escapeValue: false, // react already safes from xss
   },

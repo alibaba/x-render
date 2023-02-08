@@ -109,9 +109,6 @@ const schema = {
       title: '日期范围',
       type: 'range',
       format: 'dateTime',
-      props: {
-        placeholder: ['开始时间', '结束时间'],
-      },
     },
     time1: {
       title: '时间选择',
@@ -121,10 +118,7 @@ const schema = {
     timeRange1: {
       title: '时间范围',
       type: 'range',
-      format: 'time',
-      props: {
-        placeholder: ['开始时间', '结束时间'],
-      },
+      format: 'time'
     },
     checkbox1: {
       title: '是否选择',

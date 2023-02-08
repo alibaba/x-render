@@ -1,7 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { ConfigProvider } from 'antd';
+import dayjs from 'dayjs';
+
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
+import 'dayjs/locale/zh-cn';
 
 import { createStore } from './models/store';
 import { FRContext, ConfigContext } from './models/context';
@@ -38,7 +41,7 @@ export type {
 export default (props: FRProps) => {
   const { 
     configProvider,
-    locale = 'zh_CN',
+    locale = 'zh-CN',
     widgets,
     methods,
     form,
@@ -51,6 +54,12 @@ export default (props: FRProps) => {
 
   useEffect(() => {
     i18n.changeLanguage(locale);
+
+    if (locale === 'en-US') {
+      dayjs.locale('en');
+    } else {
+      dayjs.locale('zh-cn');
+    }
   }, [locale]);
 
   if (!form) {
@@ -58,7 +67,7 @@ export default (props: FRProps) => {
     return null;
   }
 
-  const antdLocale = locale === 'zh_CN' ? zhCN : enUS;
+  const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
   const formValidateMessages = antdLocale?.locale?.includes('en') ? validateMessagesEN : validateMessagesCN;
 
   const configContext = {

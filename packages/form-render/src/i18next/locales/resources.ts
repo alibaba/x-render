@@ -1,11 +1,11 @@
-import enUS from './en_US.json';
-import zhCN from './zh_CN.json';
+import enUS from './enUS.json';
+import zhCN from './zhCN.json';
 
 export default {
-  en_US: {
-    "translation": enUS,
+  'en-US': {
+    'translation': enUS,
   },
-  zh_CN: {
-    "translation": zhCN,
+  'zh-CN': {
+    'translation': zhCN,
   }
 }

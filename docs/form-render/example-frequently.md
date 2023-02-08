@@ -104,7 +104,7 @@ export default () => {
 ## 下拉选项异步加载
 通过服务端获取数据后展示下拉选项的选项值
 
-### 单个加载
+**单个加载**
 通过 `form.setSchemaByPath` 方法进行加载
 
 ```jsx
@@ -150,7 +150,7 @@ export default () => {
 }
 ```
 
-### 多个加载
+**多个加载**
 通过 `form.setSchema` 方法进行加载
 
 ```jsx

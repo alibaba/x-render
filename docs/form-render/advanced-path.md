@@ -1,6 +1,5 @@
 ---
 order: 3
-toc: content
 group: 
   title: 高级用法
   order: 1
