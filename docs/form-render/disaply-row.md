@@ -7,7 +7,7 @@ group:
 
 # 横向布局
 
-## 一、基础控件
+## 基础控件
 
 ```jsx
 import React from 'react';
@@ -156,7 +156,7 @@ export default () => {
 };
 ```
 
-## 二、嵌套控件
+## 嵌套控件
 
 对于嵌套类型的表单，我们内置了四种主题，分别为 collapse | card | tile | flex, 默认为 collapse 主题
 
@@ -340,7 +340,7 @@ export default () => {
 };
 ```
 
-## 三、列表控件：List
+## 列表控件
 
 列表的展示对于简单需求占位太多，复杂需求定制不够一直是痛点。所以我们给出了 5 种展示，充分满足从极简到复杂的所有需求。
 默认使用 widget: 'cardList'，卡片类型
@@ -885,7 +885,7 @@ const schema = {
 
 export default () => {
   const form = useForm();
-  return <FormRender schema={schema} form={form} />;
+  return <FormRender schema={schema} form={form} locale='en_US' configProvider={{locale: 'enUS'}}/>;
 };
 ```
 
