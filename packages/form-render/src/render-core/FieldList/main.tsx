@@ -17,10 +17,12 @@ export default (props: any) => {
     renderCore,
     rootPath,
     methods,
-    widgets,
     upperCtx,
     formCtx,
+    configContext,
   } = props;
+  
+  const { widgets } = configContext;
 
   const { t } = useTranslation();
 
@@ -168,6 +170,7 @@ export default (props: any) => {
         <>
           <Widget
             {...otherListProps}
+            configContext={configContext}
             form={form}
             schema={otherSchema}
             fields={fields}

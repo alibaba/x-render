@@ -3,7 +3,6 @@ import { createStore as createx } from 'zustand';
 type FormStore = {
   schema?: any;
   flattenSchema: any;
-  widgets: any;
   context?: any;
   initialized: boolean,
   init?: (schema: FormStore['schema']) => any;
@@ -16,7 +15,6 @@ export const createStore = () => createx<FormStore>((setState: any, get: any) =>
   schema: {},
   flattenSchema: {},
   context: {},
-  widgets: null,
   init: data => {
     return setState({ 
       initialized: true, 

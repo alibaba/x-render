@@ -1,10 +1,11 @@
-import { Button, Drawer, Space } from 'antd';
 import React from 'react';
+import { Button, Drawer, Space } from 'antd';
 import { useTranslation } from 'react-i18next';
 import FRender, { useForm } from '../../../index';
 
 const DrawerForm = (props: any) => {
-  const { schema, widgets, onClose, data } = props;
+  const { schema, widgets, onClose, data, configContext } = props;
+
   const form: any = useForm();
   const { t } = useTranslation();
 
@@ -15,6 +16,8 @@ const DrawerForm = (props: any) => {
   const handleClose = () => {
     onClose();
   };
+
+  console.log(configContext, ' console.log(configContext')
 
   return (
     <Drawer
@@ -40,9 +43,10 @@ const DrawerForm = (props: any) => {
         wrapperCol={{ flex: 1 }}
         widgets={widgets}
         onFinish={handleFinish}
+        locale={configContext?.locale}
       />
     </Drawer>
   );
-};
+}
 
 export default DrawerForm;

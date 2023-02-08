@@ -4,6 +4,7 @@ import { useStore } from 'zustand';
 import classnames from 'classnames';
 
 import { isCheckBoxType, _get, isObject, getArray } from '../../utils';
+import { FRContext, ConfigContext } from '../../models/context';
 import { getWidgetName } from '../../models/mapping';
 import { getFormItemLayout } from '../../models/layout';
 import getRuleList from '../../models/validates';
@@ -195,10 +196,11 @@ export default (props: any) => {
   }
 
   const form = Form.useFormInstance();
-  const widgets = useStore(store, (state: any) => state.widgets);
-  const methods = useStore(store, (state: any) => state.methods);
+  const configContext = useContext(ConfigContext);
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
+
+  const { widgets, methods } = configContext;
   
   const { labelWidth } = formCtx;
   const { hidden, properties, dependencies, ...otherSchema } = schema;

@@ -31,23 +31,19 @@ const FormCore = (props: any) => {
     column,
     labelWidth,
     form,
-    widgets,
     onFinish,
     onFinishFailed,
     readOnly,
     builtOperation,
     removeHiddenData,
-    methods,
     operateExtra,
   } = transformProps({ ...props, ...schemProps });
   const { labelCol, wrapperCol } = formProps;
 
   useEffect(() => {
     form.__setStore(store);
-    store.setState({ widgets, methods });
     setTimeout(() => {
       onMount && onMount();
-
       const values = omitBy(form.getValues(), isUndefined);
       immediateWatch(watch, values);
     }, 0);
@@ -128,12 +124,12 @@ const FormCore = (props: any) => {
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24 / column}>
             <Form.Item
-              label="hideLabel"
+              label='hideLabel'
               labelCol={labelCol}
-              className="fr-hide-label"
+              className='fr-hide-label'
             >
               <Space>
-                <Button type="primary" htmlType="submit">
+                <Button type='primary' htmlType='submit'>
                   提交
                 </Button>
                 <Button onClick={() => form.resetFields()}>重置</Button>
@@ -144,6 +140,6 @@ const FormCore = (props: any) => {
       )}
     </Form>
   );
-};
+}
 
 export default FormCore;

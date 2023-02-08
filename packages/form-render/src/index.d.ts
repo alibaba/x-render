@@ -215,7 +215,7 @@ export interface FRProps {
   debugCss?: boolean;
   /** 提交失败自动滚动到第一个错误字段 */
   scrollToFirstError?: boolean | ScrollOptions;
-  locale?: 'cn' | 'en';
+  locale?: 'zh_CN' | 'en_US';
   column?: number;
   debounceInput?: boolean;
   size?: string;

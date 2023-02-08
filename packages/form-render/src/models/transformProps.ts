@@ -12,7 +12,6 @@ const transformProps =  (props: any) => {
     beforeFinish,
     onMount,
     displayType = 'column',
-    widgets,
     watch,
     removeHiddenData = true,
     readOnly,
@@ -27,7 +26,6 @@ const transformProps =  (props: any) => {
     debug,
     id,
     labelWidth,
-    methods = {},
     form,
     onFinish,
     onFinishFailed,
@@ -59,7 +57,6 @@ const transformProps =  (props: any) => {
     onFinish,
     beforeFinish, // form 没有这个 api, 感觉找不到时机
     onMount,
-    widgets,
     watch,
     readOnly,
     column,
@@ -77,7 +74,6 @@ const transformProps =  (props: any) => {
     id,
     onFinishFailed,
     removeHiddenData,
-    methods,
     operateExtra
   };
 };

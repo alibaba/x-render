@@ -41,6 +41,7 @@ const TableList: React.FC<Props> = (props: any) => {
     copyItem,
     moveItem,
     removeItem,
+    configContext,
   } = props;
 
   const form = Form.useFormInstance();
@@ -159,6 +160,7 @@ const TableList: React.FC<Props> = (props: any) => {
           schema={schema}
           data={itemData}
           widgets={widgets}
+          configContext={configContext}
           onClose={handleDrawerClose}
         />
       )}

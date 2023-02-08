@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand'
-import { FRContext } from '../../models/context';
+import { FRContext, ConfigContext } from '../../models/context';
 
 import Main from './main';
 
@@ -14,13 +14,11 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
 
 export default (props: any) => {
   const store = useContext(FRContext);
+  const configContext = useContext(ConfigContext);
 
   const formCtx: any = useStore(store, (state: any) => state.context);
-  const methods = useStore(store, (state: any) => state.methods);
-
   const upperCtx: any = useContext(UpperContext);
-
-  const widgets = useStore(store, (state: any) => state.widgets)
+  const { widgets, methods } = configContext;
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
@@ -73,6 +71,7 @@ export default (props: any) => {
           formCtx={formCtx}
           upperCtx={upperCtx}
           widgets={widgets}
+          configContext={configContext}
         />
       </Form.Item>
     </Col>
