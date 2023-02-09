@@ -1,42 +1,11 @@
-import { useRef, useState } from 'react';
-import { Form, FormInstance } from 'antd';
+import { useRef } from 'react';
+import { Form } from 'antd';
 
 import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
 import { transformValueBind, parseValuesWithBind } from './bindValues';
 import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject, isArray, _omitBy, _isUndefined } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
-
-
-interface FormInstanceExtends extends FormInstance {
-  init: any;
-  __schema: any;
-  __setStore: (data: any) => any;
-  /** 设置表单值 */
-  setValues: FormInstance['setFieldsValue'];
-  setSchemaByFullPath: (path: string, schema: any) => any;
-  /** 根据路径动态设置 Schema */
-  setSchemaByPath: (path: string, schema: any) => any;
-  getHiddenValues: () => any;
-  /** 获取表单值 */
-  getValues: FormInstance['getFieldsValue'];
-  /** 设置 Schema */
-  setSchema: (schema: any, cover: boolean) => void;
-  /** 根据路径修改表单值 */
-  setValueByPath: FormInstance['setFieldValue'];
-  /**
-   * @deprecated 即将弃用，请勿使用此api，使用setValueByPath
-   */
-  onItemChange: FormInstance['setFieldValue'];
-  /** 根据路径获取 Schema */
-  getSchemaByPath: (path: string) => any;
-  setErrorFields: (erros: any[]) => void;
-  removeErrorField: (path: string) => any;
-  errorFields: FormInstance['getFieldsError'];
-  /**
-   * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
-   */
-  scrollToPath: FormInstance['scrollToField']
-};
+import type { FormInstance } from '../type';
 
 const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => {
   const path = getSchemaFullPath(_path, formSchema);
@@ -47,10 +16,8 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   _set(formSchema, path, result);
 };
 
-
-
 const useForm = () => {
-  const [form] = Form.useForm() as [FormInstanceExtends];
+  const [form] = Form.useForm() as [FormInstance];
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
   const schemaRef = useRef({});
@@ -72,7 +39,7 @@ const useForm = () => {
     setStoreData({ schema: newSchema, flattenSchema: flattenSchemaRef.current });
   };
 
-  form.setSchema = (obj: any, cover: boolean) => {
+  form.setSchema = (obj: any, cover = false) => {
     if (!isObject(obj)) {
       return;
     }
@@ -93,7 +60,7 @@ const useForm = () => {
   form.setSchemaByPath = (_path: string, _newSchema: any) => {
     const schema = _cloneDeep(schemaRef.current);
     updateSchemaByPath(_path, _newSchema, schema);
-   
+
     handleSchemaUpdate(schema);
   }
 
@@ -136,7 +103,7 @@ const useForm = () => {
   };
 
   form.removeErrorField = (path: any) => {
-    form.setFields([{ name: path, errors: []}]);
+    form.setFields([{ name: path, errors: [] }]);
   };
 
   form.getHiddenValues = () => {
@@ -151,7 +118,7 @@ const useForm = () => {
         if (!obj2.hasOwnProperty(key)) {
           _set(hiddenValues, _path, value);
           return;
-        } 
+        }
 
         if (isObject(value)) {
           recursion(value, obj2[key], _path);
@@ -176,15 +143,8 @@ const useForm = () => {
   // 老 API 兼容
   form.scrollToPath = form.scrollToField;
   form.onItemChange = form.setFieldValue;
-  // form = {
-  //   // touchedKeys: _touchedKeys.current,
-  //   // allTouched,
-  //   // methods
-  //   // touchKey,
-  //   // removeTouched,
-  //   // changeTouchedKeys,
-  // };
+ 
   return form;
 };
 
-export default useForm ;
+export default useForm;

@@ -13,7 +13,7 @@ import { validateMessagesEN, validateMessagesCN } from './models/validateMessage
 import FormCore from './form-core';
 import { widgets as defaultWidgets } from './widgets';
 import i18n from './i18next';
-import { FRProps } from './index.d';
+import { FRProps } from './type';
 
 export { widgets } from './widgets';
 export { mapping } from './models/mapping';
@@ -35,11 +35,10 @@ export type {
   ResetParams,
   RuleItem,
   ScrollOptions,
-} from './index.d';
-
+} from './type';
 
 export default (props: FRProps) => {
-  const { 
+  const {
     configProvider,
     locale = 'zh-CN',
     widgets,
@@ -81,7 +80,7 @@ export default (props: FRProps) => {
       locale={antdLocale}
       {...configProvider}
       form={{
-        validateMessages: { 
+        validateMessages: {
           ...formValidateMessages,
           ...validateMessages
         }
