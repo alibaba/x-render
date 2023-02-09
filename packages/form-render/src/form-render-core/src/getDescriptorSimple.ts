@@ -127,11 +127,12 @@ export const getDescriptorSimple = (schema: Schema = {}, path) => {
       ruleItem.validator = (_rule, value) => validatorImage(value);
     }
 
+    // 不做强校验，因为时间格式可以通过 props.format 进行更改
     // 校验时间格式
-    if (['date', 'dateTime', 'time'].includes(schema.format ?? '')) {
-      ruleItem.message = '${title}的格式错误';
-      ruleItem.validator = (_rule, value) => validatorTime(value);
-    }
+    // if (['date', 'dateTime', 'time'].includes(schema.format ?? '')) {
+    //   ruleItem.message = '${title}的格式错误';
+    //   ruleItem.validator = (_rule, value) => validatorTime(value);
+    // }
 
     // ==================== 处理用户自定义rules =========================
     const handleRegx = desc => {
