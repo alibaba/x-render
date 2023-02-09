@@ -618,19 +618,25 @@ export const getKeyFromPath = (path = '#') => {
 
 // 更多的值获取
 export const getDisplayValue = (value, schema) => {
+ 
   if (typeof value === 'boolean') {
-    return value ? 'yes' : 'no';
+    return value ? '是' : '否';
   }
   if (isObjType(schema) || isListType(schema)) {
     return '-';
   }
+
   if (Array.isArray(schema.enum) && Array.isArray(schema.enumNames)) {
     try {
+      if (Array.isArray(value)) {
+        return value.map(item => schema.enumNames[schema.enum.indexOf(item)]).join('，');
+      }
       return schema.enumNames[schema.enum.indexOf(value)];
     } catch (error) {
       return value;
     }
   }
+
   if (typeof value === 'object') {
     return JSON.stringify(value);
   }
