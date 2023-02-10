@@ -18,10 +18,13 @@ const Navigation: React.FC = () => {
       key: 'chart-render',
     },
     {
+<<<<<<< HEAD
       label: <Link to="/generator">表单设计器</Link>,
       key: 'generator',
     },
     {
+=======
+>>>>>>> c961e00f (feat: header 样式调整)
       label: (
         <div>
           <span>生态</span>
