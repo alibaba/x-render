@@ -2,12 +2,14 @@
 title: 首页
 hero:
   title: XRender
-  desc: 阿里巴巴 - 飞猪中后台「表单/表格/图表」开箱即用解决方案
+  desc: 阿里巴巴 - 中后台「表单/表格/图表」开箱即用解决方案
   actions:
     - text: Playground
       link: /playground
     - text: 开始使用
       link: /form-render
+    - text: V2 alpha 版
+      link: 'https://xrender2.vercel.app/form-render/migrate'
 features:
   - icon: https://qpluspicture.oss-cn-beijing.aliyuncs.com/k21jAW/006-parade-5.png
     title: FormRender
