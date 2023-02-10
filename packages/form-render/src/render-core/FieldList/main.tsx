@@ -25,16 +25,12 @@ export default (props: any) => {
   const { widgets } = configContext;
 
   const { t } = useTranslation();
-  const x = t('add_item');
-  
 
   const defaultAddBtnProps = {
     type: 'dashed',
     block: true,
     children: t('add_item'),
   };
-
-  console.log(defaultAddBtnProps, '--------')
 
   const defaultDelConfirmProps = {
     title: t('confirm_delete'),
@@ -217,4 +213,4 @@ export default (props: any) => {
       )}
     </Form.List>
   );
-};
+}

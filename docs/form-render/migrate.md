@@ -18,8 +18,8 @@ group:
 
 - 🚀 **更好的表单性能**：通过对 form-render 重构，底层接入 Antd Form 来实现表单的数据收集、校验等逻辑，提升表单的整体性能。有效的解决了表单数据改变表单全局刷新的问题。
 - 🎨 **全新的UI样式**：通过对中后台表单业务梳理，定制了一套全新的 UI 样式和交互规范，提升表单整体美观度 。[最佳展示](/form-render/disaply-row)
-- 🚥 **国际化**：国际化支持
-- 💎 **Antd V5**：对 antd V5 版本进行兼容
+- 🚥 **国际化**：国际化多语言支持，内置中英文语言包，英文版 locale: 'en-US'
+- 💎 **Antd V5**：兼容 antd V5 版本，无需配置
 
 
 
@@ -29,9 +29,14 @@ group:
 
 ### API 调整
 
-#### 1. form.formData 弃用
+#### form.formData 弃用
 改用 form.getValues() 方式获取
-#### 2. onFinish 提交函数
+
+#### theme 弃用
+嵌套组件 theme 字段 弃用，统一改成 widget 声明，默认是 widget: 'collapse' 折叠卡片
+
+
+#### onFinish 提交函数
 只有校验通过 onFinish 才会被触发，不在返回错误信息参数，为了兼容1.0版本，错误信息默认返回 []
 
 
@@ -45,7 +50,7 @@ group:
 }
 
 ```
-#### 3. validateFields
+#### validateFields
 errorInfo 的出参名称发生变更
 
 ```diff
