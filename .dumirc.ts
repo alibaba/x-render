@@ -6,7 +6,8 @@ export default defineConfig({
   favicons: ['https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png'],
   // autoAlias: false,
   outputPath: 'docs-dist',
-  locales: [{ id: 'zh-CN', name: '中文' }, { id: 'en-US', name: 'English' }],
+  // locales: [{ id: 'zh-CN', name: '中文' }, { id: 'en-US', name: 'English' }],
+  locales: [{ id: 'zh-CN', name: '中文' }],
   themeConfig: {
     name: 'XRender',
     logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
@@ -34,12 +35,12 @@ export default defineConfig({
           link: '/playground',
         }
       ],
-      'en-US': [
-        {
-          title: 'FormRender',
-          link: '/en/form-render',
-        }
-      ]
+      // 'en-US': [
+      //   {
+      //     title: 'FormRender',
+      //     link: '/en/form-render',
+      //   }
+      // ]
     },
   },
   extraBabelPlugins: [
