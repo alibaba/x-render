@@ -8,45 +8,119 @@ const prefix = 'xr-doc-hero';
 
 const Demo: React.FC = () => {
   const form = useForm();
-  const [schema, setSchema] = React.useState<any>({
-    type: 'object',
-    properties: {
-      input: {
-        title: 'name',
-        type: 'string',
-      },
-    },
-  });
+  const [schema, setSchema] = React.useState<any>();
 
   React.useEffect(() => {
     new TypeIt('#xr-doc-hero-schema', {
       speed: 50,
     })
-      .type(
-        "{<br/>&nbsp;&nbsp; type: 'object',<br/>&nbsp;&nbsp; properties: {<br/>&nbsp;&nbsp;&nbsp;&nbsp; input: {<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; title: 'name',<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; type: 'string',<br/>&nbsp;&nbsp;&nbsp;&nbsp; }<br/>&nbsp;&nbsp; },<br/>}",
-        { instant: true }
-      )
-      .move(-2)
+      .type('{}')
+      .move(-1, { instant: true })
+      .type('<br/><br/>', { instant: true })
+      .move(-1, { instant: true })
+      .type('&nbsp;&nbsp;', { instant: true })
+      .type('bar: {},')
+      .move(-2, { instant: true })
+      .type('<br/><br/>&nbsp;&nbsp;', { instant: true })
+      .move(-3, { instant: true })
+      .type('&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
+      .type('title: "bar",')
       .type('<br/>&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
+      .type('type: "string",')
+      .exec(() => {
+        setSchema({
+          type: 'object',
+          properties: {
+            bar: {
+              title: 'bar',
+              type: 'string',
+            },
+          },
+        });
+      })
+      .move(5)
+      .type('<br/>&nbsp;&nbsp', { instant: true })
       .type('foo: {}', { delay: 100 })
       .move(-1, { instant: true })
       .type('<br/><br/>&nbsp;&nbsp;', { instant: true })
       .move(-3, { instant: true })
-      .type('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
+      .type('&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
       .type("title: 'foo',")
-      .type('<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
+      .type('<br/>&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
       .type("type: 'string',")
       .exec(() => {
         setSchema({
           type: 'object',
           properties: {
-            input: {
-              title: 'name',
+            bar: {
+              title: 'bar',
               type: 'string',
             },
             foo: {
               title: 'foo',
               type: 'string',
+            },
+          },
+        });
+      })
+      .type('<br/>&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
+      .type('enum: [1, 2, 3],')
+      .type('<br/>&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
+      .type('enumNames: [1, 2, 3]')
+      .exec(() => {
+        setSchema({
+          type: 'object',
+          properties: {
+            bar: {
+              title: 'bar',
+              type: 'string',
+            },
+            foo: {
+              title: 'foo',
+              type: 'string',
+              enum: [1, 2, 3],
+              enumNames: [1, 2, 3],
+            },
+          },
+        });
+      })
+      .type('<br/>&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
+      .type('required: true,')
+      .exec(() => {
+        setSchema({
+          type: 'object',
+          properties: {
+            bar: {
+              title: 'bar',
+              type: 'string',
+            },
+            foo: {
+              title: 'foo',
+              type: 'string',
+              enum: [1, 2, 3],
+              enumNames: [1, 2, 3],
+              required: true,
+            },
+          },
+        });
+      })
+      .type('<br/>&nbsp;&nbsp;&nbsp;&nbsp;', { instant: true })
+      .type('description: "more powerfull!!"')
+      .exec(() => {
+        setSchema({
+          type: 'object',
+          properties: {
+            bar: {
+              title: 'bar',
+              type: 'string',
+            },
+            foo: {
+              title: 'foo',
+              type: 'string',
+              enum: [1, 2, 3],
+              enumNames: [1, 2, 3],
+              required: true,
+              description: 'more powerfull!!',
             },
           },
         });
@@ -60,20 +134,19 @@ const Demo: React.FC = () => {
         <div id="xr-doc-hero-schema"></div>
       </Card>
       <Card title="FormRender" className={`${prefix}-form`}>
-        <FormRender
-          schema={schema}
-          displayType="row"
-          form={form}
-          labelCol={{ span: 4 }}
-          wrapperCol={{ span: 18 }}
-        />
-        <Row>
-          <Col offset={4}>
-            <Button onClick={form.submit} type="primary">
-              Submit
-            </Button>
-          </Col>
-        </Row>
+        {schema ? (
+          <FormRender
+            schema={schema}
+            form={form}
+            labelCol={{ span: 24 }}
+            wrapperCol={{ span: 22 }}
+          />
+        ) : (
+          <div className={`${prefix}-loading`}>Transform schema to form...</div>
+        )}
+        <Button onClick={form.submit} type="primary">
+          Submit
+        </Button>
       </Card>
     </div>
   );
