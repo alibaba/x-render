@@ -18,7 +18,9 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
       labelCol = {};
       wrapperCol = {};
     }
-    // wrapperCol = { flex: 1 };
+    
+    labelCol = {  }
+    wrapperCol = {  }
   }
 
   if (_labelCol) {
