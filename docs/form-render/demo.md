@@ -1,36 +1,4 @@
----
-order: 0
-title: 开始使用
----
 
-<div style="display:flex;align-items:center;margin-bottom:24px">
-  <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="48px"/>
-  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">FormRender</span>
-</div>
-<p style="display:flex;justify-content:space-between;width:440px">
-  <a href="https://www.npmjs.com/package/form-render?_blank">
-    <img alt="npm" src="https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square">
-  </a>
-  <a href="https://npmjs.org/package/form-render">
-    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/form-render.svg?style=flat-square">
-  </a>
-  <a href="https://npmjs.org/package/form-render">
-    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/form-render.svg?style=flat-square">
-  </a>
-  <a>
-    <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
-  </a>
-</p>
-
-阿里巴巴-中后台表单解决方案，通过 JsonSchema 协议渲染表单
-
-
-```shell
-npm i form-render --save
-```
-## 使用方式
-
-**函数组件**
 
 使用 `useForm` hooks 创建 form 实例。
 ```jsx
@@ -44,7 +12,6 @@ const schema = {
     input1: {
       title: '简单输入框',
       type: 'string',
-      required: true,
     },
     select1: {
       title: '单选',
@@ -56,7 +23,65 @@ const schema = {
           { label: '晚', value: 'c' }
         ]
       }
-    }
+    },
+    obj: {
+      type: 'object',
+      title: '卡片主题',
+      description: '这是一个对象类型',
+      widget: 'collapse',
+      column: 3,
+      properties: {
+        input1: {
+          title: '输入框 A',
+          type: 'string',
+        },
+        input2: {
+          title: '输入框 B',
+          type: 'string',
+        },
+        input3: {
+          title: '输入框 C',
+          type: 'string',
+        },
+        input4: {
+          title: '输入框 D',
+          type: 'string',
+        },
+      },
+    },
+    list: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      display: 'inline',
+      widget: 'cardList',
+      items: {
+        type: 'object',
+        title: '卡片主题',
+        description: '这是一个对象类型',
+        column: 3,
+        widget: 'card',
+        properties: {
+          list: {
+            title: '对象数组',
+            description: '对象数组嵌套功能',
+            type: 'array',
+            display: 'inline',
+            widget: 'cardList',
+            items: {
+              type: 'object',
+              title: '卡片主题',
+              description: '这是一个对象类型',
+              column: 3,
+              widget: 'card',
+              properties: {
+                
+              },
+            },
+          },
+        },
+      },
+    },
   }
 };
 
@@ -64,11 +89,11 @@ export default () => {
   const form = useForm();
 
   const onFinish = (formData) => {
-    console.log('formData:', formData);
+    //console.log('formData:', formData);
   };
 
   return (
-    <div style={{ width: 400 }}>
+    <div>
       <FormRender form={form} schema={schema} onFinish={onFinish} />
       <Button type="primary" onClick={form.submit}>
         提交
@@ -112,7 +137,7 @@ class Demo extends React.Component {
   render() {
     const { form } = this.props;
     return (
-      <div style={{ width: 400 }}>
+      <div>
         <FormRender form={form} schema={schema} onFinish={this.onFinish} />
         <Button type="primary" onClick={form.submit}>
           提交

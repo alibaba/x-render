@@ -86,3 +86,53 @@ export function isCheckBoxType(schema, readOnly) {
   }
 }
 
+export const valueRemoveUndefined = (values: any) => {
+
+  const recursionArray = (list: any[]) => {
+    let result = list.map(item => {
+      if (isObject(item)) {
+        return recursionObj(item);
+      }
+
+      if (isArray(item)) {
+        return recursionArray(item);
+      }
+      
+      return item;
+    });
+
+    result = omitBy(result, isUndefined);
+
+    if (Object.keys(result).length === 0) {
+      return undefined;
+    }
+    return result;
+  };
+ 
+  const recursionObj = (_data: any) => {
+    let data =  omitBy(_data, isUndefined);
+
+    Object.keys(data).forEach(key => {
+      const item = data[key];
+      if (isObject(item)) {
+        data[key] = recursionObj(item);
+      }
+
+      if (isArray(item)) {
+        data[key] = recursionArray(item);
+      }
+    });
+
+    data = omitBy(data, isUndefined);
+
+    if (Object.keys(data).length === 0) {
+      return undefined;
+    }
+    return data;
+  }
+
+  return recursionObj(values) || {};
+}
+
+
+

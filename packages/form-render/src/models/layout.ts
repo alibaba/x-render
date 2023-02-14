@@ -13,14 +13,13 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
   }
 
   if (displayType === 'column') {
-    labelCol = { xl: 9, xxl: 6 };
-    if (column > 1) {
-      labelCol = {};
-      wrapperCol = {};
-    }
-    
-    labelCol = {  }
-    wrapperCol = {  }
+    // labelCol = { xl: 9, xxl: 6 };
+    // if (column > 1) {
+    //   labelCol = {};
+    //   wrapperCol = {};
+    // }
+    labelCol = {};
+    wrapperCol = {};
   }
 
   if (_labelCol) {

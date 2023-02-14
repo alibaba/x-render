@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from 'react';
 import { Form, Row, Col, Button, Space } from 'antd';
 import { useStore } from 'zustand';
-import { isUndefined, omitBy, cloneDeep } from 'lodash-es';
 
+import { valueRemoveUndefined, _cloneDeep } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesWithBind } from '../models/bindValues';
@@ -44,7 +44,7 @@ const FormCore = (props: any) => {
     form.__setStore(store);
     setTimeout(() => {
       onMount && onMount();
-      const values = omitBy(form.getValues(), isUndefined);
+      const values = form.getValues();
       immediateWatch(watch, values);
     }, 0);
   }, []);
@@ -65,18 +65,18 @@ const FormCore = (props: any) => {
     setContext(context);
   }, [column, labelCol, wrapperCol, displayType, labelWidth]);
 
-  const handleValuesChange = (changedValues: any, allValues: any) => {
-    const _allValues = omitBy(allValues, isUndefined);
-    valuesWatch(changedValues, _allValues, watch);
+  const handleValuesChange = (changedValues: any, _allValues: any) => {
+    const allValues = valueRemoveUndefined(_allValues);
+    valuesWatch(changedValues, allValues, watch);
   };
 
   const handleFinish = async (_values: any) => {
-    let values = cloneDeep(_values);
+    let values = _cloneDeep(_values);
     if (!removeHiddenData) {
-      values = cloneDeep(form.getFieldsValue(true));
+      values = _cloneDeep(form.getFieldsValue(true));
     }
     values = parseValuesWithBind(values, flattenSchema);
-    values = omitBy(values, isUndefined);
+    values = valueRemoveUndefined(values);
 
     let fieldsError = beforeFinish
       ? await beforeFinish({ data: values, schema, errors: [] })
@@ -97,12 +97,12 @@ const FormCore = (props: any) => {
     if (!onFinishFailed) {
       return;
     }
-    let values = cloneDeep(params?.values);
+    let values = _cloneDeep(params?.values);
     if (!removeHiddenData) {
-      values = cloneDeep(form.getFieldsValue(true));
+      values = _cloneDeep(form.getFieldsValue(true));
     }
     values = parseValuesWithBind(values, flattenSchema);
-    values = omitBy(values, isUndefined);
+    values = valueRemoveUndefined(values);
 
     onFinishFailed({ ...params, values });
   };
