@@ -62,20 +62,18 @@ for (let i = 0; i < 6; i++) {
 // 详细可见 form-render 的使用
 const schema = {
   type: 'object',
+  labelWidth: 80,
   properties: {
     title: {
       title: '标题',
-      type: 'string',
-      width: '30%',
-      labelWidth: 45,
+      type: 'string'
     },
     created_at: {
       title: '创建时间',
       type: 'string',
       format: 'date',
-      width: '30%',
-    },
-  },
+    }
+  }
 };
 
 // 配置完全透传 antd table
