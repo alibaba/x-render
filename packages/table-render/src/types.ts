@@ -88,6 +88,8 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   onSearch?: (search: any) => any;
   afterSearch?: (params: any) => any;
   widgets?: any;
+  form?: any;
+  [key:string]: any
 }
 
 type ApiType<RecordType> =
