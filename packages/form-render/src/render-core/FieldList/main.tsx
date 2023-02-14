@@ -3,10 +3,9 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { isFunction } from '../../utils';
 
-const getParamValue =
-  (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
-    return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
-  };
+const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
+  return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
+};
 
 export default (props: any) => {
   const {
@@ -148,22 +147,21 @@ export default (props: any) => {
       name={path}
       initialValue={initialValue}
       rules={
-        otherSchema?.min
-          ? [
-              {
-                validator: async (_, data) => {
-                  if (!data || data.length < otherSchema.min) {
-                    return Promise.reject(
-                      new Error(
-                        otherSchema?.message?.min ||
-                          `数据长度必须大于等于${otherSchema.min}`
-                      )
-                    );
-                  }
-                },
-              },
-            ]
-          : null
+        otherSchema?.min ? [
+          {
+            validator: async (_, data) => {
+              if (!data || data.length < otherSchema.min) {
+                return Promise.reject(
+                  new Error(
+                    otherSchema?.message?.min ||
+                      `数据长度必须大于等于${otherSchema.min}`
+                  )
+                );
+              }
+            }
+          }
+        ]
+      : null
       }
     >
       {(fields, operation, { errors }) => (

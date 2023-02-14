@@ -30,7 +30,6 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
     wrapperCol = _wrapperCol;
   }
 
-
   if (displayType === 'inline') {
     labelCol = {};
     wrapperCol = {};

@@ -114,8 +114,6 @@ function Provider(props, ref) {
   const _mapping = { ...defaultMapping, ...mapping };
   const _widgets = { ...defaultWidgets, ...widgets, list };
 
-  debugger;
-
   const rootState = {
     preview: _preview ?? preview,
     mapping: _mapping,

@@ -140,9 +140,9 @@ const useForm = () => {
     storeRef.current = store;
   }
 
-  // 老 API 兼容
   form.scrollToPath = form.scrollToField;
-  form.onItemChange = form.setFieldValue;
+  // 老 API 兼容
+  form.onItemChange = form.setValueByPath;
  
   return form;
 };

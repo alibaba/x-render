@@ -85,9 +85,6 @@ const RenderField = ({
     schema,
     ...schema['props'],
   });
-
-  console.log(Widget, '----widget', widgetName)
-  debugger;
   const originNode = (
     <>
       {schema.title ? (

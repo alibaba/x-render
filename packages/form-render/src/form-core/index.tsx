@@ -83,7 +83,7 @@ const FormCore = (props: any) => {
       : null;
     fieldsError = transformFieldsError(fieldsError);
 
-    console.log(values);
+    // console.log(values);
     // Stop submit
     if (fieldsError) {
       form.setFields(fieldsError);
