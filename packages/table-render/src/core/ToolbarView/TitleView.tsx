@@ -1,43 +1,43 @@
-import React from "react";
-import { Button, Radio } from "antd";
+import React from 'react';
+import { Radio } from 'antd';
+import { isFunction, isArray } from '../../utils';
 
-
-const TitleView = ({ title, ...rest }: any) => {
-  const { tableState, setTable, doSearch, getState } = rest;
+const TitleView = (props: any) => {
+  const { title, setTable, doSearch, getState, onTabChange } = props;
   const { tab, api } = getState();
-  const _tab = tab || 0;
+  const tabIndex = tab || 0;
 
-  
-  const onTabChange = (e: any) => {
-    if (rest.onTabChange && typeof rest.onTabChange === 'function') {
-      return rest.onTabChange(e);
+  const handleTabChange = (ev: any) => {
+    const _tabIndex = ev.target.value;
+    if (isFunction(onTabChange)) {
+      return onTabChange(_tabIndex, ev);
     }
-    const _tab = e.target.value;
-    setTable({ tab: _tab });
-    doSearch({ tab: _tab });
+    setTable({ tab: _tabIndex });
+    doSearch({ tab: _tabIndex });
   };
 
-  if (typeof api === 'function')
-    return <div className="tr-single-tab">{title}</div>;
-  if (api && Array.isArray(api)) {
-    if (api.length === 1)
-      return <div className="tr-single-tab">{api[0].name}</div>;
+  if (isArray(api) && api.length > 1) {
     return (
       <>
-        <Radio.Group onChange={onTabChange} value={_tab}>
-          {api.map((item, i) => {
+        <Radio.Group onChange={handleTabChange} value={tabIndex}>
+          {api.map((item: any, index: any) => {
             return (
-              <Radio.Button key={i.toString()} value={i}>
+              <Radio.Button key={index.toString()} value={index}>
                 {item.name}
               </Radio.Button>
             );
           })}
         </Radio.Group>
-        {title && <div className="tr-extra-tab">{title}</div>}
+        {title && <div className='tr-extra-tab'>{title}</div>}
       </>
     );
   }
-  return <div className="tr-single-tab" />; // 给一个空的占位
+
+  let content = title;
+  if (isArray(api)) {
+    content = api[0].name;
+  }
+  return <div className='tr-single-tab'>{content || ''}</div>;
 };
 
 export default TitleView;

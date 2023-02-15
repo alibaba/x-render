@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { Space } from 'antd';
-import create from 'zustand';
+import create, { useStore } from 'zustand';
 import { useForm } from 'form-render';
 
 import { TRContext } from '../models/context';
@@ -17,55 +17,32 @@ type ISearchParams = {
   sorter?: any;
 };
 
-const useStore = create((set, get) => ({
-  loading: false,
-  api: null,
-  tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
-  dataSource: [],
-  extraData: null, // 需要用到的 dataSource 以外的扩展返回值
-  extraParams: {},
-  pagination: {
-    current: 1,
-    pageSize: 10,
-    total: 0,
-  },
-  tableSize: 'default',
-  init: data => {
-    return set({ 
-      initialized: true, 
-      ...data
-    });
-  },
-  setState: state => {
-    return set({ ... state });
-  },
-  getState: () => {
-    return get();
-  }
-}));
 
 const RenderCore = props => {
   const { search: searchProps, table: tableProps, debug, className, style, headerTitle, toolbarRender,  toolbarAction = true, } = props;
   const form = useForm();
   const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
 
-  const loading = useStore((state: any) => state.loading);
-  const api = useStore((state: any) => state.api);
-  const currentTab = useStore((state: any) => state.tab);
+  const store = useContext(TRContext);
+  const schema = useStore(store, (state: any) => state.schema);
 
-  const dataSource = useStore((state: any) => state.dataSource);
+  const loading = useStore(store, (state: any) => state.loading);
+  const api = useStore(store, (state: any) => state.api);
+  const currentTab = useStore(store, (state: any) => state.tab);
 
-  const extraData = useStore((state: any) => state.extraData);
+  const dataSource = useStore(store, (state: any) => state.dataSource);
 
-  const extraParams = useStore((state: any) => state.extraParams);
+  const extraData = useStore(store, (state: any) => state.extraData);
 
-  const pagination = useStore((state: any) => state.pagination);
+  const extraParams = useStore(store, (state: any) => state.extraParams);
 
-  const tableSize = useStore((state: any) => state.tableSize);
+  const pagination = useStore(store, (state: any) => state.pagination);
 
-  const setState = useStore((state: any) => state.setState);
+  const tableSize = useStore(store, (state: any) => state.tableSize);
 
-  const getState = useStore((state: any) => state.getState)
+  const setState = useStore(store, (state: any) => state.setState);
+
+  const getState = useStore(store, (state: any) => state.getState)
 
   const fullScreen = () => {
     return Promise.resolve(rootRef.current?.requestFullscreen());
@@ -178,6 +155,7 @@ const showTableTop =
             setState={setState}
             getState={getState}
             api={api}
+            tableSize={tableSize}
             doSearch={doSearch}
             refresh={fullScreen}
             fullScreen={fullScreen}

@@ -16,6 +16,7 @@ const ToolbarView = props => {
     toolbarRender, 
     toolbarAction = true, 
     api,
+    tableSize,
     refresh,
     doSearch,
     fullScreen

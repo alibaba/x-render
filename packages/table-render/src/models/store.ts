@@ -18,7 +18,7 @@ type TStore = {
 };
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
-export const createStore = () => createx<TStore>((setState: any, get: any) => ({
+export const createStore = () => createx<TStore>((set: any, get: any) => ({
   loading: false,
   api: null,
   tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
@@ -33,14 +33,12 @@ export const createStore = () => createx<TStore>((setState: any, get: any) => ({
   tableSize: 'default',
 
 
-  init: data => {
-    return setState({ 
-      initialized: true, 
-      ...data
-    });
+ 
+  setState: (state: any) => {
+    return set({ ...state })
   },
-  setContext: context => {
-    return setState({ context });
+  getState: () => {
+    return get();
   }
 }));
 
