@@ -5,16 +5,7 @@
   overflow: auto;
 }
 
-.tr-table-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-}
 
-.tr-table-top-nohead {
-  height: 24px;
-}
 
 .tr-action-list {
   display: flex;

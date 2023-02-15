@@ -48,7 +48,8 @@ npm i table-render --save
  * background: 'rgb(245,245,245)'
  */
 import React from 'react';
-import { Table, Search, withTable } from 'table-render';
+import TableRender from 'table-render';
+import { Button } from 'antd';
 
 const dataSource = [];
 for (let i = 0; i < 6; i++) {
@@ -95,24 +96,61 @@ const columns = [
 ];
 
 const Wrapper = () => {
-  const searchApi = () => {
+  const api = () => {
     return {
       rows: dataSource,
       total: dataSource.length,
     };
   };
+
+  const searchHotel = async (params) => {
+      const result = await getHotelData(params);
+      return {
+        rows: result.list,
+        total: result.total,
+      }
+    }
+
+  const searchPeople = async (params) => {
+    const result = await getPeopleData(params);
+    return {
+      rows: result.list,
+      rows: result.totla,
+    }
+  }
+
+
   return (
     <>
-      <Search schema={schema} api={searchApi} />
-      <Table headerTitle="最简表格" columns={columns} rowKey="id" />
+      <TableRender
+        search={{
+          schema,
+          api: [
+            { name: '酒店数据', api: searchHotel },
+            { name: '人员数据', api: searchPeople }
+          ]
+        }}
+        toolbarRender={() => {
+          return [
+            <Button>11111</Button>
+          ]
+        }}
+        
+        table={{
+          headerTitle: "最简表格",
+          columns: columns,
+          rowKey:"id",
+
+        }}
+      />
     </>
   );
 };
 
-export default withTable(Wrapper);
+export default Wrapper;
 ```
 
-## API
+<!-- ## API
 
 ### WithTable
 
@@ -340,4 +378,4 @@ const onClick = () => {
   const onClick = () => {
     changeTab(1);   // 手动切换到对应tab
   };
-  ```
+  ``` -->

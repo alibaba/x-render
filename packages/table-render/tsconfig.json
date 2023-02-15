@@ -16,7 +16,8 @@
     },
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "resolveJsonModule": true
   },
   "exclude": [
     "node_modules",

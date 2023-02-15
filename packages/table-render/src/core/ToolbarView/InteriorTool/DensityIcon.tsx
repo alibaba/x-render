@@ -1,7 +1,7 @@
 import { ColumnHeightOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Tooltip } from 'antd';
 import React, { useRef } from 'react';
-import { useTable } from '../hooks';
+import { useTable } from '../../../components/hooks';
 
 export type DensitySize = 'middle' | 'small' | 'default' | undefined;
 
@@ -15,7 +15,7 @@ const DesityIcon = () => {
         getPopupContainer={() => dropRef.current}
         overlay={
           <Menu
-            selectedKeys={[tableState.tableSize]}
+            // selectedKeys={[tableState.tableSize]}
             onClick={({ key }) => {
               setTable({ tableSize: key as DensitySize });
             }}

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { SearchProps } from '../../types';
-import { useTable } from '../hooks';
-import SearchForm from '../SearchForm';
+import SearchForm from '../../components/SearchForm';
+import { TRContext } from '../../models/context';
+
 
 const Search: <RecordType extends object = any>(
   props: SearchProps<RecordType>
@@ -14,17 +15,21 @@ const Search: <RecordType extends object = any>(
     api,
     afterSearch,
     className,
+    form,
+    refresh,
     ...otherProps
   }  = props;
 
-  const { refresh, syncMethods, form, tableState }: any = useTable();
-  const { loading } = tableState;
+  const store = useContext(TRContext);
+
+  const { syncMethods, tableState, loading }: any = store.getState();
+  // const { loading } = tableState;
 
   const handleMount = async () => {
-    syncMethods({
-      searchApi: api,
-      syncAfterSearch: afterSearch,
-    });
+    // syncMethods({
+    //   searchApi: api,
+    //   syncAfterSearch: afterSearch,
+    // });
 
     if (hidden) {
       refresh();
