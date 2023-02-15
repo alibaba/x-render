@@ -2,9 +2,8 @@ import { Radio, Space, Table, TableProps } from 'antd';
 import React, { useEffect, useRef, useContext } from 'react';
 import { TableRenderProps } from '../../types';
 import { getDate, getDateTime, getMoneyType } from '../../utils';
-import ErrorBoundary from '../../components/ErrorBoundary';
-import { renderDom } from '../../components/field';
-import { useTable } from '../../components/hooks';
+import ErrorBoundary from '../ErrorBoundary';
+import { renderDom } from './field';
 import ToolBarAction from '../ToolbarView/InteriorTool';
 import { TRContext } from '../../models/context';
 
@@ -25,8 +24,7 @@ const ProTable: <RecordType extends object = any>(
 
   const { setTable, doSearch, dataSource = [] } : any = props;
 
-  // const { tableState, setTable, doSearch } = useTable();
-  // const { dataSource, pagination, loading, api, tableSize } = tableState;
+ 
   const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
 
   const onChange = ({ current, pageSize }, filters, sorter) => {

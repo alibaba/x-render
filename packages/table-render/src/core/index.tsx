@@ -5,10 +5,12 @@ import { useForm } from 'form-render';
 
 import { TRContext } from '../models/context';
 import { _get, isFunction, isArray } from '../utils';
-import ErrorBoundary from '../components/ErrorBoundary';
+import ErrorBoundary from './ErrorBoundary';
 import Search from './SearchView';
 import Toolbar from './ToolbarView';
 import Table from './TableView';
+
+import './index.less';
 
 type ISearchParams = {
   current?: number;

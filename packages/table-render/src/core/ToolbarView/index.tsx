@@ -33,7 +33,7 @@ const ToolbarView = props => {
       <div className='tr-toolbar-right'>
         <Space>
           <Space>{toolbarRender()}</Space>
-          {toolbarAction && <InteriorTool fullScreen={fullScreen} />}
+          {toolbarAction && <InteriorTool fullScreen={fullScreen} refresh={refresh} />}
         </Space>
       </div>
     </div>

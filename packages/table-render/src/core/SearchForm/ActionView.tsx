@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Space } from 'antd';
-import { useTable } from '../hooks';
 
 const ActionView = (props: any) => {
   const {
@@ -9,11 +8,11 @@ const ActionView = (props: any) => {
     className,
     form,
     searchText,
-    resetText
+    resetText,
+    loading
   } = props;
 
-  const { tableState = {} }: any = useTable();
-  const { loading } = tableState;
+
 
   const handleReset = () => {
     form.resetFields();

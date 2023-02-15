@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { SearchProps } from '../../types';
-import SearchForm from '../../components/SearchForm';
+import SearchForm from '../SearchForm';
 import { TRContext } from '../../models/context';
 
 
