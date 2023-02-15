@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useImperativeHandle } from 'react';
 import { Space } from 'antd';
 import create, { useStore } from 'zustand';
 import { useForm } from 'form-render';
@@ -21,7 +21,7 @@ type ISearchParams = {
 
 
 const RenderCore = props => {
-  const { search: searchProps, table: tableProps, debug, className, style, headerTitle, toolbarRender,  toolbarAction = true, } = props;
+  const { search: searchProps, table: tableProps, debug, className, style, headerTitle, toolbarRender,  toolbarAction = true, tableRef } = props;
   const form = useForm();
   const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
 
@@ -52,10 +52,18 @@ const RenderCore = props => {
   
 
   useEffect(() => {
-    setState({ api: searchProps.api })
+    setState({ api: searchProps.api, tableSize:  tableProps.size });
+    if (searchProps.hidden) {
+      refresh();
+    }
   }, [])
 
-  const afterSearch = useRef<any>();
+
+  useImperativeHandle(tableRef, () => ({
+    doSearch,
+    refresh,
+    form
+  }));
 
   const doSearch = (params: ISearchParams, customSearch?: Record<string, any>) => {
     const { current, pageSize, tab, sorter, ...extraSearch } = params || {};
@@ -95,7 +103,8 @@ const RenderCore = props => {
               pageSize: pageSize || _pageSize,
             },
           });
-          afterSearch.current({ rows, total, pageSize, ...extraData });
+        
+          searchProps?.afterSearch?.({ rows, total, pageSize, ...extraData });
         })
         .catch(err => {
           setState({ loading: false });
@@ -159,12 +168,15 @@ const showTableTop =
             api={api}
             tableSize={tableSize}
             doSearch={doSearch}
-            refresh={fullScreen}
+            refresh={refresh}
             fullScreen={fullScreen}
             toolbarRender={toolbarRender}
           />
           <Table 
             {...tableProps}
+            setState={setState}
+            getState={getState}
+            doSearch={doSearch}
             dataSource={dataSource}
           />
         </div>

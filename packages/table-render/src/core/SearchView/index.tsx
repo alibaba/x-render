@@ -1,8 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { SearchProps } from '../../types';
 import SearchForm from '../SearchForm';
 import { TRContext } from '../../models/context';
-
 
 const Search: <RecordType extends object = any>(
   props: SearchProps<RecordType>
@@ -22,19 +21,9 @@ const Search: <RecordType extends object = any>(
 
   const store = useContext(TRContext);
 
-  const { syncMethods, tableState, loading }: any = store.getState();
-  // const { loading } = tableState;
+  const { tableState, loading }: any = store.getState();
 
   const handleMount = async () => {
-    // syncMethods({
-    //   searchApi: api,
-    //   syncAfterSearch: afterSearch,
-    // });
-
-    if (hidden) {
-      refresh();
-    }
-
     if (typeof onMount === 'function') {
       await onMount();
     }
@@ -46,6 +35,10 @@ const Search: <RecordType extends object = any>(
     }
     refresh({ ...data, sorter: tableState?.sorter });
   };
+
+  if (hidden) {
+    return null;
+  }
 
   return (
     <SearchForm 

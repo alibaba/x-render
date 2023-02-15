@@ -1,4 +1,4 @@
----
+<!-- ---
 order: 3
 title: 0.x 到 1.0
 hide: true
@@ -43,4 +43,4 @@ hide: true
    );
    export default withTable(TableDemo);
 
-   ```
+   ``` -->

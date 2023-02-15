@@ -12,9 +12,6 @@ import { TRContext, ConfigContext } from './models/context';
 import RenderCore from './core';
 import i18n from './i18next';
 
-
-
-
 export default (props: any) => {
   const {
     configProvider,
@@ -31,7 +28,6 @@ export default (props: any) => {
 
   useEffect(() => {
     i18n.changeLanguage(locale);
-
     if (locale === 'en-US') {
       dayjs.locale('en');
     } else {
@@ -39,10 +35,7 @@ export default (props: any) => {
     }
   }, [locale]);
 
-
-
   const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
-
   const configContext: any = {
     locale,
   };

@@ -3,7 +3,7 @@ import { Radio } from 'antd';
 import { isFunction, isArray } from '../../utils';
 
 const TitleView = (props: any) => {
-  const { title, setTable, doSearch, getState, onTabChange } = props;
+  const { title, setState, doSearch, getState, onTabChange } = props;
   const { tab, api } = getState();
   const tabIndex = tab || 0;
 
@@ -12,7 +12,7 @@ const TitleView = (props: any) => {
     if (isFunction(onTabChange)) {
       return onTabChange(_tabIndex, ev);
     }
-    setTable({ tab: _tabIndex });
+    setState({ tab: _tabIndex });
     doSearch({ tab: _tabIndex });
   };
 

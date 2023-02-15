@@ -1,51 +1,29 @@
-import { Radio, Space, Table, TableProps } from 'antd';
-import React, { useEffect, useRef, useContext } from 'react';
-import { TableRenderProps } from '../../types';
+import React, { useEffect, useRef } from 'react';
+import { Table, TableProps } from 'antd';
 import { getDate, getDateTime, getMoneyType } from '../../utils';
-import ErrorBoundary from '../ErrorBoundary';
 import { renderDom } from './field';
-import ToolBarAction from '../ToolbarView/InteriorTool';
-import { TRContext } from '../../models/context';
-
+import { TableRenderProps } from '../../types';
 
 const ProTable: <RecordType extends object = any>(
   props: TableRenderProps<RecordType>
 ) => React.ReactElement = props => {
-  //@ts-ignore
-  if (props.dataSource) {
-    console.error(
-      '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
-    );
-  }
+  // //@ts-ignore
+  // if (props.dataSource) {
+  //   console.error(
+  //     '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
+  //   );
+  // }
 
-  const store = useContext(TRContext);
+  const { getState, setState, doSearch, columns, pageChangeWithRequest = true, ...otherProps } : any = props;
+  const { dataSource = [], loading, pagination, tableSize }: any = getState();
 
-  const { refresh, syncMethods, form, tableState, loading, pagination, tableSize, tab, api }: any = store.getState();
-
-  const { setTable, doSearch, dataSource = [] } : any = props;
-
- 
-  const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
-
-  const onChange = ({ current, pageSize }, filters, sorter) => {
-    setTable({ pagination: { ...pagination, current, pageSize }, sorter });
-    if (
-      !props.pageChangeWithRequest &&
-      props.pageChangeWithRequest !== undefined
-    )
+  const handleChange = ({ current, pageSize }, filters, sorter) => {
+    setState({ pagination: { ...pagination, current, pageSize }, sorter });
+    if (!pageChangeWithRequest) {
       return;
+    }
     doSearch({ current, pageSize, sorter });
   };
-
-  const {
-    debug,
-    headerTitle,
-    toolbarRender,
-    columns,
-    style = {},
-    className = '',
-    toolbarAction = false,
-  } = props;
 
   columns.map((item: any) => {
     const result = item;
@@ -73,8 +51,9 @@ const ProTable: <RecordType extends object = any>(
   });
 
   const tableProps: TableProps<typeof dataSource[number]> = {
-    ...props,
-    onChange,
+    ...otherProps,
+    columns,
+    onChange: handleChange,
     // dataSource不准在使用ProTable时用props赋值
     dataSource,
     pagination:
@@ -92,23 +71,8 @@ const ProTable: <RecordType extends object = any>(
     size: tableSize,
   };
 
-  const toolbarArray =
-    typeof toolbarRender === 'function' ? toolbarRender() : [];
-  const showTableTop =
-    headerTitle || (toolbarArray && toolbarArray.length) || Array.isArray(api);
-
-  const fullScreen = () => {
-    return Promise.resolve(rootRef.current?.requestFullscreen());
-  };
-
-  useEffect(() => {
-    if (props.size) {
-      setTable({ tableSize: props.size });
-    }
-  }, []);
-
   return <Table {...tableProps} />
-};
+}
 
 export default ProTable;
 

@@ -14,25 +14,24 @@ const ToolbarView = props => {
     getState,
     headerTitle, 
     toolbarRender, 
-    toolbarAction = true, 
+    toolbarAction = false, 
     api,
-    tableSize,
     refresh,
     doSearch,
     fullScreen
   } = props;
   
-  const toolbarArray = isFunction(toolbarRender) ? toolbarRender() : [];
-  const showTableTop = headerTitle || (toolbarArray && toolbarArray.length) || Array.isArray(api);
+  const content = isFunction(toolbarRender) ? toolbarRender() : [];
+  const showTableTop = headerTitle || content || Array.isArray(api);
 
   return (
     <div className={classNames('tr-toolbar', { 'tr-toolbar-nohead': !showTableTop })}>
       <div className='tr-toolbar-left'>
-        <TitleView title={headerTitle} doSearch={doSearch} getState={getState} />
+        <TitleView title={headerTitle} doSearch={doSearch} getState={getState} setState={setState} />
       </div>
       <div className='tr-toolbar-right'>
         <Space>
-          <Space>{toolbarRender()}</Space>
+          <Space>{content}</Space>
           {toolbarAction && <InteriorTool fullScreen={fullScreen} refresh={refresh} />}
         </Space>
       </div>
