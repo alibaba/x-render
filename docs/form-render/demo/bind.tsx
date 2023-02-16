@@ -1,5 +1,6 @@
-import FormRender, { useForm } from 'form-render';
 import React from 'react';
+import { Button } from 'antd';
+import FormRender, { useForm } from 'form-render';
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
@@ -10,7 +11,7 @@ const schema = {
       bind: ['startData', 'endData'],
       title: '日期',
       type: 'range',
-      format: 'date',
+      format: 'date'
     },
     objectName: {
       title: '对象',
@@ -21,32 +22,37 @@ const schema = {
         input1: {
           bind: 'a.b.c',
           title: '简单输入框',
-          description: '输入‘123’，避免外部校验错误',
+          tooltip: { title: '输入‘123’，避免外部校验错误' }, 
           type: 'string',
-          required: true,
+          required: true
         },
         input2: {
           title: '简单输入框2',
           type: 'string',
-          required: true,
+          required: true
         },
         select1: {
           title: '单选',
-          bind: false,
           type: 'string',
-          enum: ['a', 'b', 'c'],
-          enumNames: ['早', '中', '晚'],
-          widget: 'radio',
-        },
-      },
-    },
-  },
+          props: {
+            options: [
+              { label: 'a', value: '早'},
+              { label: 'b', value: '中'},
+              { label: 'c', value: '晚'}
+            ]
+          },
+          widget: 'radio'
+        }
+      }
+    }
+  }
 };
 
 const Demo = () => {
   const form = useForm();
 
-  const beforeFinish = ({ data, errors, schema }) => {
+  const beforeFinish: any = ({ data, errors, schema }) => {
+    debugger;
     if (data.objectName && data.objectName.input1 === '123') return;
     return delay(1000).then(() => {
       return {
@@ -56,24 +62,21 @@ const Demo = () => {
     });
   };
 
-  const onFinish = (formData, errors) => {
-    console.group('onFinish');
-    console.log(formData, 'formData', errors, 'errors');
-    console.groupEnd();
-    if (errors.length > 0) return;
-    // alert('formData:' + JSON.stringify(formData, null, 2));
+  const onFinish = (formData: any) => {
+    console.log(formData, 'formData');
   };
 
   return (
     <div>
-      <button onClick={form.submit}>提交</button>
       <FormRender
+        displayType='row'
         form={form}
         schema={schema}
         beforeFinish={beforeFinish}
         onFinish={onFinish} // 如果beforeFinish返回一个promise，onFinish会等promise resolve之后执行
         debug={true}
       />
+      <Button onClick={form.submit} type='primary'>提交</Button>
     </div>
   );
 };
