@@ -52,7 +52,6 @@ const Demo = () => {
   const form = useForm();
 
   const beforeFinish: any = ({ data, errors, schema }) => {
-    debugger;
     if (data.objectName && data.objectName.input1 === '123') return;
     return delay(1000).then(() => {
       return {

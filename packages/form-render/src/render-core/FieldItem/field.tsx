@@ -104,9 +104,10 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
 }
 
-const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues }) => {
+const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps }) => {
   const widgetProps = {
     ...schema.props,
+    globalProps,
     addons: {
       ...form,
       dependValues
@@ -200,7 +201,7 @@ export default (props: any) => {
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
 
-  const { widgets, methods } = configContext;
+  const { widgets, methods, globalProps } = configContext;
   
   const { labelWidth } = formCtx;
   const { hidden, properties, dependencies, ...otherSchema } = schema;
@@ -215,7 +216,7 @@ export default (props: any) => {
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   let widget = widgets[widgetName] || widgets['html'];
  
-  const widgetProps = getWidgetProps(widgetName, schema, { widgets, methods, form, dependValues });
+  const widgetProps = getWidgetProps(widgetName, schema, { widgets, methods, form, dependValues, globalProps });
   const displayType = getValueFromKey('displayType');
   const inlineMode = displayType === 'inline';
 

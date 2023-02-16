@@ -45,6 +45,7 @@ export default (props: FRProps) => {
     methods,
     form,
     validateMessages,
+    globalProps={},
     ...otherProps
   } = props;
 
@@ -73,6 +74,7 @@ export default (props: FRProps) => {
     locale,
     widgets: { ...defaultWidgets, ...widgets },
     methods,
+    globalProps,
   };
 
   return (

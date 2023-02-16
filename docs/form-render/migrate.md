@@ -112,3 +112,7 @@ validateFields()
   });
   
 ```
+
+#### globalProps 变更
+通过`globalProps`注入的数据在任何组件（以及自定义组件）中可以被取到和使用。
+变更：form-render 将直接透传 globalProps 到自定义组件，不在自动解构进行属性合并
