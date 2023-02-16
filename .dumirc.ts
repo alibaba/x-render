@@ -74,6 +74,8 @@ export default defineConfig({
     'chart-render':  path.resolve(__dirname, 'packages/chart-render/src'),
     'fr-generator':  path.resolve(__dirname, 'tools/schema-generator/src')
   },
+  codeSplitting: 'granularChunks',
+  analyze: {}
   //...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),
 });
 
