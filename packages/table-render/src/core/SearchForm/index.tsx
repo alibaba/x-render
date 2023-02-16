@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Col } from 'antd';
 import classnames from 'classnames';
 import FormRender from 'form-render';
@@ -7,6 +7,7 @@ import ActionView from './ActionView';
 import { SearchProps } from '../../types';
 import { useTranslation } from 'react-i18next';
 import './index.less';
+import { ConfigContext } from '../store';
 
 const SearchForm: <RecordType extends object = any>(
   props: SearchProps<RecordType>
@@ -47,6 +48,10 @@ const SearchForm: <RecordType extends object = any>(
     resetText,
     form
   };
+
+  const store = useContext(ConfigContext);
+  console.log(store, 1111111)
+
 
   useEffect(() => {
     initMount();
@@ -89,6 +94,7 @@ const SearchForm: <RecordType extends object = any>(
     >
       <FormRender
         displayType='row'
+        locale={store.locale}
         column={3}
         {...otherProps}
         onFinish={handleFinish}
