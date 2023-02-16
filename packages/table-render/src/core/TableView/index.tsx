@@ -3,6 +3,7 @@ import { Table, TableProps } from 'antd';
 import { getDate, getDateTime, getMoneyType } from '../../utils';
 import { renderDom } from './field';
 import { TableRenderProps } from '../../types';
+import { useTranslation } from 'react-i18next';
 
 const ProTable: <RecordType extends object = any>(
   props: TableRenderProps<RecordType>
@@ -13,8 +14,9 @@ const ProTable: <RecordType extends object = any>(
   //     '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
   //   );
   // }
-
-  const { getState, setState, doSearch, columns, pageChangeWithRequest = true, ...otherProps } : any = props;
+  const { t } = useTranslation()
+  const copySuccessMsg = t('copy_success')
+  const { getState, setState, doSearch, columns, pageChangeWithRequest = true, ...otherProps }: any = props;
   const { dataSource = [], loading, pagination, tableSize }: any = getState();
 
   const handleChange = ({ current, pageSize }, filters, sorter) => {
@@ -32,20 +34,20 @@ const ProTable: <RecordType extends object = any>(
 
     switch (result.valueType) {
       case 'date':
-        result.render = (value: any) => renderDom(getDate(value), result);
+        result.render = (value: any) => renderDom(getDate(value), result, copySuccessMsg);
         break;
       case 'dateTime':
-        result.render = (value: any) => renderDom(getDateTime(value), result);
+        result.render = (value: any) => renderDom(getDateTime(value), result, copySuccessMsg);
         break;
       case 'money':
-        result.render = (value: any) => renderDom(getMoneyType(value), result);
+        result.render = (value: any) => renderDom(getMoneyType(value), result, copySuccessMsg);
         break;
       case 'code':
-        result.render = (value: any) => renderDom(value, result);
+        result.render = (value: any) => renderDom(value, result, copySuccessMsg);
         break;
       case 'text':
       default:
-        result.render = (value: any) => renderDom(value, result);
+        result.render = (value: any) => renderDom(value, result, copySuccessMsg);
     }
     return result;
   });
@@ -61,13 +63,13 @@ const ProTable: <RecordType extends object = any>(
       props.pagination === false
         ? false
         : {
-            // onChange: onPageChange,
-            size: 'small',
-            ...props.pagination,
-            pageSize: props.pagination?.pageSize || pagination.pageSize,
-            total: props.pagination?.total || pagination.total,
-            current: props.pagination?.current || pagination.current,
-          },
+          // onChange: onPageChange,
+          size: 'small',
+          ...props.pagination,
+          pageSize: props.pagination?.pageSize || pagination.pageSize,
+          total: props.pagination?.total || pagination.total,
+          current: props.pagination?.current || pagination.current,
+        },
     loading,
     size: tableSize,
   };

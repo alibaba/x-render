@@ -1,17 +1,19 @@
 import { SettingOutlined } from '@ant-design/icons';
 import { Popover, Tooltip } from 'antd';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 const ColumnSetting = () => {
+  const { t } = useTranslation()
   return (
     <Popover
       arrowPointAtCenter
-      title='列设置'
+      title={t('column_setting')}
       trigger='click'
       placement='bottomRight'
-      content='列设置'
+      content={t('column_setting')}
     >
-      <Tooltip title='列设置'>
+      <Tooltip title={t('column_setting')}>
         <SettingOutlined />
       </Tooltip>
     </Popover>

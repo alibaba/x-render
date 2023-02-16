@@ -18,7 +18,8 @@ export const renderEllipsis = (
 
 export const renderCopyable = (
   text: any,
-  item: { copyable: any; ellipsis: any }
+  item: { copyable: any; ellipsis: any },
+  msg: string
 ) => {
   if (item.copyable || item.ellipsis) {
     return (
@@ -31,9 +32,9 @@ export const renderCopyable = (
         copyable={
           item.copyable && text
             ? {
-                text,
-                onCopy: () => message.success('复制成功'),
-              }
+              text,
+              onCopy: () => message.success(msg),
+            }
             : undefined
         }
         ellipsis={item.ellipsis || false}
@@ -71,14 +72,14 @@ export const renderCode = (code: string) => {
 };
 
 // 渲染单元格
-export const renderDom = (val: string, item: any) => {
+export const renderDom = (val: string, item: any, msg: string) => {
   if (typeof val === 'object') {
     return;
   }
   if (item.valueType === 'code') {
     return renderCode(val);
   }
-  const copyHoc = renderCopyable(val, item);
+  const copyHoc = renderCopyable(val, item, msg);
   const ellipsisHoc = renderEllipsis(copyHoc, val, item);
   return ellipsisHoc;
 };
