@@ -20,7 +20,7 @@
     "predeploy": "npm run build && npm run doc",
     "deploy": "gh-pages -d docs-dist",
     "dev": "set PORT=8080 && dumi dev",
-    "doc": "npm run build && dumi build",
+    "doc": "dumi build",
     "prepare": "dumi setup",
     "format": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
