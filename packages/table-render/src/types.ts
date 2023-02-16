@@ -34,15 +34,15 @@ export type ProColumnsType<T extends object = any> = Array<
 >;
 
 export interface TableRenderProps<RecordType extends Object = any>
-  extends Omit<TableProps<RecordType>, 'columns' | 'dataSource'> {
+  extends Omit<TableProps<RecordType>, 'columns' | 'dataSource' | 'title'> {
   /** 列定义，除了支持antd的所有配置，还额外增加一些语法糖 */
   columns: ProColumnsType<RecordType>;
   /** 开启 debug 模式，时时显示内部状态 */
   debug?: boolean;
-  /** headerTitle */
-  headerTitle?: string | React.ReactNode;
+  /** title */
+  title?: string | React.ReactNode;
   /** 表格主体右上方的控件，例如“添加”按钮 */
-  toolbarRender?: () => React.ReactNode[];
+  toolbarRender?: React.ReactNode;
   /** 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示 等功能 */
   toolbarAction?: boolean;
   /** 切换分页时是否需要请求接口 */
@@ -88,6 +88,8 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   onSearch?: (search: any) => any;
   afterSearch?: (params: any) => any;
   widgets?: any;
+  form?: any;
+  [key:string]: any
 }
 
 type ApiType<RecordType> =

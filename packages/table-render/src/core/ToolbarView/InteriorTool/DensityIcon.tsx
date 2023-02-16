@@ -1,13 +1,16 @@
 import { ColumnHeightOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Tooltip } from 'antd';
-import React, { useRef } from 'react';
-import { useTable } from '../hooks';
+import React, { useRef, useContext } from 'react';
+import { useStore } from 'zustand';
+import { TRContext } from '../../store';
 
 export type DensitySize = 'middle' | 'small' | 'default' | undefined;
 
 const DesityIcon = () => {
-  const { tableState, setTable }: any = useTable();
   const dropRef = useRef<any>(); // class组件用 React.createRef()
+  const store = useContext(TRContext);
+  const tableSize = useStore(store, (state: any) => state.tableSize);
+  const setState = useStore(store, (state: any) => state.setState);
 
   return (
     <div ref={dropRef}>
@@ -15,9 +18,9 @@ const DesityIcon = () => {
         getPopupContainer={() => dropRef.current}
         overlay={
           <Menu
-            selectedKeys={[tableState.tableSize]}
+            selectedKeys={[tableSize]}
             onClick={({ key }) => {
-              setTable({ tableSize: key as DensitySize });
+              setState({ tableSize: key as DensitySize });
             }}
             style={{
               width: 80,

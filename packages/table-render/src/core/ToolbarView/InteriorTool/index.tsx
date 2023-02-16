@@ -4,10 +4,10 @@ import DensityIcon from './DensityIcon';
 import FullScreenIcon from './FullScreenIcon';
 import ReloadIcon from './ReloadIcon';
 
-const ToolBar = props => {
+const ToolBar = ({ refresh, ...props }) => {
   return (
     <Space size={14} style={{ fontSize: 16, cursor: 'pointer' }}>
-      <ReloadIcon />
+      <ReloadIcon refresh={refresh}/>
       <DensityIcon />
       {/* <SettingIcon /> */}
       <FullScreenIcon {...props} />

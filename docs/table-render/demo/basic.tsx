@@ -1,59 +1,91 @@
+/**
+ * transform: true
+ * defaultShowCode: false
+ * background: 'rgb(245,245,245)'
+ */
+
 import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, Menu, message, Space, Tag, Tooltip } from 'antd';
-import React from 'react';
-import { Search, Table, useTable, withTable } from 'table-render';
+import { Button, message, Space, Tag, Tooltip } from 'antd';
+import React, { useRef } from 'react';
+import TableRender from 'table-render';
 import request from 'umi-request';
 
 const schema = {
   type: 'object',
+  labelWidth: 80,
   properties: {
     state: {
       title: '酒店状态',
       type: 'string',
       enum: ['open', 'closed'],
       enumNames: ['营业中', '已打烊'],
-      width: '25%',
-      widget: 'select',
+      widget: 'select'
     },
     labels: {
       title: '酒店星级',
-      type: 'string',
-      width: '25%',
+      type: 'string'
     },
     created_at: {
       title: '成立时间',
       type: 'string',
-      format: 'date',
-      width: '25%',
-    },
-  },
-  'ui:labelWidth': 80,
+      format: 'date'
+    }
+  }
 };
 
 const Demo = () => {
-  const { refresh, tableState } = useTable();
+  const tableRef: any = useRef();
 
-  const searchApi = params => {
-    console.log('params >>> ', params);
+  const searchApi = (params, sorter) => {
+    console.group(sorter);
+
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
         { params }
       )
       .then(res => {
-        // console.log('response:', res);
         if (res && res.data) {
           return {
-            rows: res.data,
+            data: [...res.data, { money: null }],
             total: res.data.length,
-            extraData: res.status,
-          }; // 注意一定要返回 rows 和 total
+          };
         }
       })
-      .catch(e => console.log('Oops, error', e));
+      .catch(e => {
+        console.log('Oops, error', e);
+
+        // 注意一定要返回 rows 和 total
+        return {
+          data: [],
+          total: 0,
+        };
+      });
   };
 
-  // 配置完全透传antd table
+  const searchApi2 = params => {
+    return request
+      .get(
+        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+        { params }
+      )
+      .then(res => {
+        if (res && res.data) {
+          return {
+            data: res.data.slice(1),
+            total: res.data.length - 1,
+          };
+        }
+      })
+      .catch(e => {
+        console.log('Oops, error', e);
+        return {
+          data: [],
+          total: 0,
+        };
+      });
+  };
+
   const columns = [
     {
       title: '酒店名称',
@@ -73,7 +105,7 @@ const Demo = () => {
       title: (
         <>
           酒店状态
-          <Tooltip placement="top" title="使用valueType">
+          <Tooltip placement='top' title='使用valueType'>
             <InfoCircleOutlined style={{ marginLeft: 6 }} />
           </Tooltip>
         </>
@@ -89,7 +121,7 @@ const Demo = () => {
       dataIndex: 'labels',
       render: (_, row) => (
         <Space>
-          {row.labels.map(({ name, color }) => (
+          {row?.labels?.map(({ name, color }) => (
             <Tag color={color} key={name}>
               {name}
             </Tag>
@@ -101,6 +133,7 @@ const Demo = () => {
     {
       title: '酒店GMV',
       key: 'money',
+      sorter: true,
       dataIndex: 'money',
       valueType: 'money',
     },
@@ -112,9 +145,9 @@ const Demo = () => {
     },
     {
       title: '操作',
-      render: row => (
+      render: () => (
         <Space>
-          <a target="_blank" key="1">
+          <a target='_blank' key='1'>
             <div
               onClick={() => {
                 message.success('预订成功');
@@ -124,68 +157,56 @@ const Demo = () => {
             </div>
           </a>
         </Space>
-      ),
-    },
+      )
+    }
   ];
 
-  const menu = (
-    <Menu>
-      <Menu.Item>
-        <div onClick={() => message.success('复制成功！')}>复制</div>
-      </Menu.Item>
-      <Menu.Item>
-        <div onClick={() => message.warning('确定删除吗？')}>删除</div>
-      </Menu.Item>
-    </Menu>
-  );
-
   const showData = () => {
-    refresh(null, { extra: 1 });
+    tableRef.refresh(null, { extra: 1 });
   };
 
   return (
-    <div style={{ background: 'rgb(245,245,245)' }}>
-      <Search
-        schema={schema}
-        displayType="row"
-        onSearch={search => console.log('onSearch', search)}
-        afterSearch={params => console.log('afterSearch', params)}
-        api={[
-          {
-            name: '全部数据',
-            api: searchApi,
-          },
-          {
-            name: '我的数据',
-            api: searchApi,
-          },
-        ]}
-      />
-      <Table
-        // size="small"
-        columns={columns}
-        // headerTitle="高级表单"
-        rowKey="id"
-        toolbarRender={() => [
-          <Button key="show" onClick={showData}>
+    <TableRender 
+      ref={tableRef}
+      search={{
+        schema
+      }}
+      request={[
+        {
+          name: '全部数据',
+          api: searchApi,
+        },
+        {
+          name: '我的数据',
+          api: searchApi2,
+        }
+      ]}
+      columns={columns}
+      rowKey='id'
+      toolbarRender={
+        <>
+          <Button key='show' onClick={showData}>
             查看日志
-          </Button>,
-          <Button key="out" onClick={showData}>
+          </Button>
+          <Button key='out' onClick={showData}>
             导出数据
-          </Button>,
+          </Button>
           <Button
-            key="primary"
-            type="primary"
+            key='primary'
+            type='primary'
             onClick={() => alert('table-render！')}
           >
             <PlusOutlined />
             创建
-          </Button>,
-        ]}
-        toolbarAction
-      />
-    </div>
-  );
+          </Button>
+        </>
+      }
+      toolbarAction
+    />
+  )
 };
 
-export default withTable(Demo);
+export default Demo;
+
+
+

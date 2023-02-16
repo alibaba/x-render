@@ -6,32 +6,12 @@
 
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { message, Space, Tag, Tooltip } from 'antd';
-import React from 'react';
-import { Search, Table, useTable, withTable } from 'table-render';
+import React, { useRef } from 'react';
+import TableRender from 'table-render';
 import request from 'umi-request';
 
-const schema = {
-  type: 'object',
-  properties: {
-    state: {
-      title: '酒店状态',
-      type: 'string',
-      enum: ['open', 'closed'],
-      enumNames: ['营业中', '已打烊'],
-      width: '25%',
-      widget: 'select',
-    },
-    labels: {
-      title: '酒店星级',
-      type: 'string',
-      width: '25%',
-    },
-  },
-  labelWidth: 80,
-};
-
 const Demo = () => {
-  const { refresh } = useTable();
+  const tableRef: any = useRef();
 
   const searchApi = params => {
     console.log('params >>> ', params);
@@ -43,7 +23,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: res.data,
+            data: res.data,
             total: res.data.length,
             extraData: res.status,
           };
@@ -53,7 +33,7 @@ const Demo = () => {
         console.log('Oops, error', e);
         // 注意一定要返回 rows 和 total
         return {
-          rows: [],
+          data: [],
           total: 0,
         };
       });
@@ -129,18 +109,17 @@ const Demo = () => {
   ];
 
   return (
-    <div>
-      <Search
-        hidden
-        schema={schema}
-        displayType="row"
-        onSearch={search => console.log('onSearch', search)}
-        afterSearch={params => console.log('afterSearch', params)}
-        api={searchApi}
-      />
-      <Table columns={columns} rowKey="id" />
-    </div>
+    <TableRender
+      ref={tableRef}
+      search={{
+        hidden: true,
+        afterSearch: params => console.log('afterSearch', params)
+      }}
+      request={searchApi}
+      columns={columns}
+      rowKey='id'
+    />
   );
 };
 
-export default withTable(Demo);
+export default Demo;

@@ -6,46 +6,44 @@
 
 import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Space, Tag, Tooltip } from 'antd';
-import React, { useEffect } from 'react';
-import { Search, Table, useTable, withTable } from 'table-render';
+import React, { useEffect, useRef } from 'react';
+import TableRender from 'table-render';
 import { history } from 'umi';
 import request from 'umi-request';
 
 const schema = {
   type: 'object',
+  labelWidth: 80,
   properties: {
     state: {
       title: '酒店状态',
       type: 'string',
       enum: ['open', 'closed'],
       enumNames: ['营业中', '已打烊'],
-      width: '25%',
-      widget: 'select',
+      widget: 'select'
     },
     labels: {
       title: '酒店星级',
-      type: 'string',
-      width: '25%',
+      type: 'string'
     },
     created_at: {
       title: '成立时间',
       type: 'string',
-      format: 'date',
-      width: '25%',
-    },
-  },
-  labelWidth: 80,
+      format: 'date'
+    }
+  }
 };
 
 const Demo = () => {
-  const { form } = useTable();
+  const tableRef: any = useRef();
+
   useEffect(() => {
     // 实际使用时queryParam为url上取下来的有效参数
     // const queryParam = { state: 'open' };
     const queryParam = history.location.query;
     if (queryParam) {
       // form具体api参考form-render文档
-      form.setValues(queryParam);
+      tableRef.current.form.setValues(queryParam);
     }
   }, []);
 
@@ -69,7 +67,7 @@ const Demo = () => {
       title: (
         <>
           酒店状态
-          <Tooltip placement="top" title="使用valueType">
+          <Tooltip placement='top' title='使用valueType'>
             <InfoCircleOutlined style={{ marginLeft: 6 }} />
           </Tooltip>
         </>
@@ -109,7 +107,7 @@ const Demo = () => {
       title: '操作',
       render: () => (
         <Space>
-          <a target="_blank" key="1">
+          <a target='_blank' key='1'>
             <div
               onClick={() => {
                 message.success('预订成功');
@@ -133,7 +131,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: res.data,
+            data: res.data,
             total: res.data.length,
             extraData: res.status,
           };
@@ -143,7 +141,7 @@ const Demo = () => {
         console.log('Oops, error', e);
         // 注意一定要返回 rows 和 total
         return {
-          rows: [],
+          data: [],
           total: 0,
         };
       });
@@ -154,7 +152,7 @@ const Demo = () => {
   };
 
   const afterSearch = params => {
-    const formData = form.getValues();
+    const formData = tableRef.current.form.getValues();
     history.replace({
       pathname: '/table-render/demo',
       query: formData,
@@ -162,32 +160,32 @@ const Demo = () => {
   };
 
   return (
-    <div>
-      <Search
-        schema={schema}
-        displayType="row"
-        onSearch={onSearch}
-        afterSearch={afterSearch}
-        api={searchApi}
-      />
-      <Table
-        columns={columns}
-        headerTitle="url带参查询"
-        rowKey="id"
-        toolbarRender={() => [
+    <TableRender 
+      ref={tableRef}
+      search={{
+        schema,
+        onSearch,
+        afterSearch
+      }}
+      request={searchApi}
+      columns={columns}
+      pagination={{ pageSize: 4 }}
+      title='url带参查询'
+      toolbarRender={
+        <>
           <Button
-            key="primary"
-            type="primary"
+            key='primary'
+            type='primary'
             onClick={() => alert('table-render！')}
           >
             <PlusOutlined />
             创建
-          </Button>,
-        ]}
-        toolbarAction
-      />
-    </div>
-  );
-};
+          </Button>
+        </>
+      }
+      toolbarAction
+    />
+  )
+}
 
-export default withTable(Demo);
+export default Demo;
