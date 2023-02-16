@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { SearchProps } from '../../types';
 import SearchForm from '../SearchForm';
 
@@ -7,18 +7,12 @@ const Search: <RecordType extends object = any>(
 ) => React.ReactElement = props => {
 
   const {
-    hidden,
-    onMount,
-    onSearch,
-    api,
-    afterSearch,
-    className,
-    form,
     refresh,
     getState,
+    onMount,
+    onSearch,
     ...otherProps
   }  = props;
-
 
   const { loading, sorter }: any = getState();
 
@@ -26,7 +20,7 @@ const Search: <RecordType extends object = any>(
     if (typeof onMount === 'function') {
       await onMount();
     }
-  }
+  };
 
   const handleSearch = (data: any) => {
     if (typeof onSearch === 'function') {
@@ -35,14 +29,9 @@ const Search: <RecordType extends object = any>(
     refresh({ ...data, sorter });
   };
 
-  if (hidden) {
-    return null;
-  }
-
   return (
     <SearchForm 
       {...otherProps} 
-      form={form}
       loading={loading} 
       onSearch={handleSearch}
       onMount={handleMount}

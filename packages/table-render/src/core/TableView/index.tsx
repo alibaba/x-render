@@ -51,6 +51,7 @@ const ProTable: <RecordType extends object = any>(
   });
 
   const tableProps: TableProps<typeof dataSource[number]> = {
+    rowKey: 'id',
     ...otherProps,
     columns,
     onChange: handleChange,

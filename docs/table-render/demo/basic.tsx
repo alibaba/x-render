@@ -47,7 +47,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: [...res.data, { money: null }],
+            data: [...res.data, { money: null }],
             total: res.data.length,
           };
         }
@@ -57,7 +57,7 @@ const Demo = () => {
 
         // 注意一定要返回 rows 和 total
         return {
-          rows: [],
+          data: [],
           total: 0,
         };
       });
@@ -72,7 +72,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: res.data.slice(1),
+            data: res.data.slice(1),
             total: res.data.length - 1,
           };
         }
@@ -80,7 +80,7 @@ const Demo = () => {
       .catch(e => {
         console.log('Oops, error', e);
         return {
-          rows: [],
+          data: [],
           total: 0,
         };
       });
@@ -167,23 +167,23 @@ const Demo = () => {
 
   return (
     <TableRender 
-      tableRef={tableRef}
+      ref={tableRef}
       search={{
-        schema,
-        api: [
-          {
-            name: '全部数据',
-            api: searchApi,
-          },
-          {
-            name: '我的数据',
-            api: searchApi2,
-          }
-        ]
+        schema
       }}
+      request={[
+        {
+          name: '全部数据',
+          api: searchApi,
+        },
+        {
+          name: '我的数据',
+          api: searchApi2,
+        }
+      ]}
       columns={columns}
       rowKey='id'
-      toolbarRender={() => (
+      toolbarRender={
         <>
           <Button key='show' onClick={showData}>
             查看日志
@@ -200,10 +200,13 @@ const Demo = () => {
             创建
           </Button>
         </>
-      )}
+      }
       toolbarAction
     />
   )
 };
 
 export default Demo;
+
+
+

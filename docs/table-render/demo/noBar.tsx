@@ -23,7 +23,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: res.data,
+            data: res.data,
             total: res.data.length,
             extraData: res.status,
           };
@@ -33,7 +33,7 @@ const Demo = () => {
         console.log('Oops, error', e);
         // 注意一定要返回 rows 和 total
         return {
-          rows: [],
+          data: [],
           total: 0,
         };
       });
@@ -110,12 +110,12 @@ const Demo = () => {
 
   return (
     <TableRender
-      tableRef={tableRef}
+      ref={tableRef}
       search={{
         hidden: true,
-        api: searchApi,
         afterSearch: params => console.log('afterSearch', params)
       }}
+      request={searchApi}
       columns={columns}
       rowKey='id'
     />

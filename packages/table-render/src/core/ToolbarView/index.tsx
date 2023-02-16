@@ -12,22 +12,22 @@ const ToolbarView = props => {
   const { 
     setState,
     getState,
-    headerTitle, 
+    title, 
     toolbarRender, 
     toolbarAction = false, 
-    api,
+    request,
     refresh,
     doSearch,
     fullScreen
   } = props;
   
-  const content = isFunction(toolbarRender) ? toolbarRender() : [];
-  const isTopHead = headerTitle || (!!content && content?.length !== 0) || (isArray(api) && api.length > 1);
+  const content = isFunction(toolbarRender) ? toolbarRender() : (toolbarRender || []);
+  const isTopHead = title || (!!content && content?.length !== 0) || (isArray(request) && request.length > 1);
  
   return (
     <div className={classNames('tr-toolbar', { 'tr-toolbar-nohead': !isTopHead })}>
       <div className='tr-toolbar-left'>
-        <TitleView title={headerTitle} doSearch={doSearch} getState={getState} setState={setState} />
+        <TitleView title={title} doSearch={doSearch} getState={getState} setState={setState} />
       </div>
       <div className='tr-toolbar-right'>
         <Space>

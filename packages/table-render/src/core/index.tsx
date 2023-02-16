@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useImperativeHandle } from 'react
 import { useStore } from 'zustand';
 import { useForm } from 'form-render';
 
-import { TRContext } from '../models/context';
+import { TRContext } from './store';
 import { _get, isFunction, isArray } from '../utils';
 import ErrorBoundary from './ErrorBoundary';
 import SearchView from './SearchView';
@@ -23,14 +23,15 @@ const RenderCore = props => {
     search: searchProps, 
     debug, className, 
     style, 
-    headerTitle, 
+    title, 
     toolbarRender, 
     toolbarAction = true, 
     tableRef,
+    request: api,
     ...tableProps
   } = props;
 
-  const { api, hidden: hiddenSearch } = searchProps;
+  const { hidden: hiddenSearch } = searchProps || { hidden: true };
 
   const form = useForm();
   const rootRef = useRef<HTMLDivElement>(null);
@@ -94,13 +95,14 @@ const RenderCore = props => {
       if (Array.isArray(api)) {
         _params = { ..._params, tab };
       }
+
       Promise.resolve(_api(_params, sorter))
         .then(res => {
           // TODO：这里校验res是否规范
-          const { rows, total, pageSize, ...extraData } = res;
+          const { data, total, pageSize, ...extraData } = res;
           setState({
             loading: false,
-            dataSource: rows,
+            dataSource: data,
             ...extraData,
             pagination: {
               ..._pagination,
@@ -109,12 +111,12 @@ const RenderCore = props => {
             },
           });
         
-          searchProps?.afterSearch?.({ rows, total, pageSize, ...extraData });
+          searchProps?.afterSearch?.({ data, total, pageSize, ...extraData });
         })
         .catch(err => {
           setState({ loading: false });
         });
-    }
+    };
 
     if (isFunction(api)) {
       getTableData(api);
@@ -130,10 +132,7 @@ const RenderCore = props => {
     console.warn('api 不是函数，检查 <Search /> 的 props');
   };
 
-  const refresh = (
-    params?: { tab?: string | number; stay?: boolean },
-    moreSearch?: any
-  ) => {
+  const refresh = (params?: { tab?: string | number; stay?: boolean }, moreSearch?: any) => {
     const _stay = (params && params.stay) || false;
     const _tab = params && params.tab;
     const _search = moreSearch || {};
@@ -164,6 +163,7 @@ const RenderCore = props => {
         form={form} 
         refresh={refresh}
         getState={getState}
+        hidden={hiddenSearch}
       />
       <ErrorBoundary>
         <div
@@ -171,11 +171,11 @@ const RenderCore = props => {
           className={`tr-table-wrapper ${className}`}  style={style}
         >
           <ToolbarView
-            api={api}
+            request={api}
             doSearch={doSearch}
             refresh={refresh}
             fullScreen={fullScreen}
-            headerTitle={headerTitle}
+            title={title}
             toolbarRender={toolbarRender}
             setState={setState}
             getState={getState}

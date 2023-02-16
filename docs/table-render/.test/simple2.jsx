@@ -44,7 +44,7 @@ const Demo = () => {
         // console.log('response:', res);
         if (res && res.data) {
           return {
-            rows: res.data,
+            data: res.data,
             total: res.data.length,
             extraData: res.status,
           }; // 注意一定要返回 rows 和 total
@@ -162,26 +162,24 @@ const Demo = () => {
         ]}
       />
       <Table
-        // size="small"
         columns={columns}
-        // headerTitle="高级表单"
-        rowKey="id"
-        toolbarRender={() => [
-          <Button key="show" onClick={showData}>
-            查看日志
-          </Button>,
-          <Button key="out" onClick={showData}>
-            导出数据
-          </Button>,
-          <Button
-            key="primary"
-            type="primary"
-            onClick={() => alert('table-render！')}
-          >
-            <PlusOutlined />
-            创建
-          </Button>,
-        ]}
+        toolbarRender={
+          <>
+            <Button onClick={showData}>
+              查看日志
+            </Button>,
+            <Button onClick={showData}>
+              导出数据
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => alert('table-render！')}
+            >
+              <PlusOutlined />
+              创建
+            </Button>
+          </>
+        }
         toolbarAction
       />
     </div>

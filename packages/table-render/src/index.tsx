@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, forwardRef } from 'react';
 import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
 
@@ -6,13 +6,13 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import 'dayjs/locale/zh-cn';
 
-import { createStore } from './models/store';
-import { TRContext, ConfigContext } from './models/context';
+import { createStore } from './core/store';
+import { TRContext, ConfigContext } from './core/store';
 
 import RenderCore from './core';
 import i18n from './i18next';
 
-export default (props: any) => {
+export default forwardRef((props: any, ref) => {
   const {
     configProvider,
     locale = 'zh-CN',
@@ -47,9 +47,9 @@ export default (props: any) => {
     >
       <ConfigContext.Provider value={configContext}>
         <TRContext.Provider value={store}>
-          <RenderCore {...otherProps} />
+          <RenderCore {...otherProps} ref={ref} />
         </TRContext.Provider>
       </ConfigContext.Provider>
     </ConfigProvider>
   );
-}
+})

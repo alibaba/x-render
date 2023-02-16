@@ -23,7 +23,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: res.data,
+            data: res.data,
             total: res.data.length,
             extraData: res.status,
           };
@@ -33,7 +33,7 @@ const Demo = () => {
         console.log('Oops, error', e);
         // 注意一定要返回 rows 和 total
         return {
-          rows: [],
+          data: [],
           total: 0,
         };
       });
@@ -114,31 +114,28 @@ const Demo = () => {
 
   return (
     <TableRender
-      tableRef={tableRef}
-      search={{
-        hidden: true,
-        api: searchApi
-      }}
+      ref={tableRef}
+      request={searchApi}
       columns={columns}
-      rowKey='id'
-      pagination={{ pageSize: 4 }}
-      headerTitle='高级表单'
-      toolbarRender={() => [
-        <Button key='show' onClick={showData}>
-          查看日志
-        </Button>,
-        <Button key='out' onClick={showData}>
-          导出数据
-        </Button>,
-        <Button
-          key='primary'
-          type='primary'
-          onClick={() => alert('table-render！')}
-        >
-          <PlusOutlined />
-          创建
-        </Button>,
-      ]}
+      pagination={{ pageSize: 5 }}
+      title='高级表单'
+      toolbarRender={
+        <>
+          <Button onClick={showData}>
+            查看日志
+          </Button>
+          <Button onClick={showData}>
+            导出数据
+          </Button>
+          <Button
+            type='primary'
+            onClick={() => alert('table-render！')}
+          >
+            <PlusOutlined />
+            创建
+          </Button>
+        </>
+      }
       toolbarAction
     />
   );

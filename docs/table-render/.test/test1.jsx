@@ -49,7 +49,7 @@ const columns = [
 const Wrapper = () => {
   const searchApi = () => {
     return {
-      rows: dataSource,
+      data: dataSource,
       total: dataSource.length,
     };
   };

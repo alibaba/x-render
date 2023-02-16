@@ -1,4 +1,8 @@
 import { createStore as createx } from 'zustand';
+import { createContext } from 'react';
+
+export const TRContext = createContext(null);
+export const ConfigContext = createContext(null);
 
 type TStore = {
   loading: boolean;

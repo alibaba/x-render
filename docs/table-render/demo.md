@@ -1,20 +1,20 @@
 ---
 order: 2
-title: 案例展示
+title: 最佳展示
 ---
 
-## 基础案例
+## 基础
 
-<code src='./demo/advanced.tsx'></code>
+<code src='./demo/basic.tsx'></code>
 
-## 无查询表格
+## 无搜索栏
 
 <code src='./demo/noSearch.tsx'></code>
 
-## 无 ToolBar 表格
+## 无工具栏
 
-<code src='./demo/noTitle.tsx'></code>
+<code src='./demo/noBar.tsx'></code>
 
-## url 带参查询表格
+## url 带参查询
 
-<code src='./demo/paramTable.tsx'></code>
+<code src='./demo/urlParams.tsx'></code>

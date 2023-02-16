@@ -131,7 +131,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            rows: res.data,
+            data: res.data,
             total: res.data.length,
             extraData: res.status,
           };
@@ -141,7 +141,7 @@ const Demo = () => {
         console.log('Oops, error', e);
         // 注意一定要返回 rows 和 total
         return {
-          rows: [],
+          data: [],
           total: 0,
         };
       });
@@ -161,18 +161,17 @@ const Demo = () => {
 
   return (
     <TableRender 
-      tableRef={tableRef}
+      ref={tableRef}
       search={{
         schema,
-        api: searchApi,
         onSearch,
         afterSearch
       }}
+      request={searchApi}
       columns={columns}
-      rowKey='id'
       pagination={{ pageSize: 4 }}
-      headerTitle='url带参查询'
-      toolbarRender={() => (
+      title='url带参查询'
+      toolbarRender={
         <>
           <Button
             key='primary'
@@ -183,7 +182,7 @@ const Demo = () => {
             创建
           </Button>
         </>
-      )}
+      }
       toolbarAction
     />
   )

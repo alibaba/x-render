@@ -1,46 +1,88 @@
-<!-- ---
+---
 order: 3
-title: 0.x 到 1.0
+title: V2 升级方案
 hide: true
 ---
+# V2 升级方案
 
-#### 对于之前使用 0.x 的同学，考虑到代码使用合理性，我们对于 TableRender 1.0 有如下更新
+本文档将帮助你从 1.x 升级到 2.x 版本
 
-1. `table-render` 的导出有如下变化，`ProTable` 修改成 `Table`。
+## 特性
 
-2. `Search`和 `Table`不再需要被`TableContainer`组件包裹，所有表格代码通过 `withTable` 包一下即可，这样书写更加简洁。
+全新的 table-render 2.0 主要具备以下特性：
 
-3. `searchApi` 原本放到 `TableContainer`组件上面，现改成放到 `Search` 上，同时`searchApi` 改成 `api`，这样更加各司其职。
+- 🚀 **更好的搜索性能**：解决了单页列表数据过多，表格搜索严重卡顿的问题
+- 🎨 **更简单的使用方式**：使用时不在需要导出  Search, Table, useTable, withTable 对象，统一导出默认对象 default(TableRender)即可
+- 🚥 **国际化**：国际化多语言支持，内置中英文语言包，英文版 locale: 'en-US'
+- 💎 **Antd V5**：兼容 antd V5 版本，无需配置
 
-   ```js
+## 有哪些不兼容的变化
 
-    // 老版本使用
-   import { ProTable, Search, TableContainer, useTable } from 'table-render';
-   //...
-   const TableDemo=(
-    <TableContainer searchApi={searchApi}>
-      <TableDemo />
-    </TableContainer>
-   );
-   const TableBody = (
-     const { refresh } = useTable();
-     <>
-        <Search schema={searchSchema} />
-        <ProTable />
-     </>
-   );
-   export default TableDemo;
+#### 导出实例变更
+```diff
+- import { Search, Table, useTable, withTable } from 'table-render';
 
-   // 新版本
-   import { Table, Search, withTable, useTable } from 'table-render';
-   //...
-   const TableDemo = (
-     const { refresh } = useTable()
-     <>
-       <Search schema={schema} api={searchApi} />
-       <Table headerTitle="最简表格" columns={columns} rowKey="id" />
-     </>
-   );
-   export default withTable(TableDemo);
+- const Demo = () => {
+-   return (
+-     <div>
+-      <Search {...searchProps} />
+-      <Table {...tableProps}/>
+-     </div>
+-   );
+- }
+- export default withTable(Demo);
 
-   ``` -->
+
++ import TableRender form 'table-render';
++ const Demo = () => {
++   return (
++     <TableRender 
++      search={{
++        ...searchProps
++      }}
++      {...tableProps}
++     />
++   )
++ }
++ export default Demo;
+
+```
+
+#### 废弃 useTable，改用 ref 获取
+tableState、setTable 移除，改用 getState()、setState()
+```diff
+- import { Search, Table, useTable, withTable } from 'table-render';
+- const { refresh } = useTable();
+
++ import React, { useRef } from 'react';
++ const tableRef = useRef(); // tableRef.current = { refresh, changeTab, form, getState }
++ <TableRender
++   ref={tableRef}
++ />
+```
+
+#### api 移入到 tableProps 里面 变成 request
+返回参数 rows 改成 data
+```diff
+const api = (params, sorter) => {
+  return {
+    data: [],
+    total: 10
+  }
+};
+-  <div>
+-   <Search api={api} />
+-   <Table {...tableProps}/>
+-  </div>
+
+
++  <TableRender 
++    search={{
++        ...searchProps
++    }}
++    request={api}
++    {...tableProps}
++  />
+```
+
+#### headTitle 变更成 title

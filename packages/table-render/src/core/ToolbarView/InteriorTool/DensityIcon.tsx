@@ -2,7 +2,7 @@ import { ColumnHeightOutlined } from '@ant-design/icons';
 import { Dropdown, Menu, Tooltip } from 'antd';
 import React, { useRef, useContext } from 'react';
 import { useStore } from 'zustand';
-import { TRContext } from '../../../models/context';
+import { TRContext } from '../../store';
 
 export type DensitySize = 'middle' | 'small' | 'default' | undefined;
 
