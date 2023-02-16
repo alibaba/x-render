@@ -119,11 +119,9 @@ const Demo = () => {
         hidden: true,
         api: searchApi
       }}
-      table={{
-        columns,
-        rowKey: 'id',
-        pagination: { pageSize: 4 },
-      }}
+      columns={columns}
+      rowKey='id'
+      pagination={{ pageSize: 4 }}
       headerTitle='高级表单'
       toolbarRender={() => [
         <Button key='show' onClick={showData}>

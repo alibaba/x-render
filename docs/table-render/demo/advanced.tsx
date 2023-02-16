@@ -38,6 +38,7 @@ const Demo = () => {
 
   const searchApi = (params, sorter) => {
     console.group(sorter);
+
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
@@ -180,11 +181,8 @@ const Demo = () => {
           }
         ]
       }}
-      table={{
-        pagination: { pageSize: 4 },
-        columns,
-        rowKey: 'id'
-      }}
+      columns={columns}
+      rowKey='id'
       toolbarRender={() => (
         <>
           <Button key='show' onClick={showData}>

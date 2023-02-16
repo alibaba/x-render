@@ -168,11 +168,9 @@ const Demo = () => {
         onSearch,
         afterSearch
       }}
-      table={{
-        pagination: { pageSize: 4 },
-        columns,
-        rowKey: 'id'
-      }}
+      columns={columns}
+      rowKey='id'
+      pagination={{ pageSize: 4 }}
       headerTitle='url带参查询'
       toolbarRender={() => (
         <>

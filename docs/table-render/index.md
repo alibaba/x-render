@@ -135,13 +135,9 @@ const Wrapper = () => {
             <Button>11111</Button>
           ]
         }}
-        
-        table={{
-          headerTitle: "最简表格",
-          columns: columns,
-          rowKey:"id",
-
-        }}
+        columns={columns}
+        rowKey='id'
+        headerTitle="最简表格"
       />
     </>
   );

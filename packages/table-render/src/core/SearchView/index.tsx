@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { SearchProps } from '../../types';
 import SearchForm from '../SearchForm';
-import { TRContext } from '../../models/context';
 
 const Search: <RecordType extends object = any>(
   props: SearchProps<RecordType>
@@ -16,12 +15,12 @@ const Search: <RecordType extends object = any>(
     className,
     form,
     refresh,
+    getState,
     ...otherProps
   }  = props;
 
-  const store = useContext(TRContext);
 
-  const { tableState, loading }: any = store.getState();
+  const { loading, sorter }: any = getState();
 
   const handleMount = async () => {
     if (typeof onMount === 'function') {
@@ -33,7 +32,7 @@ const Search: <RecordType extends object = any>(
     if (typeof onSearch === 'function') {
       onSearch(data);
     }
-    refresh({ ...data, sorter: tableState?.sorter });
+    refresh({ ...data, sorter });
   };
 
   if (hidden) {

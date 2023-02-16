@@ -33,7 +33,7 @@ export const createStore = () => createx<TStore>((set: any, get: any) => ({
   tableSize: 'default',
 
 
- 
+  inited: false,
   setState: (state: any) => {
     return set({ ...state })
   },

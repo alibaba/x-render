@@ -2,7 +2,7 @@ import React from 'react';
 import { Space } from 'antd';
 import classNames from 'classnames';
 
-import { _get, isFunction } from '../../utils';
+import { _get, isFunction, isArray } from '../../utils';
 import InteriorTool from './InteriorTool';
 
 import TitleView from './TitleView';
@@ -22,10 +22,10 @@ const ToolbarView = props => {
   } = props;
   
   const content = isFunction(toolbarRender) ? toolbarRender() : [];
-  const showTableTop = headerTitle || content || Array.isArray(api);
-
+  const isTopHead = headerTitle || (!!content && content?.length !== 0) || (isArray(api) && api.length > 1);
+ 
   return (
-    <div className={classNames('tr-toolbar', { 'tr-toolbar-nohead': !showTableTop })}>
+    <div className={classNames('tr-toolbar', { 'tr-toolbar-nohead': !isTopHead })}>
       <div className='tr-toolbar-left'>
         <TitleView title={headerTitle} doSearch={doSearch} getState={getState} setState={setState} />
       </div>

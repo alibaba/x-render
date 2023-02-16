@@ -13,6 +13,32 @@ import request from 'umi-request';
 const Demo = () => {
   const tableRef: any = useRef();
 
+  const searchApi = params => {
+    console.log('params >>> ', params);
+    return request
+      .get(
+        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+        { params }
+      )
+      .then(res => {
+        if (res && res.data) {
+          return {
+            rows: res.data,
+            total: res.data.length,
+            extraData: res.status,
+          };
+        }
+      })
+      .catch(e => {
+        console.log('Oops, error', e);
+        // 注意一定要返回 rows 和 total
+        return {
+          rows: [],
+          total: 0,
+        };
+      });
+  };
+
   // 配置完全透传antd table
   const columns = [
     {
@@ -86,12 +112,12 @@ const Demo = () => {
     <TableRender
       tableRef={tableRef}
       search={{
-        hidden: true
+        hidden: true,
+        api: searchApi,
+        afterSearch: params => console.log('afterSearch', params)
       }}
-      table={{
-        columns,
-        rowKey: 'id',
-      }}
+      columns={columns}
+      rowKey='id'
     />
   );
 };

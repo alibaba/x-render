@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useRef, useImperativeHandle } from 'react';
-import { Space } from 'antd';
-import create, { useStore } from 'zustand';
+import { useStore } from 'zustand';
 import { useForm } from 'form-render';
 
 import { TRContext } from '../models/context';
 import { _get, isFunction, isArray } from '../utils';
 import ErrorBoundary from './ErrorBoundary';
-import Search from './SearchView';
-import Toolbar from './ToolbarView';
-import Table from './TableView';
+import SearchView from './SearchView';
+import ToolbarView from './ToolbarView';
+import TableView from './TableView';
 
 import './index.less';
 
@@ -19,51 +18,57 @@ type ISearchParams = {
   sorter?: any;
 };
 
-
 const RenderCore = props => {
-  const { search: searchProps, table: tableProps, debug, className, style, headerTitle, toolbarRender,  toolbarAction = true, tableRef } = props;
+  const { 
+    search: searchProps, 
+    debug, className, 
+    style, 
+    headerTitle, 
+    toolbarRender, 
+    toolbarAction = true, 
+    tableRef,
+    ...tableProps
+  } = props;
+
+  const { api, hidden: hiddenSearch } = searchProps;
+
   const form = useForm();
-  const rootRef = useRef<HTMLDivElement>(null); // ProTable组件的ref
+  const rootRef = useRef<HTMLDivElement>(null);
 
   const store = useContext(TRContext);
-  const schema = useStore(store, (state: any) => state.schema);
-
-  const loading = useStore(store, (state: any) => state.loading);
-  const api = useStore(store, (state: any) => state.api);
+  const inited = useStore(store, (state: any) => state.inited);
   const currentTab = useStore(store, (state: any) => state.tab);
-
-  const dataSource = useStore(store, (state: any) => state.dataSource);
-
-  const extraData = useStore(store, (state: any) => state.extraData);
-
-  const extraParams = useStore(store, (state: any) => state.extraParams);
-
   const pagination = useStore(store, (state: any) => state.pagination);
-
-  const tableSize = useStore(store, (state: any) => state.tableSize);
-
   const setState = useStore(store, (state: any) => state.setState);
+  const getState = useStore(store, (state: any) => state.getState);
 
-  const getState = useStore(store, (state: any) => state.getState)
+  useEffect(() => {
+    setState({
+      tableSize: tableProps.size,
+      inited: true
+    });
+  }, []);
+
+  useEffect(() => {
+    if (inited && hiddenSearch) {
+      refresh();
+    }
+  }, [inited]);
+  
+  useImperativeHandle(tableRef, () => ({
+    doSearch,
+    refresh,
+    changeTab,
+    form,
+    getState: () => ({
+      ...getState(),
+      search: form.getValues()
+    })
+  }));
 
   const fullScreen = () => {
     return Promise.resolve(rootRef.current?.requestFullscreen());
   };
-  
-
-  useEffect(() => {
-    setState({ api: searchProps.api, tableSize:  tableProps.size });
-    if (searchProps.hidden) {
-      refresh();
-    }
-  }, [])
-
-
-  useImperativeHandle(tableRef, () => ({
-    doSearch,
-    refresh,
-    form
-  }));
 
   const doSearch = (params: ISearchParams, customSearch?: Record<string, any>) => {
     const { current, pageSize, tab, sorter, ...extraSearch } = params || {};
@@ -143,41 +148,43 @@ const RenderCore = props => {
     );
   };
 
-
-  const toolbarArray =
-  typeof toolbarRender === 'function' ? toolbarRender() : [];
-const showTableTop =
-  headerTitle || (toolbarArray && toolbarArray.length) || Array.isArray(api);
+  const changeTab = (tab: string | number) => {
+    if (['string', 'number'].indexOf(typeof tab) > -1) {
+      setState({ tab });
+      refresh({ tab });
+    } else {
+      console.error('changeTab的入参必须是number或string');
+    }
+  };
 
   return (
     <div>
-      <Search 
+      <SearchView
         {...searchProps }
         form={form} 
         refresh={refresh}
-        loading={loading}
+        getState={getState}
       />
       <ErrorBoundary>
         <div
           ref={rootRef}
           className={`tr-table-wrapper ${className}`}  style={style}
         >
-          <Toolbar
-            setState={setState}
-            getState={getState}
+          <ToolbarView
             api={api}
-            tableSize={tableSize}
             doSearch={doSearch}
             refresh={refresh}
             fullScreen={fullScreen}
+            headerTitle={headerTitle}
             toolbarRender={toolbarRender}
+            setState={setState}
+            getState={getState}
           />
-          <Table 
+          <TableView
             {...tableProps}
             setState={setState}
             getState={getState}
             doSearch={doSearch}
-            dataSource={dataSource}
           />
         </div>
       </ErrorBoundary>
