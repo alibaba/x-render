@@ -27,13 +27,38 @@ group:
 
 ## 二、有哪些不兼容的变化
 
-### API 调整
-
 #### form.formData 弃用
 改用 form.getValues() 方式获取
 
 #### theme 弃用
 嵌套组件 theme 字段 弃用，统一改成 widget 声明，默认是 widget: 'collapse' 折叠卡片
+
+#### mapping 弃用
+mapping 配置弃用，映射关系通过 widgets 组件实例进行覆盖（如果和内部名字一样会覆盖内部组件）
+```json
+input,
+checkbox, // 勾选框
+checkboxes, // checkbox多选
+color,
+date,
+time,
+dateRange,
+timeRange,
+imageInput,
+url,
+select,
+multiSelect, // 下拉多选
+number,
+radio, // Radio.Group)
+slider, // 带滚条的number
+switch,
+textarea,
+upload,
+html,
+rate,
+treeSelect,
+errorSchemaWidget // 错误显示
+```
 
 
 #### onFinish 提交函数
