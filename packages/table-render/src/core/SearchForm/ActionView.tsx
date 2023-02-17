@@ -12,8 +12,6 @@ const ActionView = (props: any) => {
     loading
   } = props;
 
-
-
   const handleReset = () => {
     form.resetFields();
     form.submit();
@@ -37,8 +35,8 @@ const ActionView = (props: any) => {
   }
 
   return (
-    <div 
-      className={`flex justify-end w-100 ${className || ''}`} 
+    <div
+      className={`flex justify-end w-100 ${className || ''}`}
       style={style}
     >
       <Space>

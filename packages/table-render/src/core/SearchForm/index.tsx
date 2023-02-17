@@ -6,8 +6,8 @@ import FormRender from 'form-render';
 import ActionView from './ActionView';
 import { SearchProps } from '../../types';
 import { useTranslation } from 'react-i18next';
-import './index.less';
 import { ConfigContext } from '../store';
+import './index.less';
 
 const SearchForm: <RecordType extends object = any>(
   props: SearchProps<RecordType>
@@ -33,6 +33,7 @@ const SearchForm: <RecordType extends object = any>(
     propsSchema,
     widgets,
     hidden,
+    loading,
     api,
     onMount,
     onSearch,
@@ -46,12 +47,11 @@ const SearchForm: <RecordType extends object = any>(
     className: searchBtnClassName,
     searchText,
     resetText,
+    loading,
     form
   };
 
-  const store = useContext(ConfigContext);
-  console.log(store, 1111111)
-
+  const configContext = useContext(ConfigContext);
 
   useEffect(() => {
     initMount();
@@ -94,7 +94,7 @@ const SearchForm: <RecordType extends object = any>(
     >
       <FormRender
         displayType='row'
-        locale={store.locale}
+        locale={configContext.locale}
         column={3}
         {...otherProps}
         onFinish={handleFinish}

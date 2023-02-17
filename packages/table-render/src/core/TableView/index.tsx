@@ -15,7 +15,6 @@ const ProTable: <RecordType extends object = any>(
   //   );
   // }
   const { t } = useTranslation()
-  const copySuccessMsg = t('copy_success')
   const { getState, setState, doSearch, columns, pageChangeWithRequest = true, ...otherProps }: any = props;
   const { dataSource = [], loading, pagination, tableSize }: any = getState();
 
@@ -34,20 +33,20 @@ const ProTable: <RecordType extends object = any>(
 
     switch (result.valueType) {
       case 'date':
-        result.render = (value: any) => renderDom(getDate(value), result, copySuccessMsg);
+        result.render = (value: any) => renderDom(getDate(value), result);
         break;
       case 'dateTime':
-        result.render = (value: any) => renderDom(getDateTime(value), result, copySuccessMsg);
+        result.render = (value: any) => renderDom(getDateTime(value), result);
         break;
       case 'money':
-        result.render = (value: any) => renderDom(getMoneyType(value), result, copySuccessMsg);
+        result.render = (value: any) => renderDom(getMoneyType(value), result);
         break;
       case 'code':
-        result.render = (value: any) => renderDom(value, result, copySuccessMsg);
+        result.render = (value: any) => renderDom(value, result);
         break;
       case 'text':
       default:
-        result.render = (value: any) => renderDom(value, result, copySuccessMsg);
+        result.render = (value: any) => renderDom(value, result);
     }
     return result;
   });

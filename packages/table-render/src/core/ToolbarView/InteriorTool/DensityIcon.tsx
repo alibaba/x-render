@@ -14,25 +14,33 @@ const DesityIcon = () => {
   const tableSize = useStore(store, (state: any) => state.tableSize);
   const setState = useStore(store, (state: any) => state.setState);
 
+  const items = [
+    {
+      key: 'default',
+      label: t('default')
+    },
+    {
+      key: 'middle',
+      label: t('middle')
+    },
+    {
+      key: 'small',
+      label: t('small')
+    },
+  ]
+
   return (
     <div ref={dropRef}>
       <Dropdown
         getPopupContainer={() => dropRef.current}
-        overlay={
-          <Menu
-            selectedKeys={[tableSize]}
-            onClick={({ key }) => {
-              setState({ tableSize: key as DensitySize });
-            }}
-            style={{
-              width: 80,
-            }}
-          >
-            <Menu.Item key="default">{t('default')}</Menu.Item>
-            <Menu.Item key="middle">{t('middle')}</Menu.Item>
-            <Menu.Item key="small">{t('small')}</Menu.Item>
-          </Menu>
-        }
+        menu={{
+          selectedKeys: [tableSize],
+          onClick: ({ key }) => {
+            setState({ tableSize: key as DensitySize });
+          },
+          style: { width: 80 },
+          items,
+        }}
         trigger={['click']}
       >
         <Tooltip title={t('table_density')}>
