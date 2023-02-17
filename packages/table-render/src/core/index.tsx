@@ -19,13 +19,13 @@ type ISearchParams = {
 };
 
 const RenderCore = props => {
-  const { 
-    search: searchProps, 
-    debug, className, 
-    style, 
-    title, 
-    toolbarRender, 
-    toolbarAction = true, 
+  const {
+    search: searchProps,
+    debug, className,
+    style,
+    title,
+    toolbarRender,
+    toolbarAction,
     tableRef,
     request: api,
     ...tableProps
@@ -55,7 +55,7 @@ const RenderCore = props => {
       refresh();
     }
   }, [inited]);
-  
+
   useImperativeHandle(tableRef, () => ({
     doSearch,
     refresh,
@@ -91,7 +91,7 @@ const RenderCore = props => {
         ...extraSearch,
         ..._pagination,
       };
-  
+
       if (Array.isArray(api)) {
         _params = { ..._params, tab };
       }
@@ -110,7 +110,7 @@ const RenderCore = props => {
               pageSize: pageSize || _pageSize,
             },
           });
-        
+
           searchProps?.afterSearch?.({ data, total, pageSize, ...extraData });
         })
         .catch(err => {
@@ -159,8 +159,8 @@ const RenderCore = props => {
   return (
     <div>
       <SearchView
-        {...searchProps }
-        form={form} 
+        {...searchProps}
+        form={form}
         refresh={refresh}
         getState={getState}
         hidden={hiddenSearch}
@@ -168,7 +168,7 @@ const RenderCore = props => {
       <ErrorBoundary>
         <div
           ref={rootRef}
-          className={`tr-table-wrapper ${className}`}  style={style}
+          className={`tr-table-wrapper ${className}`} style={style}
         >
           <ToolbarView
             request={api}
@@ -176,6 +176,7 @@ const RenderCore = props => {
             refresh={refresh}
             fullScreen={fullScreen}
             title={title}
+            toolbarAction={toolbarAction}
             toolbarRender={toolbarRender}
             setState={setState}
             getState={getState}

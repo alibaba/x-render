@@ -1,5 +1,6 @@
-import { message, Tooltip, Typography } from 'antd';
+import { Tooltip } from 'antd';
 import React from 'react';
+import Copy from './copy';
 
 export const renderEllipsis = (
   dom: JSX.Element,
@@ -21,26 +22,7 @@ export const renderCopyable = (
   item: { copyable: any; ellipsis: any }
 ) => {
   if (item.copyable || item.ellipsis) {
-    return (
-      <Typography.Text
-        style={{
-          maxWidth: '100%',
-          margin: 0,
-          padding: 0,
-        }}
-        copyable={
-          item.copyable && text
-            ? {
-                text,
-                onCopy: () => message.success('复制成功'),
-              }
-            : undefined
-        }
-        ellipsis={item.ellipsis || false}
-      >
-        {getEnumValue(text, item)}
-      </Typography.Text>
-    );
+    return <Copy item={item} text={text} />
   }
   return getEnumValue(text, item);
 };

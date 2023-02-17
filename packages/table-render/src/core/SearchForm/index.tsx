@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Col } from 'antd';
 import classnames from 'classnames';
 import FormRender from 'form-render';
 
 import ActionView from './ActionView';
 import { SearchProps } from '../../types';
+import { useTranslation } from 'react-i18next';
+import { ConfigContext } from '../store';
 import './index.less';
 
 const SearchForm: <RecordType extends object = any>(
@@ -13,12 +15,13 @@ const SearchForm: <RecordType extends object = any>(
   if (props.hidden) {
     return;
   }
+  const { t } = useTranslation()
   const {
     searchBtnRender,
     searchBtnStyle,
     searchBtnClassName,
-    searchText = '查询',
-    resetText = '重置',
+    searchText = t('search'),
+    resetText = t('reset'),
 
     searchWithError = true,
     searchOnMount = true,
@@ -30,6 +33,7 @@ const SearchForm: <RecordType extends object = any>(
     propsSchema,
     widgets,
     hidden,
+    loading,
     api,
     onMount,
     onSearch,
@@ -43,8 +47,11 @@ const SearchForm: <RecordType extends object = any>(
     className: searchBtnClassName,
     searchText,
     resetText,
+    loading,
     form
   };
+
+  const configContext = useContext(ConfigContext);
 
   useEffect(() => {
     initMount();
@@ -81,12 +88,13 @@ const SearchForm: <RecordType extends object = any>(
 
   return (
     <div
-      className={classnames('tr-search', { [className] : !!className })}
+      className={classnames('tr-search', { [className]: !!className })}
       style={style}
       onKeyDown={handleKeyDown}
     >
       <FormRender
         displayType='row'
+        locale={configContext.locale}
         column={3}
         {...otherProps}
         onFinish={handleFinish}
