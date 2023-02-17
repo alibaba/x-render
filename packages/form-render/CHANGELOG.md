@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.14.14
+- [!] 修复 theme Ts 类型声明
+
 ## 1.14.11 
 - [+] 修复 setSchemaByPath 无法单独只修改 schema.props 下面的方法实例
 ## 1.14.1

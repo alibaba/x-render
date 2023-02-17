@@ -46,6 +46,7 @@ interface SchemaBase {
   enumNames: Array<string | number>;
   rules: RuleItem | RuleItem[];
   props: Record<string, any>;
+  theme?: string | number;
 }
 
 type Schema = Partial<SchemaBase>;
