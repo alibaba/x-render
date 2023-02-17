@@ -4,7 +4,7 @@ import { useStore } from 'zustand';
 import classnames from 'classnames';
 
 import { isCheckBoxType, _get, isObject, getArray } from '../../utils';
-import { FRContext, ConfigContext } from '../../models/context';
+import { ConfigContext } from '../../models/context';
 import { getWidgetName } from '../../models/mapping';
 import { getFormItemLayout } from '../../models/layout';
 import getRuleList from '../../models/validates';

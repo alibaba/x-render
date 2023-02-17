@@ -105,6 +105,7 @@ const Demo = () => {
       request={api}
       columns={columns}
       title="最简表格"
+      toolbarAction={true}
       toolbarRender={ 
         <>
           <Button>

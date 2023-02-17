@@ -47,7 +47,7 @@ const Demo = () => {
       .then(res => {
         if (res && res.data) {
           return {
-            data: [...res.data, { money: null }],
+            data: [...res.data],
             total: res.data.length,
           };
         }
@@ -162,7 +162,7 @@ const Demo = () => {
   ];
 
   const showData = () => {
-    tableRef.refresh(null, { extra: 1 });
+    tableRef.current.refresh({ stay: true }, { extra: 1 });
   };
 
   return (
@@ -182,7 +182,6 @@ const Demo = () => {
         }
       ]}
       columns={columns}
-      rowKey='id'
       toolbarRender={
         <>
           <Button key='show' onClick={showData}>

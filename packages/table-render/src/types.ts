@@ -56,7 +56,6 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
-  api?: ApiType<RecordType>;
   displayType?: any;
   propsSchema?: any;
   className?: string;
@@ -105,8 +104,6 @@ export interface TablePropsC<RecordType extends Object = any>
   title?: string | React.ReactNode;
 }
 
-
-
 export interface TableRenderProps<RecordType extends Object = any>
   extends Omit<TablePropsC<RecordType>, 'locale'>{
  
@@ -127,4 +124,5 @@ export interface TableRenderProps<RecordType extends Object = any>
    * antd的全局config
    */
   configProvider?: ConfigProviderProps;
+  request?: ApiType<RecordType>;
 }
