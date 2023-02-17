@@ -75,7 +75,17 @@ export default defineConfig({
     'fr-generator':  path.resolve(__dirname, 'tools/schema-generator/src')
   },
   codeSplitting: { jsStrategy: 'granularChunks' },
-  analyze: {}
+  analyze: {},
+  // headScripts: [
+  //   'https://unpkg.com/react@18.2.0/umd/react.production.min.js',
+  //   // 'https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js',
+  // ],
+  // externals: {
+  //   react: 'React',
+  //   // 'react-dom': 'ReactDOM',
+  //   // antd: 'antd',
+  //   // '@ant-design/icons': 'icons'
+  // },
   //...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),
 });
 
