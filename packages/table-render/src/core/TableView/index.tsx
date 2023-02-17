@@ -2,19 +2,19 @@ import React, { useEffect, useRef } from 'react';
 import { Table, TableProps } from 'antd';
 import { getDate, getDateTime, getMoneyType } from '../../utils';
 import { renderDom } from './field';
-import { TableRenderProps } from '../../types';
+import { TablePropsC } from '../../types';
 
 const ProTable: <RecordType extends object = any>(
-  props: TableRenderProps<RecordType>
+  props: TablePropsC<RecordType>
 ) => React.ReactElement = props => {
-  // //@ts-ignore
-  // if (props.dataSource) {
-  //   console.error(
-  //     '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
-  //   );
-  // }
+  //@ts-ignore
+  if (props.dataSource) {
+    console.error(
+      '设置table-render的数据请使用api，具体使用可参考：https://form-render.github.io/table-render/guide/demo#%E5%9F%BA%E6%9C%AC-demo'
+    );
+  }
 
-  const { getState, setState, doSearch, columns, pageChangeWithRequest = true, ...otherProps } : any = props;
+  const { getState, setState, doSearch, columns, pageChangeWithRequest = true, ...otherProps }: any = props;
   const { dataSource = [], loading, pagination, tableSize }: any = getState();
 
   const handleChange = ({ current, pageSize }, filters, sorter) => {
@@ -29,7 +29,6 @@ const ProTable: <RecordType extends object = any>(
     const result = item;
     // 用户在columns中自定义的render会覆盖tr的预设render
     if (result.render) return result;
-
     switch (result.valueType) {
       case 'date':
         result.render = (value: any) => renderDom(getDate(value), result);
@@ -61,17 +60,16 @@ const ProTable: <RecordType extends object = any>(
       props.pagination === false
         ? false
         : {
-            // onChange: onPageChange,
-            size: 'small',
-            ...props.pagination,
-            pageSize: props.pagination?.pageSize || pagination.pageSize,
-            total: props.pagination?.total || pagination.total,
-            current: props.pagination?.current || pagination.current,
-          },
+          // onChange: onPageChange,
+          size: 'small',
+          ...props.pagination,
+          pageSize: props.pagination?.pageSize || pagination.pageSize,
+          total: props.pagination?.total || pagination.total,
+          current: props.pagination?.current || pagination.current,
+        },
     loading,
     size: tableSize,
   };
-
   return <Table {...tableProps} />
 }
 

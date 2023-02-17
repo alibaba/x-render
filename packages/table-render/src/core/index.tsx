@@ -19,15 +19,16 @@ type ISearchParams = {
 };
 
 const RenderCore = props => {
-  const { 
-    search: searchProps, 
-    debug, className, 
-    style, 
-    title, 
-    toolbarRender, 
-    toolbarAction = true, 
+  const {
+    search: searchProps,
+    debug, className,
+    style,
+    title,
+    toolbarRender,
+    toolbarAction,
     tableRef,
     request: api,
+    size,
     ...tableProps
   } = props;
 
@@ -39,13 +40,14 @@ const RenderCore = props => {
   const store = useContext(TRContext);
   const inited = useStore(store, (state: any) => state.inited);
   const currentTab = useStore(store, (state: any) => state.tab);
+  const tableSize = useStore(store, (state: any) => state.tableSize);
   const pagination = useStore(store, (state: any) => state.pagination);
   const setState = useStore(store, (state: any) => state.setState);
   const getState = useStore(store, (state: any) => state.getState);
 
   useEffect(() => {
     setState({
-      tableSize: tableProps.size,
+      tableSize: size,
       inited: true
     });
   }, []);
@@ -55,7 +57,7 @@ const RenderCore = props => {
       refresh();
     }
   }, [inited]);
-  
+
   useImperativeHandle(tableRef, () => ({
     doSearch,
     refresh,
@@ -91,7 +93,7 @@ const RenderCore = props => {
         ...extraSearch,
         ..._pagination,
       };
-  
+
       if (Array.isArray(api)) {
         _params = { ..._params, tab };
       }
@@ -110,7 +112,7 @@ const RenderCore = props => {
               pageSize: pageSize || _pageSize,
             },
           });
-        
+
           searchProps?.afterSearch?.({ data, total, pageSize, ...extraData });
         })
         .catch(err => {
@@ -159,8 +161,8 @@ const RenderCore = props => {
   return (
     <div>
       <SearchView
-        {...searchProps }
-        form={form} 
+        {...searchProps}
+        form={form}
         refresh={refresh}
         getState={getState}
         hidden={hiddenSearch}
@@ -168,7 +170,8 @@ const RenderCore = props => {
       <ErrorBoundary>
         <div
           ref={rootRef}
-          className={`tr-table-wrapper ${className}`}  style={style}
+          className={`tr-table-wrapper ${className}`} 
+          style={style}
         >
           <ToolbarView
             request={api}
@@ -176,6 +179,9 @@ const RenderCore = props => {
             refresh={refresh}
             fullScreen={fullScreen}
             title={title}
+            tableSize={tableSize}
+            currentTab={currentTab}
+            toolbarAction={toolbarAction}
             toolbarRender={toolbarRender}
             setState={setState}
             getState={getState}

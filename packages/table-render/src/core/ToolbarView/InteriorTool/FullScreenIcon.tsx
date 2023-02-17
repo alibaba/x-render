@@ -1,13 +1,15 @@
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { message, Tooltip } from 'antd';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 const FullScreenIcon = props => {
+  const { t } = useTranslation()
   const [isFullScreen, setFullScreen] = useState(false);
   const { fullScreen } = props;
 
   return isFullScreen ? (
-    <Tooltip title="退出全屏">
+    <Tooltip title={t('exit_full_screen')}>
       <FullscreenExitOutlined
         onClick={() => {
           document.exitFullscreen();
@@ -16,11 +18,11 @@ const FullScreenIcon = props => {
       />
     </Tooltip>
   ) : (
-    <Tooltip title="全屏">
+    <Tooltip title={t('full_screen')}>
       <FullscreenOutlined
         onClick={() => {
           if (!document.fullscreenEnabled) {
-            message.warning('当前页面不支持全屏功能');
+            message.warning(t('cannot_full_screen'));
             return;
           }
           if (!document.fullscreenElement) {

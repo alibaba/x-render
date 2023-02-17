@@ -13,7 +13,6 @@ const Search: <RecordType extends object = any>(
     onSearch,
     ...otherProps
   }  = props;
-
   const { loading, sorter }: any = getState();
 
   const handleMount = async () => {

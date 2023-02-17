@@ -1,25 +1,19 @@
-import React, { useEffect, useRef, forwardRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
-
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import 'dayjs/locale/zh-cn';
 
-import { createStore } from './core/store';
-import { TRContext, ConfigContext } from './core/store';
-
+import { createStore, TRContext } from './core/store';
 import RenderCore from './core';
 import i18n from './i18next';
+import { TableRenderProps } from './types';
 
-export default forwardRef((props: any, ref) => {
+export default React.forwardRef((props: TableRenderProps, ref) => {
   const {
     configProvider,
     locale = 'zh-CN',
-    widgets,
-    methods,
-    form,
-    validateMessages,
     ...otherProps
   } = props;
   
@@ -36,20 +30,19 @@ export default forwardRef((props: any, ref) => {
   }, [locale]);
 
   const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
-  const configContext: any = {
-    locale,
-  };
+  if (otherProps.search && locale) {
+    otherProps.search.locale = locale;
+  }
+  
 
   return (
     <ConfigProvider
       locale={antdLocale}
       {...configProvider}
     >
-      <ConfigContext.Provider value={configContext}>
-        <TRContext.Provider value={store}>
-          <RenderCore {...otherProps} ref={ref} />
-        </TRContext.Provider>
-      </ConfigContext.Provider>
+      <TRContext.Provider value={store}>
+        <RenderCore {...otherProps} tableRef={ref} />
+      </TRContext.Provider>
     </ConfigProvider>
   );
 })

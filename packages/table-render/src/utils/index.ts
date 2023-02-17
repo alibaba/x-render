@@ -56,7 +56,7 @@ export const getDate = time => {
 };
 
 // 格式化千分符
-export const getMoneyType = num => {
+export const getMoneyType = (num: any) => {
   if (!num) return null;
   return `¥${num}`.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
 };

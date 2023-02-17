@@ -17,8 +17,10 @@ type TStore = {
     total: 0,
   },
   tableSize: 'default',
-  // init?: (schema: TStore['schema']) => any;
-  // setContext: (context: any) => any;
+  [key: string]: any
+  init?: (schema: TStore['schema']) => any;
+  getState: () => any;
+  setState: (state: any) => void;
 };
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
@@ -35,7 +37,6 @@ export const createStore = () => createx<TStore>((set: any, get: any) => ({
     total: 0,
   },
   tableSize: 'default',
-
 
   inited: false,
   setState: (state: any) => {
