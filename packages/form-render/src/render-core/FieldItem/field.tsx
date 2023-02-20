@@ -203,7 +203,6 @@ export default (props: any) => {
 
   const { widgets, methods, globalProps } = configContext;
   
-  const { labelWidth } = formCtx;
   const { hidden, properties, dependencies, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);
@@ -246,7 +245,8 @@ export default (props: any) => {
           column: schema.column,
           labelCol: schema.labelCol,
           wrapperCol: schema.wrapperCol,
-          displayType: schema.displayType
+          displayType: schema.displayType,
+          labelWidth: schema.labelWidth
         }}
       > 
        {inlineMode ? content : (
@@ -270,10 +270,8 @@ export default (props: any) => {
 
   const _labelCol = getValueFromKey('labelCol');
   const _wrapperCol = getValueFromKey('wrapperCol');
-
+  const labelWidth = getValueFromKey('labelWidth');
   const { labelCol, wrapperCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth, _labelCol, _wrapperCol });
-
-  
 
   if (!label) {
     noStyle = true;

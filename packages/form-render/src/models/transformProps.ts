@@ -1,4 +1,4 @@
-import { isObject, isArray, _get } from '../utils';
+import { _get } from '../utils';
 
 const displayTypeEnum = {
   column: 'vertical',
@@ -47,8 +47,6 @@ const transformProps =  (props: any) => {
   if (displayType) {
     formProps.layout = displayTypeEnum[displayType] || 'horizontal';
   }
-
-  
 
   return {
     formProps,

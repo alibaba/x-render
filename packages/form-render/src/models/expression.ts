@@ -1,5 +1,5 @@
 import { get } from 'lodash-es';
-import { isObject, _cloneDeep } from '../utils/index';
+import { isObject, _cloneDeep, isArray } from '../utils/index';
 import { createDataSkeleton } from './formDataSkeleton';
 
 export const isExpression = (str: string) => {
@@ -20,6 +20,24 @@ export const isHasExpression = (schema: any) => {
     // 子协议不做递归确认
     if (key === 'properties') {
       return false;
+    }
+
+    const recursionArray = (list: any[]) => {
+      const result = list.some(ite => {
+        if (isArray(ite)) {
+          return recursionArray(ite);
+        }
+
+        if (isObject(ite)) {
+          return isHasExpression(ite);
+        }
+        return isExpression(ite);
+      });
+      return result;
+    };
+
+    if (isArray(item)) {
+      return recursionArray(item);
     }
 
     if (isObject(item)) {
@@ -88,10 +106,28 @@ export const parseAllExpression = (_schema: any, _formData: any, dataPath: strin
     formData = createDataSkeleton(formSchema, formData);
   }
 
+  const recursionArray = (list: any[]) => {
+    const result = list.map(item => {
+      if (isArray(item)) {
+        return recursionArray(item);
+      }
+      if (isObject(item)) {
+        return parseAllExpression(item, formData, dataPath);
+      }
+
+      if (isExpression(item)) {
+        return parseExpression(item, formData, dataPath);
+      }
+      return item;
+    });
+    return result;
+  }
+
   Object.keys(schema).forEach(key => {
     const value = schema[key];
-
-    if (isObject(value)) {
+    if (isArray(value)) {
+      schema[key] = recursionArray(value);
+    } if (isObject(value)) {
       schema[key] = parseAllExpression(value, formData, dataPath);
     } else if (isExpression(value)) {
       schema[key] = parseExpression(value, formData, dataPath);
