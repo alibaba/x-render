@@ -96,6 +96,6 @@
     "zustand": "4.1.5",
     "less": "^3.0.0",
     "formRenderV1": "npm:form-render@^1.4.13",
-    "http-proxy-middleware": "1.22.10"
+    "http-proxy-middleware": "2.0.6"
   }
 }
