@@ -313,6 +313,31 @@ export interface FRProps extends AntdFormProps {
   maxWidth?: string
 }
 
+export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
+  debug?: boolean;
+  searchBtnStyle?: React.CSSProperties;
+  searchBtnClassName?: string;
+  displayType?: any;
+  propsSchema?: any;
+  className?: string;
+  style?: React.CSSProperties;
+  hidden?: boolean;
+  searchOnMount?: boolean | unknown;
+  searchWithError?: boolean;
+  searchBtnRender?: (
+    submit: Function,
+    clearSearch: Function
+  ) => React.ReactNode[];
+  searchText?: string;
+  resetText?: string;
+  onSearch?: (search: any) => any;
+  afterSearch?: (params: any) => any;
+  widgets?: any;
+  form?: any;
+  [key:string]: any
+}
+
+
 declare const FR: React.FC<FRProps>;
 
 export declare function useForm(params?: FormParams): FormInstance;

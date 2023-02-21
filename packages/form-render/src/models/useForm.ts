@@ -84,7 +84,10 @@ const useForm = () => {
     return parseValuesWithBind(values, flattenSchemaRef.current);
   }
 
-  form.setValueByPath = form.setFieldValue;
+  form.setValueByPath = (path: any, value: any) => {
+    const name = path?.split('.');
+    form.setFieldValue(name, value);
+  }
 
   form.getSchemaByPath = _path => {
     if (typeof _path !== 'string') {

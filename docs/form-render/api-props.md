@@ -15,7 +15,7 @@ group:
 | form             | **必填**，`useForm` 创建的表单实例，与 Form 一对一绑定，详见[Forminstance](#forminstance) | `FormInstance`                                                                                        | -      |
 | onFinish         | 提交后的回调，执行 `form.submit()` 后触发                                                 | `(data, errors: Error[]) => void`                                                                     | -      |
 | beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填                                            | `({ data, errors, schema, ...rest }) => Error[] \| Promise<Error[]>`                                  | -      |
-| onMount          | 表单首次加载时触发，详见[生命周期](/form-render/advanced/life-cycle)                      | `() => void`                                                                                          | -      |
+| onMount          | 表单首次加载时触发                                                            | `() => void`                                                                                          | -      |
 | displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                            | `'column' \| 'row' \| 'inline'`                                                                       | column |
 | labelAlign       | label 标签的文本对齐方式                                                                  | `'left' \| 'right'`                                                                                   | right  |
 | colon            | 是否显示 label 后面的冒号                                                                 | `boolean`                                                                                             | true   |

@@ -15,5 +15,9 @@
   "uploaded_address": "已上传地址",
   "test_src": "测试链接",
   "schema_not_match": "schema未匹配到展示组件：",
-  "item": "项目"
+  "item": "项目",
+  "search": "查询",
+  "reset": "重置",
+  "expand": "展开",
+  "fold": "收起"
 }

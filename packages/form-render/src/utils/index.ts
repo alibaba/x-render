@@ -87,7 +87,6 @@ export function isCheckBoxType(schema, readOnly) {
 }
 
 export const valueRemoveUndefined = (values: any) => {
-
   const recursionArray = (list: any[]) => {
     let result = list.map(item => {
       if (isObject(item)) {
@@ -101,7 +100,8 @@ export const valueRemoveUndefined = (values: any) => {
       return item;
     });
 
-    result = omitBy(result, isUndefined);
+    // 数组会变成对象，感觉 underfined 不能剔除，会影响顺序
+    // result = omitBy(result, isUndefined);
 
     if (Object.keys(result).length === 0) {
       return undefined;

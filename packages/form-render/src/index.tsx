@@ -20,6 +20,7 @@ export { mapping } from './models/mapping';
 
 export { default as useForm } from './models/useForm';
 export { default as connectForm } from './form-core/connectForm';
+export { default as SearchForm } from './derivative/SearchForm';
 
 export type {
   default as FR,
@@ -55,13 +56,19 @@ export default (props: FRProps) => {
 
   useEffect(() => {
     i18n.changeLanguage(locale);
-
     if (locale === 'en-US') {
       dayjs.locale('en');
     } else {
       dayjs.locale('zh-cn');
     }
   }, [locale]);
+
+
+  useEffect(() => {
+    () => {
+      return form.resetFields();
+    }
+  }, []);
 
   if (!form) {
     console.warn('Please provide a form instance to FormRender');
