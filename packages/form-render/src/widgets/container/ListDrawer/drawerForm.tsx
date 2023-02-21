@@ -1,13 +1,14 @@
-import React from 'react';
-import { Button, Drawer, Space } from 'antd';
-import { useTranslation } from 'react-i18next';
+import React, { useContext } from 'react';
+import { Button, Drawer, Space, ConfigProvider } from 'antd';
 import FRender, { useForm } from '../../../index';
+import { translation } from '../../utils';
 
 const DrawerForm = (props: any) => {
   const { schema, widgets, onClose, data, configContext } = props;
 
   const form: any = useForm();
-  const { t } = useTranslation();
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
 
   const handleFinish = (data: any) => {
     onClose(data);

@@ -55,6 +55,9 @@ export const transformDateValue = (value, format, dateFormat) => {
     result = dayjs(result, dateFormat);
   }
   return result;
+}
 
-
+export const translation = (configCtx) => (key) => {
+  const locale = configCtx?.locale.FormRender;
+  return locale[key];
 }

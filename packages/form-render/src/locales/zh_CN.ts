@@ -1,4 +1,4 @@
-{
+export default {
   "copy_max_tip": "已达表单项数量上限，无法复制！",
   "copy": "复制",
   "add_item": "新增一条",
@@ -20,4 +20,4 @@
   "reset": "重置",
   "expand": "展开",
   "fold": "收起"
-}
+};

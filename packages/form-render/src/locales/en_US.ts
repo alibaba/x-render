@@ -1,4 +1,4 @@
-{
+export default {
   "copy_max_tip": "The maximum number of table items has been reached and cannot be copied",
   "copy": "Copy",
   "add_item": "Add a new line",

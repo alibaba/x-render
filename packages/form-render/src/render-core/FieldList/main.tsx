@@ -1,7 +1,6 @@
-import { Form, message } from 'antd';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { isFunction } from '../../utils';
+import React, { useContext } from 'react';
+import { Form, message, ConfigProvider } from 'antd';
+import { isFunction, translation } from '../../utils';
 
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
@@ -22,8 +21,8 @@ export default (props: any) => {
   } = props;
   
   const { widgets } = configContext;
-
-  const { t } = useTranslation();
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
 
   const defaultAddBtnProps = {
     type: 'dashed',

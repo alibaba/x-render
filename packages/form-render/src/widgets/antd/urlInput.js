@@ -1,10 +1,11 @@
-import { Input } from 'antd';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { isUrl } from '../../utils';
+import React, { useContext } from 'react';
+import { Input, ConfigProvider } from 'antd';
+import { isUrl, translation } from '../../utils';
 
 const UrlNode = (props) => {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
+
   const { value, addonText = t('test_src')} = props
   const useUrl = isUrl(value);
 

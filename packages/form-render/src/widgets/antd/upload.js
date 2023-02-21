@@ -1,8 +1,8 @@
 import { UploadOutlined } from '@ant-design/icons';
-import { Button, message, Upload } from 'antd';
+import { Button, message, Upload, ConfigProvider } from 'antd';
 import { get } from 'lodash-es';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useContext } from 'react';
+import { translation } from '../../utils'
 
 export default function FrUpload({
   action,
@@ -12,7 +12,8 @@ export default function FrUpload({
   buttonProps,
   schema,
 }) {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
 
   const props = {
     name: 'file',

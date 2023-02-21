@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { Popconfirm, Tabs } from 'antd';
+import React, { useState, useContext } from 'react';
+import { Popconfirm, Tabs, ConfigProvider } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import type { FormListFieldData } from 'antd';
+import { translation } from '../../utils';
 import './index.less';
-import { useTranslation } from 'react-i18next';
 
 const TabPane = Tabs.TabPane
 
@@ -35,7 +35,8 @@ const TabList: React.FC<ListTabProps> = (props) => {
   } = props;
 
   const [activeKey, setActiveKey] = useState('0');
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
 
   const getCurrentTabPaneName = idx => {
     return tabName instanceof Array

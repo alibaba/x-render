@@ -1,8 +1,11 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
+import React, { useContext } from "react";
+import { translation } from '../../utils';
+import { ConfigProvider } from 'antd';
 
 export const ErrorSchema = (schema: any) => {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
+
   return (
     <div>
       <div style={{ color: 'red' }}>{t('schema_not_match')}</div>

@@ -1,13 +1,15 @@
 import { PictureOutlined } from '@ant-design/icons';
-import { Input, Popover } from 'antd';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Input, Popover, ConfigProvider } from 'antd';
+import React, { useContext } from 'react';
+import { translation } from '../../utils';
 
 const DEFAULT_IMG =
   'https://img.alicdn.com/tfs/TB14tSiKhTpK1RjSZFKXXa2wXXa-354-330.png';
 
 const PreviewNode = ({ value }) => {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
+  
   return (
     <Popover
       content={

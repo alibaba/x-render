@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Space } from 'antd';
+import React, { useState, useEffect, useContext } from 'react';
+import { Button, Space, ConfigProvider } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
-import { useTranslation } from 'react-i18next';
+import { translation } from '../../utils'
 
 const ActionView = (props: any) => {
   const {
@@ -18,9 +18,13 @@ const ActionView = (props: any) => {
   } = props;
 
   const [expand, setExpand] = useState(!defaultCollapsed);
-  const { t } = useTranslation();
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
 
   useEffect(() => {
+    if (!collapsed) {
+      return;
+    }
     setLimitHeight(defaultCollapsed);
   }, []);
 
@@ -61,7 +65,7 @@ const ActionView = (props: any) => {
         <Button loading={loading} type='primary' onClick={form.submit}>{searchText}</Button>
         <Button onClick={handleReset}>{resetText}</Button>
         {collapsed && (
-          <a onClick={handleCollapse}>
+          <a onClick={handleCollapse} style={{ cursor: 'pointer' }}>
             {expand ? (
               <>
                 {t('fold')}

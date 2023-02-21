@@ -134,5 +134,9 @@ export const valueRemoveUndefined = (values: any) => {
   return recursionObj(values) || {};
 }
 
+export const translation = (configCtx: any) => (key: string) => {
+  const locale = configCtx?.locale.FormRender;
+  return locale[key];
+}
 
 

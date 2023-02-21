@@ -2,12 +2,12 @@
 
 
 
-import React, { useState, useRef } from 'react';
-import { Space, Table, Form, Button, Popconfirm } from 'antd';
+import React, { useState, useRef, useContext } from 'react';
+import { Space, Table, Form, Button, Popconfirm, ConfigProvider } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
 import type { FormListFieldData, FormListOperation, TableColumnsType } from 'antd';
 import FormDrawer from './drawerForm';
-import { useTranslation } from 'react-i18next';
+import { translation } from '../../utils';
 import './index.less';
 
 interface Props {
@@ -45,7 +45,8 @@ const TableList: React.FC<Props> = (props: any) => {
   } = props;
 
   const form = Form.useFormInstance();
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
 
   const paginationConfig = {
     size: 'small',
@@ -57,7 +58,7 @@ const TableList: React.FC<Props> = (props: any) => {
 
   const [visible, setVisible] = useState(false);
   const [itemData, setItemData] = useState(null);
-  const indexRef = useRef(null);
+  const indexRef = useRef<any>(null);
 
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
