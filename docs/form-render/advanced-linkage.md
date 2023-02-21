@@ -7,14 +7,14 @@ group:
 ---
 
 # 表单联动
-- 通过 函数表达式实现简单联动
+- 通过 {{ }} 实现简单联动
 - 通过 watch 监听实现复杂联动
 - 通过 dependencies 实现组件之间复杂联动
 
-## 简单联动
-### 函数表达式
+## 一、简单联动
+### {{ }} 函数表达式
 
-表单联动是开发中常见的交互，为此我们创造了这种简洁的配置方式来支持联动。通过函数表达式来控制表单项的隐藏、是否可编辑等联动交互。
+表单联动是开发中常见的交互，为此我们创造了一种简洁的配置方式来支持联动。通过函数表达式来控制表单项的隐藏、是否可编辑等交互。
 
 表达式特征：
 - 函数表达式为字符串，并以双花括号`"{{...}}"`为语法特征。除 default、rules 以外，schema 里的字段都支持函数表达式。例如
@@ -28,8 +28,6 @@ group:
 表达式关键字：
 - formData: 整个表单的值，根据 path 路径获取对应表单项的值，例如：formData.x.y 
 - rootValue: 表单上一层级的值，只在 List 场景使用
-
-总结：
 
 ### formData 示例
 ```jsx
@@ -49,7 +47,7 @@ const schema = {
       title: '输入框',
       type: 'string',
       required: true,
-      hidden: '{{ formData.switch1 === true }}',
+      hidden: '{{ formData.switch1 === true }}'
     }
   }
 };
@@ -61,6 +59,7 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form}
+      labelWidth={200}
     />
   )
 };
@@ -79,6 +78,7 @@ const schema = {
       title: '会员活动',
       type: 'array',
       display: 'inline',
+      default: [{}],
       items: {
         type: 'object',
         properties: {
@@ -94,9 +94,6 @@ const schema = {
             hidden: '{{ rootValue.switch1 === true }}',
           }
         }
-      },
-      props: {
-        hasBackground: true,
       }
     }
   }
@@ -109,15 +106,16 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form}
+      labelWidth={100}
     />
   )
 };
 ```
 
-## 复杂联动
+## 二、复杂联动
 
 ### watch 监听
-watch: 用于监听表单数据改变从而唤起回调，它是一个对象集合，根据 path 路径注册相应的表单项监听事件
+watch: 用于监听表单数据改变，根据 path 路径注册表单项监听事件
 ```js
 const watch = {
   // # 为全局
@@ -139,7 +137,7 @@ const watch = {
 };
 ```
 
-### 修改 value 
+### 修改表单项 value 
 
 form.setValueByPath：指定路径对值进行修改。[path 路径详见](/form-render/advanced/path)。
 
@@ -181,11 +179,19 @@ export default () => {
     form.setValueByPath('input2', changedValues.input1);
   }
 
-  return <FormRender form={form} schema={schema} watch={watch} onValuesChange={onValuesChange} />;
+  return (
+    <FormRender 
+      form={form} 
+      schema={schema} 
+      watch={watch} 
+      onValuesChange={onValuesChange} 
+      labelWidth={200}
+    />
+  );
 };
 ```
 
-### 修改 schema
+### 修改表单项 schema
 
 form.setSchemaByPath：指定路径对 schema 进行修改 (不允许通过此 API 修改 value、defalut)。[path 路径详见](/form-render/advanced/path)。
 
@@ -235,13 +241,14 @@ export default () => {
       form={form}
       schema={schema}
       watch={watch}
+      labelWidth={200}
     />
   );
 };
 ```
 
-## 依赖项关联
-dependencies：用于完成组件内部复杂的联动逻辑，依赖的字段更新时，该组件将自动触发更新与校验。
+## 三、表单项关联
+dependencies：用于完成组件内部复杂的联动逻辑，关联的字段更新时，该组件将自动触发更新与校验。
 - 类型：path[]，设置依赖字段，支持多个依赖字段
 - 获取依赖值：组件内通过 props.dependValues 获取依赖值集合
 
@@ -288,6 +295,7 @@ export default () => {
       form={form}
       schema={schema}
       widgets={{ CustomTextArea }}
+      labelWidth={200}
     />
   );
 }
@@ -348,6 +356,7 @@ export default () => {
       form={form}
       schema={schema}
       widgets={{ CustomTextArea }}
+      labelWidth={200}
     />
   );
 }
@@ -405,21 +414,17 @@ export default () => {
         },
         enum: [1, 2, 3, 4],
         enumNames: ['增', '删', '改', '查'],
-        widget: 'checkboxes',
-      },
-    },
-  };
-
-  const onFinish = (data, errors) => {
-    console.log(data, errors);
+        widget: 'checkboxes'
+      }
+    }
   };
 
   return (
     <FormRender
       form={form}
       schema={schema}
-      onFinish={onFinish}
       widgets={{ CustomCheckbox }}
+      labelWidth={200}
     />
   );
 };

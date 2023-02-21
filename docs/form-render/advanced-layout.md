@@ -12,7 +12,7 @@ group:
 - 通过 labelCol、wrapperCol 实现表单项布局
 - 输入控件最长宽度 400px
 
-## 标签排列：displayType
+##  一、标签排列：displayType
 displayType：row（水平分布）、column（垂直分布）、inline(紧凑)
 
 ```jsx
@@ -76,7 +76,7 @@ export default () => {
 }
 ```
 
-## 多列布局：column
+## 二、多列布局：column
 column: 一行多列，默认值 1
 
 ```jsx
@@ -142,8 +142,8 @@ export default () => {
 ```
 
 
-## 表单项布局
-### labelCol & wrapperCol
+## 三、表单项布局
+### labelCol
 
 - labelCol: label 标签布局，同 Col 组件，设置 span 值，如 { span: 6 }
 - wrapperCol: 输入控件布局，用法同 labelCol

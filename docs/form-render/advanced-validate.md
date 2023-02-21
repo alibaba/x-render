@@ -10,7 +10,7 @@ group:
 - 通过内置校验字段配置，实现简单校验逻辑
 - 通过 rules 配置，实现复杂校验逻辑
 - 通过 validateMessages 实现校验提示模版定制
-### 内置校验
+### 一、内置校验
 
 - required：必填
 - max：string 类型为字符串最大长度；number 类型时为最大值；array 类型时为数组最大长度
@@ -89,7 +89,7 @@ export default () => {
 ```
 
 
-### Rules 校验
+### 二、Rules 校验
 - 全面拥抱 Antd Form Rules
 - 自定义校验 validator：做了一点小小的改变，validator 直接返回布尔值。
 
@@ -133,13 +133,13 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form} 
-      builtOperation={true} 
+      builtOperation={true}
     />
   )
 };
 ```
 
-### 定制校验模版
+### 三、定制校验模版
 - 全面拥抱 Antd Form Rules
 - validateMessages：通过配置 validateMessages 定制校验模版，可以按需定制，定制模版会和默认校验模版进行合并处理
 
@@ -179,7 +179,7 @@ export default () => {
 ```
 
 
-### 默认模版内容
+### 四、默认模版内容
 
 - 中文模版
 ```Js

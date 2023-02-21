@@ -17,11 +17,11 @@ const Header: React.FC = () => {
         <Col span={12}>
           <Space size={20}>
             <DumiLogo />
-            <DumiSearch />
           </Space>
         </Col>
         <Col span={12}>
           <Space size={0} style={{ float: 'right'}}>
+            <DumiSearch/>
             <Navigation />
             <Divider type="vertical" style={{ marginLeft: 0 }} />
             <Space>

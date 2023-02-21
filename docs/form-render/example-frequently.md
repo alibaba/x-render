@@ -2,13 +2,13 @@
 order: 0
 toc: content
 group: 
-  title: 示例
+  title: 最佳示例
   order: 2
 ---
 
-# 表单常用交互
+# 常用交互
 
-## 表单提交
+## 一、表单提交
 ```jsx
 import React from 'react';
 import { Button, message } from 'antd';
@@ -53,7 +53,7 @@ export default () => {
 }
 ```
 
-## 表单数据异步加载
+## 二、表单数据异步加载
 
 通过 `form.setValues` 方法进行加载
 ```jsx
@@ -96,7 +96,7 @@ export default () => {
 }
 ```
 
-## 下拉选项异步加载
+## 三、下拉选项异步加载
 通过服务端获取数据后展示下拉选项的选项值
 
 **单个加载**
@@ -214,7 +214,7 @@ export default () => {
 }
 ```
 
-## 表单协议异步加载
+## 四、表单协议异步加载
 通过 `form.setSchema(schema, true)` 方法进行加载
 
 ```jsx
@@ -268,7 +268,7 @@ export default Demo;
 
 
 
-## 表单服务端校验
+## 五、表单服务端校验
 通过 `beforeFinish` 从外部回填 error 信息到表单，注意 `beforeFinish` 需返回要回填的 error
 
 ```jsx
@@ -332,7 +332,7 @@ export default () => {
 }
 ```
 
-## 表单数据字段转换
+## 六、表单数据字段转换
 服务端数据与展示经常会不符，通过配置 `bind` 字段进行转换
 
 - 例如：日期范围组件接收的是一个数组，而服务端的数据是 startDate，endDate 两个字段。

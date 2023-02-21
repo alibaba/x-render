@@ -6,6 +6,8 @@ import { valueRemoveUndefined, _cloneDeep } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesWithBind } from '../models/bindValues';
+import { getFormItemLayout } from '../models/layout';
+
 import {
   transformFieldsError,
   valuesWatch,
@@ -107,6 +109,8 @@ const FormCore = (props: any) => {
     onFinishFailed({ ...params, values });
   };
 
+  const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
+
   return (
     <Form
       labelWrap={true}
@@ -125,7 +129,7 @@ const FormCore = (props: any) => {
           <Col span={24 / column}>
             <Form.Item
               label='hideLabel'
-              labelCol={labelCol}
+              labelCol={operlabelCol}
               className='fr-hide-label'
             >
               <Space>
