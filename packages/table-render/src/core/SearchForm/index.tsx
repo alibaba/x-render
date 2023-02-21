@@ -1,11 +1,11 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Col } from 'antd';
 import classnames from 'classnames';
 import FormRender from 'form-render';
+import { useTranslation } from 'react-i18next';
 
 import ActionView from './ActionView';
 import { SearchProps } from '../../types';
-import { useTranslation } from 'react-i18next';
 import './index.less';
 
 const SearchForm: <RecordType extends object = any>(
@@ -37,6 +37,8 @@ const SearchForm: <RecordType extends object = any>(
     onMount,
     onSearch,
     afterSearch,
+    column: _column=4,
+    collapsed,
     ...otherProps
   } = props;
 
@@ -47,12 +49,39 @@ const SearchForm: <RecordType extends object = any>(
     searchText,
     resetText,
     loading,
-    form
+    form,
+    collapsed: true,
   };
+
+  const [limitHeight, setLimitHeight] = useState();
+  const searchRef = useRef<any>();
+  const [column, setColumn] = useState(_column)
 
   useEffect(() => {
     initMount();
   }, []);
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(entries => {
+     const clientWidth = searchRef?.current?.clientWidth;
+      if (clientWidth > 1344) { // 336
+        setColumn(column);
+      } else if (clientWidth > 1008) {
+        setColumn(3);
+      } else if (clientWidth > 672) {
+        setColumn(2);
+      } else {
+        setColumn(1);
+      }
+    });
+
+    resizeObserver.observe(searchRef.current);
+    () => {
+      resizeObserver.disconnect();
+    }
+  }, []);
+
+  
 
   const initMount = async () => {
     if (!searchOnMount) {
@@ -83,24 +112,30 @@ const SearchForm: <RecordType extends object = any>(
     }
   };
 
+  
+
   return (
     <div
       className={classnames('tr-search', { [className || '']: !!className })}
-      style={style}
+      style={{
+        ...style,
+        height: limitHeight ? 136 : 'auto'
+      }}
+      ref={searchRef}
       onKeyDown={handleKeyDown}
     >
       <FormRender
         displayType='row'
-        column={3}
         {...otherProps}
+        column={column}
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
         form={form}
         schema={schema || propsSchema}
         widgets={widgets}
         operateExtra={(
-          <Col className='search-action-col'>
-            <ActionView {...actionProps} />
+          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight })} style={{ minWidth: (1/column)*100 + '%' }}>
+            <ActionView {...actionProps} setLimitHeight={setLimitHeight} />
           </Col>
         )}
       />

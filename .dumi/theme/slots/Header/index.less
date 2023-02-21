@@ -1,0 +1,55 @@
+.xr-doc-header {
+  backdrop-filter: blur(6px);
+  background-color: rgba(255, 255,255, 0.8);
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 3%), 0 1px 6px -1px rgb(0 0 0 / 2%), 0 2px 4px 0 rgb(0 0 0 / 2%);
+  width: 100%;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  margin-bottom: 20px;
+
+  @{dark-selector} & {
+    background-color: #050709e6;
+  }
+
+  &-nav-item {
+    color: #333;
+    cursor: pointer;
+  }
+
+  &-nva-item:hover {
+    color: #1677ff;
+  }
+
+  .ant-menu {
+    border: none;
+    line-height: unset;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    font-size: 15px;
+
+    @{dark-selector} & {
+      color: #c6c9cd;
+    }
+
+    .ant-menu-item::after, .ant-menu-submenu::after {
+      bottom: -23px;
+    }
+  }
+
+  .dumi-default-search-bar-input {
+    border: none;
+    width: 220px;
+  }
+
+  .dumi-default-search-shortcut {
+    margin-left: 10px;
+  }
+}
+
+.dumi-default-doc-layout > main {
+  max-width: 100% !important;
+  padding: 0 40px;
+}
+

@@ -38,7 +38,7 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
   // 兼容一下 1.0 版本
   if (labelWidth) {
     labelCol = { flex : labelWidth + 'px' };
-    wrapperCol = { flex: 1 };
+    wrapperCol = { flex: 'auto' };
   }
 
   // 自定义进行覆盖

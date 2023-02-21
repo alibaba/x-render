@@ -70,6 +70,34 @@ const schema = {
       title: '创建时间',
       type: 'string',
       format: 'date',
+      hidden: "{{formData.title === '111'}}"
+    },
+    title1: {
+      title: '标题',
+      type: 'string'
+    },
+    created_at1: {
+      title: '创建时间',
+      type: 'string',
+      format: 'date',
+    },
+    title2: {
+      title: '标题',
+      type: 'string'
+    },
+    created_at2: {
+      title: '创建时间',
+      type: 'string',
+      format: 'date',
+    },
+    title3: {
+      title: '标题',
+      type: 'string'
+    },
+    created_at3: {
+      title: '创建时间',
+      type: 'string',
+      format: 'date',
     }
   }
 };

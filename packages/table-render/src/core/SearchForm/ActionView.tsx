@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Space } from 'antd';
+import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 const ActionView = (props: any) => {
   const {
@@ -9,13 +10,23 @@ const ActionView = (props: any) => {
     form,
     searchText,
     resetText,
+    collapsed,
+    setLimitHeight,
     loading
   } = props;
+
+  const [expand, setExpand] = useState(false);
 
   const handleReset = () => {
     form.resetFields();
     form.submit();
   };
+
+  const handleCollapse = () => {
+    const flag = !expand;
+    setExpand(flag)
+    setLimitHeight(flag);
+  }
 
   const searchBtnArr = typeof searchBtnRender === 'function' ? searchBtnRender(form.submit, handleReset) : [];
 
@@ -42,6 +53,21 @@ const ActionView = (props: any) => {
       <Space>
         <Button loading={loading} type='primary' onClick={form.submit}>{searchText}</Button>
         <Button onClick={handleReset}>{resetText}</Button>
+        {collapsed && (
+          <a onClick={handleCollapse}>
+            {expand ? (
+              <>
+                展开
+                <DownOutlined />
+              </>
+            ) : (
+              <>
+                收起
+                <UpOutlined />
+              </>
+            )}
+          </a>
+        )}
       </Space>
     </div>
   );

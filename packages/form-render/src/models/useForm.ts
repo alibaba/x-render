@@ -94,6 +94,10 @@ const useForm = () => {
     return _get(schemaRef.current, path);
   };
 
+  form.getSchema = () => {
+    return schemaRef.current;
+  };
+
   form.setErrorFields = (_fieldsError: any[]) => {
     const fieldsError = transformFieldsError(_fieldsError);
     if (!fieldsError) {

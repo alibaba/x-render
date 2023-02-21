@@ -169,6 +169,7 @@ export interface FormInstance extends AntdFormInstance {
  * @deprecated 即将弃用，请勿使用此api，使用setValueByPath
  */
   onItemChange: FormInstance['setFieldValue'];
+  getSchema: () => any;
 }
 
 export type WatchProperties = {
