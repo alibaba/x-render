@@ -6,12 +6,12 @@ group:
   order: 1
 ---
 
-# path 书写教程
+# path 书写
 
-当你需要调用 setSchemaByPath 时，需要书写改动的表单元素对应的 path。如果元素结构很深，如何写正确的 path 呢？
+调用 setSchemaByPath 时，需要根据 path 改动表单元素的 schema。如果元素结构很深，如何正确书写 path 呢？
 
 ## 基础型：path
-form.setSchemaByPath('radio', { enum: [1, 2, 3] });
+设置选项：form.setSchemaByPath('radio', { enum: [1, 2, 3] });
 ```jsx
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -44,6 +44,7 @@ const Demo = () => {
       form={form}
       schema={schema}
       onMount={onMount}
+      labelWidth={100}
     />
   );
 };
@@ -53,7 +54,7 @@ export default Demo;
 ```
 
 ## 嵌套型：path
-form.setSchemaByPath('x.radio', { enum: [1, 2, 3] });
+设置选项：form.setSchemaByPath('x.radio', { enum: [1, 2, 3] });
 ```jsx
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -68,6 +69,7 @@ const Demo = () => {
     properties: {
       x: {
         type: 'object',
+        title: 'xxx',
         properties: {
           radio: {
             title: '选择框',
@@ -91,6 +93,7 @@ const Demo = () => {
       form={form}
       schema={schema}
       onMount={onMount}
+      labelWidth={100}
     />
   );
 };
@@ -101,8 +104,8 @@ export default Demo;
 
 
 
-## List 型：path
-form.setSchemaByPath('x[].radio', { enum: [1, 2, 3] });
+## 列表型：path
+设置选项：form.setSchemaByPath('x[].radio', { enum: [1, 2, 3] });
 ```jsx
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -118,6 +121,7 @@ const Demo = () => {
       x: {
         title: '对象数组',
         type: 'array',
+        default: [{}],
         items: {
           type: 'object',
           properties: {
@@ -144,6 +148,7 @@ const Demo = () => {
       form={form}
       schema={schema}
       onMount={onMount}
+      labelWidth={100}
     />
   );
 };
@@ -153,7 +158,7 @@ export default Demo;
 ```
 
 ## 复杂嵌套：path
- form.setSchemaByPath('x.y[].radio', { enum: [1, 2, 3] });
+设置选项：form.setSchemaByPath('x.y[].radio', { enum: [1, 2, 3] });
 ```jsx
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -183,8 +188,10 @@ const Demo = () => {
             title: '对象数组',
             type: 'array',
             display: 'inline',
+            default: [{}],
             items: {
               type: 'object',
+              title: '基础信息',
               properties: {
                 radio : {
                   title: '选择框',
@@ -211,6 +218,7 @@ const Demo = () => {
       form={form}
       schema={schema}
       onMount={onMount}
+      labelWidth={100}
     />
   );
 };

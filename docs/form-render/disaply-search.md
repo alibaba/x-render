@@ -152,12 +152,17 @@ const schema = {
 export default () => {
   const form = useForm();
 
+  const onSearch = (values) => {
+    console.log(values, 'searchData');
+  }
+
   return (
     <SearchForm 
       schema={schema} 
       form={form}
       labelWidth={100}
       collapsed={true}
+      onSearch={onSearch}
     />
   )
 };

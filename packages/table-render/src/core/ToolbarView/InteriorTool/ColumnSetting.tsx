@@ -1,10 +1,12 @@
+import React, { useContext } from 'react';
+import { Popover, Tooltip, ConfigProvider } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
-import { Popover, Tooltip } from 'antd';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { translation } from '../../../utils';
 
 const ColumnSetting = () => {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
+
   return (
     <Popover
       arrowPointAtCenter

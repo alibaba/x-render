@@ -11,6 +11,10 @@ title: 最佳展示
 
 <code src='./demo/noSearch.tsx'></code>
 
+## 可折叠
+
+<code src='./demo/collapsed.tsx'></code>
+
 ## 无工具栏
 
 <code src='./demo/noBar.tsx'></code>

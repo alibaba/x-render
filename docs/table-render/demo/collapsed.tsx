@@ -29,7 +29,31 @@ const schema = {
       title: '成立时间',
       type: 'string',
       format: 'date'
-    }
+    },
+    labels1: {
+      title: '输入框 A',
+      type: 'string'
+    },
+    labels2: {
+      title: '输入框 B',
+      type: 'string'
+    },
+    labels3: {
+      title: '输入框 B',
+      type: 'string'
+    },
+    labels4: {
+      title: '输入框 C',
+      type: 'string'
+    },
+    labels5: {
+      title: '输入框 D',
+      type: 'string'
+    },
+    labels6: {
+      title: '输入框 E',
+      type: 'string'
+    },
   }
 };
 
@@ -169,9 +193,9 @@ const Demo = () => {
     <TableRender 
       ref={tableRef}
       search={{
-        schema
+        schema,
+        collapsed: true,
       }}
-      locale='en-US'
       request={[
         {
           name: '全部数据',

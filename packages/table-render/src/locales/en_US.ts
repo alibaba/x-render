@@ -1,4 +1,4 @@
-{
+export default {
   "search": "Search",
   "reset": "Reset",
   "copy_success": "Copy Success",

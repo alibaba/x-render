@@ -18,6 +18,10 @@ const Navigation: React.FC = () => {
       key: 'chart-render',
     },
     {
+      label: <Link to="/generator">表单设计器</Link>,
+      key: 'generator',
+    },
+    {
       label: (
         <div>
           <span>生态</span>
@@ -30,11 +34,11 @@ const Navigation: React.FC = () => {
           key: 'playground',
           icon: <CodeOutlined />,
         },
-        {
-          label: <Link to="/generator">表单设计器</Link>,
-          key: 'generator',
-          icon: <HighlightOutlined />,
-        },
+        // {
+        //   label: <Link to="/generator">表单设计器</Link>,
+        //   key: 'generator',
+        //   icon: <HighlightOutlined />,
+        // },
         {
           label: <Link to="/proptypes">PropToSchema</Link>,
           key: 'proptypes',

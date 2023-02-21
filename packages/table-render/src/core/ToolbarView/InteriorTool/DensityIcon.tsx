@@ -1,14 +1,16 @@
-import { ColumnHeightOutlined } from '@ant-design/icons';
-import { Dropdown, Menu, Tooltip } from 'antd';
 import React, { useRef, useContext } from 'react';
+import { Dropdown, ConfigProvider, Tooltip } from 'antd';
+import { ColumnHeightOutlined } from '@ant-design/icons';
 import { useStore } from 'zustand';
 import { TRContext } from '../../store';
-import { useTranslation } from 'react-i18next';
+import { translation } from '../../../utils';
 
 export type DensitySize = 'middle' | 'small' | 'default' | undefined;
 
 const DesityIcon = () => {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
+ 
   const dropRef = useRef<any>(); // class组件用 React.createRef()
   const store = useContext(TRContext);
   const tableSize = useStore(store, (state: any) => state.tableSize);

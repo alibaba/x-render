@@ -1,10 +1,11 @@
+import React, { useContext} from 'react';
+import { Tooltip, ConfigProvider } from 'antd';
 import { ReloadOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { translation } from '../../../utils';
 
 const ReloadIcon = ({ refresh }) => {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
   return (
     <Tooltip title={t('reload')}>
       <ReloadOutlined onClick={() => refresh()} />

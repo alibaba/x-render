@@ -1,4 +1,4 @@
-{
+export default {
   "search": "查询",
   "reset": "重置",
   "copy_success": "复制成功",
@@ -11,4 +11,4 @@
   "full_screen": "全屏",
   "cannot_full_screen": "当前页面不支持全屏功能",
   "reload": "刷新"
-}
+};

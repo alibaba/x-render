@@ -1,10 +1,11 @@
+import React, { useState, useContext } from 'react';
+import { message, Tooltip, ConfigProvider } from 'antd';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
-import { message, Tooltip } from 'antd';
-import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { translation } from '../../../utils';
 
 const FullScreenIcon = props => {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
   const [isFullScreen, setFullScreen] = useState(false);
   const { fullScreen } = props;
 

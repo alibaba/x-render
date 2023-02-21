@@ -880,7 +880,7 @@ const schema = {
 
 export default () => {
   const form = useForm();
-  return <FormRender schema={schema} form={form} locale='en_US' configProvider={{locale: 'enUS'}}/>;
+  return <FormRender schema={schema} form={form} />;
 };
 ```
 

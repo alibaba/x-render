@@ -1,10 +1,12 @@
-import React from 'react';
-import { message, Typography } from 'antd';
-import { useTranslation } from 'react-i18next';
+import React, { useContext } from 'react';
+import { message, Typography, ConfigProvider } from 'antd';
 import { getEnumValue } from './field';
+import { translation } from '../../utils';
 
 const Copy = ({ item, text }) => {
-  const { t } = useTranslation()
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
+  
   return (
     <Typography.Text
       style={{

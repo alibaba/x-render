@@ -29,6 +29,10 @@ group:
 | 属性               | 描述                                                                                  | 类型                                   | 默认值  |
 | ------------------ | ------------------------------------------------------------------------------------- | -------------------------------------- | ------- | 
 | schema             | **必填**，用于渲染查询表单，详见[form-render 文档](/form-render/schema/schema) | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16)                               | -       | 
+| collapsed           | 是否可折叠                             | `boolean`          |  -    |
+| defaultCollapsed    | 折叠收起                               | `boolean`          |  true   |
+| loading             | 查询按钮加载中                          | `boolean`          |  -    |
+| column              | 一行多列                               | `number`           |  4    |
 | onSearch           | 在表格查询时执行一些额外的操作                                                        | `(params) => void`                             | -       |
 | afterSearch        | 在表格查询结束后执行一些额外的操作                                                    | `(params) => void`                             | -       |
 | searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                  | `boolean`                              | true  | 
