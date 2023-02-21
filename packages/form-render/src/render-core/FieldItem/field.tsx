@@ -177,8 +177,8 @@ const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, for
   return widgetProps;
 }
 
-const createWidget = (Component: any, props: any, form: any, path: any, rootPath: any) => {
-  const { onStatusChange, ...otherProps } = props;
+const createWidget = (Component: any, props: any, form: any, path: any, rootPath: any, maxWidth: string) => {
+  const { onStatusChange, style={}, ...otherProps } = props;
   const { status } = Form.Item.useStatus();
 
   useEffect(() => {
@@ -186,7 +186,7 @@ const createWidget = (Component: any, props: any, form: any, path: any, rootPath
     onStatusChange && onStatusChange(status, errors);
   }, [status]);
 
-  return <Component { ...otherProps} />
+  return <Component { ...otherProps} style={{ maxWidth, ...style}}/>
 };
 
 export default (props: any) => {
@@ -201,7 +201,7 @@ export default (props: any) => {
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
 
-  const { widgets, methods, globalProps } = configContext;
+  const { widgets, methods, globalProps, maxWidth } = configContext;
   
   const { hidden, properties, dependencies, ...otherSchema } = schema;
 
@@ -296,7 +296,7 @@ export default (props: any) => {
       className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label'})}
       label={label}
       name={path}
-      style={inlineMode ? { marginRight: '16px' } : null}
+      style={inlineMode ? { marginRight: '16px', marginBottom: '24px' } : null}
       valuePropName={valuePropName}
       rules={readOnly ? [] : ruleList}
       hidden={hidden}
@@ -307,7 +307,7 @@ export default (props: any) => {
       noStyle={noStyle}
       dependencies={dependencies}
     >
-      {createWidget(widget, widgetProps, form, path, rootPath)}
+      {createWidget(widget, widgetProps, form, path, rootPath, maxWidth)}
     </Form.Item>
   );
 

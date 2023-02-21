@@ -1,5 +1,6 @@
 ---
 order: 0
+toc: content
 title: 开始使用
 ---
 
@@ -44,7 +45,7 @@ const schema = {
     input1: {
       title: '简单输入框',
       type: 'string',
-      required: true,
+      required: true
     },
     select1: {
       title: '单选',
@@ -68,12 +69,17 @@ export default () => {
   };
 
   return (
-    <div style={{ width: 400 }}>
-      <FormRender form={form} schema={schema} onFinish={onFinish} />
+    <>
+      <FormRender 
+        form={form} 
+        schema={schema} 
+        onFinish={onFinish} 
+        wrapperCol={{ sm: 8, xxl: 6 }}
+      />
       <Button type="primary" onClick={form.submit}>
         提交
       </Button>
-    </div>
+    </>
   );
 }
 ```
@@ -93,15 +99,15 @@ const schema = {
     input1: {
       title: '简单输入框',
       type: 'string',
-      required: true,
+      required: true
     },
     select1: {
       title: '单选',
       type: 'string',
       enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚'],
-    },
-  },
+      enumNames: ['早', '中', '晚']
+    }
+  }
 };
 
 class Demo extends React.Component {
@@ -112,12 +118,17 @@ class Demo extends React.Component {
   render() {
     const { form } = this.props;
     return (
-      <div style={{ width: 400 }}>
-        <FormRender form={form} schema={schema} onFinish={this.onFinish} />
+      <>
+        <FormRender 
+          form={form} 
+          schema={schema} 
+          onFinish={this.onFinish}
+          wrapperCol={{ sm: 8, xxl: 6 }}
+        />
         <Button type="primary" onClick={form.submit}>
           提交
         </Button>
-      </div>
+      </>
     );
   }
 }

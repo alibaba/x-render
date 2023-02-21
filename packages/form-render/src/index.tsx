@@ -46,6 +46,7 @@ export default (props: FRProps) => {
     form,
     validateMessages,
     globalProps={},
+    maxWidth = '400px',
     ...otherProps
   } = props;
 
@@ -75,6 +76,7 @@ export default (props: FRProps) => {
     widgets: { ...defaultWidgets, ...widgets },
     methods,
     globalProps,
+    maxWidth
   };
 
   return (

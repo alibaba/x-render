@@ -310,6 +310,7 @@ export interface FRProps extends AntdFormProps {
    */
   methods?: Record<string, Function>;
   operateExtra?: React.ReactNode;
+  maxWidth?: string
 }
 
 declare const FR: React.FC<FRProps>;

@@ -24,6 +24,9 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
 
   if (_labelCol) {
     labelCol = _labelCol;
+    if (displayType === 'column') {
+      labelCol = {};
+    }
   }
 
   if (_wrapperCol) {
