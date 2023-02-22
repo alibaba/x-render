@@ -1,4 +1,4 @@
-import { describe, afterAll, expect } from 'vitest';
+import { describe, test, afterAll, expect } from 'vitest';
 import * as React from 'react';
 import '@testing-library/jest-dom';
 import { render, act, cleanup } from '@testing-library/react';
@@ -11,7 +11,7 @@ function sleep(ms): Promise<never> {
 afterAll(cleanup);
 
 describe('FormRender API', () => {
-  it('📦  api test setFields and getFieldError success', async () => {
+  test('📦  api test setFields and getFieldError success', async () => {
     const { getByTestId, unmount } = render(<Demo />);
     // 测试 setFields + getFieldError
     act(() => {
@@ -29,7 +29,7 @@ describe('FormRender API', () => {
       unmount();
     });
   });
-  it('📦  api test validateFields success', async () => {
+  test('📦  api test validateFields success', async () => {
     const { getByTestId, unmount } = render(<Demo />);
     act(() => {
       getByTestId('setFields').click();
@@ -51,7 +51,7 @@ describe('FormRender API', () => {
       unmount();
     });
   });
-  it('📦  api test isFieldValidating success', async () => {
+  test('📦  api test isFieldValidating success', async () => {
     const { getByTestId, unmount } = render(<Demo />);
     // 测试 isFieldValidating
     act(() => {
@@ -68,7 +68,7 @@ describe('FormRender API', () => {
     });
   });
 
-  it('📦  api test isFieldTouched success', async () => {
+  test('📦  api test isFieldTouched success', async () => {
     const { getByTestId, unmount } = render(<Demo />);
     // 测试 isFieldTouched
     act(() => {
@@ -85,7 +85,7 @@ describe('FormRender API', () => {
     });
   });
 
-  it('📦  api test isFieldsTouched success', async () => {
+  test('📦  api test isFieldsTouched success', async () => {
     const { getByTestId, unmount } = render(<Demo />);
     act(() => {
       getByTestId('setFields').click();
@@ -102,7 +102,7 @@ describe('FormRender API', () => {
     });
   });
 
-  it('📦  api test getValues success', async () => {
+  test('📦  api test getValues success', async () => {
     const { getByTestId, unmount } = render(<Demo />);
 
     // 测试 getValues

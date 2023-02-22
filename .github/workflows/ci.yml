@@ -3,7 +3,11 @@ name: 🚀 Build CI
 env:
   NODE_OPTIONS: --max-old-space-size=6144
 
-on: [push, pull_request]
+on: 
+  push:
+    branches: [master, dev]
+  pull_request:
+    branches: [master, dev]
 
 
 jobs:
@@ -27,4 +31,9 @@ jobs:
       - name: Install
         run: yarn install
         if: steps.cache.outputs.cache-hit != 'true'
-      - run: yarn build
+      
+      - name: Build
+        run: yarn build
+
+      - name: Test
+        run: yarn test

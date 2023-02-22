@@ -1,6 +1,7 @@
 import { Button, Input, Modal } from 'antd';
 import Generator from 'fr-generator';
 import React, { useRef, useState } from 'react';
+
 const { TextArea } = Input;
 
 const defaultValue = {
@@ -61,7 +62,7 @@ const Demo = () => {
         配置schema
       </Button>
       <Modal
-        visible={show}
+        open={show}
         onCancel={toggle}
         onOk={handleOk}
         okText="保存"

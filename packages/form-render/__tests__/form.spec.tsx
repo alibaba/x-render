@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, afterAll, expect } from 'vitest';
 import * as React from 'react';
 import { render, act, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom';
