@@ -190,3 +190,6 @@ https://user-images.githubusercontent.com/8736212/123383626-ff187a80-d5c5-11eb-8
 
 - 遵循 MIT 协议
 - 请自由地享受和参与开源
+
+## 互助答疑群
+<img style="height: 400px" src="https://img.alicdn.com/imgextra/i3/O1CN01HksNgs1DZNuQsORIp_!!6000000000230-0-tps-1242-1602.jpg">
