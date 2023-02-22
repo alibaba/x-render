@@ -100,3 +100,4 @@ export default defineConfig({
   plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
   // more config: https://d.umijs.org/config
 });
+
