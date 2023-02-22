@@ -25,10 +25,14 @@ features:
 footer: Please feel free to use and contribute to the development.
 ---
 
+
 <embed src="../README.md#L33-L163"></embed>
 
 ## 贡献者们
 
 <a href="https://github.com/alibaba/x-render/graphs/contributors">
-  <img style="width: 60%" src="https://contrib.rocks/image?repo=alibaba/form-render" />
+  <img style="height: 500px; margin-bottom: 50px" src="https://contrib.rocks/image?repo=alibaba/form-render" />
 </a>
+
+## 互助答疑群
+<img style="height: 400px" src="https://img.alicdn.com/imgextra/i3/O1CN01HksNgs1DZNuQsORIp_!!6000000000230-0-tps-1242-1602.jpg">
