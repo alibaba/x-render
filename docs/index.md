@@ -8,7 +8,7 @@ hero:
       link: /playground
     - text: 开始使用
       link: /form-render
-    - text: V2 alpha 版
+    - text: V2 版
       link: 'https://xrender2.vercel.app/form-render/migrate'
 features:
   - icon: https://qpluspicture.oss-cn-beijing.aliyuncs.com/k21jAW/006-parade-5.png
