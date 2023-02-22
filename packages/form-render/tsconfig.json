@@ -36,6 +36,7 @@
     "**/__test__",
     "test",
     "tests",
-    "docs"
+    "docs",
+    "**/*.js"
   ]
 }

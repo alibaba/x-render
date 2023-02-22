@@ -61,7 +61,7 @@ const PercentSlider = p => {
         {...setting}
         onChange={handleChange}
         max={100}
-        tipFormatter={v => v + '%'}
+        tooltip={{ formatter: v => v + '%' }}
         value={numberValue || 100}
         disabled={p.disabled || p.readonly}
       />

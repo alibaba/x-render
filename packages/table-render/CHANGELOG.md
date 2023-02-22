@@ -1,5 +1,7 @@
 # Changelog
 
+### 1.3.11
+- [+] 修复 `refresh` stay 参数不生效
 ### 1.3.10
 
 - [+] `dateTime` 格式化为 `YYYY-MM-DD HH:mm:ss`
