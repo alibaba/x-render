@@ -1,1 +1,1 @@
-<code src='./test-list.jsx' />
+<code src='./test-list.jsx'></code>

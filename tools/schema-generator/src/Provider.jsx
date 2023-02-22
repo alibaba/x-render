@@ -5,7 +5,8 @@ import copyTOClipboard from 'copy-text-to-clipboard';
 import {
   mapping as defaultMapping,
   widgets as defaultWidgets,
-} from 'form-render';
+} from 'formRenderV1';
+
 import {
   forwardRef,
   useEffect,

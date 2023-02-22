@@ -8,6 +8,8 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "baseUrl": "./",
+    "skipLibCheck": true,
+    // "strict": true,
     "declaration": true,
     "paths": {
       "@/*": [
@@ -15,16 +17,16 @@
       ],
       "@@/*": [
         "src/.umi/*"
-      ]
+      ],
+      "form-render": [
+        "packages/form-render/src/*"
+      ],
     },
-    "skipLibCheck": true,
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "noImplicitAny": false
+    "noImplicitAny": false,
+    "resolveJsonModule": true
   },
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-  ],
   "exclude": [
     "node_modules",
     "lib",

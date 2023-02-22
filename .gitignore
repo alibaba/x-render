@@ -26,9 +26,9 @@
 .vscode
 
 # umi
-.umi
-.umi-production
-.umi-test
+.dumi/tmp
+.dumi-production
+.dumi-test
 .env.local
 
 # lerna

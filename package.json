@@ -21,6 +21,7 @@
     "deploy": "gh-pages -d docs-dist",
     "dev": "set PORT=8080 && dumi dev",
     "doc": "dumi build",
+    "prepare": "dumi setup",
     "format": "prettier -c --write \"docs/**/*\" \"packages/**/*\" \"tools/**/*\" \"widgets/**/*\"",
     "publish": "npm run build && lerna publish -m \"chore: publish\" --no-verify-access",
     "size": "ANALYZE=1 dumi build",
@@ -64,7 +65,7 @@
     "babel-plugin-no-debugger": "^0.0.1",
     "babel-plugin-transform-remove-console": "^6.9.4",
     "cross-env": "^7.0.3",
-    "dumi": "1.1.40",
+    "dumi": "^2.0.2",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
     "enzyme-to-json": "^3.6.2",
@@ -94,6 +95,7 @@
     "typescript": "^4.6.2",
     "vite": "^3.2.5",
     "vitest": "^0.25.6",
-    "yorkie": "^2.0.0"
+    "yorkie": "^2.0.0",
+    "formRenderV1": "npm:form-render@^1.4.13"
   }
 }

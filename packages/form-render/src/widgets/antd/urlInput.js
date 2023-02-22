@@ -1,8 +1,12 @@
-import { Input } from 'antd';
-import React from 'react';
-import { isUrl } from '../../utils';
+import React, { useContext } from 'react';
+import { Input, ConfigProvider } from 'antd';
+import { isUrl, translation } from '../../utils';
 
-const UrlNode = ({ value, addonText = '测试链接' }) => {
+const UrlNode = (props) => {
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
+
+  const { value, addonText = t('test_src')} = props
   const useUrl = isUrl(value);
 
   if (useUrl) {

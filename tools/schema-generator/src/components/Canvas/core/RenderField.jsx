@@ -85,7 +85,6 @@ const RenderField = ({
     schema,
     ...schema['props'],
   });
-
   const originNode = (
     <>
       {schema.title ? (
