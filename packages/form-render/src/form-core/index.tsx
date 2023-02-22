@@ -1,8 +1,8 @@
 import React, { useEffect, useContext } from 'react';
-import { Form, Row, Col, Button, Space } from 'antd';
+import { Form, Row, Col, Button, Space, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
 
-import { valueRemoveUndefined, _cloneDeep } from '../utils';
+import { valueRemoveUndefined, _cloneDeep, translation } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesWithBind } from '../models/bindValues';
@@ -22,6 +22,9 @@ const FormCore = (props: any) => {
   const schema = useStore(store, (state: any) => state.schema);
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
   const setContext = useStore(store, (state: any) => state.setContext);
+
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
 
   const { type, properties, ...schemProps } = schema || {};
   const {
@@ -128,15 +131,15 @@ const FormCore = (props: any) => {
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24 / column}>
             <Form.Item
-              label='hideLabel'
+              label={ displayType !== 'column' ?  'hideLabel' : null}
               labelCol={operlabelCol}
               className='fr-hide-label'
             >
               <Space>
                 <Button type='primary' htmlType='submit'>
-                  提交
+                  {t('submit')}
                 </Button>
-                <Button onClick={() => form.resetFields()}>重置</Button>
+                <Button onClick={() => form.resetFields()}> {t('reset')}</Button>
               </Space>
             </Form.Item>
           </Col>

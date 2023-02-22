@@ -1,9 +1,6 @@
 ---
 order: 1
-nav:
-  order: 3
-  title: Playground
-sidemenu: false
+title: ''
 gapless: true
 ---
 

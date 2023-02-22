@@ -132,3 +132,9 @@
 .__dumi-default-previewer-demo {
   padding: 24px;
 }
+
+.fr-obj-collapse {
+  border-radius: 4px !important;
+  border: 1px solid #f1f1f1 !important;
+  margin-bottom: 24px !important;
+}

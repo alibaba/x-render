@@ -19,5 +19,6 @@ export default {
   "search": "查询",
   "reset": "重置",
   "expand": "展开",
-  "fold": "收起"
+  "fold": "收起",
+  "submit": "提交"
 };

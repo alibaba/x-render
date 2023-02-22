@@ -18,8 +18,6 @@ const DrawerForm = (props: any) => {
     onClose();
   };
 
-  console.log(configContext, ' console.log(configContext')
-
   return (
     <Drawer
       width={600}
@@ -45,6 +43,7 @@ const DrawerForm = (props: any) => {
         widgets={widgets}
         onFinish={handleFinish}
         locale={configContext?.locale}
+        maxWidth='auto'
       />
     </Drawer>
   );

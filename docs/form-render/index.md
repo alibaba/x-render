@@ -35,6 +35,10 @@ npm i form-render --save
 
 使用 `useForm` hooks 创建 form 实例。
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
@@ -74,7 +78,7 @@ export default () => {
         form={form} 
         schema={schema} 
         onFinish={onFinish} 
-        wrapperCol={{ sm: 8, xxl: 6 }}
+        wrapperCol={{ sm: 10, xxl: 8 }}
       />
       <Button type="primary" onClick={form.submit}>
         提交
@@ -89,6 +93,10 @@ export default () => {
 对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks。
 
 ```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ */
 import React from 'react';
 import { Button } from 'antd';
 import FormRender, { connectForm } from 'form-render';
@@ -123,7 +131,7 @@ class Demo extends React.Component {
           form={form} 
           schema={schema} 
           onFinish={this.onFinish}
-          wrapperCol={{ sm: 8, xxl: 6 }}
+          wrapperCol={{ sm: 10, xxl: 8 }}
         />
         <Button type="primary" onClick={form.submit}>
           提交
@@ -143,6 +151,5 @@ export default connectForm(Demo);
 2. 玩转一下 [表单设计器](https://xrender.fun/generator)，拖拖拽拽导出 schema，丢到代码里生成可用表单。本质上这是一个可视化的表单生成器，支持 schema 的导入 & 导出。
 
 <div>
-  <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="500px"/>
-  <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*FfTuRYjRd1AAAAAAAAAAAABkARQnAQ?raw=true" alt="schema编辑器" width='500px' />
+  <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="80%"/>
 </div>

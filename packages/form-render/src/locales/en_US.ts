@@ -19,5 +19,6 @@ export default {
   "search": "Search",
   "reset": "Reset",
   "expand": "Expand",
-  "fold": "Fold"
+  "fold": "Fold",
+  "submit": "Submit"
 }

@@ -12,6 +12,7 @@ const SliderWithNumber = ({
   onChange,
   hideInput,
   inputProps,
+  style,
   ...rest
 }) => {
   const { max, min, step } = schema;
@@ -27,9 +28,9 @@ const SliderWithNumber = ({
   if (step) {
     setting = { ...setting, step };
   }
-
+ 
   return (
-    <div className="fr-slider">
+    <div className="fr-slider" style={style}>
       <Slider
         style={{ flexGrow: 1, marginRight: hideInput ? 0 : 12 }}
         {...setting}

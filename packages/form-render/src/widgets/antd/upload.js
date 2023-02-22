@@ -48,16 +48,16 @@ export default function FrUpload({
   };
 
   return (
-    <div className="fr-upload-mod">
-      <Upload {...props} className="fr-upload-file">
+    <div className='fr-upload-mod'>
+      <Upload {...props} className='fr-upload-file'>
         <Button {...btnProps} />
       </Upload>
       {value && (
         <a
           href={value}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="fr-upload-preview"
+          target='_blank'
+          rel='noopener noreferrer'
+          className='fr-upload-preview'
         >
           {t('uploaded_address')}
         </a>

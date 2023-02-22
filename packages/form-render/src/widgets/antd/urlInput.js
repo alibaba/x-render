@@ -6,7 +6,7 @@ const UrlNode = (props) => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
-  const { value, addonText = t('test_src')} = props
+  const { value, addonText = t('test_src')} = props;
   const useUrl = isUrl(value);
 
   if (useUrl) {

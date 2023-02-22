@@ -18,14 +18,14 @@ const getOperateStyle = (schema: any) => {
   let style: any = {};
   const widgetName = schema?.items?.theme || schema?.items?.widget || 'collapse';
   if (['card', 'collapse', 'lineTitle'].includes(widgetName) && !schema?.items?.props?.extra) {
-    style.top = '15px';
+    style.top = '14px';
     if (['lineTitle'].includes(widgetName)) {
       style.top = '3px';
-      style.padding = 0
+      style.padding = 0;
     }
-
+    
     if (!schema?.items?.title) {
-      style.right = '24px';
+      style.right = '0';
     }
   }
   return style;

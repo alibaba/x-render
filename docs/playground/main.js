@@ -105,6 +105,7 @@ const Demo = ({ schemaName, theme, ...formProps }) => {
               schema={schema}
               {...formProps}
               widgets={{ asyncSelect: AsyncSelect }}
+              maxWidth='auto'
             />
           )}
         </div>

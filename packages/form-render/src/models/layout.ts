@@ -39,7 +39,7 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
   }
 
   // 兼容一下 1.0 版本
-  if (labelWidth) {
+  if (labelWidth && displayType !== 'column') {
     labelCol = { flex : labelWidth + 'px' };
     wrapperCol = { flex: 'auto' };
   }

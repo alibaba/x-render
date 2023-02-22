@@ -23,9 +23,9 @@ export default ({ onChange, format, value, style, ...rest }) => {
   };
 
   const dateParams = {
-    // value: valueObj,
+    value: valueObj,
     style: { width: '100%', ...style },
-    // onChange: handleChange,
+    onChange: handleChange,
   };
 
   // TODO: format 是在 options 里自定义的情况，是否要判断一下要不要 showTime
