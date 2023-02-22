@@ -88,7 +88,7 @@ export type SearchApi<RecordType> = (
   },
   sorter?: any
 ) => Promise<{
-  rows: Array<RecordType>;
+  data: Array<RecordType>;
   total: number;
   pageSize?: number;
 }>;
@@ -106,7 +106,6 @@ export interface TablePropsC<RecordType extends Object = any>
 
 export interface TableRenderProps<RecordType extends Object = any>
   extends Omit<TablePropsC<RecordType>, 'locale'>{
- 
   /** 
    * 开启 debug 模式，时时显示内部状态 
   */

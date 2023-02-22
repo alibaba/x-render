@@ -15,9 +15,7 @@ import { FRContext, ConfigContext } from './models/context';
 import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
 import { widgets as defaultWidgets } from './widgets';
 
-export default function withProvider<T>(
-  Element: React.ComponentType<T>,
-): React.ComponentType<T> {
+export default function withProvider<T>(Element: React.ComponentType<T>) : React.ComponentType<T> {
   return (props: any) => {
 
     const {

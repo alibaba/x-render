@@ -12,7 +12,7 @@ group:
 - 通过 labelCol、wrapperCol 实现表单项布局
 - 输入控件最长宽度 400px
 
-##  一、标签排列：displayType
+## 一、标签排列：displayType
 displayType：row（水平分布）、column（垂直分布）、inline(紧凑)
 
 ```jsx

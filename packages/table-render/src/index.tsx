@@ -40,6 +40,8 @@ export default React.forwardRef((props: TableRenderProps, ref) => {
     ...configProvider?.locale
   };
 
+  console.log(langPack, 'langpack')
+
   return (
     <ConfigProvider
       {...configProvider}

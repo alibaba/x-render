@@ -7,7 +7,7 @@
 import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Space, Tag, Tooltip } from 'antd';
 import React, { useRef } from 'react';
-import TableRender from 'table-render';
+import TableRender, { } from 'table-render';
 import request from 'umi-request';
 
 const schema = {
@@ -171,7 +171,6 @@ const Demo = () => {
       search={{
         schema
       }}
-      locale='en-US'
       request={[
         {
           name: '全部数据',
