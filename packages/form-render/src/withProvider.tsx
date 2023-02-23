@@ -1,6 +1,3 @@
-
-
-
 import React, { useEffect, useRef } from 'react';
 import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
@@ -53,7 +50,7 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
     }
   
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
-    const formValidateMessages = locale === 'zh-CN' ? validateMessagesEN : validateMessagesCN;
+    const formValidateMessages = locale === 'zh-CN' ? validateMessagesCN : validateMessagesEN;
   
     const configContext = {
       locale,

@@ -5,7 +5,7 @@ import { useStore } from 'zustand';
 import { valueRemoveUndefined, _cloneDeep, translation, isFunction } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
-import { parseValuesWithBind } from '../models/bindValues';
+import { parseValuesToBind } from '../models/bindValues';
 import { getFormItemLayout } from '../models/layout';
 
 import {
@@ -151,7 +151,7 @@ const FormCore = (props: any) => {
     if (!removeHiddenData) {
       values = _cloneDeep(form.getFieldsValue(true));
     }
-    values = parseValuesWithBind(values, flattenSchema);
+    values = parseValuesToBind(values, flattenSchema);
     values = valueRemoveUndefined(values);
 
     let fieldsError = beforeFinish
@@ -178,7 +178,7 @@ const FormCore = (props: any) => {
     if (!removeHiddenData) {
       values = _cloneDeep(form.getFieldsValue(true));
     }
-    values = parseValuesWithBind(values, flattenSchema);
+    values = parseValuesToBind(values, flattenSchema);
     values = valueRemoveUndefined(values);
 
     onFinishFailed({ ...params, values });

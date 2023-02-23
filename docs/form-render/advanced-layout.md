@@ -242,6 +242,7 @@ export default () => {
       form={form}
       schema={schema}
       labelWidth={100}
+      maxWidth={400}
     />
   );
 };
