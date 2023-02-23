@@ -88,13 +88,16 @@ export type SearchApi<RecordType> = (
   },
   sorter?: any
 ) => Promise<{
+
+  /**
+   * @deprecated 即将弃用，请使用 data 返回
+   */
+  rows: Array<RecordType>;
+  
   data: Array<RecordType>;
   total: number;
   pageSize?: number;
 }>;
-
-
-
 
 export interface TablePropsC<RecordType extends Object = any>
   extends Omit<TableProps<RecordType>, 'columns' | 'dataSource' | 'title'> {

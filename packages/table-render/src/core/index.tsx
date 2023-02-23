@@ -101,10 +101,10 @@ const RenderCore = props => {
       Promise.resolve(_api(_params, sorter))
         .then(res => {
           // TODO：这里校验res是否规范
-          const { data, total, pageSize, ...extraData } = res;
+          const { rows, data, total, pageSize, ...extraData } = res;
           setState({
             loading: false,
-            dataSource: data,
+            dataSource: data | rows,
             ...extraData,
             pagination: {
               ..._pagination,
