@@ -70,7 +70,7 @@ const schema = {
       title: '创建时间',
       type: 'string',
       format: 'date',
-      hidden: "{{formData.title === '111'}}"
+      hidden: "{{formData.title === '111'}}",
     },
     title1: {
       title: '标题',
@@ -96,8 +96,9 @@ const schema = {
     },
     created_at3: {
       title: '创建时间',
-      type: 'string',
+      type: 'range',
       format: 'date',
+      cellSpan: 2
     }
   }
 };

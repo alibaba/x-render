@@ -26,7 +26,7 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       form,
       validateMessages,
       globalProps={},
-      maxWidth = '400px',
+      maxWidth,
       ...otherProps
     } = props;
   

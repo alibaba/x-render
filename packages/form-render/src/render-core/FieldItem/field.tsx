@@ -96,8 +96,17 @@ const getColSpan = (formCtx: any, parentCtx: any, schema: any) => {
       span = 8;
     }
   }
-  
+
+  if (schema.cellSpan) {
+    span = schema.cellSpan * span;
+  }
   return span;
+}
+
+const getColStyle = (schema: any) => {
+  if (schema.span || schema.width) {
+    return { flexGrow: 1, maxWidth: '100%'}
+  }
 }
 
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
@@ -316,7 +325,7 @@ export default (props: any) => {
   }
 
   return (
-    <Col span={span}>
+    <Col span={span} >
       {content}
     </Col>
   );

@@ -17,7 +17,7 @@ import FormRender, { useForm } from 'form-render';
 const schema = {
   type: 'object',
   displayType: 'column',
-  column: 2,
+  column: 3,
   properties: {
     input1: {
       title: '输入框',
