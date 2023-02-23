@@ -143,7 +143,7 @@ const useForm = () => {
     return hiddenValues;
   }
 
-  form.__setStore = (store: any) => {
+  form.__initStore = (store: any) => {
     storeRef.current = store;
   }
 

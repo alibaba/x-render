@@ -58,6 +58,24 @@ treeSelect,
 errorSchemaWidget // 错误显示
 ```
 
+#### useForm 入参全部移除
+```js
+{
+  formData,
+  onChange,
+  onValidate,
+  showValidate,
+  /** 数据分析接口，表单展示完成渲染时触发 */
+  logOnMount: _logOnMount,
+  /** 数据分析接口，表单提交成功时触发，获得本次表单填写的总时长 */
+  logOnSubmit: _logOnSubmit,
+} 
+```
+logOnMount、logOnSubmit 通过 props 传递，其他几个废弃
+
+注意 logOnMount、logOnSubmit 不再兼容从上获取 window.FR_LOGGER
+
+
 
 #### onFinish 提交函数
 只有校验通过 onFinish 才会被触发，不在返回错误信息参数，为了兼容1.0版本，错误信息默认返回 []
