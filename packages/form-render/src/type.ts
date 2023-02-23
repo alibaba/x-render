@@ -16,8 +16,6 @@ export type SchemaType =
   | 'block'
   | string;
 
-export { Options as ScrollOptions } from 'scroll-into-view-if-needed';
-
 export interface SchemaBase {
   type?: SchemaType;
   title?: string;

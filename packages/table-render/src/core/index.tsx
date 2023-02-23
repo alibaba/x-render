@@ -42,6 +42,7 @@ const RenderCore = props => {
   const currentTab = useStore(store, (state: any) => state.tab);
   const tableSize = useStore(store, (state: any) => state.tableSize);
   const pagination = useStore(store, (state: any) => state.pagination);
+  const loading = useStore(store, (state: any) => state.loading);
   const setState = useStore(store, (state: any) => state.setState);
   const getState = useStore(store, (state: any) => state.getState);
 
@@ -94,17 +95,18 @@ const RenderCore = props => {
         ..._pagination,
       };
 
-      if (Array.isArray(api)) {
-        _params = { ..._params, tab };
-      }
+      // if (Array.isArray(api)) {
+      //   _params = { ..._params, tab };
+      // }
 
-      Promise.resolve(_api(_params, sorter))
+      Promise.resolve(_api(_params, sorter, { tab: _tab }))
         .then(res => {
           // TODO：这里校验res是否规范
           const { rows, data, total, pageSize, ...extraData } = res;
+          
           setState({
             loading: false,
-            dataSource: data | rows,
+            dataSource: data || rows,
             ...extraData,
             pagination: {
               ..._pagination,
