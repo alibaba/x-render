@@ -5,72 +5,138 @@ import {
   isObject,
 } from '../utils/index';
 
-const isMultiBind = (binds: string[]) => isArray(binds) && binds.every(item => typeof item === 'string');
+const isMultiBind = (array: string[]) => isArray(array) && array.every(item => typeof item === 'string');
 
-export const parseValuesWithBind = (_values: any, flattenSchema: any) => {
-  const values = _values;
+// Need to consider list nested controls
+const transformPath = (path: string) => {
+  const result = [];
 
-  Object.keys(flattenSchema).forEach(_key => {
-    const bindPath = flattenSchema[_key]?.schema?.bind;
-    const key = _key.replace('[]', '');
-
-    if (bindPath === false) {
-      unset(values, key); 
-    } else if (typeof bindPath === 'string') {
-      let temp = get(values, key);
-      const current = get(values, bindPath);
-      if (isObject(current)) {
-        temp = { ...current, ...temp };
-      }
-      set(values, bindPath, temp);
-      unset(values, key);
-    } else if (isMultiBind(bindPath)) {
-     
-      const temp = get(values, key);
-      unset(values, key);
-      if (Array.isArray(temp)) {
-        temp.forEach((value, index) => {
-          if (bindPath[index]) {
-            set(values, bindPath[index], value);
-          }
-        });
-      }
+  const recursion = (str: string) => {
+    const index = str.indexOf('[]');
+    if (index === -1) {
+      result.push(str);
+      return;
     }
-  });
+    result.push(str.substring(0, index));
+    recursion(str.substring(index+3))
+  };
 
-  return values;
+  recursion(path);
+
+  if (result.length === 1) {
+    return result[0];
+  }
+  return result;
 };
 
-export const transformValueBind = (_values: any, flattenSchema: any) => {
-  const values = _cloneDeep(_values);
-  Object.keys(flattenSchema).forEach(_key => {
-    const bindPath = flattenSchema[_key]?.schema?.bind;
-    const key = _key.replace('[]', '');
+const transformValueToBind = (data: any, path: string, bind: false | string | string[]) => {
+  if (bind === false) {
+    unset(data, path);
+    return;
+  } 
+  
+  if (typeof bind === 'string') {
+    let value = get(data, path);
+    const preValue = get(data, bind);
+    if (isObject(preValue)) {
+      value = { ...preValue, ...value };
+    }
+    set(data, bind, value);
+    unset(data, path);
+    return;
+  } 
+  
+  // The array is converted to multiple fields.
+  if (isMultiBind(bind)) {
+    const value = get(data, path);
+    unset(data, path);
 
-    if (typeof bindPath === 'string') {
-      let temp = get(values, bindPath);
-      // 如果已经有值了，要和原来的值合并，而不是覆盖
-      const current = get(values, key);
-      if (isObject(current)) {
-        temp = { ...current, ...temp };
-      }
-      set(values, key, temp);
-      unset(values, bindPath);
-    } else if (isMultiBind(bindPath)) {
-      const bindValueList = [];
-      bindPath.forEach((itemPath: string) => {
-        const value = get(values, itemPath);
-        if (value !== undefined) {
-          bindValueList.push(value);
-        }
-        unset(values, itemPath);
+    if (Array.isArray(value)) {
+      value.forEach((item, index) => {
+        const bindPath = bind[index];
+        bindPath && set(data, bindPath, item);
       });
-
-      if (bindValueList.length > 0) {
-        set(values, key, bindValueList);
-      }
     }
+  }
+}
+
+const transformBindToValue = (data: any, path: string, bind: string | string[]) => {
+  if (typeof bind === 'string') {
+    let value = get(data, bind);
+    const preValue = get(data, path);
+    if (isObject(preValue)) {
+      value = { ...preValue, ...value };
+    }
+    set(data, path, value);
+    unset(data, bind);
+    return;
+  } 
+  
+  // The array is converted to multiple fields.
+  if (isMultiBind(bind)) {
+    const value = [];
+    bind.forEach(key => {
+      const bindValue = get(data, key);
+      // if (bindValue != undefined) {
+      //   value.push(bindValue);
+      // }
+      value.push(bindValue);
+      unset(data, key);
+    });
+
+    if (value.length > 0) {
+      set(data, path, value);
+    }
+  }
+}
+
+
+export const parseValuesToBind = (values: any, flatten: any) => {
+  if (!JSON.stringify(flatten).includes('bind')) {
+    return values;
+  }
+  const data = _cloneDeep(values);
+ 
+  Object.keys(flatten).forEach(key => {
+    const bind = flatten[key]?.schema?.bind;
+    if (bind === undefined) {
+      return;
+    }
+
+    const path = transformPath(key);
+    if (isArray(path)) {
+      return;
+    }
+    
+    transformValueToBind(data, path, bind);
   });
 
-  return values;
+  return data;
 };
+
+
+export const parseBindToValues = (values: any, flatten: any) => {
+  if (!JSON.stringify(flatten).includes('bind')) {
+    return values;
+  }
+  const data = _cloneDeep(values);
+ 
+
+  Object.keys(flatten).forEach(key => {
+    const bind = flatten[key]?.schema?.bind;
+    if (bind === undefined) {
+      return;
+    }
+    const path = transformPath(key);
+
+    if (isArray(path)) {
+      return
+    }
+
+    transformBindToValue(data, path, bind);
+  });
+
+  return data;
+};
+
+

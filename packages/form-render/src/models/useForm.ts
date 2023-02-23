@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { Form } from 'antd';
 
 import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
-import { transformValueBind, parseValuesWithBind } from './bindValues';
+import { parseBindToValues, parseValuesToBind } from './bindValues';
 import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
 import type { FormInstance } from '../type';
@@ -74,14 +74,14 @@ const useForm = () => {
   }
 
   form.setValues = (_values: any) => {
-    const values = transformValueBind(_values, flattenSchemaRef.current);
+    const values = parseBindToValues(_values, flattenSchemaRef.current);
     form.setFieldsValue(values);
   }
 
   form.getValues = (nameList?: any, filterFunc?: any) => {
     let values = form.getFieldsValue(nameList, filterFunc);
     values = valueRemoveUndefined(values);
-    return parseValuesWithBind(values, flattenSchemaRef.current);
+    return parseValuesToBind(values, flattenSchemaRef.current);
   }
 
   form.setValueByPath = (path: any, value: any) => {
@@ -143,7 +143,7 @@ const useForm = () => {
     return hiddenValues;
   }
 
-  form.__setStore = (store: any) => {
+  form.__initStore = (store: any) => {
     storeRef.current = store;
   }
 

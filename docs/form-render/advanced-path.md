@@ -45,6 +45,7 @@ const Demo = () => {
       schema={schema}
       onMount={onMount}
       labelWidth={100}
+      maxWidth={400}
     />
   );
 };
@@ -94,6 +95,7 @@ const Demo = () => {
       schema={schema}
       onMount={onMount}
       labelWidth={100}
+      maxWidth={400}
     />
   );
 };
@@ -149,6 +151,7 @@ const Demo = () => {
       schema={schema}
       onMount={onMount}
       labelWidth={100}
+      maxWidth={400}
     />
   );
 };
@@ -219,6 +222,7 @@ const Demo = () => {
       schema={schema}
       onMount={onMount}
       labelWidth={100}
+      maxWidth={400}
     />
   );
 };

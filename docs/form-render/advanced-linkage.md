@@ -60,6 +60,7 @@ export default () => {
       schema={schema} 
       form={form}
       labelWidth={200}
+      maxWidth={400}
     />
   )
 };
@@ -107,6 +108,7 @@ export default () => {
       schema={schema} 
       form={form}
       labelWidth={100}
+      maxWidth={400}
     />
   )
 };
@@ -186,6 +188,7 @@ export default () => {
       watch={watch} 
       onValuesChange={onValuesChange} 
       labelWidth={200}
+      maxWidth={400}
     />
   );
 };
@@ -242,6 +245,7 @@ export default () => {
       schema={schema}
       watch={watch}
       labelWidth={200}
+      maxWidth={400}
     />
   );
 };
@@ -262,11 +266,11 @@ import FormRender, { useForm } from 'form-render';
 const { TextArea } = Input;
 
 const CustomTextArea = props => {
-  const { dependValues } = props;
+  const { dependValues, ...otherProps } = props;
 
   console.log(dependValues, 'dependValues');
 
-  return <TextArea rows={dependValues?.[0] || 2} />;
+  return <TextArea rows={dependValues?.[0] || 2} {...otherProps} />;
 };
 
 export default () => {
@@ -296,6 +300,7 @@ export default () => {
       schema={schema}
       widgets={{ CustomTextArea }}
       labelWidth={200}
+      maxWidth={400}
     />
   );
 }
@@ -357,6 +362,7 @@ export default () => {
       schema={schema}
       widgets={{ CustomTextArea }}
       labelWidth={200}
+      maxWidth={400}
     />
   );
 }
@@ -425,6 +431,7 @@ export default () => {
       schema={schema}
       widgets={{ CustomCheckbox }}
       labelWidth={200}
+      maxWidth={400}
     />
   );
 };

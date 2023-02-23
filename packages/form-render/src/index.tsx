@@ -21,7 +21,6 @@ export type {
   ValidateParams,
   ResetParams,
   RuleItem,
-  ScrollOptions,
 } from './type';
 
 export default withProvider(FormCore);

@@ -2,7 +2,7 @@ import Color from 'color';
 import { isUrl } from '../utils';
 
 const getRuleList = (schema: any, form: any) => {
-  let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern, message } = schema;
+  let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern, message, widget, title } = schema;
   let rules: any = [...ruleList];
 
   max = max ?? maxLength;
@@ -17,7 +17,21 @@ const getRuleList = (schema: any, form: any) => {
   }
   
   if (required) {
-    rules.push({ type, required: true,  whitespace: true, message: message?.required });
+    if (['year','quarter', 'month', 'week', 'date', 'dateTime', 'time'].includes(format) && type === 'range') {
+      rules.push({
+        type: 'array',
+        required: true,
+        len: 2,
+        fields: {
+          0: { type: 'string', required: true },
+          1: { type: 'string', required: true },
+        }
+      })
+    } else if (widget === 'checkbox') {
+      rules.push({ type, required: true,  whitespace: true, message: title + "必填" });
+    } else {
+      rules.push({ type, required: true,  whitespace: true, message: message?.required });
+    }
   }
 
   if (pattern) {

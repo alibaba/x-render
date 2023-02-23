@@ -102,5 +102,7 @@ export function flattenSchema(_schema = {}, name?: any, parent?: any, _result?: 
   if (schema.type) {
     result[_name] = { parent, schema, children };
   }
+ 
   return result;
 }
+

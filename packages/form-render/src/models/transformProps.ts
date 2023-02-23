@@ -31,6 +31,8 @@ const transformProps =  (props: any) => {
     onFinishFailed,
     builtOperation,
     operateExtra,
+    logOnMount,
+    logOnSubmit,
     // labelAlign,
     // colon,
     // className,
@@ -72,7 +74,9 @@ const transformProps =  (props: any) => {
     id,
     onFinishFailed,
     removeHiddenData,
-    operateExtra
+    operateExtra,
+    logOnMount,
+    logOnSubmit,
   };
 };
 
