@@ -6,7 +6,6 @@ import {
   mapping as defaultMapping,
   widgets as defaultWidgets,
 } from 'formRenderV1';
-
 import {
   forwardRef,
   useEffect,
