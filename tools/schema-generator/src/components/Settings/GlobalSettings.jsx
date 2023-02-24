@@ -1,4 +1,4 @@
-import FormRender, { useForm } from 'form-render';
+import FormRender, { useForm } from 'formRenderV1';
 import React, { useEffect, useState } from 'react';
 import { defaultGlobalSettings } from '../../settings';
 import { useGlobal, useStore } from '../../utils/hooks';

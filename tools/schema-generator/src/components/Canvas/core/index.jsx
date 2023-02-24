@@ -1,4 +1,4 @@
-import FormRender, { useForm } from 'form-render';
+import FormRender, { useForm } from 'formRenderV1';
 import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { dataToFlatten, flattenToData } from '../../../utils';
