@@ -1,12 +1,12 @@
 /**
  * transform: true
- * defaultShowCode: false
+ * defaultShowCode: true
  * background: 'rgb(245,245,245)'
  */
 
-import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, message, Space, Tag, Tooltip } from 'antd';
 import React, { useRef } from 'react';
+import { Button, message, Space, } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import TableRender, { } from 'table-render';
 import request from 'umi-request';
 
@@ -39,51 +39,49 @@ const Demo = () => {
   const searchApi = (params, sorter) => {
     console.group(sorter);
 
-    return request
-      .get(
-        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
-        { params }
-      )
-      .then(res => {
-        if (res && res.data) {
-          return {
-            data: [...res.data],
-            total: res.data.length,
-          };
-        }
-      })
-      .catch(e => {
-        console.log('Oops, error', e);
-
-        // 注意一定要返回 rows 和 total
+    return request.get(
+      'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+      { params }
+    )
+    .then(res => {
+      if (res && res.data) {
         return {
-          data: [],
-          total: 0,
+          data: [...res.data],
+          total: res.data.length,
         };
-      });
+      }
+    })
+    .catch(e => {
+      console.log('Oops, error', e);
+
+      // 注意一定要返回 data 和 total
+      return {
+        data: [],
+        total: 0,
+      };
+    });
   };
 
   const searchApi2 = params => {
-    return request
-      .get(
-        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
-        { params }
-      )
-      .then(res => {
-        if (res && res.data) {
-          return {
-            data: res.data.slice(1),
-            total: res.data.length - 1,
-          };
-        }
-      })
-      .catch(e => {
-        console.log('Oops, error', e);
+    return request.get(
+      'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+      { params }
+    )
+    .then(res => {
+      if (res && res.data) {
         return {
-          data: [],
-          total: 0,
+          data: res.data.slice(1),
+          total: res.data.length - 1,
         };
-      });
+      }
+    })
+    .catch(e => {
+      console.log('Oops, error', e);
+      return {
+        data: [],
+        total: 0,
+      };
+    });
   };
 
   const columns = [
@@ -102,34 +100,19 @@ const Demo = () => {
       width: '25%',
     },
     {
-      title: (
-        <>
-          酒店状态
-          <Tooltip placement='top' title='使用valueType'>
-            <InfoCircleOutlined style={{ marginLeft: 6 }} />
-          </Tooltip>
-        </>
-      ),
+      title: '酒店状态',
+      tooltip: '气泡提示',
+      dataIndex: 'state',
       enum: {
         open: '营业中',
-        closed: '已打烊',
-      },
-      dataIndex: 'state',
+        closed: '已打烊'
+      }
     },
     {
       title: '酒店星级',
       dataIndex: 'labels',
-      render: (_, row) => (
-        <Space>
-          {row?.labels?.map(({ name, color }) => (
-            <Tag color={color} key={name}>
-              {name}
-            </Tag>
-          ))}
-        </Space>
-      ),
+      valueType: 'tagList'
     },
-
     {
       title: '酒店GMV',
       key: 'money',
@@ -168,9 +151,7 @@ const Demo = () => {
   return (
     <TableRender 
       ref={tableRef}
-      search={{
-        schema
-      }}
+      search={{ schema }}
       request={[
         {
           name: '全部数据',

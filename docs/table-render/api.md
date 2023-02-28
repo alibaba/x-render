@@ -1,10 +1,9 @@
 ---
-order: 2
+order: 0
 group: 
-  title: ''
-  order: 4
+  title: 其他
+  order: 5
 ---
-
 # API
 
 ## TableRender
@@ -104,7 +103,11 @@ TableRender 封装了一些常用的值类型来减少重复的 render 操作，
   | text     | 普通的文本类型                                                     |
   | date     | 当数据是日期类型的返回时，会自动将格式转换为 `YYYY-MM-DD`          |
   | dateTime | 当数据是日期类型的返回时，会自动将格式转换为 `YYYY-MM-DD HH:mm:ss` |
+  | dateRange | 当数据是日期区间类型的返回时，会自动将格式转换为 `YYYY-MM-DD`          |
   | money    | 当数据是金额时，会自动将格式转换为 `¥0,0.00`               |
+  | money    | 当数据是金额时，会自动将格式转换为 `¥0,0.00`               |
+  | money    | 当数据是金额时，会自动将格式转换为 `¥0,0.00`               |
+
 
   ```js
   const columns = [
