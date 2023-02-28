@@ -23,7 +23,7 @@ title: 开始使用
   </a>
 </p>
 
-阿里巴巴-中后台表单解决方案，通过 JsonSchema 协议渲染表单
+中后台表单解决方案，通过 JsonSchema 协议渲染表单
 
 
 ```shell
