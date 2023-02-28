@@ -1,7 +1,8 @@
 ---
-order: 3
-title: V2 升级方案
-hide: true
+order: 0
+group: 
+  title: 其他
+  order: 5
 ---
 # V2 升级方案
 
