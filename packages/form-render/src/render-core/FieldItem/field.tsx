@@ -103,12 +103,6 @@ const getColSpan = (formCtx: any, parentCtx: any, schema: any) => {
   return span;
 }
 
-const getColStyle = (schema: any) => {
-  if (schema.span || schema.width) {
-    return { flexGrow: 1, maxWidth: '100%'}
-  }
-}
-
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
 }

@@ -59,7 +59,7 @@
     "@vitest/coverage-c8": "^0.25.8",
     "@vitest/ui": "^0.25.7",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.7",
-    "antd": "^4.x",
+    "antd": "^5.x",
     "babel-jest": "^27.4.4",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-no-debugger": "^0.0.1",
@@ -96,6 +96,7 @@
     "vite": "^3.2.5",
     "vitest": "^0.25.6",
     "yorkie": "^2.0.0",
-    "formRenderV1": "npm:form-render@^1.4.13"
+    "formRenderV1": "npm:form-render@^1.4.13",
+    "fr-generator": "2.8.4"
   }
 }
