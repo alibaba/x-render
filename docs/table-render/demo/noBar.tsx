@@ -88,7 +88,7 @@ const Demo = () => {
     {
       title: '酒店星级',
       dataIndex: 'labels',
-      valueType: 'tagList'
+      valueType: 'tags'
     },
     {
       title: '酒店GMV',

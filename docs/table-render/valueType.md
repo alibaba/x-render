@@ -6,4 +6,7 @@ group:
   order: 0
 ---
 
+## 数据类型
+vauleType : `image`、`money`、`tag`、`tags`、`progress`、`date`、`dateTime`、`dateRange`、`dateTimeRange`
+
 <code src='./demo/valueType.tsx'></code>

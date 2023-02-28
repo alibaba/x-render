@@ -54,7 +54,7 @@ const ProTable: <RecordType extends object = any>(
 
     if (isFunction(result.valueTypeProps)) {
       result.render = (value: any, record: any, index: number) => {
-        if (result.valueType === 'tagList') {
+        if (result.valueType === 'tags') {
           return renderDom(value, { ...item });
         }
 

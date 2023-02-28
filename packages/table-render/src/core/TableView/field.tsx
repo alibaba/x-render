@@ -56,7 +56,7 @@ export const renderTag = (value: any, props: any) => {
   );
 }
 
-export const renderTagList = (value: any, item: any) => {
+export const renderTags = (value: any, item: any) => {
   return (
     <Space style={{ flexWrap: 'wrap' }}>
       {value?.map((ite: any) => {
@@ -87,8 +87,8 @@ export const renderDom = (value: any, item: any) => {
     val = item.enum[value] ?? (item.enum.default || value);
   }
 
-  if (item.valueType === 'tagList') {
-    return renderTagList(val, item);
+  if (item.valueType === 'tags') {
+    return renderTags(val, item);
   }
 
   if (typeof val === 'object') {

@@ -43,7 +43,7 @@ const Demo = () => {
       created_at: '2020-05-26T09:42:56Z',
       progressNum: '10',
       tagText: '1',
-      tagList: [
+      tags: [
         {
           text: '三星1',
           color: 'cyan'
@@ -112,8 +112,8 @@ const Demo = () => {
     },
     {
       title: '多标签',
-      dataIndex: 'tagList', 
-      valueType: 'tagList',
+      dataIndex: 'tags', 
+      valueType: 'tags',
       width: 160,
       valueTypeProps: (value) => { // [ { name : '', color: '' }] => 命中默认格式无需配置
         return {
