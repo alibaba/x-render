@@ -1,21 +1,21 @@
 import React from 'react';
-
 import FieldItem from './FieldItem';
 import FieldList from './FieldList';
+import './index.less';
 
 interface RenderCoreProps {
   schema: any;
   rootPath?: any[] | undefined;
   parentPath?: any[] | undefined;
   [key: string]: any
-}
+};
 
 interface RenderItemProps {
   schema: any;
   rootPath?: any[] | undefined;
   path?: any[] | undefined;
   key?: string | undefined;
-}
+};
 
 const renderItem = (props: RenderItemProps) => {
   let { schema, key, path, rootPath } = props;
