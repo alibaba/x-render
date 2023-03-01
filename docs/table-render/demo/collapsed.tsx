@@ -1,6 +1,6 @@
 /**
  * transform: true
- * defaultShowCode: false
+ * defaultShowCode: true
  * background: 'rgb(245,245,245)'
  */
 

@@ -81,7 +81,7 @@ const Demo = () => {
       valueType: 'text',
       ellipsis: true,
       copyable: true,
-      width: 120,
+      width: '120px',
     },
     {
       title: '标题气泡',
@@ -91,7 +91,7 @@ const Demo = () => {
         closed: '已打烊',
       },
       dataIndex: 'state',
-      width: 120,
+      width: '120px',
     },
     {
       title: '金额',
@@ -129,6 +129,7 @@ const Demo = () => {
       // valueTypeProps: (value, record) => ({
       //   status: 'exception'
       // })
+      width: '140px',
     },
     {
       title: '枚举转换',
@@ -142,6 +143,7 @@ const Demo = () => {
     {
       title: '时间-切换格式',
       dataIndex: 'created_at',
+      width: '140px',
 
       valueType: 'date',
       valueTypeProps: {
@@ -150,14 +152,14 @@ const Demo = () => {
     },
     {
       title: '时间区间',
-      width: 240,
+      width: '220px',
 
       dataIndex: 'dateRange', // 默认值 [start, end]
       valueType: 'dateRange'
     },
     {
       title: '时间区间（两个字段）',
-      width: 240,
+      width: '220px',
 
       valueType: 'dateRange', 
       valueTypeProps: {
@@ -172,6 +174,9 @@ const Demo = () => {
       search={{ schema }}
       request={searchApi}
       columns={columns}
+      scroll={{
+        x: 1500
+      }}
     />
   )
 };
