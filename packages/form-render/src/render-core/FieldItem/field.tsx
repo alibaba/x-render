@@ -109,7 +109,6 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
   return schema[valueKey] ?? upperCtx[valueKey];
 };
 
-
 const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps }) => {
   const widgetProps = {
     ...schema.props,
@@ -251,6 +250,7 @@ export default (props: any) => {
     widgetProps.children = childElement;
     const Widget = widget;
     const content = <Widget {...widgetProps} {...otherSchema} displayType={schema.displayType} />;
+
     return (
       <UpperContext.Provider
         value={{
@@ -262,29 +262,27 @@ export default (props: any) => {
           noStyle: schema.noStyle
         }}
       > 
-       {inlineSelf ? content : (
-          <Col span={24}>
-            {content}
-          </Col>
-       )}
+       {inlineSelf ? content : <Col span={24}>{content}</Col>}
       </UpperContext.Provider>
     );
   }
 
   // Render field components
   let label = getLabel(schema, displayType, widgets);
+  let noStyle = getValueFromKey('noStyle');
+
   const span = getColSpan(formCtx, upperCtx, schema);
   const tooltip = getTooltip(schema, displayType);
   const ruleList = getRuleList(schema, form);
   const readOnly = getValueFromKey('readOnly');
- 
-  let noStyle = getValueFromKey('noStyle');
-  const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
 
   const _labelCol = getValueFromKey('labelCol');
   const _wrapperCol = getValueFromKey('wrapperCol');
   const labelWidth = getValueFromKey('labelWidth');
   const { labelCol, wrapperCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth, _labelCol, _wrapperCol });
+
+  const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
+
 
   if (!label) {
     noStyle = true;

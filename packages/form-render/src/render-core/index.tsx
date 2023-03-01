@@ -34,11 +34,11 @@ const renderItem = (props: RenderItemProps) => {
   }
 
   // render Objiect | field
-  let childContent: React.ReactNode = null;
+  let child: React.ReactNode = null;
 
   // has child schema
   if (schema?.properties) {
-    childContent = RenderCore({ schema, parentPath: path, rootPath })
+    child = RenderCore({ schema, parentPath: path, rootPath })
     path = undefined;
   }
 
@@ -48,7 +48,7 @@ const renderItem = (props: RenderItemProps) => {
       schema={schema}
       path={path}
       rootPath={rootPath}
-      children= {childContent}
+      children= {child}
       renderCore={RenderCore}
     />
   );
@@ -65,6 +65,7 @@ const RenderCore = (props: RenderCoreProps) : any => {
     return renderItem({ schema: schema.items, path: parentPath, rootPath });
   }
 
+  // render Objiect | field
   return Object.keys(schema?.properties || {}).map((key) => {
     const item = schema.properties[key];
     const path = [...parentPath, key];
