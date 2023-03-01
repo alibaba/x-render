@@ -37,6 +37,7 @@ const SimpleList = (props: any) => {
 
   if (!schema.items.displayType) {
     schema.items.displayType = 'inline';
+    schema.items.inlineMode = true;
   }
 
   const handleCopy = (name: number) => {

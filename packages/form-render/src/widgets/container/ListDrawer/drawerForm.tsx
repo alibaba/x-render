@@ -18,11 +18,16 @@ const DrawerForm = (props: any) => {
     onClose();
   };
 
+  const drawerProps = {
+    visible: true,
+
+  }
+
   return (
     <Drawer
+      {...drawerProps}
       width={600}
       title={t('operate')}
-      visible={true}
       open={true}
       onClose={handleClose}
       extra={
