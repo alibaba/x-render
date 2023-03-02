@@ -67,7 +67,9 @@
     "dayjs": "^1.11.7",
     "rc-color-picker": "^1.2.6",
     "virtualizedtableforantd4": "^1.1.2",
-    "zustand": "4.1.5"
+    "zustand": "4.1.5",
+    "ahooks": "3.7.5",
+    "less": "^3.0.0"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",
