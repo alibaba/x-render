@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button } from 'antd';
+import React, { useState } from 'react';
+import { Button, Modal } from 'antd';
 import FormRender, { useForm } from 'form-render';
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
@@ -169,6 +169,7 @@ const schema = {
 
 const Demo = () => {
   const form = useForm();
+  const [visible, setVisible] = useState();
 
   const onFinish = (formData: any) => {
     console.log(formData, 'formData');
@@ -176,15 +177,22 @@ const Demo = () => {
 
   return (
     <div>
-      <FormRender
-        displayType='row'
-        form={form}
-        schema={schema}
-       
-        onFinish={onFinish} // 如果beforeFinish返回一个promise，onFinish会等promise resolve之后执行
-        debug={true}
-      />
-      <Button onClick={form.submit} type='primary'>提交</Button>
+      <Modal
+       open={visible}
+       onCancel={() => setVisible(false)}
+       destroyOnClose={true}
+      >
+        <FormRender
+          displayType='row'
+          form={form}
+          schema={schema}
+        
+          onFinish={onFinish} // 如果beforeFinish返回一个promise，onFinish会等promise resolve之后执行
+          debug={true}
+        />
+      </Modal>
+      
+      <Button onClick={() => setVisible(true)} type='primary'>提交</Button>
     </div>
   );
 };

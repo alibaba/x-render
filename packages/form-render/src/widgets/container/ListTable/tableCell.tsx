@@ -14,9 +14,9 @@ const TableCell = (props: any) => {
     schema.properties[dataIndex].onStatusChange = onStatusChange;
   }
 
-  const popProps = {
+  const popoverProps = {
     visible: !!errorMsg
-  };
+  }
 
   return (
     <Form.Item>
@@ -26,7 +26,7 @@ const TableCell = (props: any) => {
         placement='topRight'
         trigger='focus'
         open={!!errorMsg}
-        {...popProps}
+        {...popoverProps}
       >
         {renderCore({ ...otherProps, schema })}
       </Popover>

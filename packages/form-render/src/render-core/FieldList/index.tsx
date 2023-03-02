@@ -18,7 +18,7 @@ export default (props: any) => {
 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
-  const { widgets, methods } = configContext;
+  const { form, widgets, methods } = configContext;
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
@@ -36,7 +36,7 @@ export default (props: any) => {
     span = 24;
   }
 
-  const form = Form.useFormInstance();
+ 
   const value = Form.useWatch(path, form);
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
