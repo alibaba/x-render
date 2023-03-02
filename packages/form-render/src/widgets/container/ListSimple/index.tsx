@@ -13,9 +13,8 @@ const getHasBackground = (fields: any[], hasBackground: boolean) => {
 }
 
 const SimpleList = (props: any) => {
-  const form = Form.useFormInstance();
-
   const {
+    form,
     schema,
     fields,
     rootPath,

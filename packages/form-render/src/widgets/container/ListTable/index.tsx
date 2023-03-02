@@ -16,6 +16,7 @@ interface ListTableProps {
 
 const TableList: React.FC<ListTableProps> = (props) => {
   const {
+    form,
     schema,
     fields,
     rootPath,
@@ -37,8 +38,6 @@ const TableList: React.FC<ListTableProps> = (props) => {
     moveItem,
     removeItem,
   } = props;
-
-  const form = Form.useFormInstance();
 
   const itemSchema = schema?.items?.properties || {};
 

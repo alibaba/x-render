@@ -206,11 +206,11 @@ export default (props: any) => {
     return null;
   }
 
-  const form = Form.useFormInstance();
+ 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
-  const { widgets, methods, globalProps, maxWidth } = configCtx;
+  const { form, widgets, methods, globalProps, maxWidth } = configCtx;
   
   const { hidden, properties, dependencies, inlineMode: _inlineMode, ...otherSchema } = schema;
 

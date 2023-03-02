@@ -32,9 +32,8 @@ const getOperateStyle = (schema: any) => {
 };
 
 const CardList = (props: any) => {
-  const form = Form.useFormInstance();
-
   const {
+    form,
     schema,
     fields,
     rootPath,
