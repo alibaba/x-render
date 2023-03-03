@@ -52,7 +52,7 @@ export interface TableState<RecordType> {
 }
 
 // TODO这里FR的props应该去FR里写，这里继承就好了
-export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
+export interface SearchProps<RecordType> extends Omit<FRProps, 'form' | 'schema'> {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;

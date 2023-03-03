@@ -12,7 +12,7 @@ const Search: <RecordType extends object = any>(
     onMount,
     onSearch,
     ...otherProps
-  }  = props;
+  } = props;
   const { loading, sorter }: any = getState();
 
   const handleMount = async () => {
@@ -29,11 +29,12 @@ const Search: <RecordType extends object = any>(
   };
 
   return (
-    <SearchForm 
-      {...otherProps} 
-      loading={loading} 
+    <SearchForm
+      {...otherProps}
+      loading={loading}
       onSearch={handleSearch}
       onMount={handleMount}
+      schema={otherProps.schema || {}}
     />
   );
 }
