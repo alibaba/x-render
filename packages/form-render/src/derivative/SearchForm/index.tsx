@@ -30,6 +30,7 @@ const SearchForm: <RecordType extends object = any>(
     searchOnMount = true,
     style = {},
     className,
+    mode,
 
     form,
     hidden,
@@ -144,7 +145,7 @@ const SearchForm: <RecordType extends object = any>(
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
         form={form}
-        operateExtra={(
+        operateExtra={mode !== 'simple' && (
           <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight })} style={{ minWidth: (1/column)*100 + '%' }}>
             <ActionView {...actionProps} setLimitHeight={setLimitHeight} />
           </Col>
