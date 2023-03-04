@@ -20,7 +20,7 @@ toc: content
 | colon            | 是否显示 label 后面的冒号                                                                 | `boolean`                                                                                             | true   |
 | widgets          | 自定义组件，当内置组件无法满足时使用，详见[Widgets](#widgets)                             | `Record<string, ReactNode>`                                                                           | -      |
 | watch            | 监听表单的数据变化，详见[Watch](#watch)                                                   | `Record<string, (val: any) => void \| { handler:(val:any) => void,immediate?: boolean }>`             | -      |
-| removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                                  | `boolean`                                                                                             | true   |
+| removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认隐藏                                  | `boolean`                                                                                             | true   |
 | readOnly         | 只读模式，一般用于预览展示，全文 text 展示                                                | `boolean`                                                                                             | false  |
 | className        | 顶层 className                                                                            | `string`                                                                                              | -      |
 | style            | 顶层 style                                                                                | `CSSProperties`                                                                                       | -      |
