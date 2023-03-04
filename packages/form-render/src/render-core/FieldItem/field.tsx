@@ -227,7 +227,11 @@ export default (props: any) => {
   const widgetProps = getWidgetProps(widgetName, schema, { widgets, methods, form, dependValues, globalProps });
   const displayType = getValueFromKey('displayType');
 
-  const inlineSelf = _inlineMode || upperCtx?.displayType === 'inline';
+  let inlineSelf = _inlineMode || upperCtx?.displayType === 'inline';
+  // inexistence containers
+  if (!upperCtx.exist) {
+    inlineSelf = _inlineMode || formCtx?.displayType === 'inline';
+  }
   const inlineChild = displayType === 'inline';
 
   // Render Container Components
@@ -256,10 +260,11 @@ export default (props: any) => {
         value={{
           column: schema.column,
           labelCol: schema.labelCol,
-          wrapperCol: schema.wrapperCol,
+          fieldCol: schema.fieldCol,
           displayType: schema.displayType,
           labelWidth: schema.labelWidth,
-          noStyle: schema.noStyle
+          noStyle: schema.noStyle,
+          exist: true,
         }}
       > 
        {inlineSelf ? content : <Col span={24}>{content}</Col>}
@@ -277,9 +282,9 @@ export default (props: any) => {
   const readOnly = getValueFromKey('readOnly');
 
   const _labelCol = getValueFromKey('labelCol');
-  const _wrapperCol = getValueFromKey('wrapperCol');
+  const _fieldCol = getValueFromKey('fieldCol');
   const labelWidth = getValueFromKey('labelWidth');
-  const { labelCol, wrapperCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth, _labelCol, _wrapperCol });
+  const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
 
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
 
@@ -304,17 +309,16 @@ export default (props: any) => {
  
   const formItem = (
     <Form.Item
-      className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label'})}
+      className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf })}
       label={label}
       name={path}
-      style={inlineSelf ? { marginRight: '16px', marginBottom: '24px' } : null}
       valuePropName={valuePropName}
       rules={readOnly ? [] : ruleList}
       hidden={hidden}
       tooltip={tooltip}
       initialValue={schema.default}
       labelCol={labelCol}
-      wrapperCol={wrapperCol}
+      wrapperCol={fieldCol}
       noStyle={noStyle}
       dependencies={dependencies}
     >
@@ -323,7 +327,7 @@ export default (props: any) => {
   );
 
   if (inlineSelf) {
-    return <div className='fr-inline-field'>{formItem}</div>;
+    return formItem
   }
 
   return <Col span={span}>{formItem}</Col>;

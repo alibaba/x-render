@@ -1,25 +1,25 @@
-export const getFormItemLayout = (column: number, schema: any, { labelWidth, displayType, _labelCol, _wrapperCol }: any) => {
+export const getFormItemLayout = (column: number, schema: any, { labelWidth, displayType, _labelCol, _fieldCol }: any) => {
   let labelCol: any = { span: 5 };
-  let wrapperCol: any = { span: 9 };
+  let fieldCol: any = { span: 9 };
 
   if (column === 2) {
     labelCol = { span: 6 };
-    wrapperCol = { span: 14 }
+    fieldCol = { span: 14 }
   }
 
   if (column > 2) {
-    labelCol = { span: 8 };
-    wrapperCol = { span: 16 }
+    labelCol = { span: 7 };
+    fieldCol = { span: 16 }
   }
 
   if (displayType === 'column') {
     // labelCol = { xl: 9, xxl: 6 };
     // if (column > 1) {
     //   labelCol = {};
-    //   wrapperCol = {};
+    //   fieldCol = {};
     // }
     labelCol = {};
-    wrapperCol = {};
+    fieldCol = {};
   }
 
   if (_labelCol) {
@@ -29,29 +29,45 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
     }
   }
 
-  if (_wrapperCol) {
-    wrapperCol = _wrapperCol;
+  if (_fieldCol) {
+    fieldCol = _fieldCol;
+    if (typeof _fieldCol === 'number') {
+      fieldCol = { span: _fieldCol }
+    }
   }
 
   if (displayType === 'inline') {
     labelCol = {};
-    wrapperCol = {};
+    fieldCol = {};
   }
 
   // 兼容一下 1.0 版本
   if (labelWidth && displayType !== 'column') {
     labelCol = { flex : labelWidth + 'px' };
-    wrapperCol = { flex: 'auto' };
+    fieldCol = { flex: 'auto' };
   }
 
   // 自定义进行覆盖
+  if (schema.cellSpan) {
+    fieldCol = {};
+  }
+
+
   if (schema.labelCol) {
     labelCol = schema.labelCol;
   }
 
-  if (schema.wrapperCol) {
-    wrapperCol = schema.wrapperCol;
+  if (schema.fieldCol) {
+    fieldCol = schema.fieldCol;
+  }
+
+  if (typeof labelCol === 'number') {
+    labelCol = { span: labelCol }
+  }
+
+  if (typeof fieldCol === 'number') {
+    fieldCol = { span: fieldCol }
   }
   
-  return { labelCol, wrapperCol }
+  return { labelCol, fieldCol }
 }

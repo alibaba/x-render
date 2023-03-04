@@ -7,43 +7,22 @@ group:
 ---
 
 # 表单布局
-- 通过 displayType 实现标签排列布局
-- 通过 column 实现表单多列布局
-- 通过 labelCol、wrapperCol 实现表单项布局
-- 输入控件最长宽度 400px
+- `displayType` 标签排列方式
+- `column` 表单一行能展示的表单项个数
+- `labelWidth` 标签固定宽度
+- `cellSpan` 表单项跨列
+- `maxWidth` 输入控件最长宽度  
+- `labelCol`、`FieldCol` 表单项内部布局
+## displayType
 
-## 一、标签排列：displayType
-displayType：row（水平分布）、column（垂直分布）、inline(紧凑)
+- displayType（标签排列方式）：`row`（水平）| `column`（垂直）| `inline`(紧凑)
+- 默认值：`column`
 
 ```jsx
 import React, { useState } from 'react';
 import { Button, Space, Form, Radio } from 'antd';
 import FormRender, { useForm } from 'form-render';
-
-const schema = {
-  type: 'object',
-  column: 3,
-  displayType: 'row',
-  properties: {
-    input1: {
-      title: '姓名',
-      type: 'string'
-    },
-    input2: {
-      title: '电话',
-      type: 'string'
-    },
-    input3: {
-      title: '邮箱',
-      type: 'string',
-      format: 'email'
-    },
-    input4: {
-      title: '地址',
-      type: 'string'
-    }
-  }
-};
+import schema from './schema/basic';
 
 export default () => {
   const form = useForm();
@@ -58,56 +37,32 @@ export default () => {
 
   return (
     <div>
-      <FormRender 
-        schema={schema}
-        form={form}
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 18 }}
-      />
-      <Form.Item label='标签排列'>
+      <Form.Item label='displayType' style={{ marginBottom: '50px' }}>
         <Radio.Group value={displayType} onChange={handRadioChange}>
           <Radio.Button value='row'>row</Radio.Button>
           <Radio.Button value='column'>column</Radio.Button>
           <Radio.Button value='inline'>Inline</Radio.Button>
         </Radio.Group>
       </Form.Item>
+      <FormRender
+        schema={schema}
+        form={form}
+        labelCol={5}
+        fieldCol={18}
+      />
     </div>
   );
 }
 ```
 
-## 二、多列布局：column
-column: 一行多列，默认值 1
+## column
+一行可以展示多少个表单项，默认值: 1
 
 ```jsx
 import React, { useState } from 'react';
 import { Button, Space, Form, Radio } from 'antd';
 import FormRender, { useForm } from 'form-render';
-
-const schema = {
-  type: 'object',
-  column: 3,
-  displayType: 'row',
-  properties: {
-    input1: {
-      title: '姓名',
-      type: 'string'
-    },
-    input2: {
-      title: '电话',
-      type: 'string'
-    },
-    input3: {
-      title: '邮箱',
-      type: 'string',
-      format: 'email'
-    },
-    input4: {
-      title: '地址',
-      type: 'string'
-    },
-  }
-};
+import schema from './schema/basic';
 
 export default () => {
   const form = useForm();
@@ -123,127 +78,166 @@ export default () => {
 
   return (
     <>
-      <FormRender
-        form={form}
-        schema={schema} 
-        labelCol={{ span: 5 }}
-        wrapperCol={{ span: 18 }}
-      />
-      <Form.Item label='多列布局'>
+      <Form.Item label='column' style={{ marginBottom: '50px' }}>
         <Radio.Group value={column} onChange={handRadioChange}>
           <Radio.Button value={1}>一列</Radio.Button>
           <Radio.Button value={2}>两列</Radio.Button>
           <Radio.Button value={3}>三列</Radio.Button>
+          <Radio.Button value={4}>四列</Radio.Button>
         </Radio.Group>
       </Form.Item>
+      <FormRender
+        form={form}
+        schema={schema} 
+        labelCol={5}
+        fieldCol={18}
+      />
     </>
   );
 }
 ```
 
-
-## 三、表单项布局
-### labelCol
-
-- labelCol: label 标签布局，同 Col 组件，设置 span 值，如 { span: 6 }
-- wrapperCol: 输入控件布局，用法同 labelCol
-- 默认值：
-```js
-// 一行一列
-const labelCol = { span: 5 };
-const wrapperCol = { span: 9 };
-
-// 两列及以上
-const labelCol = { span: 6 };
-const wrapperCol = { span: 14 };
-```
+## lableWidth
+设置标签固定宽度
 
 ```jsx
-import React from 'react';
+import React, { useState } from 'react';
+import { InputNumber } from 'antd';
 import FormRender, { useForm } from 'form-render';
-
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    input1: {
-      title: '姓名',
-      type: 'string'
-    },
-    input2: {
-      title: '电话',
-      type: 'string'
-    },
-    input3: {
-      title: '邮箱',
-      type: 'string',
-      format: 'email'
-    },
-    input4: {
-      title: '地址',
-      type: 'string'
-    }
-  }
-};
+import schema from './schema/basic';
 
 export default () => {
   const form = useForm();
+  const [labelWidth, setLabelWidth] = useState(60);
+
+  return (
+    <>
+      <div style={{ marginBottom: '50px' }}>
+        labelWidth：
+        <InputNumber onChange={setLabelWidth} value={labelWidth} />
+      </div>
+      <FormRender
+        form={form}
+        schema={schema}
+        labelWidth={labelWidth}
+        column={3}
+      />
+    </>
+  );
+};
+```
+
+## cellSpan
+设置表单项跨列展示，目前需配合 `lableWidth` 来使用，否则无法与其他表单项在样式上对齐，通过配置单个表单项的 `labelCol`、`fieldCol` 勉强能改善
+
+```jsx
+import React, { useState } from 'react';
+import { InputNumber } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/cellSpan';
+
+export default () => {
+  const form = useForm();
+  const [labelWidth, setLabelWidth] = useState(60);
+
   return (
     <FormRender
       form={form}
       schema={schema}
-      labelCol={{ span: 9 }}
+      labelWidth={60}
+      column={3}
     />
+  );
+};
+```
+
+## maxWidth
+表单项控件的最大宽度
+
+```jsx
+import React, { useState } from 'react';
+import { InputNumber } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/basic';
+
+export default () => {
+  const form = useForm();
+  const [maxWidth, setMaxWidth] = useState(320);
+  
+  return (
+    <>
+      <div style={{ marginBottom: '50px' }}>
+        labelWidth：
+        <InputNumber onChange={setMaxWidth} value={maxWidth} />
+      </div>
+      <FormRender
+        form={form}
+        schema={{
+          ...schema,
+          column: 1
+        }}
+        maxWidth={maxWidth}
+        labelWidth={60}
+      />
+    </>
+  );
+};
+```
+
+## labelCol & fieldCol
+- `labelCol`（标签占位格数），`fieldCol`（控件占位格数）
+
+- 默认配置：
+```js
+// 当表单一行 一列 展示时
+labelCol: 5
+fieldCol: 9
+
+// 当表单一行 两列 展示时
+labelCol: 6
+fieldCol: 14
+
+// 当表单一行 两列以上 展示时
+labelCol: 7
+fieldCol: 16
+```
+实际业务中标签可能会比较长，默认配置无法满足布局，可以通过配置 `labelCol`、`fieldCol` 进行调整，两者加起来不超过 `24` 格数即可。
+
+`labelCol`、`fieldCol` 也可以是复杂对象，具体配置规则参照 Antd Col 组件
+
+
+```jsx
+import React, { useState } from 'react';
+import { InputNumber, Space } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/basic';
+
+export default () => {
+  const form = useForm();
+  const [labelCol, setLabelCol] = useState(5);
+  const [fieldCol, setFieldcol] = useState(18);
+
+  return (
+    <>
+      <Space style={{ marginBottom: '50px' }}>
+        <span>
+          labelCol：
+          <InputNumber onChange={setLabelCol} value={labelCol} />
+        </span>
+        <span>
+          fieldCol：
+          <InputNumber onChange={setFieldcol} value={fieldCol} />
+        </span>
+      </Space>
+      <FormRender
+        form={form}
+        schema={schema}
+        labelCol={labelCol}
+        fieldCol={fieldCol}
+      />
+    </>
   )
 };
 ```
 
 
-### lableWidth
-设置 label 标签的宽度为固定值，最后会转换为：
-```js
-labelCol = { flex : labelWidth };
-wrapperCol = { flex: 'auto' };
-```
-
-```jsx
-import React from 'react';
-import FormRender, { useForm } from 'form-render';
-
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    input1: {
-      title: '姓名',
-      type: 'string'
-    },
-    input2: {
-      title: '电话',
-      type: 'string'
-    },
-    input3: {
-      title: '邮箱',
-      type: 'string',
-      format: 'email'
-    },
-    input4: {
-      title: '地址',
-      type: 'string'
-    }
-  }
-};
-
-export default () => {
-  const form = useForm();
-
-  return (
-    <FormRender
-      form={form}
-      schema={schema}
-      labelWidth={100}
-      maxWidth={400}
-    />
-  );
-};
-```
