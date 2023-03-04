@@ -31,7 +31,7 @@ const SearchForm: <RecordType extends object = any>(
     style = {},
     className,
     mode,
-    autoSize={},
+    layoutAuto={},
     form,
     hidden,
     loading,
@@ -65,7 +65,7 @@ const SearchForm: <RecordType extends object = any>(
   }, []);
 
   useEffect(() => {
-    if (!autoSize) {
+    if (!layoutAuto) {
       return;
     }
 
@@ -77,7 +77,7 @@ const SearchForm: <RecordType extends object = any>(
       }
       for (let i = _column; i > 0; i--) {
         const item = clientWidth/i;
-        if (item >= (autoSize?.fieldMinWidth || 340)) {
+        if (item >= (layoutAuto?.fieldMinWidth || 340)) {
           setColumn(i);
           break;
         }
