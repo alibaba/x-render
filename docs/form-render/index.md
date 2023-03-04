@@ -78,7 +78,7 @@ export default () => {
         form={form} 
         schema={schema} 
         onFinish={onFinish} 
-        wrapperCol={{ sm: 10, xxl: 8 }}
+        fieldCol={8}
       />
       <Button type="primary" onClick={form.submit}>
         提交
@@ -131,7 +131,7 @@ class Demo extends React.Component {
           form={form} 
           schema={schema} 
           onFinish={this.onFinish}
-          wrapperCol={{ sm: 10, xxl: 8 }}
+          fieldCol={8}
         />
         <Button type="primary" onClick={form.submit}>
           提交
