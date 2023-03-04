@@ -1,4 +1,7 @@
 # 更新日志
+###
+-[+] Search 增加极简模式 mode='simple'配置，直接通过onChange触发查询事件，并且去除查询按钮
+-[+] 增加 autoSize 是否自适应布局
 
 ### 2.0.8
 -[+] valueType 新增 image、tag、tags、progress、dateRange、dateTimeRange 类型

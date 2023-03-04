@@ -52,6 +52,8 @@ const Search: <RecordType extends object = any>(
       loading={loading} 
       onSearch={handleSearch}
       onMount={handleMount}
+      autoSize={false}
+
     />
   );
 }

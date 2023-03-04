@@ -31,7 +31,7 @@ const SearchForm: <RecordType extends object = any>(
     style = {},
     className,
     mode,
-
+    autoSize={},
     form,
     hidden,
     loading,
@@ -65,21 +65,25 @@ const SearchForm: <RecordType extends object = any>(
   }, []);
 
   useEffect(() => {
-    const resizeObserver = new ResizeObserver(entries => {
+    if (!autoSize) {
+      return;
+    }
+
+    const resizeObserver = new ResizeObserver(() => {
       const { clientWidth, clientHeight } = searchRef?.current || {};
       if (clientHeight < 136) {
         setCollapsed(false);
         setLimitHeight(false)
       }
-     
-      if (clientWidth > 1344) { // 336
-        setColumn(column);
-      } else if (clientWidth > 1008) {
-        setColumn(3);
-      } else if (clientWidth > 672) {
-        setColumn(2);
-      } else {
-        setColumn(1);
+      for (let i = _column; i > 0; i--) {
+        const item = clientWidth/i;
+        if (item >= (autoSize?.fieldMinWidth || 340)) {
+          setColumn(i);
+          break;
+        }
+        if (i === 1) {
+          setColumn(1)
+        }
       }
     });
 

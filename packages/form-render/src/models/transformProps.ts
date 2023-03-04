@@ -33,6 +33,8 @@ const transformProps =  (props: any) => {
     operateExtra,
     logOnMount,
     logOnSubmit,
+    labelCol,
+    fieldCol,
     // labelAlign,
     // colon,
     // className,
@@ -77,6 +79,8 @@ const transformProps =  (props: any) => {
     operateExtra,
     logOnMount,
     logOnSubmit,
+    labelCol,
+    fieldCol,
   };
 };
 

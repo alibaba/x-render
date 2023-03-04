@@ -39,6 +39,8 @@ const FormCore = (props: any) => {
     onMount,
     column,
     labelWidth,
+    labelCol,
+    fieldCol,
     form,
     onFinish,
     onFinishFailed,
@@ -48,9 +50,8 @@ const FormCore = (props: any) => {
     operateExtra,
     logOnMount,
     logOnSubmit,
-    id
+    id,
   } = transformProps({ ...props, ...schemProps });
-  const { labelCol, wrapperCol } = formProps;
 
   useEffect(() => {
     form.__initStore(store);
@@ -64,14 +65,14 @@ const FormCore = (props: any) => {
   useEffect(() => {
     const context = {
       column,
-      labelCol,
-      wrapperCol,
       readOnly,
       labelWidth,
       displayType,
+      labelCol,
+      fieldCol,
     };
     setContext(context);
-  }, [column, labelCol, wrapperCol, displayType, labelWidth]);
+  }, [column, labelCol, fieldCol, displayType, labelWidth]);
 
   const initial = async () => {
     onMount && await onMount();
