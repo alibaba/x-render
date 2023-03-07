@@ -141,7 +141,7 @@ const watch = {
 
 ### 修改表单项 value 
 
-form.setValueByPath：指定路径对值进行修改。[path 路径详见](/form-render/advanced/path)。
+form.setValueByPath：指定路径对值进行修改。[path 路径详见](/form-render/advanced-path)。
 
 ```jsx
 import React from 'react';
@@ -196,7 +196,7 @@ export default () => {
 
 ### 修改表单项 schema
 
-form.setSchemaByPath：指定路径对 schema 进行修改 (不允许通过此 API 修改 value、defalut)。[path 路径详见](/form-render/advanced/path)。
+form.setSchemaByPath：指定路径对 schema 进行修改 (不允许通过此 API 修改 value、defalut)。[path 路径详见](/form-render/advanced-path)。
 
 ```jsx
 import React, { useEffect } from 'react';
