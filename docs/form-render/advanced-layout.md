@@ -167,7 +167,7 @@ export default () => {
   return (
     <>
       <div style={{ marginBottom: '50px' }}>
-        labelWidth：
+        maxWidth：
         <InputNumber onChange={setMaxWidth} value={maxWidth} />
       </div>
       <FormRender

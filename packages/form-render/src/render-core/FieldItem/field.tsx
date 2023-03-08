@@ -1,19 +1,31 @@
 import React, { createContext, useContext, useEffect } from 'react';
-import { Form, Col, Row } from 'antd';
+import { Form, Col, Row, Button, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
 
-import { isCheckBoxType, _get, isObject, getArray } from '../../utils';
+import { isCheckBoxType, _get, isObject, getArray, translation, isArray, isFunction } from '../../utils';
 import { ConfigContext } from '../../models/context';
 import { getWidgetName } from '../../models/mapping';
 import { getFormItemLayout } from '../../models/layout';
 import getRuleList from '../../models/validates';
+
 
 const UpperContext: any = createContext(() => {});
 const valuePropNameMap = {
   checkbox: 'checked',
   switch: 'checked'
 };
+
+const getPath = (path: any) => {
+  if (!path) {
+    return null;
+  }
+  if (isArray(path)) {
+    return path.join('.');
+  }
+
+  return path;
+}
 
 const getLabel = (schema: any, displayType: string, widgets: any) => {
   const { title, description, descWidget } = schema;
@@ -109,13 +121,14 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
   return schema[valueKey] ?? upperCtx[valueKey];
 };
 
-const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps }) => {
+const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path }) => {
   const widgetProps = {
     ...schema.props,
     addons: {
       ...form,
       globalProps,
-      dependValues
+      dependValues,
+      schemaPath: path
     },
   };
 
@@ -194,9 +207,44 @@ const createWidgetStatus = (Component: any, props: any, { form, path, rootPath, 
   return <Component { ...otherProps} style={{ maxWidth, ...style}}/>
 };
 
-const createWidget = (Component: any, props: any, maxWidth: string) => {
+const WidgetView = (_props: any) => {
+  const { Component, props, maxWidth, schema, path, form , ...other } = _props;
+
+  const configCtx = useContext(ConfigProvider.ConfigContext);
+  const t = translation(configCtx);
+
   const { style={}, ...otherProps } = props;
-  return <Component { ...otherProps} style={{ maxWidth, ...style}}/>
+  const { removeBtn } = schema;
+
+  const handleRemove = () => {
+    const _path = path?.join?.('.');
+   
+    if (isFunction(removeBtn?.onClick)) {
+      removeBtn.onClick({
+        path: path?.join?.('.')
+      }, () => {
+        form.setSchemaByPath(_path, { hidden: true });
+      })
+      return;
+    }
+    form.setSchemaByPath(_path, { hidden: true });
+  }
+
+  return (
+    <>
+      <Component { ...otherProps } { ...other } style={{ maxWidth, ...style}}/>
+      {removeBtn && (
+        <Button
+          type='text'
+          danger
+          {...removeBtn}
+          onClick={handleRemove} 
+        >
+          {removeBtn?.text || t('delete')}
+        </Button>
+      )}
+    </>
+  )
 };
 
 export default (props: any) => {
@@ -210,9 +258,9 @@ export default (props: any) => {
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
-  const { form, widgets, methods, globalProps, maxWidth } = configCtx;
+  const { form, widgets, methods, globalProps } = configCtx;
   
-  const { hidden, properties, dependencies, inlineMode: _inlineMode, ...otherSchema } = schema;
+  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible=true, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);
   // Component not found
@@ -224,7 +272,14 @@ export default (props: any) => {
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   let widget = widgets[widgetName] || widgets['html'];
  
-  const widgetProps = getWidgetProps(widgetName, schema, { widgets, methods, form, dependValues, globalProps });
+  const widgetProps = getWidgetProps(widgetName, schema, { 
+    widgets, 
+    methods, 
+    form, 
+    dependValues, 
+    globalProps, 
+    path: getPath(path)
+  });
   const displayType = getValueFromKey('displayType');
 
   let inlineSelf = _inlineMode || upperCtx?.displayType === 'inline';
@@ -233,6 +288,7 @@ export default (props: any) => {
     inlineSelf = _inlineMode || formCtx?.displayType === 'inline';
   }
   const inlineChild = displayType === 'inline';
+  const labelWidth = getValueFromKey('labelWidth');
 
   // Render Container Components
   if (children) {
@@ -253,7 +309,7 @@ export default (props: any) => {
 
     widgetProps.children = childElement;
     const Widget = widget;
-    const content = <Widget {...widgetProps} {...otherSchema} displayType={schema.displayType} />;
+    const content = <Widget labelWidth={labelWidth} displayType={schema.displayType} {...widgetProps} {...otherSchema} />;
 
     return (
       <UpperContext.Provider
@@ -283,11 +339,9 @@ export default (props: any) => {
 
   const _labelCol = getValueFromKey('labelCol');
   const _fieldCol = getValueFromKey('fieldCol');
-  const labelWidth = getValueFromKey('labelWidth');
+  const maxWidth = getValueFromKey('maxWidth');
   const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
-
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
-
 
   if (!label) {
     noStyle = true;
@@ -306,10 +360,10 @@ export default (props: any) => {
       label = null;
     }
   }
- 
+
   const formItem = (
     <Form.Item
-      className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf })}
+      className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility' : !visible })}
       label={label}
       name={path}
       valuePropName={valuePropName}
@@ -322,13 +376,29 @@ export default (props: any) => {
       noStyle={noStyle}
       dependencies={dependencies}
     >
-      {widgetProps.onStatusChange ? createWidgetStatus(widget, widgetProps, { form, path, rootPath, maxWidth }) : createWidget(widget, widgetProps, maxWidth)}
+      {widgetProps.onStatusChange ? createWidgetStatus(widget, widgetProps, { form, path, rootPath, maxWidth }) : (
+        <WidgetView 
+          props={widgetProps}
+          path={path}
+          schema={schema}
+          form={form}
+          Component={widget}
+          maxWidth={maxWidth}
+        />
+      )}
     </Form.Item>
   );
 
   if (inlineSelf) {
+    if (noStyle) {
+      return (
+        <div className={classnames('fr-inline-field', { 'fr-field-visibility' : !visible })}>
+          {formItem}
+       </div>
+      )
+    }
     return formItem
   }
 
-  return <Col span={span}>{formItem}</Col>;
+  return <Col span={span} className={classnames('', { 'fr-field-visibility' : !visible })}>{formItem}</Col>;
 }
