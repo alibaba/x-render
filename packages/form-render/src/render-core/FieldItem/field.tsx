@@ -258,7 +258,7 @@ export default (props: any) => {
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
-  const { form, widgets, methods, globalProps, maxWidth } = configCtx;
+  const { form, widgets, methods, globalProps } = configCtx;
   
   const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible=true, ...otherSchema } = schema;
 
@@ -339,10 +339,9 @@ export default (props: any) => {
 
   const _labelCol = getValueFromKey('labelCol');
   const _fieldCol = getValueFromKey('fieldCol');
+  const maxWidth = getValueFromKey('maxWidth');
   const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
-
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
-
 
   if (!label) {
     noStyle = true;

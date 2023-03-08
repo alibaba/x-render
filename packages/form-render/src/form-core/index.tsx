@@ -41,6 +41,7 @@ const FormCore = (props: any) => {
     labelWidth,
     labelCol,
     fieldCol,
+    maxWidth,
     form,
     onFinish,
     onFinishFailed,
@@ -70,9 +71,10 @@ const FormCore = (props: any) => {
       displayType,
       labelCol,
       fieldCol,
+      maxWidth
     };
     setContext(context);
-  }, [column, labelCol, fieldCol, displayType, labelWidth]);
+  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth]);
 
   const initial = async () => {
     onMount && await onMount();
