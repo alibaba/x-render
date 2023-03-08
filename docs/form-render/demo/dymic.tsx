@@ -177,12 +177,7 @@ const Demo = () => {
 
   return (
     <div>
-      <Modal
-       open={visible}
-       onCancel={() => setVisible(false)}
-       destroyOnClose={true}
-      >
-        <FormRender
+      <FormRender
           displayType='row'
           form={form}
           schema={schema}
@@ -190,9 +185,8 @@ const Demo = () => {
           onFinish={onFinish} // 如果beforeFinish返回一个promise，onFinish会等promise resolve之后执行
           debug={true}
         />
-      </Modal>
       
-      <Button onClick={() => setVisible(true)} type='primary'>提交</Button>
+     
     </div>
   );
 };
