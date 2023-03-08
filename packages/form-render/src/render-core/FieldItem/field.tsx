@@ -383,6 +383,7 @@ export default (props: any) => {
           schema={schema}
           form={form}
           Component={widget}
+          maxWidth={maxWidth}
         />
       )}
     </Form.Item>
