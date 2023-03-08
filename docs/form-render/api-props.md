@@ -11,7 +11,7 @@ group:
 
 | 参数             | 说明                                                                                     | 类型                                                                                                  | 默认值 |
 | ---------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------ |
-| schema           | **必填**，描述表单的 schema，详见 [schema 规范](./schema.md)                              | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16) | -      |
+| schema           | **必填**，描述表单的 schema，详见 [schema 规范](/form-render/api-schema)                              | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16) | -      |
 | form             | **必填**，`useForm` 创建的表单实例，与 Form 一对一绑定，详见[Forminstance](#forminstance) | `FormInstance`                                                                                        | -      |
 | onFinish         | 提交后的回调，执行 `form.submit()` 后触发                                                 | `(data, errors: Error[]) => void`                                                                     | -      |
 | beforeFinish     | 在 onFinish 前触发，一般用于外部校验逻辑的回填                                            | `({ data, errors, schema, ...rest }) => Error[] \| Promise<Error[]>`                                  | -      |
