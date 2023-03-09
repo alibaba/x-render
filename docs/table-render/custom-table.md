@@ -8,6 +8,6 @@ group:
 
 # 自定义表格样式
 
-有些情况下，你会希望在搜索框和表格之间增加一些内容。这时可以通过 `customTableRender` 实现你的需求。
+有些情况下，你会希望在搜索框和表格之间增加一些内容。这时可以通过 `tableWrapperRender` 实现你的需求。
 
 <code src='./demo/custom-table.tsx'></code>

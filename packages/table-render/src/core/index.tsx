@@ -29,7 +29,7 @@ const RenderCore = props => {
     tableRef,
     request: api,
     size,
-    customTableRender,
+    tableWrapperRender,
     ...tableProps
   } = props;
 
@@ -104,7 +104,7 @@ const RenderCore = props => {
         .then(res => {
           // TODO：这里校验res是否规范
           const { rows, data, total, pageSize, ...extraData } = res;
-          
+
           setState({
             loading: false,
             dataSource: data || rows,
@@ -190,8 +190,8 @@ const RenderCore = props => {
   )
 
   const renderTable = () => {
-    if (typeof customTableRender === 'function') {
-      return customTableRender(tableNode);
+    if (typeof tableWrapperRender === 'function') {
+      return tableWrapperRender(tableNode);
     } else {
       return tableNode;
     }

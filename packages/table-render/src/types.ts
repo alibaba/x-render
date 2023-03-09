@@ -129,6 +129,6 @@ export interface TableRenderProps<RecordType extends Object = any>
   /**
    * 自定义渲染表格
    */
-  customTableRender?: (tableNode: React.ReactNode) => React.ReactNode;
+  tableWrapperRender?: (tableNode: React.ReactNode) => React.ReactNode;
   request?: ApiType<RecordType>;
 }

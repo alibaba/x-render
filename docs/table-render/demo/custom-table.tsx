@@ -131,7 +131,7 @@ const Demo = () => {
       ref={tableRef}
       search={{ schema }}
       request={searchApi}
-      customTableRender={(table) => (
+      tableWrapperRender={(table) => (
         <div>
           <Alert
             message="Warning Text Warning Text Warning TextW arning Text Warning Text Warning TextWarning Text"
