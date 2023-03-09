@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import { message, Typography, ConfigProvider } from 'antd';
-import { getEnumValue } from './field';
 import { translation } from '../../utils';
 
 const Copy = ({ item, text }) => {
@@ -24,7 +23,7 @@ const Copy = ({ item, text }) => {
       }
       ellipsis={item.ellipsis || false}
     >
-      {getEnumValue(text, item)}
+      {text}
     </Typography.Text>
   );
 };

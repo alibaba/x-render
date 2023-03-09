@@ -17,6 +17,7 @@ interface ListVirtualProps {
 
 const VirtualList: React.FC<ListVirtualProps> = (props) => {
   const {
+    form,
     schema,
     fields,
     rootPath,
@@ -38,8 +39,6 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     moveItem,
     removeItem,
   } = props;
-
-  const form = Form.useFormInstance();
 
   const itemSchema = schema?.items?.properties || {};
 

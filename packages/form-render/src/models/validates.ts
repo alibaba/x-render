@@ -1,5 +1,5 @@
 import Color from 'color';
-import { isUrl } from '../utils';
+import { isUrl, isObject } from '../utils';
 
 const getRuleList = (schema: any, form: any) => {
   let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern, message, widget, title } = schema;
@@ -77,6 +77,9 @@ const getRuleList = (schema: any, form: any) => {
       const validator = item.validator;
       item.validator = async (_: any, value: any) => {
         const result = await validator(_, value, { form });
+        if (isObject(result)) {
+          return result?.status ? Promise.resolve() : Promise.reject(new Error(result.message || item.message));
+        }
         return result ? Promise.resolve() : Promise.reject(new Error(item.message));
       };;
       item.transformed = true;

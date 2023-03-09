@@ -7,11 +7,11 @@ group:
 ---
 
 # 表单联动
-- 通过 {{ }} 实现简单联动
-- 通过 watch 监听实现复杂联动
-- 通过 dependencies 实现组件之间复杂联动
+- `{{ }}`（函数表达式） 简单联动
+- `watch` 复杂联动
+- `dependencies` 当依赖的数据发生变化时，触发更新
 
-## 一、简单联动
+## 简单联动
 ### {{ }} 函数表达式
 
 表单联动是开发中常见的交互，为此我们创造了一种简洁的配置方式来支持联动。通过函数表达式来控制表单项的隐藏、是否可编辑等交互。
@@ -114,7 +114,7 @@ export default () => {
 };
 ```
 
-## 二、复杂联动
+## 复杂联动
 
 ### watch 监听
 watch: 用于监听表单数据改变，根据 path 路径注册表单项监听事件
@@ -141,7 +141,7 @@ const watch = {
 
 ### 修改表单项 value 
 
-form.setValueByPath：指定路径对值进行修改。[path 路径详见](/form-render/advanced/path)。
+form.setValueByPath：指定路径对值进行修改。[path 路径详见](/form-render/advanced-path)。
 
 ```jsx
 import React from 'react';
@@ -196,7 +196,7 @@ export default () => {
 
 ### 修改表单项 schema
 
-form.setSchemaByPath：指定路径对 schema 进行修改 (不允许通过此 API 修改 value、defalut)。[path 路径详见](/form-render/advanced/path)。
+form.setSchemaByPath：指定路径对 schema 进行修改 (不允许通过此 API 修改 value、defalut)。[path 路径详见](/form-render/advanced-path)。
 
 ```jsx
 import React, { useEffect } from 'react';
@@ -251,7 +251,7 @@ export default () => {
 };
 ```
 
-## 三、表单项关联
+## 表单项关联
 dependencies：用于完成组件内部复杂的联动逻辑，关联的字段更新时，该组件将自动触发更新与校验。
 - 类型：path[]，设置依赖字段，支持多个依赖字段
 - 获取依赖值：组件内通过 props.dependValues 获取依赖值集合

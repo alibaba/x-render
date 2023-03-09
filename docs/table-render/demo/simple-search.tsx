@@ -7,7 +7,7 @@
 import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Space, Tag, Tooltip } from 'antd';
 import React, { useRef } from 'react';
-import TableRender, { ProColumnsType } from 'table-render';
+import TableRender from 'table-render';
 import request from 'umi-request';
 
 const schema = {
@@ -29,81 +29,64 @@ const schema = {
       title: '成立时间',
       type: 'string',
       format: 'date'
-    },
-    labels1: {
-      title: '输入框 A',
-      type: 'string'
-    },
-    labels2: {
-      title: '输入框 B',
-      type: 'string'
-    },
-    labels3: {
-      title: '输入框 B',
-      type: 'string'
-    },
-    labels4: {
-      title: '输入框 C',
-      type: 'string'
-    },
-    labels5: {
-      title: '输入框 D',
-      type: 'string'
-    },
-    labels6: {
-      title: '输入框 E',
-      type: 'string'
-    },
+    }
   }
 };
 
 const Demo = () => {
   const tableRef: any = useRef();
 
+  const searchApi = (params, sorter) => {
+    console.group(sorter);
 
-  const requestData = (params: any) => {
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
         { params }
       )
-      .then(res => ({ success: true, data: res.data }))
-      .catch(() => ({ success: false, data: {} }))
-  }
+      .then(res => {
+        if (res && res.data) {
+          return {
+            data: [...res.data],
+            total: res.data.length,
+          };
+        }
+      })
+      .catch(e => {
+        console.log('Oops, error', e);
 
-  const searchApi = async (params) => {
-    const { success, data } = await requestData(params);
-    if (success) {
-      return {
-        data: data,
-        total: data.length,
-      }
-    } else {
-      // 必须返回 data 和 total
-      return {
-        data: [],
-        total: 0,
-      }
-    }
+        // 注意一定要返回 rows 和 total
+        return {
+          data: [],
+          total: 0,
+        };
+      });
   };
 
-  const searchApi2 = async (params) => {
-    const { success, data } = await requestData(params);
-    if (success) {
-      return {
-        data: data.slice(1),
-        total: data.length - 1,
-      }
-    } else {
-      // 必须返回 data 和 total
-      return {
-        data: [],
-        total: 0,
-      }
-    }
+  const searchApi2 = params => {
+    return request
+      .get(
+        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+        { params }
+      )
+      .then(res => {
+        if (res && res.data) {
+          return {
+            data: res.data.slice(1),
+            total: res.data.length - 1,
+          };
+        }
+      })
+      .catch(e => {
+        console.log('Oops, error', e);
+        return {
+          data: [],
+          total: 0,
+        };
+      });
   };
 
-  const columns: ProColumnsType<any> = [
+  const columns = [
     {
       title: '酒店名称',
       dataIndex: 'title',
@@ -136,7 +119,6 @@ const Demo = () => {
     {
       title: '酒店星级',
       dataIndex: 'labels',
-      width: 90,
       render: (_, row) => (
         <Space>
           {row?.labels?.map(({ name, color }) => (
@@ -163,16 +145,18 @@ const Demo = () => {
     },
     {
       title: '操作',
-      width: 60,
-      align: 'right',
       render: () => (
-        <a
-          onClick={() => {
-            message.success('预订成功');
-          }}
-        >
-          预订
-        </a>
+        <Space>
+          <a target='_blank' key='1'>
+            <div
+              onClick={() => {
+                message.success('预订成功');
+              }}
+            >
+              预订
+            </div>
+          </a>
+        </Space>
       )
     }
   ];
@@ -182,11 +166,12 @@ const Demo = () => {
   };
 
   return (
-    <TableRender
+    <TableRender 
       ref={tableRef}
       search={{
         schema,
         collapsed: true,
+        mode: 'simple'
       }}
       request={[
         {

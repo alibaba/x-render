@@ -18,11 +18,16 @@ const DrawerForm = (props: any) => {
     onClose();
   };
 
+  const drawerProps = {
+    visible: true,
+
+  }
+
   return (
     <Drawer
+      {...drawerProps}
       width={600}
       title={t('operate')}
-      visible={true}
       open={true}
       onClose={handleClose}
       extra={
@@ -39,7 +44,7 @@ const DrawerForm = (props: any) => {
         initialValues={data}
         form={form}
         labelCol={{ span: 8 }}
-        wrapperCol={{ flex: 1 }}
+        fieldCol={{ flex: 1 }}
         widgets={widgets}
         onFinish={handleFinish}
         locale={configContext?.locale}

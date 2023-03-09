@@ -52,7 +52,7 @@ type Widgets = {
 
 export function withWrap(Comp: ComponentType<any>) {
   return (props: any) => {
-    const { addons, schema, globalProps, ...otherProps } = props;
+    const { addons, schema, globalProps, dependValues, ...otherProps } = props;
     return <Comp {...otherProps} />;
   };
 }

@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
+import { useUnmount } from 'ahooks';
+
 
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
@@ -23,7 +25,6 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       form,
       validateMessages,
       globalProps={},
-      maxWidth,
       ...otherProps
     } = props;
   
@@ -37,12 +38,10 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       }
       dayjs.locale('zh-cn');
     }, [locale]);
-  
-    useEffect(() => {
-      () => {
-        return form.resetFields();
-      }
-    }, []);
+
+    useUnmount(() => {
+      form.resetFields();
+    });
   
     if (!form) {
       console.warn('Please provide a form instance to FormRender');
@@ -56,8 +55,8 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       locale,
       widgets: { ...defaultWidgets, ...widgets },
       methods,
-      globalProps,
-      maxWidth
+      form,
+      globalProps
     };
   
     const langPack: any = { 

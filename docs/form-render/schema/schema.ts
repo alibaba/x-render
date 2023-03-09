@@ -1,27 +1,25 @@
 export const basic = {
-  labelWidth: 130,
   type: 'object',
+  column: 3,
+  displayType: 'row',
   properties: {
-    url: {
-      title: 'url输入框',
-      placeholder: '//www.taobao.com',
-      type: 'string',
-      format: 'url',
-      required: true,
+    input1: {
+      title: 'Input A',
+      type: 'string'
     },
-    email: {
-      title: 'email输入框',
-      type: 'string',
-      format: 'email',
+    input2: {
+      title: 'Input B',
+      type: 'string'
     },
-    string: {
-      title: '正则校验字符串',
-      description: 'a-z',
-      type: 'string',
-      hidden: false,
-      disabled: true,
+    input3: {
+      title: 'Input C',
+      type: 'string'
     },
-  },
+    input4: {
+      title: 'Input D',
+      type: 'string'
+    }
+  }
 };
 
 export const expression = {
@@ -98,3 +96,5 @@ export const titleTrick = {
     },
   },
 };
+
+

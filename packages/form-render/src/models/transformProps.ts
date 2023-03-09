@@ -26,6 +26,7 @@ const transformProps =  (props: any) => {
     debug,
     id,
     labelWidth,
+    maxWidth,
     form,
     onFinish,
     onFinishFailed,
@@ -33,6 +34,8 @@ const transformProps =  (props: any) => {
     operateExtra,
     logOnMount,
     logOnSubmit,
+    labelCol,
+    fieldCol,
     // labelAlign,
     // colon,
     // className,
@@ -77,6 +80,9 @@ const transformProps =  (props: any) => {
     operateExtra,
     logOnMount,
     logOnSubmit,
+    labelCol,
+    fieldCol,
+    maxWidth
   };
 };
 

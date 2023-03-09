@@ -1,21 +1,21 @@
 import React from 'react';
-
 import FieldItem from './FieldItem';
 import FieldList from './FieldList';
+import './index.less';
 
 interface RenderCoreProps {
   schema: any;
   rootPath?: any[] | undefined;
   parentPath?: any[] | undefined;
   [key: string]: any
-}
+};
 
 interface RenderItemProps {
   schema: any;
   rootPath?: any[] | undefined;
   path?: any[] | undefined;
   key?: string | undefined;
-}
+};
 
 const renderItem = (props: RenderItemProps) => {
   let { schema, key, path, rootPath } = props;
@@ -34,11 +34,11 @@ const renderItem = (props: RenderItemProps) => {
   }
 
   // render Objiect | field
-  let childContent: React.ReactNode = null;
+  let child: React.ReactNode = null;
 
   // has child schema
   if (schema?.properties) {
-    childContent = RenderCore({ schema, parentPath: path, rootPath })
+    child = RenderCore({ schema, parentPath: path, rootPath })
     path = undefined;
   }
 
@@ -48,7 +48,7 @@ const renderItem = (props: RenderItemProps) => {
       schema={schema}
       path={path}
       rootPath={rootPath}
-      children= {childContent}
+      children= {child}
       renderCore={RenderCore}
     />
   );
@@ -65,6 +65,7 @@ const RenderCore = (props: RenderCoreProps) : any => {
     return renderItem({ schema: schema.items, path: parentPath, rootPath });
   }
 
+  // render Objiect | field
   return Object.keys(schema?.properties || {}).map((key) => {
     const item = schema.properties[key];
     const path = [...parentPath, key];

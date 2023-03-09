@@ -90,7 +90,7 @@ const schema = {
       },
     },
     textarea1: {
-      title: '编辑框',
+      title: '长文本',
       type: 'string',
       format: 'textarea',
       props: {},

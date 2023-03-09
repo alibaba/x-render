@@ -1,11 +1,11 @@
 /**
  * transform: true
- * defaultShowCode: false
+ * defaultShowCode: true
  * background: 'rgb(245,245,245)'
  */
 
-import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import { Button, message, Space, Tag, Tooltip } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, message, Space } from 'antd';
 import React, { useRef } from 'react';
 import TableRender, { ProColumnsType } from 'table-render';
 import request from 'umi-request';
@@ -55,35 +55,19 @@ const Demo = () => {
       width: '25%',
     },
     {
-      title: (
-        <>
-          酒店状态
-          <Tooltip placement='top' title='使用valueType'>
-            <InfoCircleOutlined style={{ marginLeft: 6 }} />
-          </Tooltip>
-        </>
-      ),
+      title: '酒店状态',
+      tooltip: '气泡提示',
+      dataIndex: 'state',
       enum: {
         open: '营业中',
-        closed: '已打烊',
-      },
-      dataIndex: 'state',
+        closed: '已打烊'
+      }
     },
     {
       title: '酒店星级',
       dataIndex: 'labels',
-      width: 90,
-      render: (_, row) => (
-        <Space>
-          {row?.labels?.map(({ name, color }) => (
-            <Tag color={color} key={name}>
-              {name}
-            </Tag>
-          ))}
-        </Space>
-      ),
+      valueType: 'tags'
     },
-
     {
       title: '酒店GMV',
       key: 'money',
@@ -99,16 +83,18 @@ const Demo = () => {
     },
     {
       title: '操作',
-      width: 60,
-      align: 'right',
       render: () => (
-        <a
-          onClick={() => {
-            message.success('预订成功');
-          }}
-        >
-          预订
-        </a>
+        <Space>
+          <a target='_blank' key='1'>
+            <div
+              onClick={() => {
+                message.success('预订成功');
+              }}
+            >
+              预订
+            </div>
+          </a>
+        </Space>
       )
     }
   ];

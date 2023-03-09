@@ -51,6 +51,7 @@ export interface SchemaBase {
   displayType?: 'row' | 'column' | string;
   width?: string | number;
   labelWidth?: number | string;
+  maxWidth?: number | string;
   column?: number;
   className?: string;
   widget?: string;
