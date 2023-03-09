@@ -23,6 +23,7 @@ import {
   flattenSchema,
   flattenToData,
   idToSchema,
+  idToSchema2X,
   newSchemaToOld,
   schemaToState,
 } from './utils';
@@ -162,11 +163,17 @@ function Provider(props, ref) {
 
   let displaySchema = {};
   let displaySchemaString = '';
+  let displaySchemaString2X = '';
   try {
     const _schema = {
       ...idToSchema(flattenWithData, '#', true),
       ...frProps,
     };
+    const _schema2X = {
+      ...idToSchema2X(flattenWithData, '#', true),
+      ...frProps,
+    }
+
     displaySchema = transformer.to(_schema);
     if (!isNewVersion) {
       displaySchema = newSchemaToOld(displaySchema);
@@ -174,6 +181,7 @@ function Provider(props, ref) {
     // displaySchemaString = JSON.stringify(displaySchema, null, 2);
     // 支持直接保存函数之后(解决validtor不能正常保存的问题)，这里因为导入导出的问题，序列化也用内置的api序列化
     displaySchemaString = serializeToDraft(displaySchema);
+    displaySchemaString2X = serializeToDraft(transformer.to(_schema2X))
   } catch (error) {}
 
   const getValue = () => displaySchema;
@@ -219,6 +227,7 @@ function Provider(props, ref) {
     frProps,
     displaySchema,
     displaySchemaString,
+    displaySchemaString2X,
     fieldRender,
     fieldWrapperRender,
     elementRender,

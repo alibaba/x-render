@@ -20,6 +20,7 @@ const Canvas = ({ onSelect }) => {
     userProps,
     displaySchema,
     displaySchemaString,
+    displaySchemaString2X,
     preview,
     selected,
     flatten,
@@ -29,6 +30,7 @@ const Canvas = ({ onSelect }) => {
   const [local, setState] = useSet({
     showModal: false,
     showModal2: false,
+    is2X: false,
     schemaForImport: '',
   });
 
@@ -36,6 +38,8 @@ const Canvas = ({ onSelect }) => {
 
   const toggleModal = () => setState({ showModal: !local.showModal });
   const toggleModal2 = () => setState({ showModal2: !local.showModal2 });
+  const toggleModal3 = (flag) => setState({ showModal: !local.showModal, is2X: flag });
+
 
   const onTextareaChange = e => {
     setState({ schemaForImport: e.target.value });
@@ -61,6 +65,12 @@ const Canvas = ({ onSelect }) => {
     copyTOClipboard(displaySchemaString);
     message.info(t('复制成功'));
     toggleModal();
+  };
+
+  const copySchema2X = () => {
+    copyTOClipboard(displaySchemaString2X);
+    message.info(t('复制成功'));
+    toggleModal3(false);
   };
 
   const clearSchema = () => {
@@ -127,6 +137,11 @@ const Canvas = ({ onSelect }) => {
             {getDefaultBtnText(_showDefaultBtns[3], t('导出schema'))}
           </Button>
         )}
+        {_showDefaultBtns[3] !== false && (
+          <Button type="primary" className="mr2" onClick={() => toggleModal3(true)}>
+            {getDefaultBtnText(_showDefaultBtns[3], t('导出2.x schema'))}
+          </Button>
+        )}
         {_extraBtns.map((item, idx) => {
           return (
             <Button key={idx.toString()} className="mr2" {...item}>
@@ -141,7 +156,7 @@ const Canvas = ({ onSelect }) => {
       </div>
       <Modal
         open={local.showModal}
-        onOk={copySchema}
+        onOk={local.is2X ? copySchema2X : copySchema}
         onCancel={toggleModal}
         okText={t('复制')}
         cancelText={t('取消')}
@@ -149,7 +164,7 @@ const Canvas = ({ onSelect }) => {
         <div className="mt3">
           <TextArea
             style={{ fontSize: 12 }}
-            value={displaySchemaString}
+            value={local.is2X ? displaySchemaString2X : displaySchemaString}
             autoSize={{ minRows: 10, maxRows: 30 }}
           />
         </div>

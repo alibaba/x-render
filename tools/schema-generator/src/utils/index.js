@@ -278,6 +278,71 @@ export function idToSchema(flatten, id = '#', final = false) {
   return schema;
 }
 
+export function idToSchema2X(flatten, id = '#', final = false) {
+  let schema = {};
+  const _item = flatten[id];
+  const item = deepClone(_item);
+  if (item) {
+    schema = { ...item.schema };
+    // 最终输出去掉 $id
+    if (final) {
+      schema.$id && delete schema.$id;
+    }
+    if (item.children.length > 0) {
+      item.children.forEach(child => {
+        let childId = child;
+        // TODO: 这个情况会出现吗？return会有问题吗？
+        if (!flatten[child]) {
+          return;
+        }
+        // 最终输出将所有的 key 值改了
+        try {
+          if (final) {
+            childId = flatten[child].schema.$id;
+          }
+        } catch (error) {
+          console.error(error, 'catch');
+        }
+        const key = getKeyFromUniqueId(childId);
+        if (schema.type === 'object') {
+          if (!schema.properties) {
+            schema.properties = {};
+          }
+          schema.properties[key] = idToSchema2X(flatten, child, final);
+        }
+        if (
+          schema.type === 'array' &&
+          schema.items &&
+          schema.items.type === 'object'
+        ) {
+          if (!schema.items.properties) {
+            schema.items.properties = {};
+          }
+          schema.items.properties[key] = idToSchema2X(flatten, child, final);
+        }
+      });
+    } else {
+      if (schema.type === 'object' && !schema.properties) {
+        schema.properties = {};
+      }
+      if (schema.type === 'object' && schema.theme) {
+        schema.widget = schema.theme
+        delete schema.theme
+      }
+
+      if (
+        schema.type === 'array' &&
+        schema.items &&
+        schema.items.type === 'object' &&
+        !schema.items.properties
+      ) {
+        schema.items.properties = {};
+      }
+    }
+  }
+  return schema;
+}
+
 export const copyItem = (flatten, $id, getId) => {
   let newFlatten = { ...flatten };
   try {
