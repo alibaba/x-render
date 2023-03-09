@@ -20,7 +20,6 @@ export default React.forwardRef((props: TableRenderProps, ref) => {
   const storeRef = useRef(createStore());
   const store: any = storeRef.current;
 
-
   useEffect(() => {
     if (locale === 'en-US') {
       dayjs.locale('en');

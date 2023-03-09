@@ -73,7 +73,7 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   afterSearch?: (params: any) => any;
   widgets?: any;
   form?: any;
-  [key:string]: any
+  [key: string]: any
 }
 
 type ApiType<RecordType> =
@@ -93,7 +93,7 @@ export type SearchApi<RecordType> = (
    * @deprecated 即将弃用，请使用 data 返回
    */
   rows: Array<RecordType>;
-  
+
   data: Array<RecordType>;
   total: number;
   pageSize?: number;
@@ -108,7 +108,7 @@ export interface TablePropsC<RecordType extends Object = any>
 }
 
 export interface TableRenderProps<RecordType extends Object = any>
-  extends Omit<TablePropsC<RecordType>, 'locale'>{
+  extends Omit<TablePropsC<RecordType>, 'locale'> {
   /** 
    * 开启 debug 模式，时时显示内部状态 
   */
@@ -126,5 +126,9 @@ export interface TableRenderProps<RecordType extends Object = any>
    * antd的全局config
    */
   configProvider?: ConfigProviderProps;
+  /**
+   * 自定义渲染表格
+   */
+  customTableRender?: (tableNode: React.ReactNode) => React.ReactNode;
   request?: ApiType<RecordType>;
 }

@@ -29,6 +29,7 @@ const RenderCore = props => {
     tableRef,
     request: api,
     size,
+    customTableRender,
     ...tableProps
   } = props;
 
@@ -160,6 +161,42 @@ const RenderCore = props => {
     }
   };
 
+  const tableNode = (
+    <div
+      ref={rootRef}
+      className={`tr-table-wrapper ${className}`}
+      style={style}
+    >
+      <ToolbarView
+        request={api}
+        doSearch={doSearch}
+        refresh={refresh}
+        fullScreen={fullScreen}
+        title={title}
+        tableSize={tableSize}
+        currentTab={currentTab}
+        toolbarAction={toolbarAction}
+        toolbarRender={toolbarRender}
+        setState={setState}
+        getState={getState}
+      />
+      <TableView
+        {...tableProps}
+        setState={setState}
+        getState={getState}
+        doSearch={doSearch}
+      />
+    </div>
+  )
+
+  const renderTable = () => {
+    if (typeof customTableRender === 'function') {
+      return customTableRender(tableNode);
+    } else {
+      return tableNode;
+    }
+  }
+
   return (
     <div>
       <SearchView
@@ -170,31 +207,7 @@ const RenderCore = props => {
         hidden={hiddenSearch}
       />
       <ErrorBoundary>
-        <div
-          ref={rootRef}
-          className={`tr-table-wrapper ${className}`} 
-          style={style}
-        >
-          <ToolbarView
-            request={api}
-            doSearch={doSearch}
-            refresh={refresh}
-            fullScreen={fullScreen}
-            title={title}
-            tableSize={tableSize}
-            currentTab={currentTab}
-            toolbarAction={toolbarAction}
-            toolbarRender={toolbarRender}
-            setState={setState}
-            getState={getState}
-          />
-          <TableView
-            {...tableProps}
-            setState={setState}
-            getState={getState}
-            doSearch={doSearch}
-          />
-        </div>
+        {renderTable()}
       </ErrorBoundary>
     </div>
   );
