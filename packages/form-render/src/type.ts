@@ -115,6 +115,15 @@ export interface FieldParams {
   value?: any;
 }
 
+export interface ListOperate {
+  btnType: 'text' | 'icon';
+  hideMove: boolean;
+}
+
+export interface GlobalConfig {
+  listOperate: ListOperate
+}
+
 export interface FormInstance extends AntdFormInstance {
   init: any;
   __schema: any;
@@ -269,6 +278,10 @@ export interface FRProps extends AntdFormProps {
    * 对象组件是否折叠（全局的控制）
    */
   allCollapsed?: boolean;
+   /** 
+   * 表单全局配置
+   */
+   globalConfig?: GlobalConfig;
   /** 
    * 表单的全局共享属性
    */
