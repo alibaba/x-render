@@ -543,7 +543,7 @@ const schema = {
         type: 'object',
         title: '卡片主题',
         description: '这是一个对象类型',
-        column: 3,
+        column: 1,
         properties: {
           input1: {
             title: '输入框 A',

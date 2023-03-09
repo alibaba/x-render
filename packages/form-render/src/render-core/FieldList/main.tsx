@@ -20,7 +20,7 @@ export default (props: any) => {
     configContext,
   } = props;
   
-  const { widgets } = configContext;
+  const { widgets, globalConfig } = configContext;
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
@@ -37,9 +37,7 @@ export default (props: any) => {
   };
 
   let defaultActionColumnProps = {
-    colHeaderText: t('operate'),
-    copyText: t('copy'),
-    delText: t('delete'),
+    colHeaderText: t('operate')
   };
 
   const { widget } = schema;
@@ -130,6 +128,12 @@ export default (props: any) => {
   const readOnly = getValueFromKey('readOnly');
   const preRootPath = (rootPath || []).splice(0, rootPath.length - 1);
 
+
+  if (hideMove === undefined && globalConfig?.listOperate?.hideMove) {
+    hideMove = globalConfig?.listOperate.hideMove;
+  }
+
+
   if (hideAdd) {
     hideCopy = true;
   }
@@ -140,6 +144,8 @@ export default (props: any) => {
     hideDelete = true;
     hideMove = true;
   }
+
+  const operateBtnType = globalConfig?.listOperate?.btnType;
 
   return (
     <Form.List
@@ -188,6 +194,7 @@ export default (props: any) => {
             removeItem={handleRemove(operation.remove)}
             moveItem={handleMove(operation.move)}
             copyItem={handleCopy(operation.add, fields)}
+            
             addBtnProps={{
               ...defaultAddBtnProps,
               ...addBtnProps,
@@ -199,6 +206,22 @@ export default (props: any) => {
             actionColumnProps={{
               ...defaultActionColumnProps,
               ...actionColumnProps,
+            }}
+            copyBtnProps={{
+              children: t('copy'),
+              btnType: operateBtnType
+            }}
+            deleteBtnProps={{
+              children: t('delete'),
+              btnType: operateBtnType
+            }}
+            moveUpBtnProps={{
+              children: t('moveUp'),
+              btnType: operateBtnType
+            }}
+            moveDownBtnProps={{
+              children: t('moveDown'),
+              btnType: operateBtnType
             }}
           />
           {errors?.length !== 0 && (

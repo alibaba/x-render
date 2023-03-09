@@ -1,9 +1,11 @@
 import React from 'react';
-import { Table, Form, Space, Popconfirm, Button } from 'antd';
+import { Table, Form, Space, Popconfirm, Button, Divider } from 'antd';
 import type { FormListFieldData, TableColumnsType } from 'antd';
-import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, CloseOutlined, CopyOutlined } from '@ant-design/icons';
 import VirtualCell from './virtualCell';
 import { useVT } from 'virtualizedtableforantd4';
+import FButton from '../../components/FButton';
+
 import './index.less';
 
 interface ListVirtualProps {
@@ -24,11 +26,17 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     renderCore,
     readOnly,
 
+
+    operateBtnType,
     addBtnProps,
     delConfirmProps,
+    copyBtnProps,
+    deleteBtnProps,
+    moveUpBtnProps,
+    moveDownBtnProps,
     actionColumnProps,
+    
     scrollY = 600,
-
     hideDelete,
     hideCopy,
     hideMove,
@@ -88,21 +96,41 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
       width: 150,
       render: (_, field) => (
         <Form.Item>
-          <Space>
-            {!hideCopy && <a onClick={() => handleCopy(field.name)}>{actionColumnProps.copyText}</a>}
-            {!hideDelete && (
-              <Popconfirm
-                {...delConfirmProps}
-                onConfirm={() => removeItem(field.name)}
-              >
-                <a>{actionColumnProps.delText}</a>
-              </Popconfirm>
-            )}
+          <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>
             {!hideMove && (
               <>
-                <ArrowUpOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name - 1)} />
-                <ArrowDownOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name + 1)} />
+                <FButton 
+                  disabled={field.name === 0}
+                  onClick={() => moveItem(field.name, field.name - 1)}
+                  icon={<ArrowUpOutlined/>}
+                  {...moveUpBtnProps}
+                />
+                <FButton 
+                  disabled={field.name === fields.length - 1}
+                  onClick={() => moveItem(field.name, field.name + 1)}
+                  icon={<ArrowDownOutlined/>}
+                  {...moveDownBtnProps}
+                />
               </>
+            )}
+            {!hideDelete && (
+              <Popconfirm
+                onConfirm={() => removeItem(name)}
+                {...delConfirmProps}
+              >
+                <FButton
+                  icon={<CloseOutlined/>}
+                  btnType={operateBtnType}
+                  {...deleteBtnProps}
+                />
+              </Popconfirm>
+            )}
+            {!hideCopy && (
+              <FButton 
+                onClick={() => handleCopy(field.name)}
+                icon={<CopyOutlined/>}
+                {...copyBtnProps}
+              />
             )}
           </Space>
         </Form.Item>

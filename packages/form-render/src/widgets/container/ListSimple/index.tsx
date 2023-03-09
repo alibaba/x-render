@@ -1,7 +1,9 @@
 import React from 'react';
-import { Form, Button, Space, Popconfirm } from 'antd';
+import { Button, Space, Popconfirm, Divider } from 'antd';
 import { PlusOutlined, CloseOutlined, ArrowUpOutlined, ArrowDownOutlined, CopyOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
+import FButton from '../../components/FButton';
+
 import './index.less';
 
 const getHasBackground = (fields: any[], hasBackground: boolean) => {
@@ -20,8 +22,13 @@ const SimpleList = (props: any) => {
     rootPath,
     renderCore,
     hasBackground,
+    operateBtnType,
     addBtnProps,
     delConfirmProps,
+    copyBtnProps,
+    deleteBtnProps,
+    moveUpBtnProps,
+    moveDownBtnProps,
 
     hideDelete,
     hideCopy,
@@ -32,6 +39,7 @@ const SimpleList = (props: any) => {
     copyItem,
     moveItem,
     removeItem,
+
   } = props;
 
   if (!schema.items.displayType) {
@@ -51,27 +59,47 @@ const SimpleList = (props: any) => {
         return (
           <div key={key} className='fr-list-item'>
             {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
-            <Space className={classnames('fr-list-item-operate')} >
+            <Space 
+              className={classnames('fr-list-item-operate')}
+              split={operateBtnType !== 'icon' && <Divider type='vertical' />}
+            >
               {!hideMove && (
                 <>
-                  <ArrowUpOutlined
-                    style={{ color: name !== 0 ? '#1890ff' : '#c5c5c5' }}
-                    onClick={() => name !== 0 && moveItem(name, name - 1)}
+                  <FButton 
+                    disabled={name === 0}
+                    onClick={() => moveItem(name, name - 1)}
+                    icon={<ArrowUpOutlined/>}
+                    {...moveUpBtnProps}
                   />
-                  <ArrowDownOutlined
-                    style={{ color: name !== length - 1 && length !== 1 ? '#1890ff' : '#c5c5c5' }}
-                    onClick={() => name !== length - 1 && length !== 1 && moveItem(name, name + 1)}
+                  <FButton 
+                    disabled={name === length - 1}
+                    onClick={() => moveItem(name, name + 1)}
+                    icon={<ArrowDownOutlined/>}
+                    children='下移'
+                    {...moveDownBtnProps}
                   />
                 </>
               )}
-              {!hideCopy && <CopyOutlined onClick={() => handleCopy(name)} />}
               {!hideDelete && (
                 <Popconfirm
                   onConfirm={() => removeItem(name)}
                   {...delConfirmProps}
                 >
-                  <CloseOutlined />
+                  <FButton
+                    icon={<CloseOutlined/>}
+                    children='删除'
+                    btnType={operateBtnType}
+                    {...deleteBtnProps}
+                  />
                 </Popconfirm>
+              )}
+              {!hideCopy && (
+                <FButton 
+                  onClick={() => handleCopy(name)}
+                  icon={<CopyOutlined/>}
+                  children='复制'
+                  {...copyBtnProps}
+                />
               )}
             </Space>
 
