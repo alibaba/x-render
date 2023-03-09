@@ -12,11 +12,14 @@ const schema = {
     ruleName: {
       title: '铺货规则名称',
       type: 'string',
+      extra: '1111',
+      help: 'sdfsdaf'
     },
     ruleType: {
       title: '规则类型',
       type: 'string',
       widget: 'select',
+      extra: { text: 'xxxx'},
       props: {
         options: [
           { label: '有效', value: '1' },
@@ -28,6 +31,7 @@ const schema = {
     supplierId: {
       title: '供应商 Id',
       type: 'string',
+      extra: { widget: 'xxx'}
     },
     select3: {
       title: '酒店',
@@ -181,7 +185,11 @@ const Demo = () => {
           displayType='row'
           form={form}
           schema={schema}
-        
+          widgets={{
+            "xxx": () => {
+              return 'sdfadf'
+            }
+          }}
           onFinish={onFinish} // 如果beforeFinish返回一个promise，onFinish会等promise resolve之后执行
           debug={true}
         />
