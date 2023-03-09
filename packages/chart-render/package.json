@@ -44,7 +44,7 @@
     "@ant-design/plots": "^1.0.9",
     "ahooks": "^3.4.1",
     "classnames": "^2.3.1",
-    "form-render": "1.x",
+    "formRenderV1": "npm:form-render@^1.4.13",
     "zustand": "^4.0.0-rc.1"
   },
   "devDependencies": {},

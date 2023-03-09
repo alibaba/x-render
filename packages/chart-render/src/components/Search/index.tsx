@@ -2,7 +2,7 @@ import { SyncOutlined } from '@ant-design/icons';
 import { createUpdateEffect, useDeepCompareEffect } from 'ahooks';
 import { Button, ButtonProps } from 'antd';
 import classNames from 'classnames';
-import FormRender, { FRProps, useForm } from 'form-render';
+import FormRender, { FRProps, useForm } from 'formRenderV1';
 import React, {
   CSSProperties,
   FC,

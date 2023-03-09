@@ -1,4 +1,4 @@
-export type { Schema } from 'form-render';
+export type { Schema } from 'formRenderV1';
 export { ChartProvider, withChart } from './components/ChartProvider';
 export { default as Search } from './components/Search';
 export { useChart } from './utils/store';
