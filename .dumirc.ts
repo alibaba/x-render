@@ -70,7 +70,7 @@ export default defineConfig({
     'form-render':  path.resolve(__dirname, 'packages/form-render/src'),
     'table-render':  path.resolve(__dirname, 'packages/table-render/src'),
     'chart-render':  path.resolve(__dirname, 'packages/chart-render/src'),
-    // 'fr-generator':  path.resolve(__dirname, 'tools/schema-generator/src')
+    'fr-generator':  path.resolve(__dirname, 'tools/schema-generator/src')
   },
   codeSplitting: { jsStrategy: 'granularChunks' },
   //...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),
