@@ -1,5 +1,8 @@
 # Change Log
 
+### 2.8.5
+- [!] 修复schema 默认有 labelWidth时，配置项重新设置 lableWidth，预览区没有效果
+
 ### 2.8.1
 
 - [!] 支持 React18
