@@ -1,4 +1,4 @@
-import { FormInstance } from 'form-render';
+import { FormInstance } from 'formRenderV1';
 import create, { StoreApi } from 'zustand';
 import createContext from 'zustand/context';
 import { DataSource } from './type';

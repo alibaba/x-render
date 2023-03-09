@@ -7,40 +7,39 @@
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { message, Space, Tag, Tooltip } from 'antd';
 import React, { useRef } from 'react';
-import TableRender from 'table-render';
+import TableRender, { ProColumnsType } from 'table-render';
 import request from 'umi-request';
 
 const Demo = () => {
   const tableRef: any = useRef();
 
-  const searchApi = params => {
-    console.log('params >>> ', params);
+  const requestData = (params: any) => {
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
         { params }
       )
-      .then(res => {
-        if (res && res.data) {
-          return {
-            data: res.data,
-            total: res.data.length,
-            extraData: res.status,
-          };
-        }
-      })
-      .catch(e => {
-        console.log('Oops, error', e);
-        // 注意一定要返回 rows 和 total
-        return {
-          data: [],
-          total: 0,
-        };
-      });
+      .then(res => ({ success: true, data: res.data }))
+      .catch(() => ({ success: false, data: {} }))
+  }
+
+  const searchApi = async (params) => {
+    const { success, data } = await requestData(params);
+    if (success) {
+      return {
+        data: data,
+        total: data.length,
+      }
+    } else {
+      // 必须返回 data 和 total
+      return {
+        data: [],
+        total: 0,
+      }
+    }
   };
 
-  // 配置完全透传antd table
-  const columns = [
+  const columns: ProColumnsType<any> = [
     {
       title: '酒店名称',
       dataIndex: 'title',
@@ -59,7 +58,7 @@ const Demo = () => {
       title: (
         <>
           酒店状态
-          <Tooltip placement="top" title="使用valueType">
+          <Tooltip placement='top' title='使用valueType'>
             <InfoCircleOutlined style={{ marginLeft: 6 }} />
           </Tooltip>
         </>
@@ -73,9 +72,10 @@ const Demo = () => {
     {
       title: '酒店星级',
       dataIndex: 'labels',
+      width: 90,
       render: (_, row) => (
         <Space>
-          {row.labels.map(({ name, color }) => (
+          {row?.labels?.map(({ name, color }) => (
             <Tag color={color} key={name}>
               {name}
             </Tag>
@@ -87,25 +87,30 @@ const Demo = () => {
     {
       title: '酒店GMV',
       key: 'money',
+      sorter: true,
       dataIndex: 'money',
       valueType: 'money',
     },
     {
-      title: '操作',
-      render: row => (
-        <Space>
-          <a target="_blank" key="1">
-            <div
-              onClick={() => {
-                message.success('预订成功');
-              }}
-            >
-              预订
-            </div>
-          </a>
-        </Space>
-      ),
+      title: '成立时间',
+      key: 'created_at',
+      dataIndex: 'created_at',
+      valueType: 'date',
     },
+    {
+      title: '操作',
+      width: 60,
+      align: 'right',
+      render: () => (
+        <a
+          onClick={() => {
+            message.success('预订成功');
+          }}
+        >
+          预订
+        </a>
+      )
+    }
   ];
 
   return (
