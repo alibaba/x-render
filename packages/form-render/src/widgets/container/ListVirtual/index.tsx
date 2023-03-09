@@ -92,7 +92,8 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
   if (!readOnly) {
     columns.push({
       title: actionColumnProps.colHeaderText,
-      width: 150,
+      width: '190px',
+      fixed: 'right',
       render: (_, field) => (
         <Form.Item>
           <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>

@@ -95,8 +95,9 @@ const TableList: React.FC<ListTableProps> = (props) => {
   if (!readOnly) {
     columns.push({
       title: actionColumnProps.colHeaderText,
-      width: 150,
-      render: (_, field, index) => (
+      width: '190px',
+      fixed: 'right',
+      render: (_, field) => (
         <Form.Item>
           <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>
             {!hideMove && (
