@@ -33,7 +33,7 @@ const TypeSchema: React.FC = () => {
             getBeforeInit={instance => {
               instance
                 .options({
-                  speed: 10,
+                  speed: 40,
                 })
                 .type('{}')
                 .move(-1, { instant: true })
