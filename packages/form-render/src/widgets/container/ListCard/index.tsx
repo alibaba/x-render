@@ -1,7 +1,8 @@
 import React from 'react';
-import { Form, Button, Space, Popconfirm } from 'antd';
+import { Button, Space, Popconfirm, Divider } from 'antd';
 import { PlusOutlined, CloseOutlined, ArrowUpOutlined, ArrowDownOutlined, CopyOutlined } from '@ant-design/icons';
-import classnames from 'classnames'
+import classnames from 'classnames';
+import FButton from '../../components/FButton';
 
 import './index.less';
 
@@ -38,11 +39,15 @@ const CardList = (props: any) => {
     fields,
     rootPath,
     renderCore,
-    readOnly,
     hasBackground,
+    operateBtnType,
     addBtnProps,
     delConfirmProps,
-
+    copyBtnProps,
+    deleteBtnProps,
+    moveUpBtnProps,
+    moveDownBtnProps,
+   
     hideDelete,
     hideCopy,
     hideMove,
@@ -51,9 +56,8 @@ const CardList = (props: any) => {
     addItem,
     copyItem,
     moveItem,
-    removeItem,
+    removeItem
   } = props;
-
 
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
@@ -70,31 +74,46 @@ const CardList = (props: any) => {
               <div style={{ width: 0, flex: 1 }}>
                 {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
               </div>
-              {!readOnly && (
-                <Space className={classnames('fr-list-item-operate', { 'fr-list-item-operate-fixed': getOperateFixed(schema) })} style={getOperateStyle(schema)}>
-                  {!hideMove && (
-                    <>
-                      <ArrowUpOutlined
-                        style={{ color: name !== 0 ? '#1890ff' : '#c5c5c5' }}
-                        onClick={() => name !== 0 && moveItem(name, name - 1)}
-                      />
-                      <ArrowDownOutlined
-                        style={{ color: name !== length - 1 && length !== 1 ? '#1890ff' : '#c5c5c5' }}
-                        onClick={() => name !== length - 1 && length !== 1 && moveItem(name, name + 1)}
-                      />
-                    </>
-                  )}
-                  {!hideCopy && <CopyOutlined onClick={() => handleCopy(name)} />}
-                  {!hideDelete && (
-                    <Popconfirm
-                      onConfirm={() => removeItem(name)}
-                      {...delConfirmProps}
-                    >
-                      <CloseOutlined />
-                    </Popconfirm>
-                  )}
-                </Space>
-              )}
+              <Space 
+                className={classnames('fr-list-item-operate', { 'fr-list-item-operate-fixed': getOperateFixed(schema) })}
+                style={getOperateStyle(schema)}
+                split={operateBtnType !== 'icon' && <Divider type='vertical' />}
+              >
+                {!hideMove && (
+                  <>
+                    <FButton 
+                      disabled={name === 0}
+                      onClick={() => moveItem(name, name - 1)}
+                      icon={<ArrowUpOutlined/>}
+                      {...moveUpBtnProps}
+                    />
+                    <FButton 
+                      disabled={name === length - 1}
+                      onClick={() => moveItem(name, name + 1)}
+                      icon={<ArrowDownOutlined/>}
+                      {...moveDownBtnProps}
+                    />
+                  </>
+                )}
+                {!hideDelete && (
+                  <Popconfirm
+                    onConfirm={() => removeItem(name)}
+                    {...delConfirmProps}
+                  >
+                    <FButton
+                      icon={<CloseOutlined/>}
+                      {...deleteBtnProps}
+                    />
+                  </Popconfirm>
+                )}
+                {!hideCopy && (
+                  <FButton 
+                    onClick={() => handleCopy(name)}
+                    icon={<CopyOutlined/>}
+                    {...copyBtnProps}
+                  />
+                )}
+              </Space>
             </div>
           );
         })}

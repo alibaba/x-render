@@ -20,5 +20,7 @@ export default {
   "reset": "重置",
   "expand": "展开",
   "fold": "收起",
-  "submit": "提交"
+  "submit": "提交",
+  "moveDown": "下移",
+  "moveUp": "上移"
 };

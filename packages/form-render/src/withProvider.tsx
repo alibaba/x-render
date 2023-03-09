@@ -25,6 +25,7 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       form,
       validateMessages,
       globalProps={},
+      globalConfig = {},
       ...otherProps
     } = props;
   
@@ -56,7 +57,8 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       widgets: { ...defaultWidgets, ...widgets },
       methods,
       form,
-      globalProps
+      globalProps,
+      globalConfig
     };
   
     const langPack: any = { 
