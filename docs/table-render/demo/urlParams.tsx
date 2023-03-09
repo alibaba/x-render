@@ -7,7 +7,7 @@
 import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import { Button, message, Space, Tag, Tooltip } from 'antd';
 import React, { useEffect, useRef } from 'react';
-import TableRender from 'table-render';
+import TableRender, { ProColumnsType } from 'table-render';
 import { history } from 'umi';
 import request from 'umi-request';
 
@@ -47,8 +47,33 @@ const Demo = () => {
     }
   }, []);
 
-  // 配置完全透传antd table
-  const columns = [
+  const requestData = (params: any) => {
+    return request
+      .get(
+        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+        { params }
+      )
+      .then(res => ({ success: true, data: res.data }))
+      .catch(() => ({ success: false, data: {} }))
+  }
+
+  const searchApi = async (params) => {
+    const { success, data } = await requestData(params);
+    if (success) {
+      return {
+        data: data,
+        total: data.length,
+      }
+    } else {
+      // 必须返回 data 和 total
+      return {
+        data: [],
+        total: 0,
+      }
+    }
+  };
+
+  const columns: ProColumnsType<any> = [
     {
       title: '酒店名称',
       dataIndex: 'title',
@@ -81,9 +106,10 @@ const Demo = () => {
     {
       title: '酒店星级',
       dataIndex: 'labels',
+      width: 90,
       render: (_, row) => (
         <Space>
-          {row.labels.map(({ name, color }) => (
+          {row?.labels?.map(({ name, color }) => (
             <Tag color={color} key={name}>
               {name}
             </Tag>
@@ -91,9 +117,11 @@ const Demo = () => {
         </Space>
       ),
     },
+
     {
       title: '酒店GMV',
       key: 'money',
+      sorter: true,
       dataIndex: 'money',
       valueType: 'money',
     },
@@ -105,47 +133,19 @@ const Demo = () => {
     },
     {
       title: '操作',
+      width: 60,
+      align: 'right',
       render: () => (
-        <Space>
-          <a target='_blank' key='1'>
-            <div
-              onClick={() => {
-                message.success('预订成功');
-              }}
-            >
-              预订
-            </div>
-          </a>
-        </Space>
-      ),
-    },
-  ];
-
-  const searchApi = params => {
-    console.log('params >>> ', params);
-    return request
-      .get(
-        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
-        { params }
+        <a
+          onClick={() => {
+            message.success('预订成功');
+          }}
+        >
+          预订
+        </a>
       )
-      .then(res => {
-        if (res && res.data) {
-          return {
-            data: res.data,
-            total: res.data.length,
-            extraData: res.status,
-          };
-        }
-      })
-      .catch(e => {
-        console.log('Oops, error', e);
-        // 注意一定要返回 rows 和 total
-        return {
-          data: [],
-          total: 0,
-        };
-      });
-  };
+    }
+  ];
 
   const onSearch = search => {
     console.log('onSearch', search);
@@ -160,7 +160,7 @@ const Demo = () => {
   };
 
   return (
-    <TableRender 
+    <TableRender
       ref={tableRef}
       search={{
         schema,

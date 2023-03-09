@@ -5,8 +5,8 @@
  */
 
 import React, { useRef } from 'react';
+import TableRender, { ProColumnsType } from 'table-render';
 import { message, Space, } from 'antd';
-import TableRender, { } from 'table-render';
 import request from 'umi-request';
 
 const schema = {

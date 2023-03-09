@@ -5,9 +5,10 @@
  */
 
 import React, { useRef } from 'react';
+import TableRender from 'table-render';
+import type { ProColumnsType } from 'table-render';
 import { Button, message, Space, } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import TableRender, { } from 'table-render';
 import request from 'umi-request';
 
 const schema = {
@@ -84,7 +85,7 @@ const Demo = () => {
     });
   };
 
-  const columns = [
+  const columns: ProColumnsType<any> = [
     {
       title: '酒店名称',
       dataIndex: 'title',
@@ -128,18 +129,16 @@ const Demo = () => {
     },
     {
       title: '操作',
+      width: 60,
+      align: 'right',
       render: () => (
-        <Space>
-          <a target='_blank' key='1'>
-            <div
-              onClick={() => {
-                message.success('预订成功');
-              }}
-            >
-              预订
-            </div>
-          </a>
-        </Space>
+        <a
+          onClick={() => {
+            message.success('预订成功');
+          }}
+        >
+          预订
+        </a>
       )
     }
   ];
@@ -149,7 +148,7 @@ const Demo = () => {
   };
 
   return (
-    <TableRender 
+    <TableRender
       ref={tableRef}
       search={{ schema }}
       request={[

@@ -7,40 +7,39 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, message, Space } from 'antd';
 import React, { useRef } from 'react';
-import TableRender from 'table-render';
+import TableRender, { ProColumnsType } from 'table-render';
 import request from 'umi-request';
 
 const Demo = () => {
   const tableRef: any = useRef();
 
-  const searchApi = params => {
-    console.log('params >>> ', params);
+  const requestData = (params: any) => {
     return request
       .get(
         'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
         { params }
       )
-      .then(res => {
-        if (res && res.data) {
-          return {
-            data: res.data,
-            total: res.data.length,
-            extraData: res.status,
-          };
-        }
-      })
-      .catch(e => {
-        console.log('Oops, error', e);
-        // 注意一定要返回 rows 和 total
-        return {
-          data: [],
-          total: 0,
-        };
-      });
+      .then(res => ({ success: true, data: res.data }))
+      .catch(() => ({ success: false, data: {} }))
+  }
+
+  const searchApi = async (params) => {
+    const { success, data } = await requestData(params);
+    if (success) {
+      return {
+        data: data,
+        total: data.length,
+      }
+    } else {
+      // 必须返回 data 和 total
+      return {
+        data: [],
+        total: 0,
+      }
+    }
   };
 
-  // 配置完全透传antd table
-  const columns = [
+  const columns: ProColumnsType<any> = [
     {
       title: '酒店名称',
       dataIndex: 'title',

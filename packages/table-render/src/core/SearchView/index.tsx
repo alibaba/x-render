@@ -52,6 +52,7 @@ const Search: <RecordType extends object = any>(
       loading={loading} 
       onSearch={handleSearch}
       onMount={handleMount}
+      schema={otherProps.schema || {}}
     />
   );
 }
