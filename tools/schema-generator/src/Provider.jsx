@@ -139,7 +139,7 @@ function Provider(props, ref) {
 
   let _schema = {};
   if (schema) {
-    _schema = combineSchema(schema); // TODO: 要不要判断是否都是object
+    _schema = combineSchema({ ...schema, ...frProps }); // TODO: 要不要判断是否都是object
   }
   const flatten = flattenSchema(_schema);
   const flattenWithData = transformer.from(dataToFlatten(flatten, formData));
