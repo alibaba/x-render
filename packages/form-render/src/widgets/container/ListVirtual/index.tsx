@@ -25,8 +25,7 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     rootPath,
     renderCore,
     readOnly,
-
-
+    
     operateBtnType,
     addBtnProps,
     delConfirmProps,

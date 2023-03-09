@@ -43,7 +43,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
     addItem,
     copyItem,
     moveItem,
-    removeItem,
+    removeItem
   } = props;
 
   const itemSchema = schema?.items?.properties || {};

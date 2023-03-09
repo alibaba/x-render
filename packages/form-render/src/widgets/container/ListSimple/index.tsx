@@ -38,8 +38,7 @@ const SimpleList = (props: any) => {
     addItem,
     copyItem,
     moveItem,
-    removeItem,
-
+    removeItem
   } = props;
 
   if (!schema.items.displayType) {
