@@ -86,6 +86,44 @@ const getTooltip = (schema: any, displayType: string) => {
   return null;
 };
 
+const getExtraView = (extraKey: string, schema: any, widgets: any) => {
+  const extra = schema[extraKey];
+  if (!extra) {
+    return;
+  }
+
+  // extra 自定义
+  const widgetName = extra?.widget;
+  if (widgetName) {
+    const Widget = widgets[widgetName];
+    if (!Widget) {
+      return;
+    }
+    return <Widget schema={schema} />;
+  }  
+  
+
+  let __html = '';
+  if (typeof extra === 'string') {
+    __html = extra;
+  }
+  // 内部BU使用的口子，这个api不对外，也没有必要
+  if (extra?.text) {
+    __html = extra.text;
+  }
+
+  if (!__html) {
+    return;
+  }
+
+  return (
+    <div
+      className="fr-form-item-extra"
+      dangerouslySetInnerHTML={{ __html }}
+    />
+  )
+}
+
 const getColSpan = (formCtx: any, parentCtx: any, schema: any) => {
   let span = 24;
 
@@ -333,6 +371,9 @@ export default (props: any) => {
   let noStyle = getValueFromKey('noStyle');
 
   const span = getColSpan(formCtx, upperCtx, schema);
+  const extra = getExtraView('extra', schema, widgets);
+  const help = getExtraView('help', schema, widgets);
+
   const tooltip = getTooltip(schema, displayType);
   const ruleList = getRuleList(schema, form);
   const readOnly = getValueFromKey('readOnly');
@@ -370,6 +411,8 @@ export default (props: any) => {
       rules={readOnly ? [] : ruleList}
       hidden={hidden}
       tooltip={tooltip}
+      extra={extra}
+      help={help}
       initialValue={schema.default}
       labelCol={labelCol}
       wrapperCol={fieldCol}
