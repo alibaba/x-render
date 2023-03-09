@@ -1,10 +1,9 @@
 ---
-order: 2
+order: 0
 group: 
-  title: ''
-  order: 4
+  title: 其他
+  order: 5
 ---
-
 # API
 
 ## TableRender
@@ -33,6 +32,7 @@ group:
 | defaultCollapsed    | 折叠收起                               | `boolean`          |  true   |
 | loading             | 查询按钮加载中                          | `boolean`          |  -    |
 | column              | 一行多列                               | `number`           |  4    |
+| layoutAuto            | 自适应布局，可设置为 true / false 或对象：{ fieldMinWidth: `number` }， 当设置fieldMinWidth 会根据最小宽度动态自适应                         | `boolean` or `object`         |  `true `   |
 | onSearch           | 在表格查询时执行一些额外的操作                                                        | `(params) => void`                             | -       |
 | afterSearch        | 在表格查询结束后执行一些额外的操作                                                    | `(params) => void`                             | -       |
 | searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                  | `boolean`                              | true  | 
@@ -104,7 +104,11 @@ TableRender 封装了一些常用的值类型来减少重复的 render 操作，
   | text     | 普通的文本类型                                                     |
   | date     | 当数据是日期类型的返回时，会自动将格式转换为 `YYYY-MM-DD`          |
   | dateTime | 当数据是日期类型的返回时，会自动将格式转换为 `YYYY-MM-DD HH:mm:ss` |
+  | dateRange | 当数据是日期区间类型的返回时，会自动将格式转换为 `YYYY-MM-DD`          |
   | money    | 当数据是金额时，会自动将格式转换为 `¥0,0.00`               |
+  | money    | 当数据是金额时，会自动将格式转换为 `¥0,0.00`               |
+  | money    | 当数据是金额时，会自动将格式转换为 `¥0,0.00`               |
+
 
   ```js
   const columns = [

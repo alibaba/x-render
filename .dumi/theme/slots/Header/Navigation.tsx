@@ -40,12 +40,12 @@ const Navigation: React.FC = () => {
         //   icon: <HighlightOutlined />,
         // },
         {
-          label: <Link to="/proptypes">PropToSchema</Link>,
+          label: <Link to="/tools/proptypes">PropToSchema</Link>,
           key: 'proptypes',
           icon: <SwapOutlined />,
         },
         {
-          label: <Link to="/vscode">vscode 插件</Link>,
+          label: <Link to="/tools/vscode">vscode 插件</Link>,
           key: 'vscode',
           icon: <ToolOutlined />,
         },

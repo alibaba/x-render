@@ -20,6 +20,7 @@ interface Props {
 
 const TableList: React.FC<Props> = (props: any) => {
   const {
+    form,
     schema,
     fields,
     rootPath,
@@ -44,7 +45,6 @@ const TableList: React.FC<Props> = (props: any) => {
     configContext,
   } = props;
 
-  const form = Form.useFormInstance();
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 

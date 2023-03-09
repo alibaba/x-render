@@ -1,45 +1,67 @@
 /**
  * transform: true
- * defaultShowCode: false
+ * defaultShowCode: true
  * background: 'rgb(245,245,245)'
  */
 
-import { InfoCircleOutlined } from '@ant-design/icons';
-import { message, Space, Tag, Tooltip } from 'antd';
 import React, { useRef } from 'react';
 import TableRender, { ProColumnsType } from 'table-render';
+import { message, Space, } from 'antd';
 import request from 'umi-request';
+
+const schema = {
+  type: 'object',
+  labelWidth: 80,
+  properties: {
+    state: {
+      title: '酒店状态',
+      type: 'string',
+      enum: ['open', 'closed'],
+      enumNames: ['营业中', '已打烊'],
+      widget: 'select'
+    },
+    labels: {
+      title: '酒店星级',
+      type: 'string'
+    },
+    created_at: {
+      title: '成立时间',
+      type: 'string',
+      format: 'date'
+    }
+  }
+};
 
 const Demo = () => {
   const tableRef: any = useRef();
 
-  const requestData = (params: any) => {
-    return request
-      .get(
-        'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
-        { params }
-      )
-      .then(res => ({ success: true, data: res.data }))
-      .catch(() => ({ success: false, data: {} }))
-  }
+  const searchApi = (params, sorter) => {
+    console.group(sorter);
 
-  const searchApi = async (params) => {
-    const { success, data } = await requestData(params);
-    if (success) {
-      return {
-        data: data,
-        total: data.length,
+    return request.get(
+      'https://www.fastmock.site/mock/62ab96ff94bc013592db1f67667e9c76/getTableList/api/basic',
+      { params }
+    )
+    .then(res => {
+      if (res && res.data) {
+        return {
+          data: [...res.data],
+          total: res.data.length,
+        };
       }
-    } else {
-      // 必须返回 data 和 total
+    })
+    .catch(e => {
+      console.log('Oops, error', e);
+
+      // 注意一定要返回 data 和 total
       return {
         data: [],
         total: 0,
-      }
-    }
+      };
+    });
   };
 
-  const columns: ProColumnsType<any> = [
+  const columns = [
     {
       title: '酒店名称',
       dataIndex: 'title',
@@ -55,35 +77,19 @@ const Demo = () => {
       width: '25%',
     },
     {
-      title: (
-        <>
-          酒店状态
-          <Tooltip placement='top' title='使用valueType'>
-            <InfoCircleOutlined style={{ marginLeft: 6 }} />
-          </Tooltip>
-        </>
-      ),
+      title: '酒店状态',
+      tooltip: '气泡提示',
+      dataIndex: 'state',
       enum: {
         open: '营业中',
-        closed: '已打烊',
-      },
-      dataIndex: 'state',
+        closed: '已打烊'
+      }
     },
     {
       title: '酒店星级',
       dataIndex: 'labels',
-      width: 90,
-      render: (_, row) => (
-        <Space>
-          {row?.labels?.map(({ name, color }) => (
-            <Tag color={color} key={name}>
-              {name}
-            </Tag>
-          ))}
-        </Space>
-      ),
+      valueType: 'tags'
     },
-
     {
       title: '酒店GMV',
       key: 'money',
@@ -99,32 +105,34 @@ const Demo = () => {
     },
     {
       title: '操作',
-      width: 60,
-      align: 'right',
       render: () => (
-        <a
-          onClick={() => {
-            message.success('预订成功');
-          }}
-        >
-          预订
-        </a>
+        <Space>
+          <a target='_blank' key='1'>
+            <div
+              onClick={() => {
+                message.success('预订成功');
+              }}
+            >
+              预订
+            </div>
+          </a>
+        </Space>
       )
     }
   ];
 
+
   return (
-    <TableRender
+    <TableRender 
       ref={tableRef}
-      search={{
-        hidden: true,
-        afterSearch: params => console.log('afterSearch', params)
-      }}
+      search={{ schema }}
       request={searchApi}
       columns={columns}
-      rowKey='id'
     />
-  );
+  )
 };
 
 export default Demo;
+
+
+

@@ -3,11 +3,9 @@ title: 首页
 hero:
   title: XRender
   description: |
-    阿里巴巴 - 中后台「表单/表格/图表」开箱即用解决方案
+    中后台「表单/表格/图表」开箱即用解决方案
     <br />
     <small style="opacity: 0.7;">v1 文档请访问 <a href="https://xrender.fun/" style="color: #1677ff;">https://xrender.fun</a></small>
-  # description: 阿里巴巴 - 中后台「表单/表格/图表」开箱即用解决方案  <br />
-  #   <small style="opacity: 0.7;">v1 文档请访问 <a href="https://xrender.fun/" style="color: #1677ff;">v1.d.umijs.org</a></small>
   actions:
     - text: 立即使用
       link: /form-render

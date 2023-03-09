@@ -39,6 +39,9 @@ const FormCore = (props: any) => {
     onMount,
     column,
     labelWidth,
+    labelCol,
+    fieldCol,
+    maxWidth,
     form,
     onFinish,
     onFinishFailed,
@@ -48,9 +51,8 @@ const FormCore = (props: any) => {
     operateExtra,
     logOnMount,
     logOnSubmit,
-    id
+    id,
   } = transformProps({ ...props, ...schemProps });
-  const { labelCol, wrapperCol } = formProps;
 
   useEffect(() => {
     form.__initStore(store);
@@ -64,14 +66,15 @@ const FormCore = (props: any) => {
   useEffect(() => {
     const context = {
       column,
-      labelCol,
-      wrapperCol,
       readOnly,
       labelWidth,
       displayType,
+      labelCol,
+      fieldCol,
+      maxWidth
     };
     setContext(context);
-  }, [column, labelCol, wrapperCol, displayType, labelWidth]);
+  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth]);
 
   const initial = async () => {
     onMount && await onMount();
@@ -199,7 +202,7 @@ const FormCore = (props: any) => {
         <RenderCore schema={schema} />
         {operateExtra}
       </Row>
-      {builtOperation && (
+      {schema && builtOperation && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24 / column}>
             <Form.Item

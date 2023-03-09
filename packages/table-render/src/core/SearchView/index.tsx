@@ -1,6 +1,7 @@
 import React from 'react';
 import { SearchProps } from '../../types';
 import { SearchForm } from 'form-render';
+import { isFunction } from '../../utils'
 
 const Search: <RecordType extends object = any>(
   props: SearchProps<RecordType>
@@ -10,10 +11,27 @@ const Search: <RecordType extends object = any>(
     refresh,
     getState,
     onMount,
-    onSearch,
+    watch: _watch,
+    mode,
+    form,
     ...otherProps
-  } = props;
+  }  = props;
+
   const { loading, sorter }: any = getState();
+
+  let watch = { ..._watch };
+  if (mode === 'simple') {
+    watch = {
+      '#': (value) => {
+        form.submit();
+        const callBack: any = _watch['#'];
+        if (isFunction(callBack)) {
+          callBack(value);
+        }
+      },
+      ..._watch,
+    }
+  }
 
   const handleMount = async () => {
     if (typeof onMount === 'function') {
@@ -22,16 +40,16 @@ const Search: <RecordType extends object = any>(
   };
 
   const handleSearch = (data: any) => {
-    if (typeof onSearch === 'function') {
-      onSearch(data);
-    }
     refresh({ ...data, sorter });
   };
 
   return (
-    <SearchForm
+    <SearchForm 
       {...otherProps}
-      loading={loading}
+      mode={mode}
+      form={form}
+      watch={watch}
+      loading={loading} 
       onSearch={handleSearch}
       onMount={handleMount}
       schema={otherProps.schema || {}}

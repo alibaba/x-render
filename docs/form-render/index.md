@@ -23,7 +23,7 @@ title: 开始使用
   </a>
 </p>
 
-阿里巴巴-中后台表单解决方案，通过 JsonSchema 协议渲染表单
+中后台表单解决方案，通过 JsonSchema 协议渲染表单
 
 
 ```shell
@@ -78,7 +78,7 @@ export default () => {
         form={form} 
         schema={schema} 
         onFinish={onFinish} 
-        wrapperCol={{ sm: 10, xxl: 8 }}
+        fieldCol={8}
       />
       <Button type="primary" onClick={form.submit}>
         提交
@@ -131,7 +131,7 @@ class Demo extends React.Component {
           form={form} 
           schema={schema} 
           onFinish={this.onFinish}
-          wrapperCol={{ sm: 10, xxl: 8 }}
+          fieldCol={8}
         />
         <Button type="primary" onClick={form.submit}>
           提交

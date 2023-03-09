@@ -176,6 +176,7 @@ export default () => {
 | collapsed           | 是否可折叠                             | `boolean`          |  -    |
 | defaultCollapsed    | 折叠收起                               | `boolean`          |  true   |
 | loading             | 查询按钮加载中                          | `boolean`          |  -    |
+| layoutAuto            | 自适应布局，可设置为 true / false 或对象：{ fieldMinWidth: `number` }， 当设置fieldMinWidth 会根据最小宽度动态自适应                         | `boolean` or `object`         |  `true `   |
 | column              | 一行多列                               | `number`           |  4    |
 | onMount             | 表单首次加载时触发                       | `() => void`       |  -    |
 | onSearch            | 点击查询按钮触发                        | `(data) => void`    |  -    |

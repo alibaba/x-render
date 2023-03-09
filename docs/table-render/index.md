@@ -1,6 +1,8 @@
 ---
-order: 1
-title: 使用教程
+order: 0
+title: '使用教程'
+group: 
+  order: 1
 ---
 
 <div style="display:flex;align-items:center;margin-bottom:24px">
@@ -22,7 +24,7 @@ title: 使用教程
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
   </a>
 </p>
-阿里巴巴-中后台列表解决方案，常用于搜索列表快速生成
+中后台列表解决方案，常用于搜索列表快速生成
 
 ## 简介
 

@@ -9,14 +9,39 @@ export const _merge = merge;
 export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
 
-export const getDateTime = time => {
+export const getDateTime = (time: any, format: string) => {
   if (!time) return null;
-  return dayjs(time).format('YYYY-MM-DD HH:mm:ss');
+  return dayjs(time).format(format || 'YYYY-MM-DD HH:mm:ss');
 };
 
-export const getDate = time => {
+export const getDate = (time: any, format: string) => {
   if (!time) return null;
-  return dayjs(time).format('YYYY-MM-DD');
+  return dayjs(time).format(format || 'YYYY-MM-DD');
+};
+
+export const getDateRange = (value: any, { result, record } , _format?: string) => {
+  let data = value;
+  const { bind, format } = result.valueTypeProps || {}
+  if (bind) {
+    data = [record?.[bind[0]], record?.[bind[1]]];
+  }
+
+
+  if (!isArray(data)) return null;
+  const start = getDate(data[0], _format || format);
+  const end = getDate(data[1], _format || format);
+
+  if (start && end) {
+    return `${start} ~ ${end}`;
+  }
+
+  if (start) {
+    return `${start}（开始时间）`;
+  }
+
+  if (end) {
+    return `${end}（结束时间）`;
+  }
 };
 
 // 格式化千分符

@@ -1,7 +1,7 @@
 ---
-order: 1
+order: 0
 title: ''
-gapless: true
+sidebar: true
 ---
 
 <code src='./index.jsx'></code>

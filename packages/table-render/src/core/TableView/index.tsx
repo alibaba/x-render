@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { Table, TableProps } from 'antd';
-import { getDate, getDateTime, getMoneyType } from '../../utils';
+import { Table, TableProps, Tooltip } from 'antd';
+import { InfoCircleOutlined } from '@ant-design/icons';
+
+import { getDate, getDateTime, getMoneyType, getDateRange, isObject, isFunction } from '../../utils';
 import { renderDom } from './field';
 import { TablePropsC } from '../../types';
 
@@ -25,21 +27,64 @@ const ProTable: <RecordType extends object = any>(
     doSearch({ current, pageSize, sorter });
   };
 
-  columns.map((item: any) => {
-    const result = item;
+  const newColumns = columns.map((item: any) => {
+    const { tooltip, ...otherItem } = item;
+    const result = otherItem;
+
+    // 兼容 tooltip 模式
+    if (typeof result.title === 'string' && tooltip) {
+      let tooltipProps = isObject(tooltip) ? tooltip : { title: tooltip };
+      if (isFunction(tooltip)) {
+        tooltipProps = tooltip();
+      }
+      result.title = (
+        <>
+          {result.title}
+          <Tooltip placement='top' {...tooltipProps}>
+            <InfoCircleOutlined style={{ marginLeft: 6 }} />
+          </Tooltip>
+        </>
+      );
+    }
+
     // 用户在columns中自定义的render会覆盖tr的预设render
-    if (result.render) return result;
+    if (result.render) {
+      return result;
+    }
+
+    if (isFunction(result.valueTypeProps)) {
+      result.render = (value: any, record: any, index: number) => {
+        if (result.valueType === 'tags') {
+          return renderDom(value, { ...item });
+        }
+
+        const { type, ... domProps } = result.valueTypeProps(value, record);
+        return renderDom(value, { ...item,  valueTypeProps: domProps });
+      }
+      return result;
+    }
+
     switch (result.valueType) {
       case 'date':
-        result.render = (value: any) => renderDom(getDate(value), result);
+        result.render = (value: any) => renderDom(getDate(value, result.valueTypeProps?.format), result);
         break;
       case 'dateTime':
-        result.render = (value: any) => renderDom(getDateTime(value), result);
+        result.render = (value: any) => renderDom(getDateTime(value, result.valueTypeProps?.format), result);
+        break;
+      case 'dateRange':
+        result.render = (value: any, record: any) => renderDom(getDateRange(value, { result, record }), result);
+        break;
+      case 'dateRangeTime':
+        result.render = (value: any, record: any) => renderDom(getDateRange(value,  { result, record }, 'YYYY-MM-DD HH:mm:ss'), result);
         break;
       case 'money':
         result.render = (value: any) => renderDom(getMoneyType(value), result);
         break;
       case 'code':
+        result.render = (value: any) => renderDom(value, result);
+        break;
+      case 'progress':
+      case 'tag':
         result.render = (value: any) => renderDom(value, result);
         break;
       case 'text':
@@ -52,7 +97,7 @@ const ProTable: <RecordType extends object = any>(
   const tableProps: TableProps<typeof dataSource[number]> = {
     rowKey: 'id',
     ...otherProps,
-    columns,
+    columns: newColumns,
     onChange: handleChange,
     // dataSource不准在使用ProTable时用props赋值
     dataSource,

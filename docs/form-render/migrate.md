@@ -8,7 +8,7 @@ group:
 ---
 
 # V2 升级方案
-本文档将帮助你从 1.x 升级到 2.x 版本，同时 2.x 将不在兼容 0.x 版本
+本文档将帮助你从 1.x 升级到 2.x 版本，2.x 将不再对 0.x 版本进行兼容
 
 ## 特性
 
@@ -19,46 +19,30 @@ group:
 - 🚥 **国际化**：国际化多语言支持，内置中英文语言包，英文版 locale: 'en-US'
 - 💎 **Antd V5**：兼容 antd V5 版本，无需配置
 
-
-
-
-
-## 二、有哪些不兼容的变化
-
-#### form.formData 弃用
-改用 form.getValues() 方式获取
-
-#### theme 弃用
-嵌套组件 theme 字段 弃用，统一改成 widget 声明，默认是 widget: 'collapse' 折叠卡片
-
-#### mapping 弃用
-mapping 配置弃用，映射关系通过 widgets 组件实例进行覆盖（如果和内部名字一样会覆盖内部组件）
-```json
-input,
-checkbox, // 勾选框
-checkboxes, // checkbox多选
-color,
-date,
-time,
-dateRange,
-timeRange,
-imageInput,
-url,
-select,
-multiSelect, // 下拉多选
-number,
-radio, // Radio.Group)
-slider, // 带滚条的number
-switch,
-textarea,
-upload,
-html,
-rate,
-treeSelect,
-errorSchemaWidget // 错误显示
+## 依赖升级
+```diff
+"dependencies": {
+- "form-render": "^1.0.0",
++ "form-render": "^2.0.0",
+}
 ```
 
-#### useForm 入参全部移除
+## 不兼容处理
+
+### form.formData 弃用
+form.formData 弃用，改用 form.getValues() 方式获取
+
+```diff
+- form.formData
++ form.getValues()
+```
+
+### theme 弃用
+嵌套组件 theme 字段 弃用，统一改成 widget 声明。
+默认是 widget: 'collapse' 折叠卡片，其他类型参考[横向布局](/form-render/disaply-row#二嵌套控件)示例
+
+
+### useForm 入参移除
 ```js
 {
   formData,
@@ -77,7 +61,7 @@ logOnMount、logOnSubmit 通过 props 传递，其他几个废弃
 
 
 
-#### onFinish 提交函数
+### onFinish 提交函数
 只有校验通过 onFinish 才会被触发，不在返回错误信息参数，为了兼容1.0版本，错误信息默认返回 []
 
 
@@ -91,7 +75,7 @@ logOnMount、logOnSubmit 通过 props 传递，其他几个废弃
 }
 
 ```
-#### validateFields
+### validateFields
 errorInfo 的出参名称发生变更
 
 ```diff
@@ -129,6 +113,34 @@ validateFields()
   
 ```
 
-#### globalProps 变更
+### globalProps 变更
 通过`globalProps`注入的数据在任何组件（以及自定义组件）中可以被取到和使用。
-变更：form-render 将直接透传 globalProps 到自定义组件，不在自动解构进行属性合并
+变更：自定义组件 通过 props.addons.globalProps 然后进行解构，不在自动进行属性合并注入到自定义组件中（防止其他组件被污染）
+
+
+### mapping 弃用
+mapping 配置弃用，映射关系通过 widgets 组件实例进行覆盖（如果和内部名字一样会覆盖内部组件）
+```json
+input,
+checkbox, // 勾选框
+checkboxes, // checkbox多选
+color,
+date,
+time,
+dateRange,
+timeRange,
+imageInput,
+url,
+select,
+multiSelect, // 下拉多选
+number,
+radio, // Radio.Group)
+slider, // 带滚条的number
+switch,
+textarea,
+upload,
+html,
+rate,
+treeSelect,
+errorSchemaWidget // 错误显示
+```

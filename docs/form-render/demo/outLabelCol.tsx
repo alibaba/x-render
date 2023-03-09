@@ -44,10 +44,8 @@ export default () => {
       <FormRender 
         form={form} 
         schema={schema}
-        labelCol={{
-          span: 5
-        }}
-        wrapperCol={{ span: 8}}
+        labelCol={5}
+        fieldCol={8}
       />
       <div>
         <Button onClick={onValidateFields}>validateFields Test</Button>

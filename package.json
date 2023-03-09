@@ -96,6 +96,7 @@
     "vite": "^3.2.5",
     "vitest": "^0.25.6",
     "yorkie": "^2.0.0",
-    "formRenderV1": "npm:form-render@^1.4.13"
+    "formRenderV1": "npm:form-render@^1.4.13",
+    "fr-generator": "2.8.4"
   }
 }

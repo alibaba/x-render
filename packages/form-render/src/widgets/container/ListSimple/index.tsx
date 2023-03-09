@@ -13,9 +13,8 @@ const getHasBackground = (fields: any[], hasBackground: boolean) => {
 }
 
 const SimpleList = (props: any) => {
-  const form = Form.useFormInstance();
-
   const {
+    form,
     schema,
     fields,
     rootPath,
@@ -37,6 +36,7 @@ const SimpleList = (props: any) => {
 
   if (!schema.items.displayType) {
     schema.items.displayType = 'inline';
+    schema.items.inlineMode = true;
   }
 
   const handleCopy = (name: number) => {
