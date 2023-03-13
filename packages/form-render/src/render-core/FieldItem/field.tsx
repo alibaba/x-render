@@ -248,6 +248,11 @@ const createWidgetStatus = (Component: any, props: any, { form, path, rootPath, 
 const WidgetView = (_props: any) => {
   const { Component, props, maxWidth, schema, path, form , ...other } = _props;
 
+  useEffect(() => {
+    ///other.onChange(schema.default);
+    console.log(schema.default, schema);
+  }, [JSON.stringify(schema.default)]);
+
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
