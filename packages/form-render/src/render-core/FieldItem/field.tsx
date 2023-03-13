@@ -249,8 +249,7 @@ const WidgetView = (_props: any) => {
   const { Component, props, maxWidth, schema, path, form , ...other } = _props;
 
   useEffect(() => {
-    ///other.onChange(schema.default);
-    console.log(schema.default, schema);
+    other.onChange(schema.default);
   }, [JSON.stringify(schema.default)]);
 
   const configCtx = useContext(ConfigProvider.ConfigContext);
