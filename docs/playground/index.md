@@ -1,7 +1,7 @@
 ---
 order: 0
 title: ''
-sidebar: true
+sidebar: false
 ---
 
-<code src='./index.jsx'></code>
+<code src='./index.tsx' inline={true}></code>
