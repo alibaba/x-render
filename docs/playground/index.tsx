@@ -75,7 +75,7 @@ const Playground = () => {
       <Controller onChange={onControllerChange} />
       <Divider />
       <div className="flex">
-        <div style={{ flexBasis: '50%' }}>
+        <div style={{ flexBasis: '50%', minHeight: 600 }}>
           <Editor
             value={value}
             height="100%"
