@@ -29,6 +29,7 @@ const RenderCore = props => {
     tableRef,
     request: api,
     size,
+    autoRequest = true,
     ...tableProps
   } = props;
 
@@ -54,7 +55,7 @@ const RenderCore = props => {
   }, []);
 
   useEffect(() => {
-    if (inited && hiddenSearch) {
+    if (inited && hiddenSearch && autoRequest) {
       refresh();
     }
   }, [inited]);

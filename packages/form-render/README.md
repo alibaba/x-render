@@ -23,11 +23,7 @@
 
 <https://xrender.fun/form-render>
 
-FormRender 1.0 是下一代的 `React.js` 表单解决方案。项目从内核级别进行了重写，为了能切实承接日益复杂的表单场景需求。我们的目标是以强大的扩展能力对表单场景 100%的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[0.x - 1.0 迁移文档](https://xrender.fun/form-render/migrate)
-
-<!-- <Alert>
-  <span>FormRender 已升级到 v1.x 版本，并对外提供中后台开箱即用 XRender 表单 / 表格 / 图表方案，如需使用老版本(v0.x)，请点击右上角 <a href="http://x-components.gitee.io/form-render/" target="_blank_"> 旧文档 </a></span>
-</Alert> -->
+FormRender 是中后台开箱即用的表单解决方案，通过 JsonSchema 协议动态渲染表单。为了能切实承接日益复杂的表单场景需求，2.0 我们进行了底层重构。我们的目标是以强大的扩展能力对表单场景 100% 的覆盖支持，同时保持开发者能快速上手，并以表单编辑器、插件、自定义组件等一系列周边产品带来极致的开发体验。在开发 1.0 的道路上，我们做了一系列的取舍，详见[v2 升级方案](https://xrender.fun/form-render/migrate)
 
 ## 安装
 

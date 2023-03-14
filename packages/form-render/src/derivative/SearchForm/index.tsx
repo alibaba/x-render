@@ -13,7 +13,7 @@ const SearchForm: <RecordType extends object = any>(
   props: SearchProps<RecordType>
 ) => React.ReactElement = props => {
   if (props.hidden) {
-    return;
+    return null;
   }
 
   const configCtx = useContext(ConfigProvider.ConfigContext);

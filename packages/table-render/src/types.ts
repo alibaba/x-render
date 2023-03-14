@@ -126,4 +126,6 @@ export interface TableRenderProps<RecordType extends Object = any>
    */
   configProvider?: ConfigProviderProps;
   request?: ApiType<RecordType>;
+  // 自动请求
+  autoRequest?: boolean;
 }
