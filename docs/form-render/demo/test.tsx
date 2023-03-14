@@ -198,3 +198,78 @@
 //     </>
 //   );
 // }
+
+
+import React from 'react';
+import FormRender, { useForm } from 'form-render';
+import { Button, Input } from 'antd';
+
+const schema = {
+  type: 'object',
+  displayType: 'row',
+  properties: {
+    list: {
+      title: '对象数组',
+      description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'cardList',
+      items: {
+        type: 'object',
+        title: '卡片主题',
+        description: '这是一个对象类型',
+        column: 3,
+        properties: {
+          input1: {
+            title: '输入框 A',
+            type: 'string',
+          },
+          input2: {
+            title: '输入框 B',
+            type: 'string',
+          },
+          input3: {
+            title: '输入框 B',
+            type: 'string',
+          },
+          input4: {
+            title: '输入框 C',
+            type: 'string',
+          }
+        }
+      }
+    }
+  }
+};
+
+const SiteInput = props => {
+  console.log('widget props:', props);
+
+  const handleChange = () => {
+    props.onChange([
+      1, 2, 3, 4
+    ])
+  }
+
+  return <Input addonBefore="https://" addonAfter=".com" {...props} onChange={handleChange} />;
+};
+
+export default () => {
+  const form = useForm();
+
+  const watch = {
+    '#': (value) => {
+      debugger;
+    }
+  }
+
+  return (
+    <>
+      <FormRender 
+        form={form} 
+        schema={schema}
+        watch={watch}
+        widgets={{ site: SiteInput }}
+      />
+    </>
+  );
+}

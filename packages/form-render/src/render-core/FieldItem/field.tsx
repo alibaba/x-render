@@ -2,13 +2,13 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { Form, Col, Row, Button, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 
 import { isCheckBoxType, _get, isObject, getArray, translation, isArray, isFunction } from '../../utils';
 import { ConfigContext } from '../../models/context';
 import { getWidgetName } from '../../models/mapping';
 import { getFormItemLayout } from '../../models/layout';
 import getRuleList from '../../models/validates';
-
 
 const UpperContext: any = createContext(() => { });
 const valuePropNameMap = {
@@ -121,7 +121,7 @@ const getExtraView = (extraKey: string, schema: any, widgets: any) => {
 
   return (
     <div
-      className="fr-form-item-extra"
+      className='fr-form-item-extra'
       dangerouslySetInnerHTML={{ __html }}
     />
   )
@@ -249,7 +249,11 @@ const createWidgetStatus = (Component: any, props: any, { form, path, rootPath, 
 };
 
 const WidgetView = (_props: any) => {
-  const { Component, props, maxWidth, schema, path, form, ...other } = _props;
+  const { Component, props, maxWidth, schema, path, form, initialValue, ...other } = _props;
+
+  useUpdateEffect(() => {
+    other.onChange(initialValue);
+  }, [JSON.stringify(initialValue)]);
 
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
@@ -259,7 +263,6 @@ const WidgetView = (_props: any) => {
 
   const handleRemove = () => {
     const _path = path?.join?.('.');
-
     if (isFunction(removeBtn?.onClick)) {
       removeBtn.onClick({
         path: path?.join?.('.')
@@ -294,7 +297,6 @@ export default (props: any) => {
   if (schema?.hidden) {
     return null;
   }
-
 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
@@ -405,6 +407,8 @@ export default (props: any) => {
     }
   }
 
+  const initialValue = schema.default ?? schema.initialValue;
+
   const formItem = (
     <Form.Item
       className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible })}
@@ -416,7 +420,7 @@ export default (props: any) => {
       tooltip={tooltip}
       extra={extra}
       help={help}
-      initialValue={schema.default}
+      initialValue={initialValue}
       labelCol={labelCol}
       wrapperCol={fieldCol}
       noStyle={noStyle}
@@ -430,6 +434,7 @@ export default (props: any) => {
           form={form}
           Component={widget}
           maxWidth={maxWidth}
+          initialValue={initialValue}
         />
       )}
     </Form.Item>
