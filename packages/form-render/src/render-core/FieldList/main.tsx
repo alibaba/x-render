@@ -19,7 +19,7 @@ export default (props: any) => {
     formCtx,
     configContext,
   } = props;
-  
+
   const { widgets, globalConfig } = configContext;
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
@@ -117,9 +117,10 @@ export default (props: any) => {
     }
 
     if (isFunction(copyFunc)) {
-      copyFunc(() => add(value), { schema });
+      copyFunc((funData?: any) => add(funData || value), { schema, value });
       return;
     }
+
     add(value);
   };
 
@@ -159,14 +160,14 @@ export default (props: any) => {
                 return Promise.reject(
                   new Error(
                     otherSchema?.message?.min ||
-                      `数据长度必须大于等于${otherSchema.min}`
+                    `数据长度必须大于等于${otherSchema.min}`
                   )
                 );
               }
             }
           }
         ]
-      : null
+          : null
       }
     >
       {(fields, operation, { errors }) => (
@@ -194,7 +195,7 @@ export default (props: any) => {
             removeItem={handleRemove(operation.remove)}
             moveItem={handleMove(operation.move)}
             copyItem={handleCopy(operation.add, fields)}
-            
+
             addBtnProps={{
               ...defaultAddBtnProps,
               ...addBtnProps,
