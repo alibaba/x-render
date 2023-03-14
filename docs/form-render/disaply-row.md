@@ -535,8 +535,8 @@ const schema = {
   displayType: 'row',
   properties: {
     list: {
-      title: '对象数组',
-      description: '对象数组嵌套功能',
+      // title: '对象数组',
+      // description: '对象数组嵌套功能',
       type: 'array',
       widget: 'cardList',
       items: {

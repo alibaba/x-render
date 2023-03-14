@@ -30,10 +30,10 @@ export default (props: any) => {
     >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-        const dependValues = (schema.dependencies || []).map((item: any) => _get(formData, item))
+        const dependValues = (schema.dependencies || []).map((item: any) => _get(formData, item));
         const newSchema = parseAllExpression(schema, formData, rootPath, formSchema);
-        
-        return <Field schema={newSchema} {...otherProps} dependValues={dependValues} store={store} />;
+  
+        return <Field schema={newSchema} rootPath={rootPath} {...otherProps} dependValues={dependValues} store={store} />;
       }}
     </Form.Item>
   );

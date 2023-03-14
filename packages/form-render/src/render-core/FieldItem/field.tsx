@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect } from 'react';
 import { Form, Col, Row, Button, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
+import { useUpdateEffect } from 'ahooks';
 
 import { isCheckBoxType, _get, isObject, getArray, translation, isArray, isFunction } from '../../utils';
 import { ConfigContext } from '../../models/context';
@@ -9,8 +10,7 @@ import { getWidgetName } from '../../models/mapping';
 import { getFormItemLayout } from '../../models/layout';
 import getRuleList from '../../models/validates';
 
-
-const UpperContext: any = createContext(() => {});
+const UpperContext: any = createContext(() => { });
 const valuePropNameMap = {
   checkbox: 'checked',
   switch: 'checked'
@@ -67,10 +67,13 @@ const getTooltip = (schema: any, displayType: string) => {
 
   if (tooltip) {
     if (typeof tooltip === 'string') {
-      return { title: tooltip };
+      return { title: <span dangerouslySetInnerHTML={{ __html: tooltip }} /> };
     }
 
-    return tooltip;
+    return {
+      ...tooltip,
+      title: <span dangerouslySetInnerHTML={{ __html: tooltip.title }} />,
+    };
   }
 
   if (descType === 'widget' || !description) {
@@ -100,8 +103,8 @@ const getExtraView = (extraKey: string, schema: any, widgets: any) => {
       return;
     }
     return <Widget schema={schema} />;
-  }  
-  
+  }
+
 
   let __html = '';
   if (typeof extra === 'string') {
@@ -118,7 +121,7 @@ const getExtraView = (extraKey: string, schema: any, widgets: any) => {
 
   return (
     <div
-      className="fr-form-item-extra"
+      className='fr-form-item-extra'
       dangerouslySetInnerHTML={{ __html }}
     />
   )
@@ -152,7 +155,7 @@ const getColSpan = (formCtx: any, parentCtx: any, schema: any) => {
   return span;
 };
 
-const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string, isTop= true) => {
+const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string, isTop = true) => {
   if (isTop) {
     return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
   }
@@ -233,8 +236,8 @@ const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, for
   return widgetProps;
 };
 
-const createWidgetStatus = (Component: any, props: any, { form, path, rootPath, maxWidth } ) => {
-  const { onStatusChange, style={}, ...otherProps } = props;
+const createWidgetStatus = (Component: any, props: any, { form, path, rootPath, maxWidth }) => {
+  const { onStatusChange, style = {}, ...otherProps } = props;
   const { status } = Form.Item.useStatus();
 
   useEffect(() => {
@@ -242,25 +245,24 @@ const createWidgetStatus = (Component: any, props: any, { form, path, rootPath, 
     onStatusChange && onStatusChange(status, errors);
   }, [status]);
 
-  return <Component { ...otherProps} style={{ maxWidth, ...style}}/>
+  return <Component {...otherProps} style={{ maxWidth, ...style }} />
 };
 
 const WidgetView = (_props: any) => {
-  const { Component, props, maxWidth, schema, path, form , ...other } = _props;
+  const { Component, props, maxWidth, schema, path, rootPath, form, initialValue, ...other } = _props;
 
-  useEffect(() => {
-    other.onChange(schema.default);
-  }, [JSON.stringify(schema.default)]);
+  useUpdateEffect(() => {
+    other.onChange(initialValue);
+  }, [JSON.stringify(initialValue)]);
 
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
-  const { style={}, ...otherProps } = props;
+  const { style = {}, ...otherProps } = props;
   const { removeBtn } = schema;
 
   const handleRemove = () => {
     const _path = path?.join?.('.');
-   
     if (isFunction(removeBtn?.onClick)) {
       removeBtn.onClick({
         path: path?.join?.('.')
@@ -274,13 +276,13 @@ const WidgetView = (_props: any) => {
 
   return (
     <>
-      <Component { ...otherProps } { ...other } style={{ maxWidth, ...style}}/>
+      <Component {...otherProps} {...other} style={{ maxWidth, ...style }} />
       {removeBtn && (
         <Button
           type='text'
           danger
           {...removeBtn}
-          onClick={handleRemove} 
+          onClick={handleRemove}
         >
           {removeBtn?.text || t('delete')}
         </Button>
@@ -296,13 +298,12 @@ export default (props: any) => {
     return null;
   }
 
- 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
   const { form, widgets, methods, globalProps } = configCtx;
-  
-  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible=true, ...otherSchema } = schema;
+
+  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);
   // Component not found
@@ -313,13 +314,13 @@ export default (props: any) => {
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   let widget = widgets[widgetName] || widgets['html'];
- 
-  const widgetProps = getWidgetProps(widgetName, schema, { 
-    widgets, 
-    methods, 
-    form, 
-    dependValues, 
-    globalProps, 
+
+  const widgetProps = getWidgetProps(widgetName, schema, {
+    widgets,
+    methods,
+    form,
+    dependValues,
+    globalProps,
     path: getPath(path)
   });
   const displayType = getValueFromKey('displayType');
@@ -364,8 +365,8 @@ export default (props: any) => {
           noStyle: schema.noStyle,
           exist: true,
         }}
-      > 
-       {inlineSelf ? content : <Col span={24}>{content}</Col>}
+      >
+        {inlineSelf ? content : <Col span={24}>{content}</Col>}
       </UpperContext.Provider>
     );
   }
@@ -385,7 +386,7 @@ export default (props: any) => {
   const _labelCol = getValueFromKey('labelCol');
   const _fieldCol = getValueFromKey('fieldCol');
   const maxWidth = getValueFromKey('maxWidth');
-  const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24/span*1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
+  const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24 / span * 1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
 
   if (!label) {
@@ -406,9 +407,11 @@ export default (props: any) => {
     }
   }
 
+  const initialValue = schema.default ?? schema.initialValue;
+
   const formItem = (
     <Form.Item
-      className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility' : !visible })}
+      className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible })}
       label={label}
       name={path}
       valuePropName={valuePropName}
@@ -417,20 +420,22 @@ export default (props: any) => {
       tooltip={tooltip}
       extra={extra}
       help={help}
-      initialValue={schema.default}
+      initialValue={initialValue}
       labelCol={labelCol}
       wrapperCol={fieldCol}
       noStyle={noStyle}
       dependencies={dependencies}
     >
       {widgetProps.onStatusChange ? createWidgetStatus(widget, widgetProps, { form, path, rootPath, maxWidth }) : (
-        <WidgetView 
+        <WidgetView
           props={widgetProps}
           path={path}
+          rootPath={rootPath}
           schema={schema}
           form={form}
           Component={widget}
           maxWidth={maxWidth}
+          initialValue={initialValue}
         />
       )}
     </Form.Item>
@@ -439,13 +444,13 @@ export default (props: any) => {
   if (inlineSelf) {
     if (noStyle) {
       return (
-        <div className={classnames('fr-inline-field', { 'fr-field-visibility' : !visible })}>
+        <div className={classnames('fr-inline-field', { 'fr-field-visibility': !visible })}>
           {formItem}
-       </div>
+        </div>
       )
     }
     return formItem
   }
 
-  return <Col span={span} className={classnames('', { 'fr-field-visibility' : !visible })}>{formItem}</Col>;
+  return <Col span={span} className={classnames('', { 'fr-field-visibility': !visible })}>{formItem}</Col>;
 }

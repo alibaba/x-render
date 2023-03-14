@@ -149,7 +149,7 @@ url: {
 副标题描述
 
 ### tooltip
-气泡提示
+气泡提示，支持 `html` 格式
 ```js
 tooltip: {
   title: ''
