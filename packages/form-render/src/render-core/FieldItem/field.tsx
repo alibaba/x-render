@@ -249,7 +249,7 @@ const createWidgetStatus = (Component: any, props: any, { form, path, rootPath, 
 };
 
 const WidgetView = (_props: any) => {
-  const { Component, props, maxWidth, schema, path, rootPath, form, initialValue, ...other } = _props;
+  const { Component, props, maxWidth, schema, path, form, initialValue, ...other } = _props;
 
   useUpdateEffect(() => {
     other.onChange(initialValue);
@@ -430,7 +430,6 @@ export default (props: any) => {
         <WidgetView
           props={widgetProps}
           path={path}
-          rootPath={rootPath}
           schema={schema}
           form={form}
           Component={widget}
