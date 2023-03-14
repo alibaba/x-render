@@ -1,4 +1,6 @@
 # 更新日志
+### 2.0.14
+[+] CardList 增加计数提示
 ### 2.0.13
 [+] 增加输入控件，extra、help 属性配置
 [+] 自定义校验 validator 支持返回一个 { status: true/ false , message: '错误信息' }，用于动态设置 message

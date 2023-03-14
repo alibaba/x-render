@@ -688,7 +688,7 @@ const schema = {
   properties: {
     list: {
       title: '对象数组',
-      description: '对象数组嵌套功能',
+      tooltip: '对象数组嵌套功能',
       type: 'array',
       display: 'inline',
       widget: 'cardList',
@@ -739,7 +739,7 @@ const schema = {
   properties: {
     list: {
       title: '对象数组',
-      description: '对象数组嵌套功能',
+      tooltip: '对象数组嵌套功能',
       type: 'array',
       display: 'inline',
       widget: 'cardList',
@@ -791,7 +791,7 @@ const schema = {
   properties: {
     list: {
       title: '对象数组',
-      description: '对象数组嵌套功能',
+      tooltip: '对象数组嵌套功能',
       type: 'array',
       display: 'inline',
       widget: 'cardList',
@@ -895,7 +895,7 @@ const schema = {
   properties: {
     list: {
       title: '对象数组',
-      description: '对象数组嵌套功能',
+      tooltip: '对象数组嵌套功能',
       type: 'array',
       widget: 'drawerList',
       display: 'inline',
@@ -998,7 +998,7 @@ const schema = {
   properties: {
     list: {
       title: '对象数组',
-      description: '对象数组嵌套功能',
+      tooltip: '对象数组嵌套功能',
       type: 'array',
       widget: 'tableList',
       display: 'inline',
@@ -1101,7 +1101,7 @@ const schema = {
   properties: {
     list: {
       title: '对象数组',
-      description: '对象数组嵌套功能',
+      tooltip: '对象数组嵌套功能',
       type: 'array',
       widget: 'virtualList',
       display: 'inline',
@@ -1204,7 +1204,7 @@ const schema = {
   properties: {
     list: {
       title: '对象数组',
-      description: '对象数组嵌套功能',
+      tooltip: '对象数组嵌套功能',
       type: 'array',
       widget: 'tabList',
       display: 'inline',
