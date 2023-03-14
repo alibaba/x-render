@@ -109,7 +109,7 @@ const SimpleList = (props: any) => {
         <Button
           className='add-btn'
           icon={<PlusOutlined />}
-          onClick={addItem}
+          onClick={() => addItem()}
           block={fields.length > 0 ? true : false}
           {...addBtnProps}
         />

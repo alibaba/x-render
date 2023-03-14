@@ -120,7 +120,6 @@ export default (props: any) => {
       copyFunc((funData?: any) => add(funData || value), { schema, value });
       return;
     }
-
     add(value);
   };
 
@@ -133,7 +132,6 @@ export default (props: any) => {
   if (hideMove === undefined && globalConfig?.listOperate?.hideMove) {
     hideMove = globalConfig?.listOperate.hideMove;
   }
-
 
   if (hideAdd) {
     hideCopy = true;

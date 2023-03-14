@@ -4,170 +4,81 @@ import FormRender, { useForm } from 'form-render';
 
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
+export enum Language {
+  CN = 'cn',
+  EN = 'en',
+  CA = 'ca',
+}
+
+export const LanguageText = {
+  [Language.CN]: '中文简体',
+  [Language.EN]: '英文',
+  [Language.CA]: '中文繁体',
+};
+
+export const LanguageEmailContent = {
+  [Language.CN]: 'emailContent',
+  [Language.EN]: 'emailContentEn',
+  [Language.CA]: 'emailContentCa',
+}
+
+const items = Object.entries(LanguageText).map(([key, value]) => {
+  return {
+      label: value,
+      key,
+  }
+})
+
 const schema = {
   type: 'object',
   displayType: 'row',
-  column: 3,
   properties: {
-    ruleName: {
-      title: '铺货规则名称',
-      type: 'string',
-      extra: '1111',
-      help: 'sdfsdaf'
-    },
-    ruleType: {
-      title: '规则类型',
-      type: 'string',
-      widget: 'select',
-      extra: { text: 'xxxx'},
-      props: {
-        options: [
-          { label: '有效', value: '1' },
-          { label: '下线', value: '2' },
-          { label: '删除', value: '3' }
-        ]
-      }
-    },
-    supplierId: {
-      title: '供应商 Id',
-      type: 'string',
-      extra: { widget: 'xxx'}
-    },
-    select3: {
-      title: '酒店',
-      type: 'string',
-      widget: 'select',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' }
-        ]
-      }
-    },
-    sellerId: {
-      title: '铺货店铺',
-      type: 'string'
-    },
-
-    status: {
-      title: '规则状态',
-      type: 'string',
-      widget: 'radio',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' },
-        ]
-      }
-    },
-    dateRange: {
-      title: '生效起止时间',
-      bind: ['effDateStart', 'effDateEnd'],
-      type: 'range',
-      format: 'date',
-    },
-    effWeekDays: {
-      title: '生效起止时间',
-      type: 'array',
-      items: {
-        type: 'string',
+      templateName: {
+          title: '模版名称',
+          type: 'string',
+          displayType: 'row',
+          required: true,
+          props: {},
       },
-      widget: 'multiSelect',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' },
-        ]
-      }
-    },
-    obj: {
-      type: 'object',
-      widget: 'card',
-      title: '规则设置',
-      labelWidth: 100,
-      column: 3,
-      properties: {
-        obj1: {
-          type: 'object',
-          widget: 'subInline',
-          title: '规则一',
-          displayType: 'inline',
-          hasBackground: false,
-          noStyle: true,
-          properties: {
-            input1: {
-              title: '输入框 A',
-              type: 'string',
-              placeholder: '输入框 A'
-            },
-            input2: {
-              title: '输入框 B',
-              type: 'string',
-              placeholder: '输入框 B'
-            },
-            input3: {
-              title: '输入框 C',
-              type: 'string',
-              placeholder: '输入框 c'
-            }
-          }
-        },
-        obj2: {
-          type: 'object',
-          widget: 'subInline',
-          title: '规则二',
-          displayType: 'inline',
-          hasBackground: false,
-          noStyle: true,
-          properties: {
-            input1: {
-              title: '输入框 A',
-              type: 'string',
-              placeholder: '输入框 A'
-            },
-            input2: {
-              title: '输入框 B',
-              type: 'string',
-              placeholder: '输入框 B'
-            },
-            input3: {
-              title: '输入框 C',
-              type: 'string',
-              placeholder: '输入框 c'
-            }
-          }
-        },
-        obj3: {
-          type: 'object',
-          widget: 'subInline',
-          title: '规则二',
-          column: 3,
-          displayType: 'inline',
-          hasBackground: false,
-          noStyle: true,
-          properties: {
-            input1: {
-              title: '输入框 A',
-              type: 'string',
-              placeholder: '输入框 A'
-            },
-            input2: {
-              title: '输入框 B',
-              type: 'string',
-              placeholder: '输入框 B'
-            },
-            input3: {
-              title: '输入框 C',
-              type: 'string',
-              placeholder: '输入框 c'
-            }
-          }
-        }
-      }
-    }
+      // language: {
+      //     default: Language.CN,
+      //     widget: 'tabs',
+      //     type: 'string',
+      //     props: {
+      //         type: 'card',
+      //         items: items
+      //     },
+      // },
+      emailSubject: {
+          title: '邮件标题',
+          type: 'string',
+          displayType: 'row',
+          required: true,
+          props: {},
+          hidden: `{{formData.language !== 'cn'}}`
+      },
+      list: {
+          title: '活动模版',
+          type: 'array',
+          widget: 'simpleList',
+          items: {
+              type: 'object',
+              properties: {
+                  input1: {
+                      title: '输入框 A',
+                      type: 'string',
+                  },
+                  input2: {
+                      title: '输入框 B',
+                      type: 'string',
+                  },
+                  input3: {
+                      title: '输入框 C',
+                      type: 'string',
+                  },
+              },
+          },
+      },
   },
 };
 
