@@ -14,6 +14,7 @@ import request from 'umi-request';
 const schema = {
   type: 'object',
   labelWidth: 80,
+  displayType: 'column',
   properties: {
     state: {
       title: '酒店状态',

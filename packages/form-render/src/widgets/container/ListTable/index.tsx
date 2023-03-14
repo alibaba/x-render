@@ -118,7 +118,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
             )}
             {!hideDelete && (
               <Popconfirm
-                onConfirm={() => removeItem(name)}
+                onConfirm={() => removeItem(field.name)}
                 {...delConfirmProps}
               >
                 <FButton
@@ -154,7 +154,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
       {(!schema.max || fields.length < schema.max) && !hideAdd && (
         <Button
           icon={<PlusOutlined />}
-          onClick={addItem}
+          onClick={() => addItem()}
           {...addBtnProps}
         />
       )}
