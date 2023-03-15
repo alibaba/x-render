@@ -86,8 +86,6 @@ export default (props: any) => {
   const isDisplayColumn = displayType === 'column';
   const { schema:_schema, path,} = props;
 
-
-
   const formData = form.getFieldsValue(true);
   const { schema: formSchema } = store.getState();
   const schema = parseAllExpression(_schema, formData, props.rootPath, formSchema);

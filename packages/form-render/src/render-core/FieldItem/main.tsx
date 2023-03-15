@@ -147,7 +147,7 @@ export default (props: any) => {
     }
   }
 
-  const initialValue = schema.default ?? schema.initialValue;
+  const defaultValue = schema.default ?? schema.defaultValue;
 
   const formItem = (
     <Form.Item
@@ -160,7 +160,7 @@ export default (props: any) => {
       tooltip={tooltip}
       extra={extra}
       help={help}
-      initialValue={initialValue}
+      initialValue={defaultValue}
       labelCol={labelCol}
       wrapperCol={fieldCol}
       noStyle={noStyle}
@@ -171,14 +171,14 @@ export default (props: any) => {
           Field={widget}
           fieldProps={widgetProps}
           maxWidth={maxWidth}
-          initialValue={initialValue}
+          defaultValue={defaultValue}
         />
       ) : (
         <FieldWrapper
           Field={widget}
           fieldProps={widgetProps}
           maxWidth={maxWidth}
-          initialValue={initialValue}
+          defaultValue={defaultValue}
         />
       )}
     </Form.Item>

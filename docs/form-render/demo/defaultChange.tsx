@@ -14,7 +14,7 @@ const schema = {
       type: 'string',
       required: true,
       //default: '1111',
-      initialValue: '1111sss'
+      defaultValue: '1111sss'
     },
     input2: {
       title: 'Field B',

@@ -46,9 +46,9 @@ export default (props: any) => {
 
   const { props: listProps,  removeBtn, ...otherSchema } = schema;
 
-  let initialValue = schema.default;
-  if (!initialValue && !['drawerList', 'list1'].includes(widgetName)) {
-    initialValue = [{}];
+  let defaultValue = schema.default ?? schema.defaultValue;
+  if (defaultValue === undefined && !['drawerList', 'list1'].includes(widgetName)) {
+    defaultValue = [{}];
   }
 
   let {
@@ -160,7 +160,7 @@ export default (props: any) => {
     <>
       <Form.List
         name={path}
-        initialValue={initialValue}
+        initialValue={defaultValue}
         rules={
           otherSchema?.min ? [
             {
