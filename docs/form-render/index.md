@@ -48,11 +48,9 @@ npm i form-render --save
  * transform: true
  * defaultShowCode: true
  */
-import React, { useEffect } from 'react';
-import { Button, Input, message } from 'antd';
+import React from 'react';
+import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
-import { useBoolean, useUnmount } from 'ahooks';
-
 
 const schema = {
   type: 'object',
@@ -60,74 +58,26 @@ const schema = {
     input1: {
       title: '简单输入框',
       type: 'string',
+      required: true,
     },
-    input2: {
-      title: "自定义",
+    select1: {
+      title: '单选',
       type: 'string',
-      widget: 'customInput',
-      hidden: "{{formData.input1 === '123'}}"
+      enum: ['a', 'b', 'c'],
+      enumNames: ['早', '中', '晚'],
     },
-    input3: {
-      title: "自定义",
-      type: 'string',
-      widget: 'customInput',
-      hidden: "{{ formData.input1 === '123'}}"
-    },
-    input4: {
-      title: "自定义",
-      type: 'string',
-      widget: 'customInput',
-      hidden: "{{ formData.input1 === '123'}}"
-    }
   },
 };
-
-const customInput = (props) => {
-  const { value, onChange, addons } = props;
-  const { removeErrorField, setErrorFields, dataPath } = addons;
-
-  useEffect(() => {
-    if (value === '3') {
-      setTimeout(() => {
-         removeErrorField(dataPath);
-      }, 0)
-     
-    } else {
-      setErrorFields({ name: dataPath, error: ['错误信息1', '错误信息2'] })
-    }
-  }, [value])
-
-  useUnmount(() => {
-    message.info('unmount');
-    removeErrorField(dataPath);
-  });
-
-
-  return <Input onChange={onChange}/>;
-}
 
 const Demo = () => {
   const form = useForm();
   const onFinish = (formData, errors) => {
-
     console.log('formData:', formData, 'errors', errors);
   };
-
-  const handleClick = () => {
-    // form.validateFields().then((res, erros) => {
-    //   debugger;
-    // }).catch((xxxx) => {
-    //   debugger;
-    // })
-
-    const a = form.getFieldsError();
-    console.log(a, 'gefdafaldfjaldfj');
-  }
-
   return (
     <div>
-      <FormRender form={form} schema={schema} onFinish={onFinish} widgets={{ customInput }}/>
-      <Button type="primary" onClick={handleClick}>
+      <FormRender form={form} schema={schema} onFinish={onFinish} />
+      <Button type="primary" onClick={form.submit}>
         提交
       </Button>
     </div>
