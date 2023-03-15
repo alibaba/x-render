@@ -2,6 +2,8 @@ import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand';
 import { FRContext, ConfigContext } from '../../models/context';
+import { isHasExpression, parseAllExpression } from '../../models/expression';
+
 import Main from './main';
 
 const UpperContext = createContext(() => {});
@@ -82,7 +84,15 @@ export default (props: any) => {
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
-  const { schema, path,} = props;
+  const { schema:_schema, path,} = props;
+
+
+
+  const formData = form.getFieldsValue(true);
+  const { schema: formSchema } = store.getState();
+  const schema = parseAllExpression(_schema, formData, props.rootPath, formSchema);
+
+
   const { fieldCol, labelCol } = schema || {};
   
   const { widget } = schema;
@@ -116,6 +126,10 @@ export default (props: any) => {
     isInline = true;
   }
 
+  if (schema.hidden) {
+    return null;
+  }
+  
   return (
     <Col span={24}>
       {!isInline && !isDisplayColumn && label && (

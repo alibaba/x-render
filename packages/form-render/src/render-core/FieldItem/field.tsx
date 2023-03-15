@@ -45,11 +45,9 @@ export const FieldWrapper = (props: any) => {
 
   const handleRemove = () => {
     if (isFunction(removeBtn?.onClick)) {
-      removeBtn.onClick({
-        path: addons.schemaPath
-      }, () => {
+      removeBtn.onClick(() => {
         addons.setSchemaByPath(addons.schemaPath, { hidden: true });
-      })
+      });
       return;
     }
     addons.setSchemaByPath(addons.schemaPath, { hidden: true });
@@ -64,7 +62,7 @@ export const FieldWrapper = (props: any) => {
       />
       {removeBtn && (
         <Button
-          type='text'
+          type='link'
           danger
           {...removeBtn}
           onClick={handleRemove}
