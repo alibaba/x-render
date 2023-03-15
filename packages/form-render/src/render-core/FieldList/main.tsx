@@ -137,7 +137,7 @@ export default (props: any) => {
 
   const readOnly = getValueFromKey('readOnly');
   const preRootPath = (rootPath || []).splice(0, rootPath.length - 1);
-
+  const displayType = getValueFromKey('displayType');
 
   if (hideMove === undefined && globalConfig?.listOperate?.hideMove) {
     hideMove = globalConfig?.listOperate.hideMove;
@@ -204,6 +204,11 @@ export default (props: any) => {
               removeItem={handleRemove(operation.remove)}
               moveItem={handleMove(operation.move)}
               copyItem={handleCopy(operation.add, fields)}
+             
+              temporary={{
+                displayType
+              }}
+              
 
               addBtnProps={{
                 ...defaultAddBtnProps,
