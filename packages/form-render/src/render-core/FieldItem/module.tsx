@@ -202,7 +202,7 @@ export const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valu
 export const getFieldProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath }) => {
   const pathObj = getPathObj({ path, rootPath });
  
-  const widgetProps = {
+  const fieldProps = {
     ...schema.props,
     addons: {
       ...form,
@@ -212,16 +212,20 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
     }
   };
 
+  if (dependValues?.length > 0) {
+    fieldProps.dependValues = dependValues;
+  }
+
   ['placeholder', 'disabled', 'format', 'onStatusChange', 'className'].forEach(key => {
     if (schema[key]) {
-      widgetProps[key] = schema[key];
+      fieldProps[key] = schema[key];
     }
   });
 
   // 兼容 1.0 版本逻辑 enum => options
   if (schema.enum && !schema.props?.options) {
     const { enum: enums, enumNames } = schema;
-    widgetProps.options = getArray(enums).map((item: any, index: number) => {
+    fieldProps.options = getArray(enums).map((item: any, index: number) => {
       let label = enumNames && Array.isArray(enumNames) ? enumNames[index] : item;
       const isHtml = typeof label === 'string' && label[0] === '<';
       if (isHtml) {
@@ -238,35 +242,35 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
       key.toLowerCase().indexOf('props') > -1 &&
       key.length > 5
     ) {
-      widgetProps[key] = schema[key];
+      fieldProps[key] = schema[key];
     }
   });
 
   // 支持 addonAfter 为自定义组件的情况
-  if (isObject(widgetProps.addonAfter) && widgetProps.addonAfter.widget) {
-    const AddonAfterWidget = widgets[widgetProps.addonAfter.widget];
-    widgetProps.addonAfter = <AddonAfterWidget {...schema} />;
+  if (isObject(fieldProps.addonAfter) && fieldProps.addonAfter.widget) {
+    const AddonAfterWidget = widgets[fieldProps.addonAfter.widget];
+    fieldProps.addonAfter = <AddonAfterWidget {...schema} />;
   }
 
   if (['treeSelect', 'number', 'multiSelect', 'select'].includes(widgetName)) {
-    widgetProps.style = {
+    fieldProps.style = {
       width: '100%',
-      ...widgetProps.style
+      ...fieldProps.style
     }
   }
 
   if (widgetName === 'multiSelect') {
-    widgetProps.mode = 'multiple';
+    fieldProps.mode = 'multiple';
   }
 
   // Dynamic Mapping of Methods
   if (isObject(schema.methods)) {
     Object.keys(schema.methods).forEach(key => {
       const name = schema.methods[key];
-      widgetProps[key] = methods[name];
+      fieldProps[key] = methods[name];
     });
   }
 
-  widgetProps.schema = schema;
-  return widgetProps;
+  fieldProps.schema = schema;
+  return fieldProps;
 };
