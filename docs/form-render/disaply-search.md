@@ -16,7 +16,7 @@ import { useForm, SearchForm } from 'form-render';
 
 const schema = {
   type: 'object',
-  displayType: 'row',
+  displayType: 'column',
   properties: {
     inputA: {
       title: '输入框 A',
@@ -76,12 +76,14 @@ import FormRender, { useForm, SearchForm } from 'form-render';
 
 const schema = {
   type: 'object',
-  displayType: 'row',
+  displayType: 'column',
+  column: '3',
   properties: {
     inputA: {
       title: '输入框 A',
       type: 'string',
       props: {},
+      cellSpan: '2',
     },
     inputB: {
       title: '输入框 B',

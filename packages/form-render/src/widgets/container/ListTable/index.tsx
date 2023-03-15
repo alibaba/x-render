@@ -84,7 +84,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
             renderCore={renderCore}
             schema={fieldSchema}
             parentPath={[field.name]}
-            rootPath={rootPath}
+            rootPath={[...rootPath, field.name]}
             dataIndex={dataIndex}
           />
         );

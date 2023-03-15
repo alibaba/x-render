@@ -15,7 +15,7 @@ export type {
   SearchProps,
 } from './types';
 
-export default React.forwardRef((props: TableRenderProps, ref) => {
+const TableRender = React.forwardRef((props: TableRenderProps, ref) => {
   const {
     configProvider,
     locale = 'zh-CN',
@@ -56,3 +56,5 @@ export default React.forwardRef((props: TableRenderProps, ref) => {
     </ConfigProvider>
   );
 });
+
+export default TableRender;
