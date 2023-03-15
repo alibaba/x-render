@@ -1,5 +1,57 @@
 import React from 'react';
-import { _get, isObject, getArray, isArray } from '../../utils';
+import { _get, isObject, getArray, isArray, isNumber } from '../../utils';
+
+// return dataIndex、dataPath、schemaPath
+const getPathObj = ({ rootPath = [], path }) => {
+  const pathList = (path || '').split('.');
+  const dataIndex = [];
+  const schemaIndex = [];
+  const dataPathList = [];
+
+  // dataIndex
+  rootPath.forEach((item: any, index: number) => {
+    if (isNumber(item)) {
+      dataIndex.push(item);
+      return;
+    }
+
+    if (isNumber(rootPath[index+1])) {
+      schemaIndex.push(`${item}[]`);
+    } else {
+      schemaIndex.push(item);
+    }
+  });
+
+  // dataPath
+  let list = [...rootPath];
+  list.pop();
+  list = [...list, ...pathList];
+
+  list.forEach((item: any, index: number) => {
+    if (isNumber(item)) {
+      dataPathList.push(`[${item}]`)
+    } else {
+      dataPathList.push(item)
+    }
+  });
+
+  const dataPath = dataPathList.join('.');
+
+  // schemaPath
+  const _path = pathList;
+  if (_path[0] && isNumber(_path[0])) {
+    _path.splice(0, 1);
+  }
+  const schemaPath = [...schemaIndex, _path].join('.');
+
+  // console.log(path, rootPath, '-------', dataIndex, dataPath, schemaPath);
+
+  return {
+    dataIndex,
+    dataPath,
+    schemaPath
+  };
+};
 
 export const getPath = (path: any) => {
   if (!path) {
@@ -147,48 +199,18 @@ export const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valu
   return schema[valueKey] ?? upperCtx[valueKey];
 };
 
-export const getWidgetProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath }) => {
-  const dataIndex = [];
+export const getFieldProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath }) => {
+  const pathObj = getPathObj({ path, rootPath });
  
-  let dataPath: any = [];
-  rootPath.forEach((item: any, index: number) => {
-    if ((index+1)%2 === 0) {
-      dataIndex.push(item);
-    }
-  });
-  let _dataPath = [...rootPath];
-  _dataPath.pop();
-  _dataPath = [...(_dataPath || []), ...(path || '').split('.')];
- 
-  _dataPath.forEach((item: any, index: number) => {
-    if (typeof item === 'number') {
-      dataPath.push(`[${item}]`)
-    } else {
-      dataPath.push(item)
-    }
-  });
-
-
-  dataPath = dataPath.join('.');
-
-
-  console.log(path, rootPath, '-------', dataIndex, dataPath);
-
   const widgetProps = {
     ...schema.props,
     addons: {
       ...form,
       globalProps,
       dependValues,
-      schemaPath: path,
-      dataPath,
-      dataIndex,
-    },
+      ...pathObj
+    }
   };
-
-  if (dependValues?.length > 0) {
-    widgetProps.dependValues = dependValues;
-  }
 
   ['placeholder', 'disabled', 'format', 'onStatusChange', 'className'].forEach(key => {
     if (schema[key]) {

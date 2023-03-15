@@ -61,30 +61,72 @@ const schema = {
             type: 'string',
             default: '{{rootValue.input1}}'
           },
-          list: {
-            title: '对象数组',
-            description: '对象数组嵌套功能',
-            type: 'array',
-            widget: 'cardList',
-            items: {
-              type: 'object',
-              title: '卡片主题',
-              description: '这是一个对象类型',
-              column: 3,
-              widget: 'lineTitle',
-              properties: {
-                input1: {
-                  title: 'Field A',
-                  type: 'string',
-                },
-                input2: {
-                  title: 'Field B',
-                  type: 'string',
-                  default: '{{rootValue.input1}}'
+          obj: {
+            type: 'object',
+            title: '卡片主题',
+            widget: 'card',
+            description: '这是一个对象类型',
+            column: 3,
+            properties: {
+              input1: {
+                title: 'Field A',
+                type: 'string',
+              },
+              input2: {
+                title: 'Field B',
+                type: 'string',
+                default: '{{formData.obj.input1}}'
+              },
+              list: {
+                title: '对象数组',
+                description: '对象数组嵌套功能',
+                type: 'array',
+                widget: 'cardList',
+                items: {
+                  type: 'object',
+                  title: '卡片主题',
+                  description: '这是一个对象类型',
+                  column: 3,
+                  widget: 'lineTitle',
+                  properties: {
+                    input1: {
+                      title: 'Field A',
+                      type: 'string',
+                    },
+                    input2: {
+                      title: 'Field B',
+                      type: 'string',
+                      default: '{{rootValue.input1}}'
+                    }
+                  }
                 }
               }
             }
-          }
+          },
+          // list: {
+          //   title: '对象数组',
+          //   description: '对象数组嵌套功能',
+          //   type: 'array',
+          //   widget: 'cardList',
+          //   items: {
+          //     type: 'object',
+          //     title: '卡片主题',
+          //     description: '这是一个对象类型',
+          //     column: 3,
+          //     widget: 'lineTitle',
+          //     properties: {
+          //       input1: {
+          //         title: 'Field A',
+          //         type: 'string',
+          //       },
+          //       input2: {
+          //         title: 'Field B',
+          //         type: 'string',
+          //         default: '{{rootValue.input1}}'
+          //       }
+          //     }
+          //   }
+          // }
         }
       }
     }

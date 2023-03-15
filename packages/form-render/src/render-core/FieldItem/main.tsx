@@ -22,7 +22,7 @@ import {
 
 import { 
   getParamValue, 
-  getWidgetProps,
+  getFieldProps,
   getPath,
   getLabel,
   getColSpan,
@@ -54,7 +54,7 @@ export default (props: any) => {
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   let widget = widgets[widgetName] || widgets['html'];
 
-  const widgetProps = getWidgetProps(widgetName, schema, {
+  const fieldProps = getFieldProps(widgetName, schema, {
     widgets,
     methods,
     form,
@@ -90,9 +90,9 @@ export default (props: any) => {
       );
     }
 
-    widgetProps.children = childElement;
+    fieldProps.children = childElement;
     const Widget = widget;
-    const content = <Widget labelWidth={labelWidth} displayType={schema.displayType} {...widgetProps} {...otherSchema} />;
+    const content = <Widget labelWidth={labelWidth} displayType={schema.displayType} {...fieldProps} {...otherSchema} />;
 
     return (
       <UpperContext.Provider
@@ -139,7 +139,7 @@ export default (props: any) => {
 
   // checkbox 布局有点特殊
   if (isCheckBoxType(schema, readOnly)) {
-    widgetProps.title = label;
+    fieldProps.title = label;
 
     label = 'fr-hide-label';
     if (displayType === 'inline') {
@@ -166,17 +166,17 @@ export default (props: any) => {
       noStyle={noStyle}
       dependencies={dependencies}
     >
-      {widgetProps.onStatusChange ? (
+      {fieldProps.onStatusChange ? (
         <FieldWrapperStatus 
           Field={widget}
-          fieldProps={widgetProps}
+          fieldProps={fieldProps}
           maxWidth={maxWidth}
           defaultValue={defaultValue}
         />
       ) : (
         <FieldWrapper
           Field={widget}
-          fieldProps={widgetProps}
+          fieldProps={fieldProps}
           maxWidth={maxWidth}
           defaultValue={defaultValue}
         />

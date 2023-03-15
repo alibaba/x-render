@@ -27,6 +27,8 @@ export function isUrl(string: string) {
   return protocolRE.test(string);
 }
 
+export const isNumber = (str: string | number) => !isNaN(Number(str))
+
 export const getArray = (arr, defaultValue = []) => {
   if (Array.isArray(arr)) return arr;
   return defaultValue;
