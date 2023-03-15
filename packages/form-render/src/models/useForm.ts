@@ -66,8 +66,6 @@ const useForm = () => {
     flattenSchemaRef.current = flatten(newSchema) || {};
     schemaRef.current = newSchema;
     setStoreData({ schema: newSchema, flattenSchema: flattenSchemaRef.current });
-
-    console.log('flattenSchema', flattenSchemaRef.current)
   };
 
   form.setSchema = (obj: any, cover = false) => {

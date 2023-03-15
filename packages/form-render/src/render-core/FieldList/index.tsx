@@ -88,8 +88,12 @@ export default (props: any) => {
 
   const formData = form.getFieldsValue(true);
   const { schema: formSchema } = store.getState();
-  const schema = parseAllExpression(_schema, formData, props.rootPath, formSchema);
 
+  const { items, ...otherSchema } = _schema;
+  const schema = {
+    items,
+    ...parseAllExpression(otherSchema, formData, props.rootPath, formSchema)
+  };
 
   const { fieldCol, labelCol } = schema || {};
   
