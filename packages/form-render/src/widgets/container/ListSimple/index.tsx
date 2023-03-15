@@ -38,7 +38,8 @@ const SimpleList = (props: any) => {
     addItem,
     copyItem,
     moveItem,
-    removeItem
+    removeItem,
+    temporary
   } = props;
 
   if (!schema.items.displayType) {
@@ -51,8 +52,10 @@ const SimpleList = (props: any) => {
     copyItem(value);
   };
 
+  const isColumm = temporary.displayType === 'column';
+ 
   return (
-    <div className={classnames('fr-list-simple', { 'fr-list-simple-background': getHasBackground(fields, hasBackground) })}>
+    <div className={classnames('fr-list-simple', { 'fr-list-simple-background': getHasBackground(fields, hasBackground), 'fr-list-simple-column':isColumm})}>
       {fields.map(({ key, name }) => {
         const length = fields.length;
         return (

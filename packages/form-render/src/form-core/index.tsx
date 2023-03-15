@@ -191,6 +191,7 @@ const FormCore = (props: any) => {
 
   return (
     <Form
+      className='fr-form'
       labelWrap={true}
       {...formProps}
       form={form}

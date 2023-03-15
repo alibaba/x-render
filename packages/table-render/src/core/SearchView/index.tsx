@@ -24,7 +24,7 @@ const Search: <RecordType extends object = any>(
     watch = {
       '#': (value) => {
         form.submit();
-        const callBack: any = _watch['#'];
+        const callBack: any = _watch?.['#'];
         if (isFunction(callBack)) {
           callBack(value);
         }

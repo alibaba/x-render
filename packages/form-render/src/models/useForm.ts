@@ -16,11 +16,40 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   _set(formSchema, path, result);
 };
 
+
+const getFieldPath = (_path: any) => {
+  if (!_path) {
+    return undefined;
+  }
+  if (isArray(_path)) {
+    return _path.map(item => {
+      return item.split('.').map((ite: any) => {
+        if (!isNaN(Number(ite))) {
+          return ite * 1;
+        }
+        return ite;
+      });
+    })
+  }
+  return _path.split('.').map((item: any) => {
+    if (!isNaN(Number(item))) {
+      return item * 1;
+    }
+    return item;
+  });
+}
+
 const useForm = () => {
   const [form] = Form.useForm() as [FormInstance];
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
   const schemaRef = useRef({});
+  const { getFieldError, getFieldsError, getFieldInstance } = form;
+  const formRef = useRef({
+    getFieldError,
+    getFieldsError,
+    getFieldInstance
+  })
 
   const setStoreData = (data: any) => {
     const { setState } = storeRef.current;
@@ -79,13 +108,13 @@ const useForm = () => {
   }
 
   form.getValues = (nameList?: any, filterFunc?: any) => {
-    let values = form.getFieldsValue(nameList, filterFunc);
+    let values = form.getFieldsValue(getFieldPath(nameList), filterFunc);
     values = valueRemoveUndefined(values);
     return parseValuesToBind(values, flattenSchemaRef.current);
   }
 
   form.setValueByPath = (path: any, value: any) => {
-    const name = path?.split('.');
+    const name = getFieldPath(path);
     form.setFieldValue(name, value);
   }
 
@@ -110,8 +139,23 @@ const useForm = () => {
   };
 
   form.removeErrorField = (path: any) => {
-    form.setFields([{ name: path, errors: [] }]);
+    form.setFields([{ name: getFieldPath(path), errors: [] }]);
   };
+
+  form.getFieldError = (path: string) => {
+    const name = getFieldPath(path);
+    return formRef.current.getFieldError(name);
+  }
+
+  form.getFieldsError = (path: string[]) => {
+    const name = getFieldPath(path);
+    return formRef.current.getFieldsError(name);
+  }
+
+  form.getFieldInstance = (path) => {
+    const name = getFieldPath(path)
+    return formRef.current.getFieldInstance(name);
+  }
 
   form.getHiddenValues = () => {
     const values = form.getFieldsValue();

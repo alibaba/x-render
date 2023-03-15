@@ -101,7 +101,7 @@ const TableList: React.FC<Props> = (props: any) => {
             }
           }
         };
-        return renderCore({ schema: fieldSchema, parentPath: [field.name], rootPath });
+        return renderCore({ schema: fieldSchema, parentPath: [field.name], rootPath: [...rootPath, field.name] });
       }
     }
   });

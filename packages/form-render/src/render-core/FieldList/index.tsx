@@ -2,6 +2,8 @@ import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand';
 import { FRContext, ConfigContext } from '../../models/context';
+import { isHasExpression, parseAllExpression } from '../../models/expression';
+
 import Main from './main';
 
 const UpperContext = createContext(() => {});
@@ -82,31 +84,54 @@ export default (props: any) => {
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
-  const { schema, path } = props;
+  const { schema:_schema, path,} = props;
+
+  const formData = form.getFieldsValue(true);
+  const { schema: formSchema } = store.getState();
+
+  const { items, ...otherSchema } = _schema;
+  const schema = {
+    items,
+    ...parseAllExpression(otherSchema, formData, props.rootPath, formSchema)
+  };
+
+  const { fieldCol, labelCol } = schema || {};
   
-  const { title, widget } = schema;
+  const { widget } = schema;
   let widgetName = widget || 'list1';
-
-  let span = 24;
-  if (formCtx.column) {
-    span = 24 / formCtx.column;
-  }
-
-  if (schema.width === '100%') {
-    span = 24;
-  }
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   const value = Form.useWatch(path, form);
-  const labelCol = getValueFromKey('labelCol');
+ 
   const label = getLabel(schema, displayType, widgets);
   const tooltip = getTooltip(schema, displayType);
+  const labelWidth = getValueFromKey('labelWidth')
+
+
+  let _labelCol: any = { span: 3 };
+  let _fieldCol = { flex: 1 }
+
+  if (labelWidth) {
+    _labelCol = { flex : labelWidth + 'px' };
+  }
+
+  if (labelCol) {
+    _labelCol = labelCol;
+  }
+
+  if (fieldCol) {
+    _fieldCol = fieldCol;
+  }
 
   let isInline = schema.display === 'inline';
   if (!value && widgetName !== 'drawerList') {
     isInline = true;
   }
 
+  if (schema.hidden) {
+    return null;
+  }
+  
   return (
     <Col span={24}>
       {!isInline && !isDisplayColumn && label && (
@@ -121,7 +146,8 @@ export default (props: any) => {
       )}
       <Form.Item 
         label={label} 
-        labelCol={labelCol} 
+        labelCol={_labelCol}
+        wrapperCol={_fieldCol}
         noStyle={!isInline && !isDisplayColumn}
         tooltip={tooltip}
       >

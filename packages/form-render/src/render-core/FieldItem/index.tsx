@@ -4,7 +4,7 @@ import { Form } from 'antd';
 import { _get } from '../../utils';
 import { FRContext } from '../../models/context';
 import { isHasExpression, parseAllExpression } from '../../models/expression';
-import Field from './field';
+import Main from './main';
 
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
@@ -14,7 +14,7 @@ export default (props: any) => {
 
   // No function expressions exist
   if (!isHasExpression(schema) && !schema?.dependencies) {
-    return <Field {...props} store={store} />;
+    return <Main {...props} store={store} />;
   }
 
   // Need to listen to form values for dynamic rendering
@@ -33,7 +33,7 @@ export default (props: any) => {
         const dependValues = (schema.dependencies || []).map((item: any) => _get(formData, item));
         const newSchema = parseAllExpression(schema, formData, rootPath, formSchema);
   
-        return <Field schema={newSchema} rootPath={rootPath} {...otherProps} dependValues={dependValues} store={store} />;
+        return <Main schema={newSchema} rootPath={rootPath} {...otherProps} dependValues={dependValues} store={store} />;
       }}
     </Form.Item>
   );
