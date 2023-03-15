@@ -202,42 +202,68 @@
 
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
-import { Button, Input } from 'antd';
+import { Input } from 'antd';
 
 const schema = {
   type: 'object',
   displayType: 'row',
   properties: {
-    list: {
-      title: '对象数组',
-      description: '对象数组嵌套功能',
-      type: 'array',
-      widget: 'cardList',
-      items: {
-        type: 'object',
-        title: '卡片主题',
-        description: '这是一个对象类型',
-        column: 3,
-        properties: {
-          input1: {
-            title: '输入框 A',
-            type: 'string',
-          },
-          input2: {
-            title: '输入框 B',
-            type: 'string',
-          },
-          input3: {
-            title: '输入框 B',
-            type: 'string',
-          },
-          input4: {
-            title: '输入框 C',
-            type: 'string',
-          }
+    input1: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+      labelWidth: '300px'
+    },
+    input2: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+      labelWidth: '300px',
+      dependencies: ['input1'],
+      rules: [
+        { 
+          validator: (_, value) => {
+            debugger;
+            const pattern = '^[\u4E00-\u9FA5]+$';
+            const result = new RegExp(pattern).test(value);
+            return result;
+            // 或者是返回一个对象，用于动态设置 message 内容
+            // return {
+            //   status: result,
+            //   message: '请输入中文！',
+            // }
+          }, 
+          message: '请输入中文！' 
         }
-      }
-    }
+      ]
+    },
+    date1: {
+      title: '日期选择',
+      type: 'string',
+      format: 'date',
+    },
+    dateRange1: {
+      title: '日期范围',
+      type: 'range',
+      format: 'dateTime',
+      dependencies: ['date1'],
+      rules: [
+        { 
+          validator: (_, value) => {
+            debugger;
+            const pattern = '^[\u4E00-\u9FA5]+$';
+            const result = new RegExp(pattern).test(value);
+            return result;
+            // 或者是返回一个对象，用于动态设置 message 内容
+            // return {
+            //   status: result,
+            //   message: '请输入中文！',
+            // }
+          }, 
+          message: '请输入中文！' 
+        }
+      ]
+    },
   }
 };
 
@@ -258,7 +284,6 @@ export default () => {
 
   const watch = {
     '#': (value) => {
-      debugger;
     }
   }
 
