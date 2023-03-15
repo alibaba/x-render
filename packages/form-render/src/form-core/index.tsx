@@ -198,7 +198,7 @@ const FormCore = (props: any) => {
       onFinishFailed={handleFinishFailed}
       onValuesChange={handleValuesChange}
     >
-      <Row gutter={displayType === 'row' ? 16 : 24}>
+      <Row gutter={displayType === 'row' ? 16 : 24} justify='center'>
         <RenderCore schema={schema} />
         {operateExtra}
       </Row>

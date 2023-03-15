@@ -3,11 +3,12 @@ import { Col, ConfigProvider } from 'antd';
 import classnames from 'classnames';
 
 import FormRender from '../../form-core';
-import ActionView from './ActionView';
 import { translation } from '../../utils';
 import { SearchProps } from '../../type';
-import './index.less';
 import withProvider from '../../withProvider';
+import ActionView from './ActionView';
+import './index.less';
+
 
 const getSearchHeight = (limitHeight: boolean, isColumn: boolean) => {
   if (!limitHeight) {
@@ -19,7 +20,7 @@ const getSearchHeight = (limitHeight: boolean, isColumn: boolean) => {
   }
 
   return 136;
-}
+};
 
 const SearchForm: <RecordType extends object = any>(
   props: SearchProps<RecordType>
@@ -52,15 +53,15 @@ const SearchForm: <RecordType extends object = any>(
     column: _column=4,
     collapsed: _collapsed,
     defaultCollapsed,
+    schema,
     ...otherProps
   } = props;
 
   const [limitHeight, setLimitHeight] = useState<boolean>();
   const searchRef = useRef<any>();
-  const [column, setColumn] = useState(_column);
+  const [column, setColumn] = useState(schema.column || _column);
   const [collapsed, setCollapsed] = useState(_collapsed);
-  const isColumn = (otherProps.displayType || otherProps.schema.displayType) === 'column';
-
+  const isColumn = (otherProps.displayType || schema.displayType) === 'column';
 
   const actionProps = {
     searchBtnRender,
@@ -159,12 +160,15 @@ const SearchForm: <RecordType extends object = any>(
       <FormRender
         displayType='row'
         {...otherProps}
-        column={column}
+        schema={{
+          ...schema,
+          column: column
+        }}
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
         form={form}
         operateExtra={mode !== 'simple' && (
-          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight, 'search-action-column': isColumn, })} style={{ minWidth: (1/column)*100 + '%' }}>
+          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight, 'search-action-column': isColumn && limitHeight })} style={{ minWidth: (1/column)*100 + '%' }}>
             <ActionView {...actionProps} setLimitHeight={setLimitHeight} />
           </Col>
         )}

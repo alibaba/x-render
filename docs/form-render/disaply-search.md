@@ -16,25 +16,25 @@ import { useForm, SearchForm } from 'form-render';
 
 const schema = {
   type: 'object',
-  displayType: 'column',
+  displayType: 'row',
   properties: {
     inputA: {
-      title: '输入框 A',
+      title: 'Field A',
       type: 'string',
       props: {},
     },
     inputB: {
-      title: '输入框 B',
+      title: 'Field B',
       type: 'string',
       props: {},
     },
     input3: {
-      title: '输入框 C',
+      title: 'Field C',
       type: 'string',
       props: {},
     },
     selectA: {
-      title: '下拉单选A',
+      title: 'Field D',
       type: 'string',
       widget: 'select',
       props: {
@@ -53,7 +53,7 @@ export default () => {
 
   const onSearch = (values) => {
     console.log(values, 'searchData');
-  }
+  };
 
   return (
     <SearchForm 
@@ -76,32 +76,30 @@ import FormRender, { useForm, SearchForm } from 'form-render';
 
 const schema = {
   type: 'object',
-  displayType: 'column',
-  column: '3',
+  displayType: 'row',
   properties: {
     inputA: {
-      title: '输入框 A',
+      title: 'Field A',
       type: 'string',
       props: {},
-      cellSpan: '2',
     },
     inputB: {
-      title: '输入框 B',
+      title: 'Field B',
       type: 'string',
       props: {},
     },
     inputC: {
-      title: '输入框 C',
+      title: 'Field C',
       type: 'string',
       props: {},
     },
     inputD: {
-      title: '输入框 D',
+      title: 'Field D',
       type: 'string',
       props: {},
     },
     selectA: {
-      title: '下拉单选 A',
+      title: 'Field E',
       type: 'string',
       widget: 'select',
       props: {
@@ -113,7 +111,7 @@ const schema = {
       }
     },
     selectB: {
-      title: '下拉单选 B',
+      title: 'Field F',
       type: 'string',
       widget: 'select',
       props: {
@@ -125,7 +123,7 @@ const schema = {
       }
     },
     selectC: {
-      title: '下拉单选 C',
+      title: 'Field G',
       type: 'string',
       widget: 'select',
       props: {
@@ -137,7 +135,7 @@ const schema = {
       }
     },
     selectD: {
-      title: '下拉单选 D',
+      title: 'Field H',
       type: 'string',
       widget: 'select',
       props: {
