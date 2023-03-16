@@ -8,5 +8,31 @@ group:
 
 # 无搜索栏
 
-<code src='./demo/noSearch.tsx'></code>
+```jsx
+/**
+ * transform: true
+ * defaultShowCode: true
+ * background: 'rgb(245,245,245)'
+ */
+import React, { useRef } from 'react';
+import TableRender from 'table-render';
 
+import { schema } from './static/search';
+import { columns, toolbarRender } from './static/table';
+import { searchApi, searchApi2 } from './static/request';
+
+const Demo = () => {
+  const tableRef = useRef();
+
+  return (
+    <TableRender
+      ref={tableRef}
+      columns={columns}
+      request={searchApi}
+      toolbarRender={toolbarRender}
+    />
+  )
+};
+
+export default Demo;
+```

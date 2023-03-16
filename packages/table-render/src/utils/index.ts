@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { set, get, cloneDeep, has, merge, isUndefined, omitBy } from 'lodash-es';
+import { set, get, cloneDeep, has, merge, isUndefined, omitBy, debounce } from 'lodash-es';
 
 export const _set = set;
 export const _get = get;
@@ -8,6 +8,7 @@ export const _has = has;
 export const _merge = merge;
 export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
+export const _debounce = debounce;
 
 export const getDateTime = (time: any, format: string) => {
   if (!time) return null;

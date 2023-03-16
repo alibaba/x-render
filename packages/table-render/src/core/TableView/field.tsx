@@ -52,7 +52,7 @@ export const renderProgress = (value: any, props: any) => {
 
 export const renderTag = (value: any, props: any) => {
   return (
-    <Tag {...props}>{value}</Tag>
+    <Tag {...props} key={value}>{value}</Tag>
   );
 }
 

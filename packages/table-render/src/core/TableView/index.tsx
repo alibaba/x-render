@@ -19,9 +19,13 @@ const ProTable: <RecordType extends object = any>(
   const { getState, setState, doSearch, columns, pageChangeWithRequest = true, ...otherProps }: any = props;
   const { dataSource = [], loading, pagination, tableSize }: any = getState();
 
-  const handleChange = ({ current, pageSize }, filters, sorter) => {
-    setState({ pagination: { ...pagination, current, pageSize }, sorter });
-    if (!pageChangeWithRequest) {
+  const handleChange = ({ current, pageSize }, filters, sorter, extra) => {
+    if (extra?.action === 'filter') {
+      setState({ pagination: { ...pagination, current, pageSize, total: extra.currentDataSource.length }, sorter });
+    } else {
+      setState({ pagination: { ...pagination, current, pageSize }, sorter });
+    }
+    if (!pageChangeWithRequest || extra?.action === 'filter') {
       return;
     }
     doSearch({ current, pageSize, sorter });

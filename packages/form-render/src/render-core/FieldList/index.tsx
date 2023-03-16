@@ -2,7 +2,7 @@ import React, { createContext, useContext } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand';
 import { FRContext, ConfigContext } from '../../models/context';
-import { isHasExpression, parseAllExpression } from '../../models/expression';
+import { parseAllExpression } from '../../models/expression';
 
 import Main from './main';
 
@@ -13,7 +13,12 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
 };
 
 const getLabel = (schema: any, displayType: string, widgets: any) => {
-  const { title, description, descWidget } = schema;
+  const { title, description, descWidget, labelWidget } = schema;
+  const LabelNode = widgets[labelWidget];
+
+  if (LabelNode) {
+    return <LabelNode schema={...schema} />
+  }
 
   if ((!description && !descWidget)) {
     return title;

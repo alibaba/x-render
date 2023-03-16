@@ -29,6 +29,7 @@ const RenderCore = props => {
     tableRef,
     request: api,
     size,
+    tableWrapper,
     autoRequest = true,
     ...tableProps
   } = props;
@@ -67,7 +68,7 @@ const RenderCore = props => {
     form,
     getState: () => ({
       ...getState(),
-      search: form.getValues()
+      search: form.getValues(true)
     })
   }));
 
@@ -90,7 +91,7 @@ const RenderCore = props => {
     const getTableData = (_api: any) => {
       setState({ loading: true });
       let _params = {
-        ...form.getValues(),
+        ...form.getValues(true),
         ...customSearch,
         ...extraSearch,
         ..._pagination,
@@ -104,7 +105,7 @@ const RenderCore = props => {
         .then(res => {
           // TODO：这里校验res是否规范
           const { rows, data, total, pageSize, ...extraData } = res;
-          
+
           setState({
             loading: false,
             dataSource: data || rows,
@@ -161,6 +162,42 @@ const RenderCore = props => {
     }
   };
 
+  const tableNode = (
+    <div
+      ref={rootRef}
+      className={`tr-table-wrapper ${className}`}
+      style={style}
+    >
+      <ToolbarView
+        request={api}
+        doSearch={doSearch}
+        refresh={refresh}
+        fullScreen={fullScreen}
+        title={title}
+        tableSize={tableSize}
+        currentTab={currentTab}
+        toolbarAction={toolbarAction}
+        toolbarRender={toolbarRender}
+        setState={setState}
+        getState={getState}
+      />
+      <TableView
+        {...tableProps}
+        setState={setState}
+        getState={getState}
+        doSearch={doSearch}
+      />
+    </div>
+  );
+
+  const renderTable = () => {
+    if (isFunction(tableWrapper)) {
+      return tableWrapper(tableNode);
+    }
+
+    return tableNode;
+  };
+
   return (
     <div>
       <SearchView
@@ -171,31 +208,7 @@ const RenderCore = props => {
         hidden={hiddenSearch}
       />
       <ErrorBoundary>
-        <div
-          ref={rootRef}
-          className={`tr-table-wrapper ${className}`} 
-          style={style}
-        >
-          <ToolbarView
-            request={api}
-            doSearch={doSearch}
-            refresh={refresh}
-            fullScreen={fullScreen}
-            title={title}
-            tableSize={tableSize}
-            currentTab={currentTab}
-            toolbarAction={toolbarAction}
-            toolbarRender={toolbarRender}
-            setState={setState}
-            getState={getState}
-          />
-          <TableView
-            {...tableProps}
-            setState={setState}
-            getState={getState}
-            doSearch={doSearch}
-          />
-        </div>
+        {renderTable()}
       </ErrorBoundary>
     </div>
   );

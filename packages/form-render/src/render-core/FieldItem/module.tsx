@@ -65,7 +65,13 @@ export const getPath = (path: any) => {
 };
 
 export const getLabel = (schema: any, displayType: string, widgets: any) => {
-  const { title, description, descWidget } = schema;
+  const { title, description, descWidget, labelWidget } = schema;
+
+  const LabelNode = widgets[labelWidget];
+
+  if (LabelNode) {
+    return <LabelNode schema={...schema} />
+  }
 
   if ((!description && !descWidget)) {
     return title;

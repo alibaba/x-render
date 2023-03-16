@@ -21,6 +21,11 @@ const getFieldPath = (_path: any) => {
   if (!_path) {
     return undefined;
   }
+
+  if (typeof _path === 'boolean') {
+    return _path
+  }
+
   if (isArray(_path)) {
     return _path.map(item => {
       return item.split('.').map((ite: any) => {

@@ -120,7 +120,7 @@ export default (props: any) => {
   const help = getExtraView('help', schema, widgets);
 
   const tooltip = getTooltip(schema, displayType);
-  const ruleList = getRuleList(schema, form);
+  const ruleList = getRuleList(schema, form, methods);
   const readOnly = getValueFromKey('readOnly');
 
   const _labelCol = getValueFromKey('labelCol');

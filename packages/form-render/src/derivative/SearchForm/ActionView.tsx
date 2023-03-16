@@ -14,7 +14,9 @@ const ActionView = (props: any) => {
     collapsed,
     defaultCollapsed = true,
     setLimitHeight,
-    loading
+    loading,
+    retainBtn,
+    mode,
   } = props;
 
   const [expand, setExpand] = useState(!defaultCollapsed);
@@ -56,14 +58,17 @@ const ActionView = (props: any) => {
     );
   }
 
+  const submitShow = (mode === 'simple' && (typeof retainBtn === 'boolean' || retainBtn?.includes('submit')) || mode !== 'simple');
+  const resetShow = (mode === 'simple' && (typeof retainBtn === 'boolean' || retainBtn?.includes('reset')) || mode !== 'simple');
+
   return (
     <div
       className={`flex justify-end w-100 ${className || ''}`}
       style={style}
     >
       <Space>
-        <Button loading={loading} type='primary' onClick={form.submit}>{searchText}</Button>
-        <Button onClick={handleReset}>{resetText}</Button>
+        {submitShow && <Button loading={loading} type='primary' onClick={form.submit}>{searchText}</Button>}
+        {resetShow && <Button onClick={handleReset}>{resetText}</Button>}
         {collapsed && (
           <a onClick={handleCollapse} style={{ cursor: 'pointer' }}>
             {expand ? (

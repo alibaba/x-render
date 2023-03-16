@@ -36,6 +36,7 @@
     "react-sortable-hoc": "^2.0.0"
   },
   "devDependencies": {
+    "less": "^3.0.0",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-copy": "^3.4.0"
   },

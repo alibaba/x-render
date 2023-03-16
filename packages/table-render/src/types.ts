@@ -29,7 +29,7 @@ export type ProColumnsType<T extends object = any> = Array<
     /** 是否支持复制 */
     copyable?: boolean;
     /** 值的类型 */
-    valueType?: 'text' | 'money' | 'date' | 'dateTime' | 'code';
+    valueType?: 'text' | 'money' | 'date' | 'dateTime' | 'code' | 'tag' | 'tags' | 'progress' | 'dateRange' | 'dateTimeRange' | 'image';
     /** 当前列值的枚举 */
     enum?: Record<string, string>;
   }
@@ -125,6 +125,10 @@ export interface TableRenderProps<RecordType extends Object = any>
    * antd的全局config
    */
   configProvider?: ConfigProviderProps;
+  /**
+   * 自定义渲染表格
+   */
+  tableWrapper?: (tableNode: React.ReactNode) => React.ReactNode;
   request?: ApiType<RecordType>;
   // 自动请求
   autoRequest?: boolean;

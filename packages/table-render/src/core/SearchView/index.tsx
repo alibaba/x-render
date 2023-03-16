@@ -1,7 +1,7 @@
 import React from 'react';
 import { SearchProps } from '../../types';
 import { SearchForm } from 'form-render';
-import { isFunction } from '../../utils'
+import { isFunction, _debounce } from '../../utils'
 
 const Search: <RecordType extends object = any>(
   props: SearchProps<RecordType>
@@ -22,13 +22,13 @@ const Search: <RecordType extends object = any>(
   let watch = { ..._watch };
   if (mode === 'simple') {
     watch = {
-      '#': (value) => {
+      '#': _debounce((value) => {
         form.submit();
         const callBack: any = _watch?.['#'];
         if (isFunction(callBack)) {
           callBack(value);
         }
-      },
+      }, 300),
       ..._watch,
     }
   }
@@ -44,7 +44,7 @@ const Search: <RecordType extends object = any>(
   };
 
   return (
-    <SearchForm 
+    <SearchForm
       {...otherProps}
       mode={mode}
       form={form}

@@ -241,6 +241,23 @@ const schema = {
       title: '日期选择',
       type: 'string',
       format: 'date',
+      dependencies: ['dateRange1'],
+      rules: [
+        { 
+          validator: (_, value) => {
+            debugger;
+            const pattern = '^[\u4E00-\u9FA5]+$';
+            const result = new RegExp(pattern).test(value);
+            return result;
+            // 或者是返回一个对象，用于动态设置 message 内容
+            // return {
+            //   status: result,
+            //   message: '请输入中文！',
+            // }
+          }, 
+          message: '请输入中文！' 
+        }
+      ]
     },
     dateRange1: {
       title: '日期范围',
