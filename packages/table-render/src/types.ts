@@ -125,6 +125,10 @@ export interface TableRenderProps<RecordType extends Object = any>
    * antd的全局config
    */
   configProvider?: ConfigProviderProps;
+  /**
+   * 自定义渲染表格
+   */
+  tableWrapperRender?: (tableNode: React.ReactNode) => React.ReactNode;
   request?: ApiType<RecordType>;
   // 自动请求
   autoRequest?: boolean;
