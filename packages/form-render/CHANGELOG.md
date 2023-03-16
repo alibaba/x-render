@@ -1,4 +1,7 @@
 # 更新日志
+
+### 2.0.17
+- [+] 增加 labelWidget，配置用于 form.item lable 的自定义
 ### 2.0.15
 - [!] 修复查询表单, displayType='column' 布局异常
 - [!] 修复 simpleList, 新增报错
