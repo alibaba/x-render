@@ -1,4 +1,7 @@
 # 更新日志
+
+### 2.0.13
+-[+] 增加 tableWrapper 属性，可以通过 tableWrapper 在搜索栏和表格之间增加一些内容
 ### 2.0.9
 -[+] Search 增加极简模式 mode='simple'配置，直接通过onChange触发查询事件，并且去除查询按钮
 -[+] 增加 autoSize 是否自适应布局

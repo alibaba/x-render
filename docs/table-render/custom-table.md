@@ -10,7 +10,6 @@ group:
 
 有些情况下，你会希望在搜索栏和表格之间增加一些内容。这时可以通过 `tableWrapper` 实现你的需求。
 
-## 默认展开
 ```jsx
 /**
  * transform: true

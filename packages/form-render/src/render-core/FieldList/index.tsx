@@ -17,7 +17,7 @@ const getLabel = (schema: any, displayType: string, widgets: any) => {
   const LabelNode = widgets[labelWidget];
 
   if (LabelNode) {
-    return <LabelNode schema={...schema} />
+    return <LabelNode schema={schema} />
   }
 
   if ((!description && !descWidget)) {
