@@ -3,17 +3,30 @@ import { Col, ConfigProvider } from 'antd';
 import classnames from 'classnames';
 
 import FormRender from '../../form-core';
-import ActionView from './ActionView';
 import { translation } from '../../utils';
 import { SearchProps } from '../../type';
-import './index.less';
 import withProvider from '../../withProvider';
+import ActionView from './ActionView';
+import './index.less';
+
+
+const getSearchHeight = (limitHeight: boolean, isColumn: boolean) => {
+  if (!limitHeight) {
+    return 'auto';
+  }
+ 
+  if (isColumn) {
+    return 110;
+  }
+
+  return 136;
+};
 
 const SearchForm: <RecordType extends object = any>(
   props: SearchProps<RecordType>
 ) => React.ReactElement = props => {
   if (props.hidden) {
-    return;
+    return null;
   }
 
   const configCtx = useContext(ConfigProvider.ConfigContext);
@@ -40,13 +53,15 @@ const SearchForm: <RecordType extends object = any>(
     column: _column=4,
     collapsed: _collapsed,
     defaultCollapsed,
+    schema,
     ...otherProps
   } = props;
 
-  const [limitHeight, setLimitHeight] = useState<Boolean>();
+  const [limitHeight, setLimitHeight] = useState<boolean>();
   const searchRef = useRef<any>();
-  const [column, setColumn] = useState(_column);
+  const [column, setColumn] = useState(schema.column || _column);
   const [collapsed, setCollapsed] = useState(_collapsed);
+  const isColumn = (otherProps.displayType || schema.displayType) === 'column';
 
   const actionProps = {
     searchBtnRender,
@@ -71,7 +86,7 @@ const SearchForm: <RecordType extends object = any>(
 
     const resizeObserver = new ResizeObserver(() => {
       const { clientWidth, clientHeight } = searchRef?.current || {};
-      if (clientHeight < 136) {
+      if (clientHeight < (isColumn ? 110 : 136)) {
         setCollapsed(false);
         setLimitHeight(false)
       }
@@ -96,7 +111,7 @@ const SearchForm: <RecordType extends object = any>(
   useEffect(() => {
     setTimeout(() => {
       const { clientHeight } = searchRef?.current || {};
-      if (clientHeight < 136) {
+      if (clientHeight < (isColumn ? 110 : 136)) {
         setCollapsed(false);
         setLimitHeight(false)
       }
@@ -137,7 +152,7 @@ const SearchForm: <RecordType extends object = any>(
       className={classnames('fr-search', { [className || '']: !!className })}
       style={{
         ...style,
-        height: limitHeight ? 136 : 'auto'
+        height: getSearchHeight(limitHeight, isColumn)
       }}
       ref={searchRef}
       onKeyDown={handleKeyDown}
@@ -145,12 +160,15 @@ const SearchForm: <RecordType extends object = any>(
       <FormRender
         displayType='row'
         {...otherProps}
-        column={column}
+        schema={{
+          ...schema,
+          column: column
+        }}
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
         form={form}
         operateExtra={mode !== 'simple' && (
-          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight })} style={{ minWidth: (1/column)*100 + '%' }}>
+          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight, 'search-action-column': isColumn && limitHeight })} style={{ minWidth: (1/column)*100 + '%' }}>
             <ActionView {...actionProps} setLimitHeight={setLimitHeight} />
           </Col>
         )}

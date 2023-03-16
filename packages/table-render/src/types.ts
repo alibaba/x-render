@@ -52,7 +52,7 @@ export interface TableState<RecordType> {
 }
 
 // TODO这里FR的props应该去FR里写，这里继承就好了
-export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
+export interface SearchProps<RecordType> extends Omit<FRProps, 'form' | 'schema'> {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
@@ -92,8 +92,7 @@ export type SearchApi<RecordType> = (
   /**
    * @deprecated 即将弃用，请使用 data 返回
    */
-  rows: Array<RecordType>;
-
+  rows?: Array<RecordType>;
   data: Array<RecordType>;
   total: number;
   pageSize?: number;
@@ -131,4 +130,6 @@ export interface TableRenderProps<RecordType extends Object = any>
    */
   tableWrapperRender?: (tableNode: React.ReactNode) => React.ReactNode;
   request?: ApiType<RecordType>;
+  // 自动请求
+  autoRequest?: boolean;
 }

@@ -24,7 +24,7 @@ const Search: <RecordType extends object = any>(
     watch = {
       '#': (value) => {
         form.submit();
-        const callBack: any = _watch['#'];
+        const callBack: any = _watch?.['#'];
         if (isFunction(callBack)) {
           callBack(value);
         }
@@ -52,6 +52,7 @@ const Search: <RecordType extends object = any>(
       loading={loading} 
       onSearch={handleSearch}
       onMount={handleMount}
+      schema={otherProps.schema || {}}
     />
   );
 }

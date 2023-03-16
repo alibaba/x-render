@@ -1,8 +1,10 @@
 import React from 'react';
-import { Table, Form, Space, Popconfirm, Button } from 'antd';
+import { Table, Form, Space, Popconfirm, Button, Divider } from 'antd';
 import type { FormListFieldData, TableColumnsType } from 'antd';
-import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, CloseOutlined, CopyOutlined  } from '@ant-design/icons';
 import TableCell from './tableCell';
+import FButton from '../../components/FButton';
+
 import './index.less';
 
 interface ListTableProps {
@@ -23,8 +25,13 @@ const TableList: React.FC<ListTableProps> = (props) => {
     renderCore,
     readOnly,
 
+    operateBtnType,
     addBtnProps,
     delConfirmProps,
+    copyBtnProps,
+    deleteBtnProps,
+    moveUpBtnProps,
+    moveDownBtnProps,
     actionColumnProps,
     pagination,
 
@@ -36,7 +43,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
     addItem,
     copyItem,
     moveItem,
-    removeItem,
+    removeItem
   } = props;
 
   const itemSchema = schema?.items?.properties || {};
@@ -77,7 +84,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
             renderCore={renderCore}
             schema={fieldSchema}
             parentPath={[field.name]}
-            rootPath={rootPath}
+            rootPath={[...rootPath, field.name]}
             dataIndex={dataIndex}
           />
         );
@@ -88,24 +95,45 @@ const TableList: React.FC<ListTableProps> = (props) => {
   if (!readOnly) {
     columns.push({
       title: actionColumnProps.colHeaderText,
-      width: 150,
+      width: '190px',
+      fixed: 'right',
       render: (_, field) => (
         <Form.Item>
-          <Space>
-            {!hideCopy && <a onClick={() => handleCopy(field.name)}>{actionColumnProps.copyText}</a>}
-            {!hideDelete && (
-              <Popconfirm
-                {...delConfirmProps}
-                onConfirm={() => removeItem(field.name)}
-              >
-                <a>{actionColumnProps.delText}</a>
-              </Popconfirm>
-            )}
+          <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>
             {!hideMove && (
               <>
-                <ArrowUpOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name - 1)} />
-                <ArrowDownOutlined style={{ color: '#1890ff' }} onClick={() => moveItem(field.name, field.name + 1)} />
+                <FButton 
+                  disabled={field.name === 0}
+                  onClick={() => moveItem(field.name, field.name - 1)}
+                  icon={<ArrowUpOutlined/>}
+                  {...moveUpBtnProps}
+                />
+                <FButton 
+                  disabled={field.name === fields.length - 1}
+                  onClick={() => moveItem(field.name, field.name + 1)}
+                  icon={<ArrowDownOutlined/>}
+                  {...moveDownBtnProps}
+                />
               </>
+            )}
+            {!hideDelete && (
+              <Popconfirm
+                onConfirm={() => removeItem(field.name)}
+                {...delConfirmProps}
+              >
+                <FButton
+                  icon={<CloseOutlined/>}
+                  btnType={operateBtnType}
+                  {...deleteBtnProps}
+                />
+              </Popconfirm>
+            )}
+            {!hideCopy && (
+              <FButton 
+                onClick={() => handleCopy(field.name)}
+                icon={<CopyOutlined/>}
+                {...copyBtnProps}
+              />
             )}
           </Space>
         </Form.Item>
@@ -126,7 +154,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
       {(!schema.max || fields.length < schema.max) && !hideAdd && (
         <Button
           icon={<PlusOutlined />}
-          onClick={addItem}
+          onClick={() => addItem()}
           {...addBtnProps}
         />
       )}

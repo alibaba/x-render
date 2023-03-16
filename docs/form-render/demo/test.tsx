@@ -198,3 +198,120 @@
 //     </>
 //   );
 // }
+
+
+import React from 'react';
+import FormRender, { useForm } from 'form-render';
+import { Input } from 'antd';
+
+const schema = {
+  type: 'object',
+  displayType: 'row',
+  properties: {
+    input1: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+      labelWidth: '300px'
+    },
+    input2: {
+      title: '简单输入框',
+      type: 'string',
+      required: true,
+      labelWidth: '300px',
+      dependencies: ['input1'],
+      rules: [
+        { 
+          validator: (_, value) => {
+            debugger;
+            const pattern = '^[\u4E00-\u9FA5]+$';
+            const result = new RegExp(pattern).test(value);
+            return result;
+            // 或者是返回一个对象，用于动态设置 message 内容
+            // return {
+            //   status: result,
+            //   message: '请输入中文！',
+            // }
+          }, 
+          message: '请输入中文！' 
+        }
+      ]
+    },
+    date1: {
+      title: '日期选择',
+      type: 'string',
+      format: 'date',
+      dependencies: ['dateRange1'],
+      rules: [
+        { 
+          validator: (_, value) => {
+            debugger;
+            const pattern = '^[\u4E00-\u9FA5]+$';
+            const result = new RegExp(pattern).test(value);
+            return result;
+            // 或者是返回一个对象，用于动态设置 message 内容
+            // return {
+            //   status: result,
+            //   message: '请输入中文！',
+            // }
+          }, 
+          message: '请输入中文！' 
+        }
+      ]
+    },
+    dateRange1: {
+      title: '日期范围',
+      type: 'range',
+      format: 'dateTime',
+      dependencies: ['date1'],
+      rules: [
+        { 
+          validator: (_, value) => {
+            debugger;
+            const pattern = '^[\u4E00-\u9FA5]+$';
+            const result = new RegExp(pattern).test(value);
+            return result;
+            // 或者是返回一个对象，用于动态设置 message 内容
+            // return {
+            //   status: result,
+            //   message: '请输入中文！',
+            // }
+          }, 
+          message: '请输入中文！' 
+        }
+      ]
+    },
+  }
+};
+
+const SiteInput = props => {
+  console.log('widget props:', props);
+
+  const handleChange = () => {
+    props.onChange([
+      1, 2, 3, 4
+    ])
+  }
+
+  return <Input addonBefore="https://" addonAfter=".com" {...props} onChange={handleChange} />;
+};
+
+export default () => {
+  const form = useForm();
+
+  const watch = {
+    '#': (value) => {
+    }
+  }
+
+  return (
+    <>
+      <FormRender 
+        form={form} 
+        schema={schema}
+        watch={watch}
+        widgets={{ site: SiteInput }}
+      />
+    </>
+  );
+}

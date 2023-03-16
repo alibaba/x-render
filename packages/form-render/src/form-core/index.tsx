@@ -74,7 +74,7 @@ const FormCore = (props: any) => {
       maxWidth
     };
     setContext(context);
-  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth]);
+  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly]);
 
   const initial = async () => {
     onMount && await onMount();
@@ -191,6 +191,7 @@ const FormCore = (props: any) => {
 
   return (
     <Form
+      className='fr-form'
       labelWrap={true}
       {...formProps}
       form={form}

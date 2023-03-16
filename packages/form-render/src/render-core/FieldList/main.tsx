@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Form, message, ConfigProvider } from 'antd';
+import { Form, message, ConfigProvider, Button } from 'antd';
 import { isFunction, translation } from '../../utils';
 
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
@@ -19,11 +19,11 @@ export default (props: any) => {
     formCtx,
     configContext,
   } = props;
-  
-  const { widgets } = configContext;
+
+  const { widgets, globalConfig } = configContext;
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
-
+ 
   const defaultAddBtnProps = {
     type: 'dashed',
     block: true,
@@ -37,20 +37,18 @@ export default (props: any) => {
   };
 
   let defaultActionColumnProps = {
-    colHeaderText: t('operate'),
-    copyText: t('copy'),
-    delText: t('delete'),
+    colHeaderText: t('operate')
   };
 
   const { widget } = schema;
   let widgetName = widget || 'list1';
   const Widget = widgets[widgetName];
 
-  const { props: listProps, ...otherSchema } = schema;
+  const { props: listProps,  removeBtn, ...otherSchema } = schema;
 
-  let initialValue = schema.default;
-  if (!initialValue && !['drawerList', 'list1'].includes(widgetName)) {
-    initialValue = [{}];
+  let defaultValue = schema.default ?? schema.defaultValue;
+  if (defaultValue === undefined && !['drawerList', 'list1'].includes(widgetName)) {
+    defaultValue = [{}];
   }
 
   let {
@@ -119,16 +117,31 @@ export default (props: any) => {
     }
 
     if (isFunction(copyFunc)) {
-      copyFunc(() => add(value), { schema });
+      copyFunc((funData?: any) => add(funData || value), { schema, value });
       return;
     }
     add(value);
+  };
+
+  const handleDetele = () => {
+    if (isFunction(removeBtn?.onClick)) {
+      removeBtn.onClick(() => {
+        form.setSchemaByPath(path, { hidden: true });
+      });
+      return;
+    }
+    form.setSchemaByPath(path, { hidden: true });
   };
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
 
   const readOnly = getValueFromKey('readOnly');
   const preRootPath = (rootPath || []).splice(0, rootPath.length - 1);
+  const displayType = getValueFromKey('displayType');
+
+  if (hideMove === undefined && globalConfig?.listOperate?.hideMove) {
+    hideMove = globalConfig?.listOperate.hideMove;
+  }
 
   if (hideAdd) {
     hideCopy = true;
@@ -141,73 +154,110 @@ export default (props: any) => {
     hideMove = true;
   }
 
+  const operateBtnType = globalConfig?.listOperate?.btnType;
+
   return (
-    <Form.List
-      name={path}
-      initialValue={initialValue}
-      rules={
-        otherSchema?.min ? [
-          {
-            validator: async (_, data) => {
-              if (!data || data.length < otherSchema.min) {
-                return Promise.reject(
-                  new Error(
-                    otherSchema?.message?.min ||
+    <>
+      <Form.List
+        name={path}
+        initialValue={defaultValue}
+        rules={
+          otherSchema?.min ? [
+            {
+              validator: async (_, data) => {
+                if (!data || data.length < otherSchema.min) {
+                  return Promise.reject(
+                    new Error(
+                      otherSchema?.message?.min ||
                       `数据长度必须大于等于${otherSchema.min}`
-                  )
-                );
+                    )
+                  );
+                }
               }
             }
-          }
-        ]
-      : null
-      }
-    >
-      {(fields, operation, { errors }) => (
-        <>
-          <Widget
-            {...otherListProps}
-            configContext={configContext}
-            form={form}
-            schema={otherSchema}
-            fields={fields}
-            operation={operation}
-            path={path}
-            listName={path}
-            parentLitPath={parentLitPath}
-            rootPath={[...preRootPath, ...path]}
-            readOnly={readOnly}
-            methods={methods}
-            renderCore={renderCore}
-            widgets={widgets}
-            hideAdd={hideAdd}
-            hideCopy={hideCopy}
-            hideDelete={hideDelete}
-            hideMove={hideMove}
-            addItem={handleAdd(operation.add)}
-            removeItem={handleRemove(operation.remove)}
-            moveItem={handleMove(operation.move)}
-            copyItem={handleCopy(operation.add, fields)}
-            addBtnProps={{
-              ...defaultAddBtnProps,
-              ...addBtnProps,
-            }}
-            delConfirmProps={{
-              ...defaultDelConfirmProps,
-              ...delConfirmProps,
-            }}
-            actionColumnProps={{
-              ...defaultActionColumnProps,
-              ...actionColumnProps,
-            }}
-          />
-          {errors?.length !== 0 && (
-            <div style={{ marginBottom: '12px' }}>
-              <Form.ErrorList errors={errors} />
-            </div>
-          )}
-        </>
+          ]
+            : null
+        }
+      >
+        {(fields, operation, { errors }) => (
+          <>
+            <Widget
+              {...otherListProps}
+              configContext={configContext}
+              form={form}
+              schema={otherSchema}
+              fields={fields}
+              operation={operation}
+              path={path}
+              listName={path}
+              parentLitPath={parentLitPath}
+              rootPath={[...preRootPath, ...path]}
+              readOnly={readOnly}
+              methods={methods}
+              renderCore={renderCore}
+              widgets={widgets}
+              hideAdd={hideAdd}
+              hideCopy={hideCopy}
+              hideDelete={hideDelete}
+              hideMove={hideMove}
+              addItem={handleAdd(operation.add)}
+              removeItem={handleRemove(operation.remove)}
+              moveItem={handleMove(operation.move)}
+              copyItem={handleCopy(operation.add, fields)}
+             
+              temporary={{
+                displayType
+              }}
+              
+
+              addBtnProps={{
+                ...defaultAddBtnProps,
+                ...addBtnProps,
+              }}
+              delConfirmProps={{
+                ...defaultDelConfirmProps,
+                ...delConfirmProps,
+              }}
+              actionColumnProps={{
+                ...defaultActionColumnProps,
+                ...actionColumnProps,
+              }}
+              copyBtnProps={{
+                children: t('copy'),
+                btnType: operateBtnType
+              }}
+              deleteBtnProps={{
+                children: t('delete'),
+                btnType: operateBtnType
+              }}
+              moveUpBtnProps={{
+                children: t('moveUp'),
+                btnType: operateBtnType
+              }}
+              moveDownBtnProps={{
+                children: t('moveDown'),
+                btnType: operateBtnType
+              }}
+            />
+            {errors?.length !== 0 && (
+              <div style={{ marginBottom: '12px' }}>
+                <Form.ErrorList errors={errors} />
+              </div>
+            )}
+          </>
+        )}
+      </Form.List>
+      {removeBtn && (
+        <Button
+          type='link'
+          danger
+          {...removeBtn}
+          onClick={handleDetele}
+        >
+          {removeBtn?.text || t('delete')}
+        </Button>
       )}
-    </Form.List>
+
+    </>
   );
 }

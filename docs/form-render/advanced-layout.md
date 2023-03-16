@@ -47,8 +47,8 @@ export default () => {
       <FormRender
         schema={schema}
         form={form}
-        labelCol={5}
-        fieldCol={18}
+        labelCol={6}
+        fieldCol={17}
       />
     </div>
   );
@@ -89,8 +89,8 @@ export default () => {
       <FormRender
         form={form}
         schema={schema} 
-        labelCol={5}
-        fieldCol={18}
+        labelCol={6}
+        fieldCol={17}
       />
     </>
   );
@@ -214,8 +214,8 @@ import schema from './schema/basic';
 
 export default () => {
   const form = useForm();
-  const [labelCol, setLabelCol] = useState(5);
-  const [fieldCol, setFieldcol] = useState(18);
+  const [labelCol, setLabelCol] = useState(6);
+  const [fieldCol, setFieldcol] = useState(17);
 
   return (
     <>

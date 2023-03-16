@@ -117,9 +117,15 @@ const schema = {
         { 
           validator: (_, value) => {
             const pattern = '^[\u4E00-\u9FA5]+$';
-            return new RegExp(pattern).test(value);
+            const result = new RegExp(pattern).test(value);
+            return result;
+            // 或者是返回一个对象，用于动态设置 message 内容
+            // return {
+            //   status: result,
+            //   message: '请输入中文！',
+            // }
           }, 
-          // message: '请输入中文！' 
+          message: '请输入中文！' 
         }
       ]
     }

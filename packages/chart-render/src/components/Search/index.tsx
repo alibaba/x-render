@@ -103,7 +103,7 @@ const Search: FC<Partial<ISearchProps>> = props => {
         filters: { ...propsRef.current.filters, ...form.getValues() },
       });
       setChart({ dataSource });
-    } catch {}
+    } catch { }
     setChart({ loading: false });
   }, []);
 
@@ -135,8 +135,8 @@ const Search: FC<Partial<ISearchProps>> = props => {
             (Array.isArray(searchOnChange)
               ? searchOnChange
               : searchOnChange
-              ? ['#']
-              : []
+                ? ['#']
+                : []
             ).map(key => [key, refresh!])
           ),
         }}

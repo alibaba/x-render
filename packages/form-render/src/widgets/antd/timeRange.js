@@ -9,11 +9,12 @@ import { getFormat } from '../utils';
 
 const { RangePicker } = TimePicker;
 
-const TimeRange = ({ onChange, format, value, style, ...rest }) => {
+const TimeRange = ({ onChange, format, value, style, schema }) => {
   const timeFormat = getFormat(format);
   let [start, end] = Array.isArray(value) ? value : [];
+
   const _value =
-    start && end ? [dayjs(start, timeFormat), dayjs(end, timeFormat)] : [];
+    start && end ? [dayjs(start, schema?.props?.format || timeFormat), dayjs(end, schema?.props?.format || timeFormat)] : [];
 
   const handleChange = (value, stringList) => {
     const emptyList1 = stringList[0] === '' || stringList[1] === '';
@@ -30,7 +31,7 @@ const TimeRange = ({ onChange, format, value, style, ...rest }) => {
     style: { width: '100%', ...style },
     value: _value,
     onChange: handleChange,
-    ...(rest.schema.props || {}),
+    ...(schema.props || {}),
   };
 
   return <RangePicker {...timeParams} />;

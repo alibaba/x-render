@@ -59,7 +59,7 @@ const RenderCore = (props: RenderCoreProps) : any => {
   if (!schema || Object.keys(schema).length === 0) {
     return null;
   }
-  
+ 
   // render List.item
   if (schema?.items) {
     return renderItem({ schema: schema.items, path: parentPath, rootPath });

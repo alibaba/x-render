@@ -30,6 +30,7 @@ const RenderCore = props => {
     request: api,
     size,
     tableWrapperRender,
+    autoRequest = true,
     ...tableProps
   } = props;
 
@@ -55,7 +56,7 @@ const RenderCore = props => {
   }, []);
 
   useEffect(() => {
-    if (inited && hiddenSearch) {
+    if (inited && hiddenSearch && autoRequest) {
       refresh();
     }
   }, [inited]);
