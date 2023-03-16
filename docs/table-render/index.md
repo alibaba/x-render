@@ -24,16 +24,19 @@ group:
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
   </a>
 </p>
-中后台列表解决方案，常用于搜索列表快速生成
+中后台列表开箱即用解决方案，常用于搜索列表快速生成
 
 ## 简介
 
-* **真正开箱即用**：以最简单的方式配置 API请求和表头字段，就能生成一个好用的搜索列表。
-* **XRender 生态**：搜索能力集成 FormRender，以最小成本快速生成搜索面板。
-* **无缝习惯使用**：表格能用 Ant Design Table 来提供，降低用户使用成本。
+* **开箱即用**：以最简单的方式配置 API 请求和表头字段，就能生成一个好用的搜索列表。
+* **XRender 生态**：搜索部分集成 FormRender，以最小成本快速生成搜索面板。
+* **无缝对接**：表格部分沿用 Ant Design Table， API 无缝对接，降低用户使用成本。
+* **数据模版**：表格列内置多种数据展示模版，减少自定义 Render 函数配置。
+* **多种形态**：支持搜索栏、工具栏、表格内容，根据业务需求相互组合展示多种形态。
 
 ## 安装
 
+table-render 依赖 ant design，单独使用不要忘记安装～
 ```sh
 npm i table-render --save
 ```
@@ -43,7 +46,7 @@ npm i table-render --save
 ```jsx
 /**
  * transform: true
- * defaultShowCode: false
+ * defaultShowCode: true
  * background: 'rgb(245,245,245)'
  */
 import React from 'react';
@@ -62,7 +65,7 @@ for (let i = 0; i < 6; i++) {
 
 const schema = {
   type: 'object',
-  labelWidth: 80,
+  labelWidth: 70,
   properties: {
     title: {
       title: '标题',
@@ -71,36 +74,7 @@ const schema = {
     created_at: {
       title: '创建时间',
       type: 'string',
-      format: 'date',
-      hidden: "{{formData.title === '111'}}",
-    },
-    title1: {
-      title: '标题',
-      type: 'string'
-    },
-    created_at1: {
-      title: '创建时间',
-      type: 'string',
-      format: 'date',
-    },
-    title2: {
-      title: '标题',
-      type: 'string'
-    },
-    created_at2: {
-      title: '创建时间',
-      type: 'string',
-      format: 'date',
-    },
-    title3: {
-      title: '标题',
-      type: 'string'
-    },
-    created_at3: {
-      title: '创建时间',
-      type: 'range',
-      format: 'date',
-      cellSpan: 2
+      format: 'date'
     }
   }
 };
@@ -123,10 +97,11 @@ const columns = [
 ];
 
 const Demo = () => {
+  
   const api = () => {
     return {
       data: dataSource,
-      total: dataSource.length,
+      total: dataSource.length
     };
   };
 
@@ -135,16 +110,11 @@ const Demo = () => {
       search={{ schema }}
       request={api}
       columns={columns}
-      title="最简表格"
-      toolbarAction={true}
+      title='最简表格'
       toolbarRender={ 
         <>
-          <Button>
-            查看日志
-          </Button>
-          <Button>
-            导出数据
-          </Button>
+          <Button>查看日志</Button>
+          <Button>导出数据</Button>
           <Button type='primary'>
             <PlusOutlined />
             新增

@@ -1,12 +1,12 @@
 ---
-order: 4
-title: '无工具栏'
+order: 6
+title: 'Tab 数据分类'
 group: 
   title: 最佳展示
   order: 2
 ---
-# 无工具栏
 
+# 数据分类
 ```jsx
 /**
  * transform: true
@@ -21,17 +21,25 @@ import { columns, toolbarRender } from './static/table';
 import { searchApi, searchApi2 } from './static/request';
 
 const Demo = () => {
-  const tableRef = useRef();
+  const tableRef: any = useRef();
 
   return (
     <TableRender
       ref={tableRef}
-      search={{ schema }}
+      search={{
+        schema: schema
+      }}
+      request={[
+        { name: '我的', api: searchApi },
+        { name: '全部', api: searchApi2 }
+      ]}
       columns={columns}
-      request={searchApi}
+      toolbarRender={toolbarRender}
     />
   )
 };
 
 export default Demo;
 ```
+
+

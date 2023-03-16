@@ -29,7 +29,7 @@ const RenderCore = props => {
     tableRef,
     request: api,
     size,
-    tableWrapperRender,
+    tableWrapper,
     autoRequest = true,
     ...tableProps
   } = props;
@@ -68,7 +68,7 @@ const RenderCore = props => {
     form,
     getState: () => ({
       ...getState(),
-      search: form.getValues()
+      search: form.getValues(true)
     })
   }));
 
@@ -91,7 +91,7 @@ const RenderCore = props => {
     const getTableData = (_api: any) => {
       setState({ loading: true });
       let _params = {
-        ...form.getValues(),
+        ...form.getValues(true),
         ...customSearch,
         ...extraSearch,
         ..._pagination,
@@ -188,15 +188,15 @@ const RenderCore = props => {
         doSearch={doSearch}
       />
     </div>
-  )
+  );
 
   const renderTable = () => {
-    if (typeof tableWrapperRender === 'function') {
-      return tableWrapperRender(tableNode);
-    } else {
-      return tableNode;
+    if (isFunction(tableWrapper)) {
+      return tableWrapper(tableNode);
     }
-  }
+
+    return tableNode;
+  };
 
   return (
     <div>

@@ -54,6 +54,7 @@ const SearchForm: <RecordType extends object = any>(
     collapsed: _collapsed,
     defaultCollapsed,
     schema,
+    retainBtn,
     ...otherProps
   } = props;
 
@@ -147,6 +148,8 @@ const SearchForm: <RecordType extends object = any>(
     }
   };
 
+  const operateShow = mode !== 'simple' || (mode === 'simple' && retainBtn);
+  
   return (
     <div
       className={classnames('fr-search', { [className || '']: !!className })}
@@ -167,9 +170,9 @@ const SearchForm: <RecordType extends object = any>(
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
         form={form}
-        operateExtra={mode !== 'simple' && (
-          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight, 'search-action-column': isColumn && limitHeight })} style={{ minWidth: (1/column)*100 + '%' }}>
-            <ActionView {...actionProps} setLimitHeight={setLimitHeight} />
+        operateExtra={operateShow && (
+          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight, 'search-action-column': isColumn })} style={{ minWidth: (1/column)*100 + '%' }}>
+            <ActionView {...actionProps} setLimitHeight={setLimitHeight} retainBtn={retainBtn} mode={mode} />
           </Col>
         )}
       />
