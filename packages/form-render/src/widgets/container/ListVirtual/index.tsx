@@ -57,9 +57,10 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
   };
 
   const columns: TableColumnsType<FormListFieldData> = Object.keys(itemSchema).map((dataIndex: string) => {
-    const { required, title } = itemSchema[dataIndex];
+    const { required, title, width } = itemSchema[dataIndex];
     return {
       dataIndex,
+      width,
       title: (
         <>
           {required && <span style={{ color: 'red', marginRight: '3px' }}>*</span>}

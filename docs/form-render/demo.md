@@ -2,5 +2,5 @@
 
 <!-- <code src='./demo/defaultChange.tsx'></code> -->
 
-<!-- <code src='./demo/test.tsx'></code> -->
+<code src='./demo/test.tsx'></code>
 

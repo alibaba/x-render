@@ -140,7 +140,8 @@ export default (props: any) => {
   return (
     <Col span={24}>
       {!isInline && !isDisplayColumn && label && (
-        <Form.Item 
+        <Form.Item
+          className='ant-form-item-optional-hide'
           label={label}
           labelAlign={'left'}
           colon={false}
@@ -149,7 +150,8 @@ export default (props: any) => {
         >
         </Form.Item>
       )}
-      <Form.Item 
+      <Form.Item
+        className='ant-form-item-optional-hide'
         label={label} 
         labelCol={_labelCol}
         wrapperCol={_fieldCol}

@@ -141,7 +141,7 @@ const FormCore = (props: any) => {
     setSessionItem('FORM_START', end);
     setSessionItem('NUMBER_OF_SUBMITS', numberOfSubmits);
     setSessionItem('FAILED_ATTEMPTS', failedAttempts);
-  }
+  };
 
   const handleValuesChange = (changedValues: any, _allValues: any) => {
     const allValues = valueRemoveUndefined(_allValues);
@@ -162,7 +162,7 @@ const FormCore = (props: any) => {
       : null;
     fieldsError = transformFieldsError(fieldsError);
 
-    // console.log(values);
+    // console.log(values, form.getValues(true));
     // Stop submit
     if (fieldsError) {
       form.setFields(fieldsError);
