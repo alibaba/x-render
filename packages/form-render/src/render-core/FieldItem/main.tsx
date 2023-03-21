@@ -142,7 +142,7 @@ export default (props: any) => {
   }
 
   if (readOnly) {
-    Widget = widgets['html'];
+    Widget = widgets[schema.readOnlyWidget] || widgets['html'];
   }
 
   // checkbox 布局有点特殊
