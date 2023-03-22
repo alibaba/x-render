@@ -44,7 +44,7 @@ export default () => {
 
   return (
     <div>
-      <FormRender form={form} schema={schema} onFinish={onFinish} />
+      <FormRender form={form} schema={schema} onFinish={onFinish} maxWidth={400} />
       <Button type='primary' onClick={form.submit}>
         提交
       </Button>
@@ -89,7 +89,7 @@ export default () => {
 
   return (
     <div>
-      <FormRender form={form} schema={schema} />
+      <FormRender form={form} schema={schema} maxWidth={400} />
       <Button onClick={getRemoteData}>加载服务端数据</Button>
     </div>
   );
@@ -323,6 +323,7 @@ export default () => {
         schema={schema}
         beforeFinish={beforeFinish}
         onFinish={onFinish}
+        maxWidth={400} 
       />
       <Button type='primary' onClick={form.submit}>
         提交
@@ -370,7 +371,7 @@ export default () => {
 
   return (
     <div>
-      <FormRender form={form} schema={schema} onFinish={onFinish} />
+      <FormRender form={form} schema={schema} onFinish={onFinish} maxWidth={400} />
       <Space>
         <Button onClick={getRemoteData}>加载服务端数据</Button>
         <Button type='primary' onClick={form.submit}>

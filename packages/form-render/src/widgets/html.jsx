@@ -11,13 +11,13 @@ export default function html({ value, options, schema = {} }) {
       const idx = schema.enum.indexOf(value);
       __html = schema.enumNames[idx] || '-';
 
-      const item = options.find(item => item.value = value);
+      const item = options.find(item => item.value === value);
       __html = item?.label || '-';
 
     } else if (Array.isArray(value)) {
       let idxStr = '-';
       value.forEach(v => {
-        const item = options.find(item => item.value = v);
+        const item = options.find(item => item.value === v);
         const name = item.label;
         if (name) {
           idxStr += ',' + name;
