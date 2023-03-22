@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useRef, useImperativeHandle } from 'react';
-import { useStore } from 'zustand';
+import React, { useEffect, useRef, useImperativeHandle } from 'react';
+import { useStore } from './store';
 import { useForm } from 'form-render';
 
-import { TRContext } from './store';
 import { _get, isFunction, isArray } from '../utils';
 import ErrorBoundary from './ErrorBoundary';
 import SearchView from './SearchView';
@@ -40,14 +39,13 @@ const RenderCore = props => {
   const form = useForm();
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const store = useContext(TRContext);
-  const inited = useStore(store, (state: any) => state.inited);
-  const currentTab = useStore(store, (state: any) => state.tab);
-  const tableSize = useStore(store, (state: any) => state.tableSize);
-  const pagination = useStore(store, (state: any) => state.pagination);
-  const setState = useStore(store, (state: any) => state.setState);
-  const getState = useStore(store, (state: any) => state.getState);
-  const setColumns = useStore(store, (state: any) => state.setColumns);
+  const inited = useStore((state) => state.inited);
+  const currentTab = useStore((state) => state.tab);
+  const tableSize = useStore((state) => state.tableSize);
+  const pagination = useStore((state) => state.pagination);
+  const setState = useStore((state) => state.setState);
+  const getState = useStore((state) => state.getState);
+  const setColumns = useStore((state) => state.setColumns);
 
   useEffect(() => {
     setState({
@@ -89,7 +87,7 @@ const RenderCore = props => {
     const _pageNum = current || 1;
     const _pageSize = pageSize || 10;
 
-    let _tab = currentTab;
+    let _tab: number | string = currentTab;
     if (['string', 'number'].indexOf(typeof tab) > -1) {
       _tab = tab;
     }

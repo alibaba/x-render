@@ -1,10 +1,6 @@
-import { createStore as createx } from 'zustand';
-import { createContext } from 'react';
+import create from 'zustand';
 
-export const TRContext = createContext(null);
-export const ConfigContext = createContext(null);
-
-type TStore = {
+type TableRenderStoreType = {
   loading: boolean;
   api: null,
   tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
@@ -19,15 +15,15 @@ type TStore = {
   },
   tableSize: 'default',
   schema: any,
-  init?: (schema: TStore['schema']) => any;
+  inited: boolean,
+  init?: (schema: TableRenderStoreType['schema']) => any;
   getState: () => any;
   setState: (state: any) => void;
   /** 更新 columns */
   setColumns: (columns: any[]) => void;
 };
 
-// 将 useStore 改为 createStore， 并把它改为 create 方法
-export const createStore = () => createx<TStore>((set: any, get: any) => ({
+export const useStore = create<TableRenderStoreType>()((set, get) => ({
   loading: false,
   api: null,
   tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
@@ -43,7 +39,7 @@ export const createStore = () => createx<TStore>((set: any, get: any) => ({
   schema: {},
   columns: [],
   inited: false,
-  setState: (state: any) => {
+  setState: (state) => {
     return set({ ...state })
   },
   getState: () => {
