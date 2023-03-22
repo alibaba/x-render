@@ -10,7 +10,7 @@ export type DensitySize = 'middle' | 'small' | 'default' | undefined;
 const DesityIcon = () => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
- 
+
   const dropRef = useRef<any>(); // class组件用 React.createRef()
   const store = useContext(TRContext);
   const tableSize = useStore(store, (state: any) => state.tableSize);

@@ -16,8 +16,8 @@ const ProTable: <RecordType extends object = any>(
     );
   }
 
-  const { getState, setState, doSearch, columns, pageChangeWithRequest = true, ...otherProps }: any = props;
-  const { dataSource = [], loading, pagination, tableSize }: any = getState();
+  const { getState, setState, doSearch, pageChangeWithRequest = true, ...otherProps }: any = props;
+  const { dataSource = [], loading, pagination, tableSize, columns }: any = getState();
 
   const handleChange = ({ current, pageSize }, filters, sorter, extra) => {
     if (extra?.action === 'filter') {
@@ -62,8 +62,8 @@ const ProTable: <RecordType extends object = any>(
           return renderDom(value, { ...item });
         }
 
-        const { type, ... domProps } = result.valueTypeProps(value, record);
-        return renderDom(value, { ...item,  valueTypeProps: domProps });
+        const { type, ...domProps } = result.valueTypeProps(value, record);
+        return renderDom(value, { ...item, valueTypeProps: domProps });
       }
       return result;
     }
@@ -79,7 +79,7 @@ const ProTable: <RecordType extends object = any>(
         result.render = (value: any, record: any) => renderDom(getDateRange(value, { result, record }), result);
         break;
       case 'dateRangeTime':
-        result.render = (value: any, record: any) => renderDom(getDateRange(value,  { result, record }, 'YYYY-MM-DD HH:mm:ss'), result);
+        result.render = (value: any, record: any) => renderDom(getDateRange(value, { result, record }, 'YYYY-MM-DD HH:mm:ss'), result);
         break;
       case 'money':
         result.render = (value: any) => renderDom(getMoneyType(value), result);
@@ -109,7 +109,6 @@ const ProTable: <RecordType extends object = any>(
       props.pagination === false
         ? false
         : {
-          // onChange: onPageChange,
           size: 'small',
           ...props.pagination,
           pageSize: props.pagination?.pageSize || pagination.pageSize,

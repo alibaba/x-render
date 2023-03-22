@@ -31,6 +31,7 @@ const RenderCore = props => {
     size,
     tableWrapper,
     autoRequest = true,
+    columns,
     ...tableProps
   } = props;
 
@@ -44,9 +45,9 @@ const RenderCore = props => {
   const currentTab = useStore(store, (state: any) => state.tab);
   const tableSize = useStore(store, (state: any) => state.tableSize);
   const pagination = useStore(store, (state: any) => state.pagination);
-  const loading = useStore(store, (state: any) => state.loading);
   const setState = useStore(store, (state: any) => state.setState);
   const getState = useStore(store, (state: any) => state.getState);
+  const setColumns = useStore(store, (state: any) => state.setColumns);
 
   useEffect(() => {
     setState({
@@ -54,6 +55,12 @@ const RenderCore = props => {
       inited: true
     });
   }, []);
+
+  useEffect(() => {
+    if (columns) {
+      setColumns(columns);
+    }
+  }, [columns]);
 
   useEffect(() => {
     if (inited && hiddenSearch && autoRequest) {

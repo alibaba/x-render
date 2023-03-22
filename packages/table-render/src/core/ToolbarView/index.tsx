@@ -9,24 +9,24 @@ import TitleView from './TitleView';
 import './index.less';
 
 const ToolbarView = props => {
-  const { 
+  const {
     setState,
     getState,
-    title, 
-    toolbarRender, 
-    toolbarAction = false, 
+    title,
+    toolbarRender,
+    toolbarAction = false,
     request,
     refresh,
     doSearch,
     fullScreen,
     currentTab
   } = props;
-  
+
   const content = isFunction(toolbarRender) ? toolbarRender() : (toolbarRender || []);
   const isTopHead = title || (!!content && content?.length !== 0) || (isArray(request) && request.length > 1);
- 
+
   return (
-    <div className={classNames('tr-toolbar', { 'tr-toolbar-nohead': !isTopHead })}>
+    <div className={classNames('tr-toolbar', { 'tr-toolbar-nohead': !isTopHead && !toolbarAction })}>
       <div className='tr-toolbar-left'>
         <TitleView title={title} doSearch={doSearch} setState={setState} request={request} currentTab={currentTab} />
       </div>

@@ -8,7 +8,8 @@ type TStore = {
   loading: boolean;
   api: null,
   tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
-  dataSource: [],
+  columns: any[],
+  dataSource: any[],
   extraData: null, // 需要用到的 dataSource 以外的扩展返回值
   extraParams: {},
   pagination: {
@@ -17,10 +18,12 @@ type TStore = {
     total: 0,
   },
   tableSize: 'default',
-  [key: string]: any
+  schema: any,
   init?: (schema: TStore['schema']) => any;
   getState: () => any;
   setState: (state: any) => void;
+  /** 更新 columns */
+  setColumns: (columns: any[]) => void;
 };
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
@@ -37,14 +40,16 @@ export const createStore = () => createx<TStore>((set: any, get: any) => ({
     total: 0,
   },
   tableSize: 'default',
-
+  schema: {},
+  columns: [],
   inited: false,
   setState: (state: any) => {
     return set({ ...state })
   },
   getState: () => {
     return get();
-  }
+  },
+  setColumns: (columns) => set({ columns }),
 }));
 
 
