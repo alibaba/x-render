@@ -3,7 +3,7 @@ import FormRender, { useForm } from 'form-render';
 import debounce from 'lodash/debounce';
 import Editor from "@monaco-editor/react";
 import Controller from "./controller";
-import { Divider } from 'antd';
+import { Divider, Row, Col } from 'antd';
 // @ts-ignore
 import { serializeToDraft, deserialize } from 'fr-generator';
 import AsyncSelect from "./customized/AsyncSelect";
@@ -58,7 +58,6 @@ const Playground = () => {
     }
 
     if (typeof val.readonly === 'boolean') {
-      // TODO 不生效
       setReadonly(val.readonly);
     }
 
@@ -74,11 +73,11 @@ const Playground = () => {
     <div className="fr-playground">
       <Controller onChange={onControllerChange} />
       <Divider />
-      <div className="flex">
-        <div style={{ flexBasis: '50%', minHeight: 600 }}>
+      <Row gutter={20}>
+        <Col span={12}>
           <Editor
             value={value}
-            height="100%"
+            height={600}
             language={lang}
             onChange={debounceEditorChange}
             onMount={() => {
@@ -86,8 +85,8 @@ const Playground = () => {
               setValue(JSON.stringify(schema.schema, null, '\t'))
             }}
           />
-        </div>
-        <div style={{ flexBasis: '50%', padding: 20 }}>
+        </Col>
+        <Col span={12}>
           <FormRender
             form={form}
             schema={schema}
@@ -97,8 +96,8 @@ const Playground = () => {
             labelWidth={labelWidth}
             widgets={{ asyncSelect: AsyncSelect }}
           />
-        </div>
-      </div>
+        </Col>
+      </Row>
     </div>
   );
 };
