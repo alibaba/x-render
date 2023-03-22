@@ -1,6 +1,101 @@
 
 import { isObject, isArray, _get, _has, isFunction } from '../utils';
 
+const executeCallBack = (watchItem: any, value: any, path: string, index?: any) => {
+  if (isFunction(watchItem)) {
+    try {
+      watchItem(value, index);
+    } catch (error) {
+      console.log(`${path}对应的watch函数执行报错：`, error);
+    }
+  } 
+  
+  if (isFunction(watchItem?.handler)) {
+    try {
+      watchItem.handler(value, index);
+    } catch (error) {
+      console.log(`${path}对应的watch函数执行报错：`, error);
+    }
+  }
+};
+
+const traverseValues = ({ changedValues, allValues, flatValues }) => {
+
+  const traverseArray = (list: any[], fullList: any, path: string, index: number[]) => {
+    const _path = path += '[]';
+    const filterLength = list.filter(item => (item || item === undefined)).length;
+
+    let flag = filterLength !== fullList.length || list.length === 1;
+    let isRemove = false;
+    if (filterLength > 1 && filterLength < fullList.length) {
+      flag = false;
+      isRemove = true;
+    }
+
+    list.forEach((item: any, idx: number) => {
+      if (!isRemove) {
+        flatValues[_path] =  { value: fullList[idx], index };
+      }
+      if (isObject(item)) {
+        traverseObj(item, fullList[idx], _path, [...index, idx], !flag);
+      }
+      if (isArray(item)) {
+        traverseArray(item, fullList[idx], _path, [...index, idx]);
+      }
+    });
+  };
+
+  const traverseObj = (obj: any, fullObj: any, path: string, index: number[], flag?: boolean) => {
+    Object.keys(obj).forEach((key: string) => {
+      const item = obj[key];
+      const fullItem = fullObj[key];
+      let value = item;
+
+      const _path = path ? (path + '.' + key) : key;
+
+      let last = true;
+
+      if (isArray(item)) {
+        value = [...fullItem];
+        last = false;
+        traverseArray(item, fullItem, _path, index);
+      }
+      
+      if (isObject(item)) {
+        last = false;
+        traverseObj(item, fullItem, _path, index, flag);
+      }
+
+      if (!last || !flag) {
+        flatValues[_path] =  { value, index };
+      }
+    });
+  };
+
+  traverseObj(changedValues, allValues, null, []);
+};
+
+export const valuesWatch = (changedValues: any, allValues: any, watch: any) => {
+  if (Object.keys(watch || {})?.length === 0) {
+    return;
+  }
+
+  const flatValues = {
+    '#': { value: allValues, index: allValues }
+  };
+
+  traverseValues({ changedValues, allValues, flatValues });
+
+  Object.keys(watch).forEach(path => {
+    if (!_has(flatValues, path)) {
+      return;
+    }
+    const { value, index } = _get(flatValues, path);
+    const item = watch[path];
+    executeCallBack(item, value, path, index)
+  });
+};
+
 export const transformFieldsError = (_fieldsError: any) => {
   let fieldsError = _fieldsError;
   if (isObject(fieldsError)) {
@@ -24,43 +119,6 @@ export const immediateWatch = (watch: any, values: any) => {
     const watchItem = watch[path];
 
     if (watchItem?.immediate && isFunction(watchItem?.handler)) {
-      try {
-        watchItem.handler(value);
-      } catch (error) {
-        console.log(`${path}对应的watch函数执行报错：`, error);
-      }
-    }
-  });
-};
-
-export const valuesWatch = (_changedValues: any, allValues: any, watch: any) => {
-  if (Object.keys(watch || {})?.length === 0) {
-    return;
-  }
-
-  const changedValues = {
-    '#': allValues,
-    ..._changedValues
-  };
-
-  Object.keys(watch).forEach(path => {
-    if (!_has(changedValues, path)) {
-      return;
-    }
-    const value = _get(changedValues, path);
-
-    const watchItem = watch[path];
-    
-
-    if (isFunction(watchItem)) {
-      try {
-        watchItem(value);
-      } catch (error) {
-        console.log(`${path}对应的watch函数执行报错：`, error);
-      }
-    } 
-    
-    if (isFunction(watchItem?.handler)) {
       try {
         watchItem.handler(value);
       } catch (error) {

@@ -202,116 +202,194 @@
 
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
-import { Input } from 'antd';
 
 const schema = {
   type: 'object',
   displayType: 'row',
   properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-      labelWidth: '300px'
-    },
-    input2: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-      labelWidth: '300px',
-      dependencies: ['input1'],
-      rules: [
-        { 
-          validator: (_, value) => {
-            debugger;
-            const pattern = '^[\u4E00-\u9FA5]+$';
-            const result = new RegExp(pattern).test(value);
-            return result;
-            // 或者是返回一个对象，用于动态设置 message 内容
-            // return {
-            //   status: result,
-            //   message: '请输入中文！',
-            // }
-          }, 
-          message: '请输入中文！' 
+    obj: {
+      type: 'object',
+      widget: 'card',
+      title: '卡片主题',
+      description: '这是一个对象类型',
+      column: 3,
+      properties: {
+        input1: {
+          title: '输入框 A',
+          type: 'string',
+        },
+        input2: {
+          title: '输入框 B',
+          type: 'string',
+        },
+        obj: {
+          type: 'object',
+          widget: 'card',
+          title: '卡片主题',
+          description: '这是一个对象类型',
+          column: 3,
+          properties: {
+            input1: {
+              title: '输入框 A',
+              type: 'string',
+            },
+            input2: {
+              title: '输入框 B',
+              type: 'string',
+            }
+          }
         }
-      ]
+      },
     },
-    date1: {
-      title: '日期选择',
-      type: 'string',
-      format: 'date',
-      dependencies: ['dateRange1'],
-      rules: [
-        { 
-          validator: (_, value) => {
-            debugger;
-            const pattern = '^[\u4E00-\u9FA5]+$';
-            const result = new RegExp(pattern).test(value);
-            return result;
-            // 或者是返回一个对象，用于动态设置 message 内容
-            // return {
-            //   status: result,
-            //   message: '请输入中文！',
-            // }
-          }, 
-          message: '请输入中文！' 
-        }
-      ]
+    list: {
+      // title: '对象数组',
+      // description: '对象数组嵌套功能',
+      type: 'array',
+      widget: 'cardList',
+      items: {
+        type: 'object',
+        title: '卡片主题',
+        description: '这是一个对象类型',
+        column: 3,
+        properties: {
+          input1: {
+            title: '输入框 A',
+            type: 'string',
+          },
+          input3: {
+            title: '输入框 B',
+            type: 'string',
+          },
+          obj: {
+            type: 'object',
+            widget: 'card',
+            title: '卡片主题',
+            description: '这是一个对象类型',
+            column: 3,
+            properties: {
+              input1: {
+                title: '输入框 A',
+                type: 'string',
+              },
+              input2: {
+                title: '输入框 B',
+                type: 'string',
+              },
+              list: {
+                // title: '对象数组',
+                // description: '对象数组嵌套功能',
+                type: 'array',
+                widget: 'cardList',
+                items: {
+                  type: 'object',
+                  title: '卡片主题',
+                  description: '这是一个对象类型',
+                  column: 3,
+                  properties: {
+                    input1: {
+                      title: '输入框 A',
+                      type: 'string',
+                    },
+                    input3: {
+                      title: '输入框 B',
+                      type: 'string',
+                    },
+                  },
+                },
+              },
+            }
+          }
+        },
+      },
     },
-    dateRange1: {
-      title: '日期范围',
-      type: 'range',
-      format: 'dateTime',
-      dependencies: ['date1'],
-      rules: [
-        { 
-          validator: (_, value) => {
-            debugger;
-            const pattern = '^[\u4E00-\u9FA5]+$';
-            const result = new RegExp(pattern).test(value);
-            return result;
-            // 或者是返回一个对象，用于动态设置 message 内容
-            // return {
-            //   status: result,
-            //   message: '请输入中文！',
-            // }
-          }, 
-          message: '请输入中文！' 
-        }
-      ]
-    },
-  }
-};
-
-const SiteInput = props => {
-  console.log('widget props:', props);
-
-  const handleChange = () => {
-    props.onChange([
-      1, 2, 3, 4
-    ])
-  }
-
-  return <Input addonBefore="https://" addonAfter=".com" {...props} onChange={handleChange} />;
+  },
 };
 
 export default () => {
   const form = useForm();
-
   const watch = {
-    '#': (value) => {
+    '#': (value, a) => {
+      debugger;
+    },
+    "list": (a, b) => {
+     debugger;
+    },
+    "obj.obj.input1": (a, b) => {
+      debugger;
+    },
+    "list[].input1": (a, b) => {
+      debugger
+    },
+    "list[].obj.input1": (a, b) => {
+      debugger
+    },
+    "list[].obj.list": (a, b) => {
+      debugger;
+    },
+    "list[].obj.list[]": (a, b) => {
+      debugger;
+    },
+    "list[].obj.list[].input1": (a, b) => {
+      debugger;
     }
   }
 
-  return (
-    <>
-      <FormRender 
-        form={form} 
-        schema={schema}
-        watch={watch}
-        widgets={{ site: SiteInput }}
-      />
-    </>
-  );
-}
+  return <FormRender schema={schema} form={form} watch={watch}/>;
+};
+
+
+
+// import React from 'react';
+// import FormRender, { useForm } from 'form-render';
+
+// const schema = {
+//   type: 'object',
+//   displayType: 'row',
+//   properties: {
+//     obj: {
+//       type: 'object',
+//       widget: 'card',
+//       title: '卡片主题',
+//       description: '这是一个对象类型',
+//       column: 3,
+//       properties: {
+//         yyy: {
+//           title: '输入框 A',
+//           type: 'void',
+//           widget: 'test'
+//         },
+//         input1: {
+//           title: '输入框 A',
+//           type: 'string',
+//         },
+//         input2: {
+//           title: '输入框 B',
+//           type: 'string',
+//         },
+//         xxx: {
+//           title: '输入框 A',
+//           type: 'void',
+//           widget: 'test'
+//         },
+//         input3: {
+//           title: '输入框 C',
+//           type: 'string',
+//         },
+//         input4: {
+//           title: '输入框 D',
+//           type: 'string',
+//         },
+//       },
+//     },
+//   },
+// };
+
+// const Test = () => {
+//   return 1
+// }
+
+// export default () => {
+//   const form = useForm();
+
+//   return <FormRender schema={schema} form={form} widgets={{ test: Test }} builtOperation/>;
+// };

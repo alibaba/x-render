@@ -16,7 +16,6 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   _set(formSchema, path, result);
 };
 
-
 const getFieldPath = (_path: any) => {
   if (!_path) {
     return undefined;
@@ -42,7 +41,7 @@ const getFieldPath = (_path: any) => {
     }
     return item;
   });
-}
+};
 
 const useForm = () => {
   const [form] = Form.useForm() as [FormInstance];
@@ -54,7 +53,7 @@ const useForm = () => {
     getFieldError,
     getFieldsError,
     getFieldInstance
-  })
+  });
 
   const setStoreData = (data: any) => {
     const { setState } = storeRef.current;

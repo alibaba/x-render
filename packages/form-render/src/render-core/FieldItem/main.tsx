@@ -52,7 +52,7 @@ export default (props: any) => {
   }
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  let widget = widgets[widgetName] || widgets['html'];
+  let Widget = widgets[widgetName] || widgets['html'];
 
   const fieldProps = getFieldProps(widgetName, schema, {
     widgets,
@@ -63,6 +63,15 @@ export default (props: any) => {
     path: getPath(path),
     rootPath
   });
+
+  if (schema.type === 'void') {
+    return ( 
+      <Col span={24}>
+        <Widget {...fieldProps } />
+      </Col>
+    );
+  }
+
   const displayType = getValueFromKey('displayType');
 
   let inlineSelf = _inlineMode || upperCtx?.displayType === 'inline';
@@ -91,7 +100,6 @@ export default (props: any) => {
     }
 
     fieldProps.children = childElement;
-    const Widget = widget;
     const content = <Widget labelWidth={labelWidth} displayType={schema.displayType} {...fieldProps} {...otherSchema} />;
 
     return (
@@ -129,12 +137,17 @@ export default (props: any) => {
   const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24 / span * 1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
 
+
+  if (readOnly) {
+    fieldProps.readOnly = readOnly;
+  }
+
   if (!label) {
     noStyle = true;
   }
 
   if (readOnly) {
-    widget = widgets['html'];
+    Widget = widgets[schema.readOnlyWidget] || widgets['html'];
   }
 
   // checkbox 布局有点特殊
@@ -168,14 +181,14 @@ export default (props: any) => {
     >
       {fieldProps.onStatusChange ? (
         <FieldWrapperStatus 
-          Field={widget}
+          Field={Widget}
           fieldProps={fieldProps}
           maxWidth={maxWidth}
           defaultValue={defaultValue}
         />
       ) : (
         <FieldWrapper
-          Field={widget}
+          Field={Widget}
           fieldProps={fieldProps}
           maxWidth={maxWidth}
           defaultValue={defaultValue}
