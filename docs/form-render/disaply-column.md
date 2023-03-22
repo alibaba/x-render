@@ -482,7 +482,7 @@ const schema = {
 export default () => {
   const form = useForm();
 
-  return <FormRender schema={schema} form={form} requiredMark='optional'/>;
+  return <FormRender schema={schema} form={form}>;
 };
 ```
 
