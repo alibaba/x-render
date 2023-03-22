@@ -32,7 +32,7 @@ const Header: React.FC = () => {
                 if (value === 2) {
                   return;
                 }
-                window.open('https://xrender1.vercel.app/')
+                window.open('https://1.xrender.fun/')
               }}
             />
             <Divider type="vertical" style={{ marginLeft: 0 }} />
