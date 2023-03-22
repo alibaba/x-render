@@ -97,6 +97,9 @@
 .flex {
   display: flex;
 }
+.flex-50 {
+  flex-basis: 50%;
+}
 .flex-auto {
   flex: 1 1 auto;
   min-width: 0; /* 1 */
