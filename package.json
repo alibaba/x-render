@@ -99,6 +99,7 @@
     "yorkie": "^2.0.0",
     "formRenderV1": "npm:form-render@^1.4.13",
     "fr-generator": "2.8.4",
-    "@monaco-editor/react": "^4.4.6"
+    "@monaco-editor/react": "^4.4.6",
+    "lodash": "^4.17.21"
   }
 }
