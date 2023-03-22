@@ -40,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "typeit-react": "^2.6.4",
     "@babel/core": "^7.17.2",
     "@babel/plugin-transform-react-jsx": "^7.19.0",
     "@babel/preset-env": "^7.16.11",
