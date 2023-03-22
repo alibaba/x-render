@@ -1,6 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { Table, TableProps, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
+import { useStore } from '../store';
 
 import { getDate, getDateTime, getMoneyType, getDateRange, isObject, isFunction } from '../../utils';
 import { renderDom } from './field';
@@ -16,8 +17,13 @@ const ProTable: <RecordType extends object = any>(
     );
   }
 
-  const { getState, setState, doSearch, pageChangeWithRequest = true, ...otherProps }: any = props;
-  const { dataSource = [], loading, pagination, tableSize, columns }: any = getState();
+  const { doSearch, pageChangeWithRequest = true, ...otherProps }: any = props;
+  const dataSource = useStore((store) => store.dataSource);
+  const loading = useStore((store) => store.loading);
+  const pagination = useStore((store) => store.pagination);
+  const tableSize = useStore((store) => store.tableSize);
+  const columns = useStore((store) => store.columns);
+  const setState = useStore((store) => store.setState);
 
   const handleChange = ({ current, pageSize }, filters, sorter, extra) => {
     if (extra?.action === 'filter') {
@@ -31,77 +37,85 @@ const ProTable: <RecordType extends object = any>(
     doSearch({ current, pageSize, sorter });
   };
 
-  const newColumns = columns.map((item: any) => {
-    const { tooltip, ...otherItem } = item;
-    const result = otherItem;
+  const getProColumns = (columns: any[]) => {
+    if (!columns) return [];
 
-    // 兼容 tooltip 模式
-    if (typeof result.title === 'string' && tooltip) {
-      let tooltipProps = isObject(tooltip) ? tooltip : { title: tooltip };
-      if (isFunction(tooltip)) {
-        tooltipProps = tooltip();
-      }
-      result.title = (
-        <>
-          {result.title}
-          <Tooltip placement='top' {...tooltipProps}>
-            <InfoCircleOutlined style={{ marginLeft: 6 }} />
-          </Tooltip>
-        </>
-      );
-    }
+    return columns.map((item) => {
+      const { tooltip, ...otherItem } = item;
+      const result = otherItem;
 
-    // 用户在columns中自定义的render会覆盖tr的预设render
-    if (result.render) {
-      return result;
-    }
-
-    if (isFunction(result.valueTypeProps)) {
-      result.render = (value: any, record: any, index: number) => {
-        if (result.valueType === 'tags') {
-          return renderDom(value, { ...item });
+      // 兼容 tooltip 模式
+      if (typeof result.title === 'string' && tooltip) {
+        let tooltipProps = isObject(tooltip) ? tooltip : { title: tooltip };
+        if (isFunction(tooltip)) {
+          tooltipProps = tooltip();
         }
+        result.title = (
+          <>
+            {result.title}
+            <Tooltip placement='top' {...tooltipProps}>
+              <InfoCircleOutlined style={{ marginLeft: 6 }} />
+            </Tooltip>
+          </>
+        );
+      }
 
-        const { type, ...domProps } = result.valueTypeProps(value, record);
-        return renderDom(value, { ...item, valueTypeProps: domProps });
+      // 用户在columns中自定义的render会覆盖tr的预设render
+      if (result.render) {
+        return result;
+      }
+
+      if (isFunction(result.valueTypeProps)) {
+        result.render = (value: any, record: any) => {
+          if (result.valueType === 'tags') {
+            return renderDom(value, { ...item });
+          }
+
+          const { type, ...domProps } = result.valueTypeProps(value, record);
+          return renderDom(value, { ...item, valueTypeProps: domProps });
+        }
+        return result;
+      }
+
+      switch (result.valueType) {
+        case 'date':
+          result.render = (value: any) => renderDom(getDate(value, result.valueTypeProps?.format), result);
+          break;
+        case 'dateTime':
+          result.render = (value: any) => renderDom(getDateTime(value, result.valueTypeProps?.format), result);
+          break;
+        case 'dateRange':
+          result.render = (value: any, record: any) => renderDom(getDateRange(value, { result, record }), result);
+          break;
+        case 'dateRangeTime':
+          result.render = (value: any, record: any) => renderDom(getDateRange(value, { result, record }, 'YYYY-MM-DD HH:mm:ss'), result);
+          break;
+        case 'money':
+          result.render = (value: any) => renderDom(getMoneyType(value), result);
+          break;
+        case 'code':
+          result.render = (value: any) => renderDom(value, result);
+          break;
+        case 'progress':
+        case 'tag':
+          result.render = (value: any) => renderDom(value, result);
+          break;
+        case 'text':
+        default:
+          result.render = (value: any) => renderDom(value, result);
       }
       return result;
-    }
+    })
+      .sort((a, b) => a.order - b.order)
+      .filter(i => !i.hidden)
+  }
 
-    switch (result.valueType) {
-      case 'date':
-        result.render = (value: any) => renderDom(getDate(value, result.valueTypeProps?.format), result);
-        break;
-      case 'dateTime':
-        result.render = (value: any) => renderDom(getDateTime(value, result.valueTypeProps?.format), result);
-        break;
-      case 'dateRange':
-        result.render = (value: any, record: any) => renderDom(getDateRange(value, { result, record }), result);
-        break;
-      case 'dateRangeTime':
-        result.render = (value: any, record: any) => renderDom(getDateRange(value, { result, record }, 'YYYY-MM-DD HH:mm:ss'), result);
-        break;
-      case 'money':
-        result.render = (value: any) => renderDom(getMoneyType(value), result);
-        break;
-      case 'code':
-        result.render = (value: any) => renderDom(value, result);
-        break;
-      case 'progress':
-      case 'tag':
-        result.render = (value: any) => renderDom(value, result);
-        break;
-      case 'text':
-      default:
-        result.render = (value: any) => renderDom(value, result);
-    }
-    return result;
-  });
+  const proColumns = useMemo(() => getProColumns(columns), [columns]);
 
   const tableProps: TableProps<typeof dataSource[number]> = {
     rowKey: 'id',
     ...otherProps,
-    columns: newColumns,
+    columns: proColumns,
     onChange: handleChange,
     // dataSource不准在使用ProTable时用props赋值
     dataSource,

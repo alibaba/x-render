@@ -9,11 +9,29 @@
   height: 24px;
 }
 
-.tr-toolbar-left {
-
-}
+.tr-toolbar-left {}
 
 .tr-toolbar-right {
   display: flex;
   align-items: flex-start;
+}
+
+.tr-toolbar-columns-setting {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%),
+    0 9px 28px 8px rgb(0 0 0 / 5%);
+}
+
+.tr-toolbar-columns-setting-header {
+  padding: 12px;
+}
+
+.tr-toolbar-columns-setting .ant-dropdown-menu {
+  box-shadow: none;
+}
+
+[data-theme="dark"] .head-example {
+  background: #1f1f1f;
 }

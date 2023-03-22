@@ -1,10 +1,12 @@
-import create from 'zustand';
+import { create } from 'zustand';
+import { ProColumnsType } from '..';
 
 type TableRenderStoreType = {
   loading: boolean;
   api: null,
   tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
-  columns: any[],
+  /** 表格列定义 */
+  columns: ProColumnsType<any>,
   dataSource: any[],
   extraData: null, // 需要用到的 dataSource 以外的扩展返回值
   extraParams: {},

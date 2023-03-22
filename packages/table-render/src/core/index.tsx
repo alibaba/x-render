@@ -56,7 +56,11 @@ const RenderCore = props => {
 
   useEffect(() => {
     if (columns) {
-      setColumns(columns);
+      setColumns(columns.map((i, index) => ({
+        ...i,
+        order: index,
+        hidden: false
+      })));
     }
   }, [columns]);
 

@@ -7,12 +7,14 @@ export const columns: ProColumnsType = [
   {
     title: '酒店名称',
     dataIndex: 'title',
+    key: 'title',
     valueType: 'text',
     width: '20%'
   },
   {
     title: '酒店地址',
     dataIndex: 'address',
+    key: 'address',
     ellipsis: true,
     copyable: true,
     valueType: 'text',
@@ -25,10 +27,12 @@ export const columns: ProColumnsType = [
       closed: '已打烊',
     },
     dataIndex: 'state',
+    key: 'state',
   },
   {
     title: '酒店星级',
     dataIndex: 'labels',
+    key: 'labels',
     width: 90,
     valueType: 'tags'
     // valueTypeProps: (value) => { // [ { name : '', color: '' }] => 命中默认格式无需配置

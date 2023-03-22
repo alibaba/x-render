@@ -32,6 +32,10 @@ export type ProColumnsType<T extends object = any> = Array<
     valueType?: 'text' | 'money' | 'date' | 'dateTime' | 'code' | 'tag' | 'tags' | 'progress' | 'dateRange' | 'dateTimeRange' | 'image';
     /** 当前列值的枚举 */
     enum?: Record<string, string>;
+    /** 内部排序使用 */
+    order?: number;
+    /** 隐藏 */
+    hidden?: boolean
   }
 >;
 
