@@ -6,7 +6,7 @@ import { _get, translation, isFunction } from '../../utils';
 export const FieldWrapperStatus = (props: any) => {
   const { Field, fieldProps, maxWidth, defaultValue, ...otherProps } = props;
   const { onStatusChange, addons, ...otherFieldProps } = fieldProps;
-  const style = maxWidth ? { ...fieldProps?.style } : { maxWidth, ...fieldProps?.style };
+  const style = maxWidth ? { maxWidth, ...fieldProps?.style } : { ...fieldProps?.style } ;
 
   const { status } = Form.Item.useStatus();
 
@@ -33,9 +33,9 @@ export const FieldWrapper = (props: any) => {
   const { Field, fieldProps, maxWidth, defaultValue, ...otherProps } = props;
   const { addons, schema } = fieldProps;
 
-  const _style = maxWidth ? { ...fieldProps?.style } : { maxWidth, ...fieldProps?.style };
+  const _style = maxWidth ? { maxWidth, ...fieldProps?.style }: { ...fieldProps?.style }
   const { removeBtn } = schema;
-
+ 
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 

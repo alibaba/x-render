@@ -137,6 +137,11 @@ export default (props: any) => {
   const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24 / span * 1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
 
+
+  if (readOnly) {
+    fieldProps.readOnly = readOnly;
+  }
+
   if (!label) {
     noStyle = true;
   }
