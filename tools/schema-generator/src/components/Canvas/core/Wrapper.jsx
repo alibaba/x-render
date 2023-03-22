@@ -236,7 +236,7 @@ function Wrapper({ $id, item, inside = false, children, style }) {
     Object.keys(flatten)
       .map(key => flatten[key].schema.$id)
       .filter(key => key === schema.$id).length > 1;
-
+ 
   const originNode = (
     <div
       ref={boxRef}
