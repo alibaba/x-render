@@ -1,5 +1,12 @@
 import dayjs from "dayjs";
 
+export function isUrl(string) {
+  const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
+  // const domainRE = /^[^\s\.]+\.\S{2,}$/;
+  if (typeof string !== 'string') return false;
+  return protocolRE.test(string);
+}
+
 export function getFormat(format) {
   let dateFormat;
 
