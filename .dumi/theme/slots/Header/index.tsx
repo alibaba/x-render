@@ -1,7 +1,7 @@
 import React from 'react';
 import DumiLogo from 'dumi/theme-default/slots/Logo';
 import DumiSearch from 'dumi/theme-default/slots/SearchBar';
-import { Row, Col, Space, Divider, Select } from 'antd';
+import { Row, Col, Space, Divider, Select, Badge } from 'antd';
 import Navigation from './Navigation';
 import ThemeSwitch from './ThemeSwitch';
 import GithubLink from './GithubLink';
@@ -17,7 +17,11 @@ const Header: React.FC = () => {
       <Row align="middle" justify="space-between" style={{ padding: '10px 40px' }}>
         <Col span={12}>
           <Space size={20}>
-            <DumiLogo />
+            <Badge count={2} offset={[0, 15]}  color='red' size='small'>
+              <div style={{ paddingRight: '12px' }}>
+                <DumiLogo/>
+              </div>
+            </Badge>
           </Space>
         </Col>
         <Col span={12}>
