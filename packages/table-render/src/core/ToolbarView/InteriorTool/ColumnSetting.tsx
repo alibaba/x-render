@@ -35,7 +35,7 @@ const Item: FC<ProColumnsType<any>[number] & {
       <HolderOutlined
         {...listeners}
         ref={setActivatorNodeRef}
-        style={{ marginRight: 8, color: '#666', cursor: 'move' }}
+        style={{ marginRight: 8, color: '#666', cursor: isOverlay ? 'grabbing' : 'grab' }}
       />
       {isOverlay ? (
         <Checkbox checked={isChecked}>{label}</Checkbox>
