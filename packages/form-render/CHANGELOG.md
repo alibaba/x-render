@@ -1,4 +1,6 @@
 # 更新日志
+### 2.0.19
+-[!] 修复 html 组件 select 回显问题
 
 ### 2.0.17
 - [+] 增加 labelWidget，配置用于 form.item lable 的自定义
