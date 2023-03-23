@@ -9,7 +9,7 @@ hero:
     - text: 开始使用
       link: /form-render
     - text: V2 版
-      link: 'https://xrender2.vercel.app/form-render/migrate'
+      link: 'https://xrender.fun/'
 features:
   - icon: https://qpluspicture.oss-cn-beijing.aliyuncs.com/k21jAW/006-parade-5.png
     title: FormRender
