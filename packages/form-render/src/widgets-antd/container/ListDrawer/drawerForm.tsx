@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Button, Drawer, Space, ConfigProvider } from 'antd';
-import FRender, { useForm } from 'form-render';
+import FRender, { useForm } from '../../../index';
 import { translation } from '../../utils';
 
 const DrawerForm = (props: any) => {
