@@ -17,20 +17,18 @@ const Header: React.FC = () => {
       <Row align="middle" justify="space-between" style={{ padding: '10px 40px' }}>
         <Col span={12}>
           <Space size={20}>
-            <Badge count={2} offset={[0, 15]}  color='red' size='small'>
-              <div style={{ paddingRight: '12px' }}>
-                <DumiLogo/>
-              </div>
-            </Badge>
+            <div style={{ paddingRight: '12px' }}>
+              <DumiLogo/>
+            </div>
           </Space>
         </Col>
         <Col span={12}>
           <Space size={0} style={{ float: 'right'}}>
             <DumiSearch/>
             <Navigation />
-            <Select 
-              options={[{ label: '2.x', value: 2 }, { label: '1.x', value: 1}]} 
-              style={{ width: '70px' }} 
+            <Select
+              options={[{ label: '2.x', value: 2 }, { label: '1.x', value: 1}]}
+              style={{ width: '70px' }}
               defaultValue={2}
               onChange={(value) => {
                 if (value === 2) {

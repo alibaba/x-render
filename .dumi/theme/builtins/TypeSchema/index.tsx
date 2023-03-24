@@ -80,7 +80,7 @@ const TypeSchema: React.FC = () => {
                 .type(`${br(2)}${space(2)}`, { instant: true })
                 .move(-3, { instant: true })
                 .type(space(4), { instant: true })
-                .type(`${blue('title')}: ${black(`'Favorite fruit'`)},`)
+                .type(`${blue('title')}: ${black(`'Favorite Fruit'`)},`)
                 .type(`${br(1)}${space(4)}`, { instant: true })
                 .type(`${blue('type')}: ${black(`'number'`)},`)
                 .exec(() => {
@@ -93,7 +93,7 @@ const TypeSchema: React.FC = () => {
                         placeholder: 'Please input your name.'
                       },
                       fruit: {
-                        title: 'Favorite fruit',
+                        title: 'Favorite Fruit',
                         type: 'string',
                       },
                     },
@@ -113,7 +113,7 @@ const TypeSchema: React.FC = () => {
                         placeholder: 'Please input your name.'
                       },
                       fruit: {
-                        title: 'Favorite fruit',
+                        title: 'Favorite Fruit',
                         type: 'number',
                         enum: [1, 2, 3],
                         enumNames: ['apple', 'cherry', 'pear'],
@@ -133,7 +133,7 @@ const TypeSchema: React.FC = () => {
                         placeholder: 'Please input your name.'
                       },
                       fruit: {
-                        title: 'Favorite fruit',
+                        title: 'Favorite Fruit',
                         type: 'number',
                         enum: [1, 2, 3],
                         enumNames: ['apple', 'cherry', 'pear'],
@@ -143,7 +143,7 @@ const TypeSchema: React.FC = () => {
                   });
                 })
                 .type(`${br(1)}${space(4)}`, { instant: true })
-                .type(`${blue('widget')}: ${black(`'radio',`)}`)
+                .type(`${blue('default')}: ${black(`2,`)}`)
                 .exec(() => {
                   setSchema({
                     type: 'object',
@@ -154,19 +154,19 @@ const TypeSchema: React.FC = () => {
                         placeholder: 'Please input your name.'
                       },
                       fruit: {
-                        title: 'Favorite fruit',
+                        title: 'Favorite Fruit',
                         type: 'number',
                         enum: [1, 2, 3],
                         enumNames: ['apple', 'cherry', 'pear'],
                         required: true,
-                        widget: 'radio'
+                        default: 2,
                       },
                     },
                   });
                 })
-                .move(-172, { instant: true })
+                .move(-167, { instant: true })
                 .type(`${br(1)}${space(4)}`, { instant: true })
-                .type(`${blue('help')}: ${red(`'Easiest way to build a form !'`)}`)
+                .type(`${blue('extra')}: ${red(`'Easiest way to build a form!'`)}`)
                 .exec(() => {
                   setSchema({
                     type: 'object',
@@ -175,15 +175,15 @@ const TypeSchema: React.FC = () => {
                         title: 'Name',
                         type: 'string',
                         placeholder: 'Please input your name.',
-                        help: 'Easiest way to build a form !'
+                        extra: 'Easiest way to build a form!'
                       },
                       fruit: {
-                        title: 'Favorite fruit',
+                        title: 'Favorite Fruit',
                         type: 'number',
                         enum: [1, 2, 3],
                         enumNames: ['apple', 'cherry', 'pear'],
                         required: true,
-                        widget: 'radio',
+                        default: 2,
                       },
                     },
                   });
