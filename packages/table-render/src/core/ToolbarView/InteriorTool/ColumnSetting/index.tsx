@@ -27,6 +27,12 @@ const getDirection = (columns: any[], order: number) => {
   const isLastOne = order === length - 1;
   const haveForwardFixed = !isFirstOne && columns.find(i => i.order === order - 1).fixed;
   const haveNextFixed = !isLastOne && columns.find(i => i.order === order + 1).fixed;
+  const haveForwardUnFixed = [...columns].sort((a, b) => a.order - b.order).slice(0, order).some(i => !i.fixed);
+  const haveBackwardUnFixed = [...columns].sort((a, b) => a.order - b.order).slice(order).some(i => !i.fixed);
+
+  if (haveForwardUnFixed && haveBackwardUnFixed && !isLastOne && !isFirstOne) {
+    return undefined;
+  }
 
   if (haveForwardFixed && !haveNextFixed && !isLastOne) {
     return columns.find(i => i.order === order - 1).fixed
@@ -34,10 +40,6 @@ const getDirection = (columns: any[], order: number) => {
 
   if (!haveForwardFixed && haveNextFixed && !isFirstOne) {
     return columns.find(i => i.order === order + 1).fixed
-  }
-
-  if (!haveForwardFixed && !haveForwardFixed && !isFirstOne && !isLastOne) {
-    return undefined;
   }
 
   if ((order + 1) > (length / 2)) {
