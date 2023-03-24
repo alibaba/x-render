@@ -3,6 +3,23 @@ import { ColumnsType } from 'antd/lib/table';
 import { FRProps } from 'form-render';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
 
+export type ColumnsSettingValueType = Array<{
+  /** 列的 key */
+  key: string,
+  /** 当前列是否隐藏 */
+  hidden: boolean,
+  /** 当前列是否固定 */
+  fixed?: 'right' | 'left'
+}>
+
+export type ToolbarActionConfig = {
+  /** 开启的功能，默认 all，全部开启 */
+  enabled?: Array<'refresh' | 'columnsSetting' | 'fullScreen' | 'density' | 'all'>,
+  /** 列设置的状态 */
+  columnsSettingValue?: ColumnsSettingValueType
+  /** 列设置状态改变时的回调 */
+  onColumnsSettingChange?: (val: ColumnsSettingValueType) => void;
+}
 
 export interface TableContext<RecordType> {
   tableState?: TableState<RecordType>;
@@ -32,10 +49,6 @@ export type ProColumnsType<T extends object = any> = Array<
     valueType?: 'text' | 'money' | 'date' | 'dateTime' | 'code' | 'tag' | 'tags' | 'progress' | 'dateRange' | 'dateTimeRange' | 'image';
     /** 当前列值的枚举 */
     enum?: Record<string, string>;
-    /** 内部排序使用 */
-    order?: number;
-    /** 隐藏 */
-    hidden?: boolean
   }
 >;
 
@@ -118,7 +131,9 @@ export interface TableRenderProps<RecordType extends Object = any>
   debug?: boolean;
   /** 表格主体右上方的控件，例如“添加”按钮 */
   toolbarRender?: React.ReactNode;
-  /** 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示 等功能 */
+  /** 
+   * 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示 等功能
+   */
   toolbarAction?: boolean;
   /** 切换分页时是否需要请求接口 */
   pageChangeWithRequest?: boolean;

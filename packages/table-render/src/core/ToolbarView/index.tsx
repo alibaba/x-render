@@ -11,7 +11,6 @@ import './index.less';
 const ToolbarView = props => {
   const {
     setState,
-    getState,
     title,
     toolbarRender,
     toolbarAction = false,
@@ -33,7 +32,7 @@ const ToolbarView = props => {
       <div className='tr-toolbar-right'>
         <Space>
           <Space>{content}</Space>
-          {toolbarAction && <InteriorTool fullScreen={fullScreen} refresh={refresh} />}
+          <InteriorTool toolbarAction={toolbarAction} fullScreen={fullScreen} refresh={refresh} />
         </Space>
       </div>
     </div>

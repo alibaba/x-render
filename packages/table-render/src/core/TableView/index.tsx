@@ -8,7 +8,10 @@ import { renderDom } from './field';
 import { TablePropsC } from '../../types';
 
 const ProTable: <RecordType extends object = any>(
-  props: TablePropsC<RecordType>
+  props: TableProps<RecordType> & {
+    doSearch: (...arg: any[]) => void,
+    locale?: 'zh-CN' | 'en-US';
+  }
 ) => React.ReactElement = props => {
   //@ts-ignore
   if (props.dataSource) {
@@ -106,8 +109,6 @@ const ProTable: <RecordType extends object = any>(
       }
       return result;
     })
-      .sort((a, b) => a.order - b.order)
-      .filter(i => !i.hidden)
   }
 
   const proColumns = useMemo(() => getProColumns(columns), [columns]);

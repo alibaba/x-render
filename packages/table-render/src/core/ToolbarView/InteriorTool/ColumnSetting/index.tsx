@@ -1,187 +1,128 @@
-import React, { FC, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Tooltip, ConfigProvider, Dropdown, Checkbox, Divider, Button } from 'antd';
-import { CloseOutlined, HolderOutlined, PushpinOutlined, SettingOutlined, UndoOutlined } from '@ant-design/icons';
+import { CloseOutlined, SettingOutlined, UndoOutlined } from '@ant-design/icons';
 import { translation } from '../../../../utils';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
-import { SortableContext, verticalListSortingStrategy, useSortable } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { useStore } from '../../../store';
-import { ProColumnsType } from '@/types';
+import { ToolbarActionConfig } from '@/types';
+import Item from './item';
 import omit from 'lodash.omit';
-import clx from 'classnames';
 import './index.less';
 
-const prefix = 'tr-toolbar-column-setting'
+const prefix = 'tr-toolbar-column-setting';
+type Setting = ToolbarActionConfig['columnsSettingValue'];
 
 /**
- * 计算 fixed 方向
- * 
- * @param columns 列表
- * @param order 当前项的位置
- * 
- * @returns direction 固定的方向
+ * 获取当前项的位置状态
  */
-const getDirection = (columns: any[], order: number) => {
-  const length = columns.length;
-  const isFirstOne = order === 0;
-  const isLastOne = order === length - 1;
-  const haveForwardFixed = !isFirstOne && columns.find(i => i.order === order - 1).fixed;
-  const haveNextFixed = !isLastOne && columns.find(i => i.order === order + 1).fixed;
-  const haveForwardUnFixed = [...columns].sort((a, b) => a.order - b.order).slice(0, order).some(i => !i.fixed);
-  const haveBackwardUnFixed = [...columns].sort((a, b) => a.order - b.order).slice(order).some(i => !i.fixed);
+export const getStatus = (setting: Setting, key: string) => {
+  const length = setting.length;
+  const index = setting.findIndex(i => i.key === key);
+  const isFixed = !!setting[index].fixed;
+  const isFirstOne = index === 0;
+  const isLastOne = index === length - 1;
+  const preFixed = !isFirstOne && !!setting[index - 1]?.fixed;
+  const nextFixed = !isLastOne && !!setting[index + 1]?.fixed;
+  const haveForwardUnFixed = setting.slice(0, index).some(i => !i.fixed);
+  const haveBackwardUnFixed = setting.slice(index).some(i => !i.fixed);
+  const onFirstPart = index + 1 < (length / 2);
 
-  if (haveForwardUnFixed && haveBackwardUnFixed && !isLastOne && !isFirstOne) {
-    return undefined;
-  }
-
-  if (haveForwardFixed && !haveNextFixed && !isLastOne) {
-    return columns.find(i => i.order === order - 1).fixed
-  }
-
-  if (!haveForwardFixed && haveNextFixed && !isFirstOne) {
-    return columns.find(i => i.order === order + 1).fixed
-  }
-
-  if ((order + 1) > (length / 2)) {
-    return 'right'
-  } else {
-    return 'left';
+  return {
+    index,
+    /** 当前项是固定的 */
+    isFixed,
+    /** 是第一个 */
+    isFirstOne,
+    /** 是最后一个 */
+    isLastOne,
+    /** 前一个是固定的 */
+    preFixed,
+    /** 后一个是固定的 */
+    nextFixed,
+    /** 前面存在未固定的 */
+    haveForwardUnFixed,
+    /** 后面存在未固定的 */
+    haveBackwardUnFixed,
+    /** 在前半部分 */
+    onFirstPart,
   }
 }
 
-/**
- * 计算新的 order
- * 
- * @param order 当前项的位置
- * @param newOrder 这次移动的项目的新位置
- * @param oldOrder 这次移动的项目的旧位置
- * 
- * @returns currentNewOrder 当前项的新位置 
- */
-const getNewOrder = (order: number, newOrder: number, oldOrder: number) => {
-  if (newOrder < oldOrder && order <= oldOrder && order >= newOrder) {
-    return order + 1;
-  }
+const fixItem: (setting: Setting, fixKey: string) => Setting = (setting, fixKey) => {
+  return setting.map(i => {
+    if (i.key === fixKey) {
+      const { onFirstPart, preFixed, nextFixed, isFirstOne, isLastOne, index } = getStatus(setting, i.key);
+      let fixed;
 
-  if (newOrder > oldOrder && order <= newOrder && order > oldOrder) {
-    return order - 1
-  }
+      if (preFixed && !nextFixed && !isLastOne) {
+        fixed = setting[index - 1].fixed
+      }
 
-  return order;
+      if (!preFixed && nextFixed && !isFirstOne) {
+        fixed = setting[index + 1].fixed
+      }
+
+      if (onFirstPart) {
+        fixed = 'right'
+      } else {
+        fixed = 'left';
+      }
+
+      return {
+        ...i,
+        fixed,
+      }
+    }
+    return i;
+  })
 }
 
-const Item: FC<ProColumnsType<any>[number] & {
-  columnKey: string,
-  isOverlay?: boolean,
-  isChecked?: boolean,
-}> = ({ title, columnKey, isOverlay = false, isChecked, fixed, order }) => {
-  const { setNodeRef, attributes, listeners, transition, transform, isDragging, setActivatorNodeRef } = useSortable({
-    id: columnKey,
-  });
 
-  const columns = useStore(store => store.columns);
-  const setColumns = useStore(store => store.setColumns);
+/**
+ * 取消固定不应该的固定的那些列
+ * 
+ * @param setting 排序或固定之后的 setting 数组
+ * @returns newSetting 新 setting 数组
+ */
+const cancelFixed: (setting: Setting) => Setting = (setting) => {
+  return setting.map((i) => {
+    if (i.fixed) {
+      const { haveBackwardUnFixed, haveForwardUnFixed, isFirstOne, isLastOne } = getStatus(setting, i.key);
 
-  const isFixed = !!fixed;
-  const isFirstOne = order === 0;
-  const isLastOne = order === columns.length - 1;
-  const haveForwardFixed = !isFirstOne && columns.find(i => i.order === order - 1).fixed;
-  const haveNextFixed = !isLastOne && columns.find(i => i.order === order + 1).fixed;
-  const canFix = isFirstOne || isLastOne || haveForwardFixed || haveNextFixed;
-
-  const style: React.CSSProperties = {
-    transition,
-    transform: CSS.Translate.toString(transform),
-    opacity: isDragging ? '0.6' : 'unset',
-  };
-
-  // TODO 测试下函数的场景
-  const label = useMemo(() => typeof title === 'function' ? title({}) : title, [title]);
-
-  const onFixColumn = () => {
-    if (!canFix) return;
-
-    const newColumns = columns.map(i => {
-      const isCurrentItem = i.key === columnKey;
-      // 当前项取消固定时
-      if (isCurrentItem && isFixed) {
+      if (haveForwardUnFixed && haveBackwardUnFixed && !isLastOne && !isFirstOne) {
         return omit(i, 'fixed');
       }
-
-      // 当前项固定时
-      if (isCurrentItem && !isFixed) {
-        return {
-          ...i,
-          fixed: getDirection(columns, order),
-        }
-      }
-
-      return i;
-    })
-
-    const finalColumns = newColumns.map(i => {
-      if (i.fixed) {
-        return {
-          ...i,
-          fixed: getDirection(newColumns, i.order),
-        }
-      } else {
-        return i;
-      }
-    })
-    setColumns(finalColumns);
-  }
-
-  const className = clx(`${prefix}-column`, {
-    [`${prefix}-fixed-column`]: isFixed,
-    [`${prefix}-can-fixed`]: canFix,
+    }
+    return i;
   })
-
-  return (
-    <div
-      style={style}
-      ref={setNodeRef}
-      className={className}
-      {...attributes}
-    >
-      <HolderOutlined
-        {...listeners}
-        ref={setActivatorNodeRef}
-        style={{
-          marginRight: 8,
-          color: '#666',
-          cursor: isOverlay ? 'grabbing' : 'grab'
-        }}
-      />
-      {isOverlay ? (
-        <Checkbox checked={isChecked}>{label}</Checkbox>
-      ) : (
-        <Checkbox value={columnKey}>{label}</Checkbox>
-      )}
-      <PushpinOutlined
-        className={`${prefix}-pin`}
-        onClick={onFixColumn}
-      />
-    </div>
-  )
 }
 
-const ColumnSetting = () => {
+const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 'onColumnsSettingChange'>> = ({
+  columnsSettingValue,
+  onColumnsSettingChange
+}) => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
-  const columns = useStore((store) => store.columns);
-  const setColumns = useStore(store => store.setColumns);
+  const columns = useStore(store => store.columns);
+  const columnsSetting = useStore((store) => store.columnsSetting);
+  const setColumnsSetting = useStore(store => store.setColumnsSetting);
 
-  const [value, setValue] = useState([]);
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const inited = useRef(false);
 
   useEffect(() => {
+    if (columnsSettingValue) {
+      setColumnsSetting(columnsSettingValue);
+    }
+  }, [columnsSettingValue]);
+
+  useEffect(() => {
     if (open && columns.length > 0 && !inited.current) {
-      setValue(columns.filter(i => !i.hidden).map(i => i.key))
+      init();
       inited.current = true;
       return;
     }
@@ -192,13 +133,52 @@ const ColumnSetting = () => {
     }
   }, [open, columns])
 
-  const getItems = (columns: ProColumnsType<any>) => {
-    if (!columns) return [];
-    return [...columns]
-      .sort((a, b) => a.order - b.order)
+  const init = () => {
+    const initSetting = columns.map((i) => ({
+      key: String(i.key),
+      hidden: false,
+    }))
+    handleChange(initSetting);
+  }
+
+  const findIndex = (key: any) => {
+    return columnsSetting.findIndex(i => i.key === key)
+  }
+
+  const handleChange = (setting: Setting) => {
+    setColumnsSetting(setting);
+    onColumnsSettingChange?.(setting);
+  }
+
+  const onFixItem = (key: string) => {
+    const fixedSetting = fixItem(columnsSetting, key);
+    const finalSetting = cancelFixed(fixedSetting);
+    setColumnsSetting(finalSetting);
+  }
+
+  const onUnfixItem = (key: string) => {
+    const canceledSetting = columnsSetting.map(i => ({
+      ...i,
+      fixed: i.key === key ? undefined : i.fixed,
+    }))
+    const finalSetting = cancelFixed(canceledSetting);
+    setColumnsSetting(finalSetting);
+  }
+
+
+  const getItems = (setting: Setting) => {
+    if (!setting) return [];
+    return setting
       .map(i => {
         return {
-          label: <Item {...i} key={i.key} columnKey={String(i.key)} />,
+          label: (
+            <Item
+              {...i}
+              onFixItem={onFixItem}
+              onUnfixItem={onUnfixItem}
+              columnKey={String(i.key)}
+            />
+          ),
           // must have a key
           key: i.key,
         }
@@ -206,47 +186,23 @@ const ColumnSetting = () => {
   }
 
   const onReset = () => {
-    const originalColumns = columns.map((i, index) => ({
-      ...i,
-      order: index,
-      hidden: false,
-      fixed: undefined,
-    }))
-    setColumns(originalColumns);
-    setValue(columns.map(i => i.key));
+    init();
   }
 
   const onColumnsCheckChange = (val: string[]) => {
-    const newColumns = columns.map(i => ({
+    const newColumns = columnsSetting.map(i => ({
       ...i,
       hidden: !val.includes(String(i.key))
     }))
-    setValue(val);
-    setColumns(newColumns);
+    handleChange(newColumns);
   }
 
-  const setColumnsOrder = (key: string, newOrder: number) => {
-    const oldOrder = columns.find(i => i.key === key).order;
-    if (oldOrder === newOrder) return;
+  const items = useMemo(() => getItems(columnsSetting), [columnsSetting]);
+  const activeItem = useMemo(() => columnsSetting.find(i => i.key === activeId), [columnsSetting, activeId]);
+  const keyList = useMemo(() => columnsSetting.map(i => i.key), [columnsSetting]);
+  const value = useMemo(() => columnsSetting.filter(i => !i.hidden).map(i => i.key), [columnsSetting]);
 
-    const newOrderColumns = columns.map(i => ({
-      ...i,
-      order: i.key === key ? newOrder : getNewOrder(i.order, newOrder, oldOrder),
-    }))
-
-    const newFixedColumns = newOrderColumns.map(i => ({
-      ...i,
-      fixed: i.fixed ? getDirection(newOrderColumns, i.order) : undefined,
-    }))
-
-    setColumns(newFixedColumns);
-  }
-
-  const items = useMemo(() => getItems(columns), [columns]);
-  const activeItem = useMemo(() => columns.find(i => i.key === activeId), [columns, activeId]);
-  const keyList = useMemo(() => [...columns].sort((a, b) => a.order - b.order).map(i => i.key), [columns]);
-
-  console.log('columns', columns.map(i => i.fixed));
+  console.log('columnsSetting', columnsSetting);
   return (
     <Dropdown
       menu={{ items }}
@@ -278,9 +234,9 @@ const ColumnSetting = () => {
             <DndContext
               onDragEnd={({ over, active }) => {
                 if (over) {
-                  const activeId = columns.find(i => i.key === active.id).key;
-                  const newOrder = columns.find(i => i.key === over.id).order;
-                  setColumnsOrder(String(activeId), newOrder);
+                  const newSetting = arrayMove(columnsSetting, findIndex(active.id), findIndex(over.id));
+                  const finalSetting = cancelFixed(newSetting);
+                  handleChange(finalSetting);
                 }
               }}
               onDragStart={({ active }) => {

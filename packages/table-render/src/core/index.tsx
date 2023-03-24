@@ -9,6 +9,7 @@ import ToolbarView from './ToolbarView';
 import TableView from './TableView';
 
 import './index.less';
+import { TableRenderProps } from '..';
 
 type ISearchParams = {
   current?: number;
@@ -17,7 +18,7 @@ type ISearchParams = {
   sorter?: any;
 };
 
-const RenderCore = props => {
+const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
   const {
     search: searchProps,
     debug, className,
@@ -56,11 +57,7 @@ const RenderCore = props => {
 
   useEffect(() => {
     if (columns) {
-      setColumns(columns.map((i, index) => ({
-        ...i,
-        order: index,
-        hidden: false
-      })));
+      setColumns(columns);
     }
   }, [columns]);
 
@@ -192,8 +189,6 @@ const RenderCore = props => {
       />
       <TableView
         {...tableProps}
-        setState={setState}
-        getState={getState}
         doSearch={doSearch}
       />
     </div>

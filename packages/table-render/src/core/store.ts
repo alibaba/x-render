@@ -1,3 +1,4 @@
+import { ToolbarActionConfig } from '@/types';
 import { create } from 'zustand';
 import { ProColumnsType } from '..';
 
@@ -21,8 +22,15 @@ type TableRenderStoreType = {
   init?: (schema: TableRenderStoreType['schema']) => any;
   getState: () => any;
   setState: (state: any) => void;
-  /** 更新 columns */
-  setColumns: (columns: any[]) => void;
+  /**
+   * 更新列数据
+   */
+  setColumns: (columns: ProColumnsType<any>) => void;
+  /** 
+   * 动态设置列状态
+   */
+  columnsSetting: ToolbarActionConfig['columnsSettingValue'];
+  setColumnsSetting: (setting: ToolbarActionConfig['columnsSettingValue']) => void;
 };
 
 export const useStore = create<TableRenderStoreType>()((set, get) => ({
@@ -41,6 +49,7 @@ export const useStore = create<TableRenderStoreType>()((set, get) => ({
   schema: {},
   columns: [],
   inited: false,
+  columnsSetting: [],
   setState: (state) => {
     return set({ ...state })
   },
@@ -48,6 +57,7 @@ export const useStore = create<TableRenderStoreType>()((set, get) => ({
     return get();
   },
   setColumns: (columns) => set({ columns }),
+  setColumnsSetting: (setting) => set({ columnsSetting: setting }),
 }));
 
 
