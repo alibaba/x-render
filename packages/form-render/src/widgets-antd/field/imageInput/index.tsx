@@ -6,7 +6,11 @@ import { translation } from '../../utils';
 const DEFAULT_IMG =
   'https://img.alicdn.com/tfs/TB14tSiKhTpK1RjSZFKXXa2wXXa-354-330.png';
 
-const PreviewNode = ({ value }) => {
+interface PreviewNodeProps {
+  value: string;
+}
+
+const PreviewNode = ({ value }: PreviewNodeProps) => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
   
@@ -27,8 +31,13 @@ const PreviewNode = ({ value }) => {
   );
 };
 
-export default function imageInput({ value, ...rest }) {
+interface ImageInputProps {
+  value: string;
+}
+
+export default function ImageInput({ value, ...rest }: ImageInputProps) {
   return (
     <Input value={value} addonAfter={<PreviewNode value={value} />} {...rest} />
   );
 }
+
