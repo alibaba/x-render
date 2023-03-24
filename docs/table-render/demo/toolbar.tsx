@@ -19,6 +19,7 @@ const Demo = () => {
       search={{
         schema: schema
       }}
+      scroll={{ x: 1500 }}
       request={searchApi}
       columns={columns}
       pagination={{ pageSize: 2 }}

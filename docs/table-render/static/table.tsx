@@ -30,7 +30,7 @@ export const columns: ProColumnsType = [
     key: 'state',
   },
   {
-    title: '酒店星级',
+    title: '酒店星级比较长的标题',
     dataIndex: 'labels',
     key: 'labels',
     width: 90,
