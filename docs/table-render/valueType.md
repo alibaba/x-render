@@ -1,5 +1,6 @@
 ---
 order: 5
+mobile: false
 title: '数据展示模版'
 group: 
   title: 最佳展示

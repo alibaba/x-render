@@ -1,6 +1,7 @@
 ---
 order: 2
 title: 案例展示
+mobile: false
 ---
 
 ## 基础案例

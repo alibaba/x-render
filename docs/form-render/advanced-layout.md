@@ -1,6 +1,7 @@
 ---
 order: 0
 toc: content
+mobile: false
 group: 
   title: 高级用法
   order: 1

@@ -1,6 +1,7 @@
 ---
 order: 1
 title: 使用教程
+mobile: false
 ---
 
 <div style="display:flex;align-items:center;margin-bottom:24px">

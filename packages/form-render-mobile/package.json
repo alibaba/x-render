@@ -71,7 +71,7 @@
     "rollup-plugin-copy": "^3.4.0"
   },
   "peerDependencies": {
-    "antd-mobile": "5.x",
+    "antd-mobile": "4.x | 5.x",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
   },

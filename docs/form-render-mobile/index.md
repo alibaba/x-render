@@ -2,7 +2,6 @@
 order: 0
 toc: content
 title: 开始使用
-mobile: false
 ---
 
 <div style="display:flex;align-items:center;margin-bottom:24px">
@@ -32,29 +31,69 @@ npm i form-render --save
 ```
 ## 使用方式
 
-**函数组件**
+**基础**
 
 使用 `useForm` hooks 创建 form 实例。
 ```jsx
 /**
  * transform: true
  * defaultShowCode: true
+ * background: 'rgb(245,245,245)'
  */
 import React from 'react';
 import { Button } from 'antd';
-import FormRender, { useForm } from 'form-render';
+import FormRender, { useForm } from 'form-render-mobile';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
-    input1: {
-      title: '简单输入框',
+    input: {
+      title: '输入框',
       type: 'string',
-      required: true
+      widget: 'input'
     },
-    select1: {
+    textarea: {
+      title: '长文本',
+      type: 'string',
+      widget: 'textArea'
+    },
+    slider: {
+      title: '滑动条',
+      type: 'string',
+      widget: 'slider'
+    },
+    switch: {
+      title: '开关',
+      type: 'bool',
+      widget: 'switch'
+    },
+    stepper: {
+      title: '步进器',
+      type: 'number',
+      widget: 'stepper'
+    },
+    rate: {
+      title: '评分',
+      type: 'string',
+      widget: 'rate'
+    },
+    selector: {
+      title: '选择组',
+      type: 'string',
+      widget: 'selector',
+      props: {
+        options: [
+          { label: '早', value: 'a' },
+          { label: '中', value: 'b' },
+          { label: '晚', value: 'c' }
+        ]
+      }
+    },
+    radio: {
       title: '单选',
       type: 'string',
+      widget: 'radio',
       props: {
         options: [
           { label: '早', value: 'a' },
@@ -81,76 +120,87 @@ export default () => {
         onFinish={onFinish} 
         fieldCol={8}
       />
-      <Button type="primary" onClick={form.submit}>
-        提交
-      </Button>
     </>
   );
 }
 ```
 
-**类组件**
 
-对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks。
 
+**复杂**
+
+使用 `useForm` hooks 创建 form 实例。
 ```jsx
 /**
  * transform: true
  * defaultShowCode: true
+ * background: 'rgb(245,245,245)'
  */
 import React from 'react';
 import { Button } from 'antd';
-import FormRender, { connectForm } from 'form-render';
+import FormRender, { useForm } from 'form-render-mobile';
 
 const schema = {
   type: 'object',
+  displayType: 'row',
   properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚']
+    list: {
+      title: '对象数组',
+      type: 'array',
+      items: {
+        type: 'object',
+        widget: 'Card',
+        title: '联系人',
+        properties: {
+          input: {
+            title: '输入框',
+            type: 'string',
+            widget: 'input'
+          },
+          slider: {
+            title: '滑动条',
+            type: 'string',
+            widget: 'slider'
+          },
+          switch: {
+            title: '开关',
+            type: 'bool',
+            widget: 'switch'
+          },
+          stepper: {
+            title: '步进器',
+            type: 'number',
+            widget: 'stepper'
+          },
+          rate: {
+            title: '评分',
+            type: 'string',
+            widget: 'rate'
+          },
+        }
+      }
     }
   }
 };
 
-class Demo extends React.Component {
-  onFinish = (formData) => {
+export default () => {
+  const form = useForm();
+
+  const onFinish = (formData) => {
     console.log('formData:', formData);
   };
 
-  render() {
-    const { form } = this.props;
-    return (
-      <>
-        <FormRender 
-          form={form} 
-          schema={schema} 
-          onFinish={this.onFinish}
-          fieldCol={8}
-        />
-        <Button type="primary" onClick={form.submit}>
-          提交
-        </Button>
-      </>
-    );
-  }
+  return (
+    <>
+      <FormRender 
+        form={form} 
+        schema={schema} 
+        onFinish={onFinish} 
+        fieldCol={8}
+      />
+    </>
+  );
 }
-
-export default connectForm(Demo);
 ```
-## 速写 Schema
 
-对于初学者来说记住 schema 所有的字段和使用方式并非易事。为了让大家能够快速上手，建议以以下的顺序尝试。
 
-1. 去 [Playground](/playground) 逛逛，那里有从基础玩法、高级功能到完整样例的所有 schema 样例。
-2. 玩转一下 [表单设计器](https://xrender.fun/generator)，拖拖拽拽导出 schema，丢到代码里生成可用表单。本质上这是一个可视化的表单生成器，支持 schema 的导入 & 导出。
-
-<div>
-  <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="80%"/>
-</div>

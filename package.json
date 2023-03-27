@@ -101,6 +101,7 @@
     "fr-generator": "2.8.4",
     "@monaco-editor/react": "^4.4.6",
     "lodash": "^4.17.21",
-    "dumi-theme-mobile": "^2.0.4"
+    "dumi-theme-mobile": "^2.0.4",
+    "antd-mobile": "5.x"
   }
 }

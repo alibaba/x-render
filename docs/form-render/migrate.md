@@ -1,6 +1,7 @@
 ---
 order: 0
 toc: content
+mobile: false
 hide: true
 group: 
   title: 其他

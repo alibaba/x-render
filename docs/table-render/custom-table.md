@@ -1,5 +1,6 @@
 ---
 order: 6
+mobile: false
 title: 'Table 包裹容器'
 group: 
   title: 最佳展示

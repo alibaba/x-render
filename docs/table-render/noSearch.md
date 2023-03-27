@@ -1,5 +1,6 @@
 ---
 order: 3
+mobile: false
 group: 
   title: 最佳展示
   order: 2

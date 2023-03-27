@@ -30,6 +30,11 @@ const Navigation: React.FC = () => {
       ),
       children: [
         {
+          label: <Link to="/form-render-mobile">form-render-mobile</Link>,
+          key: 'form-render-mobile',
+          icon: <CodeOutlined />,
+        },
+        {
           label: <Link to="/playground">Playground</Link>,
           key: 'playground',
           icon: <CodeOutlined />,

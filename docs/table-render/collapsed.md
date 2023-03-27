@@ -1,5 +1,6 @@
 ---
 order: 2
+mobile: false
 title: '搜索栏折叠'
 group: 
   title: 最佳展示

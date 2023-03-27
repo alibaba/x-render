@@ -1,6 +1,7 @@
 ---
 order: 1
 toc: content
+mobile: false
 group: 
   title: 最佳示例
   order: 2

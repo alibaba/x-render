@@ -1,5 +1,6 @@
 ---
 order: 3
+mobile: false
 title: '查询实时响应'
 group: 
   title: 最佳展示

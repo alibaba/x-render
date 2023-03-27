@@ -19,7 +19,7 @@
         "src/.umi/*"
       ],
       "form-render": [
-        "packages/form-render/src/*"
+        "packages/form-render-mobile/src/*"
       ],
     },
     "allowJs": true,

@@ -4,10 +4,9 @@ import { Card } from 'antd-mobile';
 import './index.less';
 
 const BoxCard = ({ children, title, description }) => {
+  return children;
   if (!title) {
-    return (
-      {children}
-    )
+    return children
   }
   return (
     <Card
