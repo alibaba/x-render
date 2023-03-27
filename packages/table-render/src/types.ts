@@ -135,8 +135,10 @@ export interface TableRenderProps<RecordType extends Object = any>
   toolbarRender?: React.ReactNode;
   /** 
    * 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示 等功能
+   * 
+   * 可以通过传入一个对象进行更具体的配置
    */
-  toolbarAction?: boolean;
+  toolbarAction?: boolean | Pick<ToolbarActionConfig, 'enabled'>;
   /** 切换分页时是否需要请求接口 */
   pageChangeWithRequest?: boolean;
   onTabChange?: () => any;

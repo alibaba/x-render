@@ -1,12 +1,12 @@
 /**
  * transform: true
- * defaultShowCode: true
+ * defaultShowCode: false
  * background: 'rgb(245,245,245)'
  */
 import React, { useRef } from 'react';
 import TableRender, { ProColumnsType } from 'table-render';
-import { schema } from '../static/search';
-import { searchApi } from '../static/request';
+import { schema } from '../../static/search';
+import { searchApi } from '../../static/request';
 
 const Demo = () => {
   const tableRef: any = useRef();
@@ -15,7 +15,7 @@ const Demo = () => {
     {
       title: '酒店名称',
       dataIndex: 'title',
-      key: 'title', // 使用表格列设置功能，必须指定 key 的值
+      key: 'title', // 使用表格列设置功能，必须指定 key 或 dataIndex 的值
       valueType: 'text',
       width: '20%'
     },
@@ -67,7 +67,9 @@ const Demo = () => {
       request={searchApi}
       columns={columns}
       pagination={{ pageSize: 2 }}
-      toolbarAction
+      toolbarAction={{
+        enabled: ['columnsSetting']
+      }}
     />
   )
 };
