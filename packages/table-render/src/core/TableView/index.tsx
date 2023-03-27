@@ -5,7 +5,7 @@ import { useStore } from '../store';
 
 import { getDate, getDateTime, getMoneyType, getDateRange, isObject, isFunction } from '../../utils';
 import { renderDom } from './field';
-import { TablePropsC } from '../../types';
+import { ColumnsSettingValueType, ProColumnsType, TablePropsC, ToolbarActionConfig } from '../../types';
 
 const ProTable: <RecordType extends object = any>(
   props: TableProps<RecordType> & {
@@ -26,6 +26,7 @@ const ProTable: <RecordType extends object = any>(
   const pagination = useStore((store) => store.pagination);
   const tableSize = useStore((store) => store.tableSize);
   const columns = useStore((store) => store.columns);
+  const columnsSetting = useStore((store) => store.columnsSetting);
   const setState = useStore((store) => store.setState);
 
   const handleChange = ({ current, pageSize }, filters, sorter, extra) => {
@@ -111,7 +112,31 @@ const ProTable: <RecordType extends object = any>(
     })
   }
 
-  const proColumns = useMemo(() => getProColumns(columns), [columns]);
+
+  // 应用 columnsSetting 到 columns
+  const setColumns = (columnsSetting: ColumnsSettingValueType, proColumns: any[]) => {
+    return columnsSetting
+      .filter(i => !i.hidden)
+      .map(i => {
+        const column = proColumns.find(j => j.key === i.key);
+        if (column) {
+          return {
+            ...column,
+            ...i,
+          };
+        }
+        return i;
+      });
+  }
+
+
+  const proColumns = useMemo(() => {
+    const proColumns = getProColumns(columns);
+    if (columnsSetting && columnsSetting.length > 0) {
+      return setColumns(columnsSetting, proColumns)
+    }
+    return proColumns;
+  }, [columns, columnsSetting]);
 
   const tableProps: TableProps<typeof dataSource[number]> = {
     rowKey: 'id',
@@ -137,4 +162,3 @@ const ProTable: <RecordType extends object = any>(
 }
 
 export default ProTable;
-
