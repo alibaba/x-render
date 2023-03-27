@@ -57,13 +57,9 @@ const fixItem: (setting: Setting, fixKey: string) => Setting = (setting, fixKey)
 
       if (preFixed && !nextFixed && !isLastOne) {
         fixed = setting[index - 1].fixed
-      }
-
-      if (!preFixed && nextFixed && !isFirstOne) {
+      } else if (!preFixed && nextFixed && !isFirstOne) {
         fixed = setting[index + 1].fixed
-      }
-
-      if (onFirstPart) {
+      } else if (onFirstPart) {
         fixed = 'left'
       } else {
         fixed = 'right';
@@ -150,22 +146,6 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
     onColumnsSettingChange?.(setting);
   }
 
-  const onFixItem = (key: string) => {
-    const fixedSetting = fixItem(columnsSetting, key);
-    const finalSetting = cancelFixed(fixedSetting);
-    setColumnsSetting(finalSetting);
-  }
-
-  const onUnfixItem = (key: string) => {
-    const canceledSetting = columnsSetting.map(i => ({
-      ...i,
-      fixed: i.key === key ? undefined : i.fixed,
-    }))
-    const finalSetting = cancelFixed(canceledSetting);
-    setColumnsSetting(finalSetting);
-  }
-
-
   const getItems = (setting: Setting) => {
     if (!setting) return [];
     return setting
@@ -189,6 +169,24 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
     init();
   }
 
+  /** 固定某一列 */
+  const onFixItem = (key: string) => {
+    const fixedSetting = fixItem(columnsSetting, key);
+    const finalSetting = cancelFixed(fixedSetting);
+    setColumnsSetting(finalSetting);
+  }
+
+  /** 取消固定某一列 */
+  const onUnfixItem = (key: string) => {
+    const canceledSetting = columnsSetting.map(i => ({
+      ...i,
+      fixed: i.key === key ? undefined : i.fixed,
+    }))
+    const finalSetting = cancelFixed(canceledSetting);
+    setColumnsSetting(finalSetting);
+  }
+
+  /** 列的显示和隐藏 */
   const onColumnsCheckChange = (val: string[]) => {
     const newColumns = columnsSetting.map(i => ({
       ...i,
@@ -197,12 +195,26 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
     handleChange(newColumns);
   }
 
+  /** 移动某一列 */
+  const onDragEnd = (activeId: any, overId: any) => {
+    const newSetting = arrayMove(columnsSetting, findIndex(activeId), findIndex(overId));
+    const activeItem = newSetting.find(i => i.key === activeId);
+
+    if (activeItem.fixed) {
+      const fixedSetting = fixItem(newSetting, activeId);
+      const finalSetting = cancelFixed(fixedSetting);
+      handleChange(finalSetting);
+    } else {
+      const finalSetting = cancelFixed(newSetting);
+      handleChange(finalSetting);
+    }
+  }
+
   const items = useMemo(() => getItems(columnsSetting), [columnsSetting]);
   const activeItem = useMemo(() => columnsSetting.find(i => i.key === activeId), [columnsSetting, activeId]);
   const keyList = useMemo(() => columnsSetting.map(i => i.key), [columnsSetting]);
   const value = useMemo(() => columnsSetting.filter(i => !i.hidden).map(i => i.key), [columnsSetting]);
 
-  console.log('columnsSetting', columnsSetting);
   return (
     <Dropdown
       menu={{ items }}
@@ -234,9 +246,7 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
             <DndContext
               onDragEnd={({ over, active }) => {
                 if (over) {
-                  const newSetting = arrayMove(columnsSetting, findIndex(active.id), findIndex(over.id));
-                  const finalSetting = cancelFixed(newSetting);
-                  handleChange(finalSetting);
+                  onDragEnd(active.id, over.id)
                 }
               }}
               onDragStart={({ active }) => {
