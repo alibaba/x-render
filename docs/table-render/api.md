@@ -16,10 +16,17 @@ group:
 | request                | **必填**，初始化&点击查询时执行的函数                                            | [Request](#request-1)    | - | -   |    
 | title                 | 表格标题                                                                  | `string \| ReactNode`| - | -   |
 | toolbarRender         | 表格主体右上方的控件，例如“添加”按钮                                      | `() => ReactNode` | false     |
-| toolbarAction         | 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示等功能 | `boolean`           | false     |
+| toolbarAction         | 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示等功能 | `boolean \| ToolbarActionConfig`           | false     |
 | pageChangeWithRequest | 切换分页时是否需要请求接口                                                | `boolean`           | true      |
 | columns               | 列定义                                                                    | [ProColumnsType](#columns)    | -     |
 
+### ToolbarActionConfig
+
+工具栏的具体配置
+
+| 属性                  | 描述                | 类型                 | 默认值     | 版本 |
+| --------------------- | ----------------- | ------------------- | --------- | -----|
+| enabled                | 启用的功能          | ` Array<'refresh' \| 'columnsSetting' \| 'fullScreen' \| 'density' \| 'all'>` | `['all']`   |  |
 
 ## Search
 
