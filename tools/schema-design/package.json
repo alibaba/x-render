@@ -1,0 +1,87 @@
+{
+  "name": "fr-design",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "beta": "npm publish --tag beta",
+    "build": "father-build",
+    "prepare": "yarn build",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "postpublish": "git push --tags",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "clone": "^2.1.2",
+    "i18next": "^21.8.11",
+    "nanoid": "^3.1.22",
+    "randombytes": "2.1.0",
+    "rc-color-picker": "^1.2.6",
+    "react-dnd": "^14.0.2",
+    "react-dnd-html5-backend": "^14.0.0",
+    "react-i18next": "^11.17.2",
+    "react-sortable-hoc": "^2.0.0",
+
+    "@alilc/lowcode-datasource-fetch-handler": "^1.0.1",
+    "@alilc/lowcode-editor-core": "1.0.17",
+    "@alilc/lowcode-plugin-base-monaco-editor": "^1.1.1",
+    "@alilc/lowcode-plugin-code-editor": "^1.0.3",
+    "@alilc/lowcode-plugin-components-pane": "^1.0.2",
+    "@alilc/lowcode-plugin-inject": "^1.0.0",
+    "@alilc/lowcode-plugin-schema": "^1.0.2",
+    "@alilc/lowcode-plugin-undo-redo": "^1.0.0",
+    "@alilc/lowcode-plugin-zh-en": "^1.0.0",
+    "@alilc/lowcode-react-renderer": "^1.0.0",
+    "@alilc/lowcode-setter-behavior": "^1.0.0",
+    "@alilc/lowcode-setter-title": "^1.0.2",
+    "antd": "^4.21.4",
+    "copy-text-to-clipboard": "^3.0.1",
+    "dexie": "^3.2.3",
+    "dexie-react-hooks": "^1.1.1",
+    "form-render": "^2.0.0",
+    "idb": "^7.1.1",
+    "js-beautify": "^1.14.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.3",
+    "react-json-view": "^1.21.3",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "less": "^3.0.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.4.0",
+
+    "@alib/build-scripts": "^0.1.18",
+    "@alilc/lowcode-engine": "^1.0.0",
+    "@alilc/lowcode-engine-ext": "^1.0.0",
+    "@alilc/lowcode-types": "^1.0.0",
+    "@types/events": "^3.0.0",
+    "@types/react": "^16.8.3",
+    "@types/react-dom": "^16.8.2",
+    "@types/streamsaver": "^2.0.0",
+    "@types/uuid": "^8.3.4",
+    "build-plugin-fusion": "^0.1.0",
+    "build-plugin-moment-locales": "^0.1.0",
+    "build-plugin-react-app": "^1.1.2",
+    "fs-extra": "^10.0.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0"
+  },
+  "peerDependencies": {
+    "antd": "4.x",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  }
+}
