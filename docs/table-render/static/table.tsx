@@ -30,7 +30,7 @@ export const columns: ProColumnsType = [
     key: 'state',
   },
   {
-    title: '酒店星级比较长的标题',
+    title: '酒店星级',
     dataIndex: 'labels',
     key: 'labels',
     width: 90,
@@ -42,7 +42,6 @@ export const columns: ProColumnsType = [
     //   }
     // },
   },
-
   {
     title: '酒店GMV',
     key: 'money',
