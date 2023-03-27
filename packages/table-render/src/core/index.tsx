@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useImperativeHandle } from 'react';
-import { useStore } from './store';
+import { useTableStore } from './store';
 import { useForm } from 'form-render';
 
 import { _get, isFunction, isArray } from '../utils';
@@ -40,13 +40,13 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
   const form = useForm();
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const inited = useStore((state) => state.inited);
-  const currentTab = useStore((state) => state.tab);
-  const tableSize = useStore((state) => state.tableSize);
-  const pagination = useStore((state) => state.pagination);
-  const setState = useStore((state) => state.setState);
-  const getState = useStore((state) => state.getState);
-  const setColumns = useStore((state) => state.setColumns);
+  const inited = useTableStore((state) => state.inited);
+  const currentTab = useTableStore((state) => state.tab);
+  const tableSize = useTableStore((state) => state.tableSize);
+  const pagination = useTableStore((state) => state.pagination);
+  const setState = useTableStore((state) => state.setState);
+  const getState = useTableStore((state) => state.getState);
+  const setColumns = useTableStore((state) => state.setColumns);
 
   useEffect(() => {
     setState({

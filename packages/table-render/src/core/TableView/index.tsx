@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Table, TableProps, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
-import { useStore } from '../store';
+import { useTableStore } from '../store';
 
 import { getDate, getDateTime, getMoneyType, getDateRange, isObject, isFunction, getColumnKey } from '../../utils';
 import { renderDom } from './field';
@@ -21,13 +21,13 @@ const ProTable: <RecordType extends object = any>(
   }
 
   const { doSearch, pageChangeWithRequest = true, ...otherProps }: any = props;
-  const dataSource = useStore((store) => store.dataSource);
-  const loading = useStore((store) => store.loading);
-  const pagination = useStore((store) => store.pagination);
-  const tableSize = useStore((store) => store.tableSize);
-  const columns = useStore((store) => store.columns);
-  const columnsSetting = useStore((store) => store.columnsSetting);
-  const setState = useStore((store) => store.setState);
+  const dataSource = useTableStore((store) => store.dataSource);
+  const loading = useTableStore((store) => store.loading);
+  const pagination = useTableStore((store) => store.pagination);
+  const tableSize = useTableStore((store) => store.tableSize);
+  const columns = useTableStore((store) => store.columns);
+  const columnsSetting = useTableStore((store) => store.columnsSetting);
+  const setState = useTableStore((store) => store.setState);
 
   const handleChange = ({ current, pageSize }, filters, sorter, extra) => {
     if (extra?.action === 'filter') {

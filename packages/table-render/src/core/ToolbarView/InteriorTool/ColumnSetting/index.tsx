@@ -3,7 +3,7 @@ import { Tooltip, ConfigProvider, Dropdown, Checkbox, Divider, Button } from 'an
 import { CloseOutlined, SettingOutlined, UndoOutlined } from '@ant-design/icons';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
-import { useStore } from '../../../store';
+import { useTableStore } from '../../../store';
 import { getColumnKey, translation } from '../../../../utils';
 import { ToolbarActionConfig } from '@/types';
 import Item from './item';
@@ -19,9 +19,9 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
-  const columns = useStore(store => store.columns);
-  const columnsSetting = useStore((store) => store.columnsSetting);
-  const setColumnsSetting = useStore(store => store.setColumnsSetting);
+  const columns = useTableStore(store => store.columns);
+  const columnsSetting = useTableStore((store) => store.columnsSetting);
+  const setColumnsSetting = useTableStore(store => store.setColumnsSetting);
 
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState<string | null>(null);

@@ -11,12 +11,12 @@ export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
 export const _debounce = debounce;
 
-export const getDateTime = (time: any, format: string) => {
+export const getDateTime = (time: any, format?: string) => {
   if (!time) return null;
   return dayjs(time).format(format || 'YYYY-MM-DD HH:mm:ss');
 };
 
-export const getDate = (time: any, format: string) => {
+export const getDate = (time: any, format?: string) => {
   if (!time) return null;
   return dayjs(time).format(format || 'YYYY-MM-DD');
 };

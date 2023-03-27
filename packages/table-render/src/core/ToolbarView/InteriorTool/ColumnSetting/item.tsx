@@ -1,9 +1,9 @@
 import React, { FC, useMemo, } from 'react';
 import { Checkbox, } from 'antd';
 import { HolderOutlined, PushpinOutlined, } from '@ant-design/icons';
-import { useSortable, } from '@dnd-kit/sortable';
+import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { useStore } from '../../../store';
+import { useTableStore } from '../../../store';
 import clx from 'classnames';
 import './index.less';
 import { getColumnKey } from '../../../../utils';
@@ -23,8 +23,8 @@ const Item: FC<Setting[number] & {
     id: columnKey,
   });
 
-  const columns = useStore(store => store.columns);
-  const columnsSetting = useStore(store => store.columnsSetting);
+  const columns = useTableStore(store => store.columns);
+  const columnsSetting = useTableStore(store => store.columnsSetting);
 
   const {
     isFirstOne,

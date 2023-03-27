@@ -1,15 +1,24 @@
 import { ToolbarActionConfig } from '@/types';
-import { create } from 'zustand';
+import React, { useRef } from 'react';
+import { create, StoreApi, useStore } from 'zustand';
 import { ProColumnsType } from '..';
 
 type TableRenderStoreType = {
   loading: boolean;
   api: null,
-  tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
-  /** 表格列定义 */
+  /**
+   * 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
+   */
+  tab: 0,
+  /** 
+   * 表格列定义
+   */
   columns: ProColumnsType<any>,
   dataSource: any[],
-  extraData: null, // 需要用到的 dataSource 以外的扩展返回值
+  /**
+   * 需要用到的 dataSource 以外的扩展返回值
+   */
+  extraData: null,
   extraParams: {},
   pagination: {
     current: 1,
@@ -33,12 +42,15 @@ type TableRenderStoreType = {
   setColumnsSetting: (setting: ToolbarActionConfig['columnsSettingValue']) => void;
 };
 
-export const useStore = create<TableRenderStoreType>()((set, get) => ({
+export const StoreContext = React.createContext(null);
+
+export const createStore = (defaultProps?: Partial<TableRenderStoreType>) => create<TableRenderStoreType>()((set, get) => ({
+  ...defaultProps,
   loading: false,
   api: null,
-  tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
+  tab: 0,
   dataSource: [],
-  extraData: null, // 需要用到的 dataSource 以外的扩展返回值
+  extraData: null,
   extraParams: {},
   pagination: {
     current: 1,
@@ -50,15 +62,16 @@ export const useStore = create<TableRenderStoreType>()((set, get) => ({
   columns: [],
   inited: false,
   columnsSetting: [],
-  setState: (state) => {
-    return set({ ...state })
-  },
-  getState: () => {
-    return get();
-  },
+  setState: (state) => set({ ...state }),
+  getState: () => get(),
   setColumns: (columns) => set({ columns }),
   setColumnsSetting: (setting) => set({ columnsSetting: setting }),
 }));
 
-
-
+export const useTableStore = <T>(
+  selector: (store: TableRenderStoreType) => T,
+  equalityFn?: (left: T, right: T) => boolean
+) => {
+  const store = React.useContext(StoreContext)
+  return useStore(store, selector, equalityFn)
+}

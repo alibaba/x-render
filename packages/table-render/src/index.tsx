@@ -5,6 +5,8 @@ import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import 'dayjs/locale/zh-cn';
 import locales from './locales';
+import { StoreContext, createStore } from './core/store';
+import { UseBoundStore, StoreApi } from 'zustand'
 
 import RenderCore from './core';
 import { TableRenderProps } from './types';
@@ -20,6 +22,11 @@ const TableRender = React.forwardRef((props: TableRenderProps, ref) => {
     locale = 'zh-CN',
     ...otherProps
   } = props;
+
+  const storeRef = React.useRef<UseBoundStore<StoreApi<TableRenderProps>>>();
+  if (!storeRef.current) {
+    storeRef.current = createStore();
+  }
 
   useEffect(() => {
     if (locale === 'en-US') {
@@ -45,7 +52,9 @@ const TableRender = React.forwardRef((props: TableRenderProps, ref) => {
       {...configProvider}
       locale={langPack}
     >
-      <RenderCore {...otherProps} tableRef={ref} />
+      <StoreContext.Provider value={storeRef.current}>
+        <RenderCore {...otherProps} tableRef={ref} />
+      </StoreContext.Provider>
     </ConfigProvider>
   );
 });
