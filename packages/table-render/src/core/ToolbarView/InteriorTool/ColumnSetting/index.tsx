@@ -64,9 +64,9 @@ const fixItem: (setting: Setting, fixKey: string) => Setting = (setting, fixKey)
       }
 
       if (onFirstPart) {
-        fixed = 'right'
+        fixed = 'left'
       } else {
-        fixed = 'left';
+        fixed = 'right';
       }
 
       return {
