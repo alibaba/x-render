@@ -195,6 +195,10 @@ export const getColSpan = (formCtx: any, parentCtx: any, schema: any) => {
   if (schema.cellSpan) {
     span = schema.cellSpan * span;
   }
+
+  if (schema.span) {
+    span = schema.span;
+  }
   return span;
 };
 
