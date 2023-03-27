@@ -48,7 +48,7 @@ const capitalizeFirstLetter = (str: string) => {
 
 export function getWidgetName(schema, _mapping = mapping) {
   const { type, format, enum: enums, readOnly, widget, props } = schema;
-  debugger;
+  // debugger;
   //如果已经注明了渲染widget，那最好
   if (schema['ui:widget'] || schema.widget) {
     return capitalizeFirstLetter(schema['ui:widget'] || schema.widget);

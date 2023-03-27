@@ -3,8 +3,8 @@ import { Collapse } from 'antd-mobile';
 
 export default ({ schema, addons, renderCore, ...props }) => {
   const { items } = schema;
-  debugger;
- 
+  // debugger;
+
   return (
     <Collapse defaultActiveKey={['1']} {...props}>
       {Object.keys(items).map((key: string) => {

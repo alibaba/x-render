@@ -48,11 +48,11 @@ const useForm = () => {
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
   const schemaRef = useRef({});
-  const { getFieldError, getFieldsError, getFieldInstance } = form;
+  const { getFieldError, getFieldsError } = form;
   const formRef = useRef({
     getFieldError,
     getFieldsError,
-    getFieldInstance
+    // getFieldInstance
   });
 
   const setStoreData = (data: any) => {
@@ -156,10 +156,10 @@ const useForm = () => {
     return formRef.current.getFieldsError(name);
   }
 
-  form.getFieldInstance = (path) => {
-    const name = getFieldPath(path)
-    return formRef.current.getFieldInstance(name);
-  }
+  // form.getFieldInstance = (path) => {
+  //   const name = getFieldPath(path)
+  //   return formRef.current.getFieldInstance(name);
+  // }
 
   form.getHiddenValues = () => {
     const values = form.getFieldsValue();
@@ -195,7 +195,7 @@ const useForm = () => {
     storeRef.current = store;
   }
 
-  form.scrollToPath = form.scrollToField;
+  // form.scrollToPath = form.scrollToField;
   // 老 API 兼容
   form.onItemChange = form.setValueByPath;
  

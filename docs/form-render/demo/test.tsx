@@ -113,7 +113,7 @@
 
 // //   const watch = {
 // //     '#': (value) => {
-// //       debugger;
+// //       // debugger;
 // //     }
 // //   }
 
@@ -178,7 +178,7 @@
 
 //   const watch =  {
 //     'obj.input1': () => {
-//       debugger;
+//       // debugger;
 //       form.setValueByPath('obj.input2', '2222')
 //     }
 //   }
@@ -309,28 +309,28 @@ export default () => {
   const form = useForm();
   const watch = {
     '#': (value, a) => {
-      debugger;
+      // // debugger;
     },
     "list": (a, b) => {
-     debugger;
+    //  // debugger;
     },
     "obj.obj.input1": (a, b) => {
-      debugger;
+      // debugger;
     },
     "list[].input1": (a, b) => {
-      debugger
+      // debugger
     },
     "list[].obj.input1": (a, b) => {
-      debugger
+      // debugger
     },
     "list[].obj.list": (a, b) => {
-      debugger;
+      // debugger;
     },
     "list[].obj.list[]": (a, b) => {
-      debugger;
+      // debugger;
     },
     "list[].obj.list[].input1": (a, b) => {
-      debugger;
+      // debugger;
     }
   }
 

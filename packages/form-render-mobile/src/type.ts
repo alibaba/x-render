@@ -1,7 +1,9 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
-import type { FormInstance as AntdFormInstance, FormProps as AntdFormProps } from 'antd-mobile';
+import type { FormProps as AntdFormProps } from 'antd-mobile';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
+
+type AntdFormInstance = AntdFormProps['form']
 
 export type { RuleItem } from 'async-validator';
 export type SchemaType =
@@ -172,7 +174,7 @@ export interface FormInstance extends AntdFormInstance {
   /**
    * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
    */
-  scrollToPath: FormInstance['scrollToField'];
+  // scrollToPath: FormInstance['scrollToField'];
   /**
  * @deprecated 即将弃用，请勿使用此api，使用setValueByPath
  */
@@ -278,10 +280,10 @@ export interface FRProps extends AntdFormProps {
    * 对象组件是否折叠（全局的控制）
    */
   allCollapsed?: boolean;
-   /** 
-   * 表单全局配置
-   */
-   globalConfig?: GlobalConfig;
+  /** 
+  * 表单全局配置
+  */
+  globalConfig?: GlobalConfig;
   /** 
    * 表单的全局共享属性
    */
@@ -345,7 +347,7 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   afterSearch?: (params: any) => any;
   widgets?: any;
   form?: any;
-  [key:string]: any
+  [key: string]: any
 }
 
 
