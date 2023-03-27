@@ -239,7 +239,7 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
                 size="small"
                 onClick={onReset}
               >
-                重置
+                {t('reset')}
               </Button>
             </div>
             <Divider style={{ margin: 0 }} />
