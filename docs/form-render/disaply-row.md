@@ -22,18 +22,15 @@ const schema = {
       title: '输入框',
       type: 'string',
       props: {},
-      span: 8,
     },
     number1: {
       title: '数字输入框',
       type: 'number',
-      span: 8,
     },
     switch1: {
       title: '是否选择',
       type: 'boolean',
       widget: 'switch',
-      span: 8,
     },
     select1: {
       title: '下拉单选',
