@@ -5,7 +5,7 @@ import FullScreenIcon from './FullScreenIcon';
 import ReloadIcon from './ReloadIcon';
 import ColumnSetting from './ColumnSetting';
 import { ToolbarActionConfig } from '@/types';
-import defaults from 'lodash/defaults';
+import defaults from 'lodash.defaults';
 
 const defaultConfig: ToolbarActionConfig = {
   enabled: ['all']
