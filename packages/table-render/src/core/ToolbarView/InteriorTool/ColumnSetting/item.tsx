@@ -5,13 +5,11 @@ import { useSortable, } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { useStore } from '../../../store';
 import clx from 'classnames';
-import { ToolbarActionConfig } from '@/types';
 import './index.less';
-import { getStatus } from '.';
 import { getColumnKey } from '../../../../utils';
+import { getStatus, Setting } from './utils';
 
 const prefix = 'tr-toolbar-column-setting-item';
-type Setting = ToolbarActionConfig['columnsSettingValue'];
 
 const Item: FC<Setting[number] & {
   columnKey: string,
