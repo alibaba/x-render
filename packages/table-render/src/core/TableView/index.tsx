@@ -1,11 +1,11 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useMemo } from 'react';
 import { Table, TableProps, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
 import { useStore } from '../store';
 
-import { getDate, getDateTime, getMoneyType, getDateRange, isObject, isFunction } from '../../utils';
+import { getDate, getDateTime, getMoneyType, getDateRange, isObject, isFunction, getColumnKey } from '../../utils';
 import { renderDom } from './field';
-import { ColumnsSettingValueType, ProColumnsType, TablePropsC, ToolbarActionConfig } from '../../types';
+import { ColumnsSettingValueType } from '../../types';
 
 const ProTable: <RecordType extends object = any>(
   props: TableProps<RecordType> & {
@@ -118,7 +118,7 @@ const ProTable: <RecordType extends object = any>(
     return columnsSetting
       .filter(i => !i.hidden)
       .map(i => {
-        const column = proColumns.find(j => j.key === i.key);
+        const column = proColumns.find((j, jIndex) => getColumnKey(j, jIndex) === i.key);
         if (column) {
           return {
             ...column,

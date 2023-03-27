@@ -1,4 +1,5 @@
 import { TableProps } from 'antd';
+import type { TableColumnType } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { FRProps } from 'form-render';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
@@ -42,7 +43,8 @@ export interface TableContext<RecordType> {
 }
 
 export type ProColumnsType<T extends object = any> = Array<
-  ColumnsType<T>[number] & {
+  TableColumnType<T> & {
+    dataIndex?: string;
     /** 是否支持复制 */
     copyable?: boolean;
     /** 值的类型 */

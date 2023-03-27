@@ -8,6 +8,7 @@ import clx from 'classnames';
 import { ToolbarActionConfig } from '@/types';
 import './index.less';
 import { getStatus } from '.';
+import { getColumnKey } from '../../../../utils';
 
 const prefix = 'tr-toolbar-column-setting-item';
 type Setting = ToolbarActionConfig['columnsSettingValue'];
@@ -47,7 +48,7 @@ const Item: FC<Setting[number] & {
   };
 
   // TODO 测试下函数的场景
-  const title = columns.find(i => i.key === columnKey).title;
+  const title = columns.find((i, index) => getColumnKey(i, index) === columnKey).title;
   const label = useMemo(() => typeof title === 'function' ? title({}) : title, [title]);
 
   /** 取消固定当前项 */

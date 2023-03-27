@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Tooltip, ConfigProvider, Dropdown, Checkbox, Divider, Button } from 'antd';
 import { CloseOutlined, SettingOutlined, UndoOutlined } from '@ant-design/icons';
-import { translation } from '../../../../utils';
+import { getColumnKey, translation } from '../../../../utils';
 import { DndContext, DragOverlay } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
 import { useStore } from '../../../store';
-import { ToolbarActionConfig } from '@/types';
+import { ProColumnsType, ToolbarActionConfig } from '@/types';
 import Item from './item';
 import omit from 'lodash.omit';
 import './index.less';
@@ -130,8 +130,8 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
   }, [open, columns])
 
   const init = () => {
-    const initSetting = columns.map((i) => ({
-      key: String(i.key),
+    const initSetting = columns.map((i, index) => ({
+      key: getColumnKey(i, index),
       hidden: false,
     }))
     handleChange(initSetting);
