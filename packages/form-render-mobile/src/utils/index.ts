@@ -103,7 +103,7 @@ export const valueRemoveUndefined = (values: any) => {
       return item;
     });
 
-    // 数组会变成对象，感觉 underfined 不能剔除，会影响顺序
+    // 数组会变成对象，感觉 undefined 不能剔除，会影响顺序
     // result = omitBy(result, isUndefined);
 
     if (Object.keys(result).length === 0) {
