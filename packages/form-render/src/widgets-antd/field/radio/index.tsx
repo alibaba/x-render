@@ -8,15 +8,15 @@ interface Option {
 }
 
 interface Props {
-  direction: 'vertical' | 'horizontal',
-  options: string[] | number[] | Option[]
+  direction: 'row' | 'column',
+  options: Option[]
   [key: string]: any
 }
 
 export default (props: Props) => {
-  const { direction = 'horizontal', options = [], ...rest } = props
+  const { direction = 'row', options = [], ...rest } = props
 
-  if (direction === 'vertical') {
+  if (direction === 'column') {
     return <Radio.Group {...rest} >
       <Space direction='vertical'>
         {
