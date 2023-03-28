@@ -171,7 +171,14 @@ const SearchForm: <RecordType extends object = any>(
         onFinishFailed={handleFinishFailed}
         form={form}
         operateExtra={operateShow && (
-          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight, 'search-action-column': isColumn })} style={{ minWidth: (1/column)*100 + '%' }}>
+          <Col 
+            className={classnames('search-action-col', { 
+                'search-action-fixed': limitHeight,
+                'search-action-column': isColumn,
+                'search-action-column-fixed': limitHeight && isColumn,
+            })} 
+            style={{ minWidth: (1/column)*100 + '%' }}
+          >
             <ActionView {...actionProps} setLimitHeight={setLimitHeight} retainBtn={retainBtn} mode={mode} />
           </Col>
         )}
