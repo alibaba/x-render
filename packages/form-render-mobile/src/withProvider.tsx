@@ -12,8 +12,9 @@ import { createStore } from './models/store';
 import { FRContext, ConfigContext } from './models/context';
 import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
 import * as defaultWidgets from './widgets';
+import { FRProps } from './type';
 
-export default function withProvider<T>(Element: React.ComponentType<T>) : React.ComponentType<T> {
+export default function withProvider<T>(Element: React.ComponentType<T>): React.FC<FRProps> {
   return (props: any) => {
 
     const {
@@ -23,14 +24,14 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       methods,
       form,
       validateMessages,
-      globalProps={},
+      globalProps = {},
       globalConfig = {},
       ...otherProps
     } = props;
-  
+
     const storeRef = useRef(createStore());
     const store: any = storeRef.current;
-  
+
     useEffect(() => {
       if (locale === 'en-US') {
         dayjs.locale('en');
@@ -42,15 +43,15 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
     useUnmount(() => {
       form.resetFields();
     });
-  
+
     if (!form) {
       console.warn('Please provide a form instance to FormRender');
       return null;
     }
-  
+
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
     const formValidateMessages = locale === 'zh-CN' ? validateMessagesCN : validateMessagesEN;
-   
+
     const configContext = {
       locale,
       widgets: { ...defaultWidgets, ...widgets },
@@ -59,8 +60,8 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       globalProps,
       globalConfig
     };
-  
-    const langPack: any = { 
+
+    const langPack: any = {
       ...antdLocale,
       "FormRender": locales[locale],
       ...configProvider?.locale
