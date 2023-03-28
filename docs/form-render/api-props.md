@@ -10,7 +10,7 @@ group:
 
 ## Props
 
-| 参数             | 说明                                                                                     | 类型                                                                                                  | 默认值 |
+| <div style="width:200px">参数</div>          | 说明                                                                                     | 类型                                                                                                  | <div style="width:100px">默认值</div> |
 | ---------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------ |
 | schema           | **必填**，描述表单的 schema，详见 [schema 规范](/form-render/api-schema)                              | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16) | -      |
 | form             | **必填**，`useForm` 创建的表单实例，与 Form 一对一绑定，详见[Forminstance](#forminstance) | `FormInstance`                                                                                        | -      |
@@ -41,7 +41,7 @@ group:
 
 ## FormInstance
 
-| 参数              | 描述                                                                                                                  | 类型                                                                                                                |
+| <div style="width:200px">参数</div>              | 描述                                                                                                                  | 类型                                                                                                                |
 | ----------------- | --------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | submit            | 触发提交流程，一般在提交按钮上使用                                                                                    | `() => void`                                                                                                        |
 | resetFields       | 清空表单（也会清空一些内置状态，例如校验）                                                                            | `({formData?: any, submitData?: any, errorFields?: Error[], touchedKeys?: string[], allTouched?: boolean}) => void` |
@@ -54,7 +54,6 @@ group:
 | getValues         | 获取表单内部维护的数据, 如果参数为空则返回当前所有数据                                                                | `(nameList?: Path[], filterFunc?: (meta: { touched: boolean, validating: boolean }) => boolean) => any`             |
 | getHiddenValues   | 获取隐藏的表单数据                                                                                                    | `() => any`                                                                                                         |
 | schema            | 表单的 schema                                                                                                         | `object`                                                                                                            |
-| touchedKeys       | 已经触碰过的 field 的数据路径                                                                                         | `Path[]`                                                                                                            |
 | removeErrorField  | 外部手动删除某一个 path 下所有的校验信息                                                                              | `(path: Path) => void`                                                                                              |                                                                                    |
 | isFieldTouched    | 检查某个表单是否被用户操作过                                                                                          | `(name: Path) => boolean`                                                                                           |
 | isFieldsTouched   | 检查一组字段 fields 是否被用户操作过, allTouched 为 true 是检查是否所有字段都被操作过                                 | `(nameList?: Path[], allTouched?: boolean) => boolean`                                                              |
