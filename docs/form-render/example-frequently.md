@@ -310,7 +310,7 @@ export default () => {
   const beforeFinish = ({ data, schema }) => {
     return fakeApi('xxx/validation').then(_ => {
       if (data.select1) {
-        return [{ name: 'select1', erros: []}];
+        return [{ name: 'select1', error: []}];
       }
       return [{ name: 'select1', error: ['外部校验错误, 请进行选择'] }];
     });
