@@ -6,7 +6,7 @@ title: 开始使用
 
 <div style="display:flex;align-items:center;margin-bottom:24px">
   <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="48px"/>
-  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">FormRender</span>
+  <h4 style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">FormRender Mobile</h4>
 </div>
 <p style="display:flex;justify-content:space-between;width:440px">
   <a href="https://www.npmjs.com/package/form-render?_blank">
@@ -23,184 +23,20 @@ title: 开始使用
   </a>
 </p>
 
-中后台表单解决方案，通过 JsonSchema 协议渲染表单
 
+
+
+## ✨ 简介
+
+FormRender Mobile 是为移动端设置的开箱即用的表单解决方案，通过 JsonSchema 协议动态渲染表单。基于 [FormRender2.0](https://xrender.fun/form-render) 和 [Ant Design Mobile](https://mobile.ant.design/zh/components/form/) 实现。API 与 FormRender2.0 基本一致，如果你熟悉 FromRender2.0 那么你就已经会使用 FormRender Mobile 了。
+
+## ⚙️ 安装
+
+FormRender Mobile 依赖 Ant Design Mobile，单独使用不要忘记同时安装 `antd-mobile`
 
 ```shell
-npm i form-render --save
-```
-## 使用方式
-
-**基础**
-
-使用 `useForm` hooks 创建 form 实例。
-```jsx
-/**
- * transform: true
- * defaultShowCode: true
- * background: 'rgb(245,245,245)'
- */
-import React from 'react';
-import { Button } from 'antd';
-import FormRender, { useForm } from 'form-render-mobile';
-
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    input: {
-      title: '输入框',
-      type: 'string',
-      widget: 'input'
-    },
-    textarea: {
-      title: '长文本',
-      type: 'string',
-      widget: 'textArea'
-    },
-    slider: {
-      title: '滑动条',
-      type: 'string',
-      widget: 'slider'
-    },
-    switch: {
-      title: '开关',
-      type: 'bool',
-      widget: 'switch'
-    },
-    stepper: {
-      title: '步进器',
-      type: 'number',
-      widget: 'stepper'
-    },
-    rate: {
-      title: '评分',
-      type: 'string',
-      widget: 'rate'
-    },
-    selector: {
-      title: '选择组',
-      type: 'string',
-      widget: 'selector',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' }
-        ]
-      }
-    },
-    radio: {
-      title: '单选',
-      type: 'string',
-      widget: 'radio',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' }
-        ]
-      }
-    }
-  }
-};
-
-export default () => {
-  const form = useForm();
-
-  const onFinish = (formData) => {
-    console.log('formData:', formData);
-  };
-
-  return (
-    <>
-      <FormRender 
-        form={form} 
-        schema={schema} 
-        onFinish={onFinish} 
-        fieldCol={8}
-      />
-    </>
-  );
-}
+npm i form-render-mobile --save
 ```
 
-
-
-**复杂**
-
-使用 `useForm` hooks 创建 form 实例。
-```jsx
-/**
- * transform: true
- * defaultShowCode: true
- * background: 'rgb(245,245,245)'
- */
-import React from 'react';
-import { Button } from 'antd';
-import FormRender, { useForm } from 'form-render-mobile';
-
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    list: {
-      title: '对象数组',
-      type: 'array',
-      items: {
-        type: 'object',
-        widget: 'Card',
-        title: '联系人',
-        properties: {
-          input: {
-            title: '输入框',
-            type: 'string',
-            widget: 'input'
-          },
-          slider: {
-            title: '滑动条',
-            type: 'string',
-            widget: 'slider'
-          },
-          switch: {
-            title: '开关',
-            type: 'bool',
-            widget: 'switch'
-          },
-          stepper: {
-            title: '步进器',
-            type: 'number',
-            widget: 'stepper'
-          },
-          rate: {
-            title: '评分',
-            type: 'string',
-            widget: 'rate'
-          },
-        }
-      }
-    }
-  }
-};
-
-export default () => {
-  const form = useForm();
-
-  const onFinish = (formData) => {
-    console.log('formData:', formData);
-  };
-
-  return (
-    <>
-      <FormRender 
-        form={form} 
-        schema={schema} 
-        onFinish={onFinish} 
-        fieldCol={8}
-      />
-    </>
-  );
-}
-```
-
-
+## 🚀 快速上手
+<code src="./demo/basic.tsx"></code>
