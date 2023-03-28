@@ -44,7 +44,7 @@ const SearchForm: <RecordType extends object = any>(
     style = {},
     className,
     mode,
-    layoutAuto={},
+    layoutAuto=false,
     form,
     hidden,
     loading,

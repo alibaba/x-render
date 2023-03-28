@@ -32,7 +32,7 @@ group:
 | defaultCollapsed    | 折叠收起                               | `boolean`          |  true   |
 | loading             | 查询按钮加载中                          | `boolean`          |  -    |
 | column              | 一行多列                               | `number`           |  4    |
-| layoutAuto            | 自适应布局，可设置为 true / false 或对象：{ fieldMinWidth: `number` }， 当设置fieldMinWidth 会根据最小宽度动态自适应                         | `boolean` or `object`         |  `true `   |
+| layoutAuto            | 自适应布局，可设置为 true / false 或对象：{ fieldMinWidth: `number` }， 当设置fieldMinWidth 会根据最小宽度动态自适应                         | `boolean` or `object`         |  `false `   |
 | onSearch           | 在表格查询时执行一些额外的操作                                                        | `(params) => void`                             | -       |
 | afterSearch        | 在表格查询结束后执行一些额外的操作                                                    | `(params) => void`                             | -       |
 | searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                  | `boolean`                              | true  | 
