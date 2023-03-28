@@ -1,3 +1,4 @@
+
 export const createIframeContent = () => {
   const html = `
     <html>
@@ -7,7 +8,7 @@ export const createIframeContent = () => {
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>阿里低代码引擎 Demo</title>
         <link rel="icon" href="//img.alicdn.com/imgextra/i2/O1CN01lNWGJi1xflgRfSgbk_!!6000000006471-55-tps-22-26.svg">
-       
+        <link href="https://dev.g.alicdn.com/fone-lowcode/fr-generator/1.0.0/css/index.css" rel="stylesheet" />
         <!-- 低代码引擎的页面主题样式，可以替换为 theme-lowcode-dark -->
         <link href="https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/variables.css" rel="stylesheet" />
         <link href="https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/dist/next.var.min.css" rel="stylesheet" />
@@ -43,6 +44,8 @@ export const createIframeContent = () => {
       </head>
 
       <body>
+        <div id="lce-container"></div>
+        <script type="text/javascript" src="https://dev.g.alicdn.com/fone-lowcode/fr-generator/1.0.0/js/index.js"></script>
       </body>
     </html>
   `;
@@ -51,6 +54,9 @@ export const createIframeContent = () => {
 
 const createIrame = () => {
   const iframe = document.createElement('iframe');
+  iframe.width = '100%';
+  iframe.height = '100%';
+  iframe.frameBorder = '0';
   iframe.srcdoc = createIframeContent();
   return iframe;
 };

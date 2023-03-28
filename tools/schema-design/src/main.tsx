@@ -1,30 +1,19 @@
 import React, { useEffect, useRef } from "react";
 import ReactDOM from 'react-dom';
 
-import createDesignIframe, { createIframeContent } from './utils/createDesignIframe';
-import Design from './design'
+import createIframe from './utils/createDesignIframe';
+
 
 
 export default () => {
   const containerRef: any = useRef();
 
   useEffect(() => {
-    const iframe = createDesignIframe();
+    const iframe = createIframe();
     containerRef.current.appendChild(iframe);
-
-    iframe.addEventListener('load', () => {
-      const container = document.createElement('div');
-
-      if (!iframe.contentDocument) {
-        return;
-      }
-
-      iframe.contentDocument.body.appendChild(container);
-      ReactDOM.render(<Design />, container);
-    });
   }, []);
 
   return (
-    <div ref={containerRef} />
+    <div ref={containerRef} style={{ width: '100%', height: '100%'}}/>
   );
 }
