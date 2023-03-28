@@ -14,15 +14,14 @@ const Demo = () => {
   const columns: ProColumnsType<any> = [
     {
       title: '酒店名称',
+      // dataIndex 唯一时，可以省略 key
       dataIndex: 'title',
-      key: 'title', // 使用表格列设置功能，必须指定 key 或 dataIndex 的值
       valueType: 'text',
       width: '20%'
     },
     {
       title: '酒店地址',
       dataIndex: 'address',
-      key: 'address',
       ellipsis: true,
       copyable: true,
       valueType: 'text',
@@ -35,25 +34,21 @@ const Demo = () => {
         closed: '已打烊',
       },
       dataIndex: 'state',
-      key: 'state',
     },
     {
       title: '酒店星级',
       dataIndex: 'labels',
-      key: 'labels',
       width: 90,
       valueType: 'tags'
     },
     {
       title: '酒店GMV',
-      key: 'money',
       sorter: true,
       dataIndex: 'money',
       valueType: 'money',
     },
     {
       title: '成立时间',
-      key: 'created_at',
       dataIndex: 'created_at',
       valueType: 'date',
     },
