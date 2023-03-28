@@ -35,7 +35,7 @@ const Navigation: React.FC = () => {
           icon: <CodeOutlined />,
         },
         {
-          label: <Link to="/design">design</Link>,
+          label: <Link to="/design" target="_blank">design</Link>,
           key: 'design',
           icon: <HighlightOutlined />,
         },
