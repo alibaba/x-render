@@ -52,9 +52,8 @@ const useForm = () => {
   const formRef = useRef({
     getFieldError,
     getFieldsError,
-    // getFieldInstance
   });
-
+  
   const setStoreData = (data: any) => {
     const { setState } = storeRef.current;
     if (!setState) {
@@ -66,7 +65,6 @@ const useForm = () => {
   };
 
   const handleSchemaUpdate = (newSchema: any) => {
-    // form.__schema = Object.freeze(newSchema);
     flattenSchemaRef.current = flatten(newSchema) || {};
     schemaRef.current = newSchema;
     setStoreData({ schema: newSchema, flattenSchema: flattenSchemaRef.current });
@@ -156,11 +154,6 @@ const useForm = () => {
     return formRef.current.getFieldsError(name);
   }
 
-  // form.getFieldInstance = (path) => {
-  //   const name = getFieldPath(path)
-  //   return formRef.current.getFieldInstance(name);
-  // }
-
   form.getHiddenValues = () => {
     const values = form.getFieldsValue();
     const allValues = form.getFieldsValue(true);
@@ -194,10 +187,6 @@ const useForm = () => {
   form.__initStore = (store: any) => {
     storeRef.current = store;
   }
-
-  // form.scrollToPath = form.scrollToField;
-  // 老 API 兼容
-  form.onItemChange = form.setValueByPath;
  
   return form;
 };

@@ -172,13 +172,8 @@ export interface FormInstance extends AntdFormInstance {
    */
   setValues: FormInstance['setFieldsValue'];
   /**
-   * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
+   * 获取表单 schema
    */
-  // scrollToPath: FormInstance['scrollToField'];
-  /**
- * @deprecated 即将弃用，请勿使用此api，使用setValueByPath
- */
-  onItemChange: FormInstance['setFieldValue'];
   getSchema: () => any;
 }
 
