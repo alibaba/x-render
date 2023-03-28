@@ -1,12 +1,16 @@
 /**
  * Created by Tw93 on 2019-12-07.
- * 滑动输入组件
+ * 多选框组件
  */
-
-import { Checkbox } from 'antd';
 import React from 'react';
+import { Checkbox } from 'antd';
 
-const SliderWithNumber = ({
+interface Props {
+  title: string;
+  [key: string]: any;
+}
+
+const CheckBox: React.FC<Props> = ({
   title,
   ...rest
 }) => {
@@ -19,4 +23,5 @@ const SliderWithNumber = ({
   );
 }
 
-export default SliderWithNumber;
+export default CheckBox;
+

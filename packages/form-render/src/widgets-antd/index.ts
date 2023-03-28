@@ -21,7 +21,7 @@ export { default as UrlInput } from './field/urlInput';
 export { default as Slider } from './field/slider';
 export { default as Upload } from './field/upload';
 export { default as ReadOnly } from './field/readOnly';
-
+export { default as PercentSlider } from './field/percentSlider';
 
 export { default as Card } from './container/Boxcard';
 export { default as Collapse } from './container/BoxCollapse';
