@@ -112,3 +112,12 @@ export default () => {
     </div>
   );
 }
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      onFinish={onFinish}
+    />
+  );
+}
