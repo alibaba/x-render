@@ -41,6 +41,23 @@ export const createIframeContent = () => {
             'padding: 2px 1px; border-radius: 0 3px 3px 0; color: #fff; background: #42c02e; font-weight: bold;',
           );
         </script>
+        
+        <script>
+        // 监听消息事件
+          window.addEventListener('message', event => {
+            debugger;
+            // 判断消息来源是否正确
+
+            window.__FR_ENGINE__.init();
+
+
+            if (event.origin === 'https://www.example.com') {
+              // 处理接收到的消息
+              console.log('Received message from parent:', event.data);
+            }
+          });
+        </script>
+
       </head>
 
       <body>
