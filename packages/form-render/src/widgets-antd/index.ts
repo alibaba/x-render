@@ -5,6 +5,7 @@ export { default as TextArea } from './field/textArea';
 export { default as Select } from './field/select';
 export { default as MultiSelect } from './field/select';
 export { default as Switch } from './field/switch';
+export { default as Radio } from './field/radio';
 export { default as Rate } from './field/rate';
 export { default as TreeSelect } from './field/treeSelect';
 export { default as CheckBox } from './field/checkbox';
