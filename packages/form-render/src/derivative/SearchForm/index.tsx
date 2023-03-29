@@ -152,7 +152,7 @@ const SearchForm: <RecordType extends object = any>(
   
   return (
     <div
-      className={classnames('fr-search', { [className || '']: !!className })}
+      className={classnames('fr-search', { [className || '']: !!className,  'fr-column-search': isColumn })}
       style={{
         ...style,
         height: getSearchHeight(limitHeight, isColumn)
