@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { FormProps as AntdFormProps } from 'antd-mobile';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
 
-type AntdFormInstance = AntdFormProps['form']
+type AntdFormInstance = Exclude<AntdFormProps['form'], undefined>
 
 export type { RuleItem } from 'async-validator';
 export type SchemaType =
