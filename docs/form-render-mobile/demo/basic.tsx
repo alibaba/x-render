@@ -1,16 +1,15 @@
 import React from 'react';
+import { Button, Dialog } from 'antd-mobile';
 import FormRender, { useForm } from 'form-render-mobile';
 
 const schema = {
   type: 'object',
-  // displayType: 'row',
   properties: {
     input: {
       title: '输入框',
       type: 'string',
       widget: 'input',
       required: true,
-      max: 3,
     },
     textarea: {
       title: '长文本',
@@ -69,7 +68,9 @@ export default () => {
   const form = useForm();
 
   const onFinish = (formData) => {
-    console.log('formData:', formData);
+    Dialog.alert({
+      content: <pre>{JSON.stringify(formData, null, 2)}</pre>,
+    })
   };
 
   return (
@@ -77,6 +78,11 @@ export default () => {
       schema={schema}
       form={form}
       onFinish={onFinish}
+      footer={
+        <Button block type='submit' color='primary' size='large'>
+          提交
+        </Button>
+      }
     />
   );
 }
