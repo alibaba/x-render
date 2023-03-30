@@ -1,50 +1,59 @@
-import React, { useEffect, useRef } from "react";
-import createIframe from './utils/createDesignIframe';
+import React, { useEffect, useRef } from 'react';
 
-import * as settings from "./settings";
-
+import createIframe from './createIframe';
 import * as defaultWidgets from './widgets';
+import * as defaultSettings from './settings';
 
-export default () => {
+import getAssets from './assets';
+
+interface IProps {
+  widgets: any
+  settings: any
+}
+
+let iframe: any;
+
+const Design = (props: IProps) => {
+  const { widgets, settings } = props;
   const containerRef: any = useRef();
 
   useEffect(() => {
-    const iframe = createIframe();
-    containerRef.current.appendChild(iframe);
+    initIframe();
 
-    iframe.addEventListener('load', () => {
-      const iframeWindow: any = iframe.contentWindow;
-      iframeWindow.postMessage('Hello from parent!');
-    });
-
-    window.addEventListener('message', event => {
-      if (event.data.type !== 'engine-load') {
-       return;
-      }
-
-      const xx: any = [];
-      Object.keys(settings).forEach((key) => {
-        xx.push(settings[key])
-      });
-
-      debugger;
-
-      iframe.contentWindow.getFormRenderMaterial = () => {
-        debugger;
-      }
-
-      iframe.contentWindow.__FR_ENGINE__.init({
-        settings: xx,
-        widgets: defaultWidgets, 
-        logo: {
-          title: 'FormRender'
-        }
-
-      });
-    });
+    window.addEventListener('message', engineOnLoad);
+    return () => {
+      window.removeEventListener('message', engineOnLoad);
+    }
   }, []);
 
+  const initIframe = () => {
+    iframe = createIframe();
+    containerRef.current.appendChild(iframe);
+  }
+
+  const engineOnLoad = (event: any) => {
+    if (event.data.type !== 'engine-load') {
+      return;
+    }
+
+    const assets = getAssets({ ...defaultSettings, ... settings })
+
+    iframe?.contentWindow?.__FR_ENGINE__?.init({
+      assets,
+      widgets: {
+        ...defaultWidgets,
+        ...widgets
+      },
+      logo: {
+        title: 'FormRender'
+      }
+    });
+  };
+
+
   return (
-    <div ref={containerRef} style={{ width: '100%', height: '100%'}}/>
+    <div ref={containerRef} style={{ width: '100%', height: '100%'}} />
   );
 }
+
+export default Design;
