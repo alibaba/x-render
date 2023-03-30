@@ -4,7 +4,7 @@ import BoxPanel from '../../hoc/components/PanelView'
 
 import './index.less';
 
-const BoxCard = ({ children, title, description }) => {
+const BoxCard = ({ children, title, description }: any) => {
   if (!title) {
     return (
       <BoxPanel>

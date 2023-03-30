@@ -20,7 +20,7 @@ function convertProps(
  * 简单包装，不做任何处理
  * 部分组件ref比较特殊，包一层会解决这个问题
  */
-export function withWrap(Comp: ComponentType<any>) {
+export function withWrap(Comp: any) {
   return (props: any) => {
     return <Comp {...props} />;
   };
@@ -31,7 +31,7 @@ export function withWrap(Comp: ComponentType<any>) {
  * 需要做处理避免报错
  */
 export function withSingleChild(
-  Comp: ComponentType<any>,
+  Comp: any,
   needsConvert = ['children'],
 ) {
   return (props: any) => {
@@ -47,7 +47,7 @@ export function withSingleChild(
   };
 }
 
-export function withSingleFunctionChild(Comp: ComponentType<any>) {
+export function withSingleFunctionChild(Comp: any) {
   return (props: any) => {
     const { children } = props;
 
@@ -74,7 +74,7 @@ export function withSingleFunctionChild(Comp: ComponentType<any>) {
  * moment对象在序列化后会被转为字符串
  * 需要让日期类组件支持接受字符串值
  */
-export function withMomentProps(Comp: ComponentType<any>, needsConvert = ['value', 'defaultValue']) {
+export function withMomentProps(Comp: any, needsConvert = ['value', 'defaultValue']) {
   return (props: any) => {
     const convertedProps = convertProps(props, needsConvert, prop => {
       if (prop) {

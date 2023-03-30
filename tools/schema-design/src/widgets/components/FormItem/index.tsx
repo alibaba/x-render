@@ -13,7 +13,7 @@ const FormItem: React.FC = (props: any) => {
   }));
 }
 
-export default withFormItemHoc(FormItem, { maxWidthAuto: true, isContainer: true });
+export default withFormItemHoc(FormItem);
 
 
 
