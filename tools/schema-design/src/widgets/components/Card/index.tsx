@@ -5,13 +5,19 @@ import BoxPanel from '../../hoc/components/PanelView'
 import './index.less';
 
 const BoxCard = ({ children, title, description }) => {
+
+
+  const iframe = document.getElementsByTagName('iframe')[0];
+
+  const des = iframe.contentWindow.React === React;
+  debugger;
+
+
   if (!title) {
     return (
-      <BoxPanel>
-        <Row>
-          {children}
-        </Row>
-      </BoxPanel>
+      <Row>
+      {children}
+    </Row>
     )
   }
  

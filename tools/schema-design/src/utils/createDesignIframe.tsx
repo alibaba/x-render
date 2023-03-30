@@ -16,11 +16,11 @@ export const createIframeContent = () => {
         <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.3-beta.4/dist/css/engine-core.css" />
         <!-- 低代码引擎官方扩展的样式 -->
         <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/css/engine-ext.css" />
-
+        
         <!-- React，可替换为 production 包 -->
-        <script src="https://g.alicdn.com/code/lib/react/16.14.0/umd/react.production.min.js"></script>
+        <script src="https://g.alicdn.com/code/lib/react/18.2.0/umd/react.production.min.js"></script>
         <!-- React DOM，可替换为 production 包 -->
-        <script src="https://g.alicdn.com/code/lib/react-dom/16.14.0/umd/react-dom.production.min.js"></script>
+        <script src="https://g.alicdn.com/code/lib/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
         <!-- React 向下兼容，预防物料层的依赖 -->
         <script src="https://g.alicdn.com/code/lib/prop-types/15.7.2/prop-types.js"></script>
         <script src="https://g.alicdn.com/platform/c/react15-polyfill/0.0.1/dist/index.js"></script>
