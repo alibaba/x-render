@@ -1,9 +1,13 @@
 {
   "name": "fr-design",
-  "version": "1.0.0",
-  "main": "dist/index.js",
-  "module": "dist/index.esm.js",
-  "typings": "dist/index.d.ts",
+  "version": "1.0.0-beta.5",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
   "scripts": {
     "beta": "npm publish --tag beta",
     "build": "father-build",
