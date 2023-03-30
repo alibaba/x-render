@@ -34,30 +34,6 @@ export const createIframeContent = () => {
         <script crossorigin="anonymous" src="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.3-beta.4/dist/js/engine-core.js"></script>
         <!-- 低代码引擎官方扩展的主包 -->
         <script crossorigin="anonymous" src="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/js/engine-ext.js"></script>
-        <script>
-          console.log(
-            '%c AliLowCodeEngineDemo %c v<%= version %> ',
-            'padding: 2px 1px; border-radius: 3px 0 0 3px; color: #fff; background: #b37feb; font-weight: bold;',
-            'padding: 2px 1px; border-radius: 0 3px 3px 0; color: #fff; background: #42c02e; font-weight: bold;',
-          );
-        </script>
-        
-        <script>
-        // 监听消息事件
-          window.addEventListener('message', event => {
-            debugger;
-            // 判断消息来源是否正确
-
-            window.__FR_ENGINE__.init();
-
-
-            if (event.origin === 'https://www.example.com') {
-              // 处理接收到的消息
-              console.log('Received message from parent:', event.data);
-            }
-          });
-        </script>
-
       </head>
 
       <body>
