@@ -1,23 +1,49 @@
-import React, { Component, createRef } from 'react';
-import Main from './main';
-import './index.less';
+import React from 'react';
+import { Form, Row } from 'antd';
+import FormContext from '../../utils/context';
 
-class ProForm extends Component<any, any> {
-  formRef = createRef<any>();
-  submitTypeRef = createRef<any>();
-
- 
-
-
-  render() {
-    return (
-      <Main
-      {...this.props}
-      formRef={this.formRef}
-      submitTypeRef={this.submitTypeRef}
-    />
-    )
-  }
+const layoutMap: any = {
+  column: 'vertical',
+  row: 'horizontal',
+  inline: 'inline'
 }
 
-export default ProForm;
+export default (props: any) => {
+  const { children, displayType='column', ...otherProps } = props;
+
+  const {
+    labelWidth,
+    labelCol,
+    fieldCol,
+    column,
+    maxWidth,
+    formRef,
+  } = props;
+
+  const context = {
+    displayType,
+    column,
+    labelWidth,
+    maxWidth,
+    labelCol,
+    fieldCol,
+    getForm: () => {
+      return formRef;
+    }
+  };
+
+  return (
+    <FormContext.Provider value={context}>
+      <Form
+        labelWrap={true}
+        className='form-design'
+        layout={layoutMap[displayType]}
+        {...otherProps}
+      >
+        <Row gutter={24}>
+          {children}
+        </Row>
+      </Form>
+    </FormContext.Provider>
+  );
+}
