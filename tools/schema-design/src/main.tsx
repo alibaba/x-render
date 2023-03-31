@@ -45,7 +45,7 @@ const Design = (props: IProps) => {
         ...widgets
       },
       logo: {
-        title: 'FormRender'
+        title: 'XRender'
       }
     });
   };

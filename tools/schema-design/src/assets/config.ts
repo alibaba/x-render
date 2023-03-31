@@ -52,17 +52,6 @@ export default {
     }
   ],
   "components": [
-    {
-      "exportName": "AliFormRenderMaterialMeta",
-      "npm": {
-        "package": "@ali/form-render-material",
-        "version": "1.0.0"
-      },
-      "url": "https://dev.g.alicdn.com/code/npm/@ali/form-render-material/1.0.0/lowcode/meta.js",
-      "urls": {
-        "default": "https://dev.alicdn.com/code/npm/@ali/form-render-material/1.0.0/lowcode/meta.js"
-      }
-    }
     
   ],
   "sort": {

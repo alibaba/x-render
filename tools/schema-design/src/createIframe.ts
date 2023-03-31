@@ -15,7 +15,8 @@ const createIframeContent = () => {
         <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.3-beta.4/dist/css/engine-core.css" />
         <!-- 低代码引擎官方扩展的样式 -->
         <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/css/engine-ext.css" />
-        
+        <link rel="stylesheet" href="https://dev.g.alicdn.com/fone-lowcode/fr-generator/1.0.0/css/index.css" />
+
         <script>
           window.React = window.parent.React;
           window.ReactDOM = window.parent.ReactDOM
