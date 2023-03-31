@@ -1,11 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-
 import createIframe from './createIframe';
-import * as defaultWidgets from './widgets';
-import * as defaultSettings from './settings';
-
-import getAssets from './assets';
-
 interface IProps {
   widgets: any
   settings: any
@@ -36,20 +30,14 @@ const Design = (props: IProps) => {
       return;
     }
 
-    const assets = getAssets({ ...defaultSettings, ... settings })
-
     iframe?.contentWindow?.__FR_ENGINE__?.init({
-      assets,
-      widgets: {
-        ...defaultWidgets,
-        ...widgets
-      },
+      settings,
+      widgets,
       logo: {
         title: 'XRender'
       }
     });
   };
-
 
   return (
     <div ref={containerRef} style={{ width: '100%', height: '100%'}} />
