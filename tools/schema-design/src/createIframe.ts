@@ -5,8 +5,8 @@ const createIframeContent = () => {
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>阿里低代码引擎 Demo</title>
-        <link rel="icon" href="//img.alicdn.com/imgextra/i2/O1CN01lNWGJi1xflgRfSgbk_!!6000000006471-55-tps-22-26.svg">
+        <title>XRender</title>
+        <link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
         <link href="https://dev.g.alicdn.com/fone-lowcode/fr-generator/1.0.0/css/index.css" rel="stylesheet" />
         <!-- 低代码引擎的页面主题样式，可以替换为 theme-lowcode-dark -->
         <link href="https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/variables.css" rel="stylesheet" />
@@ -19,7 +19,7 @@ const createIframeContent = () => {
 
         <script>
           window.React = window.parent.React;
-          window.ReactDOM = window.parent.ReactDOM
+          window.ReactDOM = window.parent.ReactDOM;
         </script>
 
         <!-- React 向下兼容，预防物料层的依赖 -->
