@@ -71,10 +71,8 @@ export default (props: any) => {
     return <Widget {...fieldProps} renderCore={renderCore} />
   }
 
-
   // Render Container Components
   if (children) {
-    
     fieldProps.children = (
       <Grid columns={1}>
         {children}
@@ -124,7 +122,6 @@ export default (props: any) => {
   if (readOnly) {
     Widget = widgets[schema.readOnlyWidget] || widgets['ReadOnlyText'];
   }
-
   const defaultValue = schema.default ?? schema.defaultValue;
 
   return (

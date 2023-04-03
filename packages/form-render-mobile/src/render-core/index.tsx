@@ -1,8 +1,6 @@
 import React from 'react';
 import FieldItem from './FieldItem';
 import FieldList from './FieldList';
-import './index.less';
-
 interface RenderCoreProps {
   schema: any;
   rootPath?: any[] | undefined;
