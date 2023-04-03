@@ -7,14 +7,12 @@ export const columns: ProColumnsType = [
   {
     title: '酒店名称',
     dataIndex: 'title',
-    key: 'title',
     valueType: 'text',
     width: '20%'
   },
   {
     title: '酒店地址',
     dataIndex: 'address',
-    key: 'address',
     ellipsis: true,
     copyable: true,
     valueType: 'text',
@@ -27,48 +25,24 @@ export const columns: ProColumnsType = [
       closed: '已打烊',
     },
     dataIndex: 'state',
-    key: 'state',
   },
   {
     title: '酒店星级',
     dataIndex: 'labels',
-    key: 'labels',
     width: 90,
     valueType: 'tags'
-    // valueTypeProps: (value) => { // [ { name : '', color: '' }] => 命中默认格式无需配置
-    //   return {
-    //     name: value?.text,
-    //     color: 'cyan'
-    //   }
-    // },
   },
   {
     title: '酒店GMV',
-    key: 'money',
     sorter: true,
     dataIndex: 'money',
     valueType: 'money',
   },
   {
     title: '成立时间',
-    key: 'created_at',
     dataIndex: 'created_at',
     valueType: 'date',
   },
-  // {
-  //   title: '操作',
-  //   width: 60,
-  //   align: 'right',
-  //   render: () => (
-  //     <a
-  //       onClick={() => {
-  //         message.success('预订成功');
-  //       }}
-  //     >
-  //       预订
-  //     </a>
-  //   )
-  // }
 ];
 
 export const toolbarRender = (
