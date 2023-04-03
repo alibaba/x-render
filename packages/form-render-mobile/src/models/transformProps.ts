@@ -17,11 +17,11 @@ const transformProps =  (props: any) => {
     readOnly,
     column = 1,
     mapping,
-    debugCss,
+    // debugCss,
     locale,
     configProvider,
     allCollapsed,
-    debounceInput,
+    // debounceInput,
     validateMessages,
     debug,
     id,
@@ -62,13 +62,13 @@ const transformProps =  (props: any) => {
     readOnly,
     column,
     mapping,
-    debugCss, // 好像没用了
+    // debugCss, // 好像没用了
     locale,
     configProvider,
     form,
     labelWidth,
     allCollapsed,
-    debounceInput, // 好像没用了
+    // debounceInput, // 好像没用了
     validateMessages,
     debug, // 换成 form 还有用吗？
     id,

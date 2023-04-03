@@ -3,7 +3,7 @@ import * as React from 'react';
 import type { FormProps as AntdFormProps } from 'antd-mobile';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
 
-type AntdFormInstance = AntdFormProps['form']
+type AntdFormInstance = Exclude<AntdFormProps['form'], undefined>
 
 export type { RuleItem } from 'async-validator';
 export type SchemaType =
@@ -172,13 +172,8 @@ export interface FormInstance extends AntdFormInstance {
    */
   setValues: FormInstance['setFieldsValue'];
   /**
-   * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
+   * 获取表单 schema
    */
-  // scrollToPath: FormInstance['scrollToField'];
-  /**
- * @deprecated 即将弃用，请勿使用此api，使用setValueByPath
- */
-  onItemChange: FormInstance['setFieldValue'];
   getSchema: () => any;
 }
 
@@ -223,11 +218,11 @@ export interface FRProps extends AntdFormProps {
   /** 
    * 表示是否显示 label 后面的冒号
    */
-  colon?: boolean;
+  // colon?: boolean;
   /** 
    * label 标签的文本对齐方式 
    */
-  labelAlign?: 'right' | 'left';
+  // labelAlign?: 'right' | 'left';
   /**
    *  只读模式
    */
@@ -237,9 +232,9 @@ export interface FRProps extends AntdFormProps {
    */
   disabled?: boolean;
   /** 
-   * 标签宽度
+   * 标签宽度(没用)
    */
-  labelWidth?: string | number;
+  // labelWidth?: string | number;
   /** 
    * antd的全局config
    */
@@ -248,26 +243,10 @@ export interface FRProps extends AntdFormProps {
    * 覆盖默认的校验信息
    */
   validateMessages?: ConfigProviderProps['form']['validateMessages'];
-  /** 
-   * 显示当前表单内部状态
-   */
-  debug?: boolean;
-  /** 
-   * 显示css布局提示线
-   */
-  debugCss?: boolean;
   /**
    * 展示语言，目前只支持中文、英文
    */
   locale?: 'zh-CN' | 'en-US';
-  /**
-   * 一行展示的列数
-   */
-  column?: number;
-  /**
-   * 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启
-   */
-  debounceInput?: boolean;
   /**
    * 数据会作为 beforeFinish 的第四个参数传入
    */
@@ -279,7 +258,7 @@ export interface FRProps extends AntdFormProps {
   /** 
    * 对象组件是否折叠（全局的控制）
    */
-  allCollapsed?: boolean;
+  // allCollapsed?: boolean;
   /** 
   * 表单全局配置
   */
@@ -316,14 +295,9 @@ export interface FRProps extends AntdFormProps {
    */
   removeHiddenData?: boolean;
   /** 
-   * 配置自定义layout组件
-   */
-  layoutWidgets?: any;
-  /** 
    * 扩展方法
    */
   methods?: Record<string, Function>;
-  maxWidth?: string
 }
 
 export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {

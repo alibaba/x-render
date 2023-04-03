@@ -1,13 +1,13 @@
 import React from 'react'
 import { Radio, Space } from 'antd-mobile'
 
-export default () => {
+export default ({ options, ...props }) => {
   return (
-    <Radio.Group defaultValue='1'>
+    <Radio.Group  {...props}>
       <Space direction='horizontal' wrap={true}>
-        <Radio value='1'>第一项</Radio>
-        <Radio value='2'>第二项</Radio>
-        <Radio value='3'>第三项</Radio>
+        {options.map((item) => {
+          return <Radio value={item.value} key={item.value}>{item.label}</Radio>
+        })}
       </Space>
     </Radio.Group>
   )

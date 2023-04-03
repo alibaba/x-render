@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { Link } from 'dumi';
-import { CodeOutlined, DownOutlined, HighlightOutlined, SwapOutlined, ToolOutlined } from '@ant-design/icons';
+import { CodeOutlined, DownOutlined, MobileOutlined, SwapOutlined, ToolOutlined } from '@ant-design/icons';
 
 const Navigation: React.FC = () => {
   const items: any = [
@@ -30,9 +30,9 @@ const Navigation: React.FC = () => {
       ),
       children: [
         {
-          label: <Link to="/form-render-mobile">form-render-mobile</Link>,
+          label: <Link to="/form-render-mobile">Form Render Mobile</Link>,
           key: 'form-render-mobile',
-          icon: <CodeOutlined />,
+          icon: <MobileOutlined />,
         },
         {
           label: <Link to="/playground">Playground</Link>,

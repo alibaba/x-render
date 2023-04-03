@@ -27,7 +27,7 @@ const FormCore = (props: any) => {
   const setContext = useStore(store, (state: any) => state.setContext);
 
 
-  const { type, properties, ...schemProps } = schema || {};
+  const { type, properties, ...schemaProps } = schema || {};
   const {
     formProps,
     displayType,
@@ -47,7 +47,7 @@ const FormCore = (props: any) => {
     logOnMount,
     logOnSubmit,
     id,
-  } = transformProps({ ...props, ...schemProps });
+  } = transformProps({ ...props, ...schemaProps });
 
   useEffect(() => {
     form.__initStore(store);
