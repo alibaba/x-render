@@ -1,12 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import 'dayjs/locale/zh-cn';
 import locales from './locales';
+import { StoreContext, createStore } from './core/store';
+import { UseBoundStore, StoreApi } from 'zustand'
 
-import { createStore, TRContext } from './core/store';
 import RenderCore from './core';
 import { TableRenderProps } from './types';
 export type {
@@ -22,8 +23,10 @@ const TableRender = React.forwardRef((props: TableRenderProps, ref) => {
     ...otherProps
   } = props;
 
-  const storeRef = useRef(createStore());
-  const store: any = storeRef.current;
+  const storeRef = React.useRef<UseBoundStore<StoreApi<TableRenderProps>>>();
+  if (!storeRef.current) {
+    storeRef.current = createStore();
+  }
 
   useEffect(() => {
     if (locale === 'en-US') {
@@ -49,9 +52,9 @@ const TableRender = React.forwardRef((props: TableRenderProps, ref) => {
       {...configProvider}
       locale={langPack}
     >
-      <TRContext.Provider value={store}>
+      <StoreContext.Provider value={storeRef.current}>
         <RenderCore {...otherProps} tableRef={ref} />
-      </TRContext.Provider>
+      </StoreContext.Provider>
     </ConfigProvider>
   );
 });
