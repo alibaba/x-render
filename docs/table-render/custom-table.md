@@ -17,7 +17,7 @@ group:
  * background: 'rgb(245,245,245)'
  */
 import React, { useRef } from 'react';
-import TableRender from 'table-render';
+import TableRender, { TableContext } from 'table-render';
 import { Alert } from 'antd';
 
 import { schema } from './static/search';
@@ -26,7 +26,7 @@ import { searchApi } from './static/request';
 
 
 const Demo = () => {
-  const tableRef: any = useRef();
+  const tableRef = useRef<TableContext>(null);
 
   return (
     <TableRender
