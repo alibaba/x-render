@@ -15,7 +15,7 @@ export type ColumnsSettingValueType = Array<{
 
 export type ToolbarActionConfig = {
   /** 开启的功能，默认 all，全部开启 */
-  enabled?: Array<'refresh' | 'columnsSetting' | 'fullScreen' | 'density' | 'all'>,
+  enabled?: Array<'refresh' | 'columnsSetting' | 'fullScreen' | 'density'>,
   /** 列设置的状态 */
   columnsSettingValue?: ColumnsSettingValueType
   /** 列设置状态改变时的回调 */

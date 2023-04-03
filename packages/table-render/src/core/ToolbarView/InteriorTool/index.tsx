@@ -8,7 +8,7 @@ import { ToolbarActionConfig } from '@/types';
 import defaults from 'lodash.defaults';
 
 const defaultConfig: ToolbarActionConfig = {
-  enabled: ['all']
+  enabled: ['columnsSetting', 'density', 'fullScreen', 'refresh']
 }
 
 const ToolBar: React.FC<{
@@ -24,18 +24,14 @@ const ToolBar: React.FC<{
 
   const { columnsSettingValue, onColumnsSettingChange, enabled } = toolbarActionConfig;
 
-  const have = (key: ToolbarActionConfig['enabled'][number]) => {
-    return enabled.includes('all') || enabled.includes(key)
-  }
-
   if (!toolbarAction) return null;
 
   return (
     <Space size={14} style={{ fontSize: 18 }}>
-      {have('refresh') && <ReloadIcon refresh={refresh} />}
-      {have('density') && <DensityIcon />}
-      {have('fullScreen') && <FullScreenIcon fullScreen={fullScreen} />}
-      {have('columnsSetting') && <ColumnSetting columnsSettingValue={columnsSettingValue} onColumnsSettingChange={onColumnsSettingChange} />}
+      {enabled.includes('refresh') && <ReloadIcon refresh={refresh} />}
+      {enabled.includes('density') && <DensityIcon />}
+      {enabled.includes('fullScreen') && <FullScreenIcon fullScreen={fullScreen} />}
+      {enabled.includes('columnsSetting') && <ColumnSetting columnsSettingValue={columnsSettingValue} onColumnsSettingChange={onColumnsSettingChange} />}
     </Space>
   );
 };
