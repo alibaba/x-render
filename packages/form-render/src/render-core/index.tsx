@@ -1,6 +1,7 @@
 import React from 'react';
 import FieldItem from './FieldItem';
 import FieldList from './FieldList';
+import { orderProperties } from '../models/flattenSchema';
 import './index.less';
 
 interface RenderCoreProps {
@@ -66,8 +67,7 @@ const RenderCore = (props: RenderCoreProps) : any => {
   }
 
   // render Objiect | field
-  return Object.keys(schema?.properties || {}).map((key) => {
-    const item = schema.properties[key];
+  return orderProperties(Object.entries(schema.properties)).map(([key, item]) => {
     const path = [...parentPath, key];
    
     return renderItem({ schema: item, path, key, rootPath });
