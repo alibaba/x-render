@@ -3,7 +3,7 @@ import { Form } from 'antd';
 
 import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
-import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
+import { _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
 import type { FormInstance } from '../type';
 
@@ -12,7 +12,10 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   const currSchema = _get(formSchema, path, {});
   const newSchema = isFunction(_newSchema) ? _newSchema(currSchema) : _newSchema;
 
-  const result = _merge(currSchema, newSchema);
+  const result = _mergeWith(currSchema, newSchema, (objValue, srcValue, key) => {
+    return srcValue;
+  });
+  
   _set(formSchema, path, result);
 };
 
@@ -100,7 +103,10 @@ const useForm = () => {
   form.setSchemaByFullPath = (path: string, newSchema: any) => {
     const schema = _cloneDeep(schemaRef.current);
     const currSchema = _get(schema, path, {});
-    const result = _merge(newSchema, currSchema);
+
+    const result = _mergeWith(currSchema, newSchema, (objValue, srcValue, key) => {
+      return srcValue;
+    });
 
     _set(schema, path, result);
     handleSchemaUpdate(schema);
