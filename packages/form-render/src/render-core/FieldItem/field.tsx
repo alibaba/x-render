@@ -4,7 +4,7 @@ import { useUpdateEffect } from 'ahooks';
 import { _get, translation, isFunction } from '../../utils';
 
 export const FieldWrapperStatus = (props: any) => {
-  const { Field, fieldProps, maxWidth, defaultValue, ...otherProps } = props;
+  const { Field, fieldProps, maxWidth, initialValue, ...otherProps } = props;
   const { onStatusChange, addons, ...otherFieldProps } = fieldProps;
   const style = maxWidth ? { maxWidth, ...fieldProps?.style } : { ...fieldProps?.style } ;
 
@@ -16,8 +16,8 @@ export const FieldWrapperStatus = (props: any) => {
   }, [status]);
 
   useUpdateEffect(() => {
-    otherProps.onChange(defaultValue);
-  }, [JSON.stringify(defaultValue)]);
+    otherProps.onChange(initialValue);
+  }, [JSON.stringify(initialValue)]);
 
   return (
     <Field 
@@ -30,7 +30,7 @@ export const FieldWrapperStatus = (props: any) => {
 };
 
 export const FieldWrapper = (props: any) => {
-  const { Field, fieldProps, maxWidth, defaultValue, ...otherProps } = props;
+  const { Field, fieldProps, maxWidth, initialValue, ...otherProps } = props;
   const { addons, schema } = fieldProps;
 
   const _style = maxWidth ? { maxWidth, ...fieldProps?.style }: { ...fieldProps?.style }
@@ -40,8 +40,8 @@ export const FieldWrapper = (props: any) => {
   const t = translation(configCtx);
 
   useUpdateEffect(() => {
-    otherProps.onChange(defaultValue);
-  }, [JSON.stringify(defaultValue)]);
+    otherProps.onChange(initialValue);
+  }, [JSON.stringify(initialValue)]);
 
   const handleRemove = () => {
     if (isFunction(removeBtn?.onClick)) {
