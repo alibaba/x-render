@@ -46,6 +46,7 @@ const FormCore = (props: any) => {
     onFinish,
     onFinishFailed,
     readOnly,
+    disabled,
     builtOperation,
     removeHiddenData,
     operateExtra,
@@ -67,6 +68,7 @@ const FormCore = (props: any) => {
     const context = {
       column,
       readOnly,
+      disabled,
       labelWidth,
       displayType,
       labelCol,
@@ -74,7 +76,7 @@ const FormCore = (props: any) => {
       maxWidth
     };
     setContext(context);
-  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly]);
+  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly, disabled]);
 
   const initial = async () => {
     onMount && await onMount();
@@ -194,6 +196,7 @@ const FormCore = (props: any) => {
       className='fr-form'
       labelWrap={true}
       {...formProps}
+      disabled={disabled}
       form={form}
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}

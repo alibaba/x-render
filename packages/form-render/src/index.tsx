@@ -1,7 +1,7 @@
 import FormCore from './form-core';
 import withProvider from './withProvider';
 
-export * from './widgets-antd';
+export * from './widgets';
 export { mapping } from './models/mapping';
 
 export { default as useForm } from './models/useForm';

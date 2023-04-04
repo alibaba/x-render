@@ -5,7 +5,6 @@ import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, CloseOutlined, CopyOu
 import VirtualCell from './virtualCell';
 import { useVT } from 'virtualizedtableforantd4';
 import FButton from '../../components/FButton';
-import sortProperties from '../../../models/sortProperties';
 
 import './index.less';
 
@@ -57,8 +56,8 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     copyItem(value);
   };
 
-  const columns: TableColumnsType<FormListFieldData> = sortProperties(Object.entries(itemSchema)).map(([dataIndex, item]) => {
-    const { required, title, width } = item;
+  const columns: TableColumnsType<FormListFieldData> = Object.keys(itemSchema).map((dataIndex: string) => {
+    const { required, title, width } = itemSchema[dataIndex];
     return {
       dataIndex,
       width,

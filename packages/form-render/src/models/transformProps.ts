@@ -36,6 +36,7 @@ const transformProps =  (props: any) => {
     logOnSubmit,
     labelCol,
     fieldCol,
+    disabled,
     // labelAlign,
     // colon,
     // className,
@@ -62,6 +63,7 @@ const transformProps =  (props: any) => {
     onMount,
     watch,
     readOnly,
+    disabled,
     column,
     mapping,
     debugCss, // 好像没用了

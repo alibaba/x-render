@@ -12,7 +12,7 @@ import 'dayjs/locale/zh-cn';
 import { createStore } from './models/store';
 import { FRContext, ConfigContext } from './models/context';
 import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
-import { widgets as defaultWidgets } from './widgets';
+import * as defaultWidgets from './widgets';
 
 export default function withProvider<T>(Element: React.ComponentType<T>) : React.ComponentType<T> {
   return (props: any) => {
@@ -52,6 +52,9 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
     const formValidateMessages = locale === 'zh-CN' ? validateMessagesCN : validateMessagesEN;
   
+    console.log(defaultWidgets, 'fafd----def')
+
+
     const configContext = {
       locale,
       widgets: { ...defaultWidgets, ...widgets },
