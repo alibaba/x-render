@@ -2,6 +2,8 @@
 
 ### 2.1.6
 - [+] 新增 order 排序
+- [!] 去除 setSchemaByPath 属性合并，只对 schema.props 进行简单合并
+
 ### 2.1.5
 - [!] 修复 select 清除异常报错
 ### 2.1.1-2.1.4
