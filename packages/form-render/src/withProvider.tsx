@@ -3,7 +3,6 @@ import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
 import { useUnmount } from 'ahooks';
 
-
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import locales from './locales';
