@@ -1,10 +1,11 @@
-import { set, get, cloneDeep, has, merge, isUndefined, omitBy } from 'lodash-es';
+import { set, get, cloneDeep, has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
 
 export const _set = set;
 export const _get = get;
 export const _cloneDeep = cloneDeep;
 export const _has = has;
 export const _merge = merge;
+export const _mergeWith = mergeWith;
 export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
 

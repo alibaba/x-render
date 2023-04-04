@@ -11,6 +11,7 @@ group:
 - `column` 表单一行能展示的表单项个数
 - `labelWidth` 标签固定宽度
 - `cellSpan` 表单项跨列
+- `span` 自定义宽度
 - `maxWidth` 输入控件最长宽度  
 - `labelCol`、`FieldCol` 表单项内部布局
 ## displayType
@@ -146,6 +147,30 @@ export default () => {
       schema={schema}
       labelWidth={60}
       column={3}
+    />
+  );
+};
+```
+
+## span
+设置表单项列宽度，表单布局会被切割成 24 等份，可以通过设置 span 来自定义表单项所占的宽度
+
+```jsx
+import React, { useState } from 'react';
+import { InputNumber } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/span';
+
+export default () => {
+  const form = useForm();
+  const [labelWidth, setLabelWidth] = useState(60);
+
+  return (
+    <FormRender
+      form={form}
+      schema={schema}
+      labelWidth={80}
+      maxWidth={300}
     />
   );
 };

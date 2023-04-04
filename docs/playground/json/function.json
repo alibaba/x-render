@@ -13,12 +13,12 @@
           "x1": {
             "title": "输入框1",
             "type": "string",
-            "hidden": "{{!rootValue.showMore}}"
+            "hidden": "{{!formData.case1.showMore}}"
           },
           "x2": {
             "title": "输入框2",
             "type": "string",
-            "hidden": "{{!rootValue.showMore}}"
+            "hidden": "{{!formData.case1.showMore}}"
           }
         }
       },
@@ -29,16 +29,22 @@
           "bi": {
             "title": "汇款币种",
             "type": "string",
-            "enum": ["rmb", "dollar"],
-            "enumNames": ["人民币", "美元"]
+            "enum": [
+              "rmb",
+              "dollar"
+            ],
+            "enumNames": [
+              "人民币",
+              "美元"
+            ]
           },
           "inputName": {
             "title": "金额",
-            "description": "{{rootValue.bi === 'dollar' ? '一次汇款不超过150美元':'一次汇款不超过1000元'}}",
+            "description": "{{formData.case2.bi === 'dollar' ? '一次汇款不超过150美元':'一次汇款不超过1000元'}}",
             "type": "string",
             "props": {
-              "addonBefore": "{{rootValue.bi === 'dollar'? '$':'￥'}}",
-              "addonAfter": "{{rootValue.bi === 'dollar'? '美元':'元'}}"
+              "addonBefore": "{{formData.case2.bi === 'dollar'? '$':'￥'}}",
+              "addonAfter": "{{formData.case2.bi === 'dollar'? '美元':'元'}}"
             }
           }
         }
@@ -57,14 +63,24 @@
                   "title": "标准",
                   "type": "string",
                   "widget": "select",
-                  "enum": ["goal", "league"],
-                  "enumNames": ["入球数", "所在联盟"],
+                  "enum": [
+                    "goal",
+                    "league"
+                  ],
+                  "enumNames": [
+                    "入球数",
+                    "所在联盟"
+                  ],
                   "width": "40%"
                 },
                 "relation": {
                   "title": "关系",
                   "type": "string",
-                  "enum": [">", "<", "="],
+                  "enum": [
+                    ">",
+                    "<",
+                    "="
+                  ],
                   "widget": "select",
                   "hidden": "{{rootValue.attr === 'league'}}",
                   "width": "20%"
@@ -84,8 +100,16 @@
                 "league": {
                   "title": "名称",
                   "type": "string",
-                  "enum": ["a", "b", "c"],
-                  "enumNames": ["西甲", "英超", "中超"],
+                  "enum": [
+                    "a",
+                    "b",
+                    "c"
+                  ],
+                  "enumNames": [
+                    "西甲",
+                    "英超",
+                    "中超"
+                  ],
                   "widget": "select",
                   "hidden": "{{rootValue.attr !== 'league'}}",
                   "width": "40%"

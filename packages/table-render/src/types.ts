@@ -1,27 +1,32 @@
 import { TableProps } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import { FRProps } from 'form-render';
+import { FRProps, FormInstance } from 'form-render';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
+import { TStore } from './core/store';
 
+export type DoSearchType = (
+  params: {
+    current?: number;
+    tab?: number | string;
+    pageSize?: number;
+    sorter?: any;
+  },
+  customSearch?: any
+) => Promise<void>
 
-export interface TableContext<RecordType> {
-  tableState?: TableState<RecordType>;
-  setTable?: (state: Partial<TableState<RecordType>>) => void;
-  doSearch?: (
-    params: {
-      current?: number;
-      tab?: number | string;
-      pageSize?: number;
-      sorter?: any;
-    },
-    customSearch?: any
-  ) => Promise<void>;
-  refresh?: (
-    params?: { stay: boolean; tab: number | string },
-    search?: any
-  ) => Promise<void>;
-  form?: any; // TODO这里应该去引FR的类型
-  changeTab?: (tab: number | string) => Promise<void>;
+export type RefreshType = (
+  params?: { stay?: boolean; tab?: number | string },
+  search?: any
+) => Promise<void>
+
+export type ChangeTabType = (tab: number | string) => Promise<void>;
+
+export interface TableContext {
+  doSearch: DoSearchType,
+  refresh: RefreshType,
+  changeTab: ChangeTabType,
+  form: FormInstance,
+  getState: () => TStore & { search: Record<string, any> },
 }
 
 export type ProColumnsType<T extends object = any> = Array<

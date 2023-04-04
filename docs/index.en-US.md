@@ -1,7 +1,7 @@
 ---
 title: 首页
 hero:
-  title: XRender
+  title: XRender 2.0
   description: |
     中后台「表单/表格/图表」开箱即用解决方案
     <br />

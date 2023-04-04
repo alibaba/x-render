@@ -21,12 +21,12 @@ group:
  */
 
 import React, { useRef } from 'react';
-import TableRender, { } from 'table-render';
+import TableRender, { TableContext } from 'table-render';
 import { schema } from './static/search';
 import { toolbarRender } from './static/table';
 
 const Demo = () => {
-  const tableRef: any = useRef();
+  const tableRef = useRef<TableContext>(null);
 
   const columns = [
     {

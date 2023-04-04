@@ -128,7 +128,7 @@ export interface FormInstance extends AntdFormInstance {
   init: any;
   __schema: any;
   __initStore: (data: any) => any;
-  setSchemaByFullPath: (path: string, schema: any) => any;
+  // setSchemaByFullPath: (path: string, schema: any) => any;
   /**
    *  根据路径动态设置 Schema
    */
