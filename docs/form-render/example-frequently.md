@@ -115,15 +115,6 @@ const schema = {
       title: '单选',
       type: 'string',
       widget: 'select',
-      props: {
-        options: [
-          {label: '东', value: 'east'},
-          {label: '西', value: 'west'},
-          {label: '南', value: 'south'},
-          {label: '北', value: 'north'}
-        ],
-        xxx: 1
-      }
     }
   }
 };
@@ -132,13 +123,13 @@ export default () => {
   const form = useForm();
 
   const onMount = () => {
-    debugger;
     form.setSchemaByPath('select1', {
       props: {
         options: [
           {label: '东', value: 'east'},
           {label: '西', value: 'west'},
-          
+          {label: '南', value: 'south'},
+          {label: '北', value: 'north'}
         ]
       }
     });
@@ -319,7 +310,7 @@ export default () => {
   const beforeFinish = ({ data, schema }) => {
     return fakeApi('xxx/validation').then(_ => {
       if (data.select1) {
-        return [{ name: 'select1', errors: []}];
+        return [{ name: 'select1', errors: [] }];
       }
       return [{ name: 'select1', errors: ['外部校验错误, 请进行选择'] }];
     });
