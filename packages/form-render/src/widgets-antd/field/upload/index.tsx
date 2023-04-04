@@ -3,6 +3,16 @@ import { Button, message, Upload, ConfigProvider } from 'antd';
 import { get } from 'lodash-es';
 import React, { useContext } from 'react';
 import { translation } from '../../utils'
+import { ButtonProps } from 'antd/es/button';
+
+interface Props {
+  action: any;
+  value: string;
+  onChange: any;
+  uploadProps: any;
+  buttonProps: ButtonProps;
+  schema: any;
+}
 
 export default function FrUpload({
   action,
@@ -11,7 +21,7 @@ export default function FrUpload({
   uploadProps,
   buttonProps,
   schema,
-}) {
+}: Props) {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
@@ -19,7 +29,7 @@ export default function FrUpload({
     name: 'file',
     type: 'file',
     action, // 旧的兼容
-    onChange(info) {
+    onChange(info: any) {
       if (info.file.status === 'done') {
         message.success(`${info.file.name} ${t('upload_success')}`);
         const path = get(schema, 'props.path', '');

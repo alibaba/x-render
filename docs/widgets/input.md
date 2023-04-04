@@ -23,6 +23,37 @@ const schema = {
       required: true,
       widget: 'demo'
     },
+    checkbox1: {
+      title: '是否选择',
+      type: 'boolean',
+      widget: 'checkbox',
+    },
+    color1: {
+      title: 'color',
+      type: 'string',
+      format: 'color',
+    },
+    image1: {
+      title: '图片展示',
+      type: 'string',
+      format: 'image',
+    },
+    slider1: {
+      title: '带滑动条',
+      type: 'number',
+      widget: 'slider',
+    },
+    width: {
+      title: '元素宽度',
+      type: 'string',
+      widget: 'percentSlider',
+    },
+    input4: {
+      title: 'url',
+      type: 'string',
+      format: 'url',
+      required: true,
+    },
     select1: {
       title: '单选',
       type: 'string',

@@ -12,7 +12,7 @@ import timeRange from './antd/timeRange';
 import upload from './antd/upload';
 import urlInput from './antd/urlInput';
 import singelCheckbox from './antd/checkbox';
-
+import percentSlider from './antd/percentSlider';
 // 容器
 import BoxCard from './container/BoxCard';
 import BoxCollapse from './container/BoxCollapse';
@@ -69,6 +69,7 @@ export const widgets: Widgets = {
   timeRange,
   imageInput: ImageInput,
   url: urlInput,
+  percentSlider,
   select: withWrap(Select),
   multiSelect: withWrap(Select), // 下拉多选
   number: withWrap(InputNumber),

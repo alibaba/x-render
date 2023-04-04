@@ -3,7 +3,7 @@ import { Input } from 'antd';
 import ColorPicker from 'rc-color-picker';
 import 'rc-color-picker/assets/index.css';
 
-const alphaHexMap = {
+const alphaHexMap: {[key: string]: string} = {
   '1.00': 'FF',
   0.99: 'FC',
   0.98: 'FA',
@@ -104,8 +104,8 @@ const alphaHexMap = {
   0.03: '08',
   0.02: '05',
   0.01: '03',
-  '0.00': '00',
-};
+  '0.00': '00'
+}
 
 // Exp: "#ffffffA6" => algha: 65
 export const getAlphaFromHex = (hex = '#ffffff') => {
@@ -121,7 +121,7 @@ export const getAlphaFromHex = (hex = '#ffffff') => {
 
 export default function color(p) {
   const { format } = p.schema;
-
+  
   const onPickerChange = e => {
     if (p.disabled || p.readonly) return;
     const alphaHex = alphaHexMap[(e.alpha / 100).toFixed(2)];
@@ -158,3 +158,5 @@ export default function color(p) {
     </div>
   );
 }
+
+

@@ -5,6 +5,7 @@ export { default as TextArea } from './field/textArea';
 export { default as Select } from './field/select';
 export { default as MultiSelect } from './field/select';
 export { default as Switch } from './field/switch';
+export { default as Radio } from './field/radio';
 export { default as Rate } from './field/rate';
 export { default as TreeSelect } from './field/treeSelect';
 export { default as CheckBox } from './field/checkbox';
@@ -21,7 +22,7 @@ export { default as UrlInput } from './field/urlInput';
 export { default as Slider } from './field/slider';
 export { default as Upload } from './field/upload';
 export { default as ReadOnly } from './field/readOnly';
-
+export { default as PercentSlider } from './field/percentSlider';
 
 export { default as Card } from './container/Boxcard';
 export { default as Collapse } from './container/BoxCollapse';
