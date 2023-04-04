@@ -50,9 +50,6 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
   
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
     const formValidateMessages = locale === 'zh-CN' ? validateMessagesCN : validateMessagesEN;
-  
-    console.log(defaultWidgets, 'fafd----def')
-
 
     const configContext = {
       locale,
