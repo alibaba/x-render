@@ -12,9 +12,8 @@ import 'dayjs/locale/zh-cn';
 import { createStore } from './models/store';
 import { FRContext, ConfigContext } from './models/context';
 import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
-import * as defaultWidgets from './widgets';
 
-export default function withProvider<T>(Element: React.ComponentType<T>) : React.ComponentType<T> {
+export default function withProvider<T>(Element: React.ComponentType<T>, defaultWidgets?: any) : React.ComponentType<T> {
   return (props: any) => {
 
     const {
