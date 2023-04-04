@@ -7,7 +7,6 @@ sidebar: false
  * transform: true
  * compact: true
  * inline: true
- * demoUrl: 'http://www.baidu.com'
  */
 import React from 'react';
 import Generator from 'fr-design';
