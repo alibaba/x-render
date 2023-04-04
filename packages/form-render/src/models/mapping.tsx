@@ -111,7 +111,7 @@ console.log(capitalizeFirstLetter('hello world')); // 输出：Hello world
 
 export const getWidget = (name: string, widgets: any) => {
   let widget = widgets[name];
-  debugger;
+
   // name 转成首字母大写
   if (!widget) {
     widget = widgets[capitalizeFirstLetter(name)];
