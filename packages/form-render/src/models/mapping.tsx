@@ -106,9 +106,6 @@ function capitalizeFirstLetter(str: any) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-console.log(capitalizeFirstLetter('hello world')); // 输出：Hello world
-
-
 export const getWidget = (name: string, widgets: any) => {
   let widget = widgets[name];
 
