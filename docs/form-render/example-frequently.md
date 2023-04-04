@@ -115,6 +115,15 @@ const schema = {
       title: '单选',
       type: 'string',
       widget: 'select',
+      props: {
+        options: [
+          {label: '东', value: 'east'},
+          {label: '西', value: 'west'},
+          {label: '南', value: 'south'},
+          {label: '北', value: 'north'}
+        ],
+        xxx: 1
+      }
     }
   }
 };
@@ -123,13 +132,13 @@ export default () => {
   const form = useForm();
 
   const onMount = () => {
+    debugger;
     form.setSchemaByPath('select1', {
       props: {
         options: [
           {label: '东', value: 'east'},
           {label: '西', value: 'west'},
-          {label: '南', value: 'south'},
-          {label: '北', value: 'north'}
+          
         ]
       }
     });
