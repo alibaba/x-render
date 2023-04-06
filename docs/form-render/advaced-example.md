@@ -26,7 +26,7 @@ export default () => {
   };
 
   return (
-    <FormRender form={form} schema={schema} onFinish={onFinish} action={true} maxWidth={360} />
+    <FormRender form={form} schema={schema} onFinish={onFinish} footer={true} maxWidth={360} />
   );
 }
 ```
