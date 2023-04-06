@@ -199,29 +199,8 @@ export default Demo;
 import React from 'react';
 import { Button, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
 import { fakeApi } from './utils';
-
-const schema = {
-  type: 'object',
-  properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true,
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' }
-        ]
-      }
-    }
-  }
-};
 
 export default () => {
   const form = useForm();
@@ -234,9 +213,9 @@ export default () => {
   const beforeFinish = ({ data, schema }) => {
     return fakeApi('xxx/validation').then(_ => {
       if (data.select1) {
-        return [{ name: 'select1', errors: [] }];
+        return [{ name: 'select', errors: [] }];
       }
-      return [{ name: 'select1', errors: ['外部校验错误, 请进行选择'] }];
+      return [{ name: 'select', errors: ['外部校验错误, 请进行选择'] }];
     });
   };
 
