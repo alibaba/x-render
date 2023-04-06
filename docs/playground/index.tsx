@@ -7,6 +7,7 @@ import { Divider, Row, Col } from 'antd';
 // @ts-ignore
 import { serializeToDraft, deserialize } from 'fr-generator';
 import AsyncSelect from "./customized/AsyncSelect";
+import './index.css';
 
 const Playground = () => {
   const form = useForm();
@@ -73,11 +74,10 @@ const Playground = () => {
     <div className="fr-playground">
       <Controller onChange={onControllerChange} />
       <Divider />
-      <Row gutter={20}>
+      <Row gutter={20} style={{ flex: 1, overflow: 'hidden' }}>
         <Col span={12}>
           <Editor
             value={value}
-            height={600}
             language={lang}
             onChange={debounceEditorChange}
             onMount={() => {
@@ -86,7 +86,7 @@ const Playground = () => {
             }}
           />
         </Col>
-        <Col span={12}>
+        <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%' }}>
           <FormRender
             form={form}
             schema={schema}

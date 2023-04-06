@@ -195,6 +195,10 @@ export const getColSpan = (formCtx: any, parentCtx: any, schema: any) => {
   if (schema.cellSpan) {
     span = schema.cellSpan * span;
   }
+
+  if (schema.span) {
+    span = schema.span;
+  }
   return span;
 };
 
@@ -258,7 +262,7 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
     fieldProps.addonAfter = <AddonAfterWidget {...schema} />;
   }
 
-  if (['treeSelect', 'number', 'multiSelect', 'select'].includes(widgetName)) {
+  if (['treeSelect', 'inputNumber', 'multiSelect', 'select'].includes(widgetName)) {
     fieldProps.style = {
       width: '100%',
       ...fieldProps.style

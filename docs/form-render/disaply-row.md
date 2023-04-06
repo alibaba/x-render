@@ -1,5 +1,5 @@
 ---
-order: 1
+order: 0
 toc: content
 mobile: false
 group: 
@@ -7,7 +7,7 @@ group:
   order: 2
 ---
 
-# 横向布局
+# 内置组件
 
 ## 基础控件
 
@@ -141,6 +141,11 @@ const schema = {
       title: '颜色选择',
       type: 'string',
       format: 'color',
+    },
+    url1: {
+      title: '链接',
+      type: 'string',
+      format: 'url',
     },
   },
 };

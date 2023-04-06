@@ -16,6 +16,19 @@ export type SchemaType =
   | 'block'
   | string;
 
+export type ActionProps = {
+  submit: {
+    text: string;
+    hide: boolean;
+    [key: string]: any;
+  },
+  reset: {
+    text: string;
+    hide: boolean;
+    [key: string]: any;
+  }
+}
+
 export interface SchemaBase {
   type?: SchemaType;
   title?: string;
@@ -128,7 +141,7 @@ export interface FormInstance extends AntdFormInstance {
   init: any;
   __schema: any;
   __initStore: (data: any) => any;
-  setSchemaByFullPath: (path: string, schema: any) => any;
+  // setSchemaByFullPath: (path: string, schema: any) => any;
   /**
    *  根据路径动态设置 Schema
    */
@@ -322,7 +335,8 @@ export interface FRProps extends AntdFormProps {
    */
   methods?: Record<string, Function>;
   operateExtra?: React.ReactNode;
-  maxWidth?: string
+  maxWidth?: string;
+  footer?: boolean | (() => React.ReactNode) | Partial<ActionProps> ;
 }
 
 export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {

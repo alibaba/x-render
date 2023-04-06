@@ -4,6 +4,7 @@ import type { FormListFieldData, TableColumnsType } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, CloseOutlined, CopyOutlined  } from '@ant-design/icons';
 import TableCell from './tableCell';
 import FButton from '../../components/FButton';
+import sortProperties from '../../../models/sortProperties';
 
 import './index.less';
 
@@ -59,8 +60,8 @@ const TableList: React.FC<ListTableProps> = (props) => {
     copyItem(value);
   };
 
-  const columns: TableColumnsType<FormListFieldData> = Object.keys(itemSchema).map((dataIndex: string) => {
-    const { required, title, width } = itemSchema[dataIndex];
+  const columns: TableColumnsType<FormListFieldData> = sortProperties(Object.entries(itemSchema)).map(([dataIndex, item]) => {
+    const { required, title, width } = item;
     return {
       dataIndex,
       width,

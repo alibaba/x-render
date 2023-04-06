@@ -1,6 +1,22 @@
 # 更新日志
+
+### 2.1.8
+- [+] 新增 footer 按钮配置栏
+
+### 2.1.7
+- [+] 新增 组件按需功能，导出 FormSlimRender 实例
+### 2.1.6
+- [+] 新增 order 排序
+- [!] 去除 setSchemaByPath 属性合并，只对 schema.props 进行简单合并
+
+### 2.1.5
+- [!] 修复 select 清除异常报错
+### 2.1.1-2.1.4
+- [!] 修复 searchForm 列布局，查询按钮高度异常
+### 2.1.0
+- [+] 增加 span 属性支持表单项宽度自定义
 ### 2.0.19
--[!] 修复 html 组件 select 回显问题
+- [!] 修复 html 组件 select 回显问题
 
 ### 2.0.17
 - [+] 增加 labelWidget，配置用于 form.item lable 的自定义

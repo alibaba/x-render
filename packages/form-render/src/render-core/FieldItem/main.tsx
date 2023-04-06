@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import { isCheckBoxType, _get } from '../../utils';
 import { ConfigContext } from '../../models/context';
-import { getWidgetName } from '../../models/mapping';
+import { getWidgetName, getWidget } from '../../models/mapping';
 import { getFormItemLayout } from '../../models/layout';
 import getRuleList from '../../models/validates';
 
@@ -52,7 +52,7 @@ export default (props: any) => {
   }
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  let Widget = widgets[widgetName] || widgets['html'];
+  let Widget = getWidget(widgetName, widgets);
 
   const fieldProps = getFieldProps(widgetName, schema, {
     widgets,
@@ -130,6 +130,7 @@ export default (props: any) => {
   const tooltip = getTooltip(schema, displayType);
   const ruleList = getRuleList(schema, form, methods);
   const readOnly = getValueFromKey('readOnly');
+  const disabled = getValueFromKey('disabled');
 
   const _labelCol = getValueFromKey('labelCol');
   const _fieldCol = getValueFromKey('fieldCol');
@@ -137,9 +138,12 @@ export default (props: any) => {
   const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24 / span * 1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
 
-
   if (readOnly) {
     fieldProps.readOnly = readOnly;
+  }
+
+  if (disabled) {
+    fieldProps.disabled = disabled;
   }
 
   if (!label) {
@@ -160,7 +164,7 @@ export default (props: any) => {
     }
   }
 
-  const defaultValue = schema.default ?? schema.defaultValue;
+  const initialValue = schema.default ?? schema.defaultValue;
 
   const formItem = (
     <Form.Item
@@ -173,7 +177,7 @@ export default (props: any) => {
       tooltip={tooltip}
       extra={extra}
       help={help}
-      initialValue={defaultValue}
+      initialValue={initialValue}
       labelCol={labelCol}
       wrapperCol={fieldCol}
       noStyle={noStyle}
@@ -184,14 +188,14 @@ export default (props: any) => {
           Field={Widget}
           fieldProps={fieldProps}
           maxWidth={maxWidth}
-          defaultValue={defaultValue}
+          initialValue={initialValue}
         />
       ) : (
         <FieldWrapper
           Field={Widget}
           fieldProps={fieldProps}
           maxWidth={maxWidth}
-          defaultValue={defaultValue}
+          initialValue={initialValue}
         />
       )}
     </Form.Item>

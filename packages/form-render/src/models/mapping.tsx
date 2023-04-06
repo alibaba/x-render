@@ -4,7 +4,7 @@ export const mapping = {
   array: 'list',
   boolean: 'checkbox',
   integer: 'number',
-  number: 'number',
+  number: 'inputNumber',
   object: 'map',
   html: 'html',
   card: 'card',
@@ -14,15 +14,15 @@ export const mapping = {
   subItem: 'subItem',
   panel: 'panel',
   'string:upload': 'upload',
-  'string:url': 'url',
-  'string:dateTime': 'date',
-  'string:date': 'date',
-  'string:year': 'date',
-  'string:month': 'date',
-  'string:week': 'date',
-  'string:quarter': 'date',
-  'string:time': 'time',
-  'string:textarea': 'textarea',
+  'string:url': 'urlInput',
+  'string:dateTime': 'datePicker',
+  'string:date': 'datePicker',
+  'string:year': 'datePicker',
+  'string:month': 'datePicker',
+  'string:week': 'datePicker',
+  'string:quarter': 'datePicker',
+  'string:time': 'timePicker',
+  'string:textarea': 'textArea',
   'string:color': 'color',
   'string:image': 'imageInput',
   'range:time': 'timeRange',
@@ -99,6 +99,26 @@ export function getWidgetName(schema, _mapping = mapping) {
   });
 
   return widgetName;
+}
+
+
+function capitalizeFirstLetter(str: any) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export const getWidget = (name: string, widgets: any) => {
+  let widget = widgets[name];
+
+  // name 转成首字母大写
+  if (!widget) {
+    widget = widgets[capitalizeFirstLetter(name)];
+  }
+
+  if (!widget) {
+    widget = widgets['Html'] || null;
+  }
+
+  return widget;
 }
 
 export const extraSchemaList = {

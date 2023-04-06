@@ -3,7 +3,6 @@ import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
 import { useUnmount } from 'ahooks';
 
-
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
 import locales from './locales';
@@ -12,11 +11,9 @@ import 'dayjs/locale/zh-cn';
 import { createStore } from './models/store';
 import { FRContext, ConfigContext } from './models/context';
 import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
-import { widgets as defaultWidgets } from './widgets';
 
-export default function withProvider<T>(Element: React.ComponentType<T>) : React.ComponentType<T> {
+export default function withProvider<T>(Element: React.ComponentType<T>, defaultWidgets?: any) : React.ComponentType<T> {
   return (props: any) => {
-
     const {
       configProvider,
       locale = 'zh-CN',
@@ -51,7 +48,6 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
   
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
     const formValidateMessages = locale === 'zh-CN' ? validateMessagesCN : validateMessagesEN;
-  
     const configContext = {
       locale,
       widgets: { ...defaultWidgets, ...widgets },
