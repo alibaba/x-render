@@ -11,7 +11,7 @@ import './index.less';
 
 import {
   Input,
-  Number,
+  InputNumber,
   TextArea,
   Select,
   MultiSelect,
@@ -19,9 +19,9 @@ import {
   Radio,
   Checkbox,
   Checkboxes,
-  Date,
+  DatePicker,
   DateRange,
-  Time,
+  TimePicker,
   TimeRange,
   TreeSelect,
   ImageInput,
@@ -210,7 +210,7 @@ const SearchForm: <RecordType extends object = any>(
 
 export default withProvider(SearchForm, {
   Input,
-  Number,
+  InputNumber,
   TextArea,
   Select,
   MultiSelect,
@@ -218,9 +218,9 @@ export default withProvider(SearchForm, {
   Radio,
   Checkbox,
   Checkboxes,
-  Date,
+  DatePicker,
   DateRange,
-  Time,
+  TimePicker,
   TimeRange,
   TreeSelect,
   ImageInput,

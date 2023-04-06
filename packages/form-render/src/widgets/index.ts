@@ -1,5 +1,5 @@
 export { default as Input } from './field/input';
-export { default as Number } from './field/number';
+export { default as InputNumber } from './field/number';
 export { default as TextArea } from './field/textArea';
 
 export { default as Select } from './field/select';
@@ -12,9 +12,9 @@ export { default as Checkbox } from './field/checkbox';
 export { default as Checkboxes } from './field/checkboxes';
 
 export { default as Color } from './field/color';
-export { default as Date } from './field/date';
+export { default as DatePicker } from './field/date';
 export { default as DateRange } from './field/dateRange';
-export { default as Time } from './field/time';
+export { default as TimePicker } from './field/time';
 export { default as TimeRange } from './field/timeRange';
 export { default as ImageInput } from './field/imageInput';
 export { default as UrlInput } from './field/urlInput';
