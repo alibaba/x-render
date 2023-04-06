@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useRef } from 'react';
 import { Form, Grid } from 'antd-mobile';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
@@ -29,6 +29,7 @@ export default (props: any) => {
     return null;
   }
 
+  const fieldRef: any = useRef();
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
@@ -115,6 +116,10 @@ export default (props: any) => {
     fieldProps.readOnly = readOnly;
   }
 
+  if (!fieldProps.fieldRef) {
+    fieldProps.fieldRef = fieldRef;
+  }
+
   if (!label) {
     noStyle = true;
   }
@@ -138,6 +143,12 @@ export default (props: any) => {
         initialValue={defaultValue}
         noStyle={noStyle}
         dependencies={dependencies}
+        onClick={() => {
+          if (!fieldRef?.current?.open) {
+            return;
+          }
+          fieldRef.current.open();
+        }}
       >
         <FieldWrapper
           Field={Widget}
