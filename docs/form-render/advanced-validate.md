@@ -79,10 +79,10 @@ export default () => {
   const form = useForm();
   
   return (
-     <FormRender 
+    <FormRender 
       schema={schema} 
       form={form} 
-      action={true}
+      footer={true}
     />
   )
 };
@@ -139,7 +139,7 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form} 
-      action={true}
+      footer={true}
     />
   )
 };
@@ -177,7 +177,7 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form} 
-      action={true}
+      footer={true}
       validateMessages={validateMessages}
     />
   )
