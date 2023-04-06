@@ -47,7 +47,7 @@ const FormCore = (props: any) => {
     onFinishFailed,
     readOnly,
     disabled,
-    action,
+    footer,
     removeHiddenData,
     operateExtra,
     logOnMount,
@@ -206,7 +206,7 @@ const FormCore = (props: any) => {
         <RenderCore schema={schema} />
         {operateExtra}
       </Row>
-      {schema && !!action && (
+      {schema && !!footer && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24 / column}>
             <Form.Item
@@ -215,24 +215,24 @@ const FormCore = (props: any) => {
               className='fr-hide-label'
             >
               <Space>
-                {!action?.reset?.hide && (
+                {!footer?.reset?.hide && (
                   <Button 
-                    {...action?.reset} 
+                    {...footer?.reset} 
                     onClick={() => form.resetFields()}
                   >
-                    {action?.reset?.text || t('reset')}
+                    {footer?.reset?.text || t('reset')}
                   </Button>
                 )}
-                {!action?.submit?.hide && (
+                {!footer?.submit?.hide && (
                   <Button
                     type='primary'
                     onClick={form.submit}
-                    {...action?.submit}
+                    {...footer?.submit}
                   >
-                    {action?.submit?.text || t('submit')}
+                    {footer?.submit?.text || t('submit')}
                   </Button>
                 )}
-                {action?.extra && action?.extra()}
+                {footer?.extra}
               </Space>
             </Form.Item>
           </Col>

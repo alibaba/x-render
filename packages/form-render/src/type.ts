@@ -16,6 +16,20 @@ export type SchemaType =
   | 'block'
   | string;
 
+export type ActionProps = {
+  submit: {
+    text: string;
+    hide: boolean;
+    [key: string]: any;
+  },
+  reset: {
+    text: string;
+    hide: boolean;
+    [key: string]: any;
+  }
+  extra: React.ReactNode
+}
+
 export interface SchemaBase {
   type?: SchemaType;
   title?: string;
@@ -322,7 +336,8 @@ export interface FRProps extends AntdFormProps {
    */
   methods?: Record<string, Function>;
   operateExtra?: React.ReactNode;
-  maxWidth?: string
+  maxWidth?: string;
+  footer?: boolean | Partial<ActionProps>;
 }
 
 export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {

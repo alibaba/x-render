@@ -30,7 +30,7 @@ const transformProps =  (props: any) => {
     form,
     onFinish,
     onFinishFailed,
-    action,
+    footer,
     operateExtra,
     logOnMount,
     logOnSubmit,
@@ -69,7 +69,7 @@ const transformProps =  (props: any) => {
     debugCss, // 好像没用了
     locale,
     configProvider,
-    action,
+    footer,
     form,
     labelWidth,
     allCollapsed,
