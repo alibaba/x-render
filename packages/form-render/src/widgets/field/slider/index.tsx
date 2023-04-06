@@ -1,12 +1,23 @@
 /**
- * Created by Tw93 on 2019-12-07.
  * 滑动输入组件
  */
-
-import { InputNumber, Slider } from 'antd';
 import React from 'react';
+import { InputNumber, Slider } from 'antd';
+import './index.less';
+interface SliderWithNumberProps {
+  schema: {
+    max?: number;
+    min?: number;
+    step?: number;
+  };
+  value: number;
+  onChange: (value: number) => void;
+  hideInput?: boolean;
+  inputProps?: any;
+  style?: React.CSSProperties;
+}
 
-const SliderWithNumber = ({
+const SliderWithNumber: React.FC<SliderWithNumberProps> = ({
   schema,
   value,
   onChange,
@@ -16,6 +27,7 @@ const SliderWithNumber = ({
   ...rest
 }) => {
   const { max, min, step } = schema;
+  
   let setting = {};
   if (max || max === 0) {
     setting = { max };
@@ -28,9 +40,9 @@ const SliderWithNumber = ({
   if (step) {
     setting = { ...setting, step };
   }
- 
+
   return (
-    <div className="fr-slider" style={style}>
+    <div className='fr-slider' style={style}>
       <Slider
         style={{ flexGrow: 1, marginRight: hideInput ? 0 : 12 }}
         {...setting}
@@ -49,6 +61,7 @@ const SliderWithNumber = ({
       )}
     </div>
   );
-};
+}
 
 export default SliderWithNumber;
+

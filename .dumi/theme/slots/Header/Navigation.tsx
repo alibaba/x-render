@@ -34,11 +34,6 @@ const Navigation: React.FC = () => {
           key: 'playground',
           icon: <CodeOutlined />,
         },
-        // {
-        //   label: <Link to="/generator">表单设计器</Link>,
-        //   key: 'generator',
-        //   icon: <HighlightOutlined />,
-        // },
         {
           label: <Link to="/tools/proptypes">PropToSchema</Link>,
           key: 'proptypes',

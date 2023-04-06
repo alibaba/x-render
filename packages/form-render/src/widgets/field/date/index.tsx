@@ -2,19 +2,21 @@
 import React, { useMemo } from 'react';
 import dayjs from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
-import { getFormat, transformDateValue } from '../utils';
-import DatePicker from './datePicker';
+import { getFormat, transformDateValue } from '../../utils';
+import DatePicker from '../../components/DatePicker';
+import withFieldWrap from '../../utils/withFieldWrap';
+
 
 dayjs.extend(quarterOfYear);
 
-export default ({ onChange, format, value, style, ...rest }) => {
+const DateCmpt = ({ onChange, format, value, style, ...rest }) => {
   const dateFormat = getFormat(format);
   
   const valueObj = useMemo(() => {
     return transformDateValue(value, format, dateFormat);
   }, [value]);
 
-  const handleChange = (dateValue, dateString) => {
+  const handleChange = (dateValue: any, dateString: string) => {
     let newValue = dateString;
     if (format === 'week' || format === 'quarter') {
       newValue = dayjs(dateValue).format(dateFormat);
@@ -22,7 +24,7 @@ export default ({ onChange, format, value, style, ...rest }) => {
     onChange(newValue);
   };
 
-  const dateParams = {
+  const dateParams: any = {
     value: valueObj,
     style: { width: '100%', ...style },
     onChange: handleChange,
@@ -43,3 +45,5 @@ export default ({ onChange, format, value, style, ...rest }) => {
 
   return <DatePicker {...dateParams} {...rest} />;
 };
+
+export default withFieldWrap(DateCmpt);

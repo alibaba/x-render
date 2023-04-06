@@ -9,6 +9,27 @@ import withProvider from '../../withProvider';
 import ActionView from './ActionView';
 import './index.less';
 
+import {
+  Input,
+  Number,
+  TextArea,
+  Select,
+  MultiSelect,
+  Switch,
+  Radio,
+  Checkbox,
+  Checkboxes,
+  Date,
+  DateRange,
+  Time,
+  TimeRange,
+  TreeSelect,
+  ImageInput,
+  UrlInput,
+  Slider,
+  Html,
+  PercentSlider
+} from '../../widgets';
 
 const getSearchHeight = (limitHeight: boolean, isColumn: boolean) => {
   if (!limitHeight) {
@@ -187,5 +208,25 @@ const SearchForm: <RecordType extends object = any>(
   );
 }
 
-export default withProvider(SearchForm);
+export default withProvider(SearchForm, {
+  Input,
+  Number,
+  TextArea,
+  Select,
+  MultiSelect,
+  Switch,
+  Radio,
+  Checkbox,
+  Checkboxes,
+  Date,
+  DateRange,
+  Time,
+  TimeRange,
+  TreeSelect,
+  ImageInput,
+  UrlInput,
+  Slider,
+  Html,
+  PercentSlider
+});
 

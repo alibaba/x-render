@@ -2,10 +2,10 @@
  * Updated by Tw93 on 2019-12-08.
  * 日历多选组件
  */
-import TimePicker from './timePicker';
+import TimePicker from '../../components/TimePicker';
 import dayjs from 'dayjs';
 import React from 'react';
-import { getFormat } from '../utils';
+import { getFormat } from '../../utils';
 
 const { RangePicker } = TimePicker;
 
@@ -16,7 +16,7 @@ const TimeRange = ({ onChange, format, value, style, schema }) => {
   const _value =
     start && end ? [dayjs(start, schema?.props?.format || timeFormat), dayjs(end, schema?.props?.format || timeFormat)] : [];
 
-  const handleChange = (value, stringList) => {
+  const handleChange = (_: any, stringList: any) => {
     const emptyList1 = stringList[0] === '' || stringList[1] === '';
     const emptyList2 =
       stringList[0] === undefined || stringList[1] === undefined;

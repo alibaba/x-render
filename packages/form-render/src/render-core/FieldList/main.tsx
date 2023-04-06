@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Form, message, ConfigProvider, Button } from 'antd';
 import { isFunction, translation } from '../../utils';
+import { getWidget } from '../../models/mapping';
 
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
@@ -40,9 +41,8 @@ export default (props: any) => {
     colHeaderText: t('operate')
   };
 
-  const { widget } = schema;
-  let widgetName = widget || 'list1';
-  const Widget = widgets[widgetName];
+  let widgetName = schema.widget || 'cardList';
+  const Widget = getWidget(widgetName, widgets);
 
   const { props: listProps,  removeBtn, ...otherSchema } = schema;
 

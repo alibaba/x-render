@@ -22,7 +22,7 @@ export const mapping = {
   'string:week': 'date',
   'string:quarter': 'date',
   'string:time': 'time',
-  'string:textarea': 'textarea',
+  'string:textarea': 'textArea',
   'string:color': 'color',
   'string:image': 'imageInput',
   'range:time': 'timeRange',
@@ -99,6 +99,26 @@ export function getWidgetName(schema, _mapping = mapping) {
   });
 
   return widgetName;
+}
+
+
+function capitalizeFirstLetter(str: any) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export const getWidget = (name: string, widgets: any) => {
+  let widget = widgets[name];
+
+  // name 转成首字母大写
+  if (!widget) {
+    widget = widgets[capitalizeFirstLetter(name)];
+  }
+
+  if (!widget) {
+    widget = widgets['Html'] || null;
+  }
+
+  return widget;
 }
 
 export const extraSchemaList = {

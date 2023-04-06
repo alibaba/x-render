@@ -1,8 +1,13 @@
 import React, { useContext } from 'react';
 import { Input, ConfigProvider } from 'antd';
 import { isUrl, translation } from '../../utils';
+import withFieldWrap from '../../utils/withFieldWrap';
+interface UrlNodeProps {
+  value: string;
+  addonText?: string;
+}
 
-const UrlNode = (props) => {
+const UrlNode: React.FC<UrlNodeProps> = (props) => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
@@ -20,14 +25,22 @@ const UrlNode = (props) => {
   return <div>{addonText}</div>;
 };
 
-export default function UrlInput({
+interface UrlInputProps {
+  value?: string;
+  prefix?: string;
+  suffix?: string;
+  addonText?: string;
+  onChange?: (value: string) => void;
+}
+
+const UrlInput: React.FC<UrlInputProps> = ({
   value,
   prefix,
   suffix,
   addonText,
   onChange,
   ...rest
-}) {
+}) => {
   let _value = value || '';
 
   if (prefix) {
@@ -38,10 +51,10 @@ export default function UrlInput({
     _value = _value.replace(suffix, '');
   }
 
-  const handleChange = e => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let _value = e.target.value;
     if (!_value) {
-      onChange(_value);
+      onChange?.(_value);
       return;
     }
     if (prefix) {
@@ -50,7 +63,7 @@ export default function UrlInput({
     if (suffix) {
       _value = _value + suffix;
     }
-    onChange(_value);
+    onChange?.(_value);
   };
 
   return (
@@ -62,8 +75,6 @@ export default function UrlInput({
       addonAfter={
         <UrlNode
           value={value}
-          prefix={prefix}
-          suffix={suffix}
           addonText={addonText}
         />
       }
@@ -71,3 +82,6 @@ export default function UrlInput({
     />
   );
 }
+
+export default withFieldWrap(UrlInput);
+
