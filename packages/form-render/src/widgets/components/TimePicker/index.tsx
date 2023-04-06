@@ -1,5 +1,5 @@
 import * as React from 'react';
-import DatePicker from '../DatePicker/datePicker';
+import DatePicker from '../DatePicker';
 
 const TimePicker: any = React.forwardRef((props: any, ref: any) => {
   return <DatePicker {...props} picker='time' mode={undefined} ref={ref} />;

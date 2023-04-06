@@ -2,7 +2,7 @@
  * Updated by Tw93 on 2019-12-08.
  * 日历多选组件
  */
-import TimePicker from '../../components/TimePicker/timePicker';
+import TimePicker from '../../components/TimePicker';
 import dayjs from 'dayjs';
 import React from 'react';
 import { getFormat } from '../../utils';

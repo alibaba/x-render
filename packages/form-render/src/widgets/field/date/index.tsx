@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import dayjs from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
 import { getFormat, transformDateValue } from '../../utils';
-import DatePicker from '../../components/DatePicker/datePicker';
+import DatePicker from '../../components/DatePicker';
 
 dayjs.extend(quarterOfYear);
 

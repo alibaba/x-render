@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import React from 'react';
 
-import TimePicker from '../../components/TimePicker/timePicker';
+import TimePicker from '../../components/TimePicker';
 import { getFormat } from '../../utils';
 
 // TODO: 不要使用moment，使用dayjs
