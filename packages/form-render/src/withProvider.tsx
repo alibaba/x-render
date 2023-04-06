@@ -14,7 +14,6 @@ import { validateMessagesEN, validateMessagesCN } from './models/validateMessage
 
 export default function withProvider<T>(Element: React.ComponentType<T>, defaultWidgets?: any) : React.ComponentType<T> {
   return (props: any) => {
-
     const {
       configProvider,
       locale = 'zh-CN',
@@ -49,7 +48,6 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
   
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
     const formValidateMessages = locale === 'zh-CN' ? validateMessagesCN : validateMessagesEN;
-
     const configContext = {
       locale,
       widgets: { ...defaultWidgets, ...widgets },
