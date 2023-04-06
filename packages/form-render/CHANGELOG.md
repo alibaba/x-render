@@ -1,5 +1,8 @@
 # 更新日志
 
+
+### 2.1.7
+- [+] 新增 组件按需功能，导出 FormSlimRender 实例
 ### 2.1.6
 - [+] 新增 order 排序
 - [!] 去除 setSchemaByPath 属性合并，只对 schema.props 进行简单合并
