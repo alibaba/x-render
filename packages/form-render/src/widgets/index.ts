@@ -8,7 +8,7 @@ export { default as Switch } from './field/switch';
 export { default as Radio } from './field/radio';
 export { default as Rate } from './field/rate';
 export { default as TreeSelect } from './field/treeSelect';
-export { default as CheckBox } from './field/checkbox';
+export { default as Checkbox } from './field/checkbox';
 export { default as Checkboxes } from './field/checkboxes';
 
 export { default as Color } from './field/color';
