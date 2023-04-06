@@ -141,6 +141,11 @@ const schema = {
       type: 'string',
       format: 'color',
     },
+    url1: {
+      title: '颜色选择',
+      type: 'string',
+      format: 'url',
+    },
   },
 };
 
