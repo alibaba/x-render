@@ -19,7 +19,7 @@ FormRender 内置了很多控件，包括基础控件、嵌套控件、以及列
  * defaultShowCode: true
  */
 import React from 'react';
-import { FormSlimRender, useForm, Input } from 'form-render';
+import { FormSlimRender, useForm, Input, Select } from 'form-render';
 
 const schema = {
   type: 'object',
@@ -29,6 +29,17 @@ const schema = {
       title: '输入框',
       type: 'string',
       props: {},
+    },
+    select1: {
+      title: '单选',
+      type: 'string',
+      props: {
+        options: [
+          { label: '早', value: 'a' },
+          { label: '中', value: 'b' },
+          { label: '晚', value: 'c' }
+        ]
+      }
     }
   }
 };
@@ -36,7 +47,7 @@ const schema = {
 export default () => {
   const form = useForm();
 
-  return <FormSlimRender schema={schema} form={form} widgets={{ Input }}/>;
+  return <FormSlimRender schema={schema} form={form} widgets={{ Input, Select }}/>;
 };
 ```
 
@@ -44,41 +55,41 @@ export default () => {
 ```js
 
 // 基础控件
-Input
-Number
-TextArea
-Select
-MultiSelect
-Switch
-Radio
-CheckBox
-Checkboxes
-Date
-DateRange
-Time
-TimeRange
+Input,
+Number,
+TextArea,
+Select,
+MultiSelect,
+Switch,
+Radio,
+CheckBox,
+Checkboxes,
+Date,
+DateRange,
+Time,
+TimeRange,
 
-Color
-Rate
-TreeSelect
-ImageInput
-UrlInput
-Slider
-Upload
-Html
-PercentSlider
+Color,
+Rate,
+TreeSelect,
+ImageInput,
+UrlInput,
+Slider,
+Upload,
+Html,
+PercentSlider,
 
 // 嵌套控件
-Card
-Collapse
-SubInline
-LineTitle
+Card,
+Collapse,
+SubInline,
+LineTitle,
 
 // 列表控件
-SimpleList
-CardList
-TableList
-DrawerList
-VirtualList
-TabList
+SimpleList,
+CardList,
+TableList,
+DrawerList,
+VirtualList,
+TabList,
 ```
