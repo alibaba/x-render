@@ -40,30 +40,8 @@ npm i form-render --save
  * defaultShowCode: true
  */
 import React from 'react';
-import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
-
-const schema = {
-  type: 'object',
-  properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' }
-        ]
-      }
-    }
-  }
-};
+import schema from './schema/simple';
 
 export default () => {
   const form = useForm();
@@ -73,17 +51,13 @@ export default () => {
   };
 
   return (
-    <>
-      <FormRender 
-        form={form} 
-        schema={schema} 
-        onFinish={onFinish} 
-        fieldCol={8}
-      />
-      <Button type="primary" onClick={form.submit}>
-        提交
-      </Button>
-    </>
+    <FormRender 
+      form={form} 
+      schema={schema} 
+      onFinish={onFinish} 
+      maxWidth={360} 
+      footer={true} 
+    />
   );
 }
 ```
@@ -98,25 +72,8 @@ export default () => {
  * defaultShowCode: true
  */
 import React from 'react';
-import { Button } from 'antd';
 import FormRender, { connectForm } from 'form-render';
-
-const schema = {
-  type: 'object',
-  properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string',
-      required: true
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚']
-    }
-  }
-};
+import schema from './schema/simple';
 
 class Demo extends React.Component {
   onFinish = (formData) => {
@@ -126,17 +83,13 @@ class Demo extends React.Component {
   render() {
     const { form } = this.props;
     return (
-      <>
-        <FormRender 
-          form={form} 
-          schema={schema} 
-          onFinish={this.onFinish}
-          fieldCol={8}
-        />
-        <Button type="primary" onClick={form.submit}>
-          提交
-        </Button>
-      </>
+      <FormRender 
+        form={form} 
+        schema={schema} 
+        onFinish={this.onFinish} 
+        maxWidth={360} 
+        footer={true} 
+      />
     );
   }
 }

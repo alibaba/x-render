@@ -27,7 +27,6 @@ export type ActionProps = {
     hide: boolean;
     [key: string]: any;
   }
-  extra: React.ReactNode
 }
 
 export interface SchemaBase {
@@ -337,7 +336,7 @@ export interface FRProps extends AntdFormProps {
   methods?: Record<string, Function>;
   operateExtra?: React.ReactNode;
   maxWidth?: string;
-  footer?: boolean | Partial<ActionProps>;
+  footer?: boolean | (() => React.ReactNode) | Partial<ActionProps> ;
 }
 
 export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {

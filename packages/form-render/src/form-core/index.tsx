@@ -214,26 +214,29 @@ const FormCore = (props: any) => {
               labelCol={operlabelCol}
               className='fr-hide-label'
             >
-              <Space>
-                {!footer?.reset?.hide && (
-                  <Button 
-                    {...footer?.reset} 
-                    onClick={() => form.resetFields()}
-                  >
-                    {footer?.reset?.text || t('reset')}
-                  </Button>
-                )}
-                {!footer?.submit?.hide && (
-                  <Button
-                    type='primary'
-                    onClick={form.submit}
-                    {...footer?.submit}
-                  >
-                    {footer?.submit?.text || t('submit')}
-                  </Button>
-                )}
-                {footer?.extra}
-              </Space>
+              {isFunction(footer) ? ( 
+                <Space>{footer()}</Space>
+              ): (
+                <Space>
+                  {!footer?.reset?.hide && (
+                    <Button 
+                      {...footer?.reset} 
+                      onClick={() => form.resetFields()}
+                    >
+                      {footer?.reset?.text || t('reset')}
+                    </Button>
+                  )}
+                  {!footer?.submit?.hide && (
+                    <Button
+                      type='primary'
+                      onClick={form.submit}
+                      {...footer?.submit}
+                    >
+                      {footer?.submit?.text || t('submit')}
+                    </Button>
+                  )}
+                </Space>
+              )}
             </Form.Item>
           </Col>
         </Row>

@@ -21,6 +21,7 @@ export default {
   "expand": "展开",
   "fold": "收起",
   "submit": "提交",
+  "save": "保存",
   "moveDown": "下移",
   "moveUp": "上移"
 };
