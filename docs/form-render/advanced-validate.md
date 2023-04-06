@@ -82,7 +82,7 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form} 
-      builtOperation={true}
+      action={true}
     />
   )
 };
@@ -139,7 +139,7 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form} 
-      builtOperation={true}
+      action={true}
     />
   )
 };
@@ -177,7 +177,7 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form} 
-      builtOperation={true}
+      action={true}
       validateMessages={validateMessages}
     />
   )

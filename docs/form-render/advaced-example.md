@@ -1,39 +1,22 @@
 ---
-order: 0
+order: 3
 toc: content
+title: '常用交互'
 group: 
-  title: 最佳示例
+  title: 高级用法
   order: 2
 ---
 
 # 常用交互
 
-## 一、表单提交
+## 表单数据提交
+通过 `onFinish` 方法监听表单提交，外部可通过调用 `form.submit` 触发 `onFinish`。
+
 ```jsx
 import React from 'react';
-import { Button, message } from 'antd';
+import { message } from 'antd';
 import FormRender, { useForm } from 'form-render';
-
-const schema = {
-  type: 'object',
-  properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string'
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' }
-        ]
-      }
-    }
-  }
-};
+import schema from './schema/simple';
 
 export default () => {
   const form = useForm();
@@ -43,87 +26,63 @@ export default () => {
   };
 
   return (
-    <div>
-      <FormRender form={form} schema={schema} onFinish={onFinish} maxWidth={400} />
-      <Button type='primary' onClick={form.submit}>
-        提交
-      </Button>
-    </div>
+    <FormRender form={form} schema={schema} onFinish={onFinish} action={true} maxWidth={360} />
   );
 }
 ```
 
-## 二、表单数据异步加载
+## 表单数据初始化
 
-通过 `form.setValues` 方法进行加载
+表单的初始化数据一般是通过接口异步查询获取的，当获取到数据时可以通过 `form.setValues` 方法进行表单数据初始化。
 ```jsx
 import React, { useState, useEffect } from 'react';
 import { Button, Space, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
 import { fakeApi, delay } from './utils';
-
-const schema = {
-  type: 'object',
-  properties: {
-    input1: {
-      title: '简单输入框',
-      type: 'string'
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      enum: ['a', 'b', 'c'],
-      enumNames: ['早', '中', '晚'],
-    }
-  }
-}
+import schema from './schema/simple';
 
 export default () => {
   const form = useForm();
 
   const getRemoteData = () => {
     fakeApi('xxx/getForm').then(_ => {
-      form.setValues({ input1: 'hello world', select1: 'c' });
+      form.setValues({ input: '表单数据获取成功', select: 'c' });
     });
   };
 
   return (
     <div>
-      <FormRender form={form} schema={schema} maxWidth={400} />
-      <Button onClick={getRemoteData}>加载服务端数据</Button>
+      <FormRender form={form} schema={schema} maxWidth={360} />
+      <Button type='primary' onClick={getRemoteData}>加载服务端数据</Button>
     </div>
   );
 }
 ```
 
-## 三、下拉选项异步加载
-通过服务端获取数据后展示下拉选项的选项值
+## 下拉选项异步加载
+下拉选项的数据有时候来源于服务端下发，这时我们需要异步修改 Schema。
 
-**单个加载**
-通过 `form.setSchemaByPath` 方法进行加载
+- 单个加载：通过 `form.setSchemaByPath` 方法进行加载
 
 ```jsx
 import React, { useEffect } from 'react';
-import { Button, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
-
 const schema = {
   type: 'object',
-  displayType: 'row',
   properties: {
-    select1: {
-      title: '单选',
+    select: {
+      title: '下拉框',
       type: 'string',
       widget: 'select',
     }
   }
 };
-
 export default () => {
   const form = useForm();
 
   const onMount = () => {
-    form.setSchemaByPath('select1', {
+    // 根据服务端下发内容，重置下拉选项
+    form.setSchemaByPath('select', {
       props: {
         options: [
           {label: '东', value: 'east'},
@@ -136,43 +95,30 @@ export default () => {
   };
   
   return (
-    <FormRender
-      form={form}
-      schema={schema}
-      onMount={onMount}
+    <FormRender form={form} schema={schema} onMount={onMount} maxWidth={360}
     />
   );
 }
 ```
 
-**多个加载**
-通过 `form.setSchema` 方法进行加载
+- 多个加载：通过 `form.setSchema` 方法进行加载
 
 ```jsx
 import React, { useEffect } from 'react';
-import { Button, message } from 'antd';
 import FormRender, { useForm } from 'form-render';
 
 const schema = {
   type: 'object',
-  displayType: 'row',
   properties: {
-    obj1: {
-      type: 'object',
-      title: '对象',
-      description: '这是一个对象类型',
-      properties: {
-        select1: {
-          title: '单选',
-          type: 'string',
-          widget: 'select',
-        },
-        select2: {
-          title: '单选',
-          type: 'string',
-          widget: 'select',
-        }
-      }
+    select1: {
+      title: '下拉框一',
+      type: 'string',
+      widget: 'select',
+    },
+    select2: {
+      title: '下拉框二',
+      type: 'string',
+      widget: 'select',
     }
   }
 };
@@ -182,7 +128,7 @@ export default () => {
 
   const onMount = () => {
     form.setSchema({
-      'obj1.select1': {
+      select1: {
         props: {
           options: [
             {label: '东', value: 'east'},
@@ -192,7 +138,7 @@ export default () => {
           ]
         }
       },
-      'obj1.select2': {
+      select2: {
         props: {
           options: [
             { label: '早', value: 'a' },
@@ -209,56 +155,36 @@ export default () => {
       form={form}
       schema={schema}
       onMount={onMount}
+      maxWidth={360}
     />
   );
 }
 ```
 
-## 四、表单协议异步加载
+## 表单协议重置
 通过 `form.setSchema(schema, true)` 方法进行加载
 
 ```jsx
 import React, { useState, useEffect } from 'react';
-import { Button, Space, message } from 'antd';
+import { Button } from 'antd';
 import FormRender, { useForm } from 'form-render';
 import { fakeApi, delay } from './utils';
+import schema from './schema/simple';
+import basic from './schema/basic';
 
 const Demo = () => {
   const form = useForm();
 
   const getRemoteSchema = () => {
     fakeApi('xxx/getForm').then(_ => {
-      const schema = {
-        type: 'object',
-        properties: {
-          input1: {
-            title: '简单输入框',
-            type: 'string',
-            required: true,
-          },
-          select1: {
-            title: '单选',
-            type: 'string',
-            props: {
-              options: [
-                { label: '早', value: 'a' },
-                { label: '中', value: 'b' },
-                { label: '晚', value: 'c' }
-              ]
-            }
-          }
-        }
-      };
-      form.setSchema(schema, true);
+      form.setSchema(basic, true);
     });
   };
 
-  
-  
   return (
     <div>
-      <FormRender form={form} />
-      <Button onClick={getRemoteSchema}>加载表单schema</Button>
+      <FormRender form={form} schema={schema} />
+      <Button type='primary' onClick={getRemoteSchema}>重置表单 Schema </Button>
     </div>
   );
 };
@@ -266,9 +192,7 @@ const Demo = () => {
 export default Demo;
 ```
 
-
-
-## 五、表单服务端校验
+## 表单服务端校验
 通过 `beforeFinish` 从外部回填 error 信息到表单，注意 `beforeFinish` 需返回要回填的 error
 
 ```jsx
@@ -333,8 +257,8 @@ export default () => {
 }
 ```
 
-## 六、表单数据字段转换
-服务端数据与展示经常会不符，通过配置 `bind` 字段进行转换
+## 表单数据字段转换
+服务端数据与展示经常会不符，通过配置 `bind` 字段进行转换（List嵌套下暂时不支持）
 
 - 例如：日期范围组件接收的是一个数组，而服务端的数据是 startDate，endDate 两个字段。
 

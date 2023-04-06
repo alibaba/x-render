@@ -14,7 +14,7 @@ export const mapping = {
   subItem: 'subItem',
   panel: 'panel',
   'string:upload': 'upload',
-  'string:url': 'url',
+  'string:url': 'urlInput',
   'string:dateTime': 'date',
   'string:date': 'date',
   'string:year': 'date',

@@ -1,12 +1,12 @@
 ---
-order: 1
+order: 0
 toc: content
 group: 
   title: 最佳示例
   order: 2
 ---
 
-# 横向布局
+# 内置组件
 
 ## 基础控件
 
@@ -142,7 +142,7 @@ const schema = {
       format: 'color',
     },
     url1: {
-      title: '颜色选择',
+      title: '链接',
       type: 'string',
       format: 'url',
     },
