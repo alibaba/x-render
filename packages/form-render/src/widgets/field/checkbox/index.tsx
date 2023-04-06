@@ -1,5 +1,6 @@
 import React from 'react';
 import { Checkbox } from 'antd';
+import withFieldWrap from '../../utils/withFieldWrap';
 
 interface Props {
   title: string;
@@ -15,5 +16,5 @@ const CheckBox: React.FC<Props> = ({ title, ...rest }) => {
   );
 }
 
-export default CheckBox;
+export default withFieldWrap(CheckBox);
 

@@ -3,14 +3,14 @@ import React from 'react';
 
 import TimePicker from '../../components/TimePicker';
 import { getFormat } from '../../utils';
+import withFieldWrap from '../../utils/withFieldWrap';
 
-// TODO: 不要使用moment，使用dayjs
-export default ({ onChange, format, value, style, ...rest }) => {
+const Time = ({ onChange, format, value, style, ...rest }) => {
   const timeFormat = getFormat(format);
   const _value = value ? dayjs(value, timeFormat) : undefined;
 
-  const handleChange = (value, string) => {
-    onChange(string);
+  const handleChange = (_: any, valueStr: string) => {
+    onChange(valueStr);
   };
 
   const timeParams: any = {
@@ -23,3 +23,4 @@ export default ({ onChange, format, value, style, ...rest }) => {
 
   return <TimePicker {...timeParams} />;
 };
+export default withFieldWrap(Time);

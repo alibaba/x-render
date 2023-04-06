@@ -1,5 +1,5 @@
 export { default as Input } from './field/input';
-export { default as Number } from './field/inputNumber';
+export { default as Number } from './field/number';
 export { default as TextArea } from './field/textArea';
 
 export { default as Select } from './field/select';

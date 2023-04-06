@@ -1,5 +1,6 @@
 import React from 'react';
 import { Checkbox, Space } from 'antd';
+import withFieldWrap from '../../utils/withFieldWrap';
 
 interface Option {
   label: string;
@@ -12,8 +13,7 @@ interface Props {
   options: Option[];
   [key: string]: any
 }
-
-export default (props: Props) => {
+const Checkboxes: React.FC<Props> = (props) => {
   const { direction = 'row', options = [], ...rest } = props
 
   if (direction === 'column') {
@@ -31,3 +31,5 @@ export default (props: Props) => {
 
   return <Checkbox.Group {...rest} options={options} />;
 };
+
+export default withFieldWrap(Checkboxes);

@@ -1,3 +1,4 @@
 import { Select } from 'antd';
+import withFieldWrap from '../../utils/withFieldWrap';
 
-export default Select;
+export default withFieldWrap(Select);

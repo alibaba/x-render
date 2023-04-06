@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { Input, ConfigProvider } from 'antd';
 import { isUrl, translation } from '../../utils';
-
+import withFieldWrap from '../../utils/withFieldWrap';
 interface UrlNodeProps {
   value: string;
   addonText?: string;
@@ -83,5 +83,5 @@ const UrlInput: React.FC<UrlInputProps> = ({
   );
 }
 
-export default UrlInput;
+export default withFieldWrap(UrlInput);
 

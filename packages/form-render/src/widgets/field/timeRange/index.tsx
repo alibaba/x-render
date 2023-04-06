@@ -16,7 +16,7 @@ const TimeRange = ({ onChange, format, value, style, schema }) => {
   const _value =
     start && end ? [dayjs(start, schema?.props?.format || timeFormat), dayjs(end, schema?.props?.format || timeFormat)] : [];
 
-  const handleChange = (value, stringList) => {
+  const handleChange = (_: any, stringList: any) => {
     const emptyList1 = stringList[0] === '' || stringList[1] === '';
     const emptyList2 =
       stringList[0] === undefined || stringList[1] === undefined;

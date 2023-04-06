@@ -1,5 +1,6 @@
 import React from 'react';
 import { Radio, Space } from 'antd';
+import withFieldWrap from '../../utils/withFieldWrap';
 
 interface Option {
   label: string;
@@ -13,7 +14,7 @@ interface Props {
   [key: string]: any
 }
 
-export default (props: Props) => {
+const RadioComp = (props: Props) => {
   const { direction = 'row', options = [], ...rest } = props
 
   if (direction === 'column') {
@@ -31,3 +32,7 @@ export default (props: Props) => {
 
   return <Radio.Group {...rest} options={options} />;
 };
+
+export default withFieldWrap(RadioComp);
+
+

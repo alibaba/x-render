@@ -1,14 +1,17 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
+import weekOfYear from 'dayjs/plugin/weekOfYear';
 
-export function isUrl(string) {
+dayjs.extend(weekOfYear); // 启用 weekOfYear 插件
+
+export function isUrl(str: string) {
   const protocolRE = /^(?:\w+:)?\/\/(\S+)$/;
   // const domainRE = /^[^\s\.]+\.\S{2,}$/;
-  if (typeof string !== 'string') return false;
-  return protocolRE.test(string);
+  if (typeof str !== 'string') return false;
+  return protocolRE.test(str);
 }
 
-export function getFormat(format) {
-  let dateFormat;
+export function getFormat(format: string) {
+  let dateFormat: string;
 
   switch (format) {
     case 'date':
@@ -44,16 +47,16 @@ export function getFormat(format) {
   return dateFormat;
 }
 
-export const transformDateValue = (value, format, dateFormat) => {
-  let result = value || undefined;
+export const transformDateValue = (value: string, format: string, dateFormat: string) => {
+  let result: any = value || undefined;
 
   if (typeof value === 'string') {
     if (format === 'week') {
       const [years, week] = value.split('-');
-      result = dayjs(years).week(week);
+      result = dayjs(years)?.week(Number(week));
     }
     if (format === 'quarter') {
-      const [yearx, quarter] = value.split('-');
+      const [yearx, quarter]: any = value.split('-');
       result = dayjs(yearx).quarter(quarter);
     }
   }
@@ -64,7 +67,7 @@ export const transformDateValue = (value, format, dateFormat) => {
   return result;
 }
 
-export const translation = (configCtx) => (key) => {
-  const locale = configCtx?.locale.FormRender;
+export const translation = (configCtx: any) => (key: string) => {
+  const locale = configCtx?.locale?.FormRender;
   return locale[key];
 }

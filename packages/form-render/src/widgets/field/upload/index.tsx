@@ -1,9 +1,10 @@
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, message, Upload, ConfigProvider } from 'antd';
-import { get } from 'lodash-es';
 import React, { useContext } from 'react';
-import { translation } from '../../utils'
+import { Button, message, Upload, ConfigProvider } from 'antd';
 import { ButtonProps } from 'antd/es/button';
+import { UploadOutlined } from '@ant-design/icons';
+import { get } from 'lodash-es';
+import { translation } from '../../utils'
+
 import './index.less';
 
 interface Props {
@@ -15,14 +16,14 @@ interface Props {
   schema: any;
 }
 
-export default function FrUpload({
+const FrUpload = ({
   action,
   value,
   onChange,
   uploadProps,
   buttonProps,
   schema,
-}: Props) {
+}: Props) => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
@@ -76,3 +77,5 @@ export default function FrUpload({
     </div>
   );
 }
+
+export default FrUpload;

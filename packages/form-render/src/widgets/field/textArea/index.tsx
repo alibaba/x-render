@@ -1,7 +1,8 @@
 import React from 'react';
 import { Input } from 'antd';
+import withFieldWrap from '../../utils/withFieldWrap';
 
-export default (props: any) => {
+const TextArea = (props: any) => {
   let finalProps = {
     autoSize: {
       minRows: 3,
@@ -12,3 +13,6 @@ export default (props: any) => {
 
   return <Input.TextArea {...finalProps} />;
 };
+
+
+export default withFieldWrap(TextArea)

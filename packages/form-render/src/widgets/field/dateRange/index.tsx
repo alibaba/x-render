@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import quarterOfYear from 'dayjs/plugin/quarterOfYear';
 import DatePicker from '../../components/DatePicker';
 import { getFormat, transformDateValue } from '../../utils';
+import withFieldWrap from '../../utils/withFieldWrap';
 
 dayjs.extend(quarterOfYear);
 const { RangePicker } = DatePicker;
@@ -18,14 +19,14 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
     if (!value) {
       return value;
     }
-    return value.map(item => transformDateValue(item, format, dateFormat));
+    return value.map((item: any) => transformDateValue(item, format, dateFormat));
   }, [value]);
 
 
-  const handleChange = (val, _stringList) => {
+  const handleChange = (val: any[], _stringList: any[]) => {
     let stringList = _stringList;
     if (['week', 'quarter'].includes(format)) {
-      stringList = (val || []).map(item => dayjs(item).format(dateFormat));
+      stringList = (val || []).map((item: any) => dayjs(item).format(dateFormat));
     }
 
     const isPass = stringList.every(item => !!item);
@@ -61,4 +62,4 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
   return <RangePicker {...dateParams} />;
 };
 
-export default DateRange;
+export default withFieldWrap(DateRange);
