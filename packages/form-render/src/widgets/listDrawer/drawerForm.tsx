@@ -44,7 +44,6 @@ const DrawerForm = (props: any) => {
         initialValues={data}
         form={form}
         labelCol={{ span: 8 }}
-        fieldCol={{ flex: 1 }}
         widgets={widgets}
         onFinish={handleFinish}
         locale={configContext?.locale}
