@@ -23,7 +23,7 @@ export { default as Upload } from './field/upload';
 export { default as Html } from './field/html';
 export { default as PercentSlider } from './field/percentSlider';
 
-export { default as Card } from './container/Boxcard';
+export { default as Card } from './container/BoxCard';
 export { default as Collapse } from './container/BoxCollapse';
 export { default as SubInline } from './container/BoxSubInline';
 export { default as LineTitle } from './container/BoxLineTitle';
