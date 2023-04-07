@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useRef } from 'react';
-import { Form, Grid } from 'antd-mobile';
+import { Form, Grid, FormItemProps } from 'antd-mobile';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
 
@@ -127,29 +127,32 @@ export default (props: any) => {
   if (readOnly) {
     Widget = widgets[schema.readOnlyWidget] || widgets['ReadOnlyText'];
   }
+
   const defaultValue = schema.default ?? schema.defaultValue;
+
+  const itemProps: FormItemProps = {
+    label,
+    valuePropName,
+    hidden,
+    extra,
+    help,
+    noStyle,
+    dependencies,
+    name:path,
+    initialValue: defaultValue,
+    rules: readOnly ? [] : ruleList,
+    className:classnames('fr-field', {'fr-field-visibility': !visible}),
+  }
+
+  if (fieldRef?.current?.open) {
+    itemProps.onClick = () => {
+      fieldRef.current.open();
+    }
+  }
 
   return (
     <Grid.Item>
-      <Form.Item
-        className={classnames('fr-field', {'fr-field-visibility': !visible})}
-        label={label}
-        name={path}
-        valuePropName={valuePropName}
-        rules={readOnly ? [] : ruleList}
-        hidden={hidden}
-        extra={extra}
-        help={help}
-        initialValue={defaultValue}
-        noStyle={noStyle}
-        dependencies={dependencies}
-        onClick={() => {
-          if (!fieldRef?.current?.open) {
-            return;
-          }
-          fieldRef.current.open();
-        }}
-      >
+      <Form.Item {...itemProps}>
         <FieldWrapper
           Field={Widget}
           fieldProps={fieldProps}
@@ -158,7 +161,4 @@ export default (props: any) => {
       </Form.Item>
     </Grid.Item>
   );
-
-
-
 }
