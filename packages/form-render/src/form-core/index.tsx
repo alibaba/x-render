@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, FC } from 'react';
 import { Form, Row, Col, Button, Space, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
 
@@ -7,6 +7,7 @@ import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesToBind } from '../models/bindValues';
 import { getFormItemLayout } from '../models/layout';
+import {FRProps} from '../type'
 
 import {
   transformFieldsError,
@@ -21,7 +22,7 @@ import RenderCore from '../render-core';
 
 import './index.less';
 
-const FormCore = (props: any) => {
+const FormCore:FC<FRProps> = (props) => {
   const store = useContext(FRContext);
   const schema = useStore(store, (state: any) => state.schema);
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
