@@ -1,7 +1,7 @@
 import React from 'react';
-import { Table, Form, Space, Popconfirm, Button, Divider } from 'antd';
+import { Table, Form, Space, Popconfirm, Button, Divider, Tooltip } from 'antd';
 import type { FormListFieldData, TableColumnsType } from 'antd';
-import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, CloseOutlined, CopyOutlined } from '@ant-design/icons';
+import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, CloseOutlined, CopyOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import VirtualCell from './virtualCell';
 import { useVT } from 'virtualizedtableforantd4';
 import FButton from '../components/FButton';
@@ -16,6 +16,21 @@ interface ListVirtualProps {
   renderCore: any;
   rootPath: any;
   [key: string]: any;
+};
+
+const getTooltip = (tooltip: any) => {
+  if (!tooltip) {
+    return;
+  }
+
+  if (typeof tooltip === 'string') {
+    return { title: <span dangerouslySetInnerHTML={{ __html: tooltip }} /> };
+  }
+
+  return {
+    ...tooltip,
+    title: <span dangerouslySetInnerHTML={{ __html: tooltip.title }} />,
+  };
 };
 
 const VirtualList: React.FC<ListVirtualProps> = (props) => {
@@ -48,6 +63,8 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     removeItem,
   } = props;
 
+  const { colHeaderText, ...otherActionColumnProps } = actionColumnProps;
+
   const itemSchema = schema?.items?.properties || {};
 
   const [vt, set_components] = useVT(() => ({ scroll: { y: scrollY } }), []);
@@ -58,7 +75,8 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
   };
 
   const columns: TableColumnsType<FormListFieldData> = sortProperties(Object.entries(itemSchema)).map(([dataIndex, item]) => {
-    const { required, title, width } = item;
+    const { required, title, width, tooltip } = item;
+    const tooltipProps = getTooltip(tooltip);
     return {
       dataIndex,
       width,
@@ -66,6 +84,11 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
         <>
           {required && <span style={{ color: 'red', marginRight: '3px' }}>*</span>}
           <span>{title}</span>
+          {tooltipProps && (
+            <Tooltip placement='top' {...tooltipProps}>
+              <InfoCircleOutlined style={{ marginLeft: 6 }} />
+            </Tooltip>
+          )}
         </>
       ),
       render: (_, field) => {
@@ -93,9 +116,10 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
 
   if (!readOnly) {
     columns.push({
-      title: actionColumnProps.colHeaderText,
+      title: colHeaderText,
       width: '190px',
       fixed: 'right',
+      ...otherActionColumnProps,
       render: (_, field) => (
         <Form.Item>
           <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>

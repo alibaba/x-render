@@ -7,7 +7,7 @@ group:
 ---
 
 # 内置组件
-
+<!-- 
 ## 基础控件
 
 ```jsx
@@ -679,7 +679,7 @@ export default () => {
 
   return <FormRender schema={schema} form={form} />;
 };
-```
+``` -->
 
 #### cardList：折叠-标签内联
 
@@ -691,6 +691,22 @@ const schema = {
   type: 'object',
   displayType: 'row',
   properties: {
+    input1: {
+            title: '输入框 A',
+            type: 'string',
+          },
+          input2: {
+            title: '输入框 B',
+            type: 'string',
+          },
+          input3: {
+            title: '输入框 B',
+            type: 'string',
+          },
+          input4: {
+            title: '输入框 C',
+            type: 'string',
+          },
     list: {
       title: '对象数组',
       tooltip: '对象数组嵌套功能',
@@ -732,7 +748,7 @@ export default () => {
 };
 ```
 
-#### cardList：卡片-标签内联
+<!-- #### cardList：卡片-标签内联
 
 ```jsx
 import React from 'react';
@@ -1246,4 +1262,4 @@ export default () => {
   const form = useForm();
   return <FormRender schema={schema} form={form} />;
 };
-```
+``` -->

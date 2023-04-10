@@ -3,8 +3,8 @@
 
 
 import React, { useState, useRef, useContext } from 'react';
-import { Space, Table, Form, Button, Popconfirm, ConfigProvider } from 'antd';
-import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined } from '@ant-design/icons';
+import { Space, Table, Form, Button, Popconfirm, ConfigProvider, Tooltip } from 'antd';
+import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, InfoCircleOutlined } from '@ant-design/icons';
 import type { FormListFieldData, FormListOperation, TableColumnsType } from 'antd';
 import FormDrawer from './drawerForm';
 import { translation } from '../utils';
@@ -16,6 +16,21 @@ interface Props {
   operation: FormListOperation;
   prefix: string;
   [key: string]: any
+};
+
+const getTooltip = (tooltip: any) => {
+  if (!tooltip) {
+    return;
+  }
+
+  if (typeof tooltip === 'string') {
+    return { title: <span dangerouslySetInnerHTML={{ __html: tooltip }} /> };
+  }
+
+  return {
+    ...tooltip,
+    title: <span dangerouslySetInnerHTML={{ __html: tooltip.title }} />,
+  };
 };
 
 const TableList: React.FC<Props> = (props: any) => {
@@ -44,6 +59,9 @@ const TableList: React.FC<Props> = (props: any) => {
     removeItem,
     configContext,
   } = props;
+
+  const { colHeaderText, ...otherActionColumnProps } = actionColumnProps;
+
 
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
@@ -86,10 +104,22 @@ const TableList: React.FC<Props> = (props: any) => {
   };
 
   const columns: TableColumnsType<FormListFieldData> = Object.keys(columnSchema).map(dataIndex => {
-    const { title } = columnSchema[dataIndex];
+    const { title, tooltip, width } = columnSchema[dataIndex];
+    const tooltipProps = getTooltip(tooltip);
+
     return {
       dataIndex,
-      title,
+      width,
+      title: (
+        <>
+          <span>{title}</span>
+          {tooltipProps && (
+            <Tooltip placement='top' {...tooltipProps}>
+              <InfoCircleOutlined style={{ marginLeft: 6 }} />
+            </Tooltip>
+          )}
+        </>
+      ),
       render: (_, field) => {
         const fieldSchema = {
           type: 'object',
@@ -108,8 +138,9 @@ const TableList: React.FC<Props> = (props: any) => {
 
   if (!readOnly) {
     columns.push({
-      title: actionColumnProps.colHeaderText,
+      title: colHeaderText,
       width: 170,
+      ...otherActionColumnProps,
       render: (_, field) => (
         <Form.Item>
           <Space>
