@@ -99,6 +99,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
       title: actionColumnProps.colHeaderText,
       width: actionColumnProps.colHeaderWidth,
       fixed: actionColumnProps.colHeaderFixed,
+      align: actionColumnProps.colHeaderAlign,
       render: (_, field) => (
         <Form.Item>
           <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>

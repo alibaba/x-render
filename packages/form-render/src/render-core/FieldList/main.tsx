@@ -41,6 +41,7 @@ export default (props: any) => {
     colHeaderText: t('operate'),
     colHeaderWidth: '190px',
     colHeaderFixed: 'right',
+    colHeaderAlign: 'center',
   };
 
   let widgetName = schema.widget || 'cardList';
