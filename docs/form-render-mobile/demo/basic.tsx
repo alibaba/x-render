@@ -8,7 +8,10 @@ const schema = {
     date: {
       title: '日期',
       type: 'string',
-      format: 'date',
+      widget: 'datePicker',
+      props: {
+        precision: 'month'
+      }
     },
     input: {
       title: '输入框',
