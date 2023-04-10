@@ -33,7 +33,7 @@ const getFieldPath = (_path: any): any => {
   }
 
   if (typeof _path === 'boolean') {
-    return _path
+    return _path;
   }
 
   let result = [];
