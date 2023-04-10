@@ -27,17 +27,19 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   _set(formSchema, path, result);
 };
 
-const getFieldPath = (_path: any) => {
+const getFieldPath = (_path: any): any => {
   if (!_path) {
     return undefined;
   }
 
   if (typeof _path === 'boolean') {
-    return _path
+    return _path;
   }
 
+  let result = [];
+
   if (isArray(_path)) {
-    return _path.map(item => {
+    result = _path.map(item => {
       return item.split('.').map((ite: any) => {
         if (!isNaN(Number(ite))) {
           return ite * 1;
@@ -46,12 +48,22 @@ const getFieldPath = (_path: any) => {
       });
     })
   }
-  return _path.split('.').map((item: any) => {
+
+  result = _path.split('.').map((item: any) => {
     if (!isNaN(Number(item))) {
       return item * 1;
     }
     return item;
   });
+
+  result = result.map(item => {
+    if (item.indexOf('[') === 0  && item.indexOf(']') === item.length -1) {
+      return Number(item.substring(1, item.length-1));
+    }
+    return item;
+  });
+  
+  return result;
 };
 
 const useForm = () => {
