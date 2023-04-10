@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef } from 'react';
+import React, { createContext, useContext, useRef, useState } from 'react';
 import { Form, Grid, FormItemProps } from 'antd-mobile';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
@@ -33,8 +33,9 @@ export default (props: any) => {
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
+  const [needOnClick, setNeedOnClick] = useState(false);
+  
   const { form, widgets, methods, globalProps } = configCtx;
-
   const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);
@@ -57,14 +58,6 @@ export default (props: any) => {
     rootPath
   });
 
-  // if (schema.type === 'void') {
-  //   return ( 
-  //     <Col span={24}>
-  //       <Widget {...fieldProps } />
-  //     </Col>
-  //   );
-  // }
-
   const displayType = getValueFromKey('displayType');
   const labelWidth = getValueFromKey('labelWidth');
 
@@ -72,7 +65,6 @@ export default (props: any) => {
     return <Widget {...fieldProps} renderCore={renderCore} />
   }
 
-  // Render Container Components
   if (children) {
     fieldProps.children = (
       <Grid columns={1}>
@@ -116,8 +108,11 @@ export default (props: any) => {
     fieldProps.readOnly = readOnly;
   }
 
-  if (!fieldProps.fieldRef) {
-    fieldProps.fieldRef = fieldRef;
+  fieldProps.setFieldRef = (ref: any) => {
+    if (ref) {
+      setNeedOnClick(true);
+      fieldRef.current = ref;
+    }
   }
 
   if (!label) {
@@ -144,7 +139,7 @@ export default (props: any) => {
     className:classnames('fr-field', {'fr-field-visibility': !visible}),
   }
 
-  if (fieldRef?.current?.open) {
+  if (needOnClick && fieldRef.current) {
     itemProps.onClick = () => {
       fieldRef.current.open();
     }

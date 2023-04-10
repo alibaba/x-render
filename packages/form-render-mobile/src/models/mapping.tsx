@@ -16,7 +16,7 @@ export const mapping = {
   'string:upload': 'upload',
   'string:url': 'url',
   'string:dateTime': 'date',
-  'string:date': 'date',
+  'string:date': 'datePicker',
   'string:year': 'date',
   'string:month': 'date',
   'string:week': 'date',

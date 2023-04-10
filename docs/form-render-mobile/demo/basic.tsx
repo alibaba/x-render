@@ -5,6 +5,11 @@ import FormRender, { useForm } from 'form-render-mobile';
 const schema = {
   type: 'object',
   properties: {
+    date: {
+      title: '日期',
+      type: 'string',
+      format: 'date',
+    },
     input: {
       title: '输入框',
       type: 'string',
