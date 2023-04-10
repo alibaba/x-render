@@ -24,7 +24,7 @@ export default (props: any) => {
   const { widgets, globalConfig } = configContext;
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
- 
+
   const defaultAddBtnProps = {
     type: 'dashed',
     block: true,
@@ -38,7 +38,9 @@ export default (props: any) => {
   };
 
   let defaultActionColumnProps = {
-    colHeaderText: t('operate')
+    colHeaderText: t('operate'),
+    colHeaderWidth: '190px',
+    colHeaderFixed: 'right',
   };
 
   let widgetName = schema.widget || 'cardList';
@@ -204,11 +206,11 @@ export default (props: any) => {
               removeItem={handleRemove(operation.remove)}
               moveItem={handleMove(operation.move)}
               copyItem={handleCopy(operation.add, fields)}
-             
+
               temporary={{
                 displayType
               }}
-              
+
 
               addBtnProps={{
                 ...defaultAddBtnProps,

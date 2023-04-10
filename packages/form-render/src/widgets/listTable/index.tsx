@@ -97,20 +97,20 @@ const TableList: React.FC<ListTableProps> = (props) => {
   if (!readOnly) {
     columns.push({
       title: actionColumnProps.colHeaderText,
-      width: '190px',
-      fixed: 'right',
+      width: actionColumnProps.colHeaderWidth,
+      fixed: actionColumnProps.colHeaderFixed,
       render: (_, field) => (
         <Form.Item>
           <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>
             {!hideMove && (
               <>
-                <FButton 
+                <FButton
                   disabled={field.name === 0}
                   onClick={() => moveItem(field.name, field.name - 1)}
                   icon={<ArrowUpOutlined/>}
                   {...moveUpBtnProps}
                 />
-                <FButton 
+                <FButton
                   disabled={field.name === fields.length - 1}
                   onClick={() => moveItem(field.name, field.name + 1)}
                   icon={<ArrowDownOutlined/>}
@@ -131,7 +131,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
               </Popconfirm>
             )}
             {!hideCopy && (
-              <FButton 
+              <FButton
                 onClick={() => handleCopy(field.name)}
                 icon={<CopyOutlined/>}
                 {...copyBtnProps}
