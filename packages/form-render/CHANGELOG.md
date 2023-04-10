@@ -3,6 +3,7 @@
 
 ### 2.1.9
 - [!] 修复 form-render ts 错误
+- [+] 扩展 list 组件 actionColumnProps 配置属性
 ### 2.1.8
 - [+] 新增 footer 按钮配置栏
 
