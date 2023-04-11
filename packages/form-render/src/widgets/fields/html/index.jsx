@@ -8,9 +8,6 @@ export default function html({ value, options, schema = {} }) {
     __html = value === true ? '✔' : '✘';
   } else if (options?.length > 0) {
     if (['string', 'number'].indexOf(typeof value) > -1) {
-      const idx = schema.enum.indexOf(value);
-      __html = schema.enumNames[idx] || '-';
-
       const item = options.find(item => item.value === value);
       __html = item?.label || '-';
 

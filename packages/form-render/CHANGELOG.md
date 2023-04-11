@@ -1,5 +1,7 @@
 # 更新日志
 
+### 2.1.11
+- [!] 修复 form-render schema.enum.indexof 错误
 ### 2.1.10
 - [+] 扩展 list 组件 actionColumnProps 配置属性
 ### 2.1.9
