@@ -120,34 +120,22 @@ export const parseAllExpression = (_schema: any, _formData: any, dataPath: strin
       }
       return item;
     });
+
     return result;
   }
 
   Object.keys(schema).forEach(key => {
     const value = schema[key];
+
     if (isArray(value)) {
       schema[key] = recursionArray(value);
-    } if (isObject(value)) {
+    } if (isObject(value) && (value.mustacheParse ?? true)) {
       schema[key] = parseAllExpression(value, formData, dataPath);
     } else if (isExpression(value)) {
       schema[key] = parseExpression(value, formData, dataPath);
-    } else if (
-      typeof key === 'string' &&
-      key.toLowerCase().indexOf('props') > -1
-    ) {
-      // 有可能叫 xxxProps
-      const propsObj = schema[key];
-      if (isObject(propsObj)) {
-        Object.keys(propsObj).forEach(k => {
-          schema[key][k] = parseExpression(
-            propsObj[k],
-            _formData,
-            dataPath
-          );
-        });
-      }
     }
   });
+
   return schema;
 };
 
