@@ -139,7 +139,7 @@ export default (props: any) => {
     className:classnames('fr-field', {'fr-field-visibility': !visible}),
   }
 
-  if (needOnClick && fieldRef.current) {
+  if (needOnClick && fieldRef.current && !readOnly) {
     itemProps.onClick = () => {
       fieldRef.current.open();
     }

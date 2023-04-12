@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Dialog } from 'antd-mobile';
+import { Button, Dialog, Space, Switch } from 'antd-mobile';
 import FormRender, { useForm } from 'form-render-mobile';
 
 const schema = {
@@ -27,12 +27,19 @@ const schema = {
     slider: {
       title: '滑动条',
       type: 'string',
-      widget: 'slider'
+      widget: 'slider',
+      props: {
+        range: true,
+      }
     },
     switch: {
       title: '开关',
       type: 'bool',
-      widget: 'switch'
+      widget: 'switch',
+      props: {
+        uncheckedText: '关',
+        checkedText: '开'
+      }
     },
     stepper: {
       title: '步进器',
@@ -49,6 +56,7 @@ const schema = {
       type: 'string',
       widget: 'selector',
       props: {
+        // multiple: true,
         options: [
           { label: '早', value: 'a' },
           { label: '中', value: 'b' },
@@ -74,23 +82,33 @@ const schema = {
 
 export default () => {
   const form = useForm();
+  const [readOnly, setReadOnly] = React.useState(false);
+  const [disabled, setDisabled] = React.useState(false);
 
-  const onFinish = (formData) => {
+  const onFinish = (formData: any) => {
     Dialog.alert({
       content: <pre>{JSON.stringify(formData, null, 2)}</pre>,
     })
   };
 
   return (
-    <FormRender
-      schema={schema}
-      form={form}
-      onFinish={onFinish}
-      footer={
-        <Button block type='submit' color='primary' size='large'>
-          提交
-        </Button>
-      }
-    />
+    <div>
+      <Space style={{marginBottom: 20}}>
+        <div>只读: <Switch checked={readOnly} onChange={(val) => setReadOnly(val)} /></div>
+        <div>禁用: <Switch checked={disabled} onChange={(val) => setDisabled(val)} /></div>
+      </Space>
+      <FormRender
+        readOnly={readOnly}
+        disabled={disabled}
+        schema={schema}
+        form={form}
+        onFinish={onFinish}
+        footer={
+          <Button block type='submit' color='primary' size='large'>
+            提交
+          </Button>
+        }
+      />
+    </div>
   );
 }

@@ -1,40 +1,17 @@
 import dayjs from "dayjs";
 
 export function getFormat(format) {
-  let dateFormat;
-
   switch (format) {
-    case 'date':
-      dateFormat = 'YYYY-MM-DD';
-      break;
-    case 'time':
-      dateFormat = 'HH:mm:ss';
-      break;
-    case 'dateTime':
-      dateFormat = 'YYYY-MM-DD HH:mm:ss';
-      break;
-    case 'week':
-      dateFormat = 'YYYY-w';
-      break;
-    case 'year':
-      dateFormat = 'YYYY';
-      break;
-    case 'quarter':
-      dateFormat = 'YYYY-Q';
-      break;
-    case 'month':
-      dateFormat = 'YYYY-MM';
-      break;
-    default:
-      // dateTime
-      if (typeof format === 'string') {
-        dateFormat = format;
-      } else {
-        dateFormat = 'YYYY-MM-DD';
-      }
+    case 'date': return 'YYYY-MM-DD'
+    case 'year': return 'YYYY';
+    case 'month': return 'YYYY-MM';
+    case 'week': return 'YYYY-w';
+    case 'hour': return 'YYYY-MM-DD hh';
+    case 'minute': return 'YYYY-MM-DD hh:mm';
+    case 'second': return 'YYYY-MM-DD hh:mm:ss';
+    case 'week-day': return 'w-d';
+    default: return 'YYYY-MM-DD';
   }
-  
-  return dateFormat;
 }
 
 export const transformDateValue = (value, format, dateFormat) => {

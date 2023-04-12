@@ -1,5 +1,6 @@
 import React from 'react'
 import { DatePicker as AntdDatePicker } from 'antd-mobile'
+import { getFormat } from '../utils';
 import dayjs from 'dayjs';
 import formatPlugin from 'dayjs/plugin/advancedFormat';
 import weekOfYearPlugin from 'dayjs/plugin/weekOfYear';
@@ -14,17 +15,6 @@ dayjs.updateLocale("en",{
   weekStart:1,
 })
 
-const defaultFormatMap = {
-  'day': 'YYYY-MM-DD',
-  'year': 'YYYY',
-  'month': 'YYYY-MM',
-  'week': 'YYYY-w',
-  'hour': 'YYYY-MM-DD hh',
-  'minute': 'YYYY-MM-DD hh:mm',
-  'second': 'YYYY-MM-DD hh:mm:ss',
-  'week-day': 'w-d',
-}
-
 export default (props: any) => {
   const { 
     value, 
@@ -36,7 +26,7 @@ export default (props: any) => {
     ...restProps
   } = omit(props, ['addons', 'schema'])
   
-  const dateFormat = format || defaultFormatMap[precision];
+  const dateFormat = format || getFormat(precision);
 
   return (
     <AntdDatePicker

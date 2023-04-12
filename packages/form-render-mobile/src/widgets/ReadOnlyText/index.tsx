@@ -1,5 +1,7 @@
 import React from 'react';
-import { Image } from 'antd-mobile';
+import { getWidgetName } from '../../models/mapping';
+import { getFormat } from '../utils';
+import dayjs from 'dayjs';
 
 interface IProps {
   value: any
@@ -7,54 +9,54 @@ interface IProps {
   schema: any
 }
 
-export default ({ value, options, schema = {} }: IProps) => {
-  let __html = '-';
+const findLabels = (value: any[], options: any[]) => {
+  return value.map(v => options.find(o => o.value === v)?.label);
+}
+
+const isValidateArray = (list: unknown) => Array.isArray(list) && list.length > 0;
+
+export default (props: IProps & Record<string, any>) => {
+  const { value, options, schema = {} } = props;
+  let __html: string;
   
-  if (schema.type === 'boolean') {
-    __html = value === true ? '✔' : '✘';
-  } else if (options?.length > 0) {
-    if (['string', 'number'].indexOf(typeof value) > -1) {
-      const idx = schema.enum.indexOf(value);
-      __html = schema.enumNames[idx] || '-';
+  const widgetName = getWidgetName(schema);
 
-      const item = options.find(item => item.value === value);
-      __html = item?.label || '-';
-
-    } else if (Array.isArray(value)) {
-      let idxStr = '-';
-      value.forEach(v => {
-        const item = options.find(item => item.value === v);
-        const name = item.label;
-        if (name) {
-          idxStr += ',' + name;
-        }
-      });
-      __html = idxStr.replace('-,', '');
-    }
-  } else if (typeof value === 'number') {
-    __html = String(value);
-  } else if (typeof value === 'string') {
-    __html = value;
-  } else if (
-    schema.type === 'range' &&
-    Array.isArray(value) &&
-    value[0] &&
-    value[1]
-  ) {
-    __html = `${value[0]} - ${value[1]}`;
-  } else if (value && ['number', 'string'].indexOf(value) === -1) {
-    __html = JSON.stringify(value);
+  switch(widgetName) {
+    case 'Input':
+    case 'TextArea':
+    case 'Rate':
+    case 'Stepper':
+      __html = value;
+      break;
+    case 'Slider':
+      if (isValidateArray(value)) {
+        __html = value.join('-')
+      } else {
+        __html = value;
+      }
+      break;
+    case 'Selector':
+      if (isValidateArray(value)) {
+        __html = findLabels(value, options).join('，')
+      }
+      break;
+    case 'Switch':
+      const { uncheckedText = '否', checkedText = '是' } = props;
+      __html = value ? checkedText : uncheckedText;
+      break;
+    case 'Radio':
+      __html = options.find(o => o.value === value)?.label;
+      break;
+    case 'DatePicker':
+      const { format, precision } = props;
+      const dateFormat = format || getFormat(precision);
+      __html = dayjs(value).format(dateFormat);
+      break;
+    default:
+      __html = '-'
   }
 
-  if (schema.format === 'image') {
-    return (
-      <Image
-        height={56}
-        src={value}
-        {...schema.imageProps}
-      />
-    );
-  }
+  __html ??= '-'
 
   return <div dangerouslySetInnerHTML={{ __html }} />;
 }
