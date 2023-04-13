@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Form, Popover } from 'antd';
+import { Form, Popover, version } from 'antd';
 
 const VirtualCell = (props: any) => {
   const { renderCore, schema, dataIndex, ...otherProps } = props;
@@ -14,9 +14,9 @@ const VirtualCell = (props: any) => {
     schema.properties[dataIndex].onStatusChange = onStatusChange;
   }
 
-  const popProps = {
+  const popProps = version < '4.23.0' ? {
     visible: !!errorMsg
-  };
+  } : {}
 
   return (
     <Form.Item>

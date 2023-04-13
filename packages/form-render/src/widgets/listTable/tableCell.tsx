@@ -1,5 +1,5 @@
-import React, { useState} from 'react';
-import { Form, Popover } from 'antd';
+import React, { useState } from 'react';
+import { Form, Popover, version } from 'antd';
 
 const TableCell = (props: any) => {
   const { renderCore, schema, dataIndex, ...otherProps } = props;
@@ -14,9 +14,9 @@ const TableCell = (props: any) => {
     schema.properties[dataIndex].onStatusChange = onStatusChange;
   }
 
-  const popoverProps = {
+  const popoverProps = version < '4.23.0' ? {
     visible: !!errorMsg
-  }
+  } : {}
 
   return (
     <Form.Item>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Button, Drawer, Space, ConfigProvider } from 'antd';
+import { Button, Drawer, Space, ConfigProvider, version } from 'antd';
 import FRender, { useForm } from '../../index';
 import { translation } from '../utils';
 
@@ -18,10 +18,9 @@ const DrawerForm = (props: any) => {
     onClose();
   };
 
-  const drawerProps = {
+  const drawerProps = version < '4.23.0' ? {
     visible: true,
-
-  }
+  } : {}
 
   return (
     <Drawer
