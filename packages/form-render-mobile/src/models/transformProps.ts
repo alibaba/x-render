@@ -36,7 +36,7 @@ const transformProps =  (props: any) => {
     fieldCol,
     // labelAlign,
     // colon,
-    // className,
+    className,
     // style,
     // disabled,
     // scrollToFirstError,
@@ -62,6 +62,7 @@ const transformProps =  (props: any) => {
     readOnly,
     column,
     mapping,
+    className,
     // debugCss, // 好像没用了
     locale,
     configProvider,

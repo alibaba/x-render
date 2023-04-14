@@ -47,6 +47,7 @@ const FormCore = (props: any) => {
     removeHiddenData,
     logOnMount,
     logOnSubmit,
+    className,
     id,
   } = transformProps({ ...props, ...schemaProps });
 
@@ -183,14 +184,14 @@ const FormCore = (props: any) => {
     onFinishFailed({ ...params, values });
   };
 
-  const className = cx('frm-form', {
+  const formClassName = cx('frm-form', className, {
     ['frm-form-card']: isCardMode,
   })
 
   return (
     <Form
-      className={className}
       {...formProps}
+      className={formClassName}
       form={form}
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
