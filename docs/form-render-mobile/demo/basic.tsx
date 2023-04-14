@@ -96,6 +96,7 @@ export default () => {
   const form = useForm();
   const [readOnly, setReadOnly] = React.useState(false);
   const [disabled, setDisabled] = React.useState(false);
+  const [displayType, setDisplayType] = React.useState('column');
 
   const onFinish = (formData: any) => {
     Dialog.alert({
@@ -108,8 +109,18 @@ export default () => {
       <Space style={{marginBottom: 20}}>
         <div>只读: <Switch checked={readOnly} onChange={(val) => setReadOnly(val)} /></div>
         <div>禁用: <Switch checked={disabled} onChange={(val) => setDisabled(val)} /></div>
+        <div>
+          布局: 
+          <Switch
+            checkedText="列"
+            uncheckedText="行"
+            checked={displayType === 'column'}
+            onChange={(val) => setDisplayType(val ? 'column': 'row')}
+          />
+        </div>
       </Space>
       <FormRender
+        displayType={displayType}
         readOnly={readOnly}
         disabled={disabled}
         schema={schema}
