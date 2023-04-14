@@ -88,49 +88,7 @@ export default () => {
 
 ### 卡片 card
 
-```jsx
-import React from 'react';
-import FormRender, { useForm } from 'form-render-mobile';
-
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    obj: {
-      type: 'object',
-      widget: 'card',
-      title: '卡片主题',
-      description: '这是一个对象类型',
-      properties: {
-        input1: {
-          title: '输入框 A',
-          type: 'string',
-        },
-        input2: {
-          title: '输入框 B',
-          type: 'string',
-        },
-        input3: {
-          title: '输入框 C',
-          type: 'string',
-        },
-        input4: {
-          title: '输入框 D',
-          type: 'string',
-        },
-      },
-    },
-  },
-};
-
-export default () => {
-  const form = useForm();
-
-  return <FormRender schema={schema} form={form} />;
-};
-```
-
-
+<code src="./demo/card.tsx"></code>
 
 ## 列表控件
 
