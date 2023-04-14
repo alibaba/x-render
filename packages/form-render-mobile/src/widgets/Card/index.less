@@ -1,21 +1,40 @@
-.fr-obj-card {
+.frm-widget-card {
   border-radius: 4px;
-  border-color: #f4f4f4;
-  margin-bottom: 24px;
+  margin: 0 12px;
 
-  .ant-card-head {
-    border: none
+  &:not(:first-of-type) {
+    margin-top: 12px;
   }
 
-  .ant-card-body {
-    padding: 12px 24px !important;
+  .adm-card-header {
+    border-bottom: none !important;
   }
 
-  .fr-header-desc {
+  .adm-card-body {
+    padding: 0;
+  }
+
+  .adm-form-item {
+    padding-left: 4px;
+  }
+
+  &-title {
+    margin-right: 6px;
+    padding-left: 4px;
+  }
+
+  &-desc {
     font-size: 12px;
     word-break: break-all;
     color: rgba(0, 0, 0, .45);
-    margin-left: 6px;
+  }
+
+  &-no-title {
+    .adm-grid-item:first-of-type {
+      .adm-list-item-content {
+        border-top: none;
+      }
+    }
   }
 }
 

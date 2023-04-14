@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { Form, Grid } from 'antd-mobile';
 import { useStore } from 'zustand';
+import cx from 'classnames';
 
 import { valueRemoveUndefined, _cloneDeep, isFunction } from '../utils';
 import { FRContext } from '../models/context';
@@ -25,7 +26,7 @@ const FormCore = (props: any) => {
   const schema = useStore(store, (state: any) => state.schema);
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
   const setContext = useStore(store, (state: any) => state.setContext);
-
+  const isCardMode = useStore(store, (state: any) => state.isCardMode);
 
   const { type, properties, ...schemaProps } = schema || {};
   const {
@@ -182,9 +183,13 @@ const FormCore = (props: any) => {
     onFinishFailed({ ...params, values });
   };
 
+  const className = cx('frm-form', {
+    ['frm-form-card']: isCardMode,
+  })
+
   return (
     <Form
-      className='frm-form'
+      className={className}
       {...formProps}
       form={form}
       onFinish={handleFinish}
