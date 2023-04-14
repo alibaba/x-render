@@ -5,6 +5,18 @@ import FormRender, { useForm } from 'form-render-mobile';
 const schema = {
   type: 'object',
   properties: {
+    city: {
+      title: '城市',
+      type: 'array',
+      widget: 'cascader',
+      props: {
+        options: [
+          { label: '浙江', value: 1, children: [
+            { label: '杭州', value: 2}
+          ] },
+        ]
+      }
+    },
     date: {
       title: '日期',
       type: 'string',

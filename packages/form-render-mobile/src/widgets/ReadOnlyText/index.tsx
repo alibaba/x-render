@@ -13,6 +13,22 @@ const findLabels = (value: any[], options: any[]) => {
   return value.map(v => options.find(o => o.value === v)?.label);
 }
 
+const flatCascaderOptions = (options: any[]) => {
+  const result = [];
+
+  const walk = (list: any[]) => {
+    list.forEach(i => {
+      result.push(i);
+      if (isValidateArray(i.children)) {
+        walk(i.children);
+      }
+    })
+  }
+
+  walk(options);
+  return result;
+}
+
 const isValidateArray = (list: unknown) => Array.isArray(list) && list.length > 0;
 
 export default (props: IProps & Record<string, any>) => {
@@ -52,6 +68,10 @@ export default (props: IProps & Record<string, any>) => {
       const dateFormat = format || getFormat(precision);
       __html = dayjs(value).format(dateFormat);
       break;
+    case 'Cascader':
+      const flatOptions = flatCascaderOptions(options);
+      __html = findLabels(value, flatOptions).join('-')
+    break;
     default:
       __html = '-'
   }
