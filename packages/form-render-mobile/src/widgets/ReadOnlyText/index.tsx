@@ -10,6 +10,8 @@ interface IProps {
 }
 
 const findLabels = (value: any[], options: any[]) => {
+  if (!isValidateArray(value) || !isValidateArray(options)) return [];
+
   return value.map(v => options.find(o => o.value === v)?.label);
 }
 
@@ -70,7 +72,7 @@ export default (props: IProps & Record<string, any>) => {
       break;
     case 'Cascader':
       const flatOptions = flatCascaderOptions(options);
-      __html = findLabels(value, flatOptions).join('-')
+      __html = findLabels(value, flatOptions).join('-') || '-'
     break;
     default:
       __html = '-'
