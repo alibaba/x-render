@@ -123,7 +123,7 @@ export default (props: any) => {
     add(value);
   };
 
-  const handleDetele = () => {
+  const handleDelete = () => {
     if (isFunction(removeBtn?.onClick)) {
       removeBtn.onClick(() => {
         form.setSchemaByPath(path, { hidden: true });
@@ -252,7 +252,7 @@ export default (props: any) => {
           type='link'
           danger
           {...removeBtn}
-          onClick={handleDetele}
+          onClick={handleDelete}
         >
           {removeBtn?.text || t('delete')}
         </Button>
