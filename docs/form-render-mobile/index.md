@@ -39,4 +39,4 @@ npm i form-render-mobile --save
 ```
 
 ## 🚀 快速上手
-<code src="./demo/basic.tsx"></code>
+<code src="./demo/basic.tsx" background="rgb(245,245,245)" compact={true}></code>

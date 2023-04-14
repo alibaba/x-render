@@ -17,19 +17,26 @@ const schema = {
         ]
       }
     },
-    date: {
-      title: '日期',
-      type: 'string',
-      widget: 'datePicker',
-      props: {
-        precision: 'month'
+    obj: {
+      title: '分组',
+      type: 'object',
+      widget: 'group',
+      properties: {
+        date: {
+          title: '日期',
+          type: 'string',
+          widget: 'datePicker',
+          props: {
+            precision: 'month'
+          }
+        },
+        input: {
+          title: '输入框',
+          type: 'string',
+          widget: 'input',
+          required: true,
+        },
       }
-    },
-    input: {
-      title: '输入框',
-      type: 'string',
-      widget: 'input',
-      required: true,
     },
     textarea: {
       title: '长文本',
@@ -106,7 +113,7 @@ export default () => {
 
   return (
     <div>
-      <Space style={{marginBottom: 20}}>
+      <Space style={{ margin: 12 }}>
         <div>只读: <Switch checked={readOnly} onChange={(val) => setReadOnly(val)} /></div>
         <div>禁用: <Switch checked={disabled} onChange={(val) => setDisabled(val)} /></div>
         <div>
