@@ -107,7 +107,7 @@ export default (props: any) => {
     move(form, to);
   };
 
-  const handleCopy = (add: any, fields: any) => (value: any) => {
+  const handleCopy = (add: any, fields: any) => (data: any) => {
     if (schema.max && fields.length === schema.max) {
       return message.warning(t('copy_max_tip'));
     }
@@ -117,10 +117,10 @@ export default (props: any) => {
     }
 
     if (isFunction(copyFunc)) {
-      copyFunc((funData?: any) => add(funData || value), { schema, value });
+      copyFunc((funData?: any) => add(funData || data), { schema, data });
       return;
     }
-    add(value);
+    add(data);
   };
 
   const handleDelete = () => {
