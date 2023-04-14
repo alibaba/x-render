@@ -1,8 +1,3 @@
-/**
- * transform: true
- * defaultShowCode: true
- * background: 'rgb(245,245,245)'
- */
 import React from 'react';
 import { Button, Dialog, Space, Switch } from 'antd-mobile';
 import FormRender, { useForm } from 'form-render-mobile';
@@ -18,6 +13,7 @@ const schema = {
       description: '这是一个对象类型',
       properties: {
         input1: {
+          required: true,
           title: '输入框 A',
           type: 'string',
         },
@@ -29,12 +25,22 @@ const schema = {
           title: '输入框 C',
           type: 'string',
         },
-        input4: {
-          title: '输入框 D',
+      },
+    },
+    obj1: {
+      type: 'object',
+      widget: 'card',
+      properties: {
+        input1: {
+          title: '输入框 A',
+          type: 'string',
+        },
+        input2: {
+          title: '输入框 B',
           type: 'string',
         },
       },
-    },
+    }
   },
 };
 
@@ -52,7 +58,7 @@ export default () => {
 
   return (
     <div>
-      <Space style={{marginBottom: 20}}>
+      <Space style={{ margin: 12 }}>
         <div>只读: <Switch checked={readOnly} onChange={(val) => setReadOnly(val)} /></div>
         <div>禁用: <Switch checked={disabled} onChange={(val) => setDisabled(val)} /></div>
       </Space>

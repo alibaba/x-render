@@ -88,7 +88,7 @@ export default () => {
 
 ### 卡片 card
 
-<code src="./demo/card.tsx"></code>
+<code src="./demo/card.tsx" background="rgb(245,245,245)" compact={true}></code>
 
 ## 列表控件
 
