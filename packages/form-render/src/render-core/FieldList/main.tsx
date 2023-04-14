@@ -24,7 +24,7 @@ export default (props: any) => {
   const { widgets, globalConfig } = configContext;
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
- 
+
   const defaultAddBtnProps = {
     type: 'dashed',
     block: true,
@@ -44,7 +44,7 @@ export default (props: any) => {
   let widgetName = schema.widget || 'cardList';
   const Widget = getWidget(widgetName, widgets);
 
-  const { props: listProps,  removeBtn, ...otherSchema } = schema;
+  const { props: listProps, removeBtn, ...otherSchema } = schema;
 
   let defaultValue = schema.default ?? schema.defaultValue;
   if (defaultValue === undefined && !['drawerList', 'list1'].includes(widgetName)) {
@@ -79,14 +79,14 @@ export default (props: any) => {
     add(data);
   };
 
-  const handleRemove = (remove: any) => (index: number) => {
+  const handleRemove = (remove: any) => (index: number, data?: any) => {
     let removeFunc = onRemove;
     if (typeof onRemove === 'string') {
       removeFunc = methods[onRemove];
     }
 
     if (isFunction(removeFunc)) {
-      removeFunc(() => remove(index), { schema, index });
+      removeFunc(() => remove(index), { schema, index, data });
       return;
     }
 
@@ -204,11 +204,11 @@ export default (props: any) => {
               removeItem={handleRemove(operation.remove)}
               moveItem={handleMove(operation.move)}
               copyItem={handleCopy(operation.add, fields)}
-             
+
               temporary={{
                 displayType
               }}
-              
+
 
               addBtnProps={{
                 ...defaultAddBtnProps,
