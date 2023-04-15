@@ -71,6 +71,8 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
     const func = methods[props.disabledDate];
     if (typeof func === 'function') {
       dateParams.disabledDate = func;
+    } else {
+      delete dateParams.disabledDate;
     }
   }
 
@@ -78,6 +80,8 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
     const func = methods[props.disabledTime];
     if (typeof func === 'function') {
       dateParams.disabledTime = func;
+    } else {
+      delete dateParams.disabledTime;
     }
   }
 
