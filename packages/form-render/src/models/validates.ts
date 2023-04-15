@@ -17,8 +17,9 @@ const getRuleList = (schema: any, form: any, methods: any) => {
   }
   
   if (required) {
+    let rule: any;
     if (['year','quarter', 'month', 'week', 'date', 'dateTime', 'time'].includes(format) && type === 'range') {
-      rules.push({
+      rule = {
         type: 'array',
         required: true,
         len: 2,
@@ -26,12 +27,16 @@ const getRuleList = (schema: any, form: any, methods: any) => {
           0: { type: 'string', required: true },
           1: { type: 'string', required: true },
         }
-      })
+      };
     } else if (widget === 'checkbox') {
-      rules.push({ type, required: true,  whitespace: true, message: title + "必填" });
+      rule = { type, required: true,  whitespace: true, message: title + '必填' };
     } else {
-      rules.push({ type, required: true,  whitespace: true, message: message?.required });
+      rule = { required: true,  whitespace: true, message: message?.required };
+      if (['string', 'number', 'boolean', 'array', 'object'].includes(type)) {
+        rule.type = type;
+      }
     }
+    rules.push(rule);
   }
 
   if (pattern) {
