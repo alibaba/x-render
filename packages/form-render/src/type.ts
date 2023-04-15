@@ -1,6 +1,6 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
-import type { FormInstance as AntdFormInstance, FormProps as AntdFormProps } from 'antd';
+import type { FormInstance as AntdFormInstance, FormProps as AntdFormProps, ColProps, TooltipProps } from 'antd';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
 
 export type { RuleItem } from 'async-validator';
@@ -80,6 +80,12 @@ export interface SchemaBase {
   props?: Record<string, any>;
   /**扩展字段 */
   'add-widget'?: string;
+  labelCol?: number | ColProps;
+  fieldCol?: number | ColProps
+  tooltip?: string | TooltipProps
+  cellSpan?: number;
+  span?: number;
+  [key: string]: any;
 }
 
 export type Schema = Partial<SchemaBase>;
