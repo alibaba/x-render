@@ -32,7 +32,7 @@ const getRuleList = (schema: any, form: any, methods: any) => {
       rule = { type, required: true,  whitespace: true, message: title + '必填' };
     } else {
       rule = { required: true,  whitespace: true, message: message?.required };
-      if (['string', 'number', 'boolean', 'array', 'object'].includes(type)) {
+      if (type !== 'any') {
         rule.type = type;
       }
     }
