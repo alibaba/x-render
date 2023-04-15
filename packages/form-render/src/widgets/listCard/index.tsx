@@ -64,11 +64,6 @@ const CardList = (props: any) => {
     copyItem(value);
   };
 
-  const handleRemove = (name: number) => {
-    const value = form.getFieldValue(rootPath.concat(name));
-    removeItem(name, value);
-  }
-
   return (
     <>
       <div className={classnames('fr-list-card', { 'fr-list-card-background': hasBackground })}>
@@ -106,7 +101,7 @@ const CardList = (props: any) => {
                 )}
                 {!hideDelete && (
                   <Popconfirm
-                    onConfirm={() => handleRemove(name)}
+                    onConfirm={() => removeItem(name)}
                     {...delConfirmProps}
                   >
                     <FButton

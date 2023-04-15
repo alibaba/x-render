@@ -79,13 +79,14 @@ export default (props: any) => {
     add(data);
   };
 
-  const handleRemove = (remove: any) => (index: number, data?: any) => {
+  const handleRemove = (remove: any) => (index: number) => {
     let removeFunc = onRemove;
     if (typeof onRemove === 'string') {
       removeFunc = methods[onRemove];
     }
 
     if (isFunction(removeFunc)) {
+      const data = form.getFieldValue([...preRootPath, ...path, index]);
       removeFunc(() => remove(index), { schema, index, data });
       return;
     }
