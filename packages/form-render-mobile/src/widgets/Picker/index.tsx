@@ -31,7 +31,7 @@ export default (props: any) => {
     >
       {items => {
         if (items.every(i => i === null)) {
-          return placeholder;
+          return <span style={{color: '#ccc'}}>{placeholder}</span>;
         } else {
           return items.map(i => i?.label ?? '未选择').join('-')
         }

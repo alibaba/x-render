@@ -37,7 +37,7 @@ export default (props: any) => {
       {...restProps}
     >
       {value => (
-        <div>{value ? dayjs(value).format(dateFormat) : placeholder}</div>
+        <div>{value ? dayjs(value).format(dateFormat) : <span style={{ color: '#ccc' }}>{placeholder}</span>}</div>
       )}
     </AntdDatePicker>
   )
