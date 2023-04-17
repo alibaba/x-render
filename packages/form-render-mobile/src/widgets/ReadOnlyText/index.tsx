@@ -67,6 +67,7 @@ export default (props: IProps & Record<string, any>) => {
       break;
     case 'DatePicker':
       const { format, precision } = props;
+      if (!value) return '-';
       const dateFormat = format || getFormat(precision);
       __html = dayjs(value).format(dateFormat);
       break;
