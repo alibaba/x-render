@@ -25,15 +25,8 @@ const schema = {
       title: '交通工具',
       type: 'string',
       widget: 'picker',
-      props: {
-        columns: [
-          [
-            { value: '公交车', label: '公交车' },
-            { value: '自行车', label: '自行车' },
-            { value: '火车', label: '火车' }
-          ]
-        ]
-      }
+      enum: ['火车', '飞机', '火箭'],
+      enumNames: ['火车', '飞机', '火箭'],
     },
     group1: {
       title: '分组',
