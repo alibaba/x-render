@@ -4,87 +4,25 @@ toc: content
 title: 最佳示例
 ---
 
-## 基础控件
-<code src="./demo/basic.tsx"></code>
+## 输入控件
 
-## 嵌套控件
+输入控件是在 antd mobile 组件的基础上，做了进一步的封装和兼容之后，组成的一系列开箱即用的 widget。如要对组件进行进一步的配置请参考对应的 antd mobile 文档。
 
-对于嵌套类型的表单，我们内置了四种主题，分别为 collapse | card | tile | flex, 默认为 collapse 主题
+form render mobile 支持如下输入控件。如需要更多自定义样式和功能，请参考 [自定义组件](/form-render/advanced-widget)。
 
-### 折叠 collapse
+<code src="./demo/allWidget.tsx" background="rgb(245,245,245)" compact={true}></code>
 
-```jsx
-/**
- * transform: true
- * defaultShowCode: true
- * background: 'rgb(245,245,245)'
- */
-import React from 'react';
-import FormRender, { useForm } from 'form-render-mobile';
+## 布局控件
 
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    obj: {
-      type: 'object',
-      title: '卡片主题',
-      description: '这是一个对象类型',
-      widget: 'collapse',
-      items: [
-        {
-          title: '基础信息',
-          properties: {
-            input1: {
-              title: '输入框 A',
-              type: 'string',
-            },
-            input2: {
-              title: '输入框 B',
-              type: 'string',
-            },
-            input3: {
-              title: '输入框 C',
-              type: 'string',
-            },
-            input4: {
-              title: '输入框 D',
-              type: 'string',
-            }
-          }
-        },
-        {
-          title: '其他信息',
-          properties: {
-            input1: {
-              title: '输入框 A',
-              type: 'string',
-            },
-            input2: {
-              title: '输入框 B',
-              type: 'string',
-            },
-            input3: {
-              title: '输入框 C',
-              type: 'string',
-            },
-            input4: {
-              title: '输入框 D',
-              type: 'string',
-            }
-          }
-        }
-      ]
-    },
-  },
-};
+对于移动端的表单场景，我们内置了两种常用布局控件，分别为 `card`，`group`。
 
-export default () => {
-  const form = useForm();
+### 分组 group
 
-  return <FormRender schema={schema} form={form} />;
-};
-```
+<code src="./demo/group.tsx" background="rgb(245,245,245)" compact={true}></code>
+
+<!-- ### 折叠 collapse -->
+<!---->
+<!-- <code src="./demo/collaspa.tsx" background="rgb(245,245,245)" compact={true}></code> -->
 
 ### 卡片 card
 
@@ -92,52 +30,4 @@ export default () => {
 
 ## 列表控件
 
-```jsx
-import React from 'react';
-import FormRender, { useForm } from 'form-render-mobile';
-
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    list: {
-      title: '对象数组',
-      description: '对象数组嵌套功能',
-      type: 'array',
-      widget: 'cardList',
-      items: {
-        type: 'object',
-        title: '卡片主题',
-        description: '这是一个对象类型',
-        column: 3,
-        widget: 'card',
-        properties: {
-          input1: {
-            title: '输入框 A',
-            type: 'string',
-          },
-          input2: {
-            title: '输入框 B',
-            type: 'string',
-          },
-          input3: {
-            title: '输入框 B',
-            type: 'string',
-          },
-          input4: {
-            title: '输入框 C',
-            type: 'string',
-          },
-        },
-      },
-    },
-  },
-};
-
-export default () => {
-  const form = useForm();
-
-  return <FormRender schema={schema} form={form} />;
-};
-```
-
+<code src="./demo/list.tsx" background="rgb(245,245,245)" compact={true}></code>
