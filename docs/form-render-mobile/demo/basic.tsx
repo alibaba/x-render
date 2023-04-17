@@ -11,13 +11,17 @@ const schema = {
       widget: 'cascader',
       props: {
         options: [
-          { label: '浙江', value: 1, children: [
-            { label: '杭州', value: 2}
-          ] },
+          { 
+            label: '浙江', 
+            value: 1, 
+            children: [
+              { label: '杭州', value: 2 }
+            ]
+          },
         ]
       }
     },
-    obj: {
+    group1: {
       title: '分组',
       type: 'object',
       widget: 'group',
@@ -35,20 +39,29 @@ const schema = {
           type: 'string',
           widget: 'input',
           required: true,
+          placeholder: '请输入'
         },
       }
     },
-    textarea: {
-      title: '长文本',
-      type: 'string',
-      widget: 'textArea'
-    },
-    slider: {
-      title: '滑动条',
-      type: 'string',
-      widget: 'slider',
-      props: {
-        range: true,
+    group2: {
+      title: '分组2',
+      type: 'object',
+      widget: 'group',
+      properties: {
+        textarea: {
+          title: '长文本',
+          type: 'string',
+          widget: 'textArea',
+          placeholder: '请输入'
+        },
+        slider: {
+          title: '滑动条',
+          type: 'string',
+          widget: 'slider',
+          props: {
+            range: true,
+          }
+        },
       }
     },
     switch: {
@@ -75,11 +88,14 @@ const schema = {
       type: 'string',
       widget: 'selector',
       props: {
-        // multiple: true,
+        multiple: true,
         options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' }
+          { label: 'A', value: 'a' },
+          { label: 'B', value: 'b' },
+          { label: 'C', value: 'c' },
+          { label: 'D', value: 'd' },
+          { label: 'E', value: 'e' },
+          { label: 'F', value: 'f' }
         ]
       }
     },

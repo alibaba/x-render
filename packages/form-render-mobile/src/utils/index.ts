@@ -142,4 +142,9 @@ export const translation = (configCtx: any) => (key: string) => {
   return locale[key];
 }
 
+export const warn = (str:string, ...args: any[]) => {
+  if (process.env.NODE_ENV === 'development') {
+    console.warn('[form-render-mobile]:', str, ...args);
+  }
+}
 

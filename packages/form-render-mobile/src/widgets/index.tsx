@@ -7,11 +7,11 @@ export {
   Switch,
   Stepper, 
 } from 'antd-mobile';
-
 export { default as Radio } from './Radio';
 export { default as ReadOnlyText } from './ReadOnlyText';
 export { default as DatePicker } from './DatePicker';
 export { default as Cascader } from './Cascader';
+export { default as Html } from './Html';
 
 // layout widget
 export { default as Group } from './Group';

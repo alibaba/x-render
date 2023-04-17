@@ -3,7 +3,7 @@ import { Form, Grid, FormItemProps } from 'antd-mobile';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
 
-import { _get } from '../../utils';
+import { warn, _get } from '../../utils';
 import { ConfigContext } from '../../models/context';
 import { getWidgetName } from '../../models/mapping';
 import getRuleList from '../../models/validates';
@@ -39,14 +39,14 @@ export default (props: any) => {
   const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);
-  // Component not found
-  if (!widgetName) {
-    const ErrorSchema = widgets['errorSchemaWidget'];
-    return <ErrorSchema schema={schema} />;
-  }
   
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  let Widget = widgets[widgetName] || widgets['Html'];
+  let Widget = widgets[widgetName];
+
+  if (!Widget) {
+    Widget = widgets['Html'];
+    warn(`Can not find widget component named ${widgetName}, please check the schema and widgets`, schema);
+  }
 
   const fieldProps = getFieldProps(widgetName, schema, {
     widgets,
