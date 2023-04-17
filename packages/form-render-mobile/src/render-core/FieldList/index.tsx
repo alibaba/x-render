@@ -5,6 +5,7 @@ import { useStore } from 'zustand';
 import { FRContext, ConfigContext } from '../../models/context';
 import { parseAllExpression } from '../../models/expression';
 import { isFunction } from '../../utils';
+import './index.less';
 
 const UpperContext = createContext(() => {});
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
@@ -67,7 +68,7 @@ export default (props: any) => {
   }
 
   return (
-    <Grid.Item span={24}>
+    <Grid.Item span={24} className="frm-list">
       <Form.Array
         name={path}
         initialValue={defaultValue}
@@ -79,8 +80,8 @@ export default (props: any) => {
         onAdd={({ add }) => handleAdd(add)}
         renderHeader={({ index }, { remove }) => (
           <>
-            {schema.items.title && (
-               <span>{schema.items.title} {index + 1}</span>
+            {schema.title && (
+               <span>{schema.title} {index + 1}</span>
             )}
             {!readOnly && (
               <a onClick={() => handleRemove(remove, index)} style={{ float: 'right' }}>
@@ -91,7 +92,7 @@ export default (props: any) => {
         )}
       >
         {fields => fields.map(({ index }) => {
-        return renderCore({ schema, parentPath: [index], rootPath: [...rootPath, index] })
+          return renderCore({ schema, parentPath: [index], rootPath: [...rootPath, index] })
         })}
       </Form.Array>
     </Grid.Item>
