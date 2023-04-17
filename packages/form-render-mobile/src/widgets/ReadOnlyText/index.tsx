@@ -74,6 +74,13 @@ export default (props: IProps & Record<string, any>) => {
       const flatOptions = flatCascaderOptions(options);
       __html = findLabels(value, flatOptions).join('-') || '-'
     break;
+    case 'Picker':
+      const { columns } = props;
+      const labels = value?.map((i: string,index: number) => {
+        return columns[index].find((j: any) => j.value === i)?.label;
+      })
+      __html = labels ? labels.join('-') : '-'
+    break;
     default:
       __html = '-'
   }
