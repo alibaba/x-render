@@ -20,9 +20,9 @@ form render mobile 支持如下输入控件。如需要更多自定义样式和�
 
 <code src="./demo/group.tsx" background="rgb(245,245,245)" compact={true}></code>
 
-<!-- ### 折叠 collapse -->
-<!---->
-<!-- <code src="./demo/collaspa.tsx" background="rgb(245,245,245)" compact={true}></code> -->
+### 折叠 collapse
+
+<code src="./demo/collaspa.tsx" background="rgb(245,245,245)" compact={true}></code>
 
 ### 卡片 card
 
