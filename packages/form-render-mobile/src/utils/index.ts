@@ -99,7 +99,7 @@ export const valueRemoveUndefined = (values: any) => {
       if (isArray(item)) {
         return recursionArray(item);
       }
-      
+
       return item;
     });
 
@@ -111,7 +111,7 @@ export const valueRemoveUndefined = (values: any) => {
     }
     return result;
   };
- 
+
   const recursionObj = (_data: any) => {
     let data =  omitBy(_data, isUndefined);
 
@@ -144,7 +144,7 @@ export const translation = (configCtx: any) => (key: string) => {
 
 export const warn = (str:string, ...args: any[]) => {
   if (process.env.NODE_ENV === 'development') {
-    console.warn('[form-render-mobile]:', str, ...args);
+    console.error('[form-render-mobile]:', str, ...args);
   }
 }
 
