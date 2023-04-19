@@ -17,14 +17,17 @@ const schema = {
           input1: {
             title: '输入框 A',
             type: 'string',
+            widget: 'input',
           },
           input2: {
             title: '输入框 B',
             type: 'string',
+            widget: 'input',
           },
           input3: {
             title: '输入框 B',
             type: 'string',
+            widget: 'input',
           },
         },
       },
@@ -34,7 +37,7 @@ const schema = {
 
 export default () => {
   const form = useForm();
-  
+
   const onFinish = (formData: any) => {
     Dialog.alert({
       content: <pre>{JSON.stringify(formData, null, 2)}</pre>,
@@ -42,9 +45,9 @@ export default () => {
   };
 
   return (
-    <FormRender 
+    <FormRender
       schema={schema}
-      form={form} 
+      form={form}
       onFinish={onFinish}
       footer={
         <Button block type='submit' color='primary' size='large'>

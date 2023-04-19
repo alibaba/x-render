@@ -17,18 +17,22 @@ const schema = {
             input1: {
               title: '输入框 A',
               type: 'string',
+              widget: 'input',
             },
             input2: {
               title: '输入框 B',
               type: 'string',
+              widget: 'input',
             },
             input3: {
               title: '输入框 C',
               type: 'string',
+              widget: 'input',
             },
             input4: {
               title: '输入框 D',
               type: 'string',
+              widget: 'input',
             }
           }
         },
@@ -38,18 +42,22 @@ const schema = {
             input1: {
               title: '输入框 A',
               type: 'string',
+              widget: 'input',
             },
             input2: {
               title: '输入框 B',
               type: 'string',
+              widget: 'input',
             },
             input3: {
               title: '输入框 C',
               type: 'string',
+              widget: 'input',
             },
             input4: {
               title: '输入框 D',
               type: 'string',
+              widget: 'input',
             }
           }
         }
