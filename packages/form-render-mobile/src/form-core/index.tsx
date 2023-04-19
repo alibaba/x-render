@@ -186,7 +186,7 @@ const FormCore = (props: any) => {
 
   const formClassName = cx('frm-form', className, {
     ['frm-form-card']: isCardMode,
-  })
+  });
 
   return (
     <Form

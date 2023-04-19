@@ -1,11 +1,11 @@
 export { 
-  Input, 
+  Input,
   Slider,
-  TextArea, 
-  Rate, 
-  Selector, 
+  TextArea,
+  Rate,
+  Selector,
   Switch,
-  Stepper, 
+  Stepper,
 } from 'antd-mobile';
 
 export { default as Card } from './Card';
