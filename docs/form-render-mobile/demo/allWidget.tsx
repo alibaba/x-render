@@ -25,8 +25,13 @@ const schema = {
       title: '选择',
       type: 'string',
       widget: 'picker',
-      enum: ['火车', '飞机', '火箭'],
-      enumNames: ['火车', '飞机', '火箭'],
+      props: {
+        options: [
+          { label: '火车', value: 1 },
+          { label: '飞机', value: 2 },
+          { label: '火箭', value: 3 }
+        ]
+      }
     },
     date: {
       title: '日期',

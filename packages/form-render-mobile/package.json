@@ -4,14 +4,14 @@
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
-    "FormRender",
+    "FormRenderMobile",
     "Render",
     "XRender",
     "React",
     "Json Schema",
     "Ant Design"
   ],
-  "homepage": "https://xrender.fun/form-render",
+  "homepage": "https://xrender.fun/form-render-mobile",
   "bugs": {
     "url": "https://github.com/alibaba/x-render/issues"
   },
