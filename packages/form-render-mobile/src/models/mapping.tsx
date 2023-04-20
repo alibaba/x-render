@@ -1,34 +1,22 @@
+import { warn } from "../utils";
+
 export const mapping = {
   default: 'input',
   string: 'input',
   array: 'list',
-  boolean: 'checkbox',
   integer: 'number',
   number: 'number',
-  object: 'map',
-  html: 'html',
   card: 'card',
   collapse: 'collapse',
-  lineTitle: 'lineTitle',
-  line: 'line',
-  subItem: 'subItem',
-  panel: 'panel',
-  'string:upload': 'upload',
-  'string:url': 'url',
+  group: 'group',
   'string:dateTime': 'datePicker',
   'string:date': 'datePicker',
   'string:year': 'datePicker',
   'string:month': 'datePicker',
   'string:week': 'datePicker',
-  // 'string:quarter': 'quarterPicker', // 暂不支持
-  // 'string:time': 'time', // 暂不支持
   'string:textarea': 'textarea',
-  'string:color': 'color',
-  'string:image': 'imageInput',
   '*?enum': 'radio',
-  '*?enum_long': 'select',
-  'array?enum': 'checkboxes',
-  'array?enum_long': 'multiSelect',
+  '*?enum_long': 'selector',
   '*?readOnly': 'html', // TODO: html widgets for list / object
 };
 
@@ -39,12 +27,14 @@ const capitalizeFirstLetter = (str: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function getWidgetName(schema, _mapping = mapping) {
-  const { type, format, enum: enums, readOnly, widget, props } = schema;
-  // debugger;
+export function getWidgetName(schema: any, _mapping = mapping) {
+  const { type, format, enum: enums, readOnly, props } = schema;
+  
   //如果已经注明了渲染widget，那最好
   if (schema['ui:widget'] || schema.widget) {
     return capitalizeFirstLetter(schema['ui:widget'] || schema.widget);
+  } else {
+    warn('Can not find widget in schema, please specify the widget you need', schema)
   }
 
   const list: string[] = [];
@@ -76,7 +66,6 @@ export function getWidgetName(schema, _mapping = mapping) {
       list.push('*?enum_long');
     } else {
       list.push(`${type}?enum`);
-      // array 默认使用 list，array?enum 默认使用 checkboxes，*?enum 默认使用select
       list.push('*?enum');
     }
   }
@@ -87,17 +76,24 @@ export function getWidgetName(schema, _mapping = mapping) {
   }
   
   if (type === 'object') {
-    list.push((schema.theme === 'tile' ? 'lineTitle' : schema.theme) || 'collapse');
+    list.push('group')
   } else {
     list.push(type); // 放在最后兜底，其他都不match时使用type默认的组件
   }
-
+  
   let widgetName = '';
   list.some(item => {
     widgetName = _mapping[item];
     return !!widgetName;
   });
-  return capitalizeFirstLetter(widgetName);
+  const finalName = capitalizeFirstLetter(widgetName) 
+  
+  if (finalName) {
+    return finalName;
+  } else {
+    warn('Unable to infer which widget to use, please specify the widget you need', schema);
+    return 'html';
+  }
 }
 
 export const extraSchemaList = {

@@ -6,14 +6,12 @@ const schema = {
   type: 'object',
   displayType: 'row',
   properties: {
-    obj: {
+    group1: {
       type: 'object',
-      widget: 'card',
-      title: '卡片主题',
-      description: '这是一个对象类型',
+      widget: 'group',
+      title: '分组1',
       properties: {
-        input1: {
-          required: true,
+        input: {
           title: '输入框 A',
           type: 'string',
           widget: 'input',
@@ -23,16 +21,29 @@ const schema = {
           type: 'string',
           widget: 'input',
         },
-        input3: {
-          title: '输入框 C',
+      },
+    },
+    group2: {
+      type: 'object',
+      widget: 'group',
+      title: '分组2',
+      description: '这是一个对象类型',
+      properties: {
+        input1: {
+          title: '输入框 A',
+          type: 'string',
+          widget: 'input',
+        },
+        input2: {
+          title: '输入框 B',
           type: 'string',
           widget: 'input',
         },
       },
     },
-    obj1: {
+    group3: {
       type: 'object',
-      widget: 'card',
+      widget: 'group',
       properties: {
         input1: {
           title: '输入框 A',

@@ -67,12 +67,20 @@ export default (props: IProps & Record<string, any>) => {
       break;
     case 'DatePicker':
       const { format, precision } = props;
+      if (!value) return '-';
       const dateFormat = format || getFormat(precision);
       __html = dayjs(value).format(dateFormat);
       break;
     case 'Cascader':
       const flatOptions = flatCascaderOptions(options);
       __html = findLabels(value, flatOptions).join('-') || '-'
+    break;
+    case 'Picker':
+      const { columns } = props;
+      const labels = value?.map((i: string,index: number) => {
+        return columns[index].find((j: any) => j.value === i)?.label;
+      })
+      __html = labels ? labels.join('-') : '-'
     break;
     default:
       __html = '-'
