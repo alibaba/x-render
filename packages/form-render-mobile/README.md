@@ -3,14 +3,14 @@
   <h4 style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">FormRender Mobile</h4>
 </div>
 <p style="display:flex;justify-content:space-between;width:440px">
-  <a href="https://www.npmjs.com/package/form-render?_blank">
-    <img alt="npm" src="https://img.shields.io/npm/v/form-render.svg?maxAge=3600&style=flat-square">
+  <a href="https://www.npmjs.com/package/form-render-mobile?_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/form-render-mobile.svg?maxAge=3600&style=flat-square">
   </a>
-  <a href="https://npmjs.org/package/form-render">
-    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/form-render.svg?style=flat-square">
+  <a href="https://npmjs.org/package/form-render-mobile">
+    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/fform-render-mobile.svg?style=flat-square">
   </a>
-  <a href="https://npmjs.org/package/form-render">
-    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/form-render.svg?style=flat-square">
+  <a href="https://npmjs.org/package/form-render-mobile">
+    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/form-render-mobile.svg?style=flat-square">
   </a>
   <a>
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
