@@ -78,8 +78,7 @@ export default () => {
     <FormRender 
       form={form} 
       schema={schema} 
-      onFinish={onFinish} 
-      fieldCol={8}
+      onFinish={onFinish}
     />
   );
 }
