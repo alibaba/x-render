@@ -165,7 +165,7 @@ const FormCore:FC<FRProps> = (props) => {
       : null;
     fieldsError = transformFieldsError(fieldsError);
 
-    console.log(values, form.getValues(true));
+    // console.log(values, form.getValues(true));
     // Stop submit
     if (fieldsError) {
       form.setFields(fieldsError);
