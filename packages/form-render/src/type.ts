@@ -282,10 +282,6 @@ export interface FRProps extends AntdFormProps {
    */
   column?: number;
   /**
-   * 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启
-   */
-  debounceInput?: boolean;
-  /**
    * 数据会作为 beforeFinish 的第四个参数传入
    */
   config?: any;
@@ -293,14 +289,7 @@ export interface FRProps extends AntdFormProps {
    * 类似于 vuejs 的 watch 的用法，监控值的变化，触发 callback
    */
   watch?: WatchProperties;
-  /** 
-   * 对象组件是否折叠（全局的控制）
-   */
-  allCollapsed?: boolean;
-   /** 
-   * 表单全局配置
-   */
-   globalConfig?: GlobalConfig;
+  globalConfig?: GlobalConfig;
   /** 
    * 表单的全局共享属性
    */

@@ -244,10 +244,6 @@ export interface FRProps extends AntdFormProps {
    */
   watch?: WatchProperties;
   /** 
-   * 对象组件是否折叠（全局的控制）
-   */
-  // allCollapsed?: boolean;
-  /** 
   * 表单全局配置
   */
   globalConfig?: GlobalConfig;
