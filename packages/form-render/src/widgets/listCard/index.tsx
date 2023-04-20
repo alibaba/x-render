@@ -24,7 +24,7 @@ const getOperateStyle = (schema: any) => {
       style.top = '3px';
       style.padding = 0;
     }
-    
+
     if (!schema?.items?.title) {
       style.right = '0';
     }
@@ -47,7 +47,7 @@ const CardList = (props: any) => {
     deleteBtnProps,
     moveUpBtnProps,
     moveDownBtnProps,
-   
+
     hideDelete,
     hideCopy,
     hideMove,
@@ -78,23 +78,23 @@ const CardList = (props: any) => {
               <div style={{ width: 0, flex: 1 }}>
                 {renderCore({ schema: newSchema, parentPath: [name], rootPath: [...rootPath, name] })}
               </div>
-              <Space 
+              <Space
                 className={classnames('fr-list-item-operate', { 'fr-list-item-operate-fixed': getOperateFixed(schema) })}
                 style={getOperateStyle(schema)}
                 split={operateBtnType !== 'icon' && <Divider type='vertical' />}
               >
                 {!hideMove && (
                   <>
-                    <FButton 
+                    <FButton
                       disabled={name === 0}
                       onClick={() => moveItem(name, name - 1)}
-                      icon={<ArrowUpOutlined/>}
+                      icon={<ArrowUpOutlined />}
                       {...moveUpBtnProps}
                     />
-                    <FButton 
+                    <FButton
                       disabled={name === length - 1}
                       onClick={() => moveItem(name, name + 1)}
-                      icon={<ArrowDownOutlined/>}
+                      icon={<ArrowDownOutlined />}
                       {...moveDownBtnProps}
                     />
                   </>
@@ -105,15 +105,15 @@ const CardList = (props: any) => {
                     {...delConfirmProps}
                   >
                     <FButton
-                      icon={<CloseOutlined/>}
+                      icon={<CloseOutlined />}
                       {...deleteBtnProps}
                     />
                   </Popconfirm>
                 )}
                 {!hideCopy && (
-                  <FButton 
+                  <FButton
                     onClick={() => handleCopy(name)}
-                    icon={<CopyOutlined/>}
+                    icon={<CopyOutlined />}
                     {...copyBtnProps}
                   />
                 )}

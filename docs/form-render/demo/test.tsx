@@ -1,68 +1,83 @@
-// import React from 'react';
-// import FormRender, { useForm } from 'form-render';
-// import { Button } from 'antd';
+import React, { useEffect } from 'react';
+import FormRender, { useForm } from 'form-render';
+import { Button, Input } from 'antd';
 
-// const schema = {
-//   type: 'object',
-//   displayType: 'row',
-//   properties: {
-//     input1: {
-//       title: '简单输入框',
-//       type: 'string',
-//       required: true,
-//       labelWidth: '300px'
-//     },
-//     // select1: {
-//     //   title: '单选',
-//     //   type: 'string',
-//     //   required: true,
-//     //   props: {
-//     //     options: [
-//     //       { label: '早', value: 'a' },
-//     //       { label: '中', value: 'b' },
-//     //       { label: '晚', value: 'c', disabled: "{{formData.input1 === '1' }}" }
-//     //     ]
-//     //   }
-//     // }
-//   }
-// };
+const schema = {
+  type: 'object',
+  displayType: 'row',
+  properties: {
+    obj: {
+      type: 'object',
+      title: '卡片主题',
+      description: '这是一个对象类型',
+      widget: 'collapse',
+      column: 3,
+      properties: {
+        input1: {
+          title: '输入框 A',
+          type: 'string',
+        },
+        list: {
+          title: '对象数组',
+          description: '对象数组嵌套功能',
+          type: 'array',
+          widget: 'cardList',
+          items: {
+            type: 'object',
+            title: '卡片主题',
+            description: '这是一个对象类型',
+            column: 3,
+            widget: 'card',
+            properties: {
+              input1: {
+                title: '输入框 A',
+                type: 'string',
+              },
+              input2: {
+                title: '输入框 A',
+                type: 'string',
+                required: true,
+                widget: 'xx'
+              }
+            },
+          },
+        },
+      },
+    },
+   
+  },
+};
 
-// export default () => {
-//   const form = useForm();
+const Test = (props: any) => {
+  const { addons } = props;
 
-//   const onValidateFields = () => {
-//     form.validateFields(['input1'])
-//     .then(values => {
-//       console.log(values, 'values');
-//     })
-//     .catch(errors => {
-//       console.log(errors, 'errors');
-//     });
-//   }
+  console.log(addons, '------addons', props)
+  useEffect(() => {
+    addons.setValueByPath('obj', {list: [{ input1: '1111'}]})
+  }, [])
 
-//   return (
-//     <>
-//       <FormRender 
-//         form={form} 
-//         schema={schema}
-//         labelCol={{
-//           span: 5
-//         }}
-//         wrapperCol={{ span: 8}}
-//         logOnMount={(data) => {
-//           console.log(data, 'log-mouont')
-//         }}
-//         logOnSubmit={(data) => {
-//           console.log(data, 'log-sub')
-//         }}
-//         builtOperation={true}
-//       />
-//       <div>
-//         <Button onClick={onValidateFields}>validateFields Test</Button>
-//       </div>
-//     </>
-//   );
-// }
+  return <div><Input /></div>
+}
+
+export default () => {
+  const form = useForm();
+
+ 
+
+  return (
+    <>
+      <FormRender 
+        form={form} 
+        schema={schema}
+        widgets={{
+          xx: Test
+        }}
+        footer={true}
+      />
+      
+    </>
+  );
+}
 
 
 
@@ -200,142 +215,142 @@
 // }
 
 
-import React from 'react';
-import FormRender, { useForm } from 'form-render';
+// import React from 'react';
+// import FormRender, { useForm } from 'form-render';
 
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    obj: {
-      type: 'object',
-      widget: 'card',
-      title: '卡片主题',
-      description: '这是一个对象类型',
-      column: 3,
-      properties: {
-        input1: {
-          title: '输入框 A',
-          type: 'string',
-        },
-        input2: {
-          title: '输入框 B',
-          type: 'string',
-        },
-        obj: {
-          type: 'object',
-          widget: 'card',
-          title: '卡片主题',
-          description: '这是一个对象类型',
-          column: 3,
-          properties: {
-            input1: {
-              title: '输入框 A',
-              type: 'string',
-            },
-            input2: {
-              title: '输入框 B',
-              type: 'string',
-            }
-          }
-        }
-      },
-    },
-    list: {
-      // title: '对象数组',
-      // description: '对象数组嵌套功能',
-      type: 'array',
-      widget: 'cardList',
-      items: {
-        type: 'object',
-        title: '卡片主题',
-        description: '这是一个对象类型',
-        column: 3,
-        properties: {
-          input1: {
-            title: '输入框 A',
-            type: 'string',
-          },
-          input3: {
-            title: '输入框 B',
-            type: 'string',
-          },
-          obj: {
-            type: 'object',
-            widget: 'card',
-            title: '卡片主题',
-            description: '这是一个对象类型',
-            column: 3,
-            properties: {
-              input1: {
-                title: '输入框 A',
-                type: 'string',
-              },
-              input2: {
-                title: '输入框 B',
-                type: 'string',
-              },
-              list: {
-                // title: '对象数组',
-                // description: '对象数组嵌套功能',
-                type: 'array',
-                widget: 'cardList',
-                items: {
-                  type: 'object',
-                  title: '卡片主题',
-                  description: '这是一个对象类型',
-                  column: 3,
-                  properties: {
-                    input1: {
-                      title: '输入框 A',
-                      type: 'string',
-                    },
-                    input3: {
-                      title: '输入框 B',
-                      type: 'string',
-                    },
-                  },
-                },
-              },
-            }
-          }
-        },
-      },
-    },
-  },
-};
+// const schema = {
+//   type: 'object',
+//   displayType: 'row',
+//   properties: {
+//     obj: {
+//       type: 'object',
+//       widget: 'card',
+//       title: '卡片主题',
+//       description: '这是一个对象类型',
+//       column: 3,
+//       properties: {
+//         input1: {
+//           title: '输入框 A',
+//           type: 'string',
+//         },
+//         input2: {
+//           title: '输入框 B',
+//           type: 'string',
+//         },
+//         obj: {
+//           type: 'object',
+//           widget: 'card',
+//           title: '卡片主题',
+//           description: '这是一个对象类型',
+//           column: 3,
+//           properties: {
+//             input1: {
+//               title: '输入框 A',
+//               type: 'string',
+//             },
+//             input2: {
+//               title: '输入框 B',
+//               type: 'string',
+//             }
+//           }
+//         }
+//       },
+//     },
+//     list: {
+//       // title: '对象数组',
+//       // description: '对象数组嵌套功能',
+//       type: 'array',
+//       widget: 'cardList',
+//       items: {
+//         type: 'object',
+//         title: '卡片主题',
+//         description: '这是一个对象类型',
+//         column: 3,
+//         properties: {
+//           input1: {
+//             title: '输入框 A',
+//             type: 'string',
+//           },
+//           input3: {
+//             title: '输入框 B',
+//             type: 'string',
+//           },
+//           obj: {
+//             type: 'object',
+//             widget: 'card',
+//             title: '卡片主题',
+//             description: '这是一个对象类型',
+//             column: 3,
+//             properties: {
+//               input1: {
+//                 title: '输入框 A',
+//                 type: 'string',
+//               },
+//               input2: {
+//                 title: '输入框 B',
+//                 type: 'string',
+//               },
+//               list: {
+//                 // title: '对象数组',
+//                 // description: '对象数组嵌套功能',
+//                 type: 'array',
+//                 widget: 'cardList',
+//                 items: {
+//                   type: 'object',
+//                   title: '卡片主题',
+//                   description: '这是一个对象类型',
+//                   column: 3,
+//                   properties: {
+//                     input1: {
+//                       title: '输入框 A',
+//                       type: 'string',
+//                     },
+//                     input3: {
+//                       title: '输入框 B',
+//                       type: 'string',
+//                     },
+//                   },
+//                 },
+//               },
+//             }
+//           }
+//         },
+//       },
+//     },
+//   },
+// };
 
-export default () => {
-  const form = useForm();
-  const watch = {
-    '#': (value, a) => {
-      // // debugger;
-    },
-    "list": (a, b) => {
-    //  // debugger;
-    },
-    "obj.obj.input1": (a, b) => {
-      // debugger;
-    },
-    "list[].input1": (a, b) => {
-      // debugger
-    },
-    "list[].obj.input1": (a, b) => {
-      // debugger
-    },
-    "list[].obj.list": (a, b) => {
-      // debugger;
-    },
-    "list[].obj.list[]": (a, b) => {
-      // debugger;
-    },
-    "list[].obj.list[].input1": (a, b) => {
-      // debugger;
-    }
-  }
+// export default () => {
+//   const form = useForm();
+//   const watch = {
+//     '#': (value, a) => {
+//       debugger;
+//     },
+//     "list": (a, b) => {
+//      debugger;
+//     },
+//     "obj.obj.input1": (a, b) => {
+//       debugger;
+//     },
+//     "list[].input1": (a, b) => {
+//       debugger
+//     },
+//     "list[].obj.input1": (a, b) => {
+//       debugger
+//     },
+//     "list[].obj.list": (a, b) => {
+//       debugger;
+//     },
+//     "list[].obj.list[]": (a, b) => {
+//       debugger;
+//     },
+//     "list[].obj.list[].input1": (a, b) => {
+//       debugger;
+//     }
+//   }
 
-  return <FormRender schema={schema} form={form} watch={watch}/>;
-};
+//   return <FormRender schema={schema} form={form} watch={watch}/>;
+// };
 
 
 
