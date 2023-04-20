@@ -22,6 +22,10 @@ const executeCallBack = (watchItem: any, value: any, path: string, index?: any) 
 const traverseValues = ({ changedValues, allValues, flatValues }) => {
 
   const traverseArray = (list: any[], fullList: any, path: string, index: number[]) => {
+    if (!list.length) {
+      return
+    }
+
     const _path = path += '[]';
     const filterLength = list.filter(item => (item || item === undefined)).length;
 
@@ -48,7 +52,7 @@ const traverseValues = ({ changedValues, allValues, flatValues }) => {
   const traverseObj = (obj: any, fullObj: any, path: string, index: number[], flag?: boolean) => {
     Object.keys(obj).forEach((key: string) => {
       const item = obj[key];
-      const fullItem = fullObj[key];
+      const fullItem = fullObj?.[key];
       let value = item;
 
       const _path = path ? (path + '.' + key) : key;
@@ -56,7 +60,7 @@ const traverseValues = ({ changedValues, allValues, flatValues }) => {
       let last = true;
 
       if (isArray(item)) {
-        value = [...fullItem];
+        value = fullItem ? [...fullItem] : fullItem;
         last = false;
         traverseArray(item, fullItem, _path, index);
       }

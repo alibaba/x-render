@@ -1,5 +1,6 @@
 import React from 'react';
 import { Picker } from 'antd-mobile';
+import { filterWidgetProps } from '../../utils';
 
 export default (props: any) => {
   const { 
@@ -10,7 +11,7 @@ export default (props: any) => {
     options,
     columns,
     ...restProps
-  } = props;
+  } = filterWidgetProps(props);
 
   // 只有一列的场景更多，这里兼容下
   const finalColumns = React.useMemo(() => {

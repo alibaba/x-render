@@ -1,4 +1,3 @@
-import Color from 'color';
 import { isUrl, isObject, isFunction } from '../utils';
 
 const getRuleList = (schema: any, form: any, methods: any) => {
@@ -55,20 +54,6 @@ const getRuleList = (schema: any, form: any, methods: any) => {
         return _isUrl && _isImg;
       }, 
       message: message?.email ?? '请输入正确的图片格式'
-    });
-  }
-
-  if (format === 'color') {
-    rules.push({
-      validator: (_: any, value: any) => {
-        try {
-          Color(value || null); // 空字符串无法解析会报错，出现空的情况传 null
-          return true;
-        } catch (e) {
-          return false;
-        }
-      }, 
-      message: message?.color ?? '请填写正确的颜色格式'
     });
   }
 

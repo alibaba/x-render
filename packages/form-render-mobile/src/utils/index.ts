@@ -148,3 +148,7 @@ export const warn = (str:string, ...args: any[]) => {
   }
 }
 
+export const filterWidgetProps = ({ addons, schema, ...rest }) => {
+  return rest;
+}
+

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Cascader} from 'antd-mobile';
-import omit from 'lodash/omit';
+import { Cascader } from 'antd-mobile';
+import { filterWidgetProps } from '../../utils';
 
 export default (props: any) => {
   const { 
@@ -8,14 +8,13 @@ export default (props: any) => {
     value,
     onChange,
     options,
-    setFieldRef, 
-  } = props;
-
-  const cascaderProps = omit(props, ['schema', 'addons']);
-  
+    setFieldRef,
+    ...rest
+  } = filterWidgetProps(props);
+ 
   return (
     <Cascader
-      {...cascaderProps}
+      {...rest}
       ref={ref => setFieldRef(ref)}
       value={value}
       options={options}

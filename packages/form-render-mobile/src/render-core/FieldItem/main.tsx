@@ -120,7 +120,7 @@ export default (props: any) => {
   }
 
   if (readOnly) {
-    Widget = widgets[schema.readOnlyWidget] || widgets['ReadOnlyText'];
+    Widget = widgets[schema.readOnlyWidget] || widgets['Html'];
   }
 
   const defaultValue = schema.default ?? schema.defaultValue;

@@ -169,7 +169,7 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
     fieldProps.dependValues = dependValues;
   }
 
-  ['placeholder', 'disabled', 'format', 'onStatusChange', 'className'].forEach(key => {
+  ['placeholder', 'disabled', 'format', 'className'].forEach(key => {
     if (schema[key]) {
       fieldProps[key] = schema[key];
     }
@@ -203,17 +203,6 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
   if (isObject(fieldProps.addonAfter) && fieldProps.addonAfter.widget) {
     const AddonAfterWidget = widgets[fieldProps.addonAfter.widget];
     fieldProps.addonAfter = <AddonAfterWidget {...schema} />;
-  }
-
-  if (['treeSelect', 'number', 'multiSelect', 'select'].includes(widgetName)) {
-    fieldProps.style = {
-      width: '100%',
-      ...fieldProps.style
-    }
-  }
-
-  if (widgetName === 'multiSelect') {
-    fieldProps.mode = 'multiple';
   }
 
   // Dynamic Mapping of Methods

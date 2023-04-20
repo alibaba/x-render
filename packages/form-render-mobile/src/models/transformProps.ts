@@ -63,15 +63,12 @@ const transformProps =  (props: any) => {
     column,
     mapping,
     className,
-    // debugCss, // 好像没用了
     locale,
     configProvider,
     form,
     labelWidth,
     allCollapsed,
-    // debounceInput, // 好像没用了
     validateMessages,
-    debug, // 换成 form 还有用吗？
     id,
     onFinishFailed,
     removeHiddenData,
