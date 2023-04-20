@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Form } from 'antd';
+import { Form } from 'antd-mobile';
 
 import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
@@ -71,11 +71,10 @@ const useForm = () => {
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
   const schemaRef = useRef({});
-  const { getFieldError, getFieldsError, getFieldInstance } = form;
+  const { getFieldError, getFieldsError } = form;
   const formRef = useRef({
     getFieldError,
-    getFieldsError,
-    getFieldInstance
+    getFieldsError
   });
 
   const setStoreData = (data: any) => {
