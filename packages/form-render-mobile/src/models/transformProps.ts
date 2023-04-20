@@ -17,11 +17,8 @@ const transformProps =  (props: any) => {
     readOnly,
     column = 1,
     mapping,
-    // debugCss,
     locale,
     configProvider,
-    allCollapsed,
-    // debounceInput,
     validateMessages,
     debug,
     id,
@@ -34,12 +31,7 @@ const transformProps =  (props: any) => {
     logOnSubmit,
     labelCol,
     fieldCol,
-    // labelAlign,
-    // colon,
     className,
-    // style,
-    // disabled,
-    // scrollToFirstError,
     ...otherProps
   } = props;
 
@@ -67,7 +59,6 @@ const transformProps =  (props: any) => {
     configProvider,
     form,
     labelWidth,
-    allCollapsed,
     validateMessages,
     id,
     onFinishFailed,
