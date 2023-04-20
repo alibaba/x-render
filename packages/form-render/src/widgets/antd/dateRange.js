@@ -68,16 +68,20 @@ const DateRange = ({ onChange, format, value, style, ...rest }) => {
   }
 
   if (props.disabledDate && typeof props.disabledDate === 'string') {
-    const func = methods[props.disabledDate];
+    const func = methods?.[props.disabledDate];
     if (typeof func === 'function') {
       dateParams.disabledDate = func;
+    } else {
+      dateParams.disabledDate = undefined;
     }
   }
 
   if (props.disabledTime && typeof props.disabledTime === 'string') {
-    const func = methods[props.disabledTime];
+    const func = methods?.[props.disabledTime];
     if (typeof func === 'function') {
       dateParams.disabledTime = func;
+    } else {
+      dateParams.disabledTime = undefined;
     }
   }
 
