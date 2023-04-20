@@ -1,5 +1,6 @@
 ---
 order: 0
+mobile: false
 title: '使用教程'
 group: 
   order: 1

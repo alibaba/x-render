@@ -128,7 +128,7 @@ export default () => {
 
 // //   const watch = {
 // //     '#': (value) => {
-// //       debugger;
+// //       // debugger;
 // //     }
 // //   }
 
@@ -193,7 +193,7 @@ export default () => {
 
 //   const watch =  {
 //     'obj.input1': () => {
-//       debugger;
+//       // debugger;
 //       form.setValueByPath('obj.input2', '2222')
 //     }
 //   }

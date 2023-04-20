@@ -1,5 +1,6 @@
 ---
 order: 6
+mobile: false
 title: 'Tab 数据分类'
 group: 
   title: 最佳展示

@@ -1,6 +1,7 @@
 ---
 order: 3
 title: 案例演示
+mobile: false
 toc: menu
 ---
 

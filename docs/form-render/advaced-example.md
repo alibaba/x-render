@@ -1,7 +1,7 @@
 ---
 order: 3
 toc: content
-title: '常用交互'
+mobile: false
 group: 
   title: 高级用法
   order: 2

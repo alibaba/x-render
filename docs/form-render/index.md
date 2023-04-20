@@ -2,6 +2,7 @@
 order: 0
 toc: content
 title: 开始使用
+mobile: false
 ---
 
 <div style="display:flex;align-items:center;margin-bottom:24px">

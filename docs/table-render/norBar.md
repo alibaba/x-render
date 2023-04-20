@@ -1,6 +1,7 @@
 ---
 order: 4
 title: '无工具栏'
+mobile: false
 group: 
   title: 最佳展示
   order: 2

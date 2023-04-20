@@ -1,5 +1,6 @@
 ---
 order: 1
+mobile: false
 title: 如何使用
 toc: menu
 ---
