@@ -227,6 +227,10 @@ export default (props: any) => {
                 children: t('copy'),
                 btnType: operateBtnType
               }}
+              editorBtnProps={{
+                children: t('edit'),
+                btnType: operateBtnType
+              }}
               deleteBtnProps={{
                 children: t('delete'),
                 btnType: operateBtnType
