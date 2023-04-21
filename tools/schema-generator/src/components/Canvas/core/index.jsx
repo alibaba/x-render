@@ -73,7 +73,6 @@ const FR = ({ id = '#', preview, displaySchema }) => {
   }
 
   // 如果传入自定义样式则覆盖使用，object 外层样式使用 schema.style，内层样式使用 schema.props.style
-  debugger;
   if ('object' === typeof schema?.style) {
     columnStyle = {
       ...columnStyle,
