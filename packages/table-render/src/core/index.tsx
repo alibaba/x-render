@@ -47,6 +47,8 @@ const RenderCore = props => {
   const loading = useStore(store, (state: any) => state.loading);
   const setState = useStore(store, (state: any) => state.setState);
   const getState = useStore(store, (state: any) => state.getState);
+  const dataSource = useStore(store, (state: any) => state.dataSource);
+
 
   useEffect(() => {
     setState({
@@ -69,7 +71,8 @@ const RenderCore = props => {
     getState: () => ({
       ...getState(),
       search: form.getValues(true)
-    })
+    }),
+    setState,
   }));
 
   const fullScreen = () => {

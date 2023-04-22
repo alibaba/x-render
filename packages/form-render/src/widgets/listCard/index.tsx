@@ -41,6 +41,7 @@ const CardList = (props: any) => {
     renderCore,
     hasBackground,
     operateBtnType,
+    
     addBtnProps,
     delConfirmProps,
     copyBtnProps,
@@ -136,4 +137,12 @@ const CardList = (props: any) => {
   );
 }
 
-export default CardList;
+export default (props: any) => {
+  const { hasBackground, fields } = props;
+
+  return React.useMemo(() => <CardList {...props} />, [
+    JSON.stringify(props.schema), 
+    fields.length,
+    hasBackground
+  ])
+};
