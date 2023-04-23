@@ -12,7 +12,7 @@ const getRuleList = (schema: any, form: any, methods: any) => {
     rules.push({ type, max, message: message?.max });
   }
 
-  if (min) {
+  if (min || min === 0) {
     rules.push({ type, min, message: message?.min });
   }
   
