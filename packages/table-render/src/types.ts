@@ -57,7 +57,7 @@ export interface TableState<RecordType> {
 }
 
 // TODO这里FR的props应该去FR里写，这里继承就好了
-export interface SearchProps<RecordType> extends Omit<FRProps, 'form' | 'schema'> {
+export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
@@ -113,8 +113,8 @@ export interface TablePropsC<RecordType extends Object = any>
 
 export interface TableRenderProps<RecordType extends Object = any>
   extends Omit<TablePropsC<RecordType>, 'locale'> {
-  /** 
-   * 开启 debug 模式，时时显示内部状态 
+  /**
+   * 开启 debug 模式，时时显示内部状态
   */
   debug?: boolean;
   /** 表格主体右上方的控件，例如“添加”按钮 */
@@ -126,7 +126,7 @@ export interface TableRenderProps<RecordType extends Object = any>
   onTabChange?: () => any;
   search?: SearchProps<RecordType>;
   locale?: 'zh-CN' | 'en-US';
-  /** 
+  /**
    * antd的全局config
    */
   configProvider?: ConfigProviderProps;

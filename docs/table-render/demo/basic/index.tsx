@@ -29,9 +29,7 @@ const Demo = () => {
   return (
     <TableRender
       ref={tableRef}
-      search={{
-        schema: schema
-      }}
+      search={{ schema }}
       request={searchApi}
       columns={columns}
       pagination={{ pageSize: 2 }}
