@@ -1,43 +1,68 @@
 import Color from 'color';
 import { isUrl, isObject, isFunction } from '../utils';
 
-const getRuleList = (schema: any, form: any, methods: any) => {
-  let { type, format, required, max, min, maxLength, minLength, rules: ruleList = [], pattern, message, widget, title } = schema;
-  let rules: any = [...ruleList];
+const insertLengthRule = (schema: any, rules: any[]) => {
+  const { type, max, min, message } = schema;
 
-  max = max ?? maxLength;
-  min = min ?? minLength;
-
-  if (max) {
+  if (max || max === 0) {
     rules.push({ type, max, message: message?.max });
   }
 
   if (min || min === 0) {
     rules.push({ type, min, message: message?.min });
   }
-  
-  if (required) {
-    let rule: any;
-    if (['year','quarter', 'month', 'week', 'date', 'dateTime', 'time'].includes(format) && type === 'range') {
-      rule = {
-        type: 'array',
-        required: true,
-        len: 2,
-        fields: {
-          0: { type: 'string', required: true },
-          1: { type: 'string', required: true },
-        }
-      };
-    } else if (widget === 'checkbox') {
-      rule = { type, required: true,  whitespace: true, message: title + '必填' };
-    } else {
-      rule = { required: true,  whitespace: true, message: message?.required };
-      if (type !== 'any') {
-        rule.type = type;
-      }
-    }
-    rules.push(rule);
+};
+
+const insertRequiredRule = (schema: any, rules: any[]) => {
+  let { 
+    type,
+    format,
+    required,
+    message,
+    widget,
+    title
+  } = schema;
+
+  const requiredAlready = schema?.rules?.some((item: any) => item?.required);
+
+  // 未声明 required，或已经存在 required 校验
+  if (!required || requiredAlready) {
+    return;
   }
+
+  let rule: any = { required: true, message: message?.required };
+
+  if (['year','quarter', 'month', 'week', 'date', 'dateTime', 'time'].includes(format) && type === 'range') {
+    rule = {
+      type: 'array',
+      required: true,
+      len: 2,
+      fields: {
+        0: { type: 'string', required: true },
+        1: { type: 'string', required: true },
+      }
+    };
+  } else if (widget === 'checkbox') {
+    rule = { type, required: true,  whitespace: true, message: title + '必填' };
+  } else if (type === 'string') {
+    rule = { type: 'string', required: true,  whitespace: true, message: message?.required };
+  }
+
+  rules.push(rule);
+}
+
+export default (schema: any, form: any, methods: any) => {
+  let { 
+    format,
+    rules: ruleList = [],
+    pattern,
+    message,
+  } = schema;
+
+  const rules: any = [...ruleList];
+ 
+  insertRequiredRule(schema, rules);
+  insertLengthRule(schema, rules);
 
   if (pattern) {
     rules.push({ pattern, message: message?.pattern });
@@ -54,6 +79,9 @@ const getRuleList = (schema: any, form: any, methods: any) => {
   if (format === 'image') {
     rules.push({
       validator: (_: any, value: any) => {
+        if (!value) {
+          return true;
+        }
         const imagePattern = '([/|.|w|s|-])*.(?:jpg|gif|png|bmp|apng|webp|jpeg|json)';
         const _isUrl = isUrl(value);
         const _isImg = new RegExp(imagePattern).test(value);
@@ -77,7 +105,7 @@ const getRuleList = (schema: any, form: any, methods: any) => {
     });
   }
 
-  rules = rules.map(((item: any) => {
+  const result = rules.map(((item: any) => {
     if (item.validator && !item.transformed) {
       const validator = isFunction(item.validator) ? item.validator : methods[item.validator];
       item.validator = async (_: any, value: any) => {
@@ -92,7 +120,5 @@ const getRuleList = (schema: any, form: any, methods: any) => {
     return item;
   }));
 
-  return rules;
+  return result;
 }
-
-export default getRuleList;
