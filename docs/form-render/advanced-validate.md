@@ -15,7 +15,7 @@ group:
 
 - required：必填
 - max：最大长度 | 最大值
-- min：最小长度 | 最小值；array 类型时为数组最小长度
+- min：最小长度 | 最小值
 - format：url ｜ email ｜ image | color
 
 ```jsx
