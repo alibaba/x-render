@@ -1,30 +1,7 @@
 
 
 import { _cloneDeep, isObjType, isListType } from '../utils/index';
-
-export function orderProperties(properties, orderKey = 'order') {
-  const orderHash = new Map();
-  // order不为数字的数据
-  const unsortedList = [];
-  const insert = item => {
-    const [, value] = item;
-    if (typeof value[orderKey] !== 'number') {
-      unsortedList.push(item);
-      return;
-    }
-    if (orderHash.has(value[orderKey])) {
-      orderHash.get(value[orderKey]).push(item);
-    } else {
-      orderHash.set(value[orderKey], [item]);
-    }
-  };
-
-  properties.forEach(item => insert(item));
-  const sortedList = Array.from(orderHash.entries())
-    .sort(([order1], [order2]) => order1 - order2) // order值越小越靠前
-    .flatMap(([, items]) => items);
-  return sortedList.concat(unsortedList);
-}
+import sortProperties from './sortProperties';
 
 export const getKeyFromPath = (path = '#') => {
   try {
@@ -74,7 +51,7 @@ export function flattenSchema(_schema = {}, name?: any, parent?: any, _result?: 
   }
   const children = [];
   if (isObjType(schema)) {
-    orderProperties(Object.entries(schema.properties)).forEach(
+    sortProperties(Object.entries(schema.properties)).forEach(
       ([key, value]) => {
         const _key = isListType(value) ? key + '[]' : key;
         const uniqueName = _name === '#' ? _key : _name + '.' + _key;
@@ -87,7 +64,7 @@ export function flattenSchema(_schema = {}, name?: any, parent?: any, _result?: 
     schema.properties = {};
   }
   if (isListType(schema)) {
-    orderProperties(Object.entries(schema.items.properties)).forEach(
+    sortProperties(Object.entries(schema.items.properties)).forEach(
       ([key, value]) => {
         const _key = isListType(value) ? key + '[]' : key;
         const uniqueName = _name === '#' ? _key : _name + '.' + _key;

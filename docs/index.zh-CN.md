@@ -33,4 +33,4 @@ footer: false
 
 ## 互助答疑群
 
-<img style="height: 400px" src="https://img.alicdn.com/imgextra/i3/O1CN01HksNgs1DZNuQsORIp_!!6000000000230-0-tps-1242-1602.jpg">
+<img style="height: 400px" src="https://img.alicdn.com/imgextra/i3/O1CN01fIgx0D2A2vBV5Ztdt_!!6000000008146-0-tps-1242-1602.jpg">

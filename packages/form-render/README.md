@@ -144,7 +144,6 @@ import Form, { useForm, connectForm } from 'form-render';
 | widgets          | 自定义组件，当内置组件无法满足时使用                                           | `object`                                                             | 否       | {}       |
 | watch            | 类似于 vue 的 watch 的用法，详见[表单监听 & 回调](/form-render/advanced/watch) | `object`                                                             | 否       | {}       |
 | removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认不隐藏                       | `boolean`                                                            | 否       | true     |
-| debug            | 开启 debug 模式，时时显示表单内部状态，**开发的时候强烈建议打开**              | `boolean`                                                            | 否       | false    |
 | readOnly         | 只读模式，一般用于预览展示，全文 text 展示                                     | `boolean`                                                            | 否       | false    |
 
 注 1：
@@ -158,11 +157,8 @@ import Form, { useForm, connectForm } from 'form-render';
 | column               | 一行展示多少列                                                   | `number`            | 1      |
 | mapping              | schema 与组件的映射关系表，当内置的表不满足时使用                | `object`            | {}     |
 | disabled             | 禁用模式，全部表单元素禁用                                       | `boolean`           | false  |
-| debugCss             | 用于 css 问题的调整，显示 css 布局提示线                         | `boolean`           | false  |
 | locale               | 展示语言，目前只支持中文、英文                                   | `string('cn'/'en')` | 'cn'   |
 | configProvider       | antd 的 configProvider，配置透传                                 | `object`            | -      |
-| allCollapsed         | 对象组件是否默认折叠（全局）                                     | `boolean`           | false  |
-| debounceInput        | 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启 | `boolean`           | false  |
 | validateMessages     | 修改默认的校验提示信息。详见下                                   | `object`            | {}     |
 
 #### validateMessages
@@ -214,7 +210,7 @@ export default connectForm(Demo);
 | setValues        | 外部手动修改 formData，用于已填写的表单的数据回填   | `(formData: any) => void`                                                                                        |
 | onItemChange     | 外部修改指定单个 field 的数据                       | `(path: string, value: any) => void`                                                                             |
 | getValues        | 获取表单内部维护的数据 formData                     | `() => void`                                                                                                     |
-| schema           | 表单的 schema                                       | object                                                                                                           |
+| getSchema           | 获取表单的 schema                                       | （）=> object                                                                                                           |
 | touchedKeys      | 已经触碰过的 field 的数据路径                       | `string[]`                                                                                                       |
 | removeErrorField | 外部手动删除某一个 path 下所有的校验信息            | `(path: string) => void`                                                                                         |
 | formData         | 表单内部维护的数据，建议使用 getValues/setValues    | `object`                                                                                                         |

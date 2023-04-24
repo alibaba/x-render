@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, FC } from 'react';
 import { Form, Row, Col, Button, Space, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
 
@@ -7,6 +7,7 @@ import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesToBind } from '../models/bindValues';
 import { getFormItemLayout } from '../models/layout';
+import {FRProps} from '../type'
 
 import {
   transformFieldsError,
@@ -21,7 +22,7 @@ import RenderCore from '../render-core';
 
 import './index.less';
 
-const FormCore = (props: any) => {
+const FormCore:FC<FRProps> = (props) => {
   const store = useContext(FRContext);
   const schema = useStore(store, (state: any) => state.schema);
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
@@ -46,7 +47,8 @@ const FormCore = (props: any) => {
     onFinish,
     onFinishFailed,
     readOnly,
-    builtOperation,
+    disabled,
+    footer,
     removeHiddenData,
     operateExtra,
     logOnMount,
@@ -67,6 +69,7 @@ const FormCore = (props: any) => {
     const context = {
       column,
       readOnly,
+      disabled,
       labelWidth,
       displayType,
       labelCol,
@@ -74,7 +77,7 @@ const FormCore = (props: any) => {
       maxWidth
     };
     setContext(context);
-  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly]);
+  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly, disabled]);
 
   const initial = async () => {
     onMount && await onMount();
@@ -188,12 +191,13 @@ const FormCore = (props: any) => {
   };
 
   const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
-
+ 
   return (
     <Form
       className='fr-form'
       labelWrap={true}
       {...formProps}
+      disabled={disabled}
       form={form}
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
@@ -203,7 +207,7 @@ const FormCore = (props: any) => {
         <RenderCore schema={schema} />
         {operateExtra}
       </Row>
-      {schema && builtOperation && (
+      {schema && !!footer && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24 / column}>
             <Form.Item
@@ -211,12 +215,29 @@ const FormCore = (props: any) => {
               labelCol={operlabelCol}
               className='fr-hide-label'
             >
-              <Space>
-                <Button type='primary' htmlType='submit'>
-                  {t('submit')}
-                </Button>
-                <Button onClick={() => form.resetFields()}> {t('reset')}</Button>
-              </Space>
+              {isFunction(footer) ? ( 
+                <Space>{footer()}</Space>
+              ): (
+                <Space>
+                  {!footer?.reset?.hide && (
+                    <Button 
+                      {...footer?.reset} 
+                      onClick={() => form.resetFields()}
+                    >
+                      {footer?.reset?.text || t('reset')}
+                    </Button>
+                  )}
+                  {!footer?.submit?.hide && (
+                    <Button
+                      type='primary'
+                      onClick={form.submit}
+                      {...footer?.submit}
+                    >
+                      {footer?.submit?.text || t('submit')}
+                    </Button>
+                  )}
+                </Space>
+              )}
             </Form.Item>
           </Col>
         </Row>

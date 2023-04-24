@@ -1,6 +1,7 @@
 ---
 order: 2
 toc: content
+mobile: false
 group: 
   title: 高级用法
   order: 1
@@ -13,8 +14,8 @@ group:
 ### 一、内置校验
 
 - required：必填
-- max：string 类型为字符串最大长度；number 类型时为最大值；array 类型时为数组最大长度
-- min：string 类型为字符串最小长度；number 类型时为最小值；array 类型时为数组最小长度
+- max：最大长度 | 最大值
+- min：最小长度 | 最小值
 - format：url ｜ email ｜ image | color
 
 ```jsx
@@ -79,10 +80,10 @@ export default () => {
   const form = useForm();
   
   return (
-     <FormRender 
+    <FormRender 
       schema={schema} 
       form={form} 
-      builtOperation={true}
+      footer={true}
     />
   )
 };
@@ -139,7 +140,7 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form} 
-      builtOperation={true}
+      footer={true}
     />
   )
 };
@@ -177,7 +178,7 @@ export default () => {
      <FormRender 
       schema={schema} 
       form={form} 
-      builtOperation={true}
+      footer={true}
       validateMessages={validateMessages}
     />
   )

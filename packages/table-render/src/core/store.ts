@@ -4,7 +4,7 @@ import { createContext } from 'react';
 export const TRContext = createContext(null);
 export const ConfigContext = createContext(null);
 
-type TStore = {
+export type TStore = {
   loading: boolean;
   api: null,
   tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
@@ -37,7 +37,6 @@ export const createStore = () => createx<TStore>((set: any, get: any) => ({
     total: 0,
   },
   tableSize: 'default',
-
   inited: false,
   setState: (state: any) => {
     return set({ ...state })

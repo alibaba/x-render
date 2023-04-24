@@ -1,4 +1,33 @@
 # 更新日志
+
+### 2.1.14
+- [!] 修复 单个控件校验提示出现多个，例如 required 和 max 不满足时会同时出现提示
+
+### 2.1.13
+- [!] 修复 校验 min = 0 时，不生效
+- [+] cardList 增加 useMemo 提升表单输入性能，避免输入卡顿
+
+### 2.1.12
+
+### 2.1.11
+- [!] 修复 form-render schema.enum.indexof 错误
+### 2.1.10
+- [+] 扩展 list 组件 actionColumnProps 配置属性
+### 2.1.9
+- [!] 修复 form-render ts 错误
+### 2.1.8
+- [+] 新增 footer 按钮配置栏
+
+### 2.1.7
+- [+] 新增 组件按需功能，导出 FormSlimRender 实例
+### 2.1.6
+- [+] 新增 order 排序
+- [!] 去除 setSchemaByPath 属性合并，只对 schema.props 进行简单合并
+
+### 2.1.5
+- [!] 修复 select 清除异常报错
+### 2.1.1-2.1.4
+- [!] 修复 searchForm 列布局，查询按钮高度异常
 ### 2.1.0
 - [+] 增加 span 属性支持表单项宽度自定义
 ### 2.0.19

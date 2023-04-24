@@ -1,12 +1,13 @@
 ---
-order: 1
+order: 0
 toc: content
+mobile: false
 group: 
   title: 最佳示例
   order: 2
 ---
 
-# 横向布局
+# 内置组件
 
 ## 基础控件
 
@@ -140,6 +141,11 @@ const schema = {
       title: '颜色选择',
       type: 'string',
       format: 'color',
+    },
+    url1: {
+      title: '链接',
+      type: 'string',
+      format: 'url',
     },
   },
 };
@@ -446,6 +452,7 @@ const schema = {
       type: 'array',
       widget: 'simpleList',
       display: 'inline',
+      labelWidth: 100,
       items: {
         type: 'object',
         properties: {
@@ -489,6 +496,7 @@ const schema = {
       type: 'array',
       widget: 'simpleList',
       display: 'inline',
+      labelWidth: 100,
       props: {
         hasBackground: true,
       },
@@ -692,6 +700,7 @@ const schema = {
       type: 'array',
       display: 'inline',
       widget: 'cardList',
+      labelWidth: 100,
       items: {
         type: 'object',
         title: '卡片主题',
@@ -743,6 +752,7 @@ const schema = {
       type: 'array',
       display: 'inline',
       widget: 'cardList',
+      labelWidth: 100,
       items: {
         type: 'object',
         title: '卡片主题',
@@ -795,6 +805,7 @@ const schema = {
       type: 'array',
       display: 'inline',
       widget: 'cardList',
+      labelWidth: 100,
       items: {
         type: 'object',
         title: '卡片主题',
@@ -899,6 +910,7 @@ const schema = {
       type: 'array',
       widget: 'drawerList',
       display: 'inline',
+      labelWidth: 100,
       items: {
         type: 'object',
         properties: {
@@ -1002,6 +1014,7 @@ const schema = {
       type: 'array',
       widget: 'tableList',
       display: 'inline',
+      labelWidth: 100,
       items: {
         type: 'object',
         properties: {
@@ -1105,6 +1118,7 @@ const schema = {
       type: 'array',
       widget: 'virtualList',
       display: 'inline',
+      labelWidth: 100,
       items: {
         type: 'object',
         properties: {
@@ -1208,6 +1222,7 @@ const schema = {
       type: 'array',
       widget: 'tabList',
       display: 'inline',
+      labelWidth: 100,
       items: {
         type: 'object',
         properties: {

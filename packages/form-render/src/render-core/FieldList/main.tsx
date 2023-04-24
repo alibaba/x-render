@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { Form, message, ConfigProvider, Button } from 'antd';
 import { isFunction, translation } from '../../utils';
+import { getWidget } from '../../models/mapping';
 
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
@@ -23,7 +24,7 @@ export default (props: any) => {
   const { widgets, globalConfig } = configContext;
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
- 
+
   const defaultAddBtnProps = {
     type: 'dashed',
     block: true,
@@ -40,11 +41,10 @@ export default (props: any) => {
     colHeaderText: t('operate')
   };
 
-  const { widget } = schema;
-  let widgetName = widget || 'list1';
-  const Widget = widgets[widgetName];
+  let widgetName = schema.widget || 'cardList';
+  const Widget = getWidget(widgetName, widgets);
 
-  const { props: listProps,  removeBtn, ...otherSchema } = schema;
+  const { props: listProps, removeBtn, ...otherSchema } = schema;
 
   let defaultValue = schema.default ?? schema.defaultValue;
   if (defaultValue === undefined && !['drawerList', 'list1'].includes(widgetName)) {
@@ -86,7 +86,8 @@ export default (props: any) => {
     }
 
     if (isFunction(removeFunc)) {
-      removeFunc(() => remove(index), { schema, index });
+      const data = form.getFieldValue([...preRootPath, ...path, index]);
+      removeFunc(() => remove(index), { schema, index, data });
       return;
     }
 
@@ -107,7 +108,7 @@ export default (props: any) => {
     move(form, to);
   };
 
-  const handleCopy = (add: any, fields: any) => (value: any) => {
+  const handleCopy = (add: any, fields: any) => (data: any) => {
     if (schema.max && fields.length === schema.max) {
       return message.warning(t('copy_max_tip'));
     }
@@ -117,13 +118,13 @@ export default (props: any) => {
     }
 
     if (isFunction(copyFunc)) {
-      copyFunc((funData?: any) => add(funData || value), { schema, value });
+      copyFunc((funData?: any) => add(funData || data), { schema, data });
       return;
     }
-    add(value);
+    add(data);
   };
 
-  const handleDetele = () => {
+  const handleDelete = () => {
     if (isFunction(removeBtn?.onClick)) {
       removeBtn.onClick(() => {
         form.setSchemaByPath(path, { hidden: true });
@@ -204,11 +205,11 @@ export default (props: any) => {
               removeItem={handleRemove(operation.remove)}
               moveItem={handleMove(operation.move)}
               copyItem={handleCopy(operation.add, fields)}
-             
+
               temporary={{
                 displayType
               }}
-              
+
 
               addBtnProps={{
                 ...defaultAddBtnProps,
@@ -224,6 +225,10 @@ export default (props: any) => {
               }}
               copyBtnProps={{
                 children: t('copy'),
+                btnType: operateBtnType
+              }}
+              editorBtnProps={{
+                children: t('edit'),
                 btnType: operateBtnType
               }}
               deleteBtnProps={{
@@ -252,7 +257,7 @@ export default (props: any) => {
           type='link'
           danger
           {...removeBtn}
-          onClick={handleDetele}
+          onClick={handleDelete}
         >
           {removeBtn?.text || t('delete')}
         </Button>

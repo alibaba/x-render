@@ -3,7 +3,7 @@ import { Form } from 'antd';
 
 import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
-import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
+import { _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
 import type { FormInstance } from '../type';
 
@@ -12,21 +12,34 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   const currSchema = _get(formSchema, path, {});
   const newSchema = isFunction(_newSchema) ? _newSchema(currSchema) : _newSchema;
 
-  const result = _merge(currSchema, newSchema);
+  const result = {
+    ...currSchema,
+    ...newSchema,
+  }
+
+  if (newSchema.props) {
+    result.props = {
+      ...currSchema?.props,
+      ...newSchema.props
+    }
+  }
+  
   _set(formSchema, path, result);
 };
 
-const getFieldPath = (_path: any) => {
+const getFieldPath = (_path: any): any => {
   if (!_path) {
     return undefined;
   }
 
   if (typeof _path === 'boolean') {
-    return _path
+    return _path;
   }
 
+  let result = [];
+
   if (isArray(_path)) {
-    return _path.map(item => {
+    result = _path.map(item => {
       return item.split('.').map((ite: any) => {
         if (!isNaN(Number(ite))) {
           return ite * 1;
@@ -35,12 +48,22 @@ const getFieldPath = (_path: any) => {
       });
     })
   }
-  return _path.split('.').map((item: any) => {
+
+  result = _path.split('.').map((item: any) => {
     if (!isNaN(Number(item))) {
       return item * 1;
     }
     return item;
   });
+
+  result = result.map(item => {
+    if (item.indexOf('[') === 0  && item.indexOf(']') === item.length -1) {
+      return Number(item.substring(1, item.length-1));
+    }
+    return item;
+  });
+  
+  return result;
 };
 
 const useForm = () => {
@@ -97,14 +120,17 @@ const useForm = () => {
     handleSchemaUpdate(schema);
   }
 
-  form.setSchemaByFullPath = (path: string, newSchema: any) => {
-    const schema = _cloneDeep(schemaRef.current);
-    const currSchema = _get(schema, path, {});
-    const result = _merge(newSchema, currSchema);
+  // form.setSchemaByFullPath = (path: string, newSchema: any) => {
+  //   const schema = _cloneDeep(schemaRef.current);
+  //   const currSchema = _get(schema, path, {});
 
-    _set(schema, path, result);
-    handleSchemaUpdate(schema);
-  }
+  //   const result = _mergeWith(currSchema, newSchema, (objValue, srcValue, key) => {
+  //     return srcValue;
+  //   });
+
+  //   _set(schema, path, result);
+  //   handleSchemaUpdate(schema);
+  // }
 
   form.setValues = (_values: any) => {
     const values = parseBindToValues(_values, flattenSchemaRef.current);

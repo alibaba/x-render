@@ -1,27 +1,32 @@
 import { TableProps } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import { FRProps } from 'form-render';
+import { FRProps, FormInstance } from 'form-render';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
+import { TStore } from './core/store';
 
+export type DoSearchType = (
+  params: {
+    current?: number;
+    tab?: number | string;
+    pageSize?: number;
+    sorter?: any;
+  },
+  customSearch?: any
+) => Promise<void>
 
-export interface TableContext<RecordType> {
-  tableState?: TableState<RecordType>;
-  setTable?: (state: Partial<TableState<RecordType>>) => void;
-  doSearch?: (
-    params: {
-      current?: number;
-      tab?: number | string;
-      pageSize?: number;
-      sorter?: any;
-    },
-    customSearch?: any
-  ) => Promise<void>;
-  refresh?: (
-    params?: { stay: boolean; tab: number | string },
-    search?: any
-  ) => Promise<void>;
-  form?: any; // TODO这里应该去引FR的类型
-  changeTab?: (tab: number | string) => Promise<void>;
+export type RefreshType = (
+  params?: { stay?: boolean; tab?: number | string },
+  search?: any
+) => Promise<void>
+
+export type ChangeTabType = (tab: number | string) => Promise<void>;
+
+export interface TableContext {
+  doSearch: DoSearchType,
+  refresh: RefreshType,
+  changeTab: ChangeTabType,
+  form: FormInstance,
+  getState: () => TStore & { search: Record<string, any> },
 }
 
 export type ProColumnsType<T extends object = any> = Array<
@@ -52,7 +57,7 @@ export interface TableState<RecordType> {
 }
 
 // TODO这里FR的props应该去FR里写，这里继承就好了
-export interface SearchProps<RecordType> extends Omit<FRProps, 'form' | 'schema'> {
+export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   debug?: boolean;
   searchBtnStyle?: React.CSSProperties;
   searchBtnClassName?: string;
@@ -108,8 +113,8 @@ export interface TablePropsC<RecordType extends Object = any>
 
 export interface TableRenderProps<RecordType extends Object = any>
   extends Omit<TablePropsC<RecordType>, 'locale'> {
-  /** 
-   * 开启 debug 模式，时时显示内部状态 
+  /**
+   * 开启 debug 模式，时时显示内部状态
   */
   debug?: boolean;
   /** 表格主体右上方的控件，例如“添加”按钮 */
@@ -121,7 +126,7 @@ export interface TableRenderProps<RecordType extends Object = any>
   onTabChange?: () => any;
   search?: SearchProps<RecordType>;
   locale?: 'zh-CN' | 'en-US';
-  /** 
+  /**
    * antd的全局config
    */
   configProvider?: ConfigProviderProps;

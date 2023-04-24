@@ -1,5 +1,6 @@
 ---
 order: 5
+mobile: false
 title: '数据展示模版'
 group: 
   title: 最佳展示
@@ -21,12 +22,12 @@ group:
  */
 
 import React, { useRef } from 'react';
-import TableRender, { } from 'table-render';
+import TableRender, { TableContext } from 'table-render';
 import { schema } from './static/search';
 import { toolbarRender } from './static/table';
 
 const Demo = () => {
-  const tableRef: any = useRef();
+  const tableRef = useRef<TableContext>(null);
 
   const columns = [
     {

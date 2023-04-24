@@ -75,7 +75,8 @@ export default defineConfig({
     'table-render':  path.resolve(__dirname, 'packages/table-render/src'),
     'chart-render':  path.resolve(__dirname, 'packages/chart-render/src'),
     'fr-generator':  path.resolve(__dirname, 'tools/schema-generator/src'),
-    'fr-design':  path.resolve(__dirname, 'tools/schema-design/src')
+    'fr-design':  path.resolve(__dirname, 'tools/schema-design/src'),
+    'form-render-mobile':  path.resolve(__dirname, 'packages/form-render-mobile/src'),
   },
   codeSplitting: { jsStrategy: 'granularChunks' },
   //...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),

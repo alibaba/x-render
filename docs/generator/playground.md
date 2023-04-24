@@ -1,5 +1,6 @@
 ---
 order: 2
+mobile: false
 title: Playground
 toc: false
 sidemenu: false

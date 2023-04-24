@@ -1,5 +1,6 @@
 ---
 order: 0
+mobile: false
 title: ''
 sidebar: false
 ---

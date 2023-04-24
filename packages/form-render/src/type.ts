@@ -1,6 +1,6 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
-import type { FormInstance as AntdFormInstance, FormProps as AntdFormProps } from 'antd';
+import type { FormInstance as AntdFormInstance, FormProps as AntdFormProps, ColProps, TooltipProps } from 'antd';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
 
 export type { RuleItem } from 'async-validator';
@@ -15,6 +15,19 @@ export type SchemaType =
   | 'datetime'
   | 'block'
   | string;
+
+export type ActionProps = {
+  submit: {
+    text: string;
+    hide: boolean;
+    [key: string]: any;
+  },
+  reset: {
+    text: string;
+    hide: boolean;
+    [key: string]: any;
+  }
+}
 
 export interface SchemaBase {
   type?: SchemaType;
@@ -67,6 +80,12 @@ export interface SchemaBase {
   props?: Record<string, any>;
   /**扩展字段 */
   'add-widget'?: string;
+  labelCol?: number | ColProps;
+  fieldCol?: number | ColProps
+  tooltip?: string | TooltipProps
+  cellSpan?: number;
+  span?: number;
+  [key: string]: any;
 }
 
 export type Schema = Partial<SchemaBase>;
@@ -128,7 +147,7 @@ export interface FormInstance extends AntdFormInstance {
   init: any;
   __schema: any;
   __initStore: (data: any) => any;
-  setSchemaByFullPath: (path: string, schema: any) => any;
+  // setSchemaByFullPath: (path: string, schema: any) => any;
   /**
    *  根据路径动态设置 Schema
    */
@@ -263,10 +282,6 @@ export interface FRProps extends AntdFormProps {
    */
   column?: number;
   /**
-   * 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启
-   */
-  debounceInput?: boolean;
-  /**
    * 数据会作为 beforeFinish 的第四个参数传入
    */
   config?: any;
@@ -274,14 +289,7 @@ export interface FRProps extends AntdFormProps {
    * 类似于 vuejs 的 watch 的用法，监控值的变化，触发 callback
    */
   watch?: WatchProperties;
-  /** 
-   * 对象组件是否折叠（全局的控制）
-   */
-  allCollapsed?: boolean;
-   /** 
-   * 表单全局配置
-   */
-   globalConfig?: GlobalConfig;
+  globalConfig?: GlobalConfig;
   /** 
    * 表单的全局共享属性
    */
@@ -322,7 +330,8 @@ export interface FRProps extends AntdFormProps {
    */
   methods?: Record<string, Function>;
   operateExtra?: React.ReactNode;
-  maxWidth?: string
+  maxWidth?: string;
+  footer?: boolean | (() => React.ReactNode) | Partial<ActionProps> ;
 }
 
 export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
