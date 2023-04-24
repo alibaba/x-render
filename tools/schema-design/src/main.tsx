@@ -33,7 +33,7 @@ const Design = (props: IProps) => {
     iframe?.contentWindow?.__FR_ENGINE__?.init({
       settings,
       widgets,
-      recordEnable: true,
+      // recordEnable: true,
       logo: {
         title: 'XRender'
       }
