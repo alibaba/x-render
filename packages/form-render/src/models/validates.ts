@@ -24,7 +24,7 @@ const insertRequiredRule = (schema: any, rules: any[]) => {
   } = schema;
 
   const requiredAlready = schema?.rules?.some((item: any) => item?.required);
-
+ 
   // 未声明 required，或已经存在 required 校验
   if (!required || requiredAlready) {
     return;
