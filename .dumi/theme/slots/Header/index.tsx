@@ -11,6 +11,9 @@ import './index.less';
 const prefix = 'xr-doc-header';
 
 const Header: React.FC = () => {
+  if (window.top.location.href.includes('design')) {
+    return null;
+  }
 
   return (
     <header className={prefix}>

@@ -21,7 +21,7 @@ features:
   - emoji: 💎
     title: FormGenerator
     description: 中后台表单可视化搭建生成利器
-footer: Please feel free to use and contribute to the development.
+footer: false
 ---
 
 <embed src="../README.md#L33-L163"></embed>
