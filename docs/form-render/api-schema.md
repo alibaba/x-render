@@ -9,7 +9,7 @@ group:
 
 # 协议配置项
 
-`schema` 用于描述表单的基本信息、结构和校验。`schema` 在结构上遵循 [JSON Schema 国际规范](https://json-schema.org/understanding-json-schema/)。
+`schema` 用于描述表单的基本信息、结构和校验。`schema` 在结构上遵循 <a href="https://json-schema.org/understanding-json-schema/" target="_blank">JSON Schema 国际规范</a>。
 表单元素类型总共有三种：`item`，`object`，`list`。
 
 ## 一、表单配置项

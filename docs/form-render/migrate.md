@@ -16,7 +16,7 @@ group:
 全新的 form-render 2.0 主要具备以下特性：
 
 - 🚀 **更好的表单性能**：通过对 form-render 重构，底层接入 Antd Form 来实现表单的数据收集、校验等逻辑，提升表单的整体性能。有效的解决了表单数据改变表单全局刷新的问题。
-- 🎨 **全新的UI样式**：通过对中后台表单业务梳理，定制了一套全新的 UI 样式和交互规范，提升表单整体美观度 。[最佳展示](/form-render/disaply-row)
+- 🎨 **全新的UI样式**：通过对中后台表单业务梳理，定制了一套全新的 UI 样式和交互规范，提升表单整体美观度 。[最佳展示](/form-render/display-row)
 - 🚥 **国际化**：国际化多语言支持，内置中英文语言包，英文版 locale: 'en-US'
 - 💎 **Antd V5**：兼容 antd V5 版本，无需配置
 
@@ -40,7 +40,7 @@ form.formData 弃用，改用 form.getValues() 方式获取
 
 ### theme 弃用
 嵌套组件 theme 字段 弃用，统一改成 widget 声明。
-默认是 widget: 'collapse' 折叠卡片，其他类型参考[横向布局](/form-render/disaply-row#二嵌套控件)示例
+默认是 widget: 'collapse' 折叠卡片，其他类型参考 [表单布局](/form-render/advanced-layout) 示例
 
 
 ### useForm 入参移除
