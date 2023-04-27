@@ -6,9 +6,9 @@ title: 内置控件
 
 ## 输入控件
 
-输入控件是由 antd mobile 组件，做了进一步的封装和兼容之后，组成的一系列开箱即用的 widget。如要对组件进行进一步的配置请参考对应的 [antd mobile 文档](https://mobile.ant.design/zh/components/button?_blank)。
+输入控件是由 antd mobile 组件，做了进一步的封装和兼容之后，组成的一系列开箱即用的 widget。如要对组件进行进一步的配置请参考对应的 <a href="https://mobile.ant.design/zh/components/button?_blank" target="_blank">antd mobile 文档</a>。
 
-form-render-mobile 支持如下输入控件。如需要更多自定义样式和功能，请参考 [自定义组件](/form-render/advanced-widget)。
+form-render-mobile 支持如下输入控件。如需要更多自定义样式和功能，请参考 <a href="/form-render/advanced-widget" target="_blank">自定义组件</a>。
 
 <code src="./demo/allWidget.tsx" background="rgb(245,245,245)" compact={true}></code>
 

@@ -26,7 +26,7 @@ title: 开始使用
 
 ## ✨ 简介
 
-FormRender Mobile 是为移动端设置的开箱即用的表单解决方案，通过 JsonSchema 协议动态渲染表单。基于 [FormRender2.0](https://xrender.fun/form-render) 和 [Ant Design Mobile](https://mobile.ant.design/zh/components/form/) 实现。API 与 FormRender 2.0 基本一致，如果你熟悉 FromRender 2.0 那么你就已经会使用 FormRender Mobile 了。
+FormRender Mobile 是为移动端设置的开箱即用的表单解决方案，通过 JsonSchema 协议动态渲染表单。基于 <a href="https://xrender.fun/form-render" target="_blank">FormRender2.0</a> 和 <a href="https://mobile.ant.design/zh/components/form/" target="_blank">Ant Design Mobile</a> 实现。API 与 FormRender 2.0 基本一致，如果你熟悉 FromRender 2.0 那么你就已经会使用 FormRender Mobile 了。
 
 ## ⚙️ 安装
 
