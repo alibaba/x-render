@@ -8,3 +8,6 @@ mobile: false
 <!-- <code src='./demo/defaultChange.tsx'></code> -->
 
 <!-- <code src='./test/bigJson.tsx'></code> -->
+
+
+<code src='./test/bind.tsx'></code>
