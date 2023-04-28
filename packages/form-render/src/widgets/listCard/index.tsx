@@ -148,7 +148,7 @@ export default (props: any) => {
   } = props;
 
   return React.useMemo(() => <CardList {...props} />, [
-    JSON.stringify(props), 
+    JSON.stringify(props.schema), 
     fields.length,
     hasBackground,
     hideDelete,
