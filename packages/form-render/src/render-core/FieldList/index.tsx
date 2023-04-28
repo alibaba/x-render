@@ -6,7 +6,6 @@ import { parseAllExpression } from '../../models/expression';
 import { getFormListLayout, getParamValue, getLabel, getTooltip } from './modules';
 import Main from './main';
 
-
 const UpperContext = createContext(() => {});
 
 export default (props: any) => {

@@ -196,7 +196,7 @@ const FormCore:FC<FRProps> = (props) => {
  
   const classRest: any = {};
   if (className) {
-    classRest.className = true;
+    classRest[className] = true;
   }
 
   return (

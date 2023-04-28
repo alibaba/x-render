@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Form, message, ConfigProvider, Button } from 'antd';
 import { isFunction, translation } from '../../utils';
 import { getWidget } from '../../models/mapping';
@@ -52,6 +52,10 @@ export default (props: any) => {
   if (defaultValue === undefined && !['drawerList', 'list1'].includes(widgetName)) {
     defaultValue = [{}];
   }
+
+  useEffect(() => {
+    setListData(defaultValue);
+  }, []);
 
   let {
     addBtnProps,
@@ -146,7 +150,7 @@ export default (props: any) => {
     hideMove = globalConfig?.listOperate.hideMove;
   }
 
-  if (otherSchema?.min > 0 && listData.length < otherSchema?.min) {
+  if (otherSchema?.min > 0 && listData.length <= otherSchema?.min) {
     hideDelete = true;
   }
  

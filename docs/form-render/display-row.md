@@ -551,7 +551,7 @@ const schema = {
       min: 2,
       items: {
         type: 'object',
-        title: '卡片主题234234234',
+        title: '卡片主题',
         description: '这是一个对象类型',
         column: 3,
         properties: {
@@ -602,7 +602,7 @@ const schema = {
       max: 2,
       items: {
         type: 'object',
-        title: '卡片主题2223234',
+        title: '卡片主题',
         description: '这是一个对象类型',
         column: 3,
         widget: 'card',
