@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand';
 import { FRContext, ConfigContext } from '../../models/context';
@@ -10,6 +10,8 @@ import Main from './main';
 const UpperContext = createContext(() => {});
 
 export default (props: any) => {
+  const [listData, setListData] = useState([]);
+
   const store = useContext(FRContext);
   const configContext = useContext(ConfigContext);
 
@@ -78,6 +80,8 @@ export default (props: any) => {
           upperCtx={upperCtx}
           widgets={widgets}
           configContext={configContext}
+          setListData={setListData}
+          listData={listData}
         />
       </Form.Item>
     </Col>

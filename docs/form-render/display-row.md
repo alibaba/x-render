@@ -547,9 +547,11 @@ const schema = {
       // description: '对象数组嵌套功能',
       type: 'array',
       widget: 'cardList',
+      max: 3,
+      min: 2,
       items: {
         type: 'object',
-        title: '卡片主题',
+        title: '卡片主题234234234',
         description: '这是一个对象类型',
         column: 3,
         properties: {
@@ -597,9 +599,10 @@ const schema = {
       description: '对象数组嵌套功能',
       type: 'array',
       widget: 'cardList',
+      max: 2,
       items: {
         type: 'object',
-        title: '卡片主题',
+        title: '卡片主题2223234',
         description: '这是一个对象类型',
         column: 3,
         widget: 'card',

@@ -122,7 +122,7 @@ const CardList = (props: any) => {
             </div>
           );
         })}
-        {(!schema.max || fields.length < schema.max) && !hideAdd && (
+        {!hideAdd && (
           <div className='add-btn'>
             <Button
               {...addBtnProps}
@@ -138,11 +138,22 @@ const CardList = (props: any) => {
 }
 
 export default (props: any) => {
-  const { hasBackground, fields } = props;
+  const {
+    hasBackground, 
+    fields,
+    hideDelete,
+    hideCopy,
+    hideMove,
+    hideAdd,
+  } = props;
 
   return React.useMemo(() => <CardList {...props} />, [
-    JSON.stringify(props.schema), 
+    JSON.stringify(props), 
     fields.length,
-    hasBackground
+    hasBackground,
+    hideDelete,
+    hideCopy,
+    hideMove,
+    hideAdd,
   ])
 };

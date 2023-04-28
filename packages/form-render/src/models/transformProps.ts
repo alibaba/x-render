@@ -37,7 +37,7 @@ const transformProps =  (props: any) => {
     disabled,
     // labelAlign,
     // colon,
-    // className,
+    className,
     // style,
     // disabled,
     // scrollToFirstError,
@@ -80,7 +80,8 @@ const transformProps =  (props: any) => {
     logOnSubmit,
     labelCol,
     fieldCol,
-    maxWidth
+    maxWidth,
+    className
   };
 };
 
