@@ -60,7 +60,7 @@ const transformValueToBind = (data: any, path: any, bind: false | string | strin
   }
 }
 
-const transformBindToValue = (data: any, path: any, bind: false | string | string[]) => {
+const transformBindToValue = (data: any, path: any, bind: any) => {
   if (typeof bind === 'string') {
     let value = get(data, bind);
     const preValue = get(data, path);
@@ -133,14 +133,12 @@ export const parseValuesToBind = (values: any, flatten: any) => {
 };
 
 export const parseBindToValues = (values: any, flatten: any) => {
-
   if (!JSON.stringify(flatten).includes('bind')) {
     return values;
   }
-  const data = _cloneDeep(values);
 
+  const data = _cloneDeep(values);
   const dealFieldList = (obj: any, [path, ...rest]: any, bind: any) => {
-    debugger;
     if (rest.length === 1) {
       const list = get(obj, path, []);
       list.forEach((item: any, index: number) => {
@@ -148,7 +146,6 @@ export const parseBindToValues = (values: any, flatten: any) => {
           list[index] = { [rest[0]] : item };
           return;
         }
-
         transformBindToValue(item, rest[0], bind);
       });
     }
