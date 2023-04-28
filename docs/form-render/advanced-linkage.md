@@ -438,7 +438,13 @@ export default () => {
 };
 ```
 
+### Form List 中的依赖
 
+- `[index]` 表示特定位置的 List Item，比如 `list[1].foo`。
+- 只传 `[]` 则表示相同位置的其他 List Item，比如 `list[].foo`。
+
+
+<code src="./demo/linkage/list.tsx"></code>
 
 
 
