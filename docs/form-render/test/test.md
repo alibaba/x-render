@@ -9,5 +9,4 @@ mobile: false
 
 <!-- <code src='./test/bigJson.tsx'></code> -->
 
-
-<code src='./test/bind.tsx'></code>
+<!-- <code src='./test/bind.tsx'></code> -->
