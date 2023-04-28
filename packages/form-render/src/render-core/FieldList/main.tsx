@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Form, message, ConfigProvider, Button } from 'antd';
 import { isFunction, translation } from '../../utils';
 import { getWidget } from '../../models/mapping';
@@ -19,6 +19,8 @@ export default (props: any) => {
     upperCtx,
     formCtx,
     configContext,
+    listData,
+    setListData,
   } = props;
 
   const { widgets, globalConfig } = configContext;
@@ -50,6 +52,10 @@ export default (props: any) => {
   if (defaultValue === undefined && !['drawerList', 'list1'].includes(widgetName)) {
     defaultValue = [{}];
   }
+
+  useEffect(() => {
+    setListData(defaultValue);
+  }, []);
 
   let {
     addBtnProps,
@@ -144,6 +150,14 @@ export default (props: any) => {
     hideMove = globalConfig?.listOperate.hideMove;
   }
 
+  if (otherSchema?.min > 0 && listData.length <= otherSchema?.min) {
+    hideDelete = true;
+  }
+ 
+  if (otherSchema?.max > 0 && otherSchema?.max <= listData.length) {
+    hideAdd = true;
+  }
+
   if (hideAdd) {
     hideCopy = true;
   }
@@ -163,9 +177,13 @@ export default (props: any) => {
         name={path}
         initialValue={defaultValue}
         rules={
-          otherSchema?.min ? [
+          [
             {
               validator: async (_, data) => {
+                setListData(data);
+                if (!otherSchema?.min) {
+                  return;
+                }
                 if (!data || data.length < otherSchema.min) {
                   return Promise.reject(
                     new Error(
@@ -177,7 +195,6 @@ export default (props: any) => {
               }
             }
           ]
-            : null
         }
       >
         {(fields, operation, { errors }) => (

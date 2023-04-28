@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, FC } from 'react';
 import { Form, Row, Col, Button, Space, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
+import classNames from 'classnames';
 
 import { valueRemoveUndefined, _cloneDeep, translation, isFunction } from '../utils';
 import { FRContext } from '../models/context';
@@ -54,6 +55,7 @@ const FormCore:FC<FRProps> = (props) => {
     logOnMount,
     logOnSubmit,
     id,
+    className,
   } = transformProps({ ...props, ...schemProps });
 
   useEffect(() => {
@@ -192,9 +194,14 @@ const FormCore:FC<FRProps> = (props) => {
 
   const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
  
+  const classRest: any = {};
+  if (className) {
+    classRest[className] = true;
+  }
+
   return (
     <Form
-      className='fr-form'
+      className={classNames('fr-form', classRest )}
       labelWrap={true}
       {...formProps}
       disabled={disabled}
