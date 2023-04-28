@@ -38,10 +38,48 @@ form.formData 弃用，改用 form.getValues() 方式获取
 + form.getValues()
 ```
 
+## Schema 相关
+
 ### theme 弃用
 嵌套组件 theme 字段 弃用，统一改成 widget 声明。
 默认是 widget: 'collapse' 折叠卡片，其他类型参考 [表单布局](/form-render/advanced-layout) 示例
 
+### description 不再自动调整样式
+在 1.x 中 description 在 displayType 为 `row` 的情况下，会自动转换为 tooltip。在 2.x 中不再自动转换，需要手动调整
+
+```diff
+{
+  displayType: 'row',
+- description: 'xxx',
++ tooltip: 'xxx'
+}
+```
+
+### bind 会在 `form.setValues`、`form.getValues` 以及 `onFinish` 生效
+
+在 2.x 中 bind 会始终生效，你应该始终使用 bind 之后的 formData。
+
+### required 不支持统一设置
+
+你需要在每个 item 中指定 `required`
+
+```diff
+{
+- required: [
+-   'input',
+- ],
+  properties: {
+    input: {
+      title: '输入框',
+      type: 'string',
++     required: true,
+    }
+  }
+}
+
+```
+
+## Form 相关
 
 ### useForm 入参移除
 ```js
@@ -145,3 +183,7 @@ rate,
 treeSelect,
 errorSchemaWidget // 错误显示
 ```
+
+### Watch 不再监听 set 事件
+
+在 2.x 中，`watch` 不再监听由于 `setValues` 和 `setValueByPath` 导致的数据变化。你应该在执行 set 事件的同时执原本的监听事件。
