@@ -6,7 +6,7 @@ import _ from 'lodash';
 
 const BoxSubInline = (props: any) => {
   const { children, title, hasBackground = true, description, tooltip, fieldCol, labelCol, labelWidth } = props;
-  let _tooltip = null;
+  let _tooltip: any = null;
   let _labelCol: any = { span: 3 };
   let _fieldCol = { flex: 1 }
 

@@ -113,7 +113,7 @@ export default (props: any) => {
           exist: true,
         }}
       >
-        {inlineSelf ? content : <Col span={24} style={{ padding: 0 }}>{content}</Col>}
+        {inlineSelf ? content : <Col span={24}>{content}</Col>}
       </UpperContext.Provider>
     );
   }
