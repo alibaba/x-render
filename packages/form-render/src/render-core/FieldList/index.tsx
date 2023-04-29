@@ -16,7 +16,7 @@ export default (props: any) => {
 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
-  const { form, widgets, methods } = configContext;
+  const { form, widgets, methods, globalConfig } = configContext;
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
@@ -26,7 +26,7 @@ export default (props: any) => {
   const { schema: formSchema } = store.getState();
 
   const { items, ...otherSchema } = _schema;
-  const schema = {
+  const schema = globalConfig?.mustacheDisabled ? _schema : {
     items,
     ...parseAllExpression(otherSchema, formData, props.rootPath, formSchema)
   };

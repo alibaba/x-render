@@ -140,7 +140,8 @@ export interface ListOperate {
 }
 
 export interface GlobalConfig {
-  listOperate: ListOperate
+  listOperate: ListOperate;
+  mustacheDisabled: boolean;
 }
 
 export interface FormInstance extends AntdFormInstance {
