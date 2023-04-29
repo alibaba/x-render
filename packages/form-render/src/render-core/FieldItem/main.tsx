@@ -4,7 +4,6 @@ import { useStore } from 'zustand';
 import classnames from 'classnames';
 
 import { isCheckBoxType, _get } from '../../utils';
-import { ConfigContext } from '../../models/context';
 import { getWidgetName, getWidget } from '../../models/mapping';
 import { getFormItemLayout } from '../../models/layout';
 import getRuleList from '../../models/validates';
@@ -31,7 +30,7 @@ import {
 } from './module';
 
 export default (props: any) => {
-  const { store, schema, path, children, dependValues, rootPath } = props;
+  const { configCtx, store, schema, path, children, dependValues, rootPath } = props;
 
   if (schema?.hidden) {
     return null;
@@ -39,7 +38,7 @@ export default (props: any) => {
 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
-  const configCtx = useContext(ConfigContext);
+ 
   const { form, widgets, methods, globalProps } = configCtx;
 
   const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;

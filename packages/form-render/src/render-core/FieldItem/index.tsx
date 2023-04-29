@@ -2,22 +2,11 @@ import React, { useContext } from 'react';
 import { Form } from 'antd';
 
 import { _get } from '../../utils';
-import { FRContext } from '../../models/context';
+import { FRContext, ConfigContext } from '../../models/context';
 import { isHasExpression, parseAllExpression } from '../../models/expression';
 import Main from './main';
 
-export default (props: any) => {
-  const { schema, rootPath, ...otherProps } = props;
-
-  const store = useContext(FRContext);
-  const { schema: formSchema } = store.getState();
-
-  // No function expressions exist
-  if (!isHasExpression(schema) && !schema?.dependencies) {
-    return <Main {...props} store={store} />;
-  }
-
-  /*
+/*
    * Get depend values
    *
    * 1. normal path
@@ -28,25 +17,40 @@ export default (props: any) => {
    * You can pass `[index]` to get specific item at the index of list, such as `list[1].foo`.
    * Support more complex path like `list[].foo[].bar`
    */
-  const getDependValues = (formData: any, dependPath: string) => {
-    const indexReg =/\[[0-9]*\]/;
+const getDependValues = (formData: any, dependPath: string, otherProps: any) => {
+  const indexReg =/\[[0-9]*\]/;
 
-    if (indexReg.test(dependPath)) {
-      const currentIndex = _get(otherProps, 'path.0')
-      const dependIndex = dependPath
-        .match(indexReg)[0]
-        .replace('[', '')
-        .replace(']', '')
+  if (indexReg.test(dependPath)) {
+    const currentIndex = _get(otherProps, 'path.0')
+    const dependIndex = dependPath
+      .match(indexReg)[0]
+      .replace('[', '')
+      .replace(']', '')
 
-      const listPath = dependPath.split(indexReg)[0];
-      const itemIndex = dependIndex || currentIndex;
-      const itemPath = dependPath.replace(`${listPath}[${dependIndex}].`, '')
-      const listData = _get(formData, `${listPath}[${itemIndex}]`)
+    const listPath = dependPath.split(indexReg)[0];
+    const itemIndex = dependIndex || currentIndex;
+    const itemPath = dependPath.replace(`${listPath}[${dependIndex}].`, '')
+    const listData = _get(formData, `${listPath}[${itemIndex}]`)
 
-      return getDependValues(listData,itemPath);
-    }
+    return getDependValues(listData,itemPath, otherProps);
+  }
 
-    return _get(formData, dependPath);
+  return _get(formData, dependPath);
+}
+
+
+export default (props: any) => {
+  const { schema, rootPath, ...otherProps } = props;
+
+  const store = useContext(FRContext);
+  const { schema: formSchema } = store.getState();
+
+  const configCtx = useContext(ConfigContext);
+  const mustacheDisabled = configCtx?.globalConfig?.mustacheDisabled;
+
+  // No function expressions exist
+  if ((!isHasExpression(schema) && !mustacheDisabled) && !schema?.dependencies) {
+    return <Main {...props} store={store} configCtx={configCtx} />;
   }
 
   // Need to listen to form values for dynamic rendering
@@ -60,10 +64,10 @@ export default (props: any) => {
     >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-        const dependValues = (schema.dependencies || []).map((dep: string) => getDependValues(formData, dep));
-        const newSchema = parseAllExpression(schema, formData, rootPath, formSchema);
+        const dependValues = (schema.dependencies || []).map((dep: string) => getDependValues(formData, dep, otherProps));
+        const newSchema = mustacheDisabled ? schema : parseAllExpression(schema, formData, rootPath, formSchema);
 
-        return <Main schema={newSchema} rootPath={rootPath} {...otherProps} dependValues={dependValues} store={store} />;
+        return <Main schema={newSchema} rootPath={rootPath} {...otherProps} dependValues={dependValues} store={store} configCtx={configCtx} />;
       }}
     </Form.Item>
   );
