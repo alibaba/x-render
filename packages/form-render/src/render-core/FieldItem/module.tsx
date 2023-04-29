@@ -85,7 +85,7 @@ export const getLabel = (schema: any, displayType: string, widgets: any) => {
 
     if (description) {
       return (
-        <span className='fr-desc ml2'>
+        <span className='fr-desc'>
           ({description})
         </span>
       )

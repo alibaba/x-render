@@ -62,6 +62,9 @@ export default () => {
       form={form}
       labelWidth={200}
       maxWidth={400}
+      globalConfig={{
+        mustacheDisabled: true,
+      }}
     />
   )
 };
