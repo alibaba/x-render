@@ -11,9 +11,11 @@ const schema = {
       title: '对象数组',
       description: '对象数组嵌套功能',
       type: 'array',
-      widget: 'simpleList',
+      widget: 'cardList',
       items: {
         type: 'object',
+        title: '卡片主题',
+        description: '这是一个对象类型',
         column: 3,
         widget: 'card',
         properties: {
@@ -57,11 +59,10 @@ const schema = {
 
 const getTest = (schema: any) => {
 
-  for (let i=0; i< 300; i++) {
+  for (let i=0; i< 500; i++) {
     schema.properties.list.items.properties[i] = {
       title: '输入框 A',
       type: 'string',
-      disabled: '{{formData.x}}'
     };
     // schema.properties[i] = {
     //   title: '输入框 A',

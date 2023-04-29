@@ -114,7 +114,7 @@ export default (props: any) => {
           exist: true,
         }}
       >
-        {inlineSelf ? content : <Col span={24}>{content}</Col>}
+        {inlineSelf ? content : <Col span={24} style={{ padding: 0 }}>{content}</Col>}
       </UpperContext.Provider>
     );
   }
@@ -147,7 +147,7 @@ export default (props: any) => {
   }
 
   if (!label) {
-    noStyle = true;
+    label = 'fr-hide-label';
   }
 
   if (readOnly) {
@@ -166,11 +166,8 @@ export default (props: any) => {
 
   const initialValue = schema.default ?? schema.defaultValue;
 
-  const classRest = { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible };
-  if (schema.className) {
-    classRest[schema.className] = true;
-  }
-
+  const classRest = { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible, [schema.className] : !! schema.className };
+  
   const formItem = (
     <Form.Item
       className={classnames('fr-field', classRest)}
@@ -209,7 +206,7 @@ export default (props: any) => {
   if (inlineSelf) {
     if (noStyle) {
       return (
-        <div className={classnames('fr-inline-field', { 'fr-field-visibility': !visible })}>
+        <div className={classnames('fr-inline-field', { 'fr-field-visibility': !visible, [schema.className] : !! schema.className })}>
           {formItem}
         </div>
       );
