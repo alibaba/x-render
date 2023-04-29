@@ -33,8 +33,6 @@ export const FieldWrapper = (props: any) => {
   const { Field, fieldProps, maxWidth, initialValue, ...otherProps } = props;
   const { addons, schema } = fieldProps;
 
-  console.log('我被更新了！！！')
-
   const _style = maxWidth ? { maxWidth, ...fieldProps?.style }: { ...fieldProps?.style }
   const { removeBtn } = schema;
  
