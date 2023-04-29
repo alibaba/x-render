@@ -54,7 +54,7 @@ export default (props: any) => {
   }
 
   useEffect(() => {
-    setListData(defaultValue);
+    setListData(defaultValue ||[]);
   }, []);
 
   let {

@@ -83,7 +83,7 @@ const useForm = () => {
     if (!setState) {
       setTimeout(() => {
         setState({ schema: schemaRef.current, flattenSchema: flattenSchemaRef.current });
-      }, 0)
+      }, 0);
     }
     setState(data);
   };

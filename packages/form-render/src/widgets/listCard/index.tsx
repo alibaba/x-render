@@ -137,23 +137,4 @@ const CardList = (props: any) => {
   );
 }
 
-export default (props: any) => {
-  const {
-    hasBackground, 
-    fields,
-    hideDelete,
-    hideCopy,
-    hideMove,
-    hideAdd,
-  } = props;
-
-  return React.useMemo(() => <CardList {...props} />, [
-    JSON.stringify(props.schema), 
-    fields.length,
-    hasBackground,
-    hideDelete,
-    hideCopy,
-    hideMove,
-    hideAdd,
-  ])
-};
+export default CardList;

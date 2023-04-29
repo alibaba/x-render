@@ -226,7 +226,7 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
     fieldProps.dependValues = dependValues;
   }
 
-  ['placeholder', 'disabled', 'format', 'onStatusChange', 'className'].forEach(key => {
+  ['placeholder', 'disabled', 'format', 'onStatusChange'].forEach(key => {
     if (schema[key]) {
       fieldProps[key] = schema[key];
     }
