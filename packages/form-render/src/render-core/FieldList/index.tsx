@@ -20,7 +20,7 @@ export default (props: any) => {
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
-  const { schema:_schema, path,} = props;
+  const { schema:_schema } = props;
 
   const formData = form.getFieldsValue(true);
   const { schema: formSchema } = store.getState();
@@ -35,14 +35,13 @@ export default (props: any) => {
   let widgetName = widget || 'list1';
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  const value = Form.useWatch(path, form);
  
   const label = getLabel(schema, displayType, widgets);
   const tooltip = getTooltip(schema, displayType);
   const { labelCol, fieldCol } = getFormListLayout(getValueFromKey);
 
   let isInline = schema.display === 'inline';
-  if (!value && widgetName !== 'drawerList') {
+  if (!setListData?.length && widgetName !== 'drawerList') {
     isInline = true;
   }
 
