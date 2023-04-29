@@ -4,7 +4,7 @@ export const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valu
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
 };
 
-export const getFormListLayout = (getValueFromKey: any) => {
+export const getFormListLayout = (getValueFromKey: any, displayType: string) => {
   const _labelCol = getValueFromKey('labelCol');
   const _fieldCol = getValueFromKey('fieldCol');
   const labelWidth = getValueFromKey('labelWidth')
@@ -12,7 +12,7 @@ export const getFormListLayout = (getValueFromKey: any) => {
   let labelCol: any = { span: 5 };
   let fieldCol: any = { flex: 1 };
 
-  if (labelWidth) {
+  if (labelWidth && displayType !== 'column') {
     labelCol = { flex : labelWidth + 'px' };
   }
 

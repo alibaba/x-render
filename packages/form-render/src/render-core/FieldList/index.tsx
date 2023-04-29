@@ -38,7 +38,7 @@ export default (props: any) => {
  
   const label = getLabel(schema, displayType, widgets);
   const tooltip = getTooltip(schema, displayType);
-  const { labelCol, fieldCol } = getFormListLayout(getValueFromKey);
+  const { labelCol, fieldCol } = getFormListLayout(getValueFromKey, displayType);
 
   let isInline = schema.display === 'inline';
   if (!setListData?.length && widgetName !== 'drawerList') {

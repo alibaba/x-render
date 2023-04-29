@@ -93,9 +93,9 @@ export const getLabel = (schema: any, displayType: string, widgets: any) => {
     return null;
   };
 
-  if (displayType === 'inline') {
-    return title;
-  }
+  // if (displayType === 'inline') {
+  //   return title;
+  // }
 
   return (
     <>
