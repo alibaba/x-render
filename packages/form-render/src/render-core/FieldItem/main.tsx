@@ -166,7 +166,7 @@ export default (props: any) => {
   const initialValue = schema.default ?? schema.defaultValue;
 
   const classRest = { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible, [schema.className] : !! schema.className };
-  
+
   const formItem = (
     <Form.Item
       className={classnames('fr-field', classRest)}

@@ -22,7 +22,7 @@ export default (props: any) => {
   const isDisplayColumn = displayType === 'column';
   const { schema:_schema } = props;
 
-  const formData = form.getFieldsValue(true);
+  const formData = form.getValues(true);
   const { schema: formSchema } = store.getState();
 
   const { items, ...otherSchema } = _schema;

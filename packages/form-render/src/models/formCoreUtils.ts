@@ -100,7 +100,7 @@ export const valuesWatch = (changedValues: any, allValues: any, watch: any) => {
   });
 };
 
-export const transformFieldsError = (_fieldsError: any) => {
+export const transformFieldsData = (_fieldsError: any, getFieldName: any) => {
   let fieldsError = _fieldsError;
   if (isObject(fieldsError)) {
     fieldsError = [fieldsError];
@@ -110,7 +110,7 @@ export const transformFieldsError = (_fieldsError: any) => {
     return;
   }
 
-  return fieldsError.map((field: any) => ({ errors: field.error, ...field }));
+  return fieldsError.map((field: any) => ({ errors: field.error, ...field, name: getFieldName(field.name) }));
 };
 
 export const immediateWatch = (watch: any, values: any) => {
