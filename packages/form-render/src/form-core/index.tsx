@@ -11,7 +11,6 @@ import { getFormItemLayout } from '../models/layout';
 import {FRProps} from '../type'
 
 import {
-  transformFieldsError,
   valuesWatch,
   immediateWatch,
   yymmdd,
@@ -24,7 +23,7 @@ import RenderCore from '../render-core';
 import './index.less';
 
 const FormCore:FC<FRProps> = (props) => {
-  const store = useContext(FRContext);
+  const store: any = useContext(FRContext);
   const schema = useStore(store, (state: any) => state.schema);
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
   const setContext = useStore(store, (state: any) => state.setContext);
@@ -165,7 +164,6 @@ const FormCore:FC<FRProps> = (props) => {
     let fieldsError = beforeFinish
       ? await beforeFinish({ data: values, schema, errors: [] })
       : null;
-    fieldsError = transformFieldsError(fieldsError);
 
     // console.log(values, form.getValues(true));
     // Stop submit

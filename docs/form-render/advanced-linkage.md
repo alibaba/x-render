@@ -437,12 +437,13 @@ export default () => {
       rules: [
         { 
           validator: (_, value, { form }) => {
-            if (!value || form.getFieldValue('input1') === value) {
+            if (!value || form.getValueByPath('input1') === value) {
               return true;
             }
+            
             return false;
           }, 
-           message: '你输入的两个密码不匹配' 
+          message: '你输入的两个密码不匹配' 
         }
       ]
     }
@@ -461,12 +462,12 @@ export default () => {
 }
 ```
 
-<!-- ### Form List 中的依赖
+#### Form List 中的依赖
 
 - `[index]` 表示特定位置的 List Item，比如 `list[1].foo`。
 - 只传 `[]` 则表示相同位置的其他 List Item，比如 `list[].foo`。
 
 
-<code src="./demo/linkage/list.tsx"></code> -->
+<code src="./demo/linkage/list.tsx"></code>
 
 

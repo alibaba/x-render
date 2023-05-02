@@ -9,7 +9,7 @@ import { getFormat } from '../../utils';
 
 const { RangePicker } = TimePicker;
 
-const TimeRange = ({ onChange, format ='time', value, style, schema }) => {
+const TimeRange = ({ onChange, format='time', value, style, schema }) => {
   const timeFormat = getFormat(format);
   let [start, end] = Array.isArray(value) ? value : [];
 

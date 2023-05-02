@@ -17,11 +17,11 @@ import Main from './main';
    * You can pass `[index]` to get specific item at the index of list, such as `list[1].foo`.
    * Support more complex path like `list[].foo[].bar`
    */
-const getDependValues = (formData: any, dependPath: string, otherProps: any) => {
+const getDependValues = (formData: any, dependPath: string, props: any, dependencieItem: any[]) => {
   const indexReg =/\[[0-9]*\]/;
 
   if (indexReg.test(dependPath)) {
-    const currentIndex = _get(otherProps, 'path.0')
+    const currentIndex = _get(props, 'path.0')
     const dependIndex = dependPath
       .match(indexReg)[0]
       .replace('[', '')
@@ -30,10 +30,14 @@ const getDependValues = (formData: any, dependPath: string, otherProps: any) => 
     const listPath = dependPath.split(indexReg)[0];
     const itemIndex = dependIndex || currentIndex;
     const itemPath = dependPath.replace(`${listPath}[${dependIndex}].`, '')
-    const listData = _get(formData, `${listPath}[${itemIndex}]`)
+    const listData = _get(formData, `${listPath}[${itemIndex}]`);
 
-    return getDependValues(listData,itemPath, otherProps);
+    dependencieItem.push(listPath, itemIndex);
+
+    return getDependValues(listData, itemPath, props, dependencieItem);
   }
+
+  dependencieItem.push(...dependPath.split('.'));
 
   return _get(formData, dependPath);
 }
@@ -47,9 +51,10 @@ export default (props: any) => {
 
   const configCtx = useContext(ConfigContext);
   const mustacheDisabled = configCtx?.globalConfig?.mustacheDisabled;
+  const dependencies = schema?.dependencies;
 
   // No function expressions exist
-  if ((!isHasExpression(schema) && !mustacheDisabled) && !schema?.dependencies) {
+  if ((!isHasExpression(schema) && !mustacheDisabled) && (!dependencies || !dependencies?.length)) {
     return <Main {...props} store={store} configCtx={configCtx} />;
   }
 
@@ -64,10 +69,28 @@ export default (props: any) => {
     >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-        const dependValues = (schema.dependencies || []).map((dep: string) => getDependValues(formData, dep, otherProps));
+
+        const formDependencies: any[] = [];
+        const dependValues = (dependencies || []).map((depPath: string) => {
+          const item:any[] = [];
+          formDependencies.push(item);
+          return getDependValues(formData, depPath, props, item);
+        });
         const newSchema = mustacheDisabled ? schema : parseAllExpression(schema, formData, rootPath, formSchema);
 
-        return <Main schema={newSchema} rootPath={rootPath} {...otherProps} dependValues={dependValues} store={store} configCtx={configCtx} />;
+        return (
+          <Main 
+            schema={{
+              ...newSchema,
+              dependencies: formDependencies
+            }} 
+            rootPath={rootPath} 
+            {...otherProps}
+            dependValues={dependValues} 
+            store={store} 
+            configCtx={configCtx} 
+          />
+        );
       }}
     </Form.Item>
   );

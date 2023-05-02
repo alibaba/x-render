@@ -3,6 +3,7 @@
  */
 import React from 'react';
 import { InputNumber, Slider } from 'antd';
+import withFieldWrap from '../../utils/withFieldWrap';
 import './index.less';
 interface SliderWithNumberProps {
   schema: {
@@ -63,5 +64,5 @@ const SliderWithNumber: React.FC<SliderWithNumberProps> = ({
   );
 }
 
-export default SliderWithNumber;
+export default withFieldWrap(SliderWithNumber, ['addons', 'dependValues']);
 

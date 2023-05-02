@@ -3,7 +3,7 @@ import { Button, message, Upload, ConfigProvider } from 'antd';
 import { ButtonProps } from 'antd/es/button';
 import { UploadOutlined } from '@ant-design/icons';
 import { get } from 'lodash-es';
-import { translation } from '../../utils'
+import { translation } from '../../utils';
 
 import './index.less';
 

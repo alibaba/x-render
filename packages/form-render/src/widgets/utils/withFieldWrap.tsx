@@ -1,8 +1,20 @@
 import React from 'react';
 
-export default (Field: any) => {
+const getProps = (props: any, filter: any[]) => {
+  const result = {};
+
+  Object.keys(props).forEach(key => {
+    if (filter.includes(key)) {
+      return;
+    }
+    result[key] = props[key];
+  });
+  
+  return result;
+}
+
+export default (Field: any, filterProps = ['addons', 'schema', 'dependValues']) => {
   return (props: any) => {
-    const { addons, schema, ...rest } = props;
-    return <Field {...rest} />;
+    return <Field {...getProps(props, filterProps)} />;
   };
 }

@@ -12,3 +12,5 @@ mobile: false
 <!-- <code src='./test/bind.tsx'></code> -->
 
 <!-- <code src='./test/list.tsx'></code> -->
+
+<!-- <code src='./test/dependencies.tsx'></code> -->
