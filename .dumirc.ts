@@ -28,7 +28,6 @@ export default defineConfig({
           title: 'ChartRender',
           link: '/chart-render',
         },
-        { title: '表单设计器', link: '/generator' },
         {
           title: 'Playground',
           link: '/playground',
@@ -73,9 +72,7 @@ export default defineConfig({
   alias: { 
     'form-render':  path.resolve(__dirname, 'packages/form-render/src'),
     'table-render':  path.resolve(__dirname, 'packages/table-render/src'),
-    'chart-render':  path.resolve(__dirname, 'packages/chart-render/src'),
-    'fr-generator':  path.resolve(__dirname, 'tools/schema-generator/src'),
-    'fr-design':  path.resolve(__dirname, 'tools/schema-design/src'),
+    '@xrenders/schema-builder':  path.resolve(__dirname, 'tools/schema-builder/src'),
     'form-render-mobile':  path.resolve(__dirname, 'packages/form-render-mobile/src'),
   },
   codeSplitting: { jsStrategy: 'granularChunks' },
