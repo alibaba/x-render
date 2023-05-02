@@ -156,7 +156,7 @@ const FormCore:FC<FRProps> = (props) => {
     onSubmitLogger({ values: _values });
     let values = _cloneDeep(_values);
     if (!removeHiddenData) {
-      values = _cloneDeep(form.getValues(true));
+      values = _cloneDeep(form.getFieldsValue(true));
     }
     values = parseValuesToBind(values, flattenSchema);
     values = valueRemoveUndefined(values);
@@ -182,7 +182,7 @@ const FormCore:FC<FRProps> = (props) => {
     }
     let values = _cloneDeep(params?.values);
     if (!removeHiddenData) {
-      values = _cloneDeep(form.getValues(true));
+      values = _cloneDeep(form.getFieldsValue(true));
     }
     values = parseValuesToBind(values, flattenSchema);
     values = valueRemoveUndefined(values);
