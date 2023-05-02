@@ -123,7 +123,7 @@ const CardList = (props: any) => {
           );
         })}
         {!hideAdd && (
-          <div className='add-btn'>
+          <div className='fr-list-add-btn'>
             <Button
               {...addBtnProps}
               onClick={() => addItem()}

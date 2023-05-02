@@ -1,6 +1,25 @@
 {
-  "name": "fr-design",
-  "version": "1.0.0-beta.5",
+  "name": "@xrenders/schema-builder",
+  "version": "1.0.0-alpha.1",
+  "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
+  "keywords": [
+    "Form",
+    "FormRender",
+    "Render",
+    "XRender",
+    "React",
+    "Json Schema",
+    "Ant Design"
+  ],
+  "homepage": "https://xrender.fun/form-render",
+  "bugs": {
+    "url": "https://github.com/alibaba/x-render/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/x-render.git"
+  },
+  "license": "MIT",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -10,6 +29,7 @@
   ],
   "scripts": {
     "beta": "npm publish --tag beta",
+    "alpha": "npm publish --tag alpha --access public",
     "build": "father-build",
     "prepare": "yarn build",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
@@ -64,5 +84,10 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
-  }
+  },
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "author": "lhbxs"
 }

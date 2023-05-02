@@ -14,35 +14,29 @@ const Navigation: React.FC = () => {
       key: 'table-render',
     },
     {
-      label: <Link to="/chart-render">ChartRender</Link>,
+      label: <Link to="/form-render-mobile">FRender Mobile</Link>,
+      key: 'form-render-mobile'
+    },
+    {
+      label: <a href="https://1.xrender.fun/chart-render" target='_black'>ChartRender</a>,
       key: 'chart-render',
     },
     {
-      label: <Link to="/generator">表单设计器</Link>,
+      label: <Link to="/schema-builder">表单设计器</Link>,
       key: 'generator',
     },
     {
       label: (
         <div>
-          <span>生态</span>
+          <span>插件</span>
           <DownOutlined style={{fontSize: 12, color: '#666', marginLeft: 3}} />
         </div>
       ),
       children: [
         {
-          label: <Link to="/form-render-mobile">FormRender Mobile</Link>,
-          key: 'form-render-mobile',
-          icon: <MobileOutlined />,
-        },
-        {
           label: <Link to="/playground">Playground</Link>,
           key: 'playground',
           icon: <CodeOutlined />,
-        },
-        {
-          label: <Link to="/design" target="_blank">design</Link>,
-          key: 'design',
-          icon: <HighlightOutlined />,
         },
         {
           label: <Link to="/tools/proptypes">PropToSchema</Link>,

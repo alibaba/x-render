@@ -5,7 +5,7 @@ import TimePicker from '../../components/TimePicker';
 import { getFormat } from '../../utils';
 import withFieldWrap from '../../utils/withFieldWrap';
 
-const Time = ({ onChange, format, value, style, ...rest }) => {
+const Time = ({ onChange, format ='time', value, style, ...rest }) => {
   const timeFormat = getFormat(format);
   const _value = value ? dayjs(value, timeFormat) : undefined;
 

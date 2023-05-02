@@ -3,7 +3,7 @@
 ### 安装
 
 ```bash
-npm i fr-generator
+npm i @xrender/schema-builder
 ```
 
 ### 代码演示
@@ -14,7 +14,7 @@ npm i fr-generator
  * defaultShowCode: true
  */
 import React from 'react';
-import Generator from 'fr-generator';
+import S from '@xrender/schema-builder';
 
 const defaultValue = {
   type: 'object',

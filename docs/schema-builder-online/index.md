@@ -9,7 +9,7 @@ sidebar: false
  * inline: true
  */
 import React from 'react';
-import Generator from 'fr-design';
+import Generator from '@xrenders/schema-builder';
 
 import ReactDOM from 'react-dom';
 

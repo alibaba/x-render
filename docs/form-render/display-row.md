@@ -9,157 +9,26 @@ group:
 
 # 内置组件
 
-## 基础控件
+## 基础组件
 
 ```jsx
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
+import schema from './schema/baseControl';
 
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    input1: {
-      title: '输入框',
-      type: 'string',
-      props: {},
-    },
-    number1: {
-      title: '数字输入框',
-      type: 'number',
-    },
-    switch1: {
-      title: '是否选择',
-      type: 'boolean',
-      widget: 'switch',
-    },
-    select1: {
-      title: '下拉单选',
-      type: 'string',
-      widget: 'select',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' },
-        ],
-      },
-    },
-    multiSelect1: {
-      title: '多选',
-      description: '下拉多选',
-      type: 'array',
-      items: {
-        type: 'string',
-      },
-      widget: 'multiSelect',
-      props: {
-        options: [
-          { label: '杭州', value: 'a' },
-          { label: '武汉', value: 'b' },
-          { label: '湖州', value: 'c' },
-          { label: '贵阳', value: 'd' },
-        ],
-      },
-    },
-    radio1: {
-      title: '点击单选',
-      type: 'string',
-      widget: 'radio',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' },
-        ],
-      },
-    },
-    checkboxes1: {
-      title: '点击多选',
-      type: 'array',
-      widget: 'checkboxes',
-      items: {
-        type: 'string',
-      },
-      props: {
-        options: [
-          { label: '杭州', value: 'a' },
-          { label: '武汉', value: 'b' },
-          { label: '湖州', value: 'c' },
-          { label: '贵阳', value: 'd' },
-        ],
-      },
-    },
-    textarea1: {
-      title: '长文本',
-      type: 'string',
-      format: 'textarea',
-      props: {},
-    },
-    html_1: {
-      title: 'HTML',
-      type: 'string',
-      widget: 'html',
-      props: {},
-    },
-    date1: {
-      title: '日期选择',
-      type: 'string',
-      format: 'date',
-    },
-    dateRange1: {
-      title: '日期范围',
-      type: 'range',
-      format: 'dateTime',
-    },
-    time1: {
-      title: '时间选择',
-      type: 'string',
-      format: 'time',
-    },
-    timeRange1: {
-      title: '时间范围',
-      type: 'range',
-      format: 'time'
-    },
-    checkbox1: {
-      title: '是否选择',
-      type: 'boolean',
-      widget: 'checkbox',
-    },
-    slider1: {
-      title: '带滑动条',
-      type: 'number',
-      widget: 'slider',
-    },
-    image1: {
-      title: '图片展示',
-      type: 'string',
-      format: 'image',
-    },
-    color1: {
-      title: '颜色选择',
-      type: 'string',
-      format: 'color',
-    },
-    url1: {
-      title: '链接',
-      type: 'string',
-      format: 'url',
-    },
-  },
-};
 
 export default () => {
   const form = useForm();
 
-  return <FormRender schema={schema} form={form} />;
+  const onFinish = (formData) => {
+    console.log('formData：', formData);
+  };
+
+  return <FormRender form={form} schema={schema} footer={true} onFinish={onFinish} />;
 };
 ```
 
-## 嵌套控件
-
-对于嵌套类型的表单，我们内置了四种主题，分别为 collapse | card | tile | flex, 默认为 collapse 主题
+## 嵌套组件
 
 ### 折叠 collapse
 
@@ -341,14 +210,14 @@ export default () => {
 };
 ```
 
-## 列表控件
+## 列表组件
 
 列表的展示对于简单需求占位太多，复杂需求定制不够一直是痛点。所以我们给出了 5 种展示，充分满足从极简到复杂的所有需求。
 默认使用 widget: 'cardList'，卡片类型
 
 ### SimpleList
 
-用于展示每行只有 1-3 个简单控件的情况，紧凑排列
+用于展示每行只有 1-3 个简单组件的情况，紧凑排列
 
 #### simpleList：标签换行
 

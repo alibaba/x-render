@@ -59,11 +59,11 @@ export default (props: any) => {
           colon={false}
           tooltip={tooltip}
           style={{ marginBottom: 0 }}
+          labelCol={{ span: 24 }}
         >
         </Form.Item>
       )}
       <Form.Item
-        className='ant-form-item-optional-hide'
         label={label} 
         labelCol={labelCol}
         wrapperCol={fieldCol}

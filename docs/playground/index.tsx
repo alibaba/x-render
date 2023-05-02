@@ -5,7 +5,7 @@ import Editor from "@monaco-editor/react";
 import Controller from "./controller";
 import { Divider, Row, Col } from 'antd';
 // @ts-ignore
-import { serializeToDraft, deserialize } from 'fr-generator';
+import { serializeToDraft, deserialize } from './serialize';
 import AsyncSelect from "./customized/AsyncSelect";
 import './index.css';
 
