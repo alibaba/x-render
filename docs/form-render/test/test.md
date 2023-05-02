@@ -13,4 +13,4 @@ mobile: false
 
 <!-- <code src='./test/list.tsx'></code> -->
 
-<code src='./test/dependencies.tsx'></code>
+<!-- <code src='./test/dependencies.tsx'></code> -->
