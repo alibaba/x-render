@@ -1,15 +1,11 @@
 import React from 'react';
-import { Card } from 'antd';
-import BoxPanel from '../components/PanelView';
-
+import classnames from 'classnames';
 import './index.less';
 
-const BoxCard = ({ schema }) => {
+export default ({ schema }) => {
   return (
-    <div className='fr-void-title'>
+    <div className={classnames('fr-void-title', { [schema?.className] : !! schema?.className })}>
       {schema.title}
     </div>
   )
 }
-
-export default BoxCard;
