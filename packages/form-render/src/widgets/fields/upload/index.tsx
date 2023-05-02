@@ -4,7 +4,6 @@ import { ButtonProps } from 'antd/es/button';
 import { UploadOutlined } from '@ant-design/icons';
 import { get } from 'lodash-es';
 import { translation } from '../../utils';
-import withFieldWrap from '../../utils/withFieldWrap';
 
 import './index.less';
 
