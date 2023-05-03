@@ -9,7 +9,6 @@ import transformProps from '../models/transformProps';
 import { parseValuesToBind } from '../models/bindValues';
 
 import {
-  transformFieldsError,
   valuesWatch,
   immediateWatch,
   yymmdd,
@@ -22,7 +21,7 @@ import RenderCore from '../render-core';
 import './index.less';
 
 const FormCore = (props: any) => {
-  const store = useContext(FRContext);
+  const store: any = useContext(FRContext);
   const schema = useStore(store, (state: any) => state.schema);
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
   const setContext = useStore(store, (state: any) => state.setContext);
@@ -157,7 +156,6 @@ const FormCore = (props: any) => {
     let fieldsError = beforeFinish
       ? await beforeFinish({ data: values, schema, errors: [] })
       : null;
-    fieldsError = transformFieldsError(fieldsError);
 
     // console.log(values, form.getValues(true));
     // Stop submit

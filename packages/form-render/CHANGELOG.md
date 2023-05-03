@@ -1,5 +1,7 @@
 # 更新日志
 
+### 2.1.16
+- [+] 增强 dependencies 字段能力，支持 List 嵌套 dependencies 配置
 ### 2.1.15
 - [+] 增强 bind 字段能力，支持 List 嵌套 bind 配置
 - [+] 增加 Field className 配置

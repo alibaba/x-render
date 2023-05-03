@@ -14,7 +14,7 @@ const Navigation: React.FC = () => {
       key: 'table-render',
     },
     {
-      label: <Link to="/form-render-mobile">FRender Mobile</Link>,
+      label: <Link to="/form-render-mobile">Form Mobile</Link>,
       key: 'form-render-mobile'
     },
     {
