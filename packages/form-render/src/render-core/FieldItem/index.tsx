@@ -2,45 +2,12 @@ import React, { useContext } from 'react';
 import { Form } from 'antd';
 
 import { _get } from '../../utils';
+import { getDependValues } from './module';
 import { FRContext, ConfigContext } from '../../models/context';
 import { isHasExpression, parseAllExpression } from '../../models/expression';
 import Main from './main';
 
-/*
-   * Get depend values
-   *
-   * 1. normal path
-   * Just get value of path in formData
-   *
-   * 2. list path
-   * Like `list[].foo`.`[]` means the same index as the current item.
-   * You can pass `[index]` to get specific item at the index of list, such as `list[1].foo`.
-   * Support more complex path like `list[].foo[].bar`
-   */
-const getDependValues = (formData: any, dependPath: string, props: any, dependencieItem: any[]) => {
-  const indexReg =/\[[0-9]*\]/;
 
-  if (indexReg.test(dependPath)) {
-    const currentIndex = _get(props, 'path.0')
-    const dependIndex = dependPath
-      .match(indexReg)[0]
-      .replace('[', '')
-      .replace(']', '')
-
-    const listPath = dependPath.split(indexReg)[0];
-    const itemIndex = dependIndex || currentIndex;
-    const itemPath = dependPath.replace(`${listPath}[${dependIndex}].`, '')
-    const listData = _get(formData, `${listPath}[${itemIndex}]`);
-
-    dependencieItem.push(listPath, itemIndex);
-
-    return getDependValues(listData, itemPath, props, dependencieItem);
-  }
-
-  dependencieItem.push(...dependPath.split('.'));
-
-  return _get(formData, dependPath);
-}
 
 
 export default (props: any) => {

@@ -15,10 +15,10 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
 export default (props: any) => {
   const { schema: _schema, path, renderCore, rootPath } = props;
 
-  const store = useContext(FRContext);
+  const store: any = useContext(FRContext);
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
-  const { form, methods } = useContext(ConfigContext);
+  const { form, methods }: any = useContext(ConfigContext);
 
   const formData = form.getFieldsValue(true);
   const { schema: formSchema } = store.getState();
@@ -76,7 +76,7 @@ export default (props: any) => {
           <span>
             <AddCircleOutline /> 添加
           </span>
-        ) : null}
+        ) : undefined}
         onAdd={({ add }) => handleAdd(add)}
         renderHeader={({ index }, { remove }) => (
           <>

@@ -4,13 +4,15 @@ import { Form } from 'antd-mobile';
 import { _get } from '../../utils';
 import { FRContext } from '../../models/context';
 import { isHasExpression, parseAllExpression } from '../../models/expression';
+import { getDependValues } from './module';
 import Main from './main';
 
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
 
-  const store = useContext(FRContext);
+  const store: any = useContext(FRContext);
   const { schema: formSchema } = store.getState();
+  const dependencies = schema?.dependencies;
 
   // No function expressions exist
   if (!isHasExpression(schema) && !schema?.dependencies) {
@@ -30,10 +32,28 @@ export default (props: any) => {
     >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
-        const dependValues = (schema.dependencies || []).map((item: any) => _get(formData, item));
-        const newSchema = parseAllExpression(schema, formData, rootPath, formSchema);
-  
-        return <Main schema={newSchema} rootPath={rootPath} {...otherProps} dependValues={dependValues} store={store} />;
+
+        const formDependencies: any[] = [];
+        const dependValues = (dependencies || []).map((depPath: string) => {
+          const item:any[] = [];
+          formDependencies.push(item);
+          return getDependValues(formData, depPath, props, item);
+        });
+        
+        const newSchema =  parseAllExpression(schema, formData, rootPath, formSchema);
+
+        return (
+          <Main 
+            schema={{
+              ...newSchema,
+              dependencies: formDependencies
+            }} 
+            rootPath={rootPath} 
+            {...otherProps}
+            dependValues={dependValues} 
+            store={store} 
+          />
+        );
       }}
     </Form.Item>
   );
