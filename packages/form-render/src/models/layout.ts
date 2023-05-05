@@ -42,7 +42,7 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
   }
 
   // 兼容一下 1.0 版本
-  if (labelWidth && displayType !== 'column') {
+  if ((labelWidth || labelWidth === 0) && displayType !== 'column') {
     labelCol = { flex : labelWidth + 'px' };
     fieldCol = { flex: 'auto' };
   }
@@ -53,11 +53,11 @@ export const getFormItemLayout = (column: number, schema: any, { labelWidth, dis
   }
 
 
-  if (schema.labelCol) {
+  if (schema.labelCol || schema.labelCol === 0) {
     labelCol = schema.labelCol;
   }
 
-  if (schema.fieldCol) {
+  if (schema.fieldCol || schema.fieldCol === 0) {
     fieldCol = schema.fieldCol;
   }
 
