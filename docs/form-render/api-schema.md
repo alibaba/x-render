@@ -257,15 +257,15 @@ list: { // list 是字段名
 配置列表控件，可配置如下属性
 
 #### props.addBtnProps
-- 描述：添加按钮属性，参考 [Antd Button Props](https://ant.design/components/button-cn#api)
+- 描述：添加按钮属性，参考 <a href="https://ant.design/components/button-cn#api" target="_blank">Antd Button Props</a>()
 - 类型：`ButtonProps`
 
 #### props.delConfirmProps
-- 描述：删除确认弹窗属性，参考 [Antd PopConfirm Props](https://ant.design/components/button-cn#api)
+- 描述：删除确认弹窗属性，参考 <a href="https://ant.design/components/popconfirm-cn#api" target="_blank">Antd PopConfirm Props</a>
 - 类型：`PopConfirmProps`
 
 #### props.actionColumnProps
-- 描述：`tableList | drawerList | virtualList` 中操作列的属性，参考 [Antd Table ColumnType](https://ant.design/components/table-cn#column)。 其中 `title` 使用 `colHeaderText` 代替。
+- 描述：`tableList | drawerList | virtualList` 中操作列的属性，参考 <a href="https://ant.design/components/table-cn#column" target="_blank">Antd Table ColumnType</a>。 其中 `title` 使用 `colHeaderText` 代替。
 - 类型：`ColumnType`
 
 #### props.hideAdd
