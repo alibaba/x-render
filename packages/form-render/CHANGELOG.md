@@ -1,5 +1,7 @@
 # 更新日志
 
+### 2.1.17
+- [+] 修复 labelWidth 设置 0，无效
 ### 2.1.16
 - [+] 增强 dependencies 字段能力，支持 List 嵌套 dependencies 配置
 ### 2.1.15
