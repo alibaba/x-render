@@ -36,6 +36,14 @@ JsonSchema 生成器，快速生成 formRender 2.0 表单协议，1.0 版本表�
 npm i @xrenders/schema-builder --save
 ```
 
+项目需要配置
+```json
+externals: {
+  "react": "React",
+  "react-dom": "ReactDOM",
+}
+```
+
 ## 使用方式
 
 <a href="/schema-builder-online" target="_blank">全屏体验</a>
