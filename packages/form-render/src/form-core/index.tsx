@@ -148,7 +148,7 @@ const FormCore:FC<FRProps> = (props) => {
   };
 
   const handleValuesChange = (changedValues: any, _allValues: any) => {
-    const allValues = valueRemoveUndefined(_allValues);
+    const allValues = valueRemoveUndefined(_allValues, true);
     valuesWatch(changedValues, allValues, watch);
   };
 

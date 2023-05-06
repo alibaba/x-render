@@ -91,7 +91,7 @@ export function isCheckBoxType(schema, readOnly) {
   }
 }
 
-export const valueRemoveUndefined = (values: any) => {
+export const valueRemoveUndefined = (values: any, notFilter?: boolean) => {
   const recursionArray = (list: any[]) => {
     let result = list.map(item => {
       if (isObject(item)) {
@@ -101,11 +101,11 @@ export const valueRemoveUndefined = (values: any) => {
       if (isArray(item)) {
         return recursionArray(item);
       }
-
+      
       return item;
     });
 
-    // 数组会变成对象，感觉 undefined 不能剔除，会影响顺序
+    // 数组会变成对象，感觉 underfined 不能剔除，会影响顺序
     // result = omitBy(result, isUndefined);
 
     if (Object.keys(result).length === 0) {
@@ -113,7 +113,7 @@ export const valueRemoveUndefined = (values: any) => {
     }
     return result;
   };
-
+ 
   const recursionObj = (_data: any) => {
     let data =  omitBy(_data, isUndefined);
 
@@ -124,7 +124,8 @@ export const valueRemoveUndefined = (values: any) => {
       }
 
       if (isArray(item)) {
-        data[key] = recursionArray(item);
+        const result = recursionArray(item) || [];
+        data[key] = notFilter ? result : result.filter((item: any) => item !== undefined);
       }
     });
 
