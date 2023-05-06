@@ -129,7 +129,7 @@ const Playground = () => {
               ]}
             />
           </Col>
-          <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%',  background: '#fff', padding: '24px 24px 24px 24px', boxShadow: '0 2px 12px 0 rgba(0,0,0,.1)' }}>
+          <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%',  background: '#fff', padding: '24px 32px 24px 24px', boxShadow: '0 2px 12px 0 rgba(0,0,0,.1)' }}>
             <FormRender
               form={form}
               schema={schema}
