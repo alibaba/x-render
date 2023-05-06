@@ -37,19 +37,9 @@ const Navigation: React.FC = () => {
           label: <a href="https://1.xrender.fun/chart-render" target='_black'>ChartRender</a>,
           key: 'chart-render',
           icon: <CodeOutlined />,
-        },
-        {
-          label: <Link to="/tools/proptypes">PropToSchema</Link>,
-          key: 'proptypes',
-          icon: <SwapOutlined />,
-        },
-        {
-          label: <Link to="/tools/vscode">vscode 插件</Link>,
-          key: 'vscode',
-          icon: <ToolOutlined />,
-        },
-      ],
-    },
+        }
+      ]
+    }
   ];
 
   return <Menu disabledOverflow items={items} mode="horizontal" />;

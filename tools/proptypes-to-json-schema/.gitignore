@@ -1,8 +1,0 @@
-node_modules
-.DS_Store
-*.log
-.sw*
-.idea
-.vscode
-!.gitignore
-!.editorconfig
