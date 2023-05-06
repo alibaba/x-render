@@ -72,32 +72,35 @@ const Playground = () => {
 
   return (
     <div className="fr-playground">
-      <Controller onChange={onControllerChange} />
-      <Divider />
-      <Row gutter={20} style={{ flex: 1, overflow: 'hidden' }}>
-        <Col span={12}>
-          <Editor
-            value={value}
-            language={lang}
-            onChange={debounceEditorChange}
-            onMount={() => {
-              const schema = require(`./json/simplest.json`);
-              setValue(JSON.stringify(schema.schema, null, '\t'))
-            }}
-          />
-        </Col>
-        <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%' }}>
-          <FormRender
-            form={form}
-            schema={schema}
-            displayType={displayType}
-            column={column}
-            readOnly={readonly}
-            labelWidth={labelWidth}
-            widgets={{ asyncSelect: AsyncSelect }}
-          />
-        </Col>
-      </Row>
+     
+        <Controller onChange={onControllerChange} />
+        <Row gutter={20} style={{ flex: 1, overflow: 'hidden' }}>
+          <Col span={12}>
+            <Editor
+              theme='vs-dark'
+              value={value}
+              language={lang}
+              onChange={debounceEditorChange}
+              onMount={() => {
+                const schema = require(`./json/simplest.json`);
+                setValue(JSON.stringify(schema.schema, null, '\t'))
+              }}
+            />
+          </Col>
+          <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%',  background: '#fff', padding: '24px 34px 24px 24px' }}>
+            <FormRender
+              form={form}
+              schema={schema}
+              displayType={displayType}
+              column={column}
+              readOnly={readonly}
+              labelWidth={labelWidth}
+              widgets={{ asyncSelect: AsyncSelect }}
+             
+            />
+          </Col>
+        </Row>
+     
     </div>
   );
 };

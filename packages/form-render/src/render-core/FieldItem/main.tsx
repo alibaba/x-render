@@ -163,6 +163,10 @@ export default (props: any) => {
     }
   }
 
+  if (labelWidth === 0 || labelCol?.span === 0) {
+    label = null;
+  }
+
   const initialValue = schema.default ?? schema.defaultValue;
 
   const classRest = { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible, [schema.className] : !! schema.className };
