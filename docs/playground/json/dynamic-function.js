@@ -4,8 +4,9 @@ module.exports = {
     properties: {
       input: {
         title: '动态函数检验',
-        description: '动态函数检验，存储的是纯函数',
+        tooltip: '动态函数检验，存储的是纯函数',
         type: 'string',
+        labelWidth: 120,
         rules: [
           {
             validator: (rule, value) => value === 'muji',

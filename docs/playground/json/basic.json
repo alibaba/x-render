@@ -12,7 +12,7 @@
             "placeholder": "昵称"
           },
           "textarea": {
-            "title": "简单文本编辑框",
+            "title": "文本编辑框",
             "type": "string",
             "format": "textarea"
           },
@@ -180,7 +180,7 @@
           },
           "multiSelect": {
             "title": "多选",
-            "description": "下拉多选",
+            "tooltip": "下拉多选",
             "type": "array",
             "items": {
               "type": "string"
@@ -191,7 +191,7 @@
           },
           "boxes": {
             "title": "多选",
-            "description": "checkbox",
+            "tooltip": "checkbox",
             "type": "array",
             "items": {
               "type": "string"

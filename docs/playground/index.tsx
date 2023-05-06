@@ -3,7 +3,7 @@ import FormRender, { useForm } from 'form-render';
 import debounce from 'lodash/debounce';
 import Editor from "@monaco-editor/react";
 import Controller from "./controller";
-import { Divider, Row, Col } from 'antd';
+import { Row, Col } from 'antd';
 // @ts-ignore
 import { serializeToDraft, deserialize } from './serialize';
 import AsyncSelect from "./customized/AsyncSelect";
@@ -23,8 +23,7 @@ const Playground = () => {
       setValue(val);
     }
   }
-
-
+  
   const parseSchema = (str: string) => {
     try {
       if (lang === 'javascript') {
@@ -74,7 +73,7 @@ const Playground = () => {
     <div className="fr-playground">
      
         <Controller onChange={onControllerChange} />
-        <Row gutter={20} style={{ flex: 1, overflow: 'hidden' }}>
+        <Row gutter={60} style={{ flex: 1, overflow: 'hidden' }}>
           <Col span={12}>
             <Editor
               theme='vs-dark'
@@ -87,7 +86,7 @@ const Playground = () => {
               }}
             />
           </Col>
-          <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%',  background: '#fff', padding: '24px 34px 24px 24px' }}>
+          <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%',  background: '#fff', padding: '24px 54px 24px 24px' }}>
             <FormRender
               form={form}
               schema={schema}
@@ -96,7 +95,6 @@ const Playground = () => {
               readOnly={readonly}
               labelWidth={labelWidth}
               widgets={{ asyncSelect: AsyncSelect }}
-             
             />
           </Col>
         </Row>

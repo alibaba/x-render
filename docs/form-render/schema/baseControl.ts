@@ -111,9 +111,7 @@ export default {
     checkbox1: {
       title: '是否选择',
       type: 'boolean',
-      widget: 'checkbox',
-      labelCol: 0,
-      required: true,
+      widget: 'checkbox'
     },
     slider1: {
       title: '带滑动条',

@@ -19,7 +19,7 @@
       },
       "string": {
         "title": "正则校验字符串",
-        "description": "a-z",
+        "tooltip": "a-z",
         "type": "string",
         "rules": [
           {
