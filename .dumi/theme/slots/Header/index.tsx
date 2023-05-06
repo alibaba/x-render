@@ -11,10 +11,13 @@ import './index.less';
 const prefix = 'xr-doc-header';
 
 const Header: React.FC = () => {
+  if (window.top.location.href.includes('/schema-builder-online')) {
+    return null;
+  }
 
   return (
     <header className={prefix}>
-      <Row align="middle" justify="space-between" style={{ padding: '10px 40px' }}>
+      <Row align="middle" justify="space-between" style={{ padding: '10px 24px' }}>
         <Col span={12}>
           <Space size={20}>
             <div style={{ paddingRight: '12px' }}>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { Link } from 'dumi';
-import { CodeOutlined, DownOutlined, HighlightOutlined, SwapOutlined, ToolOutlined } from '@ant-design/icons';
+import { CodeOutlined, DownOutlined, MobileOutlined, SwapOutlined, ToolOutlined } from '@ant-design/icons';
 
 const Navigation: React.FC = () => {
   const items: any = [
@@ -14,43 +14,32 @@ const Navigation: React.FC = () => {
       key: 'table-render',
     },
     {
-      label: <Link to="/chart-render">ChartRender</Link>,
-      key: 'chart-render',
+      label: <Link to="/form-render-mobile">FRMobile</Link>,
+      key: 'form-render-mobile'
     },
     {
-      label: <Link to="/generator">表单设计器</Link>,
-      key: 'generator',
+      label: <Link to="/playground">Playground</Link>,
+      key: 'playground'
+    },
+    {
+      label: <Link to="/schema-builder">SchemaBuilder</Link>,
+      key: 'schema-builder',
     },
     {
       label: (
         <div>
-          <span>生态</span>
+          <span>更多</span>
           <DownOutlined style={{fontSize: 12, color: '#666', marginLeft: 3}} />
         </div>
       ),
       children: [
         {
-          label: <Link to="/playground">Playground</Link>,
-          key: 'playground',
+          label: <a href="https://1.xrender.fun/chart-render" target='_black'>ChartRender</a>,
+          key: 'chart-render',
           icon: <CodeOutlined />,
-        },
-        // {
-        //   label: <Link to="/generator">表单设计器</Link>,
-        //   key: 'generator',
-        //   icon: <HighlightOutlined />,
-        // },
-        {
-          label: <Link to="/tools/proptypes">PropToSchema</Link>,
-          key: 'proptypes',
-          icon: <SwapOutlined />,
-        },
-        {
-          label: <Link to="/tools/vscode">vscode 插件</Link>,
-          key: 'vscode',
-          icon: <ToolOutlined />,
-        },
-      ],
-    },
+        }
+      ]
+    }
   ];
 
   return <Menu disabledOverflow items={items} mode="horizontal" />;

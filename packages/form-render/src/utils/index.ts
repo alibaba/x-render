@@ -1,10 +1,11 @@
-import { set, get, cloneDeep, has, merge, isUndefined, omitBy } from 'lodash-es';
+import { set, get, cloneDeep, has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
 
 export const _set = set;
 export const _get = get;
 export const _cloneDeep = cloneDeep;
 export const _has = has;
 export const _merge = merge;
+export const _mergeWith = mergeWith;
 export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
 
@@ -89,7 +90,7 @@ export function isCheckBoxType(schema, readOnly) {
   }
 }
 
-export const valueRemoveUndefined = (values: any) => {
+export const valueRemoveUndefined = (values: any, notFilter?: boolean) => {
   const recursionArray = (list: any[]) => {
     let result = list.map(item => {
       if (isObject(item)) {
@@ -122,7 +123,8 @@ export const valueRemoveUndefined = (values: any) => {
       }
 
       if (isArray(item)) {
-        data[key] = recursionArray(item);
+        const result = recursionArray(item) || [];
+        data[key] = notFilter ? result : result.filter((item: any) => item !== undefined);
       }
     });
 
@@ -133,7 +135,7 @@ export const valueRemoveUndefined = (values: any) => {
     }
     return data;
   }
-
+ 
   return recursionObj(values) || {};
 }
 

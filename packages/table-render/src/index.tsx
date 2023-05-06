@@ -9,14 +9,16 @@ import { StoreContext, createStore } from './core/store';
 import { UseBoundStore, StoreApi } from 'zustand'
 
 import RenderCore from './core';
-import { TableRenderProps } from './types';
+import { TableContext, TableRenderProps } from './types';
+
 export type {
   TableRenderProps,
   ProColumnsType,
   SearchProps,
+  TableContext,
 } from './types';
 
-const TableRender = React.forwardRef((props: TableRenderProps, ref) => {
+const TableRender = React.forwardRef<TableContext, TableRenderProps>((props, ref) => {
   const {
     configProvider,
     locale = 'zh-CN',

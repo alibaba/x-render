@@ -1,6 +1,6 @@
 import { RuleItem } from 'async-validator';
 import * as React from 'react';
-import type { FormInstance as AntdFormInstance, FormProps as AntdFormProps } from 'antd';
+import type { FormInstance as AntdFormInstance, FormProps as AntdFormProps, ColProps, TooltipProps } from 'antd';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
 
 export type { RuleItem } from 'async-validator';
@@ -15,6 +15,19 @@ export type SchemaType =
   | 'datetime'
   | 'block'
   | string;
+
+export type ActionProps = {
+  submit: {
+    text: string;
+    hide: boolean;
+    [key: string]: any;
+  },
+  reset: {
+    text: string;
+    hide: boolean;
+    [key: string]: any;
+  }
+}
 
 export interface SchemaBase {
   type?: SchemaType;
@@ -67,6 +80,12 @@ export interface SchemaBase {
   props?: Record<string, any>;
   /**扩展字段 */
   'add-widget'?: string;
+  labelCol?: number | ColProps;
+  fieldCol?: number | ColProps
+  tooltip?: string | TooltipProps
+  cellSpan?: number;
+  span?: number;
+  [key: string]: any;
 }
 
 export type Schema = Partial<SchemaBase>;
@@ -116,19 +135,24 @@ export interface FieldParams {
 }
 
 export interface ListOperate {
+  /* 列表表单操作按钮样式 */
   btnType: 'text' | 'icon';
+  /* 是否隐藏移动按钮 */
   hideMove: boolean;
 }
 
 export interface GlobalConfig {
-  listOperate: ListOperate
+  /* 列表表单配置 */
+  listOperate: ListOperate;
+  /* 是否禁用表达式 */
+  mustacheDisabled: boolean;
 }
 
 export interface FormInstance extends AntdFormInstance {
   init: any;
   __schema: any;
   __initStore: (data: any) => any;
-  setSchemaByFullPath: (path: string, schema: any) => any;
+  // setSchemaByFullPath: (path: string, schema: any) => any;
   /**
    *  根据路径动态设置 Schema
    */
@@ -141,7 +165,7 @@ export interface FormInstance extends AntdFormInstance {
    *  设置 Schema
    */
   setSchema: (schema: any, cover?: boolean) => void;
-  /** 
+  /**
    * 根据路径获取 Schema
    */
   getSchemaByPath: (path: string) => any;
@@ -153,11 +177,11 @@ export interface FormInstance extends AntdFormInstance {
    * 外部手动删除某一个 path 下所有的校验信息
    */
   removeErrorField: (path: string) => any;
-  /** 
+  /**
    * 根据路径修改表单值
    */
   setValueByPath: FormInstance['setFieldValue'];
-  /** 
+  /**
    * 获取表单值
    */
   getValues: FormInstance['getFieldsValue'];
@@ -165,7 +189,7 @@ export interface FormInstance extends AntdFormInstance {
    * 表单校验错误的数组
    */
   errorFields: FormInstance['getFieldsError'];
-  /** 
+  /**
    * 设置表单值
    */
   setValues: FormInstance['setFieldsValue'];
@@ -190,67 +214,67 @@ export type WatchProperties = {
 };
 
 export interface FRProps extends AntdFormProps {
-  /** 
+  /**
    * 表单顶层的className
    */
   className?: string;
-  /** 
+  /**
    * 表单顶层的样式
    */
   style?: React.CSSProperties;
-  /** 
+  /**
    * 表单 schema
    */
   schema: Schema;
-  /** 
+  /**
    * form单例
    */
   form: FormInstance;
-  /** 
+  /**
    * 组件和schema的映射规则
    */
   mapping?: Record<string, string>;
-  /** 
+  /**
    * 自定义组件
    */
   widgets?: Record<string, any>;
-  /** 
+  /**
    * 标签元素和输入元素的排列方式，column-分两行展示，row-同行展示，inline-自然顺排，默认`column`
    */
   displayType?: 'column' | 'row' | 'inline';
-  /** 
+  /**
    * 表示是否显示 label 后面的冒号
    */
   colon?: boolean;
-  /** 
-   * label 标签的文本对齐方式 
+  /**
+   * label 标签的文本对齐方式
    */
   labelAlign?: 'right' | 'left';
   /**
    *  只读模式
    */
   readOnly?: boolean;
-  /** 
+  /**
    * 禁用模式
    */
   disabled?: boolean;
-  /** 
+  /**
    * 标签宽度
    */
   labelWidth?: string | number;
-  /** 
+  /**
    * antd的全局config
    */
   configProvider?: ConfigProviderProps;
-  /** 
+  /**
    * 覆盖默认的校验信息
    */
   validateMessages?: ConfigProviderProps['form']['validateMessages'];
-  /** 
+  /**
    * 显示当前表单内部状态
    */
   debug?: boolean;
-  /** 
+  /**
    * 显示css布局提示线
    */
   debugCss?: boolean;
@@ -263,10 +287,6 @@ export interface FRProps extends AntdFormProps {
    */
   column?: number;
   /**
-   * 是否开启输入时使用快照模式。仅建议在表单巨大且表达式非常多时开启
-   */
-  debounceInput?: boolean;
-  /**
    * 数据会作为 beforeFinish 的第四个参数传入
    */
   config?: any;
@@ -274,31 +294,27 @@ export interface FRProps extends AntdFormProps {
    * 类似于 vuejs 的 watch 的用法，监控值的变化，触发 callback
    */
   watch?: WatchProperties;
-  /** 
-   * 对象组件是否折叠（全局的控制）
-   */
-  allCollapsed?: boolean;
-   /** 
+  /*
    * 表单全局配置
    */
-   globalConfig?: GlobalConfig;
-  /** 
+  globalConfig?: GlobalConfig;
+  /**
    * 表单的全局共享属性
    */
   globalProps?: any;
-  /** 
+  /**
    * 表单首次加载钩子
    */
   onMount?: () => void;
-  /** 
+  /**
    * 表单提交前钩子
    */
   beforeFinish?: (params: ValidateParams) => Error[] | Promise<Error[]>;
-  /** 
+  /**
    * 表单提交后钩子
    */
   onFinish?: (formData: any) => void;
-  /** 
+  /**
    * 字段值更新时触发回调事件
    */
   onValuesChange?: (
@@ -309,20 +325,21 @@ export interface FRProps extends AntdFormProps {
     },
     formData: any
   ) => void;
-  /** 
+  /**
    * 隐藏的数据是否去掉，默认不去掉
    */
   removeHiddenData?: boolean;
-  /** 
+  /**
    * 配置自定义layout组件
    */
   layoutWidgets?: any;
-  /** 
+  /**
    * 扩展方法
    */
   methods?: Record<string, Function>;
   operateExtra?: React.ReactNode;
-  maxWidth?: string
+  maxWidth?: string;
+  footer?: boolean | (() => React.ReactNode) | Partial<ActionProps> ;
 }
 
 export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {

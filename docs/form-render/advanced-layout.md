@@ -1,6 +1,7 @@
 ---
 order: 0
 toc: content
+mobile: false
 group: 
   title: 高级用法
   order: 1
@@ -14,6 +15,7 @@ group:
 - `span` 自定义宽度
 - `maxWidth` 输入控件最长宽度  
 - `labelCol`、`FieldCol` 表单项内部布局
+- `footer` 内置按钮
 ## displayType
 
 - displayType（标签排列方式）：`row`（水平）| `column`（垂直）| `inline`(紧凑)
@@ -265,4 +267,89 @@ export default () => {
 };
 ```
 
+## footer
+- `footer`：true，显示默认配置
+```jsx
+import React, { useState } from 'react';
+import { Button, Space, Form, Radio } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
 
+export default () => {
+  const form = useForm();
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      maxWidth={360}
+      footer={true}
+    />
+  );
+}
+```
+
+- 按钮属性配置
+```jsx
+import React, { useState } from 'react';
+import { Button, Space, Form, Radio } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
+
+export default () => {
+  const form = useForm();
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      maxWidth={360}
+      footer={{
+        submit: {
+          text: '确定',
+          // loading: true
+          // hide: true
+          // ...btnProps
+        },
+        save: {
+          hide: false
+        },
+        reset: {
+          text: '清空',
+          // hide: true
+          // ...btnProps
+        },
+        extraAfter: (
+          <Button>后置扩展按钮</Button>
+        ),
+        extraBefore: (
+          <Button>前置扩展按钮</Button>
+        )
+      }}
+    />
+  );
+}
+```
+
+- `footer` 自定义
+```jsx
+import React, { useState } from 'react';
+import { Button, Space, Form, Radio } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
+
+export default () => {
+  const form = useForm();
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      maxWidth={360}
+      footer={() => (
+        <Button>自定义</Button>
+      )}
+    />
+  );
+}
+```

@@ -1,7 +1,5 @@
 .fr-inline-field {
   display: inline-block;
-  min-width: 220px;
-  margin-bottom: 24px !important;
   margin-right: 16px;
 }
 
@@ -10,8 +8,22 @@
   flex-wrap: wrap;
 }
 
-.ant-form-item-optional-hide > .ant-form-item-row > .ant-form-item-label {
-  .ant-form-item-optional {
-    display: none !important;
+.ant-form-item-optional-hide {
+  padding: 0 8px;
+
+  .ant-form-item-label > label {
+    font-size: 16px;
+    font-weight: #000000d9;
+    font-weight: 600;
   }
+
+}
+
+.fr-desc {
+  word-break: break-all;
+  color: rgba(0, 0, 0, .45);
+  line-height: 22px;
+  margin-left: 5px;
+  font-weight: normal;
+  font-size: 14px;
 }

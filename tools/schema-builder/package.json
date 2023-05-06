@@ -1,0 +1,93 @@
+{
+  "name": "@xrenders/schema-builder",
+  "version": "1.0.0-alpha.1",
+  "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
+  "keywords": [
+    "Form",
+    "FormRender",
+    "Render",
+    "XRender",
+    "React",
+    "Json Schema",
+    "Ant Design"
+  ],
+  "homepage": "https://xrender.fun/form-render",
+  "bugs": {
+    "url": "https://github.com/alibaba/x-render/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/x-render.git"
+  },
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
+  "scripts": {
+    "beta": "npm publish --tag beta",
+    "alpha": "npm publish --tag alpha --access public",
+    "build": "father-build",
+    "prepare": "yarn build",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "postpublish": "git push --tags",
+    "test": "umi-test",
+    "test:coverage": "umi-test --coverage"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "clone": "^2.1.2",
+    "i18next": "^21.8.11",
+    "nanoid": "^3.1.22",
+    "randombytes": "2.1.0",
+    "rc-color-picker": "^1.2.6",
+    "react-dnd": "^14.0.2",
+    "react-dnd-html5-backend": "^14.0.0",
+    "react-i18next": "^11.17.2",
+    "react-sortable-hoc": "^2.0.0"
+  },
+  "devDependencies": {
+    "father-build": "^1.17.2",
+    "less": "^3.0.0",
+    "@rollup/plugin-babel": "^6.0.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "@alib/build-scripts": "^0.1.18",
+    "@alilc/lowcode-engine": "^1.0.0",
+    "@alilc/lowcode-engine-ext": "^1.0.0",
+    "@alilc/lowcode-types": "^1.0.0",
+    "@types/events": "^3.0.0",
+    "@types/react": "^16.8.3",
+    "@types/react-dom": "^16.8.2",
+    "@types/streamsaver": "^2.0.0",
+    "@types/uuid": "^8.3.4",
+    "build-plugin-fusion": "^0.1.0",
+    "build-plugin-moment-locales": "^0.1.0",
+    "build-plugin-react-app": "^1.1.2",
+    "fs-extra": "^10.0.1",
+    "tsconfig-paths-webpack-plugin": "^3.2.0"
+  },
+  "peerDependencies": {
+    "antd": "4.x",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "types": "./lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "author": "lhbxs"
+}

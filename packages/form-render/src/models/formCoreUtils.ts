@@ -22,6 +22,10 @@ const executeCallBack = (watchItem: any, value: any, path: string, index?: any) 
 const traverseValues = ({ changedValues, allValues, flatValues }) => {
 
   const traverseArray = (list: any[], fullList: any, path: string, index: number[]) => {
+    if (!list.length) {
+      return
+    }
+
     const _path = path += '[]';
     const filterLength = list.filter(item => (item || item === undefined)).length;
 
@@ -48,7 +52,7 @@ const traverseValues = ({ changedValues, allValues, flatValues }) => {
   const traverseObj = (obj: any, fullObj: any, path: string, index: number[], flag?: boolean) => {
     Object.keys(obj).forEach((key: string) => {
       const item = obj[key];
-      const fullItem = fullObj[key];
+      const fullItem = fullObj?.[key];
       let value = item;
 
       const _path = path ? (path + '.' + key) : key;
@@ -56,7 +60,7 @@ const traverseValues = ({ changedValues, allValues, flatValues }) => {
       let last = true;
 
       if (isArray(item)) {
-        value = [...fullItem];
+        value = fullItem ? [...fullItem] : fullItem;
         last = false;
         traverseArray(item, fullItem, _path, index);
       }
@@ -81,7 +85,7 @@ export const valuesWatch = (changedValues: any, allValues: any, watch: any) => {
   }
 
   const flatValues = {
-    '#': { value: allValues, index: allValues }
+    '#': { value: allValues, index: changedValues }
   };
 
   traverseValues({ changedValues, allValues, flatValues });
@@ -96,7 +100,7 @@ export const valuesWatch = (changedValues: any, allValues: any, watch: any) => {
   });
 };
 
-export const transformFieldsError = (_fieldsError: any) => {
+export const transformFieldsData = (_fieldsError: any, getFieldName: any) => {
   let fieldsError = _fieldsError;
   if (isObject(fieldsError)) {
     fieldsError = [fieldsError];
@@ -106,7 +110,7 @@ export const transformFieldsError = (_fieldsError: any) => {
     return;
   }
 
-  return fieldsError.map((field: any) => ({ errors: field.error, ...field }));
+  return fieldsError.map((field: any) => ({ errors: field.error, ...field, name: getFieldName(field.name) }));
 };
 
 export const immediateWatch = (watch: any, values: any) => {

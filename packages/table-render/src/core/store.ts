@@ -3,7 +3,10 @@ import React, { useRef } from 'react';
 import { create, StoreApi, useStore } from 'zustand';
 import { ProColumnsType } from '..';
 
-type TableRenderStoreType = {
+export const TRContext = createContext(null);
+export const ConfigContext = createContext(null);
+
+export type TStore = {
   loading: boolean;
   api: null,
   /**
@@ -58,8 +61,6 @@ export const createStore = (defaultProps?: Partial<TableRenderStoreType>) => cre
     total: 0,
   },
   tableSize: 'default',
-  schema: {},
-  columns: [],
   inited: false,
   columnsSetting: [],
   setState: (state) => set({ ...state }),

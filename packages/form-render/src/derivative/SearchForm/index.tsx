@@ -9,6 +9,27 @@ import withProvider from '../../withProvider';
 import ActionView from './ActionView';
 import './index.less';
 
+import {
+  Input,
+  InputNumber,
+  TextArea,
+  Select,
+  MultiSelect,
+  Switch,
+  Radio,
+  Checkbox,
+  Checkboxes,
+  DatePicker,
+  DateRange,
+  TimePicker,
+  TimeRange,
+  TreeSelect,
+  ImageInput,
+  UrlInput,
+  Slider,
+  Html,
+  PercentSlider
+} from '../../widgets';
 
 const getSearchHeight = (limitHeight: boolean, isColumn: boolean) => {
   if (!limitHeight) {
@@ -44,7 +65,7 @@ const SearchForm: <RecordType extends object = any>(
     style = {},
     className,
     mode,
-    layoutAuto={},
+    layoutAuto=false,
     form,
     hidden,
     loading,
@@ -152,7 +173,7 @@ const SearchForm: <RecordType extends object = any>(
   
   return (
     <div
-      className={classnames('fr-search', { [className || '']: !!className })}
+      className={classnames('fr-search', { [className || '']: !!className,  'fr-column-search': isColumn })}
       style={{
         ...style,
         height: getSearchHeight(limitHeight, isColumn)
@@ -171,7 +192,14 @@ const SearchForm: <RecordType extends object = any>(
         onFinishFailed={handleFinishFailed}
         form={form}
         operateExtra={operateShow && (
-          <Col className={classnames('search-action-col', { 'search-action-fixed': limitHeight, 'search-action-column': isColumn })} style={{ minWidth: (1/column)*100 + '%' }}>
+          <Col 
+            className={classnames('search-action-col', { 
+                'search-action-fixed': limitHeight,
+                'search-action-column': isColumn,
+                'search-action-column-fixed': limitHeight && isColumn,
+            })} 
+            style={{ minWidth: (1/column)*100 + '%' }}
+          >
             <ActionView {...actionProps} setLimitHeight={setLimitHeight} retainBtn={retainBtn} mode={mode} />
           </Col>
         )}
@@ -180,5 +208,25 @@ const SearchForm: <RecordType extends object = any>(
   );
 }
 
-export default withProvider(SearchForm);
+export default withProvider(SearchForm, {
+  Input,
+  InputNumber,
+  TextArea,
+  Select,
+  MultiSelect,
+  Switch,
+  Radio,
+  Checkbox,
+  Checkboxes,
+  DatePicker,
+  DateRange,
+  TimePicker,
+  TimeRange,
+  TreeSelect,
+  ImageInput,
+  UrlInput,
+  Slider,
+  Html,
+  PercentSlider
+});
 

@@ -40,13 +40,16 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
   const form = useForm();
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const inited = useTableStore((state) => state.inited);
-  const currentTab = useTableStore((state) => state.tab);
-  const tableSize = useTableStore((state) => state.tableSize);
-  const pagination = useTableStore((state) => state.pagination);
-  const setState = useTableStore((state) => state.setState);
-  const getState = useTableStore((state) => state.getState);
-  const setColumns = useTableStore((state) => state.setColumns);
+  const store = useContext(TRContext);
+  const inited = useStore(store, (state: any) => state.inited);
+  const currentTab = useStore(store, (state: any) => state.tab);
+  const tableSize = useStore(store, (state: any) => state.tableSize);
+  const pagination = useStore(store, (state: any) => state.pagination);
+  const loading = useStore(store, (state: any) => state.loading);
+  const setState = useStore(store, (state: any) => state.setState);
+  const getState = useStore(store, (state: any) => state.getState);
+  const dataSource = useStore(store, (state: any) => state.dataSource);
+
 
   useEffect(() => {
     setState({
@@ -75,7 +78,8 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
     getState: () => ({
       ...getState(),
       search: form.getValues(true)
-    })
+    }),
+    setState,
   }));
 
   const fullScreen = () => {

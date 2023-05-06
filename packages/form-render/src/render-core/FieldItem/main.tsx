@@ -4,8 +4,7 @@ import { useStore } from 'zustand';
 import classnames from 'classnames';
 
 import { isCheckBoxType, _get } from '../../utils';
-import { ConfigContext } from '../../models/context';
-import { getWidgetName } from '../../models/mapping';
+import { getWidgetName, getWidget } from '../../models/mapping';
 import { getFormItemLayout } from '../../models/layout';
 import getRuleList from '../../models/validates';
 
@@ -31,7 +30,7 @@ import {
 } from './module';
 
 export default (props: any) => {
-  const { store, schema, path, children, dependValues, rootPath } = props;
+  const { configCtx, store, schema, path, children, dependValues, rootPath } = props;
 
   if (schema?.hidden) {
     return null;
@@ -39,7 +38,7 @@ export default (props: any) => {
 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
-  const configCtx = useContext(ConfigContext);
+ 
   const { form, widgets, methods, globalProps } = configCtx;
 
   const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
@@ -52,7 +51,7 @@ export default (props: any) => {
   }
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  let Widget = widgets[widgetName] || widgets['html'];
+  let Widget = getWidget(widgetName, widgets);
 
   const fieldProps = getFieldProps(widgetName, schema, {
     widgets,
@@ -130,6 +129,7 @@ export default (props: any) => {
   const tooltip = getTooltip(schema, displayType);
   const ruleList = getRuleList(schema, form, methods);
   const readOnly = getValueFromKey('readOnly');
+  const disabled = getValueFromKey('disabled');
 
   const _labelCol = getValueFromKey('labelCol');
   const _fieldCol = getValueFromKey('fieldCol');
@@ -137,34 +137,43 @@ export default (props: any) => {
   const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24 / span * 1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
 
-
   if (readOnly) {
     fieldProps.readOnly = readOnly;
   }
 
-  if (!label) {
-    noStyle = true;
+  if (disabled) {
+    fieldProps.disabled = disabled;
+  }
+
+  if (!label && displayType !== 'column') {
+    label = 'fr-hide-label';
   }
 
   if (readOnly) {
-    Widget = widgets[schema.readOnlyWidget] || widgets['html'];
+    Widget = widgets[schema.readOnlyWidget] || widgets['Html'];
   }
 
   // checkbox 布局有点特殊
   if (isCheckBoxType(schema, readOnly)) {
     fieldProps.title = label;
 
-    label = 'fr-hide-label';
-    if (displayType === 'inline') {
-      label = null;
-    }
+    label = null;
+    if (displayType === 'row') {
+      label = 'fr-hide-label';
+    } 
   }
 
-  const defaultValue = schema.default ?? schema.defaultValue;
+  if (labelWidth === 0 || labelCol?.span === 0) {
+    label = null;
+  }
+
+  const initialValue = schema.default ?? schema.defaultValue;
+
+  const classRest = { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible, [schema.className] : !! schema.className };
 
   const formItem = (
     <Form.Item
-      className={classnames('fr-field', { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible })}
+      className={classnames('fr-field', classRest)}
       label={label}
       name={path}
       valuePropName={valuePropName}
@@ -173,7 +182,7 @@ export default (props: any) => {
       tooltip={tooltip}
       extra={extra}
       help={help}
-      initialValue={defaultValue}
+      initialValue={initialValue}
       labelCol={labelCol}
       wrapperCol={fieldCol}
       noStyle={noStyle}
@@ -184,14 +193,14 @@ export default (props: any) => {
           Field={Widget}
           fieldProps={fieldProps}
           maxWidth={maxWidth}
-          defaultValue={defaultValue}
+          initialValue={initialValue}
         />
       ) : (
         <FieldWrapper
           Field={Widget}
           fieldProps={fieldProps}
           maxWidth={maxWidth}
-          defaultValue={defaultValue}
+          initialValue={initialValue}
         />
       )}
     </Form.Item>
@@ -200,7 +209,7 @@ export default (props: any) => {
   if (inlineSelf) {
     if (noStyle) {
       return (
-        <div className={classnames('fr-inline-field', { 'fr-field-visibility': !visible })}>
+        <div className={classnames('fr-inline-field', { 'fr-field-visibility': !visible, [schema.className] : !! schema.className })}>
           {formItem}
         </div>
       );
