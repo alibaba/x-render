@@ -154,7 +154,8 @@
   display: flex;
   flex-direction: column;
   z-index: 0;
-  height: 100vh;
+  height: calc(100vh - 10px);
+  background-color: #f7f9fb;
 }
 
 .__dumi-default-previewer-demo {

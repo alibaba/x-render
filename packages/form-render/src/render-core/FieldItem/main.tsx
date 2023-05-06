@@ -145,7 +145,7 @@ export default (props: any) => {
     fieldProps.disabled = disabled;
   }
 
-  if (!label) {
+  if (!label && displayType !== 'column') {
     label = 'fr-hide-label';
   }
 
@@ -157,10 +157,14 @@ export default (props: any) => {
   if (isCheckBoxType(schema, readOnly)) {
     fieldProps.title = label;
 
-    label = 'fr-hide-label';
-    if (displayType === 'inline') {
-      label = null;
-    }
+    label = null;
+    if (displayType === 'row') {
+      label = 'fr-hide-label';
+    } 
+  }
+
+  if (labelWidth === 0 || labelCol?.span === 0) {
+    label = null;
   }
 
   const initialValue = schema.default ?? schema.defaultValue;

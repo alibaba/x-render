@@ -3,7 +3,7 @@ import FormRender, { useForm } from 'form-render';
 import debounce from 'lodash/debounce';
 import Editor from "@monaco-editor/react";
 import Controller from "./controller";
-import { Divider, Row, Col } from 'antd';
+import { Row, Col } from 'antd';
 // @ts-ignore
 import { serializeToDraft, deserialize } from './serialize';
 import AsyncSelect from "./customized/AsyncSelect";
@@ -23,8 +23,7 @@ const Playground = () => {
       setValue(val);
     }
   }
-
-
+  
   const parseSchema = (str: string) => {
     try {
       if (lang === 'javascript') {
@@ -72,32 +71,33 @@ const Playground = () => {
 
   return (
     <div className="fr-playground">
-      <Controller onChange={onControllerChange} />
-      <Divider />
-      <Row gutter={20} style={{ flex: 1, overflow: 'hidden' }}>
-        <Col span={12}>
-          <Editor
-            value={value}
-            language={lang}
-            onChange={debounceEditorChange}
-            onMount={() => {
-              const schema = require(`./json/simplest.json`);
-              setValue(JSON.stringify(schema.schema, null, '\t'))
-            }}
-          />
-        </Col>
-        <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%' }}>
-          <FormRender
-            form={form}
-            schema={schema}
-            displayType={displayType}
-            column={column}
-            readOnly={readonly}
-            labelWidth={labelWidth}
-            widgets={{ asyncSelect: AsyncSelect }}
-          />
-        </Col>
-      </Row>
+        <Controller onChange={onControllerChange} />
+        <Row gutter={24} style={{ flex: 1, overflow: 'hidden', padding: '0 24px 0 16px' }}>
+          <Col span={12}>
+            <Editor
+              theme='vs-dark'
+              value={value}
+              language={lang}
+              onChange={debounceEditorChange}
+              onMount={() => {
+                const schema = require(`./json/simplest.json`);
+                setValue(JSON.stringify(schema.schema, null, '\t'))
+              }}
+            />
+          </Col>
+          <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%',  background: '#fff', padding: '24px 24px 24px 24px', boxShadow: '0 2px 12px 0 rgba(0,0,0,.1)' }}>
+            <FormRender
+              form={form}
+              schema={schema}
+              displayType={displayType}
+              column={column}
+              readOnly={readonly}
+              labelWidth={labelWidth}
+              widgets={{ asyncSelect: AsyncSelect }}
+            />
+          </Col>
+        </Row>
+     
     </div>
   );
 };

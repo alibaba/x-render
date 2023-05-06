@@ -40,7 +40,7 @@
           },
           "inputName": {
             "title": "金额",
-            "description": "{{formData.case2.bi === 'dollar' ? '一次汇款不超过150美元':'一次汇款不超过1000元'}}",
+            "tooltip": "{{formData.case2.bi === 'dollar' ? '一次汇款不超过150美元':'一次汇款不超过1000元'}}",
             "type": "string",
             "props": {
               "addonBefore": "{{formData.case2.bi === 'dollar'? '$':'￥'}}",

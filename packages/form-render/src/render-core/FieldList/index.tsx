@@ -65,7 +65,7 @@ export default (props: any) => {
       )}
       <Form.Item
         label={label} 
-        labelCol={labelCol}
+        labelCol={isDisplayColumn ? { span: 24 } : labelCol}
         wrapperCol={fieldCol}
         noStyle={!isInline && !isDisplayColumn}
         tooltip={tooltip}

@@ -409,7 +409,7 @@
       "          \"placeholder\": \"昵称\"",
       "        },",
       "        \"textarea\": {",
-      "          \"title\": \"简单文本编辑框\",",
+      "          \"title\": \"文本编辑框\",",
       "          \"type\": \"string\",",
       "          \"format\": \"textarea\"",
       "        },",

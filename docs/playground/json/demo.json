@@ -104,7 +104,7 @@
       },
       "multiSelectDemo": {
         "title": "多选组件",
-        "description": "多选功能",
+        "tooltip": "多选功能",
         "type": "array",
         "items": {
           "type": "string"
@@ -118,7 +118,6 @@
         "properties": {
           "payType": {
             "title": "支付方式",
-            "description": "",
             "type": "array",
             "items": { "type": "string" },
             "enum": ["1", "5", "6"],

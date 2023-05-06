@@ -1,3 +1,9 @@
 .playground-controller .fr-field {
   margin-bottom: 4px;
 }
+
+.playground-controller {
+  margin-bottom: 20px;
+  background-color: #fff;
+  padding: 20px 0;
+}
