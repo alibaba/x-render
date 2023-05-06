@@ -14,7 +14,7 @@ npm i @xrender/schema-builder
  * defaultShowCode: true
  */
 import React from 'react';
-import S from '@xrender/schema-builder';
+import SchemaBuilder from '@xrender/schema-builder';
 
 const defaultValue = {
   type: 'object',
@@ -29,13 +29,11 @@ const defaultValue = {
 const Demo = () => {
   return (
     <div style={{ height: '80vh' }}>
-      <Generator defaultValue={defaultValue} />
+      <SchemaBuilder defaultValue={defaultValue} />
     </div>
   );
 };
 
 export default Demo;
 ```
-
-## API
 
