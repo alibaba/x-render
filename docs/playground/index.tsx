@@ -72,12 +72,20 @@ const Playground = () => {
   return (
     <div className="fr-playground">
         <Controller onChange={onControllerChange} />
-        <Row gutter={24} style={{ flex: 1, overflow: 'hidden', padding: '0 24px 0 16px' }}>
+        <Row gutter={24} style={{ flex: 1, overflow: 'hidden' }}>
           <Col span={12}>
             <Editor
               theme='vs-dark'
               value={value}
               language={lang}
+              options={{
+                lineNumbers: 'off',
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: 14,
+                minimap: {
+                  enabled: false
+                }
+              }}
               onChange={debounceEditorChange}
               onMount={() => {
                 const schema = require(`./json/simplest.json`);
@@ -94,6 +102,7 @@ const Playground = () => {
               readOnly={readonly}
               labelWidth={labelWidth}
               widgets={{ asyncSelect: AsyncSelect }}
+              footer={true}
             />
           </Col>
         </Row>

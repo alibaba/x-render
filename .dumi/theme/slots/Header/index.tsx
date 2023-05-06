@@ -11,7 +11,7 @@ import './index.less';
 const prefix = 'xr-doc-header';
 
 const Header: React.FC = () => {
-  if (window.top.location.href.includes('/schema-builder-online') || window.top.location.href.includes('/playground')) {
+  if (window.top.location.href.includes('/schema-builder-online')) {
     return null;
   }
 

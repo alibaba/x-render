@@ -4,8 +4,7 @@ import './index.css';
 
 const schema = {
   type: 'object',
-  displayType: 'row',
-  column: 4,
+  displayType: 'inline',
   properties: {
     displayType: {
       title: '标签布局',
@@ -34,11 +33,11 @@ const schema = {
       widget: 'slider',
       default: 100,
       props: {
-        style: {
-          width: 300,
-        },
         min: 20,
-        max: 200
+        max: 200,
+        style: {
+          width: '220px'
+        }
       }
     },
     schema: {
@@ -47,8 +46,7 @@ const schema = {
       widget: 'radio',
       enum: ['simplest', 'basic', 'format', 'dynamic-function', 'new-feature', 'function', 'input', 'select', 'demo'],
       enumNames: ['最简样例', '基础控件', '校验', '动态函数', '新功能', '复杂联动', '个性输入框', '个性选择框', '完整例子'],
-      default: 'simplest',
-      span: 24
+      default: 'simplest'
     }
   }
 }
@@ -67,7 +65,6 @@ const Controller: React.FC<{ onChange: (val: Record<string, any>) => void }> = (
       className='playground-controller'
       schema={schema}
       form={form}
-      labelWidth={100}
       watch={watch}
     />
   )
