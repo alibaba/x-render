@@ -90,7 +90,7 @@ export function isCheckBoxType(schema, readOnly) {
   }
 }
 
-export const valueRemoveUndefined = (values: any) => {
+export const valueRemoveUndefined = (values: any, notFilter?: boolean) => {
   const recursionArray = (list: any[]) => {
     let result = list.map(item => {
       if (isObject(item)) {
@@ -123,7 +123,8 @@ export const valueRemoveUndefined = (values: any) => {
       }
 
       if (isArray(item)) {
-        data[key] = recursionArray(item);
+        const result = recursionArray(item) || [];
+        data[key] = notFilter ? result : result.filter((item: any) => item !== undefined);
       }
     });
 
@@ -134,7 +135,7 @@ export const valueRemoveUndefined = (values: any) => {
     }
     return data;
   }
-
+ 
   return recursionObj(values) || {};
 }
 
