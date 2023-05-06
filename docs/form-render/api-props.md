@@ -20,6 +20,7 @@ group:
 | displayType      | 表单元素与 label 同行 or 分两行展示, inline 则整个展示自然顺排                            | `'column' \| 'row' \| 'inline'`                                                                       | column |
 | labelAlign       | label 标签的文本对齐方式                                                                  | `'left' \| 'right'`                                                                                   | right  |
 | colon            | 是否显示 label 后面的冒号                                                                 | `boolean`                                                                                             | true   |
+| globalConfig     | 表单全局配置，详见 [GlobalConfig](/form-render/api-props#globalconfig)                                                                 | `GlobalConfig`                                                                                             | true   |
 | widgets          | 自定义组件，当内置组件无法满足时使用，详见[自定义组件](/form-render/advanced-widget)                             | `Record<string, ReactNode>`                                                                           | -      |
 | watch            | 监听表单的数据变化，详见 [Watch 监听](/form-render/advanced-linkage#watch-监听)                                                   | `Record<string, (val: any) => void \| { handler:(val:any) => void,immediate?: boolean }>`             | -      |
 | removeHiddenData | 提交数据的时候是否去掉已经被隐藏的元素的数据，默认隐藏                                  | `boolean`                                                                                             | true   |
@@ -56,3 +57,16 @@ group:
 | scrollToPath      | 滚动到 path 对应的位置                                                                                                | `(name: Path , options?:` <a href="https://github.com/stipsan/scroll-into-view-if-needed/tree/ece40bd9143f48caf4b99503425ecb16b0ad8249#options" target="_blank">ScrollOptions</a>`) => boolean`                                                                                               |                                                                                                                                   |
 | getFieldError     | 获取对应字段 field 的错误信息                                                                                         | `(name: Path) => string[]`                                                                                          |
 | getFieldsError    | 获取一组字段 fields 对应的错误信息, 返回数组形式; 入参为空则获取所有字段对应的错误信息 | `(nameList: Path[]) => Error[]`                                                                                     |
+
+## GlobalConfig
+
+| <div style="width:200px">参数</div>              | 描述                                                 | 类型              |
+| ----------------- | ----------------------------------------------------------------------------------- | ----------------------------- |
+| mustacheDisabled  | 是否禁用表达式                                                            | `boolean`              |
+| listOperate       | 列表表单配置                                         | `ListOperate` |
+
+### ListOperate
+| <div style="width:200px">参数</div>              | 描述                                                 | 类型              |
+| ----------------- | ----------------------------------------------------------------------------------- | ----------------------------- |
+| btnType  |   列表表单操作按钮样式                                                          | `'icon'\|'text'`              |
+| hideMove       | 是否隐藏移动按钮                                         | `boolean` |
