@@ -17,7 +17,7 @@ const Header: React.FC = () => {
 
   return (
     <header className={prefix}>
-      <Row align="middle" justify="space-between" style={{ padding: '10px 40px' }}>
+      <Row align="middle" justify="space-between" style={{ padding: '10px 24px' }}>
         <Col span={12}>
           <Space size={20}>
             <div style={{ paddingRight: '12px' }}>

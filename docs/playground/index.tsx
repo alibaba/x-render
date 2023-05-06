@@ -79,10 +79,9 @@ const Playground = () => {
   return (
     <div className="fr-playground">
         <Controller onChange={onControllerChange} />
-        <Row gutter={24} style={{ flex: 1, overflow: 'hidden' }}>
+        <Row gutter={20} style={{ flex: 1, overflow: 'hidden' }}>
           <Col span={12}>
             <Tabs
-             
               items={[
                 {
                   label: 'Schema',

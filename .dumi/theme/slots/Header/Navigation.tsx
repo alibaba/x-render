@@ -14,28 +14,28 @@ const Navigation: React.FC = () => {
       key: 'table-render',
     },
     {
-      label: <Link to="/form-render-mobile">Form Mobile</Link>,
+      label: <Link to="/form-render-mobile">FRMobile</Link>,
       key: 'form-render-mobile'
     },
     {
-      label: <a href="https://1.xrender.fun/chart-render" target='_black'>ChartRender</a>,
-      key: 'chart-render',
+      label: <Link to="/playground">Playground</Link>,
+      key: 'playground'
     },
     {
-      label: <Link to="/schema-builder">表单设计器</Link>,
-      key: 'generator',
+      label: <Link to="/schema-builder">SchemaBuilder</Link>,
+      key: 'schema-builder',
     },
     {
       label: (
         <div>
-          <span>插件</span>
+          <span>更多</span>
           <DownOutlined style={{fontSize: 12, color: '#666', marginLeft: 3}} />
         </div>
       ),
       children: [
         {
-          label: <a href="/playground" target='_black'>Playground</a>,
-          key: 'playground',
+          label: <a href="https://1.xrender.fun/chart-render" target='_black'>ChartRender</a>,
+          key: 'chart-render',
           icon: <CodeOutlined />,
         },
         {

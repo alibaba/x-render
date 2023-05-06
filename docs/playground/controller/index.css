@@ -3,7 +3,12 @@
 }
 
 .playground-controller {
-  margin-bottom: 20px;
+  margin-bottom: 8px;
   background-color: #fff;
-  padding: 20px 30px;
+  padding: 12px 30px 6px 30px;
+  border-radius: 3px;
+}
+
+.playground-controller .fr-inline-field {
+  margin-right: 60px !important;
 }

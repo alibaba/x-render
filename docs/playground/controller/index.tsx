@@ -22,11 +22,11 @@ const schema = {
       enumNames: ['一列', '两列', '三列'],
       default: 1,
     },
-    readonly: {
-      title: '只读',
-      type: 'boolean',
-      widget: 'switch'
-    },
+    // readonly: {
+    //   title: '只读',
+    //   type: 'boolean',
+    //   widget: 'switch'
+    // },
     labelWidth: {
       title: '标签宽度',
       type: 'number',
