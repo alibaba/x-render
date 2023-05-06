@@ -34,7 +34,7 @@ const Navigation: React.FC = () => {
       ),
       children: [
         {
-          label: <Link to="/playground">Playground</Link>,
+          label: <a href="/playground" target='_black'>Playground</a>,
           key: 'playground',
           icon: <CodeOutlined />,
         },

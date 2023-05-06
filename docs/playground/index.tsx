@@ -71,9 +71,8 @@ const Playground = () => {
 
   return (
     <div className="fr-playground">
-     
         <Controller onChange={onControllerChange} />
-        <Row gutter={60} style={{ flex: 1, overflow: 'hidden' }}>
+        <Row gutter={24} style={{ flex: 1, overflow: 'hidden', padding: '0 24px 0 16px' }}>
           <Col span={12}>
             <Editor
               theme='vs-dark'
@@ -86,7 +85,7 @@ const Playground = () => {
               }}
             />
           </Col>
-          <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%',  background: '#fff', padding: '24px 54px 24px 24px' }}>
+          <Col span={12} style={{ overflowY: 'auto', overflowX: 'hidden', height: '100%',  background: '#fff', padding: '24px 24px 24px 24px', boxShadow: '0 2px 12px 0 rgba(0,0,0,.1)' }}>
             <FormRender
               form={form}
               schema={schema}

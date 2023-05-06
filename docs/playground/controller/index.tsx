@@ -5,6 +5,7 @@ import './index.css';
 const schema = {
   type: 'object',
   displayType: 'row',
+  column: 4,
   properties: {
     displayType: {
       title: '标签布局',
@@ -13,8 +14,6 @@ const schema = {
       enum: ['column', 'row'],
       enumNames: ['垂直', '水平'],
       default: 'column',
-      span: 5,
-      labelWidth: 100
     },
     column: {
       title: '列数',
@@ -23,13 +22,11 @@ const schema = {
       enum: [1, 2, 3],
       enumNames: ['一列', '两列', '三列'],
       default: 1,
-      span: 5
     },
     readonly: {
       title: '只读',
       type: 'boolean',
-      widget: 'switch',
-      span: 3
+      widget: 'switch'
     },
     labelWidth: {
       title: '标签宽度',
@@ -42,9 +39,7 @@ const schema = {
         },
         min: 20,
         max: 200
-      },
-      span: 7,
-      labelWidth: 100
+      }
     },
     schema: {
       title: '示例',
@@ -72,7 +67,7 @@ const Controller: React.FC<{ onChange: (val: Record<string, any>) => void }> = (
       className='playground-controller'
       schema={schema}
       form={form}
-      labelWidth={60}
+      labelWidth={100}
       watch={watch}
     />
   )
