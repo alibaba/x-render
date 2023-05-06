@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'antd';
 import { Link } from 'dumi';
-import { CodeOutlined, DownOutlined, MobileOutlined, SwapOutlined, ToolOutlined, HighlightOutlined } from '@ant-design/icons';
+import { CodeOutlined, DownOutlined, MobileOutlined, SwapOutlined, ToolOutlined } from '@ant-design/icons';
 
 const Navigation: React.FC = () => {
   const items: any = [
