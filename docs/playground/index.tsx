@@ -138,7 +138,6 @@ const Playground = () => {
               readOnly={readonly}
               labelWidth={labelWidth}
               widgets={{ asyncSelect: AsyncSelect }}
-              footer={true}
               watch={{ '#' : onValuesChange }}
               onFinish={(values) => {
                 setFormData(values);
