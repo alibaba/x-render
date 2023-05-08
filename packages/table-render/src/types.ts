@@ -1,9 +1,8 @@
 import { TableProps } from 'antd';
 import type { TableColumnType } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
 import { FRProps, FormInstance } from 'form-render';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
-import { TStore } from './core/store';
+import type { TableRenderStoreType } from './core/store';
 
 export type ColumnsSettingValueType = Array<{
   /** 列的 key */
@@ -44,7 +43,7 @@ export interface TableContext {
   refresh: RefreshType,
   changeTab: ChangeTabType,
   form: FormInstance,
-  getState: () => TStore & { search: Record<string, any> },
+  getState: () => TableRenderStoreType & { search: Record<string, any> },
 }
 
 export type ProColumnsType<T extends object = any> = Array<

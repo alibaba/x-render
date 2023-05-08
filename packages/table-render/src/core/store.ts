@@ -1,9 +1,9 @@
 import { ToolbarActionConfig } from '@/types';
-import React, { useRef } from 'react';
-import { create, StoreApi, useStore } from 'zustand';
+import React from 'react';
+import { create, useStore } from 'zustand';
 import { ProColumnsType } from '..';
 
-type TableRenderStoreType = {
+export type TableRenderStoreType = {
   loading: boolean;
   api: null,
   /**
