@@ -61,8 +61,7 @@ const Item: FC<Setting[number] & {
     onFixItem?.(columnKey);
   }
 
-  const className = clx(`${prefix}`, {
-    [`${prefix}-fixed`]: isFixed,
+  const className = clx({
     [`${prefix}-can-fixed`]: canFix,
   })
 

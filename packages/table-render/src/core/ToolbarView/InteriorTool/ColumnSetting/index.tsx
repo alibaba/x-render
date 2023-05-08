@@ -8,6 +8,7 @@ import { getColumnKey, translation } from '../../../../utils';
 import { ToolbarActionConfig } from '@/types';
 import Item from './item';
 import { cancelFixed, fixItem, Setting } from './utils';
+import clx from 'classnames'
 import './index.less';
 
 const prefix = 'tr-toolbar-column-setting';
@@ -66,20 +67,20 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
 
   const getItems = (setting: Setting) => {
     if (!setting) return [];
-    return setting
-      .map(i => {
-        return {
-          label: (
-            <Item
-              {...i}
-              onFixItem={onFixItem}
-              onUnfixItem={onUnfixItem}
-              columnKey={String(i.key)}
-            />
-          ),
-          key: i.key,
-        }
-      })
+    return setting.map(i => ({
+      className: clx(`${prefix}-item`, {
+        [`${prefix}-item-fixed`]: i.fixed,
+      }),
+      key: i.key,
+      label: (
+        <Item
+          {...i}
+          onFixItem={onFixItem}
+          onUnfixItem={onUnfixItem}
+          columnKey={String(i.key)}
+        />
+      ),
+    }))
   }
 
   const onReset = () => {
