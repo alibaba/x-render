@@ -20,8 +20,6 @@ const transformProps =  (props: any) => {
     debugCss,
     locale,
     configProvider,
-    allCollapsed,
-    debounceInput,
     validateMessages,
     debug,
     id,
@@ -30,15 +28,16 @@ const transformProps =  (props: any) => {
     form,
     onFinish,
     onFinishFailed,
-    builtOperation,
+    footer,
     operateExtra,
     logOnMount,
     logOnSubmit,
     labelCol,
     fieldCol,
+    disabled,
     // labelAlign,
     // colon,
-    // className,
+    className,
     // style,
     // disabled,
     // scrollToFirstError,
@@ -62,16 +61,15 @@ const transformProps =  (props: any) => {
     onMount,
     watch,
     readOnly,
+    disabled,
     column,
     mapping,
     debugCss, // 好像没用了
     locale,
     configProvider,
-    builtOperation,
+    footer,
     form,
     labelWidth,
-    allCollapsed,
-    debounceInput, // 好像没用了
     validateMessages,
     debug, // 换成 form 还有用吗？
     id,
@@ -82,7 +80,8 @@ const transformProps =  (props: any) => {
     logOnSubmit,
     labelCol,
     fieldCol,
-    maxWidth
+    maxWidth,
+    className
   };
 };
 

@@ -75,7 +75,8 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
     getState: () => ({
       ...getState(),
       search: form.getValues(true)
-    })
+    }),
+    setState,
   }));
 
   const fullScreen = () => {

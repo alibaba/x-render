@@ -1,6 +1,7 @@
 ---
 order: 0
 toc: content
+mobile: false
 group: 
   title: 高级用法
   order: 1
@@ -11,8 +12,10 @@ group:
 - `column` 表单一行能展示的表单项个数
 - `labelWidth` 标签固定宽度
 - `cellSpan` 表单项跨列
+- `span` 自定义宽度
 - `maxWidth` 输入控件最长宽度  
 - `labelCol`、`FieldCol` 表单项内部布局
+- `footer` 内置按钮
 ## displayType
 
 - displayType（标签排列方式）：`row`（水平）| `column`（垂直）| `inline`(紧凑)
@@ -151,6 +154,30 @@ export default () => {
 };
 ```
 
+## span
+设置表单项列宽度，表单布局会被切割成 24 等份，可以通过设置 span 来自定义表单项所占的宽度
+
+```jsx
+import React, { useState } from 'react';
+import { InputNumber } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/span';
+
+export default () => {
+  const form = useForm();
+  const [labelWidth, setLabelWidth] = useState(60);
+
+  return (
+    <FormRender
+      form={form}
+      schema={schema}
+      labelWidth={80}
+      maxWidth={300}
+    />
+  );
+};
+```
+
 ## maxWidth
 表单项控件的最大宽度
 
@@ -240,4 +267,89 @@ export default () => {
 };
 ```
 
+## footer
+- `footer`：true，显示默认配置
+```jsx
+import React, { useState } from 'react';
+import { Button, Space, Form, Radio } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
 
+export default () => {
+  const form = useForm();
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      maxWidth={360}
+      footer={true}
+    />
+  );
+}
+```
+
+- 按钮属性配置
+```jsx
+import React, { useState } from 'react';
+import { Button, Space, Form, Radio } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
+
+export default () => {
+  const form = useForm();
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      maxWidth={360}
+      footer={{
+        submit: {
+          text: '确定',
+          // loading: true
+          // hide: true
+          // ...btnProps
+        },
+        save: {
+          hide: false
+        },
+        reset: {
+          text: '清空',
+          // hide: true
+          // ...btnProps
+        },
+        extraAfter: (
+          <Button>后置扩展按钮</Button>
+        ),
+        extraBefore: (
+          <Button>前置扩展按钮</Button>
+        )
+      }}
+    />
+  );
+}
+```
+
+- `footer` 自定义
+```jsx
+import React, { useState } from 'react';
+import { Button, Space, Form, Radio } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
+
+export default () => {
+  const form = useForm();
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      maxWidth={360}
+      footer={() => (
+        <Button>自定义</Button>
+      )}
+    />
+  );
+}
+```

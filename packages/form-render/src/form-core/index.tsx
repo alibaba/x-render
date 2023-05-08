@@ -1,15 +1,16 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, FC } from 'react';
 import { Form, Row, Col, Button, Space, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
+import classNames from 'classnames';
 
 import { valueRemoveUndefined, _cloneDeep, translation, isFunction } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesToBind } from '../models/bindValues';
 import { getFormItemLayout } from '../models/layout';
+import {FRProps} from '../type'
 
 import {
-  transformFieldsError,
   valuesWatch,
   immediateWatch,
   yymmdd,
@@ -21,8 +22,8 @@ import RenderCore from '../render-core';
 
 import './index.less';
 
-const FormCore = (props: any) => {
-  const store = useContext(FRContext);
+const FormCore:FC<FRProps> = (props) => {
+  const store: any = useContext(FRContext);
   const schema = useStore(store, (state: any) => state.schema);
   const flattenSchema = useStore(store, (state: any) => state.flattenSchema);
   const setContext = useStore(store, (state: any) => state.setContext);
@@ -46,12 +47,14 @@ const FormCore = (props: any) => {
     onFinish,
     onFinishFailed,
     readOnly,
-    builtOperation,
+    disabled,
+    footer,
     removeHiddenData,
     operateExtra,
     logOnMount,
     logOnSubmit,
     id,
+    className,
   } = transformProps({ ...props, ...schemProps });
 
   useEffect(() => {
@@ -67,6 +70,7 @@ const FormCore = (props: any) => {
     const context = {
       column,
       readOnly,
+      disabled,
       labelWidth,
       displayType,
       labelCol,
@@ -74,7 +78,7 @@ const FormCore = (props: any) => {
       maxWidth
     };
     setContext(context);
-  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly]);
+  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly, disabled]);
 
   const initial = async () => {
     onMount && await onMount();
@@ -144,7 +148,7 @@ const FormCore = (props: any) => {
   };
 
   const handleValuesChange = (changedValues: any, _allValues: any) => {
-    const allValues = valueRemoveUndefined(_allValues);
+    const allValues = valueRemoveUndefined(_allValues, true);
     valuesWatch(changedValues, allValues, watch);
   };
 
@@ -160,7 +164,6 @@ const FormCore = (props: any) => {
     let fieldsError = beforeFinish
       ? await beforeFinish({ data: values, schema, errors: [] })
       : null;
-    fieldsError = transformFieldsError(fieldsError);
 
     // console.log(values, form.getValues(true));
     // Stop submit
@@ -188,12 +191,18 @@ const FormCore = (props: any) => {
   };
 
   const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
+  
+  const classRest: any = {};
+  if (className) {
+    classRest[className] = true;
+  }
 
   return (
     <Form
-      className='fr-form'
+      className={classNames('fr-form', classRest )}
       labelWrap={true}
       {...formProps}
+      disabled={disabled}
       form={form}
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
@@ -203,7 +212,7 @@ const FormCore = (props: any) => {
         <RenderCore schema={schema} />
         {operateExtra}
       </Row>
-      {schema && builtOperation && (
+      {schema && !!footer && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24 / column}>
             <Form.Item
@@ -211,12 +220,29 @@ const FormCore = (props: any) => {
               labelCol={operlabelCol}
               className='fr-hide-label'
             >
-              <Space>
-                <Button type='primary' htmlType='submit'>
-                  {t('submit')}
-                </Button>
-                <Button onClick={() => form.resetFields()}> {t('reset')}</Button>
-              </Space>
+              {isFunction(footer) ? ( 
+                <Space>{footer()}</Space>
+              ): (
+                <Space>
+                  {!footer?.reset?.hide && (
+                    <Button 
+                      {...footer?.reset} 
+                      onClick={() => form.resetFields()}
+                    >
+                      {footer?.reset?.text || t('reset')}
+                    </Button>
+                  )}
+                  {!footer?.submit?.hide && (
+                    <Button
+                      type='primary'
+                      onClick={form.submit}
+                      {...footer?.submit}
+                    >
+                      {footer?.submit?.text || t('submit')}
+                    </Button>
+                  )}
+                </Space>
+              )}
             </Form.Item>
           </Col>
         </Row>

@@ -1,7 +1,8 @@
 ---
 order: 0
+mobile: false
 title: ''
-sidebar: true
+sidebar: false
 ---
 
-<code src='./index.jsx'></code>
+<code src='./index.tsx' inline={true}></code>

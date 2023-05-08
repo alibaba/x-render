@@ -9,7 +9,7 @@ const isMultiBind = (array: string[]) => isArray(array) && array.every(item => t
 
 // Need to consider list nested controls
 const transformPath = (path: string) => {
-  const result = [];
+  const result: string[] = [];
 
   const recursion = (str: string) => {
     const index = str.indexOf('[]');
@@ -29,7 +29,7 @@ const transformPath = (path: string) => {
   return result;
 };
 
-const transformValueToBind = (data: any, path: string, bind: false | string | string[]) => {
+const transformValueToBind = (data: any, path: any, bind: false | string | string[]) => {
   if (bind === false) {
     unset(data, path);
     return;
@@ -60,7 +60,7 @@ const transformValueToBind = (data: any, path: string, bind: false | string | st
   }
 }
 
-const transformBindToValue = (data: any, path: string, bind: string | string[]) => {
+const transformBindToValue = (data: any, path: any, bind: any) => {
   if (typeof bind === 'string') {
     let value = get(data, bind);
     const preValue = get(data, path);
@@ -92,36 +92,72 @@ const transformBindToValue = (data: any, path: string, bind: string | string[]) 
 
 
 export const parseValuesToBind = (values: any, flatten: any) => {
+  // No bind field exists, no processing
   if (!JSON.stringify(flatten).includes('bind')) {
     return values;
   }
+
   const data = _cloneDeep(values);
+
+  const dealFieldList = (obj: any, [path, ...rest]: any, bind: any) => {
+    if (rest.length === 1) {
+      const list = get(obj, path, []);
+      list.forEach((item: any, index: number) => {
+        const value = get(item, rest[0]);
+        if (bind === 'root') {
+          list[index] = value;
+          return;
+        }
+        transformValueToBind(item, rest[0], bind);
+      });
+    }
+
+    if (isArray(obj)) {
+      obj.forEach((item: any) => dealFieldList(item, [path, ...rest], bind));
+    } else if (isObject(obj)) {
+      const value = get(obj, path);
+      dealFieldList(value, rest, bind);
+    }
+  };
  
   Object.keys(flatten).forEach(key => {
     const bind = flatten[key]?.schema?.bind;
     if (bind === undefined) {
       return;
     }
-
     const path = transformPath(key);
-    if (isArray(path)) {
-      return;
-    }
-    
-    transformValueToBind(data, path, bind);
+    isArray(path) ? dealFieldList(data, path, bind) : transformValueToBind(data, path, bind);
   });
 
   return data;
 };
 
-
 export const parseBindToValues = (values: any, flatten: any) => {
   if (!JSON.stringify(flatten).includes('bind')) {
     return values;
   }
-  const data = _cloneDeep(values);
- 
 
+  const data = _cloneDeep(values);
+  const dealFieldList = (obj: any, [path, ...rest]: any, bind: any) => {
+    if (rest.length === 1) {
+      const list = get(obj, path, []);
+      list.forEach((item: any, index: number) => {
+        if (bind === 'root') {
+          list[index] = { [rest[0]] : item };
+          return;
+        }
+        transformBindToValue(item, rest[0], bind);
+      });
+    }
+
+    if (isArray(obj)) {
+      obj.forEach((item: any) => dealFieldList(item, [path, ...rest], bind));
+    } else if (isObject(obj)) {
+      const value = get(obj, path);
+      dealFieldList(value, rest, bind);
+    }
+  };
+ 
   Object.keys(flatten).forEach(key => {
     const bind = flatten[key]?.schema?.bind;
     if (bind === undefined) {
@@ -129,11 +165,7 @@ export const parseBindToValues = (values: any, flatten: any) => {
     }
     const path = transformPath(key);
 
-    if (isArray(path)) {
-      return
-    }
-
-    transformBindToValue(data, path, bind);
+    isArray(path) ? dealFieldList(data, path, bind) : transformBindToValue(data, path, bind);
   });
 
   return data;

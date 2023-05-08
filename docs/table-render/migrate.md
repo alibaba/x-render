@@ -1,5 +1,6 @@
 ---
 order: 0
+mobile: false
 group: 
   title: 其他
   order: 5

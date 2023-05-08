@@ -1,5 +1,6 @@
 ---
 order: 0
+mobile: false
 group: 
   title: 其他
   order: 5
@@ -32,24 +33,24 @@ group:
 
 我们将搜索相关的能力放到 `<Search />` 上面配置，包括对应的搜索筛选表单的渲染
 
-| 属性               | 描述                                                                                                                 | 类型                                                                                                  | 默认值  |
-| ------------------ | -------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ------- |
-| schema             | **必填**，用于渲染查询表单，详见[form-render 文档](/form-render/schema/schema)                                       | [SchemaBase](https://github.com/alibaba/x-render/blob/master/packages/form-render/src/index.d.ts#L16) | -       |
-| collapsed          | 是否可折叠                                                                                                           | `boolean`                                                                                             | -       |
-| defaultCollapsed   | 折叠收起                                                                                                             | `boolean`                                                                                             | true    |
-| loading            | 查询按钮加载中                                                                                                       | `boolean`                                                                                             | -       |
-| column             | 一行多列                                                                                                             | `number`                                                                                              | 4       |
-| layoutAuto         | 自适应布局，可设置为 true / false 或对象：{ fieldMinWidth: `number` }， 当设置fieldMinWidth 会根据最小宽度动态自适应 | `boolean` or `object`                                                                                 | `true ` |
-| onSearch           | 在表格查询时执行一些额外的操作                                                                                       | `(params) => void`                                                                                    | -       |
-| afterSearch        | 在表格查询结束后执行一些额外的操作                                                                                   | `(params) => void`                                                                                    | -       |
-| searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                                                 | `boolean`                                                                                             | true    |
-| hidden             | 是否隐藏 `<Search />` 组件                                                                                           | `boolean`                                                                                             | false   |
-| searchBtnRender    | 自定义表单查询按钮                                                                                                   | `(refresh,clearSearch) => ReactNode[]`                                                                | -       |
-| searchBtnStyle     | 自定义表单操作按钮组的样式                                                                                           | `CSSProperties`                                                                                       | -       |
-| searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                                                     | `string`                                                                                              | -       |
-| searchWithError    | 表单校验失败时，是否继续执行查询操作                                                                                 | `boolean`                                                                                             | true    |
-| searchText         | 自定义查询按钮的文本                                                                                                 | `string`                                                                                              | 查询    |
-| resetText          | 自定义重置按钮的文本                                                                                                 | `string`                                                                                              | 重置    |
+| 属性               | 描述                                                                                  | 类型                                   | 默认值  |
+| ------------------ | ------------------------------------------------------------------------------------- | -------------------------------------- | ------- | 
+| schema             | **必填**，用于渲染查询表单，详见[form-render 文档](/form-render/api-schema) | <a target="_blank" href="https://github.com/alibaba/x-render/blob/e2feff8fdb3bef5537b92a2157dbbf40b9d4eb17/packages/form-render/src/type.ts#L32">SchemaBase</a>                               | -       | 
+| collapsed           | 是否可折叠                             | `boolean`          |  -    |
+| defaultCollapsed    | 折叠收起                               | `boolean`          |  true   |
+| loading             | 查询按钮加载中                          | `boolean`          |  -    |
+| column              | 一行多列                               | `number`           |  4    |
+| layoutAuto            | 自适应布局，可设置为 true / false 或对象：{ fieldMinWidth: `number` }， 当设置fieldMinWidth 会根据最小宽度动态自适应                         | `boolean` or `object`         |  `false `   |
+| onSearch           | 在表格查询时执行一些额外的操作                                                        | `(params) => void`                             | -       |
+| afterSearch        | 在表格查询结束后执行一些额外的操作                                                    | `(params) => void`                             | -       |
+| searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                  | `boolean`                              | true  | 
+| hidden             | 是否隐藏 `<Search />` 组件                                                              | `boolean`                              | false |
+| searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch) => ReactNode[]` | -       | 
+| searchBtnStyle     | 自定义表单操作按钮组的样式                                                            | `CSSProperties`                  | -      | 
+| searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                      | `string`                               | -      | 
+| searchWithError    | 表单校验失败时，是否继续执行查询操作                                                  | `boolean`                              | true    |
+| searchText         | 自定义查询按钮的文本                                                                  | `string`                               | 查询  | 
+| resetText          | 自定义重置按钮的文本                                                                  | `string`                               | 重置  | 
 
 ## Request
 入参：`params`、`sorter`，分别是表单筛选项的值、排序参数。
@@ -93,7 +94,7 @@ const request = [
 ```
 ## Columns
 
-columns 为 antd 已有的 props，支持 antd 所有的 [columns](https://ant.design/components/table-cn/#Column) 配置，同时也提供了一些更方便的 api，加快书写
+columns 为 antd 已有的 props，支持 antd 所有的 <a href="https://ant.design/components/table-cn/#Column" target="_blank">columns</a> 配置，同时也提供了一些更方便的 api，加快书写
 
 | 属性      | 描述                                   | 类型                                        | 默认值 |
 | --------- | -------------------------------------- | ------------------------------------------- | ------ |

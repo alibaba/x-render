@@ -1,9 +1,9 @@
 import { useRef } from 'react';
 import { Form } from 'antd';
 
-import { transformFieldsError, getSchemaFullPath } from './formCoreUtils';
+import { transformFieldsData, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
-import { _set, _get, _has, _cloneDeep, _merge, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
+import { _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
 import type { FormInstance } from '../type';
 
@@ -12,59 +12,95 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
   const currSchema = _get(formSchema, path, {});
   const newSchema = isFunction(_newSchema) ? _newSchema(currSchema) : _newSchema;
 
-  const result = _merge(currSchema, newSchema);
+  const result = {
+    ...currSchema,
+    ...newSchema,
+  }
+
+  if (newSchema.props) {
+    result.props = {
+      ...currSchema?.props,
+      ...newSchema.props
+    }
+  }
+  
   _set(formSchema, path, result);
 };
 
-const getFieldPath = (_path: any) => {
+const getFieldName = (_path: any): any => {
   if (!_path) {
     return undefined;
   }
 
   if (typeof _path === 'boolean') {
-    return _path
+    return _path;
   }
 
+  let result: any[] = [];
+
   if (isArray(_path)) {
-    return _path.map(item => {
+    result = _path.map((item: any) => {
       return item.split('.').map((ite: any) => {
         if (!isNaN(Number(ite))) {
           return ite * 1;
         }
         return ite;
       });
-    })
+    });
   }
-  return _path.split('.').map((item: any) => {
+
+  result = _path.split('.').map((item: any) => {
     if (!isNaN(Number(item))) {
       return item * 1;
     }
     return item;
   });
+
+  result = result.map(item => {
+    if (typeof item === 'string' && item?.indexOf('[') === 0  && item?.indexOf(']') === item?.length -1) {
+      return Number(item.substring(1, item.length-1));
+    }
+    return item;
+  });
+ 
+  return result;
 };
 
 const useForm = () => {
   const [form] = Form.useForm() as [FormInstance];
+
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
   const schemaRef = useRef({});
-  const { getFieldError, getFieldsError, getFieldInstance } = form;
-  const formRef = useRef({
-    getFieldError,
-    getFieldsError,
-    getFieldInstance
-  });
+  const { 
+    getFieldError, 
+    getFieldsError, 
+    getFieldInstance, 
+    setFieldValue,
+    setFieldsValue,
+    setFields,
+    scrollToField,
+    isFieldsTouched,
+    isFieldTouched,
+    isFieldValidating,
+    resetFields,
+    validateFields,
+    ...otherForm 
+  } = form;
+
+  const xform: any = otherForm;
 
   const setStoreData = (data: any) => {
     const { setState } = storeRef.current;
     if (!setState) {
       setTimeout(() => {
         setState({ schema: schemaRef.current, flattenSchema: flattenSchemaRef.current });
-      }, 0)
+      }, 0);
     }
     setState(data);
   };
 
+  // 更新协议
   const handleSchemaUpdate = (newSchema: any) => {
     // form.__schema = Object.freeze(newSchema);
     flattenSchemaRef.current = flatten(newSchema) || {};
@@ -72,7 +108,8 @@ const useForm = () => {
     setStoreData({ schema: newSchema, flattenSchema: flattenSchemaRef.current });
   };
 
-  form.setSchema = (obj: any, cover = false) => {
+  // 设置协议
+  xform.setSchema = (obj: any, cover = false) => {
     if (!isObject(obj)) {
       return;
     }
@@ -90,39 +127,52 @@ const useForm = () => {
     handleSchemaUpdate(schema);
   }
 
-  form.setSchemaByPath = (_path: string, _newSchema: any) => {
+  // 设置某个字段的协议
+  xform.setSchemaByPath = (_path: string, _newSchema: any) => {
     const schema = _cloneDeep(schemaRef.current);
     updateSchemaByPath(_path, _newSchema, schema);
 
     handleSchemaUpdate(schema);
   }
 
-  form.setSchemaByFullPath = (path: string, newSchema: any) => {
-    const schema = _cloneDeep(schemaRef.current);
-    const currSchema = _get(schema, path, {});
-    const result = _merge(newSchema, currSchema);
+  // form.setSchemaByFullPath = (path: string, newSchema: any) => {
+  //   const schema = _cloneDeep(schemaRef.current);
+  //   const currSchema = _get(schema, path, {});
 
-    _set(schema, path, result);
-    handleSchemaUpdate(schema);
-  }
+  //   const result = _mergeWith(currSchema, newSchema, (objValue, srcValue, key) => {
+  //     return srcValue;
+  //   });
 
-  form.setValues = (_values: any) => {
+  //   _set(schema, path, result);
+  //   handleSchemaUpdate(schema);
+  // }
+
+  // 设置表单数据
+  xform.setValues = (_values: any) => {
     const values = parseBindToValues(_values, flattenSchemaRef.current);
-    form.setFieldsValue(values);
+    setFieldsValue(values);
   }
 
-  form.getValues = (nameList?: any, filterFunc?: any) => {
-    let values = form.getFieldsValue(getFieldPath(nameList), filterFunc);
+  // 获取表单数据
+  xform.getValues = (nameList?: any, filterFunc?: any) => {
+    let values = form.getFieldsValue(getFieldName(nameList), filterFunc);
     values = valueRemoveUndefined(values);
     return parseValuesToBind(values, flattenSchemaRef.current);
   }
 
-  form.setValueByPath = (path: any, value: any) => {
-    const name = getFieldPath(path);
-    form.setFieldValue(name, value);
+  xform.getValueByPath = (path: string) => {
+    const name = getFieldName(path);
+    return form.getFieldValue(name);
   }
 
-  form.getSchemaByPath = _path => {
+  // 设置某个字段的值
+  xform.setValueByPath = (path: string, value: any) => {
+    const name = getFieldName(path);
+    setFieldValue(name, value);
+  }
+
+  // 通过某个字段的 schema
+  xform.getSchemaByPath = (_path: string) => {
     if (typeof _path !== 'string') {
       console.warn('请输入正确的路径');
     }
@@ -130,40 +180,48 @@ const useForm = () => {
     return _get(schemaRef.current, path);
   };
 
-  form.getSchema = () => {
+  // 获取协议
+  xform.getSchema = () => {
     return schemaRef.current;
   };
 
-  form.setErrorFields = (_fieldsError: any[]) => {
-    const fieldsError = transformFieldsError(_fieldsError);
-    if (!fieldsError) {
+  // 设置一组字段错误
+  xform.setErrorFields = (fieldsError: any[]) => {
+    const fieldsData = transformFieldsData(fieldsError, getFieldName);
+    if (!fieldsData) {
       return;
     }
-    form.setFields(fieldsError);
+
+    setFields(fieldsData);
   };
 
-  form.removeErrorField = (path: any) => {
-    form.setFields([{ name: getFieldPath(path), errors: [] }]);
+  // 清空某个字段的错误
+  xform.removeErrorField = (path: any) => {
+    setFields([{ name: getFieldName(path), errors: [] }]);
   };
 
-  form.getFieldError = (path: string) => {
-    const name = getFieldPath(path);
-    return formRef.current.getFieldError(name);
+  // 获取对应字段名的错误信息
+  xform.getFieldError = (path: string) => {
+    const name = getFieldName(path);
+    return form.getFieldError(name);
   }
 
-  form.getFieldsError = (path: string[]) => {
-    const name = getFieldPath(path);
-    return formRef.current.getFieldsError(name);
+  // 获取一组字段名对应的错误信息，返回为数组形式
+  xform.getFieldsError = (path: string[]) => {
+    const name = getFieldName(path);
+    return getFieldsError(name);
   }
 
-  form.getFieldInstance = (path) => {
-    const name = getFieldPath(path)
-    return formRef.current.getFieldInstance(name);
+  // 获取对应字段实例
+  xform.getFieldInstance = (path: string) => {
+    const name = getFieldName(path);
+    return getFieldInstance(name);
   }
 
-  form.getHiddenValues = () => {
-    const values = form.getFieldsValue();
-    const allValues = form.getFieldsValue(true);
+  // 获取隐藏字段数据
+  xform.getHiddenValues = () => {
+    const values = xform.getValues();
+    const allValues = xform.getValues(true);
     const hiddenValues = {};
 
     const recursion = (obj1: any, obj2: any, path: any) => {
@@ -191,15 +249,65 @@ const useForm = () => {
     return hiddenValues;
   }
 
-  form.__initStore = (store: any) => {
+  // 设置一组字段状态
+  xform.setFields = (nameList: any[]) => {
+    const fieldsData = transformFieldsData(nameList, getFieldName);
+    if (!fieldsData) {
+      return;
+    }
+    setFields(fieldsData);
+  }
+
+  xform.__initStore = (store: any) => {
     storeRef.current = store;
   }
 
-  form.scrollToPath = form.scrollToField;
+  // 滚动到对应字段位置
+  xform.scrollToPath = (path: string, ...rest) => {
+    const name = getFieldName(path);
+    scrollToField(name, ...rest);
+  }
+
+  // 检查一组字段是否被用户操作过，allTouched 为 true 时检查是否所有字段都被操作过
+  xform.isFieldsTouched = (pathList?: string[], allTouched?: boolean) => {
+    const nameList = (pathList || []).map(path => getFieldName(path));
+    return isFieldsTouched(nameList, allTouched);
+  }
+
+  // 检查对应字段是否被用户操作过
+  xform.isFieldTouched = (path: string) => {
+    const name = getFieldName(path);
+    return isFieldTouched(name);
+  }
+
+  // 检查对应字段是否被用户操作过
+  xform.isFieldValidating = (path: string) => {
+    const name = getFieldName(path);
+    return isFieldValidating(name);
+  }
+
+  xform.resetFields = (pathList?: string[]) => {
+    const nameList = (pathList || []).map(path => getFieldName(path));
+    if (nameList.length > 0) {
+      resetFields(nameList);
+    } else {
+      resetFields();
+    }
+  }
+
+  // 触发表单验证
+  xform.validateFields = (pathList?: string[]) => {
+    const nameList = (pathList || []).map(path => getFieldName(path));
+    if (nameList.length > 0) {
+      return validateFields(nameList);
+    } 
+    return resetFields();
+  }
+
   // 老 API 兼容
-  form.onItemChange = form.setValueByPath;
+  xform.onItemChange = xform.setValueByPath;
  
-  return form;
+  return xform;
 };
 
 export default useForm;

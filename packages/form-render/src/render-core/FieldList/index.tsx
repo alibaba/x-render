@@ -1,135 +1,47 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { Form, Col } from 'antd';
 import { useStore } from 'zustand';
 import { FRContext, ConfigContext } from '../../models/context';
 import { parseAllExpression } from '../../models/expression';
-
+import { getFormListLayout, getParamValue, getLabel, getTooltip } from './modules';
 import Main from './main';
 
 const UpperContext = createContext(() => {});
 
-const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
-  return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
-};
-
-const getLabel = (schema: any, displayType: string, widgets: any) => {
-  const { title, description, descWidget, labelWidget } = schema;
-  const LabelNode = widgets[labelWidget];
-
-  if (LabelNode) {
-    return <LabelNode schema={schema} />
-  }
-
-  if ((!description && !descWidget)) {
-    return title;
-  }
-
-  const RenderDesc = () => {
-    const Widget = widgets[descWidget];
-    if (Widget) {
-      return <Widget schema={schema} />;
-    }
-
-    if (description) {
-      return (
-        <span className='fr-desc ml2'>
-          ({description})
-        </span>
-      )
-    }
-    return null;
-  };
-
-  if (displayType === 'inline') {
-    return title;
-  }
-
-  return (
-    <>
-      {title}
-      <RenderDesc />
-    </>
-  )
-};
-
-const getTooltip = (schema: any, displayType: string) => {
-  const { descType, description, tooltip } = schema;
-
-  if (tooltip) {
-    if (typeof tooltip === 'string') {
-      return { title: <span dangerouslySetInnerHTML={{ __html: tooltip }} /> };
-    }
-
-    return {
-      ...tooltip,
-      title: <span dangerouslySetInnerHTML={{ __html: tooltip.title }} />,
-    };
-  }
-
-  if (descType === 'widget' || !description) {
-    return null;
-  }
-
-  if (displayType === 'column' && descType === 'icon') {
-    return {
-      title: description
-    }
-  }
-
-  return null;
-};
-
 export default (props: any) => {
+  const [listData, setListData] = useState([]);
+
   const store = useContext(FRContext);
   const configContext = useContext(ConfigContext);
 
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
-  const { form, widgets, methods } = configContext;
+  const { form, widgets, methods, globalConfig } = configContext;
 
   const { displayType } = formCtx;
   const isDisplayColumn = displayType === 'column';
-  const { schema:_schema, path,} = props;
+  const { schema:_schema } = props;
 
   const formData = form.getFieldsValue(true);
   const { schema: formSchema } = store.getState();
 
   const { items, ...otherSchema } = _schema;
-  const schema = {
+  const schema = globalConfig?.mustacheDisabled ? _schema : {
     items,
     ...parseAllExpression(otherSchema, formData, props.rootPath, formSchema)
   };
-
-  const { fieldCol, labelCol } = schema || {};
   
   const { widget } = schema;
   let widgetName = widget || 'list1';
 
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  const value = Form.useWatch(path, form);
  
   const label = getLabel(schema, displayType, widgets);
   const tooltip = getTooltip(schema, displayType);
-  const labelWidth = getValueFromKey('labelWidth')
-
-
-  let _labelCol: any = { span: 3 };
-  let _fieldCol = { flex: 1 }
-
-  if (labelWidth) {
-    _labelCol = { flex : labelWidth + 'px' };
-  }
-
-  if (labelCol) {
-    _labelCol = labelCol;
-  }
-
-  if (fieldCol) {
-    _fieldCol = fieldCol;
-  }
+  const { labelCol, fieldCol } = getFormListLayout(getValueFromKey, displayType);
 
   let isInline = schema.display === 'inline';
-  if (!value && widgetName !== 'drawerList') {
+  if (!setListData?.length && widgetName !== 'drawerList') {
     isInline = true;
   }
 
@@ -147,14 +59,14 @@ export default (props: any) => {
           colon={false}
           tooltip={tooltip}
           style={{ marginBottom: 0 }}
+          labelCol={{ span: 24 }}
         >
         </Form.Item>
       )}
       <Form.Item
-        className='ant-form-item-optional-hide'
         label={label} 
-        labelCol={_labelCol}
-        wrapperCol={_fieldCol}
+        labelCol={isDisplayColumn ? { span: 24 } : labelCol}
+        wrapperCol={fieldCol}
         noStyle={!isInline && !isDisplayColumn}
         tooltip={tooltip}
       >
@@ -166,6 +78,8 @@ export default (props: any) => {
           upperCtx={upperCtx}
           widgets={widgets}
           configContext={configContext}
+          setListData={setListData}
+          listData={listData}
         />
       </Form.Item>
     </Col>

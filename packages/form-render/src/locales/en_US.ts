@@ -21,6 +21,7 @@ export default {
   "expand": "Expand",
   "fold": "Fold",
   "submit": "Submit",
+  "save": "Save",
   "moveDown": "Move Down",
   "moveUp": "Move Up"
 }

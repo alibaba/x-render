@@ -10,7 +10,7 @@ export default defineConfig({
   themeConfig: {
     name: 'XRender',
     logo: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png',
-    footer: ' Please feel free to use and contribute to the development.',
+    footer: false,
     socialLinks: {
       github: 'https://github.com/alibaba/x-render',
     },
@@ -28,7 +28,6 @@ export default defineConfig({
           title: 'ChartRender',
           link: '/chart-render',
         },
-        { title: '表单设计器', link: '/generator' },
         {
           title: 'Playground',
           link: '/playground',
@@ -65,12 +64,16 @@ export default defineConfig({
   chainWebpack(config, { webpack }) {
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
   },
+  headScripts: [
+    'https://unpkg.com/react@17.0.1/umd/react.production.min.js',
+    'https://g.alicdn.com/code/lib/react-dom/16.14.0/umd/react-dom.production.min.js'
+  ],
   plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
   alias: { 
     'form-render':  path.resolve(__dirname, 'packages/form-render/src'),
     'table-render':  path.resolve(__dirname, 'packages/table-render/src'),
-    'chart-render':  path.resolve(__dirname, 'packages/chart-render/src'),
-    'fr-generator':  path.resolve(__dirname, 'tools/schema-generator/src')
+    '@xrenders/schema-builder':  path.resolve(__dirname, 'tools/schema-builder/src'),
+    'form-render-mobile':  path.resolve(__dirname, 'packages/form-render-mobile/src'),
   },
   codeSplitting: { jsStrategy: 'granularChunks' },
   //...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),
