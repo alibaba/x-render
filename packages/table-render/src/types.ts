@@ -1,9 +1,26 @@
 import { TableProps } from 'antd';
-import { ColumnsType } from 'antd/lib/table';
+import type { TableColumnType } from 'antd';
 import { FRProps, FormInstance } from 'form-render';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
-import { TStore } from './core/store';
+import type { TableRenderStoreType } from './core/store';
 
+export type ColumnsSettingValueType = Array<{
+  /** 列的 key */
+  key: string,
+  /** 当前列是否隐藏 */
+  hidden: boolean,
+  /** 当前列是否固定 */
+  fixed?: 'right' | 'left'
+}>
+
+export type ToolbarActionConfig = {
+  /** 开启的功能，默认 all，全部开启 */
+  enabled?: Array<'refresh' | 'columnsSetting' | 'fullScreen' | 'density'>,
+  /** 列设置的状态 */
+  columnsSettingValue?: ColumnsSettingValueType
+  /** 列设置状态改变时的回调 */
+  onColumnsSettingChange?: (val: ColumnsSettingValueType) => void;
+}
 export type DoSearchType = (
   params: {
     current?: number;
@@ -26,11 +43,12 @@ export interface TableContext {
   refresh: RefreshType,
   changeTab: ChangeTabType,
   form: FormInstance,
-  getState: () => TStore & { search: Record<string, any> },
+  getState: () => TableRenderStoreType & { search: Record<string, any> },
 }
 
 export type ProColumnsType<T extends object = any> = Array<
-  ColumnsType<T>[number] & {
+  TableColumnType<T> & {
+    dataIndex?: string;
     /** 是否支持复制 */
     copyable?: boolean;
     /** 值的类型 */
@@ -119,8 +137,12 @@ export interface TableRenderProps<RecordType extends Object = any>
   debug?: boolean;
   /** 表格主体右上方的控件，例如“添加”按钮 */
   toolbarRender?: React.ReactNode;
-  /** 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示 等功能 */
-  toolbarAction?: boolean;
+  /** 
+   * 显示在表格主体右上方的 Icon 列表，内置了刷新、调整密度、全屏显示 等功能
+   * 
+   * 可以通过传入一个对象进行更具体的配置
+   */
+  toolbarAction?: boolean | Pick<ToolbarActionConfig, 'enabled'>;
   /** 切换分页时是否需要请求接口 */
   pageChangeWithRequest?: boolean;
   onTabChange?: () => any;
