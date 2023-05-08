@@ -1,6 +1,7 @@
 ---
 order: 7
 title: '工具栏'
+mobile: false
 group: 
   title: 最佳展示
 ---
@@ -15,6 +16,6 @@ Table Render 内置工具栏，通过 `toolbarAction` 开启。默认四种功�
 
 <code src="./demo/toolbar/basic.tsx"></code>
 
-可以通过传入一个对象控制具体使用哪些工具，例如只显示列设置功能。默认为 `enabled: ['all']` 使用全部工具。
+可以通过传入一个对象控制具体使用哪些工具，例如只显示列设置功能。
 
 <code src="./demo/toolbar/selection-tool.tsx"></code>
