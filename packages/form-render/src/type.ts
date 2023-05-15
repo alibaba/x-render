@@ -166,6 +166,10 @@ export interface FormInstance {
    */
   setSchema: (schema: any, cover?: boolean) => void;
   /**
+   * 获取表单的 schema
+   */
+  getSchema: () => any;
+  /**
    * 根据路径获取 Schema
    */
   getSchemaByPath: (path: string) => any;
@@ -206,10 +210,6 @@ export interface FormInstance {
    */
   getValues: AntdFormInstance['getFieldsValue'];
   /**
-   * @deprecated，改用 getFieldsError 代替
-   */
-  errorFields: AntdFormInstance['getFieldsError'];
-  /**
    * 设置表单值
    */
   setValues: AntdFormInstance['setFieldsValue'];
@@ -218,23 +218,23 @@ export interface FormInstance {
    */
   resetFields: AntdFormInstance['resetFields'];
   /**
-   * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
+   * @deprecated，即将弃用，请勿使用此 api，使用 getFieldsError
+   */
+  errorFields: AntdFormInstance['getFieldsError'];
+  /**
+   * @deprecated 即将弃用，请勿使用此 api，使用 form.isFieldsValidating
    */
   scrollToPath: AntdFormInstance['scrollToField'];
   /**
- * @deprecated 即将弃用，请勿使用此api，使用setValueByPath
+ * @deprecated 即将弃用，请勿使用此 api，使用setValueByPath
  */
   onItemChange: AntdFormInstance['setFieldValue'];
   /**
-   * 获取表单的 schema
-   */
-  getSchema: () => any;
-  /**
-   * @deprecated
+   * @deprecated 即将弃用，请勿使用此 api
    */
   init: any;
   /**
-   * @deprecated，使用 getSchema 代替
+   * @deprecated，即将弃用，请勿使用此 api，使用 getSchema 代替
    */
   __schema: any;
   /**
