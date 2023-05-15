@@ -218,7 +218,7 @@ export interface FormInstance {
    */
   resetFields: AntdFormInstance['resetFields'];
   /**
-   * @deprecated，即将弃用，请勿使用此 api，使用 getFieldsError
+   * @deprecated 即将弃用，请勿使用此 api，使用 getFieldsError
    */
   errorFields: AntdFormInstance['getFieldsError'];
   /**
@@ -234,11 +234,11 @@ export interface FormInstance {
    */
   init: any;
   /**
-   * @deprecated，即将弃用，请勿使用此 api，使用 getSchema 代替
+   * @deprecated 即将弃用，请勿使用此 api，使用 getSchema 代替
    */
   __schema: any;
   /**
-   * @deprecated，内部方法不要使用
+   * @deprecated 内部方法不要使用
    */
   __initStore: (data: any) => any;
 }
