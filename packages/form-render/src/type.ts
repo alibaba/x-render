@@ -206,7 +206,7 @@ export interface FormInstance {
    */
   getValues: AntdFormInstance['getFieldsValue'];
   /**
-   * 表单校验错误的数组
+   * @deprecated，改用 getFieldsError 代替
    */
   errorFields: AntdFormInstance['getFieldsError'];
   /**
