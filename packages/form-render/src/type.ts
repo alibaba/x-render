@@ -148,11 +148,11 @@ export interface GlobalConfig {
   mustacheDisabled: boolean;
 }
 
-export interface FormInstance extends AntdFormInstance {
-  init: any;
-  __schema: any;
-  __initStore: (data: any) => any;
-  // setSchemaByFullPath: (path: string, schema: any) => any;
+export interface FormInstance {
+  /*
+   * 提交表单
+   */
+  submit: () => void,
   /**
    *  根据路径动态设置 Schema
    */
@@ -178,30 +178,69 @@ export interface FormInstance extends AntdFormInstance {
    */
   removeErrorField: (path: string) => any;
   /**
+   * 获取对应字段 field 的错误信息
+   */
+  getFieldError: AntdFormInstance['getFieldError'];
+  /**
+   * 获取一组字段 fields 的错误信息
+   */
+  getFieldsError: AntdFormInstance['getFieldsError'];
+  /**
+   * 检查某个表单项是否被修改过
+   */
+  isFieldTouched: AntdFormInstance['isFieldTouched'];
+  /**
+   * 检查一组表单项是否被修改过
+   */
+  isFieldsTouched: AntdFormInstance['isFieldsTouched'];
+  /**
+   * 检查某个表单项是否在校验中
+   */
+  isFieldValidating: AntdFormInstance['isFieldValidating'];
+  /**
    * 根据路径修改表单值
    */
-  setValueByPath: FormInstance['setFieldValue'];
+  setValueByPath: AntdFormInstance['setFieldValue'];
   /**
    * 获取表单值
    */
-  getValues: FormInstance['getFieldsValue'];
+  getValues: AntdFormInstance['getFieldsValue'];
   /**
    * 表单校验错误的数组
    */
-  errorFields: FormInstance['getFieldsError'];
+  errorFields: AntdFormInstance['getFieldsError'];
   /**
    * 设置表单值
    */
-  setValues: FormInstance['setFieldsValue'];
+  setValues: AntdFormInstance['setFieldsValue'];
+  /**
+   * 重置表单
+   */
+  resetFields: AntdFormInstance['resetFields'];
   /**
    * @deprecated 即将弃用，请勿使用此api，使用 form.isFieldsValidating
    */
-  scrollToPath: FormInstance['scrollToField'];
+  scrollToPath: AntdFormInstance['scrollToField'];
   /**
  * @deprecated 即将弃用，请勿使用此api，使用setValueByPath
  */
-  onItemChange: FormInstance['setFieldValue'];
+  onItemChange: AntdFormInstance['setFieldValue'];
+  /**
+   * 获取表单的 schema
+   */
   getSchema: () => any;
+  /**
+   * @deprecated
+   */
+  init: any;
+  /**
+   * @deprecated，使用 getSchema 代替
+   */
+  __schema: any;
+  /**
+   * @deprecated，内部方法不要使用
+   */
+  __initStore: (data: any) => any;
 }
 
 export type WatchProperties = {
@@ -213,7 +252,7 @@ export type WatchProperties = {
   | ((value: any) => void);
 };
 
-export interface FRProps extends AntdFormProps {
+export interface FRProps extends Omit<AntdFormProps, 'form'> {
   /**
    * 表单顶层的className
    */
