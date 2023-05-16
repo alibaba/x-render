@@ -43,6 +43,7 @@ externals: {
   "react-dom": "ReactDOM",
 }
 ```
+- 注意：externals 之后需要在 html 里面引入 React、ReactDOM cdn 资源
 
 ## 使用方式
 
@@ -60,7 +61,8 @@ import SchemaBuilder from '@xrenders/schema-builder';
 const Demo = () => {
   return (
     <div style={{ height: '80vh' }}>
-      <SchemaBuilder />
+      <SchemaBuilder 
+      />
     </div>
   );
 };
