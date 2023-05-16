@@ -8,7 +8,7 @@ interface IProps {
 let iframe: any;
 
 const Design = (props: IProps) => {
-  const { widgets, settings } = props;
+  const { widgets, settings, ...restProps } = props;
   const containerRef: any = useRef();
 
   useEffect(() => {
@@ -36,7 +36,8 @@ const Design = (props: IProps) => {
       // recordEnable: true,
       logo: {
         title: 'XRender'
-      }
+      },
+      ...restProps
     });
   };
 
