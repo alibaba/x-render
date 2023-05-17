@@ -22,7 +22,7 @@ export default (props: any) => {
     listData,
     setListData,
   } = props;
-
+ 
   const { widgets, globalConfig } = configContext;
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);

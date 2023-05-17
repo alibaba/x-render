@@ -86,7 +86,7 @@ const TableList: React.FC<Props> = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [itemData, setItemData] = useState(null);
   const indexRef = useRef<any>(null);
-
+  
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
     copyItem(value);
