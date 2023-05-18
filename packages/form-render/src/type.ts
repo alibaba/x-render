@@ -415,6 +415,7 @@ export type WidgetProps = {
   addons: WidgetAddonsType,
   disabled?: boolean,
   readOnly?: boolean,
+  [other: string]: any,
 }
 
 /** 自定义组件 addons */
