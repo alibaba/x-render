@@ -76,7 +76,6 @@ const useForm = () => {
     getFieldError,
     getFieldsError,
     getFieldInstance,
-    setFieldValue,
     setFieldsValue,
     setFields,
     scrollToField,
@@ -168,7 +167,7 @@ const useForm = () => {
   // 设置某个字段的值
   xform.setValueByPath = (path: string, value: any) => {
     const name = getFieldName(path);
-    setFieldValue(name, value);
+    form.setFieldValue(name, value);
   }
 
   // 通过某个字段的 schema
@@ -301,7 +300,7 @@ const useForm = () => {
     if (nameList.length > 0) {
       return validateFields(nameList);
     }
-    return resetFields();
+    return validateFields();
   }
 
   // 老 API 兼容

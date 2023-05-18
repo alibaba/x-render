@@ -20,7 +20,6 @@ const DrawerForm = (props: any) => {
 
   const drawerProps = {
     visible: true,
-
   }
 
   return (

@@ -3,7 +3,7 @@
 ### 安装
 
 ```bash
-npm i @xrender/schema-builder
+npm i @xrenders/schema-builder
 ```
 
 ### 代码演示
@@ -14,7 +14,7 @@ npm i @xrender/schema-builder
  * defaultShowCode: true
  */
 import React from 'react';
-import SchemaBuilder from '@xrender/schema-builder';
+import SchemaBuilder from '@xrenders/schema-builder';
 
 const defaultValue = {
   type: 'object',
