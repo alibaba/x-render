@@ -9,17 +9,57 @@ group:
 
 # 自定义组件
 
-可能的应用场景如下：
+在实际的开发中，可能会遇到如下的应用场景：
 
 - 我需要写一个异步加载的搜索输入框（普适性不高/难以用 schema 描述的组件）
 - 我们团队使用 xxx ui，与 antd 不搭，希望能适配一套 xxx ui 组件的 FormRender（欢迎 Pull Request）
 - 我需要在表单内部写一个 excel 上传按钮（完全定制化的需求）
 
-注：如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request，这样可以更好扩展其生态，FormRender 的社区以及提供了部分 [常用自定义组件](https://github.com/alibaba/x-render/tree/master/widgets)。
+FormRender 内置的控件可能不能满足功能上的需要，这时就需要自定义组件 widget 的支持
 
-## 使用
+:::info
+如果是新增一个常用组件，建议给 FormRender 维护的同学来提 Pull Request 或 Issue 并说明你的使用场景，这样可以更好扩展其生态，FormRender 的社区以及提供了部分 [常用自定义组件](https://github.com/alibaba/x-render/tree/master/widgets)。
+:::
 
-简单的说，在 Form 组件层使用 widgets 字段注册自定义组件，并在 schema 内使用 widget 字段指明使用的组件 key 值即可：
+## 什么是 Widget
+
+widget 只是一个普通的 React 组件，它会接收到 FormRener 传递给它的一些 props。开发者可以根据这些 props 完成控件的受控、联动、校验等操作。
+
+比方说，我想在一个常规输入框的后面放一个按钮用于发送验证码。FormRender 的内置组件不能满足需求，那么我可以写一个如下的自定义组件：
+
+```js
+const CaptchaInput = (props: any) => {
+  const { value, onChange } = props;
+  console.log('widget props:', props);
+
+  const sendCaptcha = (phone: string) => {
+    console.log('send captcha to:', phone);
+  }
+
+  return (
+    <Space>
+      <Input
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder="请输入手机号"
+      />
+      <Button onClick={() => sendCaptcha(value)}>发送验证码</Button>
+    </Space>
+  );
+};
+```
+
+## 使用 Widget
+
+首先在 `<FormRender />` 中注册 widget。
+
+```js
+import CaptchaInput from 'my/widgets';
+
+<FormRender widgets={{ CaptchaInput }} />
+```
+
+之后在 Schema 中指定 item 的 widget 属性为刚刚注册的 widget。
 
 ```js
 const schema = {
@@ -28,133 +68,96 @@ const schema = {
     string: {
       title: '网址输入自定义组件',
       type: 'string',
-      widget: 'site',
+      // 指定为刚刚注册的 widget
+      widget: 'CaptchaInput',
     }
   }
 };
-
-<Form
-  schema={schema}
-  widgets={{ site: SiteInput }}
-/>;
 ```
 
-实际代码如下：
+完整代码如下：
 
-```jsx
-import React from 'react';
-import { Input, Button } from 'antd';
-import Form, { useForm } from 'form-render';
+<code src="./demo/widget/basic.tsx"></code>
 
-const schema = {
-  type: 'object',
-  properties: {
-    string: {
-      title: '网址输入自定义组件',
-      type: 'string',
-      widget: 'site',
-    },
-    select: {
-      title: '单选',
-      type: 'number',
-      enum: [1, 2, 3],
-      enumNames: ['选项1', '选项2', '选项3'],
-    },
-  },
-};
+<!-- ## 不需要自己手写自定义组件哦 -->
+<!---->
+<!-- 自定义组件就是普通的 React 组件，唯一的要求是要有 value/onChange 这两个 props，用于双向绑定值。所以如果现成的组件已经默认使用了 value/onChange，就可以直接拿来用。 -->
+<!---->
+<!-- 举例来说：现在我们需要使用“级联选择”组件，FormRender 并没有内置支持。这时打开 [antd 文档](https://ant.design/components/cascader/)，我们看到 cascader 默认使用了 value/onChange，那就直接拿来用吧： -->
+<!---->
+<!-- ```js -->
+<!-- import { Cascader } from 'antd'; -->
+<!---->
+<!-- // 顶层引入注册 -->
+<!-- ... -->
+<!-- <Form -->
+<!--   form={form} -->
+<!--   schema={schema} -->
+<!--   widgets={{ cascader: Cascader }} -->
+<!-- /> -->
+<!---->
+<!-- // schema 中使用 -->
+<!-- location: { -->
+<!--   title: '省市区', -->
+<!--   type: 'string', -->
+<!--   widget: 'cascader', -->
+<!--   props: { -->
+<!--     ... -->
+<!--   } -->
+<!-- }, -->
+<!-- ``` -->
 
-const SiteInput = props => {
-  console.log('widget props:', props);
-  return <Input addonBefore="https://" addonAfter=".com" {...props} />;
-};
+## Widget 接收到的 props
 
-const Demo = () => {
-  const form = useForm();
-  return (
-    <div>
-      <Form
-        form={form}
-        schema={schema}
-        widgets={{ site: SiteInput }}
-        onFinish={formData => alert(JSON.stringify(formData, null, 2))}
-      />
-      <Button type="primary" onClick={form.submit}>
-        提交
-      </Button>
-    </div>
-  );
-};
+默认情况下 Widget 会接收到如下的 props：
 
-export default Demo;
-```
+### id
+- 类型：`string`
+- 描述：当前 item 的 key
 
-## 不需要自己手写自定义组件哦
+### schema
+- 类型：`Schema`
+- 描述：当前 item 的 schema
 
-自定义组件就是普通的 React 组件，唯一的要求是要有 value/onChange 这两个 props，用于双向绑定值。所以如果现成的组件已经默认使用了 value/onChange，就可以直接拿来用。
+### value
+- 类型：`any`
+- 描述：当前 item 的值，用于 widget 的受控
 
-举例来说：现在我们需要使用“级联选择”组件，FormRender 并没有内置支持。这时打开 [antd 文档](https://ant.design/components/cascader/)，我们看到 cascader 默认使用了 value/onChange，那就直接拿来用吧：
+### onChange
+- 类型：`(value: any) => void`
+- 描述：当前 item 的值变化时的回调用于 widget 的受控
 
-```js
-import { Cascader } from 'antd';
+### disabled
+- 类型：`boolean`
+- 描述：当前 item 是否为禁用状态，如果没有单独为这个 item 指定，那么就继承全局的 `disabled` 属性
 
-// 顶层引入注册
-...
-<Form
-  form={form}
-  schema={schema}
-  widgets={{ cascader: Cascader }}
-/>
+### readOnly
+- 类型：`boolean`
+- 描述：当前 item 是否为只读状态，如果没有单独为这个 item 指定，那么就继承全局的 `readOnly` 属性
 
-// schema 中使用
-location: {
-  title: '省市区',
-  type: 'string',
-  widget: 'cascader',
-  props: {
-    ...
-  }
-},
-```
+### addons
 
-## 自定义组件收到的 props
+addons 包含了全部的表单实例方法，详见 [FormInstance](/form-render/api-props#forminstance)，这里不再赘述。除此之外 addons 还包含了如下一些额外属性。
 
-使用自定义组件时，大多有复杂定制需求，FormRender 提供了丰富的 props：
+#### addons.globalProps
+- 类型：`Record<string, any>`
+- 描述：全局属性，继承自全局
 
-- **disabled**：是否禁止输入
-- **readOnly**：是否只读
-- **value**：组件现在的值
-- **onChange**：函数，接收 value 为入参，用于将自定义组件的返回值同步给 Form
-- **schema**：组件对应的子 schema
+#### addons.dataIndex
+- 类型：`string[]`
+- 描述：用于 Form List 中判断当前 item 的 index。如果不是 Form List 中，那么 `dataIndex` 始终为一个空数据 `[]`。如果 dataPath 包含数组，例如"a.b[2].c[0].d"，则为 [2,0]。是自上到下所有经过的数组的 index 按顺序存放的一个数组类型
 
-addons 上挂着几乎所有的 form 方法：
+#### addons.dataPath
+- 类型：`string`
+- 描述：目前数据所在的 path，例如"a.b[2].c[0].d"
 
-```js
-const {
-  setValueByPath, // (path, value) => void
-  getSchemaByPath, // (path) => schema
-  setSchemaByPath, // (path) => void
-  setSchema, // ({path1: schema1, path2: schema2}) => void
-  setValues, // (newData) => void
-  getValues, // () => formData
-  resetFields, // () => void
-  setErrorFields, // (errors) => void
-  removeErrorField, // () => void
-  validateFields, // (nameList?: string[]) => Promise<any>;
-  isFieldTouched, // (name: string) => boolean;
-  isFieldsTouched, //(nameList?: string[], allTouched?: boolean) => boolean;
-  isFieldValidating, //(name: string) => boolean;
-  scrollToPath, (name: string) => void;
-  getFieldError, (name: string) => string[];
-  getFieldsError, (nameList?: string[]) => Error[];
-  setFields, (nameList: string[]) => void;
-} = addons;
-```
+#### addons.schemaPath
+- 类型：`string`
+- 描述：当前 widget 对应的 schema 在整体 schema 中的路径
 
-详见[开始使用](/form-render/)的“form 方法”
-
-- **addons.dataPath**: 目前数据所在的 path，例如"a.b[2].c[0].d"，string 类型。
-- **addons.dataIndex**: 如果 dataPath 不包含数组，则为 [], 如果 dataPath 包含数组，例如"a.b[2].c[0].d"，则为 [2,0]。是自上到下所有经过的数组的 index 按顺序存放的一个数组类型
-- **addons.dependValues**: 当自定义组件对应的 schema 使用到 dependencies 字段时，在此获得 dependencies 对应的表单项的实时的值
+#### addons.dependValues
+- 类型：`any[]`
+- 描述：当自定义组件对应的 schema 使用到 dependencies 字段时，在此获得 dependencies 对应的表单项的实时的值
 
 ## antd 组件改造成自定义组件
 

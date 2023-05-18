@@ -405,6 +405,26 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   [key:string]: any
 }
 
+/** 自定义组件 props */
+export type WidgetProps = {
+  value: any,
+  onChange: (value: any) => void,
+  schema: Schema,
+  style: React.CSSProperties,
+  id: string,
+  addons: WidgetAddonsType,
+  disabled?: boolean,
+  readOnly?: boolean,
+}
+
+/** 自定义组件 addons */
+export type WidgetAddonsType = FormInstance & {
+  globalProps: Record<string, any>,
+  dependValue: any[],
+  dataIndex: string[],
+  dataPath: string,
+  schemaPath: string,
+}
 
 declare const FR: React.FC<FRProps>;
 
