@@ -182,6 +182,10 @@ export interface FormInstance {
    */
   removeErrorField: (path: string) => any;
   /**
+   * 校验表单
+   */
+  validateFields: AntdFormInstance['validateFields'];
+  /**
    * 获取对应字段 field 的错误信息
    */
   getFieldError: AntdFormInstance['getFieldError'];

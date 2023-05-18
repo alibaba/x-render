@@ -56,6 +56,7 @@ group:
 | scrollToPath      | 滚动到 path 对应的位置                                                                                                | `(name: Path , options?:` <a href="https://github.com/stipsan/scroll-into-view-if-needed/tree/ece40bd9143f48caf4b99503425ecb16b0ad8249#options" target="_blank">ScrollOptions</a>`) => boolean`                                                                                               |                                                                                                                                   |
 | getFieldError     | 获取对应字段 field 的错误信息                                                                                         | `(name: Path) => string[]`                                                                                          |
 | getFieldsError    | 获取一组字段 fields 对应的错误信息, 返回数组形式; 入参为空则获取所有字段对应的错误信息 | `(nameList: Path[]) => Error[]`                                                                                     |
+| validateFields    | 触发表单校验 | `(nameList?: Path[]) => Promise<any>`                                                                                     |
 
 ## GlobalConfig
 
