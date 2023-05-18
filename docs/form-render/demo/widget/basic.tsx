@@ -9,71 +9,12 @@ const schema = {
       title: '自定义 Input',
       type: 'string',
       widget: 'CaptchaInput',
+      foo: 'xxx',
+      props: {
+        foo: 'xxxx',
+      }
     },
   },
-};
-
-const schema2 = {
-  type: 'object',
-  maxWidth: 400,
-  properties: {
-    input1: {
-      title: '输入框 1',
-      type: 'string',
-    },
-    obj: {
-      type: 'object',
-      widget: 'card',
-      title: '一级嵌套',
-      properties: {
-        input2: {
-          title: '输入框 2',
-          type: 'string'
-        }
-      }
-    },
-    list: {
-      title: 'List 嵌套',
-      type: 'array',
-      widget: 'cardList',
-      items: {
-        type: 'object',
-        title: 'List.Item',
-        properties: {
-          input4: {
-            title: '输入框 4',
-            type: 'string',
-          },
-          obj: {
-            type: 'object',
-            widget: 'card',
-            title: '一级嵌套',
-            properties: {
-              input5: {
-                title: '输入框 5',
-                type: 'string',
-              },
-              list: {
-                type: 'array',
-                widget: 'cardList',
-                items: {
-                  type: 'object',
-                  title: '二级 List.Item',
-                  properties: {
-                    input6: {
-                      title: '输入框 6',
-                      type: 'string',
-                      widget: 'CaptchaInput'
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
 };
 
 const CaptchaInput = (props: any) => {
@@ -101,7 +42,7 @@ const Demo = () => {
   return (
     <Form
       form={form}
-      schema={schema2}
+      schema={schema}
       widgets={{ CaptchaInput }}
       onFinish={formData => alert(JSON.stringify(formData, null, 2))}
       footer
