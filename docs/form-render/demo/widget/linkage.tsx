@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Space } from 'antd';
 import Form, { useForm } from 'form-render';
+import type { WidgetProps } from 'form-render';
 
 const schema = {
   type: 'object',
@@ -26,7 +27,7 @@ const schema = {
   }
 }
 
-const MyInput = (props: any) => {
+const MyInput: React.FC<WidgetProps> = (props) => {
   const { value, onChange, age } = props;
 
   return (

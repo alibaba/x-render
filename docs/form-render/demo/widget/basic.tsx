@@ -1,6 +1,7 @@
 import React from 'react';
 import { Input, Button, Space } from 'antd';
 import Form, { useForm } from 'form-render';
+import type { WidgetProps } from 'form-render';
 
 const schema = {
   type: 'object',
@@ -17,7 +18,7 @@ const schema = {
   },
 };
 
-const CaptchaInput = (props: any) => {
+const CaptchaInput: React.FC<WidgetProps> = (props) => {
   const { value, onChange } = props;
   console.log('widget props:', props);
 
