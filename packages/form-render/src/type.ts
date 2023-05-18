@@ -205,6 +205,10 @@ export interface FormInstance {
    * 检查某个表单项是否在校验中
    */
   isFieldValidating: AntdFormInstance['isFieldValidating'];
+    /**
+   * 根据路径获取表单值
+   */
+  getValueByPath: AntdFormInstance['getFieldValue'];
   /**
    * 根据路径修改表单值
    */
