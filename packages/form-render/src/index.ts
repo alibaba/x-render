@@ -23,6 +23,7 @@ export type {
   ValidateParams,
   ResetParams,
   RuleItem,
+  WidgetProps,
 } from './type';
 
 export default withProvider(FormCore, defaultWidgets);
