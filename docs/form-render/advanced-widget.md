@@ -81,34 +81,6 @@ const schema = {
 
 <code src="./demo/widget/basic.tsx"></code>
 
-<!-- ## 不需要自己手写自定义组件哦 -->
-<!---->
-<!-- 自定义组件就是普通的 React 组件，唯一的要求是要有 value/onChange 这两个 props，用于双向绑定值。所以如果现成的组件已经默认使用了 value/onChange，就可以直接拿来用。 -->
-<!---->
-<!-- 举例来说：现在我们需要使用“级联选择”组件，FormRender 并没有内置支持。这时打开 [antd 文档](https://ant.design/components/cascader/)，我们看到 cascader 默认使用了 value/onChange，那就直接拿来用吧： -->
-<!---->
-<!-- ```js -->
-<!-- import { Cascader } from 'antd'; -->
-<!---->
-<!-- // 顶层引入注册 -->
-<!-- ... -->
-<!-- <Form -->
-<!--   form={form} -->
-<!--   schema={schema} -->
-<!--   widgets={{ cascader: Cascader }} -->
-<!-- /> -->
-<!---->
-<!-- // schema 中使用 -->
-<!-- location: { -->
-<!--   title: '省市区', -->
-<!--   type: 'string', -->
-<!--   widget: 'cascader', -->
-<!--   props: { -->
-<!--     ... -->
-<!--   } -->
-<!-- }, -->
-<!-- ``` -->
-
 ## Widget 接收到的 props
 
 默认情况下 Widget 会接收到如下的 props：
@@ -221,33 +193,74 @@ const shcema = {
 
 <code src="./demo/widget/linkage.tsx"></code>
 
-:::warning
-如果希望被动触发 widget 的校验，需要设置 `dependencies`，详见 [表单联动](/form-render/advanced-linkage#dependencies-依赖字段)
+
+## 使用 dependencies 联动
+除了使用表达式联动，widget 还可以使用 `dependencies` 属性进行联动。首先在 schema 中定义好 `dependencies`，比如：
+```js
+const shcema = {
+    type: 'object',
+    properties: {
+        age: {
+            title: '年龄',
+            type: 'string',
+        },
+        name: {
+            title: '姓名',
+            type: 'string',
+            widget: 'MyInput',
+            // 指定依赖的字段
+            dependencies: ['age']
+        },
+    }
+}
+```
+
+之后在 widget 的 `props.addons.dependValues` 中可以拿到依赖的值。
+
+```js
+const MyInput = (props) => {
+    const { addons } = props;
+    console.log('dependValues:', addons.dependValues);
+    // dependValues: ['xxxx']
+
+    return (
+        // ...
+    )
+}
+```
+与上面同样的例子，使用 `dependencies` 的代码如下：
+<code src="./demo/widget/depend-linkage.tsx"></code>
+
+:::info
+`dependencies` 除了触自动更新之外，还能触发校验，详见 [表单联动](/form-render/advanced-linkage#dependencies-依赖字段)
 :::
 
-## 只读模式下的自定义组件
+## 其他 Widget
 
+除了输入控件可以自定义 widget 之外，Form Render 还提供了自定义一个表单项其他部分的能力。
+
+### readOnlyWidget
 只读模式下，默认会渲染内置的 html 组件，但有时 html 组件并不能满足一个自定义组件在只读模式下需要的展示，此时可使用`readOnlyWidget`字段来指定只读模式下的展示。
 
-```json
-{
-  "type": "object",
-  "properties": {
-    "string": {
-      "title": "网址输入自定义组件",
-      "type": "string",
-      "widget": "site",
-      "readOnlyWidget": "siteText"
-    }
-  }
-}
+```js
+const schema = {
+  type: 'object',
+  properties: {
+    string: {
+      title: 'ReadOnly widget',
+      type: 'string',
+      widget: 'SiteInput',
+      readOnlyWidget: 'ReadOnlySiteInput',
+    },
+  },
+};
 ```
 
 如果你打算在一个自定义组件里通过 readOnly 参数判断条件展示，既是说，site 组件已经写了只读和非只读情况下的渲染
 
 ```js
-const SiteInput = ({ readOnly, value, ...rest }) => {
-  if (readOnly) return <div>{`https://${value}.com`}</div>;
+const SiteInput = ({ readOnly, value, ...rest }: WidgetProps) => {
+  if (readOnly) return <a href={`https://${value}.com`}>{`https://${value || ''}.com`}</a>;
   return (
     <Input addonBefore="https://" addonAfter=".com" value={value} {...rest} />
   );
@@ -256,19 +269,34 @@ const SiteInput = ({ readOnly, value, ...rest }) => {
 
 此时可以指定 `readOnlyWidget` 和 `widget` 为同一个组件：
 
-```json
-{
-  "type": "object",
-  "properties": {
-    "string": {
-      "title": "网址输入自定义组件",
-      "type": "string",
-      "widget": "site",
-      "readOnlyWidget": "site"
-    }
-  }
-}
+```js
+const schema = {
+  type: 'object',
+  properties: {
+    string: {
+      title: 'ReadOnly widget',
+      type: 'string',
+      widget: 'SiteInput',
+      readOnlyWidget: 'SiteInput',
+    },
+  },
+};
 ```
+完整代码如下：
+
+<code src="./demo/widget/readonly-widget.tsx"></code>
+
+### labelWidget
+
+使用 `labelWidget` 自定义 label 组件，此时 widget 接收到的 props 只有 `schema`。
+
+<code src="./demo/widget/label-widget.tsx"></code>
+
+### descWidget
+
+使用 `descWidget` 自定义 description 组件，此时 widget 接收到的 props 只有 `schema`。
+
+<code src="./demo/widget/desc-widget.tsx"></code>
 
 ## 统一管理 Widget
 
