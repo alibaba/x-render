@@ -6,7 +6,7 @@ import type { WidgetProps } from 'form-render';
 const schema = {
   type: 'object',
   properties: {
-    string: {
+    phone: {
       title: '自定义 Input',
       type: 'string',
       widget: 'CaptchaInput',

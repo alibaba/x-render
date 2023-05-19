@@ -67,7 +67,7 @@ import CaptchaInput from 'my/widgets';
 const schema = {
   type: 'object',
   properties: {
-    string: {
+    phone: {
       title: '网址输入自定义组件',
       type: 'string',
       // 指定为刚刚注册的 widget
