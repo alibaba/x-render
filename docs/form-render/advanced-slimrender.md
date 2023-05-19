@@ -14,43 +14,14 @@ FormRender 内置了很多控件，包括基础控件、嵌套控件、以及列
 
 
 ## 使用方式
-```jsx
-/**
- * transform: true
- * defaultShowCode: true
- */
-import React from 'react';
-import { FormSlimRender, useForm, Input, Select } from 'form-render';
 
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    input1: {
-      title: '输入框',
-      type: 'string',
-      props: {},
-    },
-    select1: {
-      title: '单选',
-      type: 'string',
-      props: {
-        options: [
-          { label: '早', value: 'a' },
-          { label: '中', value: 'b' },
-          { label: '晚', value: 'c' }
-        ]
-      }
-    }
-  }
-};
+<code src="./demo/form-slim/basic.tsx"></code>
 
-export default () => {
-  const form = useForm();
+## 列表组件
 
-  return <FormSlimRender schema={schema} form={form} widgets={{ Input, Select }}/>;
-};
-```
+对于列表组件的按需使用，除了引入列表本身，还需引入列表嵌套组件。否则不能正常渲染。
+
+<code src="./demo/form-slim/form-list.tsx"></code>
 
 ## 内置的组件
 ```js
