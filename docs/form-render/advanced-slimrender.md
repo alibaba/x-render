@@ -19,9 +19,34 @@ FormRender 内置了很多控件，包括基础控件、嵌套控件、以及列
 
 ## 列表组件
 
-对于列表组件的按需使用，除了引入列表本身，还需引入列表嵌套组件。否则不能正常渲染。
+对于列表组件的按需使用，除了引入列表本身，还需引入列表嵌套组件，否则不能正常渲染。
 
 <code src="./demo/form-slim/form-list.tsx"></code>
+
+默认的嵌套组件为 `Collapse`，如需使用其他嵌套组件，需要在 schema 中指定 widget 属性。
+```js
+const schema = {
+  type: 'object',
+  displayType: 'row',
+  properties: {
+    list: {
+      title: '列表按需',
+      type: 'array',
+      widget: 'simpleList',
+      items: {
+        type: 'object',
+        widget: 'Card', // 自定义嵌套组件
+        properties: {
+          input1: {
+            title: '输入框',
+            type: 'string',
+          },
+        },
+      },
+    },
+  },
+};
+```
 
 ## 内置的组件
 ```js
