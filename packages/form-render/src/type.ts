@@ -421,7 +421,7 @@ export type WidgetProps = {
 /** 自定义组件 addons */
 export type WidgetAddonsType = FormInstance & {
   globalProps: Record<string, any>,
-  dependValue: any[],
+  dependValues: any[],
   dataIndex: string[],
   dataPath: string,
   schemaPath: string,
