@@ -21,7 +21,14 @@ assignees: lhbxs
 
 **2.问题描述(Bug description)**：
 
-**3.最小复现 demo(Reproduction demo)**：
+**3.出现问题的 schema demo(Reproduction schema demo)**：
+```js
+const schema = {
+  // ...
+}
+```
+
+**4.最小复现 demo(Reproduction demo)**：
 
 <!--
   请尽可能提供复现demo，有 demo 的 bug report 会在第一时间处理
