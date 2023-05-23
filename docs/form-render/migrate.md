@@ -79,17 +79,6 @@ form.formData 弃用，改用 form.getValues() 方式获取
 
 ```
 
-### title 为空时，需配合 labelWidth 使用
-
-在 1.x 中，如果设置 `title: ""`，会自动设置 `labelWidth` 为 0，在 2.x 中需要手动设置。
-
-```diff
-{
-  title: "",
-+ labelWidth: 0, 
-}
-```
-
 ### validator 直接返回布尔或对象
 
 2.x 中 validator 可以直接返回布尔，或者对象用于动态设置 message 内容
