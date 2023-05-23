@@ -837,12 +837,9 @@ const schema = {
         type: 'object',
         properties: {
           input1: {
-            title: '正则表达式',
+            title: '简单输入框',
             type: 'string',
             required: true,
-            rules: [
-              { pattern: '^[\u4E00-\u9FA5]+$', message: '请输入中文！' }
-            ]
           },
           input2: {
             title: '简单输入框2',
