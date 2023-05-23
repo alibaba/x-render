@@ -43,7 +43,6 @@ export default () => {
             rules: [
               { 
                 validator: (_, value, { form }) => {
-                  debugger;
                   if (!value || form.getFieldValue(['list', 0, 'input1']) === value) {
                     return true;
                   }
@@ -77,7 +76,6 @@ export default () => {
                   rules: [
                     { 
                       validator: (_, value, { form }) => {
-                        debugger;
                         if (!value || form.getFieldValue(['list', 0, 'input1']) === value) {
                           return true;
                         }

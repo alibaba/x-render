@@ -17,7 +17,7 @@ const TableCell = (props: any) => {
   const popoverProps = {
     visible: !!errorMsg
   }
-
+  
   return (
     <Form.Item>
       <Popover

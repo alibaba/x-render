@@ -46,7 +46,7 @@ export default (props: any) => {
   let widgetName = schema.widget || 'cardList';
   const Widget = getWidget(widgetName, widgets);
 
-  const { props: listProps, removeBtn, ...otherSchema } = schema;
+  const { props: listProps, removeBtn, rules = [], ...otherSchema } = schema;
 
   let defaultValue = schema.default ?? schema.defaultValue;
   if (defaultValue === undefined && !['drawerList', 'list1'].includes(widgetName)) {
@@ -193,7 +193,8 @@ export default (props: any) => {
                   );
                 }
               }
-            }
+            },
+            ...rules
           ]
         }
       >
@@ -222,12 +223,9 @@ export default (props: any) => {
               removeItem={handleRemove(operation.remove)}
               moveItem={handleMove(operation.move)}
               copyItem={handleCopy(operation.add, fields)}
-
               temporary={{
                 displayType
               }}
-
-
               addBtnProps={{
                 ...defaultAddBtnProps,
                 ...addBtnProps,
