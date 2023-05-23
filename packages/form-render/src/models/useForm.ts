@@ -303,6 +303,10 @@ const useForm = () => {
     return validateFields();
   }
 
+  xform.getFlattenSchema = () => {
+    return flattenSchemaRef.current;
+  }
+
   // 老 API 兼容
   xform.onItemChange = xform.setValueByPath;
 
