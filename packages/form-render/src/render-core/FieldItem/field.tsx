@@ -9,11 +9,11 @@ export const FieldWrapperStatus = (props: any) => {
   const style = maxWidth ? { maxWidth, ...fieldProps?.style } : { ...fieldProps?.style } ;
 
   const { status } = Form.Item.useStatus();
+  const errors = addons.getFieldError(addons.dataPath);
 
   useEffect(() => {
-    const errors = addons.getFieldError(addons.dataPath);
     onStatusChange && onStatusChange(status, errors);
-  }, [status]);
+  }, [JSON.stringify(errors)]);
 
   useUpdateEffect(() => {
     otherProps.onChange(initialValue);
