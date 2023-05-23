@@ -1,15 +1,16 @@
+@ant-prefix: ant;
 
-.fr-hide-label > .ant-form-item-row > .ant-form-item-label {
+.fr-hide-label > .@{ant-prefix}-form-item-row > .@{ant-prefix}-form-item-label {
   visibility: hidden;
 }
 
 
 
 .fr-field {
-  .ant-form-item-row {
+  .@{ant-prefix}-item-row {
     flex-wrap: nowrap;
   }
-  .ant-form-item-control-input-content {
+  .@{ant-prefix}-form-item-control-input-content {
     display: flex;
   }
 }
@@ -21,12 +22,12 @@
 }
 
 .fr-form {
-  .ant-form-item-control {
+  .@{ant-prefix}-form-item-control {
     width: 0;
   }
 
   .fr-inline-field {
-    .ant-form-item-control {
+    .@{ant-prefix}-form-item-control {
       width: auto;
     }
   }
