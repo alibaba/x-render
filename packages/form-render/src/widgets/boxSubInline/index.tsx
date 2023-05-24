@@ -5,7 +5,7 @@ import './index.less';
 import _ from 'lodash';
 
 const BoxSubInline = (props: any) => {
-  const { children, title, hasBackground = true, description, tooltip, fieldCol, labelCol, labelWidth } = props;
+  const { children, title, hasBackground = true, description, tooltip, fieldCol, labelCol, labelWidth, ...rest } = props;
   let _tooltip: any = null;
   let _labelCol: any = { span: 3 };
   let _fieldCol = { flex: 1 }
@@ -31,6 +31,7 @@ const BoxSubInline = (props: any) => {
 
   return (
     <Form.Item
+      {...rest}
       className={classnames('fr-obj-subinline', {
         'fr-obj-subinline-label-hidden': !title,
         'fr-obj-subinline-background': hasBackground

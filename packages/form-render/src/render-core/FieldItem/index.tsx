@@ -7,9 +7,6 @@ import { FRContext, ConfigContext } from '../../models/context';
 import { isHasExpression, parseAllExpression } from '../../models/expression';
 import Main from './main';
 
-
-
-
 export default (props: any) => {
   const { schema, rootPath, ...otherProps } = props;
 
