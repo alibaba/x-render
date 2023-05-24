@@ -152,6 +152,10 @@ rules: [
 - 描述：自定义控件 class 名称
 - 类型：`string`
 
+### reserveLabel
+- 描述：当 title 未设置时，通过配置 reserveLabel: true，可以保留 labelWidth 占位，使得输入控件和其他控件上下对齐
+- 类型：`boolean`
+
 ### props
 配置额外属性，如果使用的是 antd 组件 对应的就是 antd 组件的其他属性。例如：
 

@@ -73,7 +73,6 @@ const schema = {
   }
 };
 
-
 export default () => {
   const form = useForm();
   
@@ -88,6 +87,10 @@ export default () => {
       schema={schema}
       form={form}
       onFinish={onFinish}
+      widgets={{
+        InputNumber: () => {return 1},
+        Serialnumber: () => { return 1}
+      }}
       footer={
         <Button block type='submit' color='primary' size='large'>
           提交

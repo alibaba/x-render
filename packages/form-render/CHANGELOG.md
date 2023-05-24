@@ -1,7 +1,16 @@
 # 更新日志
 
+### 2.1.25
+- [+] 增加 form.getFlattenSchema API
+- [+] List 场景支持 rules: []，整体校验配置
+- [!] 修复 TableList 场景，输入框控件自定义校验提示异常
+
+### 2.1.21
+- [!] 修复 DrawerList 编辑时，报错
+### 2.1.20
+- [!] 修复 validateFields 调用无效
 ### 2.1.17
-- [+] 修复 labelWidth 设置 0，无效
+- [!] 修复 labelWidth 设置 0，无效
 ### 2.1.16
 - [+] 增强 dependencies 字段能力，支持 List 嵌套 dependencies 配置
 ### 2.1.15

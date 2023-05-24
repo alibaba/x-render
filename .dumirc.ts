@@ -65,8 +65,8 @@ export default defineConfig({
     config.plugin('monaco-editor').use(MonacoWebpackPlugin);
   },
   headScripts: [
-    'https://unpkg.com/react@17.0.1/umd/react.production.min.js',
-    'https://g.alicdn.com/code/lib/react-dom/16.14.0/umd/react-dom.production.min.js'
+    'https://g.alicdn.com/code/lib/react/17.0.1/umd/react.production.min.js',
+    'https://g.alicdn.com/code/lib/react-dom/17.0.1/umd/react-dom.production.min.js'
   ],
   plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
   alias: { 

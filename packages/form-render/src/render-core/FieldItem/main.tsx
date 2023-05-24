@@ -41,7 +41,7 @@ export default (props: any) => {
  
   const { form, widgets, methods, globalProps } = configCtx;
 
-  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
+  const { reserveLabel, hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);
   // Component not found
@@ -145,7 +145,7 @@ export default (props: any) => {
     fieldProps.disabled = disabled;
   }
 
-  if (!label && displayType !== 'column') {
+  if (reserveLabel && !label && displayType !== 'column') {
     label = 'fr-hide-label';
   }
 
@@ -163,9 +163,9 @@ export default (props: any) => {
     } 
   }
 
-  if (labelWidth === 0 || labelCol?.span === 0) {
-    label = null;
-  }
+  // if (labelWidth === 0 || labelCol?.span === 0) {
+  //   label = null;
+  // }
 
   const initialValue = schema.default ?? schema.defaultValue;
 

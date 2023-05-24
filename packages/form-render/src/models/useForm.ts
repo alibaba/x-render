@@ -23,7 +23,7 @@ const updateSchemaByPath = (_path: string, _newSchema: any, formSchema: any) => 
       ...newSchema.props
     }
   }
-  
+
   _set(formSchema, path, result);
 };
 
@@ -62,21 +62,20 @@ const getFieldName = (_path: any): any => {
     }
     return item;
   });
- 
+
   return result;
 };
 
 const useForm = () => {
-  const [form] = Form.useForm() as [FormInstance];
+  const [form] = Form.useForm();
 
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
   const schemaRef = useRef({});
-  const { 
-    getFieldError, 
-    getFieldsError, 
-    getFieldInstance, 
-    setFieldValue,
+  const {
+    getFieldError,
+    getFieldsError,
+    getFieldInstance,
     setFieldsValue,
     setFields,
     scrollToField,
@@ -85,7 +84,7 @@ const useForm = () => {
     isFieldValidating,
     resetFields,
     validateFields,
-    ...otherForm 
+    ...otherForm
   } = form;
 
   const xform: any = otherForm;
@@ -168,7 +167,7 @@ const useForm = () => {
   // 设置某个字段的值
   xform.setValueByPath = (path: string, value: any) => {
     const name = getFieldName(path);
-    setFieldValue(name, value);
+    form.setFieldValue(name, value);
   }
 
   // 通过某个字段的 schema
@@ -263,7 +262,7 @@ const useForm = () => {
   }
 
   // 滚动到对应字段位置
-  xform.scrollToPath = (path: string, ...rest) => {
+  xform.scrollToPath = (path: string, ...rest: any[]) => {
     const name = getFieldName(path);
     scrollToField(name, ...rest);
   }
@@ -300,14 +299,18 @@ const useForm = () => {
     const nameList = (pathList || []).map(path => getFieldName(path));
     if (nameList.length > 0) {
       return validateFields(nameList);
-    } 
-    return resetFields();
+    }
+    return validateFields();
+  }
+
+  xform.getFlattenSchema = () => {
+    return flattenSchemaRef.current;
   }
 
   // 老 API 兼容
   xform.onItemChange = xform.setValueByPath;
- 
-  return xform;
+
+  return xform as FormInstance;
 };
 
 export default useForm;

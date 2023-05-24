@@ -270,7 +270,7 @@ const useForm = () => {
     if (nameList.length > 0) {
       return validateFields(nameList);
     } 
-    return resetFields();
+    return validateFields();
   }
 
   xform.__initStore = (store: any) => {

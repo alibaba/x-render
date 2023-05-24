@@ -79,6 +79,26 @@ form.formData 弃用，改用 form.getValues() 方式获取
 
 ```
 
+### validator 直接返回布尔或对象
+
+2.x 中 validator 可以直接返回布尔，或者对象用于动态设置 message 内容
+
+```diff
+{
+  validator: (_, value) => {
+-   return Promise.reject('xxx')
++   return {
++     status: false,
++     message: 'xxx',
++   }
+
+-   return Promise.resolve()
++   return true
+  },
+}
+
+```
+
 ## Form 相关
 
 ### useForm 入参移除
