@@ -31,41 +31,18 @@ export const columns: ProColumnsType = [
     dataIndex: 'labels',
     width: 90,
     valueType: 'tags'
-    // valueTypeProps: (value) => { // [ { name : '', color: '' }] => 命中默认格式无需配置
-    //   return {
-    //     name: value?.text,
-    //     color: 'cyan'
-    //   }
-    // },
   },
-
   {
     title: '酒店GMV',
-    key: 'money',
     sorter: true,
     dataIndex: 'money',
     valueType: 'money',
   },
   {
     title: '成立时间',
-    key: 'created_at',
     dataIndex: 'created_at',
     valueType: 'date',
   },
-  // {
-  //   title: '操作',
-  //   width: 60,
-  //   align: 'right',
-  //   render: () => (
-  //     <a
-  //       onClick={() => {
-  //         message.success('预订成功');
-  //       }}
-  //     >
-  //       预订
-  //     </a>
-  //   )
-  // }
 ];
 
 export const toolbarRender = (

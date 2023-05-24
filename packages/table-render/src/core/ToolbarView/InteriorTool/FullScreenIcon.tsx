@@ -3,7 +3,9 @@ import { message, Tooltip, ConfigProvider } from 'antd';
 import { FullscreenExitOutlined, FullscreenOutlined } from '@ant-design/icons';
 import { translation } from '../../../utils';
 
-const FullScreenIcon = props => {
+const FullScreenIcon: React.FC<{
+  fullScreen: () => Promise<void>;
+}> = props => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
   const [isFullScreen, setFullScreen] = useState(false);

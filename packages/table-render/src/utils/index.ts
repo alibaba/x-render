@@ -1,5 +1,6 @@
 import dayjs from 'dayjs';
 import { set, get, cloneDeep, has, merge, isUndefined, omitBy, debounce } from 'lodash-es';
+import { ProColumnsType } from '..';
 
 export const _set = set;
 export const _get = get;
@@ -10,17 +11,17 @@ export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
 export const _debounce = debounce;
 
-export const getDateTime = (time: any, format: string) => {
+export const getDateTime = (time: any, format?: string) => {
   if (!time) return null;
   return dayjs(time).format(format || 'YYYY-MM-DD HH:mm:ss');
 };
 
-export const getDate = (time: any, format: string) => {
+export const getDate = (time: any, format?: string) => {
   if (!time) return null;
   return dayjs(time).format(format || 'YYYY-MM-DD');
 };
 
-export const getDateRange = (value: any, { result, record } , _format?: string) => {
+export const getDateRange = (value: any, { result, record }, _format?: string) => {
   let data = value;
   const { bind, format } = result.valueTypeProps || {}
   if (bind) {
@@ -80,4 +81,19 @@ export const translation = (configCtx: any) => (key: string) => {
 }
 
 
-
+/**  
+ * 从 column 中获取 key
+ * 
+ * 优先级：key > dataIndex > title
+ * 
+ * @param column 表格列
+ * @param fallback 备选值
+ * @returns key
+ */
+export const getColumnKey = (column: ProColumnsType<any>[number], fallback: any) => {
+  if (column.key) return String(column.key);
+  if (column.dataIndex) return String(column.dataIndex);
+  if (column.title && typeof column.title === 'string') return column.title;
+  console.warn('[Table Render]: column must have a key or dataIndex or title');
+  return String(fallback);
+}

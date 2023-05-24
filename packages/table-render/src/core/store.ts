@@ -1,15 +1,24 @@
-import { createStore as createx } from 'zustand';
-import { createContext } from 'react';
+import { ToolbarActionConfig } from '@/types';
+import React from 'react';
+import { create, useStore } from 'zustand';
+import { ProColumnsType } from '..';
 
-export const TRContext = createContext(null);
-export const ConfigContext = createContext(null);
-
-export type TStore = {
+export type TableRenderStoreType = {
   loading: boolean;
   api: null,
-  tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
-  dataSource: [],
-  extraData: null, // 需要用到的 dataSource 以外的扩展返回值
+  /**
+   * 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
+   */
+  tab: 0,
+  /** 
+   * 表格列定义
+   */
+  columns: ProColumnsType<any>,
+  dataSource: any[],
+  /**
+   * 需要用到的 dataSource 以外的扩展返回值
+   */
+  extraData: null,
   extraParams: {},
   pagination: {
     current: 1,
@@ -17,19 +26,31 @@ export type TStore = {
     total: 0,
   },
   tableSize: 'default',
-  [key: string]: any
-  init?: (schema: TStore['schema']) => any;
+  schema: any,
+  inited: boolean,
+  init?: (schema: TableRenderStoreType['schema']) => any;
   getState: () => any;
   setState: (state: any) => void;
+  /**
+   * 更新列数据
+   */
+  setColumns: (columns: ProColumnsType<any>) => void;
+  /** 
+   * 动态设置列状态
+   */
+  columnsSetting: ToolbarActionConfig['columnsSettingValue'];
+  setColumnsSetting: (setting: ToolbarActionConfig['columnsSettingValue']) => void;
 };
 
-// 将 useStore 改为 createStore， 并把它改为 create 方法
-export const createStore = () => createx<TStore>((set: any, get: any) => ({
+export const StoreContext = React.createContext(null);
+
+export const createStore = (defaultProps?: Partial<TableRenderStoreType>) => create<TableRenderStoreType>()((set, get) => ({
+  ...defaultProps,
   loading: false,
   api: null,
-  tab: 0, // 如果api是数组，需要在最顶层感知tab，来知道到底点击搜索调用的是啥api
+  tab: 0,
   dataSource: [],
-  extraData: null, // 需要用到的 dataSource 以外的扩展返回值
+  extraData: null,
   extraParams: {},
   pagination: {
     current: 1,
@@ -37,14 +58,20 @@ export const createStore = () => createx<TStore>((set: any, get: any) => ({
     total: 0,
   },
   tableSize: 'default',
+  schema: {},
+  columns: [],
   inited: false,
-  setState: (state: any) => {
-    return set({ ...state })
-  },
-  getState: () => {
-    return get();
-  }
+  columnsSetting: [],
+  setState: (state) => set({ ...state }),
+  getState: () => get(),
+  setColumns: (columns) => set({ columns }),
+  setColumnsSetting: (setting) => set({ columnsSetting: setting }),
 }));
 
-
-
+export const useTableStore = <T>(
+  selector: (store: TableRenderStoreType) => T,
+  equalityFn?: (left: T, right: T) => boolean
+) => {
+  const store = React.useContext(StoreContext)
+  return useStore(store, selector, equalityFn)
+}

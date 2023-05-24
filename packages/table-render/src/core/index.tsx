@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useRef, useImperativeHandle } from 'react';
-import { useStore } from 'zustand';
+import React, { useEffect, useRef, useImperativeHandle } from 'react';
+import { useTableStore } from './store';
 import { useForm } from 'form-render';
 
-import { TRContext } from './store';
 import { _get, isFunction, isArray } from '../utils';
 import ErrorBoundary from './ErrorBoundary';
 import SearchView from './SearchView';
@@ -10,6 +9,7 @@ import ToolbarView from './ToolbarView';
 import TableView from './TableView';
 
 import './index.less';
+import { TableRenderProps } from '..';
 
 type ISearchParams = {
   current?: number;
@@ -18,7 +18,7 @@ type ISearchParams = {
   sorter?: any;
 };
 
-const RenderCore = props => {
+const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
   const {
     search: searchProps,
     debug, className,
@@ -31,6 +31,7 @@ const RenderCore = props => {
     size,
     tableWrapper,
     autoRequest = true,
+    columns,
     ...tableProps
   } = props;
 
@@ -39,16 +40,13 @@ const RenderCore = props => {
   const form = useForm();
   const rootRef = useRef<HTMLDivElement>(null);
 
-  const store = useContext(TRContext);
-  const inited = useStore(store, (state: any) => state.inited);
-  const currentTab = useStore(store, (state: any) => state.tab);
-  const tableSize = useStore(store, (state: any) => state.tableSize);
-  const pagination = useStore(store, (state: any) => state.pagination);
-  const loading = useStore(store, (state: any) => state.loading);
-  const setState = useStore(store, (state: any) => state.setState);
-  const getState = useStore(store, (state: any) => state.getState);
-  const dataSource = useStore(store, (state: any) => state.dataSource);
-
+  const inited = useTableStore((state) => state.inited);
+  const currentTab = useTableStore((state) => state.tab);
+  const tableSize = useTableStore((state) => state.tableSize);
+  const pagination = useTableStore((state) => state.pagination);
+  const setState = useTableStore((state) => state.setState);
+  const getState = useTableStore((state) => state.getState);
+  const setColumns = useTableStore((state) => state.setColumns);
 
   useEffect(() => {
     setState({
@@ -56,6 +54,12 @@ const RenderCore = props => {
       inited: true
     });
   }, []);
+
+  useEffect(() => {
+    if (columns) {
+      setColumns(columns);
+    }
+  }, [columns]);
 
   useEffect(() => {
     if (inited && hiddenSearch && autoRequest) {
@@ -85,7 +89,7 @@ const RenderCore = props => {
     const _pageNum = current || 1;
     const _pageSize = pageSize || 10;
 
-    let _tab = currentTab;
+    let _tab: number | string = currentTab;
     if (['string', 'number'].indexOf(typeof tab) > -1) {
       _tab = tab;
     }
@@ -186,8 +190,6 @@ const RenderCore = props => {
       />
       <TableView
         {...tableProps}
-        setState={setState}
-        getState={getState}
         doSearch={doSearch}
       />
     </div>
