@@ -25,7 +25,7 @@ export default (props: any) => {
   const formData = form.getFieldsValue(true);
   const { schema: formSchema } = store.getState();
 
-  const { items, ...otherSchema } = _schema;
+  const { items, className, ...otherSchema } = _schema;
   const schema = globalConfig?.mustacheDisabled ? _schema : {
     items,
     ...parseAllExpression(otherSchema, formData, props.rootPath, formSchema)
@@ -50,7 +50,7 @@ export default (props: any) => {
   }
   
   return (
-    <Col span={24}>
+    <Col span={24} className={className}>
       {!isInline && !isDisplayColumn && label && (
         <Form.Item
           className='ant-form-item-optional-hide'
