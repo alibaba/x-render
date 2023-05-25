@@ -41,7 +41,7 @@ const ActionView = (props: any) => {
     setLimitHeight(expand);
   };
 
-  const searchBtnArr = typeof searchBtnRender === 'function' ? searchBtnRender(form.submit, handleReset) : [];
+  const searchBtnArr = typeof searchBtnRender === 'function' ? searchBtnRender(form.submit, handleReset, { loading }) : [];
 
   if (searchBtnRender) {
     return (

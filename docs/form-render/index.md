@@ -57,7 +57,11 @@ export default () => {
       schema={schema} 
       onFinish={onFinish} 
       maxWidth={360} 
-      footer={true} 
+      footer={true}
+      onMount={() => {
+        form.setSchema({ 'config.xxx': { hidden: true }})
+     
+      }}
     />
   );
 }

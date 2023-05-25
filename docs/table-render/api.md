@@ -45,7 +45,7 @@ group:
 | afterSearch        | 在表格查询结束后执行一些额外的操作                                                    | `(params) => void`                             | -       |
 | searchOnMount      | 组件初次挂载时，是否默认执行查询动作                                                  | `boolean`                              | true  | 
 | hidden             | 是否隐藏 `<Search />` 组件                                                              | `boolean`                              | false |
-| searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch) => ReactNode[]` | -       | 
+| searchBtnRender    | 自定义表单查询按钮                                                                    | `(refresh,clearSearch, { loadding }) => ReactNode[]` | -       | 
 | searchBtnStyle     | 自定义表单操作按钮组的样式                                                            | `CSSProperties`                  | -      | 
 | searchBtnClassName | 自定义表单操作按钮组的 ClassName                                                      | `string`                               | -      | 
 | searchWithError    | 表单校验失败时，是否继续执行查询操作                                                  | `boolean`                              | true    |

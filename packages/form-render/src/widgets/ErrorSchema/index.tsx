@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { translation } from '../../utils';
+import { translation } from '../utils';
 import { ConfigProvider } from 'antd';
 
-export const ErrorSchema = (schema: any) => {
+const ErrorSchema = (schema: any) => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
@@ -13,3 +13,5 @@ export const ErrorSchema = (schema: any) => {
     </div>
   );
 }
+
+export default ErrorSchema;
