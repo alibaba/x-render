@@ -1,5 +1,5 @@
 
-import { isObject, isArray, _get, _has, isFunction } from '../utils';
+import { isObject, isArray, _get, _has, isFunction, isObjType } from '../utils';
 
 const executeCallBack = (watchItem: any, value: any, path: string, index?: any) => {
   if (isFunction(watchItem)) {
@@ -149,7 +149,7 @@ export const getSchemaFullPath = (path: string, schema: any) => {
     const key = result + '.' + item;
     const itemSchema = _get(schema, key, {});
 
-    if (itemSchema?.type === 'object') {
+    if (isObjType(itemSchema)) {
       result = key + '.properties';
       return ;
     }

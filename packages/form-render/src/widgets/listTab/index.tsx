@@ -32,6 +32,8 @@ const TabList: React.FC<ListTabProps> = (props) => {
 
     addItem,
     removeItem,
+
+    tabItemProps = {}
   } = props;
 
   const [activeKey, setActiveKey] = useState('0');
@@ -87,6 +89,7 @@ const TabList: React.FC<ListTabProps> = (props) => {
         {fields.map(({ key, name }) => {
           return (
             <TabPane
+              {...tabItemProps}
               tab={getCurrentTabPaneName(name)}
               key={name}
               className='fr-list-item'

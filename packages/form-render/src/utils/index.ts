@@ -73,7 +73,7 @@ export function getFormat(format) {
 // TODO: to support case that item is not an object
 export function isObjType(schema: any) {
   //return schema?.type === 'object' && schema.properties && !schema.widget;
-  return schema?.type === 'object' && schema.properties;
+  return schema?.type === 'object' && schema?.properties;
 };
 
 export function isListType(schema: any) {
