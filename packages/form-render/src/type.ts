@@ -407,7 +407,8 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   searchWithError?: boolean;
   searchBtnRender?: (
     submit: Function,
-    clearSearch: Function
+    clearSearch: Function,
+    other: any
   ) => React.ReactNode[];
   searchText?: string;
   resetText?: string;

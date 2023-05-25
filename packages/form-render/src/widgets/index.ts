@@ -36,3 +36,4 @@ export { default as VirtualList } from './listVirtual';
 export { default as TabList } from './listTab';
 
 export { default as VoidTitle } from './voidTitle';
+export { default as ErrorSchema } from './ErrorSchema';
