@@ -31,7 +31,7 @@ import {
 
 export default (props: any) => {
   const { configCtx, store, schema, path, children, dependValues, rootPath } = props;
-  debugger;
+
   if (schema?.hidden) {
     return null;
   }
