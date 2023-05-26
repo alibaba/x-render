@@ -1,7 +1,6 @@
-import { ToolbarActionConfig } from '@/types';
 import React from 'react';
 import { create, useStore } from 'zustand';
-import { ProColumnsType } from '..';
+import { ToolbarActionConfig, ProColumnsType } from '../types';
 
 export type TableRenderStoreType = {
   loading: boolean;
@@ -72,6 +71,6 @@ export const useTableStore = <T>(
   selector: (store: TableRenderStoreType) => T,
   equalityFn?: (left: T, right: T) => boolean
 ) => {
-  const store = React.useContext(StoreContext)
-  return useStore(store, selector, equalityFn)
+  const store = React.useContext(StoreContext);
+  return useStore(store, selector, equalityFn);
 }

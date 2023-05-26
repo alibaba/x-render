@@ -16,7 +16,6 @@ const ToolbarView = props => {
     toolbarAction = false,
     request,
     refresh,
-    doSearch,
     fullScreen,
     currentTab
   } = props;
@@ -27,7 +26,7 @@ const ToolbarView = props => {
   return (
     <div className={classNames('tr-toolbar', { 'tr-toolbar-nohead': !isTopHead && !toolbarAction })}>
       <div className='tr-toolbar-left'>
-        <TitleView title={title} doSearch={doSearch} setState={setState} request={request} currentTab={currentTab} />
+        <TitleView title={title} setState={setState} request={request} currentTab={currentTab} />
       </div>
       <div className='tr-toolbar-right'>
         <Space>
