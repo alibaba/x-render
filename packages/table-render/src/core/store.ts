@@ -20,9 +20,9 @@ export type TableRenderStoreType = {
   extraData: null,
   extraParams: {},
   pagination: {
-    current: 1,
-    pageSize: 10,
-    total: 0,
+    current: number,
+    pageSize: number,
+    total: number,
   },
   tableSize: 'default',
   schema: any,

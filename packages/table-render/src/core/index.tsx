@@ -57,7 +57,7 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
       pagination
     };
 
-    if (tableProps?.pagination?.pageSize) {
+    if (typeof tableProps?.pagination === 'object' && tableProps?.pagination?.pageSize) {
       initState.pagination.pageSize = tableProps.pagination.pageSize;
     }
     setState(initState);
