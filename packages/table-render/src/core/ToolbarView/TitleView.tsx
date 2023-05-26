@@ -12,7 +12,6 @@ const TitleView = (props: any) => {
       return onTabChange(_tabIndex, ev);
     }
     setState({ tab: _tabIndex });
-    doSearch({ tab: _tabIndex });
   };
 
   if (isArray(request) && request.length > 1) {

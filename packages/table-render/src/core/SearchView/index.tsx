@@ -1,7 +1,7 @@
 import React from 'react';
-import { SearchProps } from '../../types';
 import { SearchForm } from 'form-render';
-import { isFunction, _debounce } from '../../utils'
+import { isFunction, _debounce } from '../../utils';
+import { SearchProps } from '../../types';
 
 const Search: <RecordType extends object = any>(
   props: SearchProps<RecordType>

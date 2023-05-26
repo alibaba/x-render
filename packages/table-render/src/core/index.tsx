@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useImperativeHandle } from 'react';
-import { useTableStore } from './store';
 import { useForm } from 'form-render';
+import { useUpdateEffect } from 'ahooks';
 
+import { useTableStore } from './store';
 import { _get, isFunction, isArray } from '../utils';
+import { TableRenderProps } from '../types';
+
 import ErrorBoundary from './ErrorBoundary';
 import SearchView from './SearchView';
 import ToolbarView from './ToolbarView';
 import TableView from './TableView';
 
 import './index.less';
-import { TableRenderProps } from '..';
 
 type ISearchParams = {
   current?: number;
@@ -49,10 +51,16 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
   const setColumns = useTableStore((state) => state.setColumns);
 
   useEffect(() => {
-    setState({
+    const initState = {
       tableSize: size,
-      inited: true
-    });
+      inited: true,
+      pagination
+    };
+
+    if (typeof tableProps?.pagination === 'object' && tableProps?.pagination?.pageSize) {
+      initState.pagination.pageSize = tableProps.pagination.pageSize;
+    }
+    setState(initState);
   }, []);
 
   useEffect(() => {
@@ -66,6 +74,10 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
       refresh();
     }
   }, [inited]);
+
+  useUpdateEffect(() => {
+    refresh();
+  }, [currentTab])
 
   useImperativeHandle(tableRef, () => ({
     doSearch,
@@ -85,11 +97,11 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
 
   const doSearch = (params: ISearchParams, customSearch?: Record<string, any>) => {
     const { current, pageSize, tab, sorter, ...extraSearch } = params || {};
-
+  
     const _pageNum = current || 1;
     const _pageSize = pageSize || 10;
 
-    let _tab: number | string = currentTab;
+    let _tab: any = currentTab;
     if (['string', 'number'].indexOf(typeof tab) > -1) {
       _tab = tab;
     }
@@ -103,10 +115,6 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
         ...extraSearch,
         ..._pagination,
       };
-
-      // if (Array.isArray(api)) {
-      //   _params = { ..._params, tab };
-      // }
 
       Promise.resolve(_api(_params, sorter, { tab: _tab }))
         .then(res => {
@@ -149,6 +157,7 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
     const _stay = (params && params.stay) || false;
     const _tab = params && params.tab;
     const _search = moreSearch || {};
+   
     doSearch(
       {
         ...params,
@@ -163,7 +172,7 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
   const changeTab = (tab: string | number) => {
     if (['string', 'number'].indexOf(typeof tab) > -1) {
       setState({ tab });
-      refresh({ tab });
+      // refresh({ tab });
     } else {
       console.error('changeTab的入参必须是number或string');
     }
