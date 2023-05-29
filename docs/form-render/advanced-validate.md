@@ -146,7 +146,24 @@ export default () => {
 };
 ```
 
-### 三、定制校验模版
+### 三、子表单校验
+自定义组件是一个子表单时，表单提交是无法触发子表单进行校验的，所以这种类型的子组件需要单独处理
+```js
+useImperativeHandle(props.addons.fieldRef, () => {
+  // 将校验方法暴露出去，方便外部表单提交时，触发校验
+  return {
+    validator: validator,
+  };
+});
+
+// 内部校验方法
+const validator = () => {
+  return true; // 返回 boolean 值，表示内部校验通过
+
+  // retrun { status: boolean, message: string } // 如果需在外部显示子表单错误信息可以使用对象形式返回
+}
+```
+### 四、定制校验模版
 - 全面拥抱 Antd Form Rules
 - validateMessages：通过配置 validateMessages 定制校验模版，可以按需定制，定制模版会和默认校验模版进行合并处理
 
@@ -186,7 +203,7 @@ export default () => {
 ```
 
 
-### 四、默认模版内容
+### 五、默认模版内容
 
 - 中文模版
 ```Js
