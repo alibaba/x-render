@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Form, Space, Popconfirm, Button, Divider, Tooltip } from 'antd';
 import type { FormListFieldData, TableColumnsType } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, CloseOutlined, CopyOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import classnames from 'classnames';
 import VirtualCell from './virtualCell';
 import { useVT } from 'virtualizedtableforantd4';
 import FButton from '../components/FButton';
@@ -61,7 +62,12 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     copyItem,
     moveItem,
     removeItem,
+    configContext,
+    validatePopover,
   } = props;
+
+  const { globalConfig } = configContext;
+  const islidatePopover = validatePopover ?? globalConfig?.listValidatePopover ?? true;
 
   const { colHeaderText, ...otherActionColumnProps } = actionColumnProps;
 
@@ -97,10 +103,19 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
           properties: {
             [dataIndex]: {
               ...itemSchema[dataIndex],
-              noStyle: true,
+              fieldCol: 24,
             }
           }
         };
+
+        if (!islidatePopover) {
+          return (
+            <div className='fr-table-cell-content'>
+              {renderCore({ parentPath: [field.name], rootPath: [...rootPath, field.name], schema: fieldSchema })}
+            </div>
+          )
+        }
+
         return (
           <VirtualCell
             renderCore={renderCore}
@@ -167,7 +182,7 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
   return (
     <>
       <Table
-        className='fr-virtual-list'
+        className={classnames('fr-virtual-list', { 'fr-virtual-list-no-popover': !islidatePopover })}
         size='middle'
         columns={columns}
         dataSource={fields}

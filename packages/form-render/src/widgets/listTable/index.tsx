@@ -2,6 +2,7 @@ import React from 'react';
 import { Table, Form, Space, Popconfirm, Button, Divider, Tooltip } from 'antd';
 import type { FormListFieldData, TableColumnsType } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, CloseOutlined, CopyOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import classnames from 'classnames';
 import TableCell from './tableCell';
 import FButton from '../components/FButton';
 import sortProperties from '../../models/sortProperties';
@@ -59,8 +60,13 @@ const TableList: React.FC<ListTableProps> = (props) => {
     addItem,
     copyItem,
     moveItem,
-    removeItem
+    removeItem,
+    configContext,
+    validatePopover,
   } = props;
+
+  const { globalConfig } = configContext;
+  const islidatePopover = validatePopover ?? globalConfig?.listValidatePopover ?? true;
 
   const { colHeaderText, ...otherActionColumnProps } = actionColumnProps;
   const itemSchema = schema?.items?.properties || {};
@@ -99,10 +105,19 @@ const TableList: React.FC<ListTableProps> = (props) => {
           properties: {
             [dataIndex]: {
               ...itemSchema[dataIndex],
-              noStyle: true,
+              fieldCol: 24,
             }
           }
         };
+
+        if (!islidatePopover) {
+          return (
+            <div className='fr-table-cell-content'>
+              {renderCore({ parentPath: [field.name], rootPath: [...rootPath, field.name], schema: fieldSchema })}
+            </div>
+          )
+        }
+
         return (
           <TableCell
             renderCore={renderCore}
@@ -167,7 +182,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
   }
 
   return (
-    <div className='fr-table-list'>
+    <div className={classnames('fr-table-list', { 'fr-table-list-no-popover': !islidatePopover })}>
       <Table
         size='middle'
         columns={columns}

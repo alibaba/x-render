@@ -144,6 +144,8 @@ export interface ListOperate {
 export interface GlobalConfig {
   /* 列表表单配置 */
   listOperate: ListOperate;
+  /** 列表校验气泡模式*/
+  listValidatePopover: boolean;
   /* 是否禁用表达式 */
   mustacheDisabled: boolean;
 }
