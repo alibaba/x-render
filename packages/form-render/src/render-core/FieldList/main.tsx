@@ -20,7 +20,7 @@ export default (props: any) => {
     formCtx,
     configContext,
     listData,
-    setListData,
+    setListData
   } = props;
  
   const { widgets, globalConfig } = configContext;

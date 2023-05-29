@@ -20,7 +20,8 @@ const insertRequiredRule = (schema: any, rules: any[]) => {
     required,
     message,
     widget,
-    title
+    title,
+    _title,
   } = schema;
 
   const requiredAlready = schema?.rules?.some((item: any) => item?.required);
@@ -45,7 +46,7 @@ const insertRequiredRule = (schema: any, rules: any[]) => {
   } else if (widget === 'checkbox') {
     rule = { type, required: true,  whitespace: true, message: title + '必填' };
   } else if (type === 'string') {
-    rule = { type: 'string', required: true,  whitespace: true, message: message?.required || (!title ? '内容必填' : undefined) };
+    rule = { type: 'string', required: true,  whitespace: true, message: message?.required || ((!title && !_title) ? '内容必填' : undefined) };
   }
 
   rules.push(rule);

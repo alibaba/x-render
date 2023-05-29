@@ -97,7 +97,8 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
           properties: {
             [dataIndex]: {
               ...itemSchema[dataIndex],
-              noStyle: true,
+              title: null,
+              fieldCol: 24,
             }
           }
         };

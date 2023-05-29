@@ -2,21 +2,43 @@
 
 .fr-table-list {
   margin-bottom: 24px;
-  
+
   .@{ant-prefix}-form-item {
     margin-bottom: 0;
+  }
+  
+  .@{ant-prefix}-form-item-label {
+    display: none;
   }
 
   .@{ant-prefix}-form-item-explain-error {
     display: none;
   }
+  
   .fr-list-item-operate {
     gap: 0 !important;
   }
 }
 
 .fr-popover-error {
-  .ant-popover-inner-content {
+  .@{ant-prefix}-popover-inner-content {
     color: #ff4d4f !important
+  }
+}
+
+.fr-table-list-no-popover {
+  .@{ant-prefix}-table-tbody {
+    .@{ant-prefix}-table-cell {
+      padding: 24px 8px 0px 8px !important;
+    }
+  }
+
+  .@{ant-prefix}-form-item {
+    margin-bottom: 24px;
+  }
+
+  .@{ant-prefix}-form-item-explain-error {
+    display: block;
+    font-size: 10px;
   }
 }
