@@ -1,5 +1,9 @@
 # 更新日志
 
+### 2.1.28
+- [+] 增加 ListTable、ListVirtual 校验增加非气泡模式配置
+ globalConfig = { listValidatePopover: false }
+
 ### 2.1.25
 - [+] 增加 form.getFlattenSchema API
 - [+] List 场景支持 rules: []，整体校验配置
