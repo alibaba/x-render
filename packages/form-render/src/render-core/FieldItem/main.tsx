@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useRef } from 'react';
 import { Form, Col, Row } from 'antd';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
@@ -36,6 +36,7 @@ export default (props: any) => {
     return null;
   }
 
+  const fieldRef: any = useRef();
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
  
@@ -60,7 +61,8 @@ export default (props: any) => {
     dependValues,
     globalProps,
     path: getPath(path),
-    rootPath
+    rootPath,
+    fieldRef
   });
 
   if (schema.type === 'void') {
@@ -127,7 +129,7 @@ export default (props: any) => {
   const help = getExtraView('help', schema, widgets);
 
   const tooltip = getTooltip(schema, displayType);
-  const ruleList = getRuleList(schema, form, methods);
+  const ruleList = getRuleList(schema, form, methods, fieldRef);
   const readOnly = getValueFromKey('readOnly');
   const disabled = getValueFromKey('disabled');
 

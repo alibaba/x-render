@@ -3,6 +3,7 @@
 ### 2.1.28
 - [+] 增加 ListTable、ListVirtual 校验增加非气泡模式配置
  globalConfig = { listValidatePopover: false }
+- [+] 增加子表单校验配置，详细内容查看表单校验文档
 
 ### 2.1.25
 - [+] 增加 form.getFlattenSchema API
