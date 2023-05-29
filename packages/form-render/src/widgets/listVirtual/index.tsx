@@ -103,7 +103,6 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
           properties: {
             [dataIndex]: {
               ...itemSchema[dataIndex],
-              title: null,
               fieldCol: 24,
             }
           }
