@@ -66,9 +66,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
   } = props;
 
   const { globalConfig } = configContext;
-
   const islidatePopover = validatePopover ?? globalConfig?.listValidatePopover ?? true;
-
 
   const { colHeaderText, ...otherActionColumnProps } = actionColumnProps;
   const itemSchema = schema?.items?.properties || {};
