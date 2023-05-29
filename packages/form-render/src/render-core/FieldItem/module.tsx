@@ -209,7 +209,7 @@ export const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valu
   return schema[valueKey] ?? upperCtx[valueKey];
 };
 
-export const getFieldProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath }) => {
+export const getFieldProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath, fieldRef }) => {
   const pathObj = getPathObj({ path, rootPath });
  
   const fieldProps = {
@@ -218,6 +218,7 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
       ...form,
       globalProps,
       dependValues,
+      fieldRef,
       ...pathObj
     }
   };

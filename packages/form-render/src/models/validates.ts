@@ -51,7 +51,7 @@ const insertRequiredRule = (schema: any, rules: any[]) => {
   rules.push(rule);
 }
 
-export default (schema: any, form: any, methods: any) => {
+export default (schema: any, form: any, methods: any, fieldRef: any) => {
   let { 
     format,
     rules: ruleList = [],
@@ -63,6 +63,16 @@ export default (schema: any, form: any, methods: any) => {
  
   insertRequiredRule(schema, rules);
   insertLengthRule(schema, rules);
+
+  rules.push({
+    validator: async (_: any) => {
+      if (!isFunction(fieldRef?.current?.validator)) {
+        return true;
+      }
+      const res = await fieldRef.current?.validator();
+      return res;
+    }
+  });
 
   if (pattern) {
     rules.push({ pattern, message: message?.pattern });
