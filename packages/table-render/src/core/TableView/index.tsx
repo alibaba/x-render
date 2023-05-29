@@ -35,6 +35,7 @@ const ProTable: <RecordType extends object = any>(
     } else {
       setState({ pagination: { ...pagination, current, pageSize }, sorter });
     }
+    
     if (!pageChangeWithRequest || extra?.action === 'filter') {
       return;
     }
@@ -151,9 +152,10 @@ const ProTable: <RecordType extends object = any>(
         : {
           size: 'small',
           ...props.pagination,
-          pageSize: props.pagination?.pageSize || pagination.pageSize,
-          total: props.pagination?.total || pagination.total,
-          current: props.pagination?.current || pagination.current,
+          ...pagination,
+          // pageSize: props.pagination?.pageSize || pagination.pageSize,
+          // total: props.pagination?.total || pagination.total,
+          // current: props.pagination?.current || pagination.current,
         },
     loading,
     size: tableSize,
