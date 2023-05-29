@@ -844,7 +844,6 @@ const schema = {
           input2: {
             title: '简单输入框2',
             type: 'string',
-            required: true,
           },
           input3: {
             title: '简单输入框3',
@@ -865,7 +864,7 @@ const schema = {
 
 export default () => {
   const form = useForm();
-  return <FormRender schema={schema} form={form} footer={true} />;
+  return <FormRender schema={schema} form={form} />;
 };
 ```
 
