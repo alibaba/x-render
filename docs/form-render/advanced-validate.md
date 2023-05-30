@@ -156,8 +156,8 @@ useImperativeHandle(props.addons.fieldRef, () => {
   };
 });
 
-// 内部校验方法
-const validator = () => {
+// 内部校验方法，异步校验请用 async、await 语法
+const validator = async () => { 
   return true; // 返回 boolean 值，表示内部校验通过
 
   // retrun { status: boolean, message: string } // 如果需在外部显示子表单错误信息可以使用对象形式返回
