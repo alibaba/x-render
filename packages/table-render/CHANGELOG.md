@@ -1,5 +1,7 @@
 # 更新日志
 
+### 2.0.18
+-[!] 修复 table-render 切换 pageSize 无效
 ### 2.0.17
 -[!] 修复 table-render 配置 pagesize 查询无效
 ### 2.0.16
