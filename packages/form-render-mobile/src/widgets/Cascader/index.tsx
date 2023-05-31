@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useRef, useImperativeHandle} from 'react';
 import { Cascader } from 'antd-mobile';
-import { filterWidgetProps } from '../../utils';
+import { omit } from 'lodash';
 
 export default (props: any) => {
   const { 
@@ -8,14 +8,20 @@ export default (props: any) => {
     value,
     onChange,
     options,
-    setFieldRef,
     ...rest
-  } = filterWidgetProps(props);
+  } = omit(props, ['addons', 'schema']);
+
+  const pickerRef: any = useRef(null);
+  
+  // 使用useImperativeHandle暴露方法给外部
+  useImperativeHandle(props.addons.fieldRef, () => ({
+    ...pickerRef?.current
+  }));
  
   return (
     <Cascader
       {...rest}
-      ref={ref => setFieldRef(ref)}
+      ref={pickerRef}
       value={value}
       options={options}
       onConfirm={onChange}
@@ -28,5 +34,5 @@ export default (props: any) => {
         }
       }}
     </Cascader>
-  )
+  );
 }

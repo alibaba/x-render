@@ -71,6 +71,8 @@ const useForm = () => {
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
   const schemaRef = useRef({});
+  const fieldRefs = useRef({});
+
   const { 
     getFieldError, 
     getFieldsError,
@@ -235,8 +237,6 @@ const useForm = () => {
     setFields(fieldsData);
   }
 
-  
-
   // 检查一组字段是否被用户操作过，allTouched 为 true 时检查是否所有字段都被操作过
   xform.isFieldsTouched = (pathList?: string[], allTouched?: boolean) => {
     const nameList = (pathList || []).map(path => getFieldName(path));
@@ -275,6 +275,17 @@ const useForm = () => {
 
   xform.__initStore = (store: any) => {
     storeRef.current = store;
+  }
+
+  xform.setFieldRef = (path: string, ref: any) => {
+    if (!path) {
+      return;
+    }
+    fieldRefs.current[path] = ref;
+  }
+
+  xform.getFieldRef = (path: string) => {
+    return fieldRefs.current[path];
   }
  
   return xform;

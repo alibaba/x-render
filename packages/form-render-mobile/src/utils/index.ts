@@ -9,6 +9,21 @@ export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
 export const _mergeWith = mergeWith;
 
+// 首字母转大写
+const strToUpperCase = (str: string) => {
+  if (!str) {
+    return '';
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// 首字母转小写
+const strToLowerCase = (str: string) => {
+  if (!str) {
+    return '';
+  }
+  return str.charAt(0).toLowerCase() + str.slice(1);
+}
 
 export const isObject = (data: any) => {
   const str = Object.prototype.toString.call(data);
@@ -151,7 +166,19 @@ export const warn = (str:string, ...args: any[]) => {
   }
 }
 
-export const filterWidgetProps = ({ addons, schema, ...rest }) => {
-  return rest;
+export const getWidget = (widgets: any, widgetName: string, schema: any, readOnly?: boolean) => {
+  let widget = widgets[strToLowerCase(widgetName)];
+  if (!widget) {
+    widget = widgets[strToUpperCase(widgetName)];
+  }
+
+  if (!widget) {
+    widget = widgets['Html'] || widgets['html'];
+    if (!readOnly) {
+      warn(`Can not find widget component named ${widgetName}, please check the schema and widgets`, schema);
+    }
+  }
+
+  return widget || null;
 }
 

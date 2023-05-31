@@ -1,11 +1,10 @@
-import React, { createContext, useContext, useRef, useState } from 'react';
+import React, { createContext, useContext, useRef, useEffect, useState } from 'react';
 import { Form, Grid, FormItemProps } from 'antd-mobile';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
 
-import { warn, _get } from '../../utils';
+import { _get, getWidget } from '../../utils';
 import { ConfigContext } from '../../models/context';
-import { getWidgetName } from '../../models/mapping';
 import getRuleList from '../../models/validates';
 import FieldWrapper from './field';
 import { 
@@ -29,39 +28,45 @@ export default (props: any) => {
     return null;
   }
 
+  const [needOnClick, setNeedOnClick] = useState(false);
+
   const fieldRef: any = useRef();
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
-  const [needOnClick, setNeedOnClick] = useState(false);
   
-  const { form, widgets, methods, globalProps } = configCtx;
+  const { form, widgets, methods, globalProps }: any = configCtx;
   const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
-
-  let widgetName = getWidgetName(schema);
-  
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-  let Widget = widgets[widgetName];
 
-  if (!Widget) {
-    Widget = widgets['Html'];
-    warn(`Can not find widget component named ${widgetName}, please check the schema and widgets`, schema);
-  }
+  useEffect(() => {
+    form.setFieldRef(fieldProps.addons.dataPath, fieldRef);
+  }, []);
 
-  const fieldProps = getFieldProps(widgetName, schema, {
+  useEffect(() => {
+    if (fieldRef?.current?.open) {
+      setNeedOnClick(true);
+    }
+  }, [fieldRef.current]);
+  
+
+  let Widget = getWidget(widgets, schema.widget, schema)
+
+  const fieldProps = getFieldProps(schema, {
     widgets,
     methods,
     form,
     dependValues,
     globalProps,
     path: getPath(path),
-    rootPath
+    rootPath,
+    fieldRef
   });
 
   const displayType = getValueFromKey('displayType');
   const labelWidth = getValueFromKey('labelWidth');
 
-  if (widgetName === 'Collapse') {
+  if (['collapse'].includes(schema.widget)) {
     return <Widget {...fieldProps} renderCore={renderCore} />
   }
 
@@ -102,17 +107,10 @@ export default (props: any) => {
   const help = getExtraView('help', schema, widgets);
   const ruleList = getRuleList(schema, form, methods);
   const readOnly = getValueFromKey('readOnly');
-  const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
+  const valuePropName = schema.valuePropName || valuePropNameMap[schema.widget] || undefined;
 
   if (readOnly) {
     fieldProps.readOnly = readOnly;
-  }
-
-  fieldProps.setFieldRef = (ref: any) => {
-    if (ref) {
-      setNeedOnClick(true);
-      fieldRef.current = ref;
-    }
   }
 
   if (!label) {
@@ -120,7 +118,7 @@ export default (props: any) => {
   }
 
   if (readOnly) {
-    Widget = widgets[schema.readOnlyWidget] || widgets['Html'];
+    Widget = getWidget(widgets, schema.readOnlyWidget, schema, true);
   }
 
   const defaultValue = schema.default ?? schema.defaultValue;
@@ -133,16 +131,16 @@ export default (props: any) => {
     help,
     noStyle,
     dependencies,
-    name:path,
+    name: path,
     initialValue: defaultValue,
     rules: readOnly ? [] : ruleList,
-    className:classnames('fr-field', {'fr-field-visibility': !visible}),
-  }
+    className:classnames('fr-field', {'fr-field-visibility': !visible})
+  };
 
-  if (needOnClick && fieldRef.current && !readOnly) {
+  if (!readOnly && needOnClick) {
     itemProps.onClick = () => {
       fieldRef.current.open();
-    }
+    };
   }
 
   return (

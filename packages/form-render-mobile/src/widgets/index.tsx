@@ -7,12 +7,12 @@ import {
   Selector as AntdSelector,
   Switch as AntdSwitch,
   Stepper as AntdStepper,
+  Radio as AntdRadio
 } from 'antd-mobile';
-
-import { filterWidgetProps } from '../utils';
+import { omitBy } from 'lodash';
 
 const widgetHoc = (Widget: any) => (props: any) => {
-  const { setFieldRef, ...widgetProps } = filterWidgetProps(props);
+  const widgetProps = omitBy(props, ['addons', 'schema']);
   return <Widget {...widgetProps} />
 };
 
@@ -23,8 +23,8 @@ export const Rate = widgetHoc(AntdRate);
 export const Selector = widgetHoc(AntdSelector);
 export const Switch = widgetHoc(AntdSwitch);
 export const Stepper = widgetHoc(AntdStepper);
+export const Radio = widgetHoc(AntdRadio);
 
-export { default as Radio } from './Radio';
 export { default as DatePicker } from './DatePicker';
 export { default as Cascader } from './Cascader';
 export { default as Html } from './Html';
