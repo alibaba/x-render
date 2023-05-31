@@ -85,6 +85,7 @@ export interface SchemaBase {
   tooltip?: string | TooltipProps
   cellSpan?: number;
   span?: number;
+  validateTrigger?: string | string[]
   [key: string]: any;
 }
 

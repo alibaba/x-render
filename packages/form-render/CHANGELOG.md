@@ -1,5 +1,8 @@
 # 更新日志
 
+### 2.1.29
+-[!] 修复子表单场景，默认只在表单提交时触发校验
+
 ### 2.1.28
 - [+] 增加 ListTable、ListVirtual 校验增加非气泡模式配置
  globalConfig = { listValidatePopover: false }
