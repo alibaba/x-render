@@ -1,5 +1,4 @@
-import { s } from 'vitest/dist/index-5aad25c1';
-import { parseExpression} from './expression';
+import { parseExpression } from './expression';
 
 // 提取 formData. 开头的字符串
 const extractFormDataStrings = (list: string[]) => {
@@ -53,7 +52,7 @@ const getListEveryResult = (list: string[], preValue: any, nextValue: any, dataP
     const curr = parseExpression(item, nextValue, dataPath);
     return pre === curr;
   });
-}
+};
 
 export default (str: string, dataPath: string, dependencies: any[], shouldUpdateOpen: boolean) => (preValue: any, nextValue: any) => {
   // dependencies 先不处理
