@@ -42,7 +42,7 @@ export default (props: any) => {
  
   const { form, widgets, methods, globalProps } = configCtx;
 
-  const { reserveLabel, hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
+  const { reserveLabel, hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, validateTrigger, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);
   // Component not found
@@ -184,6 +184,7 @@ export default (props: any) => {
       wrapperCol={fieldCol}
       noStyle={noStyle}
       dependencies={dependencies}
+      validateTrigger={ fieldRef?.current?.validator ? 'onSubmit' : 'onChange' }
     >
       {fieldProps.onStatusChange ? (
         <FieldWrapperStatus 

@@ -149,19 +149,30 @@ export default () => {
 ### 三、子表单校验
 自定义组件是一个子表单时，表单提交是无法触发子表单进行校验的，所以这种类型的子组件需要单独处理
 ```js
-useImperativeHandle(props.addons.fieldRef, () => {
-  // 将校验方法暴露出去，方便外部表单提交时，触发校验
-  return {
-    validator: validator,
+import { useImperativeHandle } from 'react';
+const ChildForm = (props) => {
+  
+	// 内部校验方法，异步校验请用 async、await 语法
+  const validator = async () => { 
+    return true; // 返回 boolean 值，true 表示内部校验通过
+  
+    // 如果需在外部显示子表单错误信息可以使用对象形式返回
+    // retrun { status: boolean, message: string };
   };
-});
 
-// 内部校验方法，异步校验请用 async、await 语法
-const validator = async () => { 
-  return true; // 返回 boolean 值，表示内部校验通过
+  useImperativeHandle(props.addons.fieldRef, () => {
+    // 将校验方法暴露出去，方便外部表单提交时，触发校验
+    return {
+      validator
+    };
+  });
 
-  // retrun { status: boolean, message: string } // 如果需在外部显示子表单错误信息可以使用对象形式返回
+  return (
+  	...// 表单渲染代码
+  );
 }
+
+export default ChildForm;
 ```
 ### 四、定制校验模版
 - 全面拥抱 Antd Form Rules
