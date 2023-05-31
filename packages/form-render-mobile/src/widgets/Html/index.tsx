@@ -1,5 +1,4 @@
 import React from 'react';
-import { getWidgetName } from '../../models/mapping';
 import { getFormat } from '../utils';
 import dayjs from 'dayjs';
 
@@ -7,6 +6,14 @@ interface IProps {
   value: any
   options: any[],
   schema: any
+}
+
+// 首字母转大写
+const strToUpperCase = (str: string) => {
+  if (!str) {
+    return '';
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 const findLabels = (value: any[], options: any[]) => {
@@ -37,9 +44,7 @@ export default (props: IProps & Record<string, any>) => {
   const { value, options, schema = {} } = props;
   let __html: string;
   
-  const widgetName = getWidgetName(schema);
-
-  switch(widgetName) {
+  switch(strToUpperCase(schema.widget)) {
     case 'Input':
     case 'TextArea':
     case 'Rate':

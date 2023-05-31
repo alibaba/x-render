@@ -212,10 +212,6 @@ export interface FRProps extends AntdFormProps {
    */
   form: FormInstance;
   /** 
-   * 组件和schema的映射规则
-   */
-  mapping?: Record<string, string>;
-  /** 
    * 自定义组件
    */
   widgets?: Record<string, any>;

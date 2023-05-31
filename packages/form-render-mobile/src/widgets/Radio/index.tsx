@@ -1,9 +1,8 @@
 import React from 'react';
 import { Radio, Space } from 'antd-mobile';
-import { filterWidgetProps } from '../../utils';
 
 export default (props: any) => {
-  const { options, ...rest } = filterWidgetProps(props);
+  const { options, ...rest } = props;
   return (
     <Radio.Group  {...rest}>
       <Space direction='horizontal' wrap={true}>
