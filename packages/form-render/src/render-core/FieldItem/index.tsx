@@ -33,7 +33,7 @@ export default (props: any) => {
       shouldUpdate={fieldShouldUpdate(schemaStr, rootPath, dependencies, shouldUpdateOpen)}
     >
       {(form: any) => {
-        console.log('我被更新啦', schema, rootPath)
+        console.log('我被更新啦', schema, rootPath);
         const formData = form.getFieldsValue(true);
 
         const formDependencies: any[] = [];

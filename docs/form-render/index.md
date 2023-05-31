@@ -42,83 +42,25 @@ npm i form-render --save
  */
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
-import { Cascader } from 'antd';
-
-const schema = {
-  type: 'object',
-  displayType: 'row',
-  properties: {
-    a: {
-      title: '简单输入框1',
-      type: 'string',
-      required: true,
-       disabled: '{{ formData.deliveryModelType === 2   }}',
-    },
-    a1: {
-      title: '简单输入框2',
-      type: 'string',
-      required: true,
-    },
-    b: {
-      title: '简单输入框3',
-      type: 'string',
-      disabled: '{{ formData.a === 2 }}',
-    },
-    list: {
-      title: '活动模版',
-      type: 'array',
-      widget: 'cardList',
-      items: {
-        type: 'object',
-        properties: {
-          a: {
-            title: '简单输入框1',
-            type: 'string',
-            required: true,
-            disabled: '{{ formData.deliveryModelType === 2   }}',
-          },
-          a1: {
-            title: '简单输入框2',
-            type: 'string',
-            required: true,
-          },
-          b: {
-            title: '简单输入框3',
-            type: 'string',
-            disabledx: '{{ formData.a === 2 }}',
-            disabled: '{{ rootValue.a === 2 }}',
-          },
-        },
-      },
-    },
-  },
-};
+import schema from './schema/simple';
 
 export default () => {
   const form = useForm();
+
+  const onFinish = (formData) => {
+    console.log('formData:', formData);
+  };
+
   return (
-    <FormRender
-      schema={schema}
-      form={form}
-      onMount={() => {
-        form.setValueByPath('list', [
-          { input1: 1, materialType: 2, select1: 100003, k: 1 },
-          { input1: 2, materialType: 2, select1: 100003, k: 1 },
-          { input1: 2, materialType: 3, select1: 100001, k: 1 },
-        ]);
-      }}
-      watch={{
-        a: async (value) => {
-          setTimeout(() => {
-            // form.setValueByPath('list', null);
-          }, 2000);
-        },
-      }}
-      widgets={{ cascader: Cascader }}
+    <FormRender 
+      form={form} 
+      schema={schema} 
+      onFinish={onFinish} 
+      maxWidth={360} 
+      footer={true} 
     />
   );
-};
-
+}
 ```
 
 **类组件**
