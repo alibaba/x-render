@@ -5,6 +5,7 @@ import { _get } from '../../utils';
 import { getDependValues } from './module';
 import { FRContext, ConfigContext } from '../../models/context';
 import { isHasExpression, parseAllExpression } from '../../models/expression';
+import fieldShouldUpdate from '../../models/fieldShouldUpdate';
 import Main from './main';
 
 export default (props: any) => {
@@ -15,6 +16,8 @@ export default (props: any) => {
 
   const configCtx = useContext(ConfigContext);
   const mustacheDisabled = configCtx?.globalConfig?.mustacheDisabled;
+  const shouldUpdateOpen = configCtx?.globalConfig?.shouldUpdateOpen;
+
   const dependencies = schema?.dependencies;
 
   // No function expressions exist
@@ -22,16 +25,15 @@ export default (props: any) => {
     return <Main {...props} store={store} configCtx={configCtx} />;
   }
 
+  const schemaStr = JSON.stringify(schema);
   // Need to listen to form values for dynamic rendering
   return (
     <Form.Item
       noStyle
-      shouldUpdate={() => {
-        // TODO 进行优化
-        return true;
-      }}
+      shouldUpdate={fieldShouldUpdate(schemaStr, rootPath, dependencies, shouldUpdateOpen)}
     >
       {(form: any) => {
+        console.log('我被更新啦', schema, rootPath)
         const formData = form.getFieldsValue(true);
 
         const formDependencies: any[] = [];
