@@ -175,6 +175,14 @@ export interface FormInstance extends AntdFormInstance {
    * 获取表单 schema
    */
   getSchema: () => any;
+  /**
+   * 存储 field 的 ref 对象
+   */
+  setFieldRef: (path: string, ref: any) => void;
+  /**
+   * 获取 field 的 ref 对象
+   */
+  getFieldRef: (path: string) => any;
 }
 
 export type WatchProperties = {

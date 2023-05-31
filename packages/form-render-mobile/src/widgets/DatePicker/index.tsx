@@ -1,5 +1,5 @@
-import React from 'react'
-import { DatePicker as AntdDatePicker } from 'antd-mobile'
+import React, { useRef, useImperativeHandle} from 'react';
+import { DatePicker as AntdDatePicker } from 'antd-mobile';
 import { getFormat } from '../utils';
 import dayjs from 'dayjs';
 import formatPlugin from 'dayjs/plugin/advancedFormat';
@@ -20,17 +20,23 @@ export default (props: any) => {
     value, 
     onChange, 
     precision = 'day', 
-    placeholder = '请选择日期', 
-    setFieldRef, 
+    placeholder = '请选择日期',
     format,
     ...restProps
   } = omit(props, ['addons', 'schema'])
   
+  const pickerRef: any = useRef(null);
+  
+  // 使用useImperativeHandle暴露方法给外部
+  useImperativeHandle(props.addons.fieldRef, () => ({
+    ...pickerRef?.current
+  }));
+
   const dateFormat = format || getFormat(precision);
 
   return (
     <AntdDatePicker
-      ref={ref => setFieldRef(ref)}
+      ref={pickerRef}
       value={value}
       onConfirm={(value) => onChange(value)}
       precision={precision}

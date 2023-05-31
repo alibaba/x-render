@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef, useState } from 'react';
+import React, { createContext, useContext, useRef, useEffect } from 'react';
 import { Form, Grid, FormItemProps } from 'antd-mobile';
 import { useStore } from 'zustand';
 import classnames from 'classnames';
@@ -33,12 +33,11 @@ export default (props: any) => {
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);
-  const [needOnClick, setNeedOnClick] = useState(false);
   
-  const { form, widgets, methods, globalProps } = configCtx;
+  const { form, widgets, methods, globalProps }: any = configCtx;
   const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
 
-  let widgetName = getWidgetName(schema);
+  let widgetName: any = getWidgetName(schema);
   
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   let Widget = widgets[widgetName];
@@ -55,7 +54,8 @@ export default (props: any) => {
     dependValues,
     globalProps,
     path: getPath(path),
-    rootPath
+    rootPath,
+    fieldRef
   });
 
   const displayType = getValueFromKey('displayType');
@@ -108,13 +108,6 @@ export default (props: any) => {
     fieldProps.readOnly = readOnly;
   }
 
-  fieldProps.setFieldRef = (ref: any) => {
-    if (ref) {
-      setNeedOnClick(true);
-      fieldRef.current = ref;
-    }
-  }
-
   if (!label) {
     noStyle = true;
   }
@@ -133,21 +126,21 @@ export default (props: any) => {
     help,
     noStyle,
     dependencies,
-    name:path,
+    name: path,
     initialValue: defaultValue,
     rules: readOnly ? [] : ruleList,
     className:classnames('fr-field', {'fr-field-visibility': !visible}),
-  }
+  };
 
-  if (needOnClick && fieldRef.current && !readOnly) {
-    itemProps.onClick = () => {
-      fieldRef.current.open();
-    }
-  }
+  useEffect(() => {
+    form.setFieldRef(fieldProps.addons.dataPath, fieldRef);
+  }, []);
 
   return (
     <Grid.Item>
-      <Form.Item {...itemProps}>
+      <Form.Item {...itemProps} onClick={readOnly ? undefined : () => {
+        fieldRef?.current?.open();
+      }}>
         <FieldWrapper
           Field={Widget}
           fieldProps={fieldProps}

@@ -13,7 +13,7 @@ const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: s
 };
 
 export default (props: any) => {
-  const { schema: _schema, path, renderCore, rootPath } = props;
+  const { schema: _schema, path, renderCore, rootPath: _rootPath } = props;
 
   const store: any = useContext(FRContext);
   const formCtx: any = useStore(store, (state: any) => state.context);
@@ -26,7 +26,7 @@ export default (props: any) => {
   const { items, ...otherSchema } = _schema;
   const schema = {
     items,
-    ...parseAllExpression(otherSchema, formData, rootPath, formSchema)
+    ...parseAllExpression(otherSchema, formData, _rootPath, formSchema)
   };
 
   const defaultValue = schema.default ?? (schema.defaultValue || [{}]);
@@ -67,6 +67,9 @@ export default (props: any) => {
     return null;
   }
 
+  const preRootPath = (_rootPath || []).splice(0, _rootPath.length - 1);
+  const rootPath = [...preRootPath, ...path];
+  
   return (
     <Grid.Item span={24} className="frm-list">
       <Form.Array

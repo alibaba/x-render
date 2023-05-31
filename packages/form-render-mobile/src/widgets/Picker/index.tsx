@@ -1,17 +1,23 @@
-import React from 'react';
+import React, { useRef, useImperativeHandle} from 'react';
 import { Picker } from 'antd-mobile';
-import { filterWidgetProps } from '../../utils';
+import { omit } from 'lodash';
 
 export default (props: any) => {
   const { 
     value, 
     onChange, 
-    setFieldRef,
     placeholder = '请选择',
     options,
     columns,
     ...restProps
-  } = filterWidgetProps(props);
+  } = omit(props, ['addons', 'schema']);
+
+  const pickerRef: any = useRef(null);
+  
+  // 使用useImperativeHandle暴露方法给外部
+  useImperativeHandle(props.addons.fieldRef, () => ({
+    ...pickerRef?.current
+  }));
 
   // 只有一列的场景更多，这里兼容下
   const finalColumns = React.useMemo(() => {
@@ -26,7 +32,7 @@ export default (props: any) => {
     <Picker
       value={value}
       onConfirm={(val: any) => onChange(val)}
-      ref={ref => setFieldRef(ref)}
+      ref={pickerRef}
       columns={finalColumns}
       {...restProps}
     >

@@ -3,10 +3,12 @@ import { _get, isObject, getArray, isArray, isNumber } from '../../utils';
 
 // return dataIndex、dataPath、schemaPath
 const getPathObj = ({ rootPath = [], path }) => {
+  console.log(rootPath, '----rootpath')
+
   const pathList = (path || '').split('.');
-  const dataIndex = [];
-  const schemaIndex = [];
-  const dataPathList = [];
+  const dataIndex: any[] = [];
+  const schemaIndex: any[] = [];
+  const dataPathList: any[] = [];
 
   // dataIndex
   rootPath.forEach((item: any, index: number) => {
@@ -23,7 +25,7 @@ const getPathObj = ({ rootPath = [], path }) => {
   });
 
   // dataPath
-  let list = [...rootPath];
+  let list: any[] = [...rootPath];
   list.pop();
   list = [...list, ...pathList];
 
@@ -152,7 +154,7 @@ export const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valu
   return schema[valueKey] ?? upperCtx[valueKey];
 };
 
-export const getFieldProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath }) => {
+export const getFieldProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath, fieldRef }) => {
   const pathObj = getPathObj({ path, rootPath });
  
   const fieldProps = {
@@ -161,6 +163,7 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
       ...form,
       globalProps,
       dependValues,
+      fieldRef,
       ...pathObj
     }
   };

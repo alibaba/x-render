@@ -12,7 +12,7 @@ import {
 import { filterWidgetProps } from '../utils';
 
 const widgetHoc = (Widget: any) => (props: any) => {
-  const { setFieldRef, ...widgetProps } = filterWidgetProps(props);
+  const { ...widgetProps } = filterWidgetProps(props);
   return <Widget {...widgetProps} />
 };
 
