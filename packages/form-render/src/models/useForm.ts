@@ -72,6 +72,8 @@ const useForm = () => {
   const flattenSchemaRef = useRef({});
   const storeRef: any = useRef();
   const schemaRef = useRef({});
+  const fieldRefs = useRef({});
+
   const {
     getFieldError,
     getFieldsError,
@@ -309,6 +311,17 @@ const useForm = () => {
 
   // 老 API 兼容
   xform.onItemChange = xform.setValueByPath;
+
+  xform.setFieldRef = (path: string, ref: any) => {
+    if (!path) {
+      return;
+    }
+    fieldRefs.current[path] = ref;
+  }
+
+  xform.getFieldRef = (path: string) => {
+    return fieldRefs.current[path];
+  }
 
   return xform as FormInstance;
 };
