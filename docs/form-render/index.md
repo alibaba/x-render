@@ -42,62 +42,7 @@ npm i form-render --save
  */
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
-// import schema from './schema/simple';
-
-const schema = {
-	"type": "object",
-	"properties": {
-		"input": {
-			"title": "materialStrategyType",
-			"type": "string"
-			
-		},
-        "materialTemplateId": {
-			"title": "materialTemplateId",
-			"type": "string"
-			
-		},
-        "deliveryModelType": {
-			"title": "2",
-			"type": "number",
-			 "hiddenx": "{{ formData.input1 }}",
-		
-		},
-		"list": {
-			"title": "对象数组",
-			"description": "对象数组嵌套功能",
-			"type": "array",
-			"min": 1,
-			"max": 3,
-         
-			"items": {
-				"type": "object",
-				"properties": {
-					"input1": {
-						"title": "简单输入框",
-						"type": "string"
-           
-					},
-					"select1": {
-						"title": "单选",
-						"type": "string",
-             "hiddenx": "{{ rootValue.input1 }}",
-						"enum": [
-							"a",
-							"b",
-							"c"
-						],
-						"enumNames": [
-							"早",
-							"中",
-							"晚"
-						]
-					}
-				}
-			}
-		}
-	}
-};
+import schema from './schema/simple';
 
 export default () => {
   const form = useForm();
@@ -113,20 +58,6 @@ export default () => {
       onFinish={onFinish} 
       maxWidth={360} 
       footer={true}
-      onMount={() => {
-
-      }}
-      watch={{ '#' : (value) =>{
-        if (value.input) {
-          form.setSchemaByPath('list', { hidden: true })
-        } else {
-          form.setSchemaByPath('list', { hidden: false })
-        }
-        
-      }}}
-      globalConfig={{
-        shouldUpdateOpen: true,
-      }}
     />
   );
 }

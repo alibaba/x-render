@@ -4,7 +4,7 @@ import { Form } from 'antd';
 
 import { transformFieldsData, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
-import { _isMatch, _some, _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
+import { _isMatch, _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined, hasFuncProperty } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
 import type { FormInstance } from '../type';
 
@@ -132,25 +132,13 @@ const useForm = () => {
 
   // 设置某个字段的协议
   xform.setSchemaByPath = (_path: string, _newSchema: any) => {
-    const hasFuncProperty = (obj) => {
-      return _some(obj, (value) => {
-        if (isFunction(value)) {
-          return true;
-        }
-        if (isObject(value)) {
-          return hasFuncProperty(value);
-        }
-        return false;
-      });
-    };
-   
+    // diff 判断是否需要更新，存在函数跳过
     if (!hasFuncProperty(_newSchema) && _isMatch(xform.getSchemaByPath(_path), _newSchema)) {
       return;
     }
 
     const schema = _cloneDeep(schemaRef.current);
     updateSchemaByPath(_path, _newSchema, schema);
-
     handleSchemaUpdate(schema);
   }
 

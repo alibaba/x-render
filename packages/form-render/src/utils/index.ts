@@ -146,4 +146,16 @@ export const translation = (configCtx: any) => (key: string) => {
   return locale[key];
 }
 
+export const hasFuncProperty = (obj: any) => {
+  return _some(obj, (value) => {
+    if (isFunction(value)) {
+      return true;
+    }
+    if (isObject(value)) {
+      return hasFuncProperty(value);
+    }
+    return false;
+  });
+};
+
 
