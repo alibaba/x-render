@@ -1,6 +1,39 @@
 import React from 'react';
 import { _get, isObject, getArray, isArray, isNumber } from '../../utils';
 
+const filterHiddenData = (list: any[]) => {
+  if (!isArray(list)) {
+    return list;
+  }
+
+  let result = [];
+  for (let i = 0; i < list.length; i++) {
+    const item = list[i];
+    if (!item.hidden) {
+      let node = {
+        ...item,
+      };
+
+      if (item.children) {
+        let children = filterHiddenData(item.children);
+        if (children.length > 0) {
+          node.children = children;
+        }
+      }
+
+      if (item.items) {
+        let items = filterHiddenData(item.items);
+        if (items.length > 0) {
+          node.items = items;
+        }
+      }
+
+      result.push(node);
+    }
+  }
+  return result;
+}
+
 // return dataIndex、dataPath、schemaPath
 const getPathObj = ({ rootPath = [], path }) => {
   const pathList = (path || '').split('.');
@@ -212,7 +245,7 @@ export const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valu
 export const getFieldProps = (widgetName: string, schema: any, { widgets, methods, form, dependValues, globalProps, path, rootPath, fieldRef }) => {
   const pathObj = getPathObj({ path, rootPath });
  
-  const fieldProps = {
+  let fieldProps = {
     ...schema.props,
     addons: {
       ...form,
@@ -244,6 +277,13 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
       }
       return { label, value: item };
     });
+  }
+
+  if (isArray(fieldProps.options)) {
+    fieldProps = {
+      ...fieldProps,
+      options: filterHiddenData(fieldProps.options)
+    }
   }
 
   // 以 props 结尾的属性，直接透传
