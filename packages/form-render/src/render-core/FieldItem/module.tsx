@@ -286,6 +286,8 @@ export const getFieldProps = (widgetName: string, schema: any, { widgets, method
     }
   }
 
+  console.log(fieldProps.options, 'fafadfaf', schema.title)
+
   // 以 props 结尾的属性，直接透传
   Object.keys(schema).forEach(key => {
     if (
