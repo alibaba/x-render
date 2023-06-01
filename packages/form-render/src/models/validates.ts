@@ -49,7 +49,24 @@ const insertRequiredRule = (schema: any, rules: any[]) => {
   }
 
   rules.push(rule);
-}
+};
+
+export const transformRules = (rules = [], methods: any, form: any) => {
+  return rules.map(((item: any) => {
+    if (item.validator && !item.transformed) {
+      const validator = isFunction(item.validator) ? item.validator : methods[item.validator];
+      item.validator = async (_: any, value: any) => {
+        const result = await validator(_, value, { form });
+        if (isObject(result)) {
+          return result?.status ? Promise.resolve() : Promise.reject(new Error(result.message || item.message));
+        }
+        return result ? Promise.resolve() : Promise.reject(new Error(item.message));
+      };;
+      item.transformed = true;
+    }
+    return item;
+  }));
+};
 
 export default (schema: any, form: any, methods: any, fieldRef: any) => {
   let { 
@@ -115,20 +132,5 @@ export default (schema: any, form: any, methods: any, fieldRef: any) => {
     });
   }
 
-  const result = rules.map(((item: any) => {
-    if (item.validator && !item.transformed) {
-      const validator = isFunction(item.validator) ? item.validator : methods[item.validator];
-      item.validator = async (_: any, value: any) => {
-        const result = await validator(_, value, { form });
-        if (isObject(result)) {
-          return result?.status ? Promise.resolve() : Promise.reject(new Error(result.message || item.message));
-        }
-        return result ? Promise.resolve() : Promise.reject(new Error(item.message));
-      };;
-      item.transformed = true;
-    }
-    return item;
-  }));
-
-  return result;
+  return transformRules(rules, methods, form);
 }
