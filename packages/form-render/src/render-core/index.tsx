@@ -66,7 +66,6 @@ const RenderCore = (props: RenderCoreProps) : any => {
     return renderItem({ schema: schema.items, path: parentPath, rootPath });
   }
 
-
   // render Objiect | field
   return sortProperties(Object.entries(schema.properties || {})).map(([key, item]) => {
     const path = [...parentPath, key];
