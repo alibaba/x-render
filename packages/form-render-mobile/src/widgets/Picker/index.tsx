@@ -1,23 +1,30 @@
-import React, { useRef, useImperativeHandle} from 'react';
+import React, { useRef, useImperativeHandle, useEffect} from 'react';
 import { Picker } from 'antd-mobile';
 import { omit } from 'lodash';
 
 export default (props: any) => {
-  const { 
-    value, 
-    onChange, 
+  const {
+    value,
+    onChange,
     placeholder = '请选择',
     options,
     columns,
     ...restProps
   } = omit(props, ['addons', 'schema']);
 
+  const { autoOpen = false } = props.schema;
   const pickerRef: any = useRef(null);
-  
+
   // 使用useImperativeHandle暴露方法给外部
   useImperativeHandle(props.addons.fieldRef, () => ({
     ...pickerRef?.current
   }));
+
+  useEffect(() => {
+    if (autoOpen) {
+      pickerRef.current?.open();
+    }
+  }, [])
 
   // 只有一列的场景更多，这里兼容下
   const finalColumns = React.useMemo(() => {
