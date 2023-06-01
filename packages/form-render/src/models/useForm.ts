@@ -1,9 +1,10 @@
 import { useRef } from 'react';
 import { Form } from 'antd';
 
+
 import { transformFieldsData, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
-import { _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
+import { _isMatch, _some, _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, valueRemoveUndefined } from '../utils';
 import { flattenSchema as flatten } from './flattenSchema';
 import type { FormInstance } from '../type';
 
@@ -93,6 +94,7 @@ const useForm = () => {
 
   const setStoreData = (data: any) => {
     const { setState } = storeRef.current;
+    
     if (!setState) {
       setTimeout(() => {
         setState({ schema: schemaRef.current, flattenSchema: flattenSchemaRef.current });
@@ -130,6 +132,22 @@ const useForm = () => {
 
   // 设置某个字段的协议
   xform.setSchemaByPath = (_path: string, _newSchema: any) => {
+    const hasFuncProperty = (obj) => {
+      return _some(obj, (value) => {
+        if (isFunction(value)) {
+          return true;
+        }
+        if (isObject(value)) {
+          return hasFuncProperty(value);
+        }
+        return false;
+      });
+    };
+   
+    if (!hasFuncProperty(_newSchema) && _isMatch(xform.getSchemaByPath(_path), _newSchema)) {
+      return;
+    }
+
     const schema = _cloneDeep(schemaRef.current);
     updateSchemaByPath(_path, _newSchema, schema);
 

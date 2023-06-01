@@ -1,4 +1,4 @@
-import { set, get, cloneDeep, has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
+import { isMatch, some, set, get, cloneDeep, has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
 
 export const _set = set;
 export const _get = get;
@@ -8,6 +8,8 @@ export const _merge = merge;
 export const _mergeWith = mergeWith;
 export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
+export const _some = some;
+export const _isMatch = isMatch;
 
 export const isObject = (data: any) => {
   const str = Object.prototype.toString.call(data);
