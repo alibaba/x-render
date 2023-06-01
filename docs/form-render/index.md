@@ -57,7 +57,7 @@ export default () => {
       schema={schema} 
       onFinish={onFinish} 
       maxWidth={360} 
-      footer={true} 
+      footer={true}
     />
   );
 }
