@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { Form, message, ConfigProvider, Button } from 'antd';
 import { isFunction, translation } from '../../utils';
 import { getWidget } from '../../models/mapping';
+import { transformRules } from '../../models/validates';
 
 const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
   return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
@@ -171,32 +172,37 @@ export default (props: any) => {
 
   const operateBtnType = globalConfig?.listOperate?.btnType;
 
+  let ruleList: any = [];
+  if (!readOnly) {
+    const _rules = [
+      {
+        validator: async (_, data) => {
+          setListData(data);
+          if (!otherSchema?.min) {
+            return;
+          }
+          if (!data || data.length < otherSchema.min) {
+            return Promise.reject(
+              new Error(
+                otherSchema?.message?.min ||
+                `数据长度必须大于等于${otherSchema.min}`
+              )
+            );
+          }
+        }
+      },
+      ...rules
+    ];
+
+    ruleList = transformRules(_rules, methods, form);
+  }
+
   return (
     <>
       <Form.List
         name={path}
         initialValue={defaultValue}
-        rules={
-          [
-            {
-              validator: async (_, data) => {
-                setListData(data);
-                if (!otherSchema?.min) {
-                  return;
-                }
-                if (!data || data.length < otherSchema.min) {
-                  return Promise.reject(
-                    new Error(
-                      otherSchema?.message?.min ||
-                      `数据长度必须大于等于${otherSchema.min}`
-                    )
-                  );
-                }
-              }
-            },
-            ...rules
-          ]
-        }
+        rules={ruleList}
       >
         {(fields, operation, { errors }) => (
           <>
