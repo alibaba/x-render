@@ -58,7 +58,6 @@ export default () => {
       onFinish={onFinish} 
       maxWidth={360} 
       footer={true}
-      globalConfig={{ shouldUpdateOpen: true }}
     />
   );
 }
