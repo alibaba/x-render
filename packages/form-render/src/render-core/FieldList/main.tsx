@@ -174,7 +174,7 @@ export default (props: any) => {
 
   let ruleList: any = [];
   if (!readOnly) {
-    const _rules = [
+    ruleList = [
       {
         validator: async (_, data) => {
           setListData(data);
@@ -191,10 +191,8 @@ export default (props: any) => {
           }
         }
       },
-      ...rules
+      ...transformRules(rules || [], methods, form)
     ];
-
-    ruleList = transformRules(_rules, methods, form);
   }
 
   return (

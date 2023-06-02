@@ -48,21 +48,21 @@ externals: {
 ## 使用方式
 
 <a href="/schema-builder-online" target="_blank">全屏体验</a>
+
 ```jsx
 /**
- * transform: true
- * defaultShowCode: true
- * background: 'rgb(204,204,204, .33)'
- * padding: 20px
- */
+* transform: true
+* defaultShowCode: true
+* background: 'rgb(204,204,204, .33)'
+* padding: 20px
+*/
 import React from 'react';
 import SchemaBuilder from '@xrenders/schema-builder';
 
 const Demo = () => {
   return (
     <div style={{ height: '80vh' }}>
-      <SchemaBuilder 
-      />
+      <SchemaBuilder importBtn={true} exportBtn={true} pubBtn={false} />
     </div>
   );
 };

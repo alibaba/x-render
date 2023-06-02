@@ -9,7 +9,7 @@ sidebar: false
  * inline: true
  */
 import React from 'react';
-import Generator from '@xrenders/schema-builder';
+import SchemaBuilder from '@xrenders/schema-builder';
 
 import ReactDOM from 'react-dom';
 
@@ -20,7 +20,7 @@ window.ReactDOM = ReactDOM;
 const Demo = () => {
   return (
     <div style={{ height: '100vh' }}>
-      <Generator />
+      <SchemaBuilder importBtn={true} exportBtn={true} pubBtn={false} />
     </div>
   );
 };
