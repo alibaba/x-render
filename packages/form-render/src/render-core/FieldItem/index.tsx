@@ -34,6 +34,7 @@ export default (props: any) => {
     >
       {(form: any) => {
         const formData = form.getFieldsValue(true);
+        console.log('我被更新了', schema.title);
 
         const formDependencies: any[] = [];
         const dependValues = (dependencies || []).map((depPath: string) => {
