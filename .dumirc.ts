@@ -74,6 +74,7 @@ export default defineConfig({
     'table-render':  path.resolve(__dirname, 'packages/table-render/src'),
     '@xrenders/schema-builder':  path.resolve(__dirname, 'tools/schema-builder/src'),
     'form-render-mobile':  path.resolve(__dirname, 'packages/form-render-mobile/src'),
+    '@xrenders/data-view':  path.resolve(__dirname, 'packages/data-view/src'),
   },
   codeSplitting: { jsStrategy: 'granularChunks' },
   //...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),
