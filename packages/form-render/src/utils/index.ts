@@ -75,14 +75,14 @@ export function getFormat(format) {
 // TODO: to support case that item is not an object
 export function isObjType(schema: any) {
   //return schema?.type === 'object' && schema.properties && !schema.widget;
-  return schema?.type === 'object' && schema?.properties;
+  return schema?.type === 'object' && schema?.properties && schema?.widgetType !== 'field';
 };
 
 export function isListType(schema: any) {
   return schema?.type === 'array' && isObjType(schema?.items) && schema?.enum === undefined;
 };
 
-export function isCheckBoxType(schema, readOnly) {
+export function isCheckBoxType(schema: any, readOnly: boolean) {
   if (readOnly) return false;
   if (schema.widget === 'checkbox') return true;
   if (schema && schema.type === 'boolean') {
