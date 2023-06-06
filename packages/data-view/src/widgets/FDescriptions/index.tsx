@@ -11,7 +11,7 @@ import './index.less';
 const { Item: DescriptionItem } = Descriptions;
 const WIDGETNAME = 'dv-descriptions';
 
-const renderItemLabel = (item: any, data: any, storeMethod: any) => {
+const renderItemLabel = (item: any, data: any, addons: any) => {
   const { label, subLabel, labelToolTip } = item;
 
   // 如果 label 是函数
@@ -22,7 +22,7 @@ const renderItemLabel = (item: any, data: any, storeMethod: any) => {
   // 如果 label 是字符串函数名
   if (typeof label === 'string' && label.includes('method:')) {
     const [_, funcName] = label.split('method:');
-    const func = storeMethod.getMethod(funcName);
+    const func = addons.getMethod(funcName);
     return func(item, data);
   }
 
@@ -38,7 +38,7 @@ const renderItemLabel = (item: any, data: any, storeMethod: any) => {
 
   // 存在 lable 提示，进行聚合
   let { icon, title, overlayInnerStyle, ...tooltipProps } = labelToolTip || {};
-  const Icon = createIconFont(storeMethod.getConfig().iconFontUrl);
+  const Icon = createIconFont(addons.getConfig().iconFontUrl);
 
   return (
     <>
@@ -64,10 +64,10 @@ const renderItemLabel = (item: any, data: any, storeMethod: any) => {
   );
 };
 
-const getDescriptionItems = (items = [], { storeMethod, data, itemShowLevel }) => {
+const getDescriptionItems = (items = [], { addons, data, itemShowLevel }) => {
   return items.map((item: any) => {
     const { defaultValue = '', dataKey, showLevel, hidden } = item || {};
-    const { getDataFromKey, getSourceData, getMethod } = storeMethod;
+    const { getDataFromKey, getSourceData, getMethod } = addons;
     
     const _itemData = getDataFromKey(dataKey, data, defaultValue);
 
@@ -119,12 +119,12 @@ const FDescriptions = (props: any) => {
     itemShowLevel,
     title,
     extra,
-    storeMethod,
+    addons,
     items: _items,
     ...restProps
   } = props;
 
-  const items = getDescriptionItems(_items, { data, storeMethod, itemShowLevel });
+  const items = getDescriptionItems(_items, { data, addons, itemShowLevel });
   let _column = props.column || 3;
   
   return (
@@ -136,8 +136,8 @@ const FDescriptions = (props: any) => {
       })}
       size='small'
       {...restProps}
-      extra={<ReactNode schema={extra} data={data} storeMethod={storeMethod} />}
-      title={<ReactNode schema={title} data={data} storeMethod={storeMethod} />}
+      extra={<ReactNode schema={extra} data={data} addons={addons} />}
+      title={<ReactNode schema={title} data={data} addons={addons} />}
     >
       {items.map((item, index) => {
         const {
@@ -167,15 +167,15 @@ const FDescriptions = (props: any) => {
         return (
           <DescriptionItem
             key={index}
-            label={renderItemLabel(item, data, storeMethod)}
+            label={renderItemLabel(item, data, addons)}
             span={span}
             style={{ ...itemStyle, ..._itemStyle }}
             labelStyle={{ ...labelStyle, ..._labelStyle }}
             contentStyle={{ ...contentStyle, ...item.contentStyle }}
           >
-            {storeMethod.renderer({ 
+            {addons.renderer({ 
               data,
-              storeMethod,
+              addons,
               schema: {
                 widget: 'FText',
                 ...itemProps,

@@ -6,7 +6,7 @@ import './index.less';
 const { Title } = Typography;
 
 const FTitle = (props: any) => {
-  const { className, style, data, level = 6, showType, storeMethod, ...otherProps } = props;
+  const { className, style, data, level = 6, showType, addons, ...otherProps } = props;
 
   let { color, fontSize, ...otherStyle } = style || {};
   if (!fontSize && level === 6) {

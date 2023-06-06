@@ -51,7 +51,7 @@ const transformSchema = (schema: any, data: any) => {
  * 渲染器
  */
 export default (props: any): any => {
-  const { schema, data, storeMethod, showEmpty } = props;
+  const { schema, data, addons, showEmpty } = props;
   const List = transformSchema(schema, data);
 
   const componentList = List.map((item: any, index: number) => {
@@ -59,7 +59,7 @@ export default (props: any): any => {
     if ((data && item.repeatIndex) || item.repeatIndex === 0) {
       currData = data[item.repeatIndex];
     }
-    const componentInfo = decorator(item, currData, storeMethod);
+    const componentInfo = decorator(item, currData, addons);
 
     if (!componentInfo) {
       return;
@@ -73,8 +73,8 @@ export default (props: any): any => {
         {...componentProps}
         data={componentData}
         {...asyncComptProps}
-        storeMethod={{
-          ...storeMethod,
+        addons={{
+          ...addons,
           dataKey,
           getParentData
         }}
@@ -85,7 +85,7 @@ export default (props: any): any => {
   if (componentList.length === 0) {
     if (showEmpty) {
       return (
-        <Skeleton active loading={!storeMethod.getSourceData()}>
+        <Skeleton active loading={!addons.getSourceData()}>
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
         </Skeleton>
       );

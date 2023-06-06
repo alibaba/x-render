@@ -8,7 +8,7 @@ const FButtonFold = (props: any) => {
   const {
     data,
     content,
-    storeMethod,
+    addons,
     className,
     method,
     childSchema,
@@ -22,7 +22,7 @@ const FButtonFold = (props: any) => {
     setExpand(!isExpand);
     // 传人外置方法，实现按钮点击事件
     if (method) {
-      const func = storeMethod.getMethod(method?.name || method);
+      const func = addons.getMethod(method?.name || method);
       func(data, method);
       return;
     }
@@ -30,7 +30,7 @@ const FButtonFold = (props: any) => {
 
   let expandContent;
   if (expandRender) {
-    expandContent = storeMethod.getMethod(expandRender)(data);
+    expandContent = addons.getMethod(expandRender)(data);
   }
 
   return (
@@ -48,7 +48,7 @@ const FButtonFold = (props: any) => {
         <div style={{ width: '100%' }}>
           {expandRender
             ? expandContent
-            : storeMethod.renderer({ schema: childSchema, data, storeMethod })}
+            : addons.renderer({ schema: childSchema, data, addons })}
         </div>
       )}
     </>

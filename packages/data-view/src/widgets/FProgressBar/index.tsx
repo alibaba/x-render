@@ -7,15 +7,15 @@ interface FProgressBarProps extends Omit<ProgressProps, 'formatFunc' | 'percent'
   /** 内容的模版函数的 Key */
   formatFunc: string;
   data: any;
-  storeMethod: Record<string, (...params: any) => any>;
+  addons: Record<string, (...params: any) => any>;
 }
 
 const FProgressBar: React.FC<FProgressBarProps> = (props) => {
-  const { className, style, formatFunc, storeMethod, data, ...restProps } = props;
+  const { className, style, formatFunc, addons, data, ...restProps } = props;
 
   const handleformatFunc = (percent?: number, successPrecent?: number) => {
     if (formatFunc) {
-      const func = storeMethod.getMethod(formatFunc);
+      const func = addons.getMethod(formatFunc);
       if (typeof func === 'function') {
         return func(percent, successPrecent);
       }

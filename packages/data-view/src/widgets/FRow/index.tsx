@@ -6,7 +6,7 @@ import { combineClass } from '../utils/common';
 import './index.less';
 
 const FRow = (props: any) => {
-  const { items, data, hasBackground, className, storeMethod, ...options } = props;
+  const { items, data, hasBackground, className, addons, ...options } = props;
 
   return (
     <Row className={combineClass('dtv-row', className)} wrap={false} {...options}>
@@ -21,7 +21,7 @@ const FRow = (props: any) => {
             })}
             {...itemOptions}
           >
-            {storeMethod.renderer({ key: index, schema: children, data, storeMethod })}
+            {addons.renderer({ key: index, schema: children, data, addons })}
           </Col>
         );
       })}

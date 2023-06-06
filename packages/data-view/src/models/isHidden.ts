@@ -8,7 +8,7 @@ const getList = (string: string, operator: string) =>
 const operators = ['===', '==', '!=', '>', '<', 'has', '!has']; // 支持四种基本运算符
 
 // 计算单个表达式的hidden值
-const calculate = (str: string, data: any, storeMethod: any) => {
+const calculate = (str: string, data: any, addons: any) => {
   if (!data || typeof data !== 'object' || Object.keys(data).length === 0) {
     return false;
   }
@@ -32,14 +32,14 @@ const calculate = (str: string, data: any, storeMethod: any) => {
         data,
         path: left.replace(/data:/g, ''),
         defaultValue: right === undefined ? '' : 'left-null',
-        storeMethod,
+        addons,
       });
     } else if (left.includes('source:')) {
       left = getValueFromKey({
-        data: storeMethod.getSourceData(),
+        data: addons.getSourceData(),
         path: left.replace(/source:/g, ''),
         defaultValue: right === undefined ? '' : 'left-null',
-        storeMethod,
+        addons,
       });
     }
 
@@ -52,14 +52,14 @@ const calculate = (str: string, data: any, storeMethod: any) => {
         data,
         path: right.replace(/data:/g, ''),
         defaultValue: left === undefined ? '' : 'right-null',
-        storeMethod,
+        addons,
       });
     } else if (right?.includes('source:')) {
       right = getValueFromKey({
-        data: storeMethod.getSourceData(),
+        data: addons.getSourceData(),
         path: left.replace(/source:/g, ''),
         defaultValue: left === undefined ? '' : 'right-null',
-        storeMethod,
+        addons,
       });
     }
 
@@ -98,7 +98,7 @@ const calculate = (str: string, data: any, storeMethod: any) => {
 /**
  * 表达式判断
  */
-export default (key: any, data: any, storeMethod: any) => {
+export default (key: any, data: any, addons: any) => {
   let newKey = key;
 
   // 说明是函数表达式
@@ -111,33 +111,33 @@ export default (key: any, data: any, storeMethod: any) => {
 
   // 相等，说明不是函数表达式
   if (newKey === key || operators.every((item) => !newKey.includes(item))) {
-    return !getValueFromKey({ data, path: newKey, defaultValue: false, storeMethod });
+    return !getValueFromKey({ data, path: newKey, defaultValue: false, addons });
   }
 
   // 两种运算符都不存在
   if (!hasOr(newKey) && !hasAnd(newKey)) {
-    return !calculate(newKey, data, storeMethod);
+    return !calculate(newKey, data, addons);
   }
 
   // 只有 && 运算符
   if (!hasOr(newKey) && hasAnd(newKey)) {
     return !getList(newKey, '&&').every((item: string) => {
-      const res = calculate(item, data, storeMethod);
+      const res = calculate(item, data, addons);
       return res;
     });
   }
 
   // 只有 || 运算符
   if (hasOr(newKey) && !hasAnd(newKey)) {
-    return !getList(newKey, '||').some((item: string) => calculate(item, data, storeMethod));
+    return !getList(newKey, '||').some((item: string) => calculate(item, data, addons));
   }
 
   // 两种运算符都存在
   return !getList(newKey, '||').some((item: string) => {
     // 存在 && 运算符
     if (hasAnd(item)) {
-      return getList(item, '&&').every((item: string) => calculate(item, data, storeMethod));
+      return getList(item, '&&').every((item: string) => calculate(item, data, addons));
     }
-    return calculate(item, data, storeMethod);
+    return calculate(item, data, addons);
   });
 };

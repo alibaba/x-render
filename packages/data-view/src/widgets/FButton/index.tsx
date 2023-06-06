@@ -10,7 +10,7 @@ const OriginModal: any = Modal;
 interface FButtonProps extends ButtonProps {
   data: any;
   content: any;
-  storeMethod: Record<string, (...params: any) => any>;
+  addons: Record<string, (...params: any) => any>;
   /** 事件类型 */
   eventType: string;
   /** 传入的方法配置 */
@@ -52,7 +52,7 @@ interface FButtonProps extends ButtonProps {
 const FButton: React.FC<FButtonProps> = (props) => {
   const {
     data,
-    storeMethod,
+    addons,
     className,
     eventType,
     content,
@@ -76,10 +76,10 @@ const FButton: React.FC<FButtonProps> = (props) => {
   const sendRequest = async (req: any) => {
     const { api, name, params: condition, config } = req;
     const params = {
-      ...storeMethod.getRequestParams(condition, { insideData: data }),
+      ...addons.getRequestParams(condition, { insideData: data }),
     };
-    const requestFunc = storeMethod.getMethod(name || 'request');
-    const requestConfig = storeMethod.getRequestConfig();
+    const requestFunc = addons.getMethod(name || 'request');
+    const requestConfig = addons.getRequestConfig();
 
     const res = (await requestFunc(api, params, config, request)) || {};
     return res[requestConfig.dataKey];
@@ -108,7 +108,7 @@ const FButton: React.FC<FButtonProps> = (props) => {
       okText,
       className: 'dtv-button-modal',
       ...modalProps,
-      content: storeMethod.renderer({ schema: children, data: modalData, storeMethod }),
+      content: addons.renderer({ schema: children, data: modalData, addons }),
     });
   };
 
@@ -152,7 +152,7 @@ const FButton: React.FC<FButtonProps> = (props) => {
     // 传人外置方法，实现按钮点击事件
     if (eventType === 'method') {
       const funcName = typeof method === 'string' ? method : method?.name;
-      const func = storeMethod.getMethod(funcName);
+      const func = addons.getMethod(funcName);
       await apply(func, data, method);
       return;
     }
@@ -175,7 +175,7 @@ const FButton: React.FC<FButtonProps> = (props) => {
 
         openModal(result);
       } else {
-        openModal(storeMethod.getParentData());
+        openModal(addons.getParentData());
       }
       return;
     }
@@ -187,11 +187,11 @@ const FButton: React.FC<FButtonProps> = (props) => {
     }
   };
 
-  const Icon = createIconFont(storeMethod.getConfig().iconFontUrl);
+  const Icon = createIconFont(addons.getConfig().iconFontUrl);
   const iconContent = <Icon type={iconSetting?.type} style={iconSetting?.style} />;
   const debounceClick = React.useCallback(debounceFunc(handleClick, debounce?.wait, debounce), [
     method,
-    storeMethod,
+    addons,
     request,
     eventType,
     modal,

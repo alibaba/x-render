@@ -9,7 +9,7 @@ const FPanel = (props: any) => {
     className,
     style,
     data,
-    storeMethod,
+    addons,
 
     title,
     titleStyle,
@@ -22,8 +22,8 @@ const FPanel = (props: any) => {
     <div className={combineClass('dtv-panel', className)} style={style}>
       {title && <FTitle data={title} showIcon={titleShowIcon} style={titleStyle} />}
       {render
-        ? storeMethod.getMethod(render)(data, props)
-        : storeMethod.renderer({ schema: childSchema, data, storeMethod })}
+        ? addons.getMethod(render)(data, props)
+        : addons.renderer({ schema: childSchema, data, addons })}
     </div>
   );
 };

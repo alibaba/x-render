@@ -17,7 +17,7 @@ const FSteps = (props: any) => {
     size = 'small',
     className,
     style,
-    storeMethod,
+    addons,
     ...otherProps
   } = props;
 

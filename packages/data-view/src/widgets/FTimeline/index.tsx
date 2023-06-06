@@ -4,7 +4,7 @@ import { combineClass } from '../utils/common';
 import FTitle from '../FTitle';
 
 const FTimeline = (props: any) => {
-  const { data = [], title, className, style, lineItem = {}, storeMethod, ...otherProps } = props;
+  const { data = [], title, className, style, lineItem = {}, addons, ...otherProps } = props;
   const {
     timeKey = 'time',
     contenKey = 'content',

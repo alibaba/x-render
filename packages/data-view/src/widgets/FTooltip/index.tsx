@@ -4,7 +4,7 @@ import { combineClass } from '../utils/common';
 import './index.less';
 
 const FTooltip = (props: any) => {
-  const { data, childSchema, className, style, title, tooltip, storeMethod, ...otherProps } = props;
+  const { data, childSchema, className, style, title, tooltip, addons, ...otherProps } = props;
   const tooltipTitle = <div dangerouslySetInnerHTML={{ __html: title }} />;
 
   return (
@@ -18,7 +18,7 @@ const FTooltip = (props: any) => {
       title={tooltipTitle}
     >
       <div className="content" style={{ display: 'inline-block', ...style }}>
-        {storeMethod.renderer({ schema: childSchema, data, storeMethod, ...otherProps })}
+        {addons.renderer({ schema: childSchema, data, addons, ...otherProps })}
       </div>
     </Tooltip>
   );

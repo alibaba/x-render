@@ -15,7 +15,7 @@ const FSuckNav = (props: any) => {
     className,
     style,
     fixed = true,
-    storeMethod,
+    addons,
     ...otherProps
   } = props;
 
@@ -37,7 +37,7 @@ const FSuckNav = (props: any) => {
       scrollContainer={scrollContainer}
     >
       {childSchema.map((item: any, index: number) =>
-        storeMethod.renderer({ key: index, schema: item, storeMethod, ...otherProps }),
+        addons.renderer({ key: index, schema: item, addons, ...otherProps }),
       )}
     </Tabs>
   );

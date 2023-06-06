@@ -6,7 +6,7 @@ import { get } from 'lodash-es';
 
 interface FRadioGroupProps extends Omit<RadioGroupProps, 'onChange'> {
   data: any;
-  storeMethod: Record<string, (...params: any) => any>;
+  addons: Record<string, (...params: any) => any>;
   /** 自定义 onChange 方法，参数是 event，需要返回最终的 value，支持异步方法 */
   onChange: string;
   /** 自定义 label, value, disable 的字段 */
@@ -31,7 +31,7 @@ const FRadioGroup: React.FC<FRadioGroupProps> = (props) => {
     className,
     onChange,
     style,
-    storeMethod,
+    addons,
     dataKey,
     optionKeys = defaultOptionKeys,
     ...restProps
@@ -52,7 +52,7 @@ const FRadioGroup: React.FC<FRadioGroupProps> = (props) => {
 
   const handleChange = (e: RadioChangeEvent) => {
     const value = e.target.value;
-    const func = storeMethod.getMethod(onChange);
+    const func = addons.getMethod(onChange);
     const result = func(value, { options });
 
     if (result?.then) {

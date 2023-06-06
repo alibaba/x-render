@@ -64,15 +64,15 @@ export default (props: DataVProps) => {
     return parseExpression(key, { currentData, sourceData: data }) ?? defaultValue;
   }
 
-  const renderer = ({ data, schema, storeMethod }: any) => {
-    return <RenderCore schema={schema} data={data} storeMethod={storeMethod} />;
+  const renderer = ({ data, schema, addons }: any) => {
+    return <RenderCore schema={schema} data={data} addons={addons} />;
   };
 
   return (
     <RenderCore
       data={data || {}}
       schema={schema}
-      storeMethod={{
+      addons={{
         renderer,
         getMethod,
         getWidget,

@@ -4,15 +4,15 @@ import { combineClass, isReactNodeSchema } from '../utils/common';
 import './index.less';
 
 const FCard = (props: any) => {
-  const { data, childSchema, className, style, title, extra, storeMethod, ...otherProps } = props;
+  const { data, childSchema, className, style, title, extra, addons, ...otherProps } = props;
   let cardTitle = <div dangerouslySetInnerHTML={{ __html: title }} />;
   let cardExtra = extra;
   if (isReactNodeSchema(title)) {
-    cardTitle = storeMethod.renderer({ schema: title, data, storeMethod });
+    cardTitle = addons.renderer({ schema: title, data, addons });
   }
 
   if (isReactNodeSchema(extra)) {
-    cardExtra = storeMethod.renderer({ schema: extra, data, storeMethod });
+    cardExtra = addons.renderer({ schema: extra, data, addons });
   }
 
   return (
@@ -23,7 +23,7 @@ const FCard = (props: any) => {
       title={cardTitle}
       extra={cardExtra}
     >
-      {storeMethod.renderer({ schema: childSchema, data, storeMethod })}
+      {addons.renderer({ schema: childSchema, data, addons })}
     </Card>
   );
 };

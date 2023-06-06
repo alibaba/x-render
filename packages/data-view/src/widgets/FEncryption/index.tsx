@@ -7,13 +7,13 @@ import { getValueFromKey } from '../utils/common';
  * 加密组件
  */
 const FEncryption = (props: any) => {
-  const { data, method, storeMethod, ...otherProps } = props;
+  const { data, method, addons, ...otherProps } = props;
 
-  const parentData = storeMethod.getParentData();
-  const dataKey = storeMethod.dataKey;
+  const parentData = addons.getParentData();
+  const dataKey = addons.dataKey;
 
   const encryInfo: any =
-    getValueFromKey({ path: 'source:encryInfo', defaultValue: {}, storeMethod }) || {};
+    getValueFromKey({ path: 'source:encryInfo', defaultValue: {}, addons }) || {};
   let showKey = (method?.showKey ?? '') + dataKey;
   if (method?.extraShowKey) {
     showKey = parentData[dataKey + method.extraShowKey];
@@ -31,7 +31,7 @@ const FEncryption = (props: any) => {
       funcName = method.name;
     }
 
-    const func = storeMethod.getMethod(funcName);
+    const func = addons.getMethod(funcName);
     func({ dataKey, method, data: parentData }, ev);
   };
 
@@ -41,7 +41,7 @@ const FEncryption = (props: any) => {
       data={conent}
       onClick={handleClick}
       {...otherProps}
-      iconFontUrl={storeMethod.getConfig().iconFontUrl}
+      iconFontUrl={addons.getConfig().iconFontUrl}
     />
   );
 };

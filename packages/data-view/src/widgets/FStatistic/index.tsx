@@ -5,11 +5,11 @@ import { combineClass, isReactNodeSchema, isType } from '../utils/common';
 
 interface FStatisticProps extends Omit<StatisticProps, 'value'> {
   data: any;
-  storeMethod: Record<string, (...params: any) => any>;
+  addons: Record<string, (...params: any) => any>;
 }
 
 const FStatistic: React.FC<FStatisticProps> = (props) => {
-  const { className, data, storeMethod, style, formatter, title, suffix, prefix, ...restProps } =
+  const { className, data, addons, style, formatter, title, suffix, prefix, ...restProps } =
     props;
 
   let titleNode = title;
@@ -17,21 +17,21 @@ const FStatistic: React.FC<FStatisticProps> = (props) => {
   let prefixNode = prefix;
 
   if (isReactNodeSchema(title)) {
-    titleNode = storeMethod.renderer({ schema: title, data, storeMethod });
+    titleNode = addons.renderer({ schema: title, data, addons });
   }
 
   if (isReactNodeSchema(suffix)) {
-    suffixNode = storeMethod.renderer({ schema: suffix, data, storeMethod });
+    suffixNode = addons.renderer({ schema: suffix, data, addons });
   }
 
   if (isReactNodeSchema(prefix)) {
-    prefixNode = storeMethod.renderer({ schema: prefix, data, storeMethod });
+    prefixNode = addons.renderer({ schema: prefix, data, addons });
   }
 
   const handleFormatter = (value: any) => {
     let result = value;
     if (formatter) {
-      const func = storeMethod.getMethod(formatter);
+      const func = addons.getMethod(formatter);
       result = func(value);
     }
 

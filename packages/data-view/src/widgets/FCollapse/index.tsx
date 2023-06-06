@@ -9,26 +9,26 @@ interface IProps {
   header?: any[];
   className?: any;
   style?: object;
-  storeMethod?: any;
+  addons?: any;
 }
 
 /**
  * 折叠面板
  */
 const FCollapse = (props: IProps) => {
-  const { data, header, childSchema, storeMethod, ...collapseProps } = props;
-  const sourceData = storeMethod.getSourceData();
+  const { data, header, childSchema, addons, ...collapseProps } = props;
+  const sourceData = addons.getSourceData();
 
   let loading = false;
   if (!sourceData || !Object.keys(sourceData).length) {
     loading = true;
   }
 
-  const content = storeMethod.renderer({ schema: childSchema, data, storeMethod, showEmpty: true });
+  const content = addons.renderer({ schema: childSchema, data, addons, showEmpty: true });
 
   return (
     <BaseCollapse
-      header={storeMethod.renderer({ schema: header, data, storeMethod })}
+      header={addons.renderer({ schema: header, data, addons })}
       {...collapseProps}
     >
       <Skeleton active loading={loading}>

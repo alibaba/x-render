@@ -1,7 +1,7 @@
 import React from 'react';
 
 // 处理表格 column
-const detalColumn = (colmnMap: any, { storeMethod, template, renderFRender, repeatIndex }: any) => {
+const detalColumn = (colmnMap: any, { addons, template, renderFRender, repeatIndex }: any) => {
   const column: any = {};
 
   for (const key of Object.keys(colmnMap || {})) {
@@ -25,7 +25,7 @@ const detalColumn = (colmnMap: any, { storeMethod, template, renderFRender, repe
     // 对合并数据进行递归处理
     if (childColumn) {
       otherItem.column = detalColumn(childColumn, {
-        storeMethod,
+        addons,
         template,
         renderFRender,
         repeatIndex,
@@ -72,7 +72,7 @@ const detalColumn = (colmnMap: any, { storeMethod, template, renderFRender, repe
 
     // 配置外置 render 方法进行渲染
     if (render && typeof render === 'string') {
-      const renderFunc = storeMethod.getMethod(render);
+      const renderFunc = addons.getMethod(render);
       otherItem.render = (data: any, record: any, index: any) =>
         renderFunc(data, item, record, index);
     }

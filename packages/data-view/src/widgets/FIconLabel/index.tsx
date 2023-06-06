@@ -10,12 +10,12 @@ const FIconLabel = (props: any) => {
     method,
     href,
     target = '_blank',
-    storeMethod,
+    addons,
     ...otherProps
   } = props;
 
-  const parentData = storeMethod.getParentData();
-  const dataKey = storeMethod.dataKey;
+  const parentData = addons.getParentData();
+  const dataKey = addons.dataKey;
 
   const handleClick = async (ev: any) => {
     if (href) {
@@ -27,7 +27,7 @@ const FIconLabel = (props: any) => {
       return;
     }
     // 传人外置方法，实现按钮点击事件
-    const func = storeMethod.getMethod(method?.name || method);
+    const func = addons.getMethod(method?.name || method);
     func({ dataKey, method, data: parentData }, ev);
   };
 
@@ -37,7 +37,7 @@ const FIconLabel = (props: any) => {
       data={`${leftText || ''} ${data} ${rightText || ''}`}
       {...otherProps}
       {...icon}
-      iconFontUrl={storeMethod.getConfig().iconFontUrl}
+      iconFontUrl={addons.getConfig().iconFontUrl}
     />
   );
 };

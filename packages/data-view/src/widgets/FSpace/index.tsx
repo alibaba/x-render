@@ -12,7 +12,7 @@ const FSpace = (props: any) => {
     labelStyle,
     spaceStyle,
     childSchema,
-    storeMethod,
+    addons,
     ...spaceProps
   } = props;
 
@@ -21,7 +21,7 @@ const FSpace = (props: any) => {
       {label && <span style={labelStyle}>{label}：</span>}
       <Space style={spaceStyle} split={split ? <Divider type="vertical" /> : null} {...spaceProps}>
         {childSchema.map((schema: any, index: number) =>
-          storeMethod.renderer({ key: index, schema, data, storeMethod }),
+          addons.renderer({ key: index, schema, data, addons }),
         )}
       </Space>
     </div>

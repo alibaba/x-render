@@ -23,7 +23,7 @@ interface IProps {
   format: any; // 数据格式化配置
   iconSetting: any; // 图标配置
   useType: string; // 使用方式，区别是否被其他组件调用，如果是，需要自行格式化数据
-  storeMethod: any; // data-view 插件总控
+  addons: any; // data-view 插件总控
   [key: string]: any;
 }
 
@@ -45,10 +45,10 @@ const FText = (props: IProps) => {
     render,
     format,
     iconSetting,
-    storeMethod,
+    addons,
   } = props;
 
-  const parentData = storeMethod.getParentData();
+  const parentData = addons.getParentData();
 
   let value = data;
 
@@ -63,13 +63,13 @@ const FText = (props: IProps) => {
     if (['html'].includes(format?.type)) {
       value = <InnerHtml data={value} />;
     } else {
-      value = transformData(value, format, parentData, storeMethod);
+      value = transformData(value, format, parentData, addons);
     }
   }
 
   // 自定义渲染：配置外置 render 方法
   if (render && typeof render === 'string') {
-    const renderFunc = storeMethod.getMethod(render);
+    const renderFunc = addons.getMethod(render);
     return renderFunc(value, props, parentData) || null;
   }
 
@@ -80,7 +80,7 @@ const FText = (props: IProps) => {
     if (typeof childSchema === 'string') {
       schema = { widget: childSchema };
     }
-    return storeMethod.renderer({ schema, data: value, storeMethod });
+    return addons.renderer({ schema, data: value, addons });
   }
 
   // 异常处理，这样的数据不符合渲染规则，不渲染
@@ -122,7 +122,7 @@ const FText = (props: IProps) => {
   }
 
   const handleIconClick = (ev: any) => {
-    transDataKeyToData(iconSetting, { data: parentData, storeMethod });
+    transDataKeyToData(iconSetting, { data: parentData, addons });
     if (iconSetting.href) {
       if (iconSetting.target === '_self') {
         window.location.href = iconSetting.href;
@@ -132,11 +132,11 @@ const FText = (props: IProps) => {
       return;
     }
     // 传人外置方法，实现按钮点击事件
-    const func = storeMethod.getMethod(iconSetting?.method?.name || iconSetting?.method);
+    const func = addons.getMethod(iconSetting?.method?.name || iconSetting?.method);
     func({ dataKey: props.dataKey, method: iconSetting.method, data: parentData }, ev);
   };
 
-  const Icon = createIconFont(storeMethod.getConfig().iconFontUrl);
+  const Icon = createIconFont(addons.getConfig().iconFontUrl);
   const isClick = !!iconSetting?.href || !!iconSetting?.method;
   const iconContent = (
     <Icon

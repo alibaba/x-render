@@ -11,7 +11,7 @@ const FTextEllipsis = (props: any) => {
     className,
     style,
     data,
-    storeMethod,
+    addons,
 
     contentStyle,
     height = 24,
@@ -20,7 +20,7 @@ const FTextEllipsis = (props: any) => {
 
   } = props;
 
-  const parentData = storeMethod.getParentData();
+  const parentData = addons.getParentData();
 
   return (
     <div className={combineClass('dtv-textellipsis', className)} style={style}>
@@ -29,10 +29,10 @@ const FTextEllipsis = (props: any) => {
         data={data}
         contentStyle={contentStyle}
         leftSlot={
-          leftSlot && storeMethod.renderer({ schema: leftSlot, data: parentData, storeMethod })
+          leftSlot && addons.renderer({ schema: leftSlot, data: parentData, addons })
         }
         rightSlot={
-          rightSlot && storeMethod.renderer({ schema: rightSlot, data: parentData, storeMethod })
+          rightSlot && addons.renderer({ schema: rightSlot, data: parentData, addons })
         }
       />
     </div>

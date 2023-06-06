@@ -13,7 +13,7 @@ import './index.less';
  * 自动请求数据-Table
  */
 const RequestTable = (props: any) => {
-  const { request, pagination: pageConfig, storeMethod, ...tableProps } = props;
+  const { request, pagination: pageConfig, addons, ...tableProps } = props;
 
   const [state, setState] = useSet({
     total: 0,
@@ -45,11 +45,11 @@ const RequestTable = (props: any) => {
     const params = {
       pageNo,
       pageSize,
-      ...getRequestParams(condition, storeMethod.getSourceData()),
+      ...getRequestParams(condition, addons.getSourceData()),
     };
 
-    const requestFunc = storeMethod.getMethod(name || 'request');
-    const requestConfig = storeMethod.getRequestConfig();
+    const requestFunc = addons.getMethod(name || 'request');
+    const requestConfig = addons.getRequestConfig();
 
     setState({ loading: true });
     const res = (await requestFunc(api, params, request)) || {};

@@ -8,7 +8,7 @@ import './index.less';
  * 图片组件
  */
 const FImage = (props: any) => {
-  const [{ data, className, style, images, preview = false, storeMethod, ...imageProps }] = props;
+  const [{ data, className, style, images, preview = false, addons, ...imageProps }] = props;
 
   let src = data;
   if (images) {

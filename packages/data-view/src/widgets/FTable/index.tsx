@@ -15,7 +15,7 @@ const FTable = (props: any) => {
     column,
     template,
     request,
-    storeMethod,
+    addons,
     titleStyle,
     repeatIndex,
     rowSelection,
@@ -24,13 +24,13 @@ const FTable = (props: any) => {
   } = props;
 
   const renderFRender = (value: any, schema: any) => {
-    return storeMethod.renderer({ schema, data: value, storeMethod });
+    return addons.renderer({ schema, data: value, addons });
   };
 
-  const columnMap = detalColumn(column, { storeMethod, template, renderFRender, repeatIndex });
+  const columnMap = detalColumn(column, { addons, template, renderFRender, repeatIndex });
 
   // if (rowSelection) {
-  //   otherProps.rowSelection = storeMethod('getAppHelperParams', rowSelection);
+  //   otherProps.rowSelection = addons('getAppHelperParams', rowSelection);
   // }
 
   return (
@@ -56,7 +56,7 @@ const FTable = (props: any) => {
             ...style,
           }}
           request={request}
-          storeMethod={storeMethod}
+          addons={addons}
           column={columnMap}
           fRender={renderFRender}
         />

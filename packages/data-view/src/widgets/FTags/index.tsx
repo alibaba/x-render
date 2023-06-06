@@ -4,7 +4,7 @@ import { get } from 'lodash-es';
 import { combineClass, transformData } from '../utils/common';
 import InnerHtml from '../components/InnerHtml';
 
-const renderTag = (tagProps: any, storeMethod: any) => (data: any, index: number) => {
+const renderTag = (tagProps: any, addons: any) => (data: any, index: number) => {
   const { dataKey, format, ...otherProps } = tagProps || {};
   let value = data;
   if (dataKey) {
@@ -15,7 +15,7 @@ const renderTag = (tagProps: any, storeMethod: any) => (data: any, index: number
   if (['html'].includes(format?.type)) {
     value = <InnerHtml data={value} />;
   } else {
-    value = transformData(value, format, storeMethod);
+    value = transformData(value, format, addons);
   }
 
   if (!value || (typeof value === 'object' && !isValidElement(value))) {
@@ -30,7 +30,7 @@ const renderTag = (tagProps: any, storeMethod: any) => (data: any, index: number
 };
 
 const FTags: FC = (props: any) => {
-  const { className, style, data, tagProps, storeMethod } = props;
+  const { className, style, data, tagProps, addons } = props;
 
   let list = data || [];
 
@@ -40,7 +40,7 @@ const FTags: FC = (props: any) => {
 
   return (
     <div className={combineClass('dtv-tags', className)} style={style}>
-      {list.map(renderTag(tagProps, storeMethod))}
+      {list.map(renderTag(tagProps, addons))}
     </div>
   );
 };

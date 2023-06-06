@@ -2,7 +2,7 @@ import React from 'react';
 import InnerHtml from '../InnerHtml';
 
 const ReactNode = (props: any) => {
-  const { schema, data, storeMethod } = props;
+  const { schema, data, addons } = props;
 
   if (!schema) {
     return null;
@@ -17,12 +17,12 @@ const ReactNode = (props: any) => {
 
     // 如果字符串中包含 render: 则调用 render 方法进行渲染
     const [_, funcName] = schema.split('method:');
-    const renderFunc = storeMethod.getMethod(funcName);
+    const renderFunc = addons.getMethod(funcName);
     return renderFunc(data);
   }
 
   // 当 data 为对象时，则调用 FRender 组件进行渲染
-  return storeMethod.renderer({ schema, data, storeMethod });
+  return addons.renderer({ schema, data, addons });
 };
 
 export default ReactNode;

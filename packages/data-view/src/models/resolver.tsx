@@ -20,10 +20,10 @@ const InnerHtml = (props: any) => {
   );
 };
 
-export default (props: any, parentData: any, storeMethod: any) => {
+export default (props: any, parentData: any, addons: any) => {
   // 获取对应数据
   const getValue = (params: any) => {
-    return getValueFromKey({ data: parentData, storeMethod, ...params });
+    return getValueFromKey({ data: parentData, addons, ...params });
   };
 
   const { dataKey, defaultValue, children, ...rest } = props;
@@ -35,7 +35,7 @@ export default (props: any, parentData: any, storeMethod: any) => {
   // 解析函数表达式，替换值
   const restProps = parseAllExpression(rest, {
     parentData,
-    sourceData: storeMethod.getSourceData(),
+    sourceData: addons.getSourceData(),
     currentData: value,
   });
 
@@ -59,10 +59,10 @@ export default (props: any, parentData: any, storeMethod: any) => {
     ...componentProps
   } = restProps;
 
-  showLevel = showLevel ?? storeMethod?.getConfig()?.showLevel;
+  showLevel = showLevel ?? addons?.getConfig()?.showLevel;
 
   // 当组件配置 showKey，服务端对应数据不存在时，直接返回不显示
-  if (showKey && isHidden(showKey, parentData, storeMethod)) {
+  if (showKey && isHidden(showKey, parentData, addons)) {
     return null;
   }
 
@@ -71,7 +71,7 @@ export default (props: any, parentData: any, storeMethod: any) => {
   }
 
   // 根据 widget 创建对应组件，先从外部获取，如果没有，再从内置组件中获取
-  const component = storeMethod.getWidget(widget);
+  const component = addons.getWidget(widget);
 
   if (!component) {
     console.warn(widget, '未找到对应组件，请检查配置项 widget 是否配置正确');
@@ -87,7 +87,7 @@ export default (props: any, parentData: any, storeMethod: any) => {
   if (['html'].includes(format?.type)) {
     value = <InnerHtml data={value} />;
   } else {
-    value = transformData(value, format, parentData, storeMethod);
+    value = transformData(value, format, parentData, addons);
   }
 
   // 当配置 showLevel 需要校验数据是否为空
@@ -152,7 +152,7 @@ export default (props: any, parentData: any, storeMethod: any) => {
 
   // 通过外部方法，获取组件配置信息
   let asyncComptProps = {};
-  const getPropsFunc = getCompProps && storeMethod.getMethod(getCompProps);
+  const getPropsFunc = getCompProps && addons.getMethod(getCompProps);
   if (getPropsFunc) {
     asyncComptProps = getPropsFunc(props, { data: value, parentData }) || {};
   }

@@ -34,17 +34,17 @@ export const parseString = (string: string) => Function('"use strict";return (' 
  * @param path // 对应数据的路径，例如：'a.b.c'
  * @param defaultValue // 默认值
  * @param data // 数据
- * @param storeMethod // 渲染器方法集，访问 getSourceData
+ * @param addons // 渲染器方法集，访问 getSourceData
  * @returns value
  */
 export const getValueFromKey = (props: {
   path: string;
   data?: any;
   defaultValue?: any;
-  storeMethod: any;
+  addons: any;
   valueType?: string;
 }): string | boolean => {
-  const { data, path = '', defaultValue = '', storeMethod, valueType } = props;
+  const { data, path = '', defaultValue = '', addons, valueType } = props;
 
   let result = null;
   let negation = null; // 否定标识 ！
@@ -61,7 +61,7 @@ export const getValueFromKey = (props: {
   // 带 source 标识，表示从顶层获取数据
   if (dataPath.includes('source:')) {
     const [_, sourcePath]: any = dataPath.split('source:');
-    const sourceData = storeMethod.getSourceData();
+    const sourceData = addons.getSourceData();
     result = get(sourceData, sourcePath);
   } else {
     result = get(data, dataPath);
@@ -90,7 +90,7 @@ export const getValueFromKey = (props: {
 /**
  * 数据格式转换
  */
-export const transformData = (value: any, format: any, parentData?: any, storeMethod?: any) => {
+export const transformData = (value: any, format: any, parentData?: any, addons?: any) => {
   if (!format || (!value && value !== 0 && format.type !== 'dateTime-range')) {
     return value;
   }
@@ -101,12 +101,12 @@ export const transformData = (value: any, format: any, parentData?: any, storeMe
 
     if (type === 'dateTime-range') {
       const { startKey, endKey }: any = config;
-      let startTime: any = getValueFromKey({ data: parentData, path: startKey, storeMethod });
+      let startTime: any = getValueFromKey({ data: parentData, path: startKey, addons });
       if (startTime) {
         startTime = dayjs.tz(startTime).format(config.format || 'YYYY-MM-DD HH:mm:ss');
       }
 
-      let endTime: any = getValueFromKey({ data: parentData, path: endKey, storeMethod });
+      let endTime: any = getValueFromKey({ data: parentData, path: endKey, addons });
       if (endTime) {
         endTime = dayjs.tz(endTime).format(config.format || 'YYYY-MM-DD HH:mm:ss');
       }
@@ -140,7 +140,7 @@ export const transformData = (value: any, format: any, parentData?: any, storeMe
         result = `${getValueFromKey({
           data: parentData,
           path: config.split('dataKey:')[1],
-          storeMethod,
+          addons,
           defaultValue: '',
         })} ${value}`;
       } else {
@@ -154,7 +154,7 @@ export const transformData = (value: any, format: any, parentData?: any, storeMe
         result = `${value} ${getValueFromKey({
           data: parentData,
           path: config.split('dataKey:')[1],
-          storeMethod,
+          addons,
           defaultValue: '',
         })}`;
       } else {
@@ -292,7 +292,7 @@ export const isType = (val: any, types: Array<keyof typeof validatorMap>) => {
   });
 };
 
-export const transDataKeyToData = (object: any, { data, storeMethod }: any) => {
+export const transDataKeyToData = (object: any, { data, addons }: any) => {
   // 进行动态数据绑定
   Object.keys(object).forEach((key) => {
     const item = object[key];
@@ -301,13 +301,13 @@ export const transDataKeyToData = (object: any, { data, storeMethod }: any) => {
     }
 
     if (startsWith(item, 'source:')) {
-      object[key] = getValueFromKey({ path: item, data, storeMethod });
+      object[key] = getValueFromKey({ path: item, data, addons });
       return;
     }
 
     if (startsWith(item, 'data:')) {
       const path = item.split('data:')[1]?.trim();
-      object[key] = getValueFromKey({ path, data, storeMethod });
+      object[key] = getValueFromKey({ path, data, addons });
     }
   });
 };
