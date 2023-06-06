@@ -176,6 +176,14 @@ const useForm = () => {
   xform.setValueByPath = (path: string, value: any) => {
     const name = getFieldName(path);
     form.setFieldValue(name, value);
+
+    try {
+      if (JSON.stringify(form.getFieldValue(name)) !== JSON.stringify(value)) {
+        form.setFieldValue(name, value);
+      }
+    } catch (error) {
+      
+    }
   }
 
   // 通过某个字段的 schema
@@ -311,8 +319,11 @@ const useForm = () => {
     return validateFields();
   }
 
-  xform.getFlattenSchema = () => {
-    return flattenSchemaRef.current;
+  xform.getFlattenSchema = (path?: string) => {
+    if (!path) {
+      return flattenSchemaRef.current;
+    }
+    return flattenSchemaRef.current?.[path];
   }
 
   // 老 API 兼容

@@ -176,7 +176,7 @@ export interface FormInstance {
    * 
    * 获取 flatten schema
    */
-  getFlattenSchema: () => any;
+  getFlattenSchema: (path?: string) => any;
   /**
    * 根据路径获取 Schema
    */

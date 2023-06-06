@@ -37,9 +37,9 @@ const filterHiddenData = (list: any[]) => {
 // return dataIndex、dataPath、schemaPath
 const getPathObj = ({ rootPath = [], path }) => {
   const pathList = (path || '').split('.');
-  const dataIndex = [];
-  const schemaIndex = [];
-  const dataPathList = [];
+  const dataIndex: any[] = [];
+  const schemaIndex: any[] = [];
+  const dataPathList: any[] = [];
 
   // dataIndex
   rootPath.forEach((item: any, index: number) => {
@@ -56,7 +56,7 @@ const getPathObj = ({ rootPath = [], path }) => {
   });
 
   // dataPath
-  let list = [...rootPath];
+  let list: any[] = [...rootPath];
   list.pop();
   list = [...list, ...pathList];
 
