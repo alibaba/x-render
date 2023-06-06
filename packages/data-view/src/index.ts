@@ -1,8 +1,9 @@
-import DataRender from './core';
+import DRender from './core';
 import withProvider from './withProvider';
+import * as defaultWidgets from './widgets';
 
-export type {
-  default as FR,
-} from './type';
+export { default as FRender } from './core/renderer';
 
-export default withProvider(DataRender);
+export const DataRender = withProvider(DRender, defaultWidgets);
+export const LightRender = withProvider(DRender);
+export default withProvider(DRender, defaultWidgets);

@@ -1,17 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import { ConfigProvider } from 'antd';
 import dayjs from 'dayjs';
-import { useUnmount } from 'ahooks';
 
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
-import locales from './locales';
 import 'dayjs/locale/zh-cn';
 
 import { createStore } from './models/store';
-import { FRContext, ConfigContext } from './models/context';
+import { FRContext } from './models/context';
 
-export default function withProvider<T>(Element: React.ComponentType<T>) : React.ComponentType<T> {
+export default function withProvider<T>(
+  Element: React.ComponentType<T>,
+  defaultWidgets?: any,
+): React.ComponentType<T> {
   return (props: any) => {
     const {
       configProvider,
@@ -20,14 +21,14 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       methods,
       form,
       validateMessages,
-      globalProps={},
+      globalProps = {},
       globalConfig = {},
       ...otherProps
     } = props;
-  
+
     const storeRef = useRef(createStore());
     const store: any = storeRef.current;
-  
+
     useEffect(() => {
       if (locale === 'en-US') {
         dayjs.locale('en');
@@ -36,35 +37,18 @@ export default function withProvider<T>(Element: React.ComponentType<T>) : React
       dayjs.locale('zh-cn');
     }, [locale]);
 
-   
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
-   
-    const configContext = {
-      locale,
-      widgets,
-      methods,
-      form,
-      globalProps,
-      globalConfig
-    };
-  
-    const langPack: any = { 
-      ...antdLocale,
-      ...configProvider?.locale
-    };
 
-    debugger;
+    const langPack: any = {
+      ...antdLocale,
+      ...configProvider?.locale,
+    };
 
     return (
-      <ConfigProvider
-        {...configProvider}
-        locale={langPack}
-      >
-        <ConfigContext.Provider value={configContext}>
-          <FRContext.Provider value={store}>
-            <Element form={form} {...otherProps} />
-          </FRContext.Provider>
-        </ConfigContext.Provider>
+      <ConfigProvider {...configProvider} locale={langPack}>
+        <FRContext.Provider value={store}>
+          <Element {...otherProps} widgets={{ ...defaultWidgets, ...widgets }} />
+        </FRContext.Provider>
       </ConfigProvider>
     );
   };

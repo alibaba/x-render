@@ -1,17 +1,5 @@
-
-
-
-
-
-
-
-
-
-
-
 export interface DataVProps {
-  [key: string]: any
+  [key: string]: any;
 }
-
 
 export default DataVProps;

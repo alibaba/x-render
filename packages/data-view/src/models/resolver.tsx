@@ -2,6 +2,7 @@ import React from 'react';
 import isHidden from './isHidden';
 import { getValueFromKey, transformData, isDataEmpty, startsWith } from '../utils/common';
 import classnames from 'classnames';
+import { parseAllExpression } from './expression';
 
 const InnerHtml = (props: any) => {
   const { data, style, className } = props;
@@ -12,7 +13,7 @@ const InnerHtml = (props: any) => {
 
   return (
     <span
-      className={classnames(null, { [className]: className })}
+      className={classnames(null, { [className]: !!className })}
       style={style}
       dangerouslySetInnerHTML={{ __html: data }}
     />
@@ -20,16 +21,33 @@ const InnerHtml = (props: any) => {
 };
 
 export default (props: any, parentData: any, storeMethod: any) => {
+  // 获取对应数据
+  const getValue = (params: any) => {
+    return getValueFromKey({ data: parentData, storeMethod, ...params });
+  };
+
+  const { dataKey, defaultValue, ...rest } = props;
+
+  // 当组件配置 dataKey，根据 dataKey 获取服务端对应数据，否则继承父级数据
+  let value = dataKey ? getValue({ path: dataKey, defaultValue }) : defaultValue ?? parentData;
+
+  // 解析函数表达式，替换值
+  const restProps = parseAllExpression(rest, {
+    parentData,
+    sourceData: storeMethod.getSourceData(),
+    data: value,
+  });
+
+  // console.log('before:', props, 'after:', restProps);
+
   let {
     widget,
     data,
     children,
-    dataKey,
     showKey,
     showLevel,
     format,
     getCompProps,
-    defaultValue,
     leftTextKey,
     rightTextKey,
     hrefKey,
@@ -37,16 +55,10 @@ export default (props: any, parentData: any, storeMethod: any) => {
     leftUnitKey,
     rightUnitKey,
     titleKey,
-
     ...componentProps
-  } = props;
+  } = restProps;
 
   showLevel = showLevel ?? storeMethod?.getConfig()?.showLevel;
-
-  // 获取对应数据
-  const getValue = (params: any) => {
-    return getValueFromKey({ data: parentData, storeMethod, ...params });
-  };
 
   // 当组件配置 showKey，服务端对应数据不存在时，直接返回不显示
   if (showKey && isHidden(showKey, parentData, storeMethod)) {
@@ -60,9 +72,6 @@ export default (props: any, parentData: any, storeMethod: any) => {
     console.warn(widget, '未找到对应组件，请检查配置项 widget 是否配置正确');
     return null;
   }
-
-  // 当组件配置 dataKey，根据 dataKey 获取服务端对应数据，否则继承父级数据
-  let value = dataKey ? getValue({ path: dataKey, defaultValue }) : defaultValue ?? parentData;
 
   // 如果有传人的数据，直接使用
   if (data || data === 0) {

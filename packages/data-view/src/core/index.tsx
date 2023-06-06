@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import Renderer from './renderer';
+import React from 'react';
+import RenderCore from './renderer';
 import { getRequestParams } from '../utils/common';
 import { DataVProps } from '../type';
 import './index.less';
@@ -8,14 +8,14 @@ const defaultConfig = {
   showLevel: 0,
 };
 
-const DataRender:FC<DataVProps> = (props) => {
+export default (props: DataVProps) => {
   const { schema, data, sourceData, widgets, config = {} } = props;
 
   // 获取顶层数据
   const getSourceData = () => {
     return sourceData || data;
   };
- 
+
   // 获取外部自定义方法
   const getMethod = (name: string) => {
     const { methods = {} } = props;
@@ -55,25 +55,23 @@ const DataRender:FC<DataVProps> = (props) => {
     ...config,
   });
 
-  const renderFRender = (data: any, schema: any, storeMethod: any) => {
-    return <Renderer schema={schema} data={data} storeMethod={storeMethod} />;
+  const renderer = (data: any, schema: any, storeMethod: any) => {
+    return <RenderCore schema={schema} data={data} storeMethod={storeMethod} />;
   };
- 
+
   return (
-    <Renderer
+    <RenderCore
       data={data || {}}
       schema={schema}
       storeMethod={{
-        getSourceData,
+        renderer,
         getMethod,
         getWidget,
+        getSourceData,
         getRequestConfig,
         getRequestPrams,
         getConfig,
-        renderer: renderFRender,
       }}
     />
   );
-}
-
-export default DataRender;
+};

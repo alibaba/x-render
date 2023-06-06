@@ -1,13 +1,14 @@
 import React from 'react';
 import { Empty, Skeleton } from 'antd';
-import get from 'lodash/get';
+import { get } from 'lodash-es';
 import decorator from '../models/resolver';
 
 // 对 schema 进行处理
-const dealWithSchema = (schema: any, data: any) => {
+const transformSchema = (schema: any, data: any) => {
   if (!schema || typeof schema !== 'object') {
     return [];
   }
+
   const arrayList = Array.isArray(schema) ? schema : [schema];
 
   // 处理 repeat 组件按数据多次进行展示
@@ -47,38 +48,34 @@ const dealWithSchema = (schema: any, data: any) => {
 };
 
 /**
- *
- * 组件渲染器
+ * 渲染器
  */
-const FRender = (props: any): any => {
+export default (props: any): any => {
   const { schema, data, storeMethod, showEmpty } = props;
-  const schemaData = dealWithSchema(schema, data);
+  const List = transformSchema(schema, data);
 
-  const componentList: any[] = [];
-  schemaData.forEach((item: any, index: number) => {
-    let newData = data;
+  const componentList = List.map((item: any, index: number) => {
+    let currData = data;
     if ((data && item.repeatIndex) || item.repeatIndex === 0) {
-      newData = data[item.repeatIndex];
+      currData = data[item.repeatIndex];
+    }
+    const componentInfo = decorator(item, currData, storeMethod);
+
+    if (!componentInfo) {
+      return;
     }
 
-    const componentInfo = decorator(item, newData, storeMethod);
-    if (componentInfo) {
-      const {
-        component: Component,
-        componentData,
-        componentProps,
-        asyncComptProps,
-      } = componentInfo;
-      componentList.push(
-        <Component
-          key={index}
-          {...componentProps}
-          data={componentData}
-          {...asyncComptProps}
-          storeMethod={storeMethod}
-        />,
-      );
-    }
+    const { component: Component, componentData, componentProps, asyncComptProps } = componentInfo;
+
+    return (
+      <Component
+        key={index}
+        {...componentProps}
+        data={componentData}
+        {...asyncComptProps}
+        storeMethod={storeMethod}
+      />
+    );
   });
 
   if (componentList.length === 0) {
@@ -94,5 +91,3 @@ const FRender = (props: any): any => {
 
   return componentList;
 };
-
-export default FRender;
