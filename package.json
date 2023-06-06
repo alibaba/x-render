@@ -85,8 +85,8 @@
     "prettier": "^2.6.0",
     "prettier-plugin-packagejson": "^2.2.16",
     "prismjs": "^1.27.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
     "react-monaco-editor": "^0.44.0",
     "react-simple-code-editor": "^0.11.0",
     "react-test-renderer": "^17.0.2",
@@ -104,7 +104,6 @@
     "dumi-theme-mobile": "^2.0.4",
     "antd-mobile": "5.x",
     "translate-google": "^1.5.0",
-    "chart-render": "^0.1.9",
-    "@ali/data-view": "1.0.8"
+    "chart-render": "^0.1.9"
   }
 }
