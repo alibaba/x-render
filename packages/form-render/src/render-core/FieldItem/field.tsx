@@ -15,9 +15,9 @@ export const FieldWrapperStatus = (props: any) => {
     onStatusChange && onStatusChange(status, errors);
   }, [JSON.stringify(errors)]);
 
-  // useUpdateEffect(() => {
-  //   otherProps.onChange(initialValue);
-  // }, [JSON.stringify(initialValue)]);
+  useUpdateEffect(() => {
+    otherProps.onChange(initialValue);
+  }, [JSON.stringify(initialValue)]);
 
   return (
     <Field 
