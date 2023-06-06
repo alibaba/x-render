@@ -319,8 +319,11 @@ const useForm = () => {
     return validateFields();
   }
 
-  xform.getFlattenSchema = () => {
-    return flattenSchemaRef.current;
+  xform.getFlattenSchema = (path?: string) => {
+    if (!path) {
+      return flattenSchemaRef.current;
+    }
+    return flattenSchemaRef.current?.[path];
   }
 
   // 老 API 兼容
