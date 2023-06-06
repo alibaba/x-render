@@ -22,7 +22,6 @@ interface FButtonProps extends ButtonProps {
       };
   /** 弹窗配置 */
   modal?: ModalProps & { type?: string; request?: any };
-  getParentData: () => any;
   /** 请求配置 */
   request?: any;
   /** 图标配置 */
@@ -60,7 +59,6 @@ const FButton: React.FC<FButtonProps> = (props) => {
     method,
     modal,
     href,
-    getParentData,
     request,
     type = 'link',
     target = '_blank',
@@ -177,7 +175,7 @@ const FButton: React.FC<FButtonProps> = (props) => {
 
         openModal(result);
       } else {
-        openModal(getParentData());
+        openModal(storeMethod.getParentData());
       }
       return;
     }

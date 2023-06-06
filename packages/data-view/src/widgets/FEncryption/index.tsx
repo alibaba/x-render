@@ -7,9 +7,10 @@ import { getValueFromKey } from '../utils/common';
  * 加密组件
  */
 const FEncryption = (props: any) => {
-  const { dataKey, data, getParentData, method, storeMethod, ...otherProps } = props;
+  const { data, method, storeMethod, ...otherProps } = props;
 
-  const parentData = getParentData();
+  const parentData = storeMethod.getParentData();
+  const dataKey = storeMethod.dataKey;
 
   const encryInfo: any =
     getValueFromKey({ path: 'source:encryInfo', defaultValue: {}, storeMethod }) || {};

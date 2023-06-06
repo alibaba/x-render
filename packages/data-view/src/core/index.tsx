@@ -1,6 +1,7 @@
 import React from 'react';
 import RenderCore from './renderer';
 import { getRequestParams } from '../utils/common';
+import { parseExpression } from '../models/expression';
 import { DataVProps } from '../type';
 import './index.less';
 
@@ -55,6 +56,14 @@ export default (props: DataVProps) => {
     ...config,
   });
 
+  const getDataFromKey = (_key: string, currentData: any, defaultValue: any) => {
+    if (!_key) {
+      return currentData;
+    }
+    const key = ['data:', 'source:', 'parent:', '{{'].some(item => _key.includes(item)) ? _key : `currentData.${_key}`;
+    return parseExpression(key, { currentData, sourceData: data }) ?? defaultValue;
+  }
+
   const renderer = ({ data, schema, storeMethod }: any) => {
     return <RenderCore schema={schema} data={data} storeMethod={storeMethod} />;
   };
@@ -71,6 +80,7 @@ export default (props: DataVProps) => {
         getRequestConfig,
         getRequestPrams,
         getConfig,
+        getDataFromKey
       }}
     />
   );

@@ -26,16 +26,17 @@ export default (props: any, parentData: any, storeMethod: any) => {
     return getValueFromKey({ data: parentData, storeMethod, ...params });
   };
 
-  const { dataKey, defaultValue, ...rest } = props;
+  const { dataKey, defaultValue, children, ...rest } = props;
 
   // 当组件配置 dataKey，根据 dataKey 获取服务端对应数据，否则继承父级数据
   let value = dataKey ? getValue({ path: dataKey, defaultValue }) : defaultValue ?? parentData;
+
 
   // 解析函数表达式，替换值
   const restProps = parseAllExpression(rest, {
     parentData,
     sourceData: storeMethod.getSourceData(),
-    data: value,
+    currentData: value,
   });
 
   // console.log('before:', props, 'after:', restProps);
@@ -43,7 +44,6 @@ export default (props: any, parentData: any, storeMethod: any) => {
   let {
     widget,
     data,
-    children,
     showKey,
     showLevel,
     format,
@@ -55,6 +55,7 @@ export default (props: any, parentData: any, storeMethod: any) => {
     leftUnitKey,
     rightUnitKey,
     titleKey,
+    hidden,
     ...componentProps
   } = restProps;
 
@@ -63,6 +64,10 @@ export default (props: any, parentData: any, storeMethod: any) => {
   // 当组件配置 showKey，服务端对应数据不存在时，直接返回不显示
   if (showKey && isHidden(showKey, parentData, storeMethod)) {
     return null;
+  }
+
+  if (!!hidden) {
+    return;
   }
 
   // 根据 widget 创建对应组件，先从外部获取，如果没有，再从内置组件中获取
@@ -143,10 +148,6 @@ export default (props: any, parentData: any, storeMethod: any) => {
 
   if (children) {
     componentProps.childSchema = children;
-  }
-
-  if (widget === 'FEncryption') {
-    componentProps.dataKey = dataKey;
   }
 
   // 通过外部方法，获取组件配置信息

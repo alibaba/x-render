@@ -14,13 +14,13 @@ const FTextEllipsis = (props: any) => {
     storeMethod,
 
     contentStyle,
-    getParentData,
     height = 24,
     leftSlot = [],
     rightSlot = [],
+
   } = props;
 
-  const parentData = getParentData();
+  const parentData = storeMethod.getParentData();
 
   return (
     <div className={combineClass('dtv-textellipsis', className)} style={style}>

@@ -1,6 +1,5 @@
 import React, { isValidElement, CSSProperties } from 'react';
 
-import isHidden from '../../models/isHidden';
 import { transformData, combineClass, transDataKeyToData } from '../utils/common';
 import createIconFont from '../utils/createIconFont';
 import { renderText } from '../components/TextView';
@@ -37,7 +36,6 @@ const FText = (props: IProps) => {
     className,
     style,
     data,
-    getParentData,
     leftText,
     rightText,
     leftTextStyle,
@@ -45,48 +43,14 @@ const FText = (props: IProps) => {
     useType,
     childSchema,
     render,
-    showKey,
-    showLevel,
     format,
     iconSetting,
     storeMethod,
   } = props;
 
-  const parentData = getParentData();
+  const parentData = storeMethod.getParentData();
 
   let value = data;
-
-  // 如果描述项没有数据（包含 0），则描述项内容不显示
-  if (showLevel === 1 && (!value || value === '0')) {
-    return null;
-  }
-
-  // 如果描述项没有数据（不包含 0），则描述项内容不显示
-  if (showLevel === 2 && !value && value !== 0) {
-    return null;
-  }
-
-  // 受其他数据控制，检查是否需要显示，支持函数表达式
-  if (showKey) {
-    if (typeof showKey === 'function') {
-      // 如果是函数，直接执行
-      if (!showKey(parentData, storeMethod.getSourceData())) {
-        return null;
-      }
-    } else if (showKey.includes('func:')) {
-      // 如果是通过协议声明的函数，获取函数并执行
-      const [_, funcName] = showKey.split('func:');
-      const showFunc = storeMethod.getMethod(funcName);
-      if (!showFunc(parentData, storeMethod.getSourceData())) {
-        return null;
-      }
-    } else {
-      // 函数表达式
-      if (isHidden(showKey, parentData, storeMethod)) {
-        return null;
-      }
-    }
-  }
 
   // 布尔值特殊处理一下
   if (typeof value === 'boolean') {

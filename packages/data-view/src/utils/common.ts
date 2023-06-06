@@ -8,12 +8,6 @@ import { isNumber, isObject, isString, get } from 'lodash-es';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
-export const parseProps = (props: any) => {
-  const { storeMethod, dataKey, getParentData, ...otherProps } = props;
-
-  return [otherProps, { storeMethod, dataKey, getParentData }];
-};
-
 export const combineClass = (name: any, data: any, extra = {}) => {
   let result: any = {};
 
