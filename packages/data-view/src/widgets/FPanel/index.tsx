@@ -17,8 +17,7 @@ const FPanel = (props: any) => {
     childSchema,
     render,
   } = props;
-
-  debugger;
+  
   return (
     <div className={combineClass('dtv-panel', className)} style={style}>
       {title && <FTitle data={title} showIcon={titleShowIcon} style={titleStyle} />}

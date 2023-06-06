@@ -51,13 +51,17 @@ export interface IProps {
   [key: string]: any;
 }
 
+
+
+
+
 /**
  * 描述列表
  */
 const FDescriptions = (props: IProps) => {
   const {
     data,
-    items,
+    items: _items,
     className,
     itemStyle,
     labelStyle,
@@ -144,6 +148,57 @@ const FDescriptions = (props: IProps) => {
     );
   };
 
+
+  const items = _items.map((item: any) => {
+    const {
+      defaultValue = '',
+      dataKey,
+      showKey,
+      showLevel
+    } = item || {};
+
+    // 获取数据
+    let value = dataKey ? getValueFromKey({ data, path: dataKey, defaultValue, storeMethod }) : data;
+
+    const level = showLevel ?? itemShowLevel;
+    // 如果描述项没有数据（包含 0），则描述项不显示
+    if (level === 1 && (!value || value === '0')) {
+      return null;
+    }
+
+    // 如果描述项没有数据（不包含 0），则示描述项不显
+    if (level === 2 && !value && value !== 0) {
+      return null;
+    }
+
+    // 受其他数据控制，检查是否需要显示
+    if (showKey) {
+      if (typeof showKey === 'function') {
+        // 如果是函数，直接执行
+        if (!showKey(data, storeMethod.getSourceData())) {
+          return null;
+        }
+      } else if (showKey.includes('func:')) {
+        // 如果是通过协议声明的函数，获取函数并执行
+        const [_, funcName] = showKey.split('func:');
+        const showFunc = storeMethod.getMethod(funcName);
+        if (!showFunc(data, storeMethod.getSourceData())) {
+          return null;
+        }
+      } else {
+        // 函数表达式
+        if (isHidden(showKey, data, storeMethod)) {
+          return null;
+        }
+      }
+    }
+
+    return { ...item, _itemData: value };
+  }).filter(item => item);
+
+
+  let _column = props.column || 3
+
   return (
     <Descriptions
       className={combineClass(WIDGETNAME, className, {
@@ -166,47 +221,13 @@ const FDescriptions = (props: IProps) => {
           leftTextKey,
           rightTextKey,
           children: itemChildSchema,
+          _itemData,
+          span: _span,
           ...itemProps
         } = item || {};
 
-        // 获取数据
-        let value = dataKey
-          ? getValueFromKey({ data, path: dataKey, defaultValue, storeMethod })
-          : data;
-
+  
         const level = showLevel ?? itemShowLevel;
-        // 如果描述项没有数据（包含 0），则描述项不显示
-        if (level === 1 && (!value || value === '0')) {
-          return null;
-        }
-
-        // 如果描述项没有数据（不包含 0），则示描述项不显
-        if (level === 2 && !value && value !== 0) {
-          return null;
-        }
-
-        // 受其他数据控制，检查是否需要显示
-        if (showKey) {
-          if (typeof showKey === 'function') {
-            // 如果是函数，直接执行
-            if (!showKey(data, storeMethod.getSourceData())) {
-              return null;
-            }
-          } else if (showKey.includes('func:')) {
-            // 如果是通过协议声明的函数，获取函数并执行
-            const [_, funcName] = showKey.split('func:');
-            const showFunc = storeMethod.getMethod(funcName);
-            if (!showFunc(data, storeMethod.getSourceData())) {
-              return null;
-            }
-          } else {
-            // 函数表达式
-            if (isHidden(showKey, data, storeMethod)) {
-              return null;
-            }
-          }
-        }
-
         const leveMap: any = { 3: 1, 4: 2 };
 
         if (leftTextKey) {
@@ -217,11 +238,23 @@ const FDescriptions = (props: IProps) => {
           itemProps.rightText = getValueFromKey({ data, path: rightTextKey, storeMethod });
         }
 
+        // 动态计算 span
+        let span = _span;
+        if (items[index+1]) {
+          const nextSpan = items[index+1].span ?? 1;
+          if (_span + nextSpan > _column) {
+            span = _column;
+            _column = props.column;
+          } else {
+            _column = _column -1;
+          }
+        }
+
         return (
           <DescriptionItem
             key={index}
             label={renderItemLabel(item)}
-            span={item.span}
+            span={span}
             style={{ ...itemStyle, ...item.style }}
             contentStyle={{ ...contentStyle, ...item.contentStyle }}
             labelStyle={{ ...labelStyle, ...item.labelStyle }}
@@ -229,10 +262,10 @@ const FDescriptions = (props: IProps) => {
             <FText
               {...itemProps}
               childSchema={itemChildSchema}
-              useType="internal"
+              useType='internal'
               showKey={showContentKey}
               showLevel={leveMap[level] || null}
-              data={value}
+              data={_itemData}
               getParentData={() => data}
               storeMethod={storeMethod}
             />
