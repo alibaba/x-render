@@ -176,6 +176,14 @@ const useForm = () => {
   xform.setValueByPath = (path: string, value: any) => {
     const name = getFieldName(path);
     form.setFieldValue(name, value);
+
+    try {
+      if (JSON.stringify(form.getFieldValue(name)) !== JSON.stringify(value)) {
+        form.setFieldValue(name, value);
+      }
+    } catch (error) {
+      
+    }
   }
 
   // 通过某个字段的 schema
