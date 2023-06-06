@@ -15,25 +15,29 @@ export const getKeyFromPath = (path = '#') => {
   }
 };
 
-export function getSchemaFromFlatten(flatten, path = '#') {
+export function getSchemaFromFlatten(flatten: any, path = '#') {
   let schema: any = {};
   const item = _cloneDeep(flatten[path]);
-  if (item) {
-    schema = item.schema;
-    // schema.$id && delete schema.$id;
-    if (item.children.length > 0) {
-      item.children.forEach(child => {
-        if (!flatten[child]) return;
-        const key = getKeyFromPath(child);
-        if (isObjType(schema)) {
-          schema.properties[key] = getSchemaFromFlatten(flatten, child);
-        }
-        if (isListType(schema)) {
-          schema.items.properties[key] = getSchemaFromFlatten(flatten, child);
-        }
-      });
-    }
+
+  if (!item) {
+    return schema;
   }
+  
+  schema = item.schema;
+  // schema.$id && delete schema.$id;
+  if (item.children.length > 0) {
+    item.children.forEach((child: any) => {
+      if (!flatten[child]) return;
+      const key = getKeyFromPath(child);
+      if (isObjType(schema)) {
+        schema.properties[key] = getSchemaFromFlatten(flatten, child);
+      }
+      if (isListType(schema)) {
+        schema.items.properties[key] = getSchemaFromFlatten(flatten, child);
+      }
+    });
+  }
+
   return schema;
 }
 
@@ -49,7 +53,7 @@ export function flattenSchema(_schema = {}, name?: any, parent?: any, _result?: 
   if (!schema.$id) {
     schema.$id = _name; // path as $id, for easy access to path in schema
   }
-  const children = [];
+  const children: any[] = [];
   if (isObjType(schema)) {
     sortProperties(Object.entries(schema.properties)).forEach(
       ([key, value]) => {

@@ -38,7 +38,7 @@ const renderItem = (props: RenderItemProps) => {
   let child: React.ReactNode = null;
 
   // has child schema
-  if (schema?.properties) {
+  if (schema?.properties && schema?.widgetType !== 'field') {
     child = RenderCore({ schema, parentPath: path, rootPath })
     path = undefined;
   }
