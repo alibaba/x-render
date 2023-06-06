@@ -40,130 +40,27 @@ npm i form-render --save
  * transform: true
  * defaultShowCode: true
  */
-import React from "react";
-import FormRender, { useForm } from "form-render";
-import { Cascader } from "antd";
-const schema = {
-  type: "object",
-  displayType: "row",
-  properties: {
-    a: {
-      title: "简单输入框",
-      type: "string",
-      required: true,
-    },
-    b: {
-      title: "简单输入框",
-      type: "string",
-    },
-    list: {
-      title: "对象数组",
-      description: "对象数组嵌套功能",
-      type: "array",
-      widget: "cardList",
-      displayType: "row",
-      props: {
-        hasBackground: true,
-        hideAdd: true,
-        hideCopy: true,
-        hideMove: true,
-        hideDelete: true,
-      },
-      items: {
-        type: "object",
-        title: "组件",
-        description: "",
-        properties: {
-          input1: {
-            title: "简单输入框",
-            type: "string",
-            required: "{{ !!formData.b }}",
-            defaultValue: '{{ rootValue.input2 === 2 ? 100003 : "" }}',
-          },
-          deliveryModelType: {
-            title: "简单输入框2",
-            type: "number",
-          },
-          materialType: {
-            title: "策略类型",
-            type: "number",
-            widget: "select",
-            required: true,
-            // defaultValue: '{{ formData.deliveryModelType }}',
-            props: {
-              mode: "single",
-              disabled: "{{ formData.deliveryModelType === 2   }}",
-              options: [
-                {
-                  label: "test1",
-                  value: 1,
-                  disabled: "{{ formData.deliveryModelType > 2   }}",
-                },
-                {
-                  label: "test2",
-                  value: 2,
-                  disabled: "{{ formData.deliveryModelType > 2   }}",
-                },
-                {
-                  label: "test3",
-                  value: 3,
-                  disabled: "{{ formData.deliveryModelType !== 3  }}",
-                },
-                {
-                  label: "test4",
-                  value: 4,
-                  disabled: "{{ formData.deliveryModelType !== 4  }}",
-                },
-              ],
-            },
-          },
-          select1: {
-            title: "策略来源",
-            type: "number",
-            widget: "cascader",
-            defaultValue: '{{ rootValue.materialType === 2 ? 100003 : "" }}',
-            required: true,
-            props: {
-              materialType: "{{ rootValue.materialType  }}",
-            },
-          },
-        },
-      },
-    },
-  },
-};
+import React from 'react';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
 
 export default () => {
   const form = useForm();
+
+  const onFinish = (formData) => {
+    console.log('formData:', formData);
+  };
+
   return (
-    <FormRender
-      schema={schema}
-      form={form}
-      onMount={() => {
-        form.setValueByPath("list", [
-          { input1: 1, materialType: 2, select1: 100003, k: 1 },
-          { input1: 2, materialType: 2, select1: 100003, k: 1 },
-          { input1: 2, materialType: 3, select1: 100001, k: 1 },
-        ]);
-      }}
-      watch={{
-        a: async (value) => {
-          setTimeout(() => {
-            debugger;
-            form.setValueByPath("list", null);
-            
-            console.log(form.getValueByPath("list"), 'listData')
-            
-            
-            
-          }, 2000);
-        },
-      }}
-      widgets={{ cascader: Cascader }}
+    <FormRender 
+      form={form} 
+      schema={schema} 
+      onFinish={onFinish} 
+      maxWidth={360} 
+      footer={true}
     />
   );
-};
-
+}
 ```
 
 **类组件**
