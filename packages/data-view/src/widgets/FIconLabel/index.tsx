@@ -4,10 +4,8 @@ import IconLabel from '../components/IconLabel';
 const FIconLabel = (props: any) => {
   const {
     data,
-    dataKey,
     leftText,
     rightText,
-    getParentData,
     icon,
     method,
     href,
@@ -16,7 +14,8 @@ const FIconLabel = (props: any) => {
     ...otherProps
   } = props;
 
-  const parentData = getParentData();
+  const parentData = storeMethod.getParentData();
+  const dataKey = storeMethod.dataKey;
 
   const handleClick = async (ev: any) => {
     if (href) {

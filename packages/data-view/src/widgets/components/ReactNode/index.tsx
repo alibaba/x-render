@@ -11,12 +11,12 @@ const ReactNode = (props: any) => {
   // 当 data 为字符串时，直接返回
   if (typeof schema === 'string') {
     //  直接返回
-    if (!schema.includes('render:')) {
+    if (!schema.includes('method:')) {
       return <InnerHtml data={schema} />;
     }
 
     // 如果字符串中包含 render: 则调用 render 方法进行渲染
-    const [_, funcName] = schema.split('render:');
+    const [_, funcName] = schema.split('method:');
     const renderFunc = storeMethod.getMethod(funcName);
     return renderFunc(data);
   }

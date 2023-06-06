@@ -31,7 +31,7 @@ export const isExpression = (str: string) => {
 
 export const parseExpression = (
   func: any,
-  { sourceData, parentData, data }: { sourceData: any; parentData: any; data: any },
+  { sourceData, parentData, currentData }: { sourceData?: any; parentData?: any; currentData?: any },
 ) => {
   if (typeof func === 'string') {
     const funcBody = func.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '');
@@ -39,11 +39,11 @@ export const parseExpression = (
     const funcStr = `
       return ${funcBody
         .replace(/source:/g, JSON.stringify(sourceData) + '.')
-        .replace(/data:/g, JSON.stringify(data) + '.')
+        .replace(/data:/g, JSON.stringify(currentData) + '.')
         .replace(/parent:/g, JSON.stringify(parentData) + '.')
         // 兼容两种写法
         .replace(/(^|\s)sourceData\.(?=\w)/g, JSON.stringify(sourceData) + '.')
-        .replace(/(^|\s)currentData\.(?=\w)/g, JSON.stringify(data) + '.')
+        .replace(/(^|\s)currentData\.(?=\w)/g, JSON.stringify(currentData) + '.')
         .replace(/(^|\s)parentData\.(?=\w)/g, JSON.stringify(parentData) + '.')}
     `;
 
@@ -51,7 +51,7 @@ export const parseExpression = (
       const result = Function(funcStr)();
       return result;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       return null; // 如果计算有错误，return null 最合适
     }
   }

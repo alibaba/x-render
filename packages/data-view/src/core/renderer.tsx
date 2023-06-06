@@ -65,7 +65,7 @@ export default (props: any): any => {
       return;
     }
 
-    const { component: Component, componentData, componentProps, asyncComptProps } = componentInfo;
+    const { component: Component, componentData, componentProps: { dataKey, getParentData, ...componentProps }, asyncComptProps } = componentInfo;
 
     return (
       <Component
@@ -73,7 +73,11 @@ export default (props: any): any => {
         {...componentProps}
         data={componentData}
         {...asyncComptProps}
-        storeMethod={storeMethod}
+        storeMethod={{
+          ...storeMethod,
+          dataKey,
+          getParentData
+        }}
       />
     );
   });

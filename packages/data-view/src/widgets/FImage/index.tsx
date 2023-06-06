@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from 'antd';
-import { combineClass, parseProps } from '../utils/common';
+import { combineClass } from '../utils/common';
 import './index.less';
 
 /**
@@ -8,7 +8,7 @@ import './index.less';
  * 图片组件
  */
 const FImage = (props: any) => {
-  const [{ data, className, style, images, preview = false, ...imageProps }] = parseProps(props);
+  const [{ data, className, style, images, preview = false, storeMethod, ...imageProps }] = props;
 
   let src = data;
   if (images) {
