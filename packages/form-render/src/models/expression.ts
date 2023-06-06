@@ -67,7 +67,7 @@ export const parseExpression = (func: any, formData = {}, parentPath: string) =>
       const result = Function(funcStr)();
       return result;
     } catch (error) {
-      console.log(error, func, parentPath);
+      console.log(error, parentPath);
       return null; // 如果计算有错误，return null 最合适
     }
   } 
