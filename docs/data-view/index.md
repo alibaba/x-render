@@ -42,49 +42,10 @@ npm i @xrenders/data-view --save
  */
 import React from 'react';
 import DataView from '@xrenders/data-view';
+import schema from './schema/basic';
+import data from './data/basic';
 
 export default () => {
- 
-  const data = {
-    rateInfo: {
-      ratePlan: 'Breakfast fro one',
-      telePhone: '693.00',
-      priceTag: '700.00'
-    }
-  };
-
-  const schema = [{
-    widget: 'FDescriptions',
-    title: '描述列表',
-    dataKey: 'rateInfo',
-    column: 3,
-    items: [
-      {
-        label: '姓名',
-        dataKey: 'userName',
-        labelToolTip: {
-          overlayInnerStyle: { width: '280px' },
-          title: '1231231231231231大了就啊都是十分理解啊老地方见的失联飞机23123',
-        },
-      },
-      {
-        label: '手机号',
-        dataKey: 'telePhone',
-        children: {
-          widget: 'FText',
-          iconSetting: {
-            type: 'icon-phone',
-          },
-        },
-      },
-      {
-        label: '地址',
-        dataKey: 'live',
-        showLevel: 1
-      }
-    ]
-  }];
-  
   return (
     <DataView schema={schema} data={data} />
   );

@@ -78,6 +78,8 @@ export default (props: any): any => {
     );
   });
 
+  debugger;
+
   if (componentList.length === 0) {
     if (showEmpty) {
       return (

@@ -55,7 +55,7 @@ export default (props: DataVProps) => {
     ...config,
   });
 
-  const renderer = (data: any, schema: any, storeMethod: any) => {
+  const renderer = ({ data, schema, storeMethod }: any) => {
     return <RenderCore schema={schema} data={data} storeMethod={storeMethod} />;
   };
 
