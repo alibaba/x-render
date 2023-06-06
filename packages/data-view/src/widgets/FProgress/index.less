@@ -1,0 +1,48 @@
+.dtv-progress {
+  width: 100%;
+  padding: 10px 0 0 5px;
+  overflow-y: auto;
+  white-space: nowrap;
+
+  .step-item {
+    position: relative;
+    display: inline-block;
+    width: 260px;
+    margin: 0 14px;
+    padding-top: 11px;
+    padding-right: 20px;
+    white-space: normal;
+    vertical-align: top;
+  }
+
+  .step-item-active {
+    border-top: 1px solid rgba(0, 0, 0, 0.15);
+  }
+
+  .step-title {
+    color: rgba(20, 20, 20, 0.85);
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .step-time {
+    color: #8a8a8a;
+    font-size: 12px;
+    line-height: 22px;
+  }
+
+  .step-dot {
+    position: absolute;
+    top: -5px;
+    left: -18px;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+  }
+
+  .step-item-active .step-dot {
+    border: 2px solid #3f7ffb;
+  }
+}

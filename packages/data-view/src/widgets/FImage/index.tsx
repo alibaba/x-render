@@ -1,0 +1,29 @@
+import React from 'react';
+import { Image } from 'antd';
+import { combineClass, parseProps } from '../utils/common';
+import './index.less';
+
+/**
+ *
+ * 图片组件
+ */
+const FImage = (props: any) => {
+  const [{ data, className, style, images, preview = false, ...imageProps }] = parseProps(props);
+
+  let src = data;
+  if (images) {
+    src = images[data] || images.default;
+  }
+
+  return (
+    <Image
+      className={combineClass('dv-image', className)}
+      style={style}
+      src={src}
+      preview={preview}
+      {...imageProps}
+    />
+  );
+};
+
+export default FImage;

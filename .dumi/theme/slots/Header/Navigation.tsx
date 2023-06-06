@@ -17,6 +17,10 @@ const Navigation: React.FC = () => {
       label: <Link to="/form-render-mobile">FRMobile</Link>,
       key: 'form-render-mobile'
     },
+    // {
+    //   label: <Link to="/data-view">DataView</Link>,
+    //   key: 'data-view'
+    // },
     {
       label: <Link to="/playground">Playground</Link>,
       key: 'playground'
