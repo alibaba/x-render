@@ -1,7 +1,6 @@
 import React, { useState, FC } from 'react';
 import { Collapse } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
-import classnames from 'classnames';
 import './index.less';
 import BoxPanel from '../components/PanelView';
 
@@ -13,14 +12,16 @@ interface IProps {
   title?: string;
   description?: any;
   collapsed?: boolean;
-  displayType?: any
+  displayType?: any;
+  bordered?: boolean;
+  ghost?: boolean;
 }
 
 /**
  * 折叠面板
  */
 const BoxCollapse: FC<IProps> = (props) => {
-  const { style, children, title, description, collapsed = true, displayType } = props;
+  const { style, children, title, description, collapsed = true, displayType, bordered = false, ghost	= true } = props;
  
   if (!title) {
     return (
@@ -50,8 +51,8 @@ const BoxCollapse: FC<IProps> = (props) => {
     <Collapse
       className='fr-obj-collapse'
       style={style}
-      bordered={false}
-      ghost={true}
+      bordered={bordered}
+      ghost={ghost}
       activeKey={[activeKey]}
       expandIcon={renderExpandIcon}
       onChange={() => setActiveKey(activeKey ? '' : 'single')}
