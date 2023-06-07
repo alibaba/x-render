@@ -108,6 +108,9 @@ const SearchForm: <RecordType extends object = any>(
 
     const resizeObserver = new ResizeObserver(() => {
       const { clientWidth, clientHeight } = searchRef?.current || {};
+      if(clientWidth === 0 || clientHeight === 0)){
+        return;
+      }
       if (clientHeight < (isColumn ? 110 : 136)) {
         setCollapsed(false);
         setLimitHeight(false)
