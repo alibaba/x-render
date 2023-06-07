@@ -1,87 +1,34 @@
-import React, { createContext, useContext, useState } from 'react';
-import { Form, Col } from 'antd';
-import { useStore } from 'zustand';
-import { FRContext, ConfigContext } from '../../models/context';
-import { parseAllExpression } from '../../models/expression';
-import { getFormListLayout, getParamValue, getLabel, getTooltip } from './modules';
+import React, { useContext } from 'react';
+import { Form } from 'antd';
+
+import { _get } from '../../utils';
+import { ConfigContext } from '../../models/context';
+import { isHasExpression } from '../../models/expression';
+import fieldShouldUpdate from '../../models/fieldShouldUpdate';
 import Main from './main';
 
-const UpperContext = createContext(() => {});
-
 export default (props: any) => {
-  const [listData, setListData] = useState([]);
+  const { schema, rootPath } = props;
 
-  const store = useContext(FRContext);
-  const configContext = useContext(ConfigContext);
+  const configCtx = useContext(ConfigContext);
+  const mustacheDisabled = configCtx?.globalConfig?.mustacheDisabled;
+  const dependencies = schema?.dependencies;
 
-  const formCtx: any = useStore(store, (state: any) => state.context);
-  const upperCtx: any = useContext(UpperContext);
-  const { form, widgets, methods, globalConfig } = configContext;
-
-  const { displayType } = formCtx;
-  const isDisplayColumn = displayType === 'column';
-  const { schema:_schema } = props;
-
-  const formData = form.getFieldsValue(true);
-  const { schema: formSchema } = store.getState();
-
-  const { items, className, ...otherSchema } = _schema;
-  const schema = globalConfig?.mustacheDisabled ? _schema : {
-    items,
-    ...parseAllExpression(otherSchema, formData, props.rootPath, formSchema)
-  };
-  
-  const { widget } = schema;
-  let widgetName = widget || 'list1';
-
-  const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
- 
-  const label = getLabel(schema, displayType, widgets);
-  const tooltip = getTooltip(schema, displayType);
-  const { labelCol, fieldCol } = getFormListLayout(getValueFromKey, displayType);
-
-  let isInline = schema.display === 'inline';
-  if (!setListData?.length && widgetName !== 'drawerList') {
-    isInline = true;
+  // No function expressions exist
+  if ((!isHasExpression(schema) && !mustacheDisabled) && (!dependencies || !dependencies?.length)) {
+    return <Main configContext={configCtx} {...props}  />;
   }
 
-  if (schema.hidden) {
-    return null;
-  }
-  
+  const schemaStr = JSON.stringify(schema);
+  // Need to listen to form values for dynamic rendering
   return (
-    <Col span={24} className={className}>
-      {!isInline && !isDisplayColumn && label && (
-        <Form.Item
-          className='ant-form-item-optional-hide'
-          label={label}
-          labelAlign={'left'}
-          colon={false}
-          tooltip={tooltip}
-          style={{ marginBottom: 0 }}
-          labelCol={{ span: 24 }}
-        >
-        </Form.Item>
-      )}
-      <Form.Item
-        label={label} 
-        labelCol={isDisplayColumn ? { span: 24 } : labelCol}
-        wrapperCol={fieldCol}
-        noStyle={!isInline && !isDisplayColumn}
-        tooltip={tooltip}
-      >
-        <Main
-          {...props}
-          form={form}
-          methods={methods}
-          formCtx={formCtx}
-          upperCtx={upperCtx}
-          widgets={widgets}
-          configContext={configContext}
-          setListData={setListData}
-          listData={listData}
-        />
-      </Form.Item>
-    </Col>
+    <Form.Item
+      noStyle
+      shouldUpdate={fieldShouldUpdate(schemaStr, rootPath, dependencies, true)}
+    >
+      {() => {
+        return <Main configContext={configCtx} {...props}  />;
+      }}
+    </Form.Item>
   );
 }

@@ -56,7 +56,7 @@ const getListEveryResult = (list: string[], preValue: any, nextValue: any, dataP
 
 export default (str: string, dataPath: string, dependencies: any[], shouldUpdateOpen: boolean) => (preValue: any, nextValue: any) => {
   // dependencies 先不处理
-  if (dependencies || !shouldUpdateOpen) {
+  if (dependencies) {
     return true;
   }
 
