@@ -1,4 +1,5 @@
 import React from 'react';
+import { isFunction } from 'lodash-es';
 import RenderCore from './renderer';
 import { getRequestParams } from '../utils/common';
 import { parseExpression } from '../models/expression';
@@ -10,7 +11,7 @@ const defaultConfig = {
 };
 
 export default (props: DataVProps) => {
-  const { schema, data, sourceData, widgets, config = {} } = props;
+  const { schema, data, sourceData, widgets, methods, config = {} } = props;
 
   // 获取顶层数据
   const getSourceData = () => {
@@ -18,14 +19,19 @@ export default (props: DataVProps) => {
   };
 
   // 获取外部自定义方法
-  const getMethod = (name: string) => {
-    const { methods = {} } = props;
-    const func = methods[name];
+  const getMethod = (_name: string) => {
+    let name = _name;
+    if (name && name.startsWith('method:')) {
+      const [_, funcName] = _name.replace(/\s+/g, '').split('method:');
+      name = funcName;
+    }
 
-    if (!func) {
-      console.warn(`${name} 自定义方法不存在，请检查协议配置`);
+    const func = methods[name];
+    if (!isFunction(func)) {
+      console.warn(`${name}：自定义方法不存在或者 ${name}：并不是一个函数`);
       return () => null;
     }
+
     return func;
   };
 

@@ -82,9 +82,11 @@ const FormCore:FC<FRProps> = (props) => {
 
   const initial = async () => {
     onMount && await onMount();
-    const values = form.getValues();
-    immediateWatch(watch, values);
     onMountLogger();
+    setTimeout(() => {
+      const values = form.getValues();
+      immediateWatch(watch, values);
+    }, 0);
   };
 
   const onMountLogger = () => {

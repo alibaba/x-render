@@ -1,6 +1,5 @@
 import React from 'react';
-import isHidden from './isHidden';
-import { getValueFromKey, transformData, isDataEmpty, startsWith } from '../utils/common';
+import { transformData, isDataEmpty } from '../utils/common';
 import classnames from 'classnames';
 import { parseAllExpression } from './expression';
 
@@ -21,57 +20,37 @@ const InnerHtml = (props: any) => {
 };
 
 export default (props: any, parentData: any, addons: any) => {
-  // 获取对应数据
-  const getValue = (params: any) => {
-    return getValueFromKey({ data: parentData, addons, ...params });
-  };
-
   const { dataKey, defaultValue, children, ...rest } = props;
+  const { getDataFromKey, getSourceData, getMethod, getConfig, getWidget } = addons;
+  const sourceData = getSourceData();
 
   // 当组件配置 dataKey，根据 dataKey 获取服务端对应数据，否则继承父级数据
-  let value = dataKey ? getValue({ path: dataKey, defaultValue }) : defaultValue ?? parentData;
-
+  let value = dataKey ? getDataFromKey(dataKey, parentData, defaultValue) : defaultValue ?? parentData;
 
   // 解析函数表达式，替换值
   const restProps = parseAllExpression(rest, {
     parentData,
-    sourceData: addons.getSourceData(),
+    sourceData,
     currentData: value,
   });
-
   // console.log('before:', props, 'after:', restProps);
 
-  let {
-    widget,
-    data,
-    showKey,
-    showLevel,
-    format,
-    getCompProps,
-    leftTextKey,
-    rightTextKey,
-    hrefKey,
-    labelKey,
-    leftUnitKey,
-    rightUnitKey,
-    titleKey,
-    hidden,
-    ...componentProps
-  } = restProps;
+  const { widget, data, showLevel: _showLevel, format, getCompProps, hidden, ...componentProps } = restProps;
 
-  showLevel = showLevel ?? addons?.getConfig()?.showLevel;
-
-  // 当组件配置 showKey，服务端对应数据不存在时，直接返回不显示
-  if (showKey && isHidden(showKey, parentData, addons)) {
-    return null;
-  }
-
-  if (!!hidden) {
+  if (hidden && typeof hidden === 'boolean') {
     return;
   }
 
+  if (hidden?.includes('method:')) {
+    // 如果是通过协议声明的函数，获取函数并执行
+    const func = getMethod(hidden);
+    if (func && func(props, { data: value, parentData, sourceData })) {
+      return null;
+    }
+  }
+
   // 根据 widget 创建对应组件，先从外部获取，如果没有，再从内置组件中获取
-  const component = addons.getWidget(widget);
+  const component = getWidget(widget);
 
   if (!component) {
     console.warn(widget, '未找到对应组件，请检查配置项 widget 是否配置正确');
@@ -79,7 +58,7 @@ export default (props: any, parentData: any, addons: any) => {
   }
 
   // 如果有传人的数据，直接使用
-  if (data || data === 0) {
+  if (data !== undefined) {
     value = data;
   }
 
@@ -90,60 +69,10 @@ export default (props: any, parentData: any, addons: any) => {
     value = transformData(value, format, parentData, addons);
   }
 
+  const showLevel = _showLevel ?? getConfig()?.showLevel;
   // 当配置 showLevel 需要校验数据是否为空
   if ([1, 2].includes(showLevel) && isDataEmpty(value, showLevel)) {
     return null;
-  }
-
-  // 进行动态数据绑定
-  Object.keys(componentProps).forEach((key) => {
-    const item = componentProps[key];
-    if (typeof item !== 'string') {
-      return;
-    }
-
-    if (startsWith(item, 'source:')) {
-      componentProps[key] = getValue({ path: item });
-      return;
-    }
-
-    if (startsWith(item, 'data:')) {
-      const path = item.split('data:')[1]?.trim();
-      componentProps[key] = getValue({ path });
-    }
-  });
-
-  // 子组件可能需要此数据
-  componentProps.dataKey = dataKey;
-  componentProps.getParentData = () => parentData;
-
-  // 根据配置的 key 获取相应的数据
-  if (hrefKey) {
-    componentProps.href = getValue({ path: hrefKey, valueType: '!object' });
-  }
-
-  if (leftTextKey) {
-    componentProps.leftText = getValue({ path: leftTextKey, valueType: '!object' });
-  }
-
-  if (rightTextKey) {
-    componentProps.rightText = getValue({ path: rightTextKey, valueType: '!object' });
-  }
-
-  if (leftUnitKey) {
-    componentProps.leftUnit = getValue({ path: leftUnitKey, valueType: '!object' });
-  }
-
-  if (rightUnitKey) {
-    componentProps.rightUnit = getValue({ path: rightUnitKey, valueType: '!object' });
-  }
-
-  if (labelKey) {
-    componentProps.label = getValue({ path: labelKey, valueType: '!object' });
-  }
-
-  if (titleKey) {
-    componentProps.title = getValue({ path: titleKey, valueType: '!object' });
   }
 
   if (children) {
@@ -152,15 +81,15 @@ export default (props: any, parentData: any, addons: any) => {
 
   // 通过外部方法，获取组件配置信息
   let asyncComptProps = {};
-  const getPropsFunc = getCompProps && addons.getMethod(getCompProps);
+  const getPropsFunc = getCompProps && getMethod(getCompProps);
   if (getPropsFunc) {
-    asyncComptProps = getPropsFunc(props, { data: value, parentData }) || {};
+    asyncComptProps = getPropsFunc(props, { data: value, parentData, sourceData }) || {};
   }
 
   return {
     componentProps,
     asyncComptProps,
     componentData: value,
-    component,
+    component
   };
 };

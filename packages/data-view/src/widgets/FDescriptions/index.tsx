@@ -93,9 +93,7 @@ const getDescriptionItems = (items = [], { addons, data, itemShowLevel }) => {
     }
     
     if (hidden?.includes('method:')) {
-      // 如果是通过协议声明的函数，获取函数并执行
-      const [_, funcName] = hidden.split('method:');
-      const func = getMethod(funcName);
+      const func = getMethod(hidden);
       if (func && func(data, sourceData)) {
         return null;
       }
@@ -103,8 +101,7 @@ const getDescriptionItems = (items = [], { addons, data, itemShowLevel }) => {
 
     return { ...item, _itemData };
   }).filter(item => item);
-}
-
+};
 
 /**
  * 描述列表
@@ -146,6 +143,7 @@ const FDescriptions = (props: any) => {
           span: _span,
           style: _itemStyle,
           labelStyle: _labelStyle,
+          contentHidden,
           ...itemProps
         } = item || {};
 
@@ -179,6 +177,7 @@ const FDescriptions = (props: any) => {
               schema: {
                 widget: 'FText',
                 ...itemProps,
+                hidden: contentHidden,
                 useType: 'internal',
                 showLevel: leveMap[level] || null,
               }
