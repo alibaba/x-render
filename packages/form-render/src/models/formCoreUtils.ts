@@ -119,11 +119,10 @@ export const immediateWatch = (watch: any, values: any) => {
   }
 
   const watchObj = {};
-
   Object.keys(watch).forEach(key => {
     const watchItem = watch[key];
     if (watchItem?.immediate && isFunction(watchItem?.handler)) {
-      watchObj[key] = watch;
+      watchObj[key] = watchItem;
     }
   });
 
