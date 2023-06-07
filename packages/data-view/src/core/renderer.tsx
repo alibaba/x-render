@@ -65,7 +65,7 @@ export default (props: any): any => {
       return;
     }
 
-    const { component: Component, componentData, componentProps: { dataKey, getParentData, ...componentProps }, asyncComptProps } = componentInfo;
+    const { component: Component, componentData, componentProps, asyncComptProps } = componentInfo;
 
     return (
       <Component
@@ -75,8 +75,10 @@ export default (props: any): any => {
         {...asyncComptProps}
         addons={{
           ...addons,
-          dataKey,
-          getParentData
+          dataKey: item.dataKey,
+          getParentData: () => {
+            return currData;
+          }
         }}
       />
     );

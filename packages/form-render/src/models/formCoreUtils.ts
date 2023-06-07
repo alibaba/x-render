@@ -118,18 +118,15 @@ export const immediateWatch = (watch: any, values: any) => {
     return;
   }
 
-  Object.keys(watch).forEach(path => {
-    const value = _get(values, path);
-    const watchItem = watch[path];
-
+  const watchObj = {};
+  Object.keys(watch).forEach(key => {
+    const watchItem = watch[key];
     if (watchItem?.immediate && isFunction(watchItem?.handler)) {
-      try {
-        watchItem.handler(value);
-      } catch (error) {
-        console.log(`${path}对应的watch函数执行报错：`, error);
-      }
+      watchObj[key] = watchItem;
     }
   });
+
+  valuesWatch(values, values, watchObj);
 };
 
 export const getSchemaFullPath = (path: string, schema: any) => {
