@@ -14,14 +14,18 @@ interface IProps {
   description?: any;
   collapsed?: boolean;
   displayType?: any
+  // 折叠面板边框
+  collapseBorder?: boolean
+  // 折叠面板透明
+  collapseGhost?: boolean
 }
 
 /**
  * 折叠面板
  */
 const BoxCollapse: FC<IProps> = (props) => {
-  const { style, children, title, description, collapsed = true, displayType } = props;
- 
+  const { style, children, title, description, collapsed = true, displayType, collapseBorder = false,  collapseGhost = true} = props;
+
   if (!title) {
     return (
       <BoxPanel bordered={displayType !== 'inline'}>
@@ -29,7 +33,7 @@ const BoxCollapse: FC<IProps> = (props) => {
       </BoxPanel>
     )
   }
-  
+
   const [activeKey, setActiveKey] = useState<string>(collapsed ? 'single' : '');
   const collapseHeader = (
     <>
@@ -50,8 +54,8 @@ const BoxCollapse: FC<IProps> = (props) => {
     <Collapse
       className='fr-obj-collapse'
       style={style}
-      bordered={false}
-      ghost={true}
+      bordered={collapseBorder}
+      ghost={collapseGhost}
       activeKey={[activeKey]}
       expandIcon={renderExpandIcon}
       onChange={() => setActiveKey(activeKey ? '' : 'single')}
