@@ -32,16 +32,15 @@ import {
 export default (props: any) => {
   const { configCtx, store, schema, path, children, dependValues, rootPath } = props;
 
+  const fieldRef: any = useRef();
+  const formCtx: any = useStore(store, (state: any) => state.context);
+  const upperCtx: any = useContext(UpperContext);
+  
   if (schema?.hidden) {
     return null;
   }
 
-  const fieldRef: any = useRef();
-  const formCtx: any = useStore(store, (state: any) => state.context);
-  const upperCtx: any = useContext(UpperContext);
- 
   const { form, widgets, methods, globalProps } = configCtx;
-
   const { reserveLabel, hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, validateTrigger, ...otherSchema } = schema;
 
   let widgetName = getWidgetName(schema);
