@@ -103,6 +103,9 @@ export function getWidgetName(schema, _mapping = mapping) {
 
 
 function capitalizeFirstLetter(str: any) {
+  if (!str) {
+    return str;
+  }
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
