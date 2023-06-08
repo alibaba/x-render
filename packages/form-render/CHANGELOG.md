@@ -1,5 +1,7 @@
 # 更新日志
 
+### 2.2.5
+- [!] 修复 react hook 提示错误
 ### 2.2.4
 - [!] 修复 SearchForm 开启layoutAuto，重新激活页面，collapsed会失效
 ### 2.2.3
