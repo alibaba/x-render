@@ -32,13 +32,13 @@ import {
 export default (props: any) => {
   const { configCtx, store, schema, path, children, dependValues, rootPath } = props;
 
-  if (schema?.hidden) {
-    return null;
-  }
-
   const fieldRef: any = useRef();
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
+  
+  if (schema?.hidden) {
+    return null;
+  }
  
   const { form, widgets, methods, globalProps } = configCtx;
 
