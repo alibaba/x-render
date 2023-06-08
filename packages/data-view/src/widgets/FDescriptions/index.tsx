@@ -144,6 +144,8 @@ const FDescriptions = (props: any) => {
           style: _itemStyle,
           labelStyle: _labelStyle,
           contentHidden,
+          label,
+          dataKey,
           ...itemProps
         } = item || {};
 
@@ -161,7 +163,7 @@ const FDescriptions = (props: any) => {
             _column = _column -1;
           }
         }
-
+     
         return (
           <DescriptionItem
             key={index}

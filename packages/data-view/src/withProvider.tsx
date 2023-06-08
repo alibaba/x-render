@@ -18,12 +18,7 @@ export default function withProvider<T>(
       configProvider,
       locale = 'zh-CN',
       widgets,
-      methods,
-      form,
-      validateMessages,
-      globalProps = {},
-      globalConfig = {},
-      ...otherProps
+      ...rest
     } = props;
 
     const storeRef = useRef(createStore());
@@ -47,7 +42,7 @@ export default function withProvider<T>(
     return (
       <ConfigProvider {...configProvider} locale={langPack}>
         <FRContext.Provider value={store}>
-          <Element {...otherProps} widgets={{ ...defaultWidgets, ...widgets }} />
+          <Element {...rest} widgets={{ ...defaultWidgets, ...widgets }} />
         </FRContext.Provider>
       </ConfigProvider>
     );

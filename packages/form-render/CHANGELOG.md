@@ -1,5 +1,7 @@
 # 更新日志
 
+### 2.2.4
+- [!] 修复 SearchForm 开启layoutAuto，重新激活页面，collapsed会失效
 ### 2.2.3
 - [!] 修复 List 组件使用函数表达式，依赖值变化组件不更新
 - [+] collapse 折叠组件，支持配置 bordered、ghost 属性

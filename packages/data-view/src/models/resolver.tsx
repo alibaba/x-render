@@ -70,6 +70,7 @@ export default (props: any, parentData: any, addons: any) => {
   }
 
   const showLevel = _showLevel ?? getConfig()?.showLevel;
+
   // 当配置 showLevel 需要校验数据是否为空
   if ([1, 2].includes(showLevel) && isDataEmpty(value, showLevel)) {
     return null;
