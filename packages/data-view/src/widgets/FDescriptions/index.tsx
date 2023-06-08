@@ -163,7 +163,7 @@ const FDescriptions = (props: any) => {
             _column = _column -1;
           }
         }
-        debugger;
+     
         return (
           <DescriptionItem
             key={index}
