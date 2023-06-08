@@ -11,7 +11,7 @@ const defaultConfig = {
 };
 
 export default (props: DataVProps) => {
-  const { schema, data, sourceData, widgets, methods, config = {} } = props;
+  const { schema, data, sourceData, widgets, methods = {}, config = {} } = props;
 
   // 获取顶层数据
   const getSourceData = () => {
