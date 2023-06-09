@@ -1,5 +1,8 @@
 # 更新日志
 
+### 2.2.6
+- [+] SearchForm 增加 closeReturnSearch 关闭回车查询属性
+
 ### 2.2.5
 - [!] 修复 react hook 提示错误
 ### 2.2.4

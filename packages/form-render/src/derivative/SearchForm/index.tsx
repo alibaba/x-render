@@ -76,6 +76,7 @@ const SearchForm: <RecordType extends object = any>(
     defaultCollapsed,
     schema,
     retainBtn,
+    closeReturnSearch,
     ...otherProps
   } = props;
 
@@ -182,7 +183,7 @@ const SearchForm: <RecordType extends object = any>(
         height: getSearchHeight(limitHeight, isColumn)
       }}
       ref={searchRef}
-      onKeyDown={handleKeyDown}
+      onKeyDown={!closeReturnSearch && handleKeyDown}
     >
       <FormRender
         displayType='row'
