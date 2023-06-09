@@ -401,7 +401,7 @@ export interface FRProps extends Omit<AntdFormProps, 'form'> {
    */
   methods?: Record<string, Function>;
   operateExtra?: React.ReactNode;
-  maxWidth?: string;
+  maxWidth?: number | string;
   footer?: boolean | (() => React.ReactNode) | Partial<ActionProps> ;
 }
 
