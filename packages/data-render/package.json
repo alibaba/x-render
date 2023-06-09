@@ -1,6 +1,6 @@
 {
-  "name": "@xrenders/data-view",
-  "version": "1.0.0-alpha.9",
+  "name": "@xrenders/data-render",
+  "version": "1.0.0-alpha.1",
   "description": "",
   "keywords": [
     "DataView",
