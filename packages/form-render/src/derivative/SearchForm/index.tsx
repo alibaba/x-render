@@ -183,7 +183,7 @@ const SearchForm: <RecordType extends object = any>(
         height: getSearchHeight(limitHeight, isColumn)
       }}
       ref={searchRef}
-      onKeyDown={!!closeReturnSearch && handleKeyDown}
+      onKeyDown={!closeReturnSearch && handleKeyDown}
     >
       <FormRender
         displayType='row'
