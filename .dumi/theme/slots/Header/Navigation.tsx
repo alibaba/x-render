@@ -18,8 +18,8 @@ const Navigation: React.FC = () => {
       key: 'form-render-mobile'
     },
     // {
-    //   label: <Link to="/data-view">DataView</Link>,
-    //   key: 'data-view'
+    //   label: <Link to="/data-render">DataView</Link>,
+    //   key: 'data-render'
     // },
     {
       label: <Link to="/playground">Playground</Link>,

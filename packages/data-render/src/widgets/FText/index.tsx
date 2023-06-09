@@ -23,7 +23,7 @@ interface IProps {
   format: any; // 数据格式化配置
   iconSetting: any; // 图标配置
   useType: string; // 使用方式，区别是否被其他组件调用，如果是，需要自行格式化数据
-  addons: any; // data-view 插件总控
+  addons: any; // data-render 插件总控
   [key: string]: any;
 }
 

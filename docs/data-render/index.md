@@ -9,14 +9,14 @@ mobile: false
   <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">DataView</span>
 </div>
 <p style="display:flex;justify-content:space-between;width:440px">
-  <a href="https://www.npmjs.com/package/@xrenders/data-view" target="_blank">
-    <img alt="npm" src="https://img.shields.io/npm/v/@xrenders/data-view.svg?maxAge=3600&style=flat-square">
+  <a href="https://www.npmjs.com/package/@xrenders/data-render" target="_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/@xrenders/data-render.svg?maxAge=3600&style=flat-square">
   </a>
-  <a href="https://npmjs.org/package/@xrenders/data-view" target="_blank">
-    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/@xrenders/data-view.svg?style=flat-square">
+  <a href="https://npmjs.org/package/@xrenders/data-render" target="_blank">
+    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/@xrenders/data-render.svg?style=flat-square">
   </a>
-  <a href="https://npmjs.org/package/@xrenders/data-view" target="_blank">
-    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/@xrenders/data-view.svg?style=flat-square">
+  <a href="https://npmjs.org/package/@xrenders/data-render" target="_blank">
+    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/@xrenders/data-render.svg?style=flat-square">
   </a>
   <a>
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
@@ -28,7 +28,7 @@ mobile: false
 
 ## 安装
 ```shell
-npm i @xrenders/data-view --save
+npm i @xrenders/data-render --save
 ```
 
 ## 使用方式
@@ -41,7 +41,7 @@ npm i @xrenders/data-view --save
  * defaultShowCode: true
  */
 import React from 'react';
-import DataView from '@xrenders/data-view';
+import DataView from '@xrenders/data-render';
 import schema from './schema/basic';
 import data from './data/basic';
 
