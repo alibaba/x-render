@@ -41,11 +41,6 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
       inited.current = true;
       return;
     }
-
-    if (!open) {
-      inited.current = false;
-      return;
-    }
   }, [open, columns])
 
   const init = () => {
