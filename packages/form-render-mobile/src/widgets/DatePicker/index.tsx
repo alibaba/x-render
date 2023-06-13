@@ -33,12 +33,17 @@ export default (props: any) => {
   }));
 
   const dateFormat = format || getFormat(precision);
+  
+  const handleChange = (date: Date) => {
+    const dateString = dayjs(date).format(dateFormat);
+    onChange(dateString);
+  }
 
   return (
     <AntdDatePicker
       ref={pickerRef}
-      value={value}
-      onConfirm={(value) => onChange(value)}
+      value={dayjs(value, dateFormat).toDate()}
+      onConfirm={handleChange}
       precision={precision}
       {...restProps}
     >
