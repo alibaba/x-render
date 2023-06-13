@@ -1,6 +1,6 @@
 import React, { useRef, useImperativeHandle} from 'react';
 import { Picker } from 'antd-mobile';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 
 export default (props: any) => {
   const { 
