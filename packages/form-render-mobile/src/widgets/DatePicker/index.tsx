@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import formatPlugin from 'dayjs/plugin/advancedFormat';
 import weekOfYearPlugin from 'dayjs/plugin/weekOfYear';
 import updateLocalePlugin from 'dayjs/plugin/updateLocale';
-import { omit } from 'lodash';
+import { omit } from 'lodash-es';
 
 dayjs.extend(updateLocalePlugin);
 dayjs.extend(formatPlugin);

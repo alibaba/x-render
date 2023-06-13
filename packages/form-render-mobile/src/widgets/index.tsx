@@ -9,10 +9,10 @@ import {
   Stepper as AntdStepper,
   Radio as AntdRadio
 } from 'antd-mobile';
-import { omitBy } from 'lodash';
+import { omit } from 'lodash-es';
 
 const widgetHoc = (Widget: any) => (props: any) => {
-  const widgetProps = omitBy(props, ['addons', 'schema']);
+  const widgetProps = omit(props, ['addons', 'schema']);
   return <Widget {...widgetProps} />
 };
 
