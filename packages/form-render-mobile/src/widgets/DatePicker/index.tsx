@@ -47,8 +47,8 @@ export default (props: any) => {
       precision={precision}
       {...restProps}
     >
-      {value => (
-        <div>{value ? dayjs(value).format(dateFormat) : <span style={{ color: '#ccc' }}>{placeholder}</span>}</div>
+      {date => (
+        <div>{(date && value) ? dayjs(date).format(dateFormat) : <span style={{ color: '#ccc' }}>{placeholder}</span>}</div>
       )}
     </AntdDatePicker>
   )
