@@ -41,11 +41,6 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
       inited.current = true;
       return;
     }
-
-    if (!open) {
-      inited.current = false;
-      return;
-    }
   }, [open, columns])
 
   const init = () => {
@@ -91,7 +86,7 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
   const onFixItem = (key: string) => {
     const fixedSetting = fixItem(columnsSetting, key);
     const finalSetting = cancelFixed(fixedSetting);
-    setColumnsSetting(finalSetting);
+    handleChange(finalSetting);
   }
 
   /** 取消固定某一列 */
@@ -101,16 +96,16 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
       fixed: i.key === key ? undefined : i.fixed,
     }))
     const finalSetting = cancelFixed(canceledSetting);
-    setColumnsSetting(finalSetting);
+    handleChange(finalSetting);
   }
 
   /** 列的显示和隐藏 */
   const onColumnsCheckChange = (val: string[]) => {
-    const newColumns = columnsSetting.map(i => ({
+    const finalSetting = columnsSetting.map(i => ({
       ...i,
       hidden: !val.includes(String(i.key))
     }))
-    handleChange(newColumns);
+    handleChange(finalSetting);
   }
 
   /** 移动某一列 */
