@@ -174,6 +174,13 @@ const useForm = () => {
 
   // 设置某个字段的值
   xform.setValueByPath = (path: string, value: any) => {
+    if (!form.setFieldValue) {
+      const values = form.getFieldsValue();
+      _set(values, path, value);
+      xform.setValues(values);
+      return;
+    }
+
     const name = getFieldName(path);
     form.setFieldValue(name, value);
 
