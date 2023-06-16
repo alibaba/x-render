@@ -58,6 +58,9 @@ export default () => {
       onFinish={onFinish} 
       maxWidth={360} 
       footer={true}
+      onMount={() => {
+        form.setSchemaByPath('select', { props: { options: []}})
+      }}
     />
   );
 }

@@ -425,6 +425,7 @@ export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
   resetText?: string;
   onSearch?: (search: any) => any;
   afterSearch?: (params: any) => any;
+  onReset?: (form: any) => void;
   widgets?: any;
   form?: any;
   [key:string]: any

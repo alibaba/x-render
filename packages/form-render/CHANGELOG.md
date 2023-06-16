@@ -1,5 +1,8 @@
 # 更新日志
 
+### 2.2.8
+- [+] SearchForm 增加 onReset 自定义重置方法
+- [-] 修复 setSchemaByPath 判断，在某些情况不生效
 ### 2.2.6
 - [+] SearchForm 增加 closeReturnSearch 关闭回车查询属性
 

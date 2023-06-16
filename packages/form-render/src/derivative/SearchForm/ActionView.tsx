@@ -5,6 +5,7 @@ import { translation } from '../../utils'
 
 const ActionView = (props: any) => {
   const {
+    onReset,
     searchBtnRender,
     style,
     className,
@@ -31,6 +32,11 @@ const ActionView = (props: any) => {
   }, []);
 
   const handleReset = () => {
+    if (onReset) {
+      onReset(form);
+      return;
+    }
+    
     form.resetFields();
     form.submit();
   };

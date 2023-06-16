@@ -71,12 +71,14 @@ const SearchForm: <RecordType extends object = any>(
     loading,
     onMount,
     onSearch,
+    onReset,
     column: _column=4,
     collapsed: _collapsed,
     defaultCollapsed,
     schema,
     retainBtn,
     closeReturnSearch,
+    resetAfter,
     ...otherProps
   } = props;
 
@@ -95,7 +97,8 @@ const SearchForm: <RecordType extends object = any>(
     loading,
     form,
     collapsed,
-    defaultCollapsed
+    defaultCollapsed,
+    onReset
   };
 
   useEffect(() => {
