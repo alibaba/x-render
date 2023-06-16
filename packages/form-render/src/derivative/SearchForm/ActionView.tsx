@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useContext } from 'react';
 import { Button, Space, ConfigProvider } from 'antd';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import { translation } from '../../utils'
 
 const ActionView = (props: any) => {
   const {
+    onReset,
     searchBtnRender,
     style,
     className,
@@ -12,25 +13,23 @@ const ActionView = (props: any) => {
     searchText,
     resetText,
     collapsed,
-    defaultCollapsed = true,
     setLimitHeight,
+    setExpand,
+    expand,
     loading,
     retainBtn,
     mode,
   } = props;
 
-  const [expand, setExpand] = useState(!defaultCollapsed);
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
-  useEffect(() => {
-    if (!collapsed) {
+  const handleReset = () => {
+    if (onReset) {
+      onReset(form);
       return;
     }
-    setLimitHeight(defaultCollapsed);
-  }, []);
-
-  const handleReset = () => {
+    
     form.resetFields();
     form.submit();
   };

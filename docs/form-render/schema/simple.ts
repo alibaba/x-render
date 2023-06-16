@@ -3,11 +3,13 @@ export default {
   properties: {
     input: {
       title: '输入框',
-      type: 'string'
+      type: 'string',
+      widget: 'input'
     },
     select: {
       title: '下拉框',
       type: 'string',
+      widget: 'select',
       props: {
         options: [
           { label: '早', value: 'a' },
