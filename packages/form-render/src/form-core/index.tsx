@@ -8,7 +8,7 @@ import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesToBind } from '../models/bindValues';
 import { getFormItemLayout } from '../models/layout';
-import {FRProps} from '../type'
+import { FRProps } from '../type';
 
 import {
   valuesWatch,
@@ -55,6 +55,7 @@ const FormCore:FC<FRProps> = (props) => {
     logOnSubmit,
     id,
     className,
+    validateTrigger,
   } = transformProps({ ...props, ...schemProps });
 
   useEffect(() => {
@@ -75,10 +76,11 @@ const FormCore:FC<FRProps> = (props) => {
       displayType,
       labelCol,
       fieldCol,
-      maxWidth
+      maxWidth,
+      validateTrigger
     };
     setContext(context);
-  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly, disabled]);
+  }, [column, labelCol, fieldCol, displayType, labelWidth, maxWidth, readOnly, disabled, validateTrigger]);
 
   const initial = async () => {
     onMount && await onMount();
