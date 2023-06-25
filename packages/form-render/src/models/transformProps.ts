@@ -1,5 +1,3 @@
-import { _get } from '../utils';
-
 const displayTypeEnum = {
   column: 'vertical',
   row: 'horizontal',
@@ -35,12 +33,8 @@ const transformProps =  (props: any) => {
     labelCol,
     fieldCol,
     disabled,
-    // labelAlign,
-    // colon,
     className,
-    // style,
-    // disabled,
-    // scrollToFirstError,
+    validateTrigger,
     ...otherProps
   } = props;
 
@@ -81,7 +75,8 @@ const transformProps =  (props: any) => {
     labelCol,
     fieldCol,
     maxWidth,
-    className
+    className,
+    validateTrigger
   };
 };
 

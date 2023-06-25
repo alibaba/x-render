@@ -176,7 +176,7 @@ export default (props: any) => {
   if (!readOnly) {
     ruleList = [
       {
-        validator: async (_, data) => {
+        validator: async (_: any, data: any) => {
           setListData(data);
           if (!otherSchema?.min) {
             return;
