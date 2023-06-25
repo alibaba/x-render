@@ -311,20 +311,11 @@ export default () => {
           // hide: true
           // ...btnProps
         },
-        save: {
-          hide: false
-        },
         reset: {
           text: '清空',
           // hide: true
           // ...btnProps
-        },
-        extraAfter: (
-          <Button>后置扩展按钮</Button>
-        ),
-        extraBefore: (
-          <Button>前置扩展按钮</Button>
-        )
+        }
       }}
     />
   );
