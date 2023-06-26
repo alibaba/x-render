@@ -71,7 +71,7 @@ export default (props: any) => {
   const rootPath = [...preRootPath, ...path];
   
   return (
-    <Grid.Item span={24} className="frm-list">
+    <Grid.Item className="frm-list">
       <Form.Array
         name={path}
         initialValue={defaultValue}
