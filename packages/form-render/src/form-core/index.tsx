@@ -65,7 +65,7 @@ const FormCore:FC<FRProps> = (props) => {
 
   useEffect(() => {
     form.setSchema(props.schema, true);
-  }, [props.schema]);
+  }, [JSON.stringify(props.schema || {})]);
 
   useEffect(() => {
     const context = {

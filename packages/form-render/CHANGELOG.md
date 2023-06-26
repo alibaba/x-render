@@ -1,5 +1,7 @@
 # 更新日志
 
+### 2.2.9
+- [-] 修复 schema 依赖更新异常
 ### 2.2.8
 - [+] SearchForm 增加 onReset 自定义重置方法
 - [-] 修复 setSchemaByPath 判断，在某些情况不生效
