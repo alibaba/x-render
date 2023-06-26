@@ -36,7 +36,6 @@ const TabList: React.FC<ListTabProps> = (props) => {
     tabItemProps = {}
   } = props;
 
-  const [activeKey, setActiveKey] = useState('0');
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
@@ -48,15 +47,13 @@ const TabList: React.FC<ListTabProps> = (props) => {
 
   const handleDelete = (targetKey: number) => {
     removeItem(targetKey);
-    setActiveKey(`${targetKey > 1 ? targetKey - 1 : 0}`);
+    
   }
 
   const handleEdit = (targetKey, action) => {
     if (action === 'add') {
       if ((!schema.max || fields.length < schema.max) && !readOnly && !hideAdd) {
-        addItem()
-        const currentKey = fields.length;
-        setActiveKey(`${currentKey}`);
+        addItem();
       }
     } else if (action === 'remove') {
       return null
@@ -77,32 +74,28 @@ const TabList: React.FC<ListTabProps> = (props) => {
   }
 
   return (
-    <>
-      <Tabs
-        className='fr-tab-list'
-        type={'editable-card'}
-        onChange={setActiveKey}
-        activeKey={activeKey + ''}
-        onEdit={handleEdit}
-        hideAdd={readOnly || hideAdd}
-      >
-        {fields.map(({ key, name }) => {
-          return (
-            <TabPane
-              {...tabItemProps}
-              tab={getCurrentTabPaneName(name)}
-              key={name}
-              className='fr-list-item'
-              closeIcon={renderClose(name)}
-            >
-              <div style={{ flex: 1 }}>
-                {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
-              </div>
-            </TabPane>
-          );
-        })}
-      </Tabs>
-    </>
+    <Tabs
+      className='fr-tab-list'
+      type={'editable-card'}
+      onEdit={handleEdit}
+      hideAdd={readOnly || hideAdd}
+    >
+      {fields.map(({ key, name }) => {
+        return (
+          <TabPane
+            {...tabItemProps}
+            tab={getCurrentTabPaneName(name)}
+            key={name}
+            className='fr-list-item'
+            closeIcon={renderClose(name)}
+          >
+            <div style={{ flex: 1 }}>
+              {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
+            </div>
+          </TabPane>
+        );
+      })}
+    </Tabs>
   );
 }
 

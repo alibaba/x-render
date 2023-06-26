@@ -40,25 +40,99 @@ npm i form-render --save
  * transform: true
  * defaultShowCode: true
  */
-import React from 'react';
 import FormRender, { useForm } from 'form-render';
-import schema from './schema/simple';
+
+import React, { useEffect, useState } from 'react';
+import { Button, Drawer, Select, Input } from 'antd';
+
+const options = [{label:'ceshi1',value:1},{label:'ceshi2',value:2},{label:'ceshi3',value:3}];
+
+const CaptchaInput = (props) => {
+    const { value, onChange, addons } = props;
+   
+    useEffect(() => {
+      console.log('addons.dataIndex', JSON.stringify(addons));
+    }, [addons]);
+
+    useEffect(()=>{
+        console.log('value',value)
+    },[value])
+
+    const sendCaptcha = (phone: string) => {
+      console.log('send captcha to:', phone);
+    };
+
+    return (
+      <>
+        <Input
+          value={value}
+          placeholder="请输入手机号"
+          onChange={(e) => onChange(e.target.value)}
+        />
+        <Button onClick={() => sendCaptcha(value)}>发送验证码</Button>
+      </>
+    );
+  };
+
+
 
 export default () => {
   const form = useForm();
+  const [visible, setVisible] = useState(false);
 
   const onFinish = (formData) => {
     console.log('formData:', formData);
   };
 
+  const schema = {
+    type: 'object',
+    displayType: 'row',
+    properties: {
+      list: {
+        title: '对象数组',
+        description: '对象数组嵌套功能',
+        type: 'array',
+        widget: 'tabList',
+        props: {
+          tabName: `组件`,
+        },
+        items: {
+          type: 'object',
+          properties: {
+            iii: {
+              bind: 'root',
+              widget: 'CaptchaInput',
+              fieldCol: 24,
+            },
+          },
+        },
+      },
+    },
+  };
+
+  const init =()=>{
+    form.setValueByPath('list', [{iii:123},{iii:333333}, {iii:292929}]);
+  }
+
+  useEffect(()=>{
+    visible&&init();
+  },[visible])
+
   return (
-    <FormRender 
-      form={form} 
-      schema={schema} 
-      onFinish={onFinish} 
-      maxWidth={360} 
-      footer={true}
-    />
+  <>
+    <Button onClick={()=>setVisible(true)}>编辑</Button>
+    <Drawer open={visible} width={1200} onClose={()=>setVisible(false)}>
+      <FormRender
+        schema={schema}
+        form={form}
+        widgets={{ CaptchaInput }}
+        onFinish={onFinish}
+      />
+      <Button type="primary" onClick={form.submit}>
+        提交
+      </Button>
+    </Drawer>
+    </>
   );
 }
 ```
