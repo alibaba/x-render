@@ -15,7 +15,7 @@ const FTimeline = (props: any) => {
   return (
     <>
       <FTitle data={title} />
-      <Timeline className={combineClass('dtv-timeline', className)} style={style} {...otherProps}>
+      <Timeline className={combineClass('dr-timeline', className)} style={style} {...otherProps}>
         {(data || []).map((item: any = {}, index: number) => (
           <Timeline.Item key={index} {...otherLineItem} color={item[colorKey] || 'gray'}>
             <span className="line-item-time">{item[timeKey]}</span>

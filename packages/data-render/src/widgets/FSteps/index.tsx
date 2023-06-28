@@ -25,7 +25,7 @@ const FSteps = (props: any) => {
     <Steps
       {...otherProps}
       size={size}
-      className={combineClass('dtv-steps', className)}
+      className={combineClass('dr-steps', className)}
       style={style}
     >
       {data.map((item: any, index: number) => (

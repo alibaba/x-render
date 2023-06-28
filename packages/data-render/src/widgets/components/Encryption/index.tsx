@@ -1,6 +1,7 @@
 import React from 'react';
 import classnames from 'classnames';
 import createIconFont from '../../utils/createIconFont';
+import { renderString } from '../../utils/common';
 import CopyLabel from '../CopyLabel';
 import './index.less';
 
@@ -35,17 +36,17 @@ const Encryption = (props: IProps) => {
 
   return (
     <div className={classnames('encryption-view', { [className]: className })}>
-      {label && <span className="line-label">{label}</span>}
+      {label && <span className='line-label'>{renderString(label)}</span>}
       {data &&
         (copy ? (
           <CopyLabel data={data} iconFontUrl={iconFontUrl} />
         ) : (
-          <span className="encry-content">{data}</span>
+          <span className='encry-content'>{data}</span>
         ))}
       {!data && (
         <span onClick={onClick} className={classnames('line-span', { [iconClass]: iconClass })}>
           {type && <Icon type={type} style={{ color: '#1677FF', fontSize: 18, ...iconStyle }} />}
-          {showText && <span className="icon-text">{text}</span>}
+          {showText && <span className='icon-text'>{text}</span>}
         </span>
       )}
     </div>

@@ -40,7 +40,7 @@ const FStatistic: React.FC<FStatisticProps> = (props) => {
 
   return (
     <Statistic
-      className={combineClass('dtv-statistic', className)}
+      className={combineClass('dr-statistic', className)}
       style={style}
       value={isType(data, ['number', 'string']) ? data : 0}
       title={titleNode}

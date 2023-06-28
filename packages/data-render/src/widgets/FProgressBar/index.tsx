@@ -26,7 +26,7 @@ const FProgressBar: React.FC<FProgressBarProps> = (props) => {
 
   return (
     <Progress
-      className={combineClass('dtv-progess', className)}
+      className={combineClass('dr-progess', className)}
       style={style}
       format={formatFunc ? handleformatFunc : undefined}
       percent={isType(data, ['number', 'string']) ? data : 0}

@@ -9,7 +9,7 @@ const FRow = (props: any) => {
   const { items, data, hasBackground, className, addons, ...options } = props;
 
   return (
-    <Row className={combineClass('dtv-row', className)} wrap={false} {...options}>
+    <Row className={combineClass('dr-row', className)} wrap={false} {...options}>
       {(items || []).map((item: any, index: number) => {
         const { children, className: itemClassName, ...itemOptions } = item;
         return (

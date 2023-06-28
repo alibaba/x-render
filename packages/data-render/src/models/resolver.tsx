@@ -20,12 +20,17 @@ const InnerHtml = (props: any) => {
 };
 
 export default (props: any, parentData: any, addons: any) => {
-  const { dataKey, defaultValue, children, ...rest } = props;
+  const { data, dataKey, defaultValue, children, ...rest } = props;
   const { getDataFromKey, getSourceData, getMethod, getConfig, getWidget } = addons;
   const sourceData = getSourceData();
 
   // 当组件配置 dataKey，根据 dataKey 获取服务端对应数据，否则继承父级数据
   let value = dataKey ? getDataFromKey(dataKey, parentData, defaultValue) : defaultValue ?? parentData;
+  
+  // 如果有传人的数据，直接使用
+  if (data !== undefined) {
+    value = data;
+  }
 
   // 解析函数表达式，替换值
   const restProps = parseAllExpression(rest, {
@@ -35,7 +40,7 @@ export default (props: any, parentData: any, addons: any) => {
   });
   // console.log('before:', props, 'after:', restProps);
 
-  const { widget, data, showLevel: _showLevel, format, getCompProps, hidden, ...componentProps } = restProps;
+  const { widget, showLevel: _showLevel, format, getCompProps, hidden, ...componentProps } = restProps;
 
   if (hidden && typeof hidden === 'boolean') {
     return;
@@ -55,11 +60,6 @@ export default (props: any, parentData: any, addons: any) => {
   if (!component) {
     console.warn(widget, '未找到对应组件，请检查配置项 widget 是否配置正确');
     return null;
-  }
-
-  // 如果有传人的数据，直接使用
-  if (data !== undefined) {
-    value = data;
   }
 
   // 数据进行格式化

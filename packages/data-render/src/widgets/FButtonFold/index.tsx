@@ -36,7 +36,7 @@ const FButtonFold = (props: any) => {
   return (
     <>
       <Button
-        className={combineClass('dtv-button-fold', className)}
+        className={combineClass('dr-button-fold', className)}
         type="link"
         {...otherProps}
         onClick={handleClick}

@@ -9,7 +9,7 @@ const FTooltip = (props: any) => {
 
   return (
     <Tooltip
-      className={combineClass('dtv-tooltip', className)}
+      className={combineClass('dr-tooltip', className)}
       color="#fff"
       overlayInnerStyle={{
         color: '#141414',

@@ -23,7 +23,7 @@ const FTextEllipsis = (props: any) => {
   const parentData = addons.getParentData();
 
   return (
-    <div className={combineClass('dtv-textellipsis', className)} style={style}>
+    <div className={combineClass('dr-textellipsis', className)} style={style}>
       <TextEllipsis
         height={height}
         data={data}

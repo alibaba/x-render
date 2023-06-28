@@ -17,7 +17,7 @@ const FSpace = (props: any) => {
   } = props;
 
   return (
-    <div className={combineClass('dtv-space', className)} style={style}>
+    <div className={combineClass('dr-space', className)} style={style}>
       {label && <span style={labelStyle}>{label}：</span>}
       <Space style={spaceStyle} split={split ? <Divider type="vertical" /> : null} {...spaceProps}>
         {childSchema.map((schema: any, index: number) =>

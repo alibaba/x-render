@@ -46,8 +46,8 @@ export const getValueFromKey = (props: {
 }): string | boolean => {
   const { data, path = '', defaultValue = '', addons, valueType } = props;
 
-  let result = null;
-  let negation = null; // 否定标识 ！
+  let result: any = null;
+  let negation: any = null; // 否定标识 ！
   let dataPath = path;
 
   if (path.substring(0, 2) === '!!') {
@@ -311,3 +311,11 @@ export const transDataKeyToData = (object: any, { data, addons }: any) => {
     }
   });
 };
+
+
+export const renderString = (str: any) => {
+  if (isObject(str)) {
+    return '';
+  }
+  return str;
+}

@@ -9,7 +9,7 @@ const FTimeline = (props: any) => {
   return (
     <>
       <FTitle data={title} />
-      <div className={combineClass('dtv-progress', className)}>
+      <div className={combineClass('dr-progress', className)}>
         {data.map((item: any, index: number) => (
           <div
             key={item.content}

@@ -24,31 +24,30 @@ const BaseCollapse: FC<IProps> = (props) => {
 
   const collapseHeader = (
     <>
-      {title && <div className="collapse-title">{title}</div>}
+      {title && <div className='collapse-title'>{title}</div>}
       {header && header}
     </>
   );
 
   const renderExpandIcon = ({ isActive }: any): JSX.Element => {
     return (
-      <div className="expand-icon-box">
+      <div className='expand-icon-box'>
         <DownOutlined rotate={isActive ? 180 : 0} />
-        <span className="expand-icon-desc">{isActive ? '收起' : '展开'}</span>
+        <span className='expand-icon-desc'>{isActive ? '收起' : '展开'}</span>
       </div>
     );
   };
 
   return (
     <Collapse
-      className={combineClass('dtv-collapse', className)}
+      className={combineClass('dr-collapse', className)}
       style={style}
-      bordered={false}
       ghost={true}
       activeKey={[activeKey]}
       expandIcon={renderExpandIcon}
       onChange={() => setActiveKey(activeKey ? '' : 'single')}
     >
-      <Panel key="single" header={collapseHeader}>
+      <Panel key='single' header={collapseHeader}>
         {children}
       </Panel>
     </Collapse>
