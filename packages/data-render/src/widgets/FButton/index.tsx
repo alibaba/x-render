@@ -106,7 +106,7 @@ const FButton: React.FC<FButtonProps> = (props) => {
       width: contentWidth,
       centered,
       okText,
-      className: 'dtv-button-modal',
+      className: 'dr-button-modal',
       ...modalProps,
       content: addons.renderer({ schema: children, data: modalData, addons }),
     });
@@ -203,7 +203,7 @@ const FButton: React.FC<FButtonProps> = (props) => {
   const text = content || data;
 
   const buttonProps: ButtonProps = {
-    className: combineClass('dtv-button', className),
+    className: combineClass('dr-button', className),
     type,
     target,
     href: eventType === 'iframe' ? undefined : href,

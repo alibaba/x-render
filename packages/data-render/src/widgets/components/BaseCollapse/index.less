@@ -1,13 +1,11 @@
-.dtv-collapse {
+.dr-collapse {
   margin-top: 16px;
   background-color: #fff;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px 2px #dde1e8;
+  border: 1px solid #f0f0f0;
 
   .collapse-title {
     height: 24px;
     margin-right: 16px;
-    color: #141414;
     font-weight: bold;
     font-size: 16px;
     line-height: 24px;
@@ -28,22 +26,27 @@
   .expand-icon-box {
     position: absolute;
     top: 20px;
-    right: 10px;
+    right: 12px;
     display: flex;
     align-items: center;
     color: #999;
+    margin-right: 12px;
   }
 
   .expand-icon-desc {
     margin-left: 4px;
   }
 
-  .ant-collapse-header {
+  > .ant-collapse-item .ant-collapse-header {
     display: flex;
     align-items: center !important;
-    padding: 16px !important;
+    padding: 16px 24px !important;
     background-color: #fff;
-    border-radius: 4px !important;
+    border-radius: 8px !important;
+
+    > .ant-collapse-expand-icon {
+      padding-inline-end: 0 !important;
+    }
   }
 
   .ant-collapse-header-text {

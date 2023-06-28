@@ -178,6 +178,7 @@ const FDescriptions = (props: any) => {
               addons,
               schema: {
                 widget: 'FText',
+                data: _itemData,
                 ...itemProps,
                 hidden: contentHidden,
                 useType: 'internal',

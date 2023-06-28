@@ -1,6 +1,6 @@
 {
   "name": "@xrenders/data-render",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0-alpha.7",
   "description": "",
   "keywords": [
     "DataView",
@@ -25,8 +25,8 @@
       "email": "tw93@qq.com"
     },
     {
-      "name": "mankaiviky",
-      "email": "mankaiviky@163.com"
+      "name": "lhbxs",
+      "email": "596850703@qq.com"
     }
   ],
   "main": "lib/index.js",

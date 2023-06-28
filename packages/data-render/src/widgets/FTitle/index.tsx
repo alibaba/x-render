@@ -14,7 +14,7 @@ const FTitle = (props: any) => {
   }
 
   return (
-    <div className={combineClass('dtv-title', className)} style={otherStyle}>
+    <div className={combineClass('dr-title', className)} style={otherStyle}>
       {showType === 1 && <span className="view-title-icon" />}
       <Title className="view-title" level={level} style={{ color, fontSize }} {...otherProps}>
         {data}

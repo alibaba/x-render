@@ -39,7 +39,7 @@ const FTags: FC = (props: any) => {
   }
 
   return (
-    <div className={combineClass('dtv-tags', className)} style={style}>
+    <div className={combineClass('dr-tags', className)} style={style}>
       {list.map(renderTag(tagProps, addons))}
     </div>
   );

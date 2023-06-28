@@ -72,7 +72,7 @@ const FRadioGroup: React.FC<FRadioGroupProps> = (props) => {
 
   return (
     <Radio.Group
-      className={combineClass('dtv-radio-group', className)}
+      className={combineClass('dr-radio-group', className)}
       style={style}
       onChange={handleChange}
       value={value}

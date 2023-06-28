@@ -19,7 +19,7 @@ const FPanel = (props: any) => {
   } = props;
   
   return (
-    <div className={combineClass('dtv-panel', className)} style={style}>
+    <div className={combineClass('dr-panel', className)} style={style}>
       {title && <FTitle data={title} showIcon={titleShowIcon} style={titleStyle} />}
       {render
         ? addons.getMethod(render)(data, props)

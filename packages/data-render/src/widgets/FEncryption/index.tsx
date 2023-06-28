@@ -1,6 +1,5 @@
 import React from 'react';
 import Encryption from '../components/Encryption';
-import { getValueFromKey } from '../utils/common';
 
 /**
  *
@@ -9,11 +8,11 @@ import { getValueFromKey } from '../utils/common';
 const FEncryption = (props: any) => {
   const { data, method, addons, ...otherProps } = props;
 
+  const sourceData = addons.getSourceData();
   const parentData = addons.getParentData();
   const dataKey = addons.dataKey;
-
-  const encryInfo: any =
-    getValueFromKey({ path: 'source:encryInfo', defaultValue: {}, addons }) || {};
+  const encryInfo: any = sourceData?.encryInfo || {};
+  
   let showKey = (method?.showKey ?? '') + dataKey;
   if (method?.extraShowKey) {
     showKey = parentData[dataKey + method.extraShowKey];

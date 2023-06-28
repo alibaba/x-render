@@ -7,8 +7,8 @@ import './index.less';
  *
  * 图片组件
  */
-const FImage = (props: any) => {
-  const [{ data, className, style, images, preview = false, addons, ...imageProps }] = props;
+export default (props: any) => {
+  const { data, className, style, images, preview = false, addons, ...imageProps } = props;
 
   let src = data;
   if (images) {
@@ -24,6 +24,4 @@ const FImage = (props: any) => {
       {...imageProps}
     />
   );
-};
-
-export default FImage;
+}

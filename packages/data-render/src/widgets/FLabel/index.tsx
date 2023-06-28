@@ -8,7 +8,7 @@ const FLabel = (props: any) => {
   const { colon = true, label, className, style, labelStyle, contentStyle, ...otherProps } = props;
 
   return (
-    <div className={combineClass('dtv-label', className)} style={style}>
+    <div className={combineClass('dr-label', className)} style={style}>
       <span className="label" style={labelStyle}>
         {label}
         {colon && '：'}
