@@ -112,7 +112,7 @@ export default (schema: any, form: any, methods: any, fieldRef: any) => {
         const imagePattern = '([/|.|w|s|-])*.(?:jpg|gif|png|bmp|apng|webp|jpeg|json)';
         const _isUrl = isUrl(value);
         const _isImg = new RegExp(imagePattern).test(value);
-        return _isUrl && _isImg;
+        return _isUrl || _isImg;
       }, 
       message: message?.email ?? '请输入正确的图片格式'
     });
