@@ -5,6 +5,7 @@ import { isObject } from './utils';
 import { Schema } from '../../index';
 import { RuleItem, RuleType } from 'async-validator';
 import { orderBy } from 'lodash-es';
+import { isUrl } from '../../utils';
 
 // 校验时间格式
 function validatorTime(value?: string) {
@@ -78,7 +79,11 @@ function validatorImage(value?: string) {
 
   // 从0.x迁移过来的正则
   const imagePattern = '([/|.|w|s|-])*.(?:jpg|gif|png|bmp|apng|webp|jpeg|json)';
-  return new RegExp(imagePattern).test(value);
+
+  // image 里也可以填写网络链接
+  const _isUrl = isUrl(value);
+  const _isImg = new RegExp(imagePattern).test(value);
+  return _isUrl || _isImg;
 }
 
 // 将x-render的schema转为async-validator的格式
