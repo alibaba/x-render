@@ -66,6 +66,9 @@ export default (str: string, dataPath: string, dependencies: any[], shouldUpdate
   const formDataRes = getListEveryResult(formDataList, preValue, nextValue, dataPath);
   const rootValueRes = getListEveryResult(rootValueList, preValue, nextValue, dataPath);
 
+
+  console.log(dataPath, str, rootValueRes)
+
   if (formDataRes && rootValueRes) {
     return false;
   }
