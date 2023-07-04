@@ -84,7 +84,11 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
   }
 
   const onReset = () => {
-    init();
+    const settingValue = columns.map((i, index) => ({
+      key: getColumnKey(i, index),
+      hidden: false,
+    }))
+    handleChange(settingValue);
   }
 
   /** 固定某一列 */
