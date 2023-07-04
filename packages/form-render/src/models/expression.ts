@@ -51,7 +51,7 @@ export const isHasExpression = (schema: any) => {
 };
 
 
-export const parseExpression = (func: any, formData = {}, parentPath: string) => {
+export const parseExpression = (func: any, formData = {}, parentPath: string | []) => {
   const parentData = get(formData, parentPath) || {};
 
   if (typeof func === 'string') {
