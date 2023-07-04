@@ -7,7 +7,6 @@ import {
   Selector as AntdSelector,
   Switch as AntdSwitch,
   Stepper as AntdStepper,
-  Radio as AntdRadio
 } from 'antd-mobile';
 import { omit } from 'lodash-es';
 
