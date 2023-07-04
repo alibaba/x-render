@@ -44,9 +44,14 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
   }, [open, columns])
 
   const init = () => {
+    const keyMap = columnsSettingValue?.reduce((previousValue, currentValue) => {
+      previousValue[currentValue.key] = currentValue.hidden
+      return previousValue
+    }, {}) || {};
+    
     const initSetting = columns.map((i, index) => ({
       key: getColumnKey(i, index),
-      hidden: false,
+      hidden: keyMap[getColumnKey(i, index)] || false,
     }))
     handleChange(initSetting);
   }
