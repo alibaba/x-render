@@ -67,7 +67,7 @@ export default (props: any) => {
     return null;
   }
 
-  const preRootPath = (_rootPath || []).splice(0, _rootPath.length - 1);
+  const preRootPath = [...(_rootPath  || [])].splice(0, _rootPath.length - 1);
   const rootPath = [...preRootPath, ...path];
   
   return (
