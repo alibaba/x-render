@@ -10,6 +10,7 @@ import Main from './main';
 
 export default (props: any) => {
   const { schema, rootPath } = props;
+  const { items, ...listSchema } = schema || {};
 
   const store = useContext(FRContext);
   const { schema: formSchema } = store.getState();
@@ -23,21 +24,23 @@ export default (props: any) => {
     return <Main configContext={configCtx} {...props}  />;
   }
 
-  const schemaStr = JSON.stringify(schema);
   // Need to listen to form values for dynamic rendering
   return (
     <Form.Item
       noStyle
-      shouldUpdate={fieldShouldUpdate(schemaStr, rootPath, dependencies, true)}
+      shouldUpdate={fieldShouldUpdate(JSON.stringify(listSchema || {}), rootPath, dependencies, true)}
     >
       {(form: any) => {
        const formData = form.getFieldsValue(true);
-       const newSchema = mustacheDisabled ? schema : parseAllExpression(schema, formData, rootPath, formSchema);
+       const newListSchema = mustacheDisabled ? schema : parseAllExpression(listSchema, formData, rootPath, formSchema);
         return (
           <Main 
             configContext={configCtx} 
             {...props} 
-            schema={newSchema}
+            schema={{
+              items,
+              ...newListSchema
+            }}
             rootPath={[...rootPath]}
           />
         );
