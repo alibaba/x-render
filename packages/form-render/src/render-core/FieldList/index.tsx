@@ -41,7 +41,7 @@ export default (props: any) => {
               items,
               ...newListSchema
             }}
-            rootPath={[...rootPath]}
+            rootPath={rootPath}
           />
         );
       }}
