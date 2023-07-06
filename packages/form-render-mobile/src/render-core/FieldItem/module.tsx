@@ -3,7 +3,6 @@ import { _get, isObject, getArray, isArray, isNumber } from '../../utils';
 
 // return dataIndex、dataPath、schemaPath
 const getPathObj = ({ rootPath = [], path }) => {
-  console.log(rootPath, '----rootpath')
 
   const pathList = (path || '').split('.');
   const dataIndex: any[] = [];
