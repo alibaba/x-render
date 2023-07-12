@@ -96,7 +96,7 @@ export const transformData = (value: any, format: any, parentData?: any, addons?
   }
 
   const getValue = (value: any, item: any) => {
-    const { type, config }: any = item;
+    const { type, config, conn = ' ~ ' }: any = item;
     let result = value;
 
     if (type === 'dateTime-range') {
@@ -116,7 +116,7 @@ export const transformData = (value: any, format: any, parentData?: any, addons?
       }
 
       if (endTime !== 'Invalid Date') {
-        result += ' ~ ' + endTime;
+        result += conn + endTime;
       }
     }
     // 日期

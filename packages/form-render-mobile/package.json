@@ -1,6 +1,6 @@
 {
   "name": "form-render-mobile",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",

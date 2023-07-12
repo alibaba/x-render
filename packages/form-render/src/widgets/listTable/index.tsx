@@ -63,6 +63,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
     removeItem,
     configContext,
     validatePopover,
+    ...retProps
   } = props;
 
   const { globalConfig } = configContext;
@@ -185,11 +186,12 @@ const TableList: React.FC<ListTableProps> = (props) => {
     <div className={classnames('fr-table-list', { 'fr-table-list-no-popover': !islidatePopover })}>
       <Table
         size='middle'
+        scroll={{ x: 'max-content' }}
+        style={{ marginBottom: '12px'}}
+        {...retProps}
         columns={columns}
         dataSource={fields}
         pagination={paginationConfig}
-        scroll={{ x: 'max-content' }}
-        style={{ marginBottom: '12px'}}
       />
       {(!schema.max || fields.length < schema.max) && !hideAdd && (
         <Button
