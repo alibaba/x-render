@@ -92,7 +92,7 @@ const getDescriptionItems = (items = [], { addons, data, itemShowLevel }) => {
       return null;
     }
     
-    if (hidden?.includes('method:')) {
+    if (hidden?.includes?.('method:')) {
       const func = getMethod(hidden);
       if (func && func(data, sourceData)) {
         return null;

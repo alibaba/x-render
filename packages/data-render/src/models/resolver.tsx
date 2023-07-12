@@ -46,7 +46,7 @@ export default (props: any, parentData: any, addons: any) => {
     return;
   }
 
-  if (hidden?.includes('method:')) {
+  if (hidden?.includes?.('method:')) {
     // 如果是通过协议声明的函数，获取函数并执行
     const func = getMethod(hidden);
     if (func && func(props, { data: value, parentData, sourceData })) {
