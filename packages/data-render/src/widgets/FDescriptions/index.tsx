@@ -27,7 +27,7 @@ const renderItemLabel = (item: any, data: any, addons: any) => {
   }
 
   // 不存在 lable 提示，直接返回 label
-  if (!labelToolTip) {
+  if (!labelToolTip?.title) {
     return (
       <>
         {label}
@@ -164,7 +164,7 @@ const FDescriptions = (props: any) => {
             _column = _column -1;
           }
         }
-             
+
         return (
           <DescriptionItem
             key={index}
