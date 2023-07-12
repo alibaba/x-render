@@ -27,7 +27,7 @@ const renderItemLabel = (item: any, data: any, addons: any) => {
   }
 
   // 不存在 lable 提示，直接返回 label
-  if (!labelToolTip) {
+  if (!labelToolTip?.title) {
     return (
       <>
         {label}
@@ -153,17 +153,18 @@ const FDescriptions = (props: any) => {
         const leveMap: any = { 3: 1, 4: 2 };
 
         // 动态计算 span
-        let span = _span;
+        let span = _span || 1;
         if (items[index+1]) {
           const nextSpan = items[index+1].span ?? 1;
-          if (_span + nextSpan > _column) {
+
+          if ((_span || 1) + nextSpan > _column) {
             span = _column;
             _column = props.column;
           } else {
             _column = _column -1;
           }
         }
-     
+
         return (
           <DescriptionItem
             key={index}

@@ -66,7 +66,7 @@ export default (props: DataVProps) => {
     if (!_key) {
       return currentData;
     }
-    const key = ['data:', 'source:', 'parent:', '{{'].some(item => _key.includes(item)) ? _key : `currentData.${_key}`;
+    const key = ['data:', 'source:', 'parent:', '{{'].some(item => _key.includes(item)) ? _key : `$d.${_key}`;
     return parseExpression(key, { currentData, sourceData: data }) ?? defaultValue;
   }
 

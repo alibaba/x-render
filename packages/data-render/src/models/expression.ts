@@ -42,9 +42,9 @@ export const parseExpression = (
         .replace(/data:/g, JSON.stringify(currentData) + '.')
         .replace(/parent:/g, JSON.stringify(parentData) + '.')
         // 兼容两种写法
-        .replace(/(^|\s)sourceData\.(?=\w)/g, JSON.stringify(sourceData) + '.')
-        .replace(/(^|\s)currentData\.(?=\w)/g, JSON.stringify(currentData) + '.')
-        .replace(/(^|\s)parentData\.(?=\w)/g, JSON.stringify(parentData) + '.')}
+        .replace(/\$s/g, JSON.stringify(sourceData))
+        .replace(/\$d/g, JSON.stringify(currentData))
+        .replace(/\$p/g, JSON.stringify(parentData))}
     `;
 
     try {
