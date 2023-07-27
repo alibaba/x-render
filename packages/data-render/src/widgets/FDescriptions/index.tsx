@@ -65,13 +65,26 @@ const renderItemLabel = (item: any, data: any, addons: any) => {
 };
 
 const getDescriptionItems = (items = [], { addons, data, itemShowLevel }) => {
-  return items.map((item: any) => {
-    const { defaultValue = '', dataKey, showLevel, hidden } = item || {};
-    const { getDataFromKey, getSourceData, getMethod } = addons;
-    
-    const _itemData = getDataFromKey(dataKey, data, defaultValue);
+  return items.map((_item: any) => {
+    const { defaultValue = '', dataKey, metaData, showLevel, hidden } = _item || {};
+    const { getDataFromKey, getSourceData, getMethod, getConfig } = addons;
+    const config = getConfig();
 
-    const level = showLevel ?? itemShowLevel;
+    let item = _item;
+    if (metaData && config?.descriptions?.asyncItemProps) {
+      const asyncProps = config.descriptions.asyncItemProps(_item, { parentData: data, metaData: metaData })
+      item = {
+        ..._item,
+        ...asyncProps
+      };
+    }
+    
+    let _itemData = getDataFromKey(dataKey, data, defaultValue);
+    if (metaData && !dataKey) {
+      _itemData = item.data;
+    }
+
+    const level = showLevel ?? itemShowLevel ?? config?.showLevel;
     // 如果描述项没有数据（包含 0），则描述项不显示
     if (level === 1 && (!_itemData || _itemData === '0')) {
       return null;

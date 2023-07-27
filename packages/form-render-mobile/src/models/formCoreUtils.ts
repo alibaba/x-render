@@ -85,7 +85,7 @@ export const valuesWatch = (changedValues: any, allValues: any, watch: any) => {
   }
 
   const flatValues = {
-    '#': { value: allValues, index: allValues }
+    '#': { value: allValues, index: changedValues }
   };
 
   traverseValues({ changedValues, allValues, flatValues });

@@ -26,7 +26,7 @@ export const isExpression = (str: string) => {
   const pattern = /^{\s*{(.+)}\s*}$/;
   const reg1 = /^{\s*{function\(.+}\s*}$/;
 
-  return str.match(pattern) && !str.match(reg1);
+  return str.trim().match(pattern) && !str.trim().match(reg1);
 };
 
 export const parseExpression = (
