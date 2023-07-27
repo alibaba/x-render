@@ -109,6 +109,9 @@ export const elements = [
   {
     text: '输入框',
     name: 'input',
+    popover: {
+      content: '可以输入内容'
+    },
     schema: {
       title: '输入框',
       type: 'string',
@@ -161,6 +164,10 @@ export const elements = [
   },
   {
     text: '大输入框',
+    popover: {
+      title: '介绍',
+      content: '可以输入多行内容'
+    },
     name: 'textarea',
     schema: {
       title: '编辑框',
@@ -203,6 +210,10 @@ export const elements = [
   {
     text: '日期选择',
     name: 'date',
+    popover: {
+      title: '略缩图',
+      content: <img width={348} height={43} src="https://img.alicdn.com/imgextra/i4/O1CN01gPzKrs1eNTHPhuSIG_!!6000000003859-0-tps-348-43.jpg" />
+    },
     schema: {
       title: '日期选择',
       type: 'string',
