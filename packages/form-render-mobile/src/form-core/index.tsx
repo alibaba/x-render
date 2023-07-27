@@ -57,7 +57,7 @@ const FormCore = (props: any) => {
 
   useEffect(() => {
     form.setSchema(props.schema, true);
-  }, [props.schema]);
+  }, [JSON.stringify(props.schema || {})]);
 
   useEffect(() => {
     const context = {
