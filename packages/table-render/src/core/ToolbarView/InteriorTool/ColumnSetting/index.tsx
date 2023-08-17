@@ -36,12 +36,12 @@ const ColumnSetting: React.FC<Pick<ToolbarActionConfig, 'columnsSettingValue' | 
   }, [columnsSettingValue]);
 
   useEffect(() => {
-    if (open && columns.length > 0 && !inited.current) {
+    if (open && columns.length > 0 && !inited.current && columnsSetting.length === 0) {
       init();
       inited.current = true;
       return;
     }
-  }, [open, columns])
+  }, [open, columns, columnsSetting])
 
   const init = () => {
     const initSetting = columns.map((i, index) => ({
