@@ -1,6 +1,6 @@
 {
   "name": "table-render",
-  "version": "2.0.19",
+  "version": "2.1.0",
   "description": "中后台表格解决方案",
   "keywords": [
     "TableRender",
@@ -40,7 +40,7 @@
     ]
   },
   "dependencies": {
-    "@ant-design/icons": "^4.2.2",
+    "@ant-design/icons": "^5.1.4",
     "dayjs": "^1.11.7",
     "form-render": "^2.1.26",
     "lodash.get": "^4.4.2",
