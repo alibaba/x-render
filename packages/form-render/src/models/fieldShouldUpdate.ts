@@ -4,7 +4,8 @@ import { parseExpression } from './expression';
 const extractFormDataStrings = (list: string[]) => {
   let result = [];
   list.forEach(str => {
-    const regex = /formData.\w+(.\w+)*/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
+    // TODO: 为啥要拆开来获取？
+    const regex = /formData.\w+(.\w+)*(\(.*\))?/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
     const matches = str.match(regex);
     if (matches) {
       result = result.concat(matches);
@@ -18,7 +19,7 @@ const extractFormDataStrings = (list: string[]) => {
 const extractRootValueStrings = (list: string[]) => {
   let result = [];
   list.forEach(str => {
-    const regex = /rootValue.\w+(.\w+)*/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
+    const regex = /rootValue.\w+(.\w+)*(\(.*\))?/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
     const matches = str.match(regex);
     if (matches) {
       result = result.concat(matches);
@@ -62,7 +63,6 @@ export default (str: string, dataPath: string, dependencies: any[], shouldUpdate
 
   const formDataList = findStrList(str, 'formData');
   const rootValueList = findStrList(str, 'rootValue');
-
   const formDataRes = getListEveryResult(formDataList, preValue, nextValue, dataPath);
   const rootValueRes = getListEveryResult(rootValueList, preValue, nextValue, dataPath);
 
