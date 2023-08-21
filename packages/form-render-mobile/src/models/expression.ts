@@ -7,7 +7,7 @@ export const isExpression = (str: string) => {
     return false;
   }
   
-  const pattern = /^{\s*{(.+)}\s*}$/;
+  const pattern = /^{\s*{(.+)}\s*}$/s;
   const reg1 = /^{\s*{function\(.+}\s*}$/;
 
   return str.match(pattern) && !str.match(reg1);
@@ -55,7 +55,7 @@ export const parseExpression = (func: any, formData = {}, parentPath: string) =>
   const parentData = get(formData, parentPath) || {};
 
   if (typeof func === 'string') {
-    const funcBody = func.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '');
+    const funcBody = func.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '').trim();
 
     const funcStr = `
       return ${funcBody
@@ -67,7 +67,7 @@ export const parseExpression = (func: any, formData = {}, parentPath: string) =>
       const result = Function(funcStr)();
       return result;
     } catch (error) {
-      console.log(error, func, parentPath);
+      console.log(error,funcStr, func, parentPath);
       return null; // 如果计算有错误，return null 最合适
     }
   } 
