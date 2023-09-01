@@ -85,7 +85,7 @@
     "prettier": "^2.6.0",
     "prettier-plugin-packagejson": "^2.2.16",
     "prismjs": "^1.27.0",
-   "react": "^18.2.0",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-monaco-editor": "^0.44.0",
     "react-simple-code-editor": "^0.11.0",
