@@ -9,8 +9,8 @@ const createIframeContent = () => {
         <link rel="icon" href="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png">
         <link href="https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/variables.css" rel="stylesheet" />
         <link href="https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/dist/next.var.min.css" rel="stylesheet" />
-        <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.5/dist/css/engine-core.css" />
-        <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/css/engine-ext.css" />
+        <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.11-beta.8/dist/css/engine-core.css" />
+        <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.6/dist/css/engine-ext.css" />
         <link rel="stylesheet" href="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.7/css/index.css" />
 
         <script>
@@ -23,14 +23,14 @@ const createIframeContent = () => {
         <script src="https://g.alicdn.com/platform/c/lodash/4.6.1/lodash.min.js"></script>
         <script src="https://g.alicdn.com/mylib/moment/2.24.0/min/moment.min.js"></script>
         <script src="https://g.alicdn.com/code/lib/alifd__next/1.23.24/next.min.js"></script>
-        <script crossorigin="anonymous" src="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.5/dist/js/engine-core.js"></script>
-        <script crossorigin="anonymous" src="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.5/dist/js/engine-ext.js"></script>
+        <script crossorigin="anonymous" src="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.11-beta.8/dist/js/engine-core.js"></script>
+        <script crossorigin="anonymous" src="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.6/dist/js/engine-ext.js"></script>
 
       </head>
 
       <body>
         <div id="lce-container"></div>
-        <script type="text/javascript" src="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.7/js/index.js"></script>
+        <script type="text/javascript" src="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.8/js/index.js"></script>
       </body>
     </html>
   `;
