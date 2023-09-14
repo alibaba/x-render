@@ -1,43 +1,43 @@
-import React, { useEffect, useState, useRef, useContext } from 'react';
+import { useUpdateEffect } from 'ahooks';
 import { Col, ConfigProvider } from 'antd';
 import classnames from 'classnames';
 import { debounce } from 'lodash-es';
-import { useUpdateEffect } from 'ahooks';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import FormRender from '../../form-core';
-import { translation } from '../../utils';
 import { SearchProps } from '../../type';
+import { translation } from '../../utils';
 import withProvider from '../../withProvider';
 import ActionView from './ActionView';
 import './index.less';
 
 import {
-  Input,
-  InputNumber,
-  TextArea,
-  Select,
-  MultiSelect,
-  Switch,
-  Radio,
   Checkbox,
   Checkboxes,
   DatePicker,
   DateRange,
+  Html,
+  ImageInput,
+  Input,
+  InputNumber,
+  MultiSelect,
+  PercentSlider,
+  Radio,
+  Select,
+  Slider,
+  Switch,
+  TextArea,
   TimePicker,
   TimeRange,
   TreeSelect,
-  ImageInput,
   UrlInput,
-  Slider,
-  Html,
-  PercentSlider
 } from '../../widgets';
 
 const getSearchHeight = (limitHeight: boolean, isColumn: boolean) => {
   if (!limitHeight) {
     return 'auto';
   }
- 
+
   if (isColumn) {
     return 110;
   }
@@ -67,7 +67,7 @@ const SearchForm: <RecordType extends object = any>(
     style = {},
     className,
     mode,
-    layoutAuto=false,
+    layoutAuto = false,
     form,
     hidden,
     loading,
@@ -103,7 +103,7 @@ const SearchForm: <RecordType extends object = any>(
     form,
     collapsed,
     onReset,
-    expand
+    expand,
   };
 
   useEffect(() => {
@@ -135,12 +135,16 @@ const SearchForm: <RecordType extends object = any>(
     }
     setTimeout(() => {
       const { clientHeight } = searchRef?.current;
-     
+
       if (!collapsed && clientHeight > (isColumn ? 110 : 136)) {
         setCollapsed(true);
       }
 
-      if (collapsed && _column === column && heightRef.current <= (isColumn ? 110 : 136)) {
+      if (
+        collapsed &&
+        _column === column &&
+        heightRef.current <= (isColumn ? 110 : 136)
+      ) {
         setCollapsed(false);
       }
 
@@ -153,31 +157,38 @@ const SearchForm: <RecordType extends object = any>(
       return;
     }
 
-    const resizeObserver = new ResizeObserver(debounce(() => {
-      const { clientWidth, clientHeight } = searchRef?.current || {};
-      if(clientWidth === 0 || clientHeight === 0 || !preWidthRef.current || preWidthRef.current === clientWidth){
+    const resizeObserver = new ResizeObserver(
+      debounce(() => {
+        const { clientWidth, clientHeight } = searchRef?.current || {};
+        if (
+          clientWidth === 0 ||
+          clientHeight === 0 ||
+          !preWidthRef.current ||
+          preWidthRef.current === clientWidth
+        ) {
+          preWidthRef.current = clientWidth;
+          return;
+        }
+
         preWidthRef.current = clientWidth;
-        return;
-      }
 
-      preWidthRef.current = clientWidth;
-
-      for (let i = _column; i > 0; i--) {
-        const item = clientWidth/i;
-        if (item >= (layoutAuto?.fieldMinWidth || 340)) {
-          setColumn(i);
-          break;
+        for (let i = _column; i > 0; i--) {
+          const item = clientWidth / i;
+          if (item >= (layoutAuto?.fieldMinWidth || 340)) {
+            setColumn(i);
+            break;
+          }
+          if (i === 1) {
+            setColumn(1);
+          }
         }
-        if (i === 1) {
-          setColumn(1);
-        }
-      }
-    }, 300));
+      }, 300)
+    );
 
     resizeObserver.observe(searchRef.current);
     () => {
       resizeObserver.disconnect();
-    }
+    };
   };
 
   const initMount = async () => {
@@ -211,48 +222,70 @@ const SearchForm: <RecordType extends object = any>(
 
   const operateShow = mode !== 'simple' || (mode === 'simple' && retainBtn);
 
+  /** 当设置collapsed，超出隐藏 */
+  const properties = useMemo(() => {
+    const properties = {};
+    Object.keys(schema.properties).forEach((key, index) => {
+      const item = { ...(schema.properties[key] || {}) };
+      if (
+        (limitHeight && isColumn && index > column - 1) ||
+        (limitHeight && !isColumn && index > column * 2 - 1)
+      ) {
+        item.hidden = true;
+      }
+      properties[key] = item;
+    });
+    return properties;
+  }, [schema, limitHeight, column, isColumn]);
+
   return (
     <div
-      className={classnames('fr-search', { [className || '']: !!className,  'fr-column-search': isColumn })}
+      className={classnames('fr-search', {
+        [className || '']: !!className,
+        'fr-column-search': isColumn,
+      })}
       style={{
         ...style,
-        height: getSearchHeight(limitHeight, isColumn)
+        height: getSearchHeight(limitHeight, isColumn),
       }}
       ref={searchRef}
       onKeyDown={!closeReturnSearch && handleKeyDown}
     >
       <FormRender
-        displayType='row'
+        displayType="row"
         {...otherProps}
         schema={{
           ...schema,
-          column: column
+          properties: properties,
+          column: column,
         }}
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
         form={form}
-        operateExtra={operateShow && (
-          <Col 
-            className={classnames('search-action-col', { 
-              'search-action-fixed': limitHeight,
-              'search-action-column': isColumn,
-              'search-action-column-fixed': limitHeight && isColumn,
-            })} 
-            style={{ minWidth: (1/column)*100 + '%' }}
-          >
-            <ActionView 
-              {...actionProps} 
-              setLimitHeight={setLimitHeight} 
-              retainBtn={retainBtn} 
-              mode={mode} 
-              setExpand={setExpand} 
-            />
-          </Col>
-        )}
+        operateExtra={
+          operateShow && (
+            <Col
+              className={classnames('search-action-col', {
+                'search-action-fixed': limitHeight,
+                'search-action-column': isColumn,
+                'search-action-column-fixed': limitHeight && isColumn,
+              })}
+              style={{ minWidth: (1 / column) * 100 + '%' }}
+            >
+              <ActionView
+                {...actionProps}
+                setLimitHeight={setLimitHeight}
+                retainBtn={retainBtn}
+                mode={mode}
+                setExpand={setExpand}
+              />
+            </Col>
+          )
+        }
       />
     </div>
   );
-}
+};
 
 export default withProvider(SearchForm, {
   Input,
@@ -273,6 +306,5 @@ export default withProvider(SearchForm, {
   UrlInput,
   Slider,
   Html,
-  PercentSlider
+  PercentSlider,
 });
-
