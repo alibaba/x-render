@@ -169,9 +169,9 @@ const FormCore:FC<FRProps> = (props) => {
       ? await beforeFinish({ data: values, schema, errors: [] })
       : null;
 
-    console.log(values, form.getValues(true), _values);
+    // console.log(values, form.getValues(true), _values);
     // Stop submit
-    if (fieldsError) {
+    if (fieldsError?.length > 0) {
       form.setFields(fieldsError);
       return;
     }
