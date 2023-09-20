@@ -169,9 +169,9 @@ const FormCore:FC<FRProps> = (props) => {
       ? await beforeFinish({ data: values, schema, errors: [] })
       : null;
 
-    // console.log(values, form.getValues(true));
+    // console.log(values, form.getValues(true), _values);
     // Stop submit
-    if (fieldsError) {
+    if (fieldsError?.length > 0) {
       form.setFields(fieldsError);
       return;
     }
@@ -211,6 +211,7 @@ const FormCore:FC<FRProps> = (props) => {
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
       onValuesChange={handleValuesChange}
+      preserve={!removeHiddenData}
     >
       <Row gutter={displayType === 'row' ? 16 : 24}>
         <RenderCore schema={schema} />
