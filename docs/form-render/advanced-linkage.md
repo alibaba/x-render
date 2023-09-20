@@ -87,7 +87,6 @@ export default () => {
       schema={schema} 
       form={form}
       maxWidth={400}
-      footer={true}
     />
   );
 }
