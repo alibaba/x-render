@@ -45,7 +45,7 @@ const schema = {
     input1: {
       title: '输入框',
       type: 'string',
-      hidden: '{{ formData.switch1 === true }}'
+      disabled: '{{ formData.switch1 === true }}'
     },
     list: {
       title: 'List 场景',
