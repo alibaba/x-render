@@ -45,7 +45,7 @@ const schema = {
     input1: {
       title: '输入框',
       type: 'string',
-      disabled: '{{ formData.switch1 === true }}'
+      hidden: '{{ formData.switch1 === true }}'
     },
     list: {
       title: 'List 场景',
@@ -87,6 +87,7 @@ export default () => {
       schema={schema} 
       form={form}
       maxWidth={400}
+      footer={true}
     />
   );
 }
