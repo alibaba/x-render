@@ -225,7 +225,7 @@ const SearchForm: <RecordType extends object = any>(
   /** 当设置collapsed，超出隐藏 */
   const properties = useMemo(() => {
     const properties = {};
-    Object.keys(schema.properties).forEach((key, index) => {
+    Object.keys(schema.properties || {}).forEach((key, index) => {
       const item = { ...(schema.properties[key] || {}) };
       if (
         (limitHeight && isColumn && index > column - 1) ||
