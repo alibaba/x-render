@@ -79,16 +79,19 @@ const useTableRoot = props => {
         .then(res => {
           // TODO：这里校验res是否规范
           const { rows, total, pageSize, ...extraData } = res;
+          const newPagination = {
+            ..._pagination,
+            total,
+            pageSize: pageSize || _pageSize,
+          };
+
           set({
             loading: false,
             dataSource: rows,
             ...extraData,
-            pagination: {
-              ..._pagination,
-              total,
-              pageSize: pageSize || _pageSize,
-            },
+            pagination: newPagination,
           });
+          paginationRef.current = newPagination;
           afterSearch.current({ rows, total, pageSize, ...extraData });
         })
         .catch(err => {
@@ -101,8 +104,9 @@ const useTableRoot = props => {
     params?: { tab?: string | number; stay?: boolean },
     moreSearch?: any
   ) => {
-    const _stay = (params && params.stay) || false;
+    const _stay = params?.stay || false;
     const _search = moreSearch || {};
+
     doSearch(
       {
         current: _stay ? paginationRef?.current?.current : 1,
