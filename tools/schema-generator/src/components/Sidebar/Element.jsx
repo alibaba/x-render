@@ -1,11 +1,12 @@
 import React from 'react';
+import { Popover } from 'antd';
 import { useDrag } from 'react-dnd';
 import { useTranslation } from 'react-i18next';
 import { addItem } from '../../utils';
 import { useGlobal, useStore } from '../../utils/hooks';
 import './Element.less';
 
-const Element = ({ text, name, schema, icon, fixedName }) => {
+const Element = ({ text, name, schema, icon, fixedName, popover }) => {
   const setGlobal = useGlobal();
   const {
     selected,
@@ -52,6 +53,7 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
   const widgetProps = {
     text,
     icon,
+    popover,
     onClick: handleElementClick,
   };
 
@@ -69,12 +71,22 @@ const Element = ({ text, name, schema, icon, fixedName }) => {
 export default Element;
 
 // 目前没有用icon，但是可以补上
-const WidgetUI = ({ onClick, text, icon }) => {
+const WidgetUI = ({ onClick, text, icon, popover }) => {
   const { t } = useTranslation(["components"]);
-  return (
-    <li className="left-item" onClick={onClick}>
-      {icon}
-      {t(text)}
-    </li>
-  );
+  if (popover?.content) {
+    return <Popover title={popover?.title || ''} content={popover?.content} mouseLeaveDelay={0}>
+      <li className="left-item" onClick={onClick}>
+        {icon}
+        {t(text)}
+      </li>
+    </Popover>
+  } else {
+    return (
+      <li className="left-item" onClick={onClick}>
+        {icon}
+        {t(text)}
+      </li>
+    );
+  }
+
 };
