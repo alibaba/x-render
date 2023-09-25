@@ -211,7 +211,7 @@ const FormCore:FC<FRProps> = (props) => {
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
       onValuesChange={handleValuesChange}
-      preserve={!removeHiddenData}
+      // preserve={!removeHiddenData}
     >
       <Row gutter={displayType === 'row' ? 16 : 24}>
         <RenderCore schema={schema} />
