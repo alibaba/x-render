@@ -211,14 +211,22 @@ export default (props: any) => {
   if (inlineSelf) {
     if (noStyle) {
       return (
-        <div className={classnames('fr-inline-field', { 'fr-field-visibility': !visible, [schema.className] : !! schema.className })}>
+        <div 
+          className={classnames('fr-inline-field', { 'fr-field-visibility': !visible, [schema.className] : !! schema.className })}
+        >
           {formItem}
         </div>
       );
     }
-
     return formItem;
   }
 
-  return <Col span={span} className={classnames(null, { 'fr-field-visibility': !visible })}>{formItem}</Col>;
+  return (
+    <Col 
+      span={span} 
+      className={classnames(null, { 'fr-field-visibility': !visible })}
+    >
+      {formItem}
+    </Col>
+  );
 }

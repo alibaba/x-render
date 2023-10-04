@@ -92,59 +92,12 @@ export function isCheckBoxType(schema: any, readOnly: boolean) {
   }
 }
 
-export const valueRemoveUndefined = (values: any, notFilter?: boolean) => {
-  const recursionArray = (list: any[]) => {
-    let result = list.map(item => {
-      if (isObject(item)) {
-        return recursionObj(item);
-      }
 
-      if (isArray(item)) {
-        return recursionArray(item);
-      }
-      
-      return item;
-    });
-
-    // 数组会变成对象，感觉 underfined 不能剔除，会影响顺序
-    // result = omitBy(result, isUndefined);
-
-    if (Object.keys(result).length === 0) {
-      return undefined;
-    }
-    return result;
-  };
- 
-  const recursionObj = (_data: any) => {
-    let data =  omitBy(_data, isUndefined);
-
-    Object.keys(data).forEach(key => {
-      const item = data[key];
-      if (isObject(item)) {
-        data[key] = recursionObj(item);
-      }
-
-      if (isArray(item)) {
-        const result = recursionArray(item) || [];
-        data[key] = notFilter ? result : result.filter((item: any) => item !== undefined);
-      }
-    });
-
-    data = omitBy(data, isUndefined);
-
-    if (Object.keys(data).length === 0) {
-      return undefined;
-    }
-    return data;
-  }
- 
-  return recursionObj(values) || {};
-}
 
 export const translation = (configCtx: any) => (key: string) => {
   const locale = configCtx?.locale.FormRender;
   return locale[key];
-}
+};
 
 export const hasFuncProperty = (obj: any) => {
   return _some(obj, (value) => {

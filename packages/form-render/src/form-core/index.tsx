@@ -3,10 +3,12 @@ import { Form, Row, Col, Button, Space, ConfigProvider } from 'antd';
 import { useStore } from 'zustand';
 import classNames from 'classnames';
 
-import { valueRemoveUndefined, _cloneDeep, translation, isFunction } from '../utils';
+import { _cloneDeep, translation, isFunction } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesToBind } from '../models/bindValues';
+import filterHiddenValue from '../models/filterValuesHidden';
+import filterValuesUndefined from '../models/filterValuesUndefined';
 import { getFormItemLayout } from '../models/layout';
 import { FRProps } from '../type';
 
@@ -152,18 +154,24 @@ const FormCore:FC<FRProps> = (props) => {
   };
 
   const handleValuesChange = (changedValues: any, _allValues: any) => {
-    const allValues = valueRemoveUndefined(_allValues, true);
+    const allValues = filterValuesUndefined(_allValues, true);
     valuesWatch(changedValues, allValues, watch);
   };
 
   const handleFinish = async (_values: any) => {
-    onSubmitLogger({ values: _values });
     let values = _cloneDeep(_values);
-    if (!removeHiddenData) {
+
+    console.log(values, 'values')
+
+
+    if (removeHiddenData) {
+      values = filterHiddenValue(values, flattenSchema);
+    } else {
       values = _cloneDeep(form.getFieldsValue(true));
     }
+
     values = parseValuesToBind(values, flattenSchema);
-    values = valueRemoveUndefined(values);
+    values = filterValuesUndefined(values);
 
     let fieldsError = beforeFinish
       ? await beforeFinish({ data: values, schema, errors: [] })
@@ -176,6 +184,7 @@ const FormCore:FC<FRProps> = (props) => {
       return;
     }
 
+    onSubmitLogger({ values: _values });
     onFinish && onFinish(values, []);
   };
 
@@ -189,7 +198,7 @@ const FormCore:FC<FRProps> = (props) => {
       values = _cloneDeep(form.getFieldsValue(true));
     }
     values = parseValuesToBind(values, flattenSchema);
-    values = valueRemoveUndefined(values);
+    values = filterValuesUndefined(values);
 
     onFinishFailed({ ...params, values });
   };

@@ -3,52 +3,39 @@ import FormRender, { useForm } from 'form-render';
 import { Button, Input } from 'antd';
 
 const schema = {
-  type: 'object',
-  displayType: 'row',
+  type: "object",
+  displayType: "row",
   properties: {
-    obj: {
-      type: 'object',
-      title: '卡片主题',
-      description: '这是一个对象类型',
-      widget: 'collapse',
-      column: 3,
-      properties: {
-        input1: {
-          title: '输入框 A',
-          type: 'string',
-        },
-        list: {
-          title: '对象数组',
-          description: '对象数组嵌套功能',
-          type: 'array',
-          widget: 'cardList',
-          items: {
-            type: 'object',
-            title: '卡片主题',
-            description: '这是一个对象类型',
-            column: 3,
-            widget: 'card',
-            properties: {
-              input1: {
-                title: '输入框 A',
-                type: 'string',
-              },
-              input2: {
-                title: '输入框 A',
-                type: 'string',
-                required: true,
-                widget: 'xx'
-              }
-            },
+    list: {
+      title: "对象数组",
+      tooltip: "对象数组嵌套功能",
+      type: "array",
+      display: "inline",
+      widget: "cardList",
+      labelWidth: 100,
+      items: {
+        type: "object",
+        title: "卡片主题",
+        description: "这是一个对象类型",
+        column: 3,
+        widget: "card",
+        properties: {
+          input1: {
+            title: "输入框 A",
+            type: "string",
+            hidden: true
           },
-        },
-      },
-    },
-   
-  },
+          input2: {
+            title: "输入框 B",
+            type: "string"
+          }
+        }
+      }
+    }
+  }
 };
 
-const Test = (props: any) => {
+const CustomObjectWidget = (props: any) => {
   const { addons } = props;
 
   console.log(addons, '------addons', props)
@@ -69,10 +56,14 @@ export default () => {
       <FormRender 
         form={form} 
         schema={schema}
+        removeHiddenData={false}
         widgets={{
-          xx: Test
+          xx: CustomObjectWidget
         }}
         footer={true}
+        onFinish={(a) => {
+          debugger;
+        }}
       />
       
     </>

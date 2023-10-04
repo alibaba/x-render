@@ -14,11 +14,11 @@ const schema = {
       type: 'string',
       hidden: '{{ formData.switch1 === true }}'
     },
+    
     list: {
       title: 'List 场景',
       type: 'array',
       widget: 'CardList',
-      defaultValue: [{}],
       items: {
         type: 'object',
         widget: 'card',
@@ -39,6 +39,76 @@ const schema = {
             type: 'string',
             defaultValue: '{{ rootValue.input1 }}',
             hidden: '{{ rootValue.switch1 }}'
+          },
+          obj: {
+            type: 'object',
+            title: '卡片主题',
+            description: '这是一个对象类型',
+            widget: 'collapse',
+            column: 3,
+           
+            properties: {
+              input1: {
+                title: '输入框 A',
+                type: 'string',
+                hidden: '{{ rootValue.obj.switchx }}',
+              },
+              input2: {
+                title: '输入框 B',
+                type: 'string',
+              },
+              input3: {
+                title: '输入框 C',
+                type: 'string',
+              },
+              switchx: {
+                title: '隐藏输入框 2 ',
+                type: 'boolean',
+                widget: 'switch'
+              },
+            },
+          },
+          array: {
+            title: 'array 场景',
+            type: 'array',
+            widget: 'CardList',
+            items: {
+              type: 'object',
+              widget: 'card',
+              title: 'List.Item',
+              properties: {
+                switch1: {
+                  title: '隐藏输入框 2 ',
+                  type: 'boolean',
+                  widget: 'switch'
+                },
+                input2: {
+                  title: '输入框 2',
+                  type: 'string',
+                  hidden: '{{ rootValue.switch1 }}'
+                },
+                obj: {
+                  type: 'object',
+                  title: '卡片主题',
+                  description: '这是一个对象类型',
+                  widget: 'collapse',
+                  column: 3,
+                  // hidden: '{{ rootValue.switch1 }}',
+                  properties: {
+                    input1: {
+                      title: '输入框 A',
+                      type: 'string',
+                      hidden: '{{ rootValue.obj.switch }}',
+                    },
+                    switch: {
+                      title: '隐藏输入框A ',
+                      type: 'boolean',
+                      widget: 'switch'
+                    },
+                  },
+                },
+              }
+            }
           }
         }
       }
@@ -60,8 +130,14 @@ export default () => {
       schema={schema} 
       onFinish={onFinish} 
       footer={true}
+      // removeHiddenData={false}
       onMount={() => {
-        form.setValues({ active: ['1', '2', '3'], list: [{ obj: { startDate: '2023-04-12', endDate: '2023-04-15', list: ['1']}}], obj: { startDate: '2023-04-12', endDate: '2023-04-15'} })
+        form.setValues({
+          switch1: true,
+          xxx: 1
+        })
+
+        form.setValueByPath('switch1', false);
       }}
     />
   );
