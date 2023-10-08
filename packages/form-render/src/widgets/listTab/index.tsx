@@ -1,11 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useMemo, useEffect } from 'react';
 import { Popconfirm, Tabs, ConfigProvider } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
 import type { FormListFieldData } from 'antd';
 import { translation } from '../utils';
 import './index.less';
-
-const TabPane = Tabs.TabPane
 
 interface ListTabProps {
   fields: FormListFieldData[];
@@ -16,6 +14,16 @@ interface ListTabProps {
   [key: string]: any;
 };
 
+const TabPaneContent = (props: any) => {
+  const { renderCore, name, schema, rootPath } = props;
+
+  return useMemo(() => (
+   <div style={{ flex: 1 }}>
+      {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
+    </div>
+  ), [JSON.stringify(props)]);
+};
+
 const TabList: React.FC<ListTabProps> = (props) => {
   const {
     schema,
@@ -23,27 +31,27 @@ const TabList: React.FC<ListTabProps> = (props) => {
     rootPath,
     renderCore,
     readOnly,
-
     delConfirmProps,
     tabName,
-
     hideDelete,
     hideAdd,
-
     addItem,
     removeItem,
-
-    tabItemProps = {}
+    tabItemProps = {},
+    activeKey: _activeKey,
+    ...retProps
   } = props;
 
-  const [activeKey, setActiveKey] = useState('0');
+  const [activeKey, setActiveKey] = useState<string>('0');
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
-  const getCurrentTabPaneName = idx => {
-    return tabName instanceof Array
-      ? tabName[idx] || idx + 1
-      : `${tabName || t('item')} ${idx + 1}`;
+  useEffect(() => {
+    setActiveKey(_activeKey || '0');
+  }, [_activeKey]);
+
+  const getTabPaneName = (index: number) => {
+    return tabName instanceof Array ? tabName[index] || index + 1 : `${tabName || t('item')} ${index + 1}`;
   };
 
   const handleDelete = (targetKey: number) => {
@@ -51,21 +59,17 @@ const TabList: React.FC<ListTabProps> = (props) => {
     setActiveKey(`${targetKey > 1 ? targetKey - 1 : 0}`);
   }
 
-  const handleEdit = (targetKey, action) => {
+  const handleEdit = (_: any, action: any) => {
     if (action === 'add') {
       if ((!schema.max || fields.length < schema.max) && !readOnly && !hideAdd) {
-        addItem()
+        addItem();
         const currentKey = fields.length;
         setActiveKey(`${currentKey}`);
       }
-    } else if (action === 'remove') {
-      return null
-    } else {
-      return null;
     }
   };
 
-  const renderClose = (name) => {
+  const renderClose = (name: number) => {
     return !readOnly && !hideDelete ? (
       <Popconfirm
         onConfirm={() => handleDelete(name)}
@@ -74,35 +78,37 @@ const TabList: React.FC<ListTabProps> = (props) => {
         <CloseOutlined />
       </Popconfirm>
     ) : <></>
-  }
+  };
 
   return (
-    <>
-      <Tabs
-        className='fr-tab-list'
-        type={'editable-card'}
-        onChange={setActiveKey}
-        activeKey={activeKey + ''}
-        onEdit={handleEdit}
-        hideAdd={readOnly || hideAdd}
-      >
-        {fields.map(({ key, name }) => {
-          return (
-            <TabPane
-              {...tabItemProps}
-              tab={getCurrentTabPaneName(name)}
-              key={name}
-              className='fr-list-item'
-              closeIcon={renderClose(name)}
-            >
-              <div style={{ flex: 1 }}>
-                {renderCore({ schema, parentPath: [name], rootPath: [...rootPath, name] })}
-              </div>
-            </TabPane>
-          );
-        })}
-      </Tabs>
-    </>
+    <Tabs
+      className='fr-tab-list'
+      type='editable-card'
+      {...retProps}
+      onChange={setActiveKey}
+      activeKey={`${activeKey}`}
+      onEdit={handleEdit}
+      hideAdd={readOnly || hideAdd}
+    >
+      {fields.map(({ key, name }) => {
+        return (
+          <Tabs.TabPane 
+            key={key}
+            className='fr-list-item'
+            {...tabItemProps}
+            tab={getTabPaneName(name)}
+            closeIcon={renderClose(name)}
+          >
+            <TabPaneContent 
+              name={name} 
+              rootPath={rootPath} 
+              schema={schema} 
+              renderCore={renderCore} 
+            />
+          </Tabs.TabPane>
+        )
+      })}
+    </Tabs>
   );
 }
 
