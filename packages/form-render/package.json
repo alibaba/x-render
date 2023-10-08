@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "2.2.16",
+  "version": "2.2.17",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -26,8 +26,8 @@
       "email": "tw93@qq.com"
     },
     {
-      "name": "mankaiviky",
-      "email": "mankaiviky@163.com"
+      "name": "lhbxs",
+      "email": "596850703@qq.com"
     }
   ],
   "main": "lib/index.js",
