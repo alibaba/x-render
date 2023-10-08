@@ -60,12 +60,11 @@ export const parseExpression = (func: any, formData = {}, parentPath: string | [
         .replace(/formData/g, JSON.stringify(formData))
         .replace(/rootValue/g, JSON.stringify(parentData))}
     `;
-
     try {
       const result = Function(funcStr)();
       return result;
     } catch (error) {
-      console.log(error, funcStr, parentPath);
+      //console.log(error, funcStr, parentPath);
       return null; // 如果计算有错误，return null 最合适
     }
   } 

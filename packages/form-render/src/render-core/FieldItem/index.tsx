@@ -9,12 +9,12 @@ import fieldShouldUpdate from '../../models/fieldShouldUpdate';
 import Main from './main';
 
 export default (props: any) => {
-  const { schema, rootPath, ...otherProps } = props;
+  const { schema, rootPath, ...restProps } = props;
 
-  const store = useContext(FRContext);
+  const store: any = useContext(FRContext);
   const { schema: formSchema } = store.getState();
 
-  const configCtx = useContext(ConfigContext);
+  const configCtx: any = useContext(ConfigContext);
   const mustacheDisabled = configCtx?.globalConfig?.mustacheDisabled;
   const shouldUpdateOpen = configCtx?.globalConfig?.shouldUpdateOpen;
 
@@ -49,7 +49,7 @@ export default (props: any) => {
               dependencies: formDependencies
             }} 
             rootPath={rootPath} 
-            {...otherProps}
+            {...restProps}
             dependValues={dependValues} 
             store={store} 
             configCtx={configCtx} 
