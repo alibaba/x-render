@@ -20,7 +20,7 @@ export default (values: any, notFilter?: boolean) => {
   };
  
   const recursiveObj = (obj: any, filter = true) => {
-    let result = {};
+    let result = Object.create(Object.getPrototypeOf(obj));
 
     for (let key of Object.keys(obj)) {
       const item = obj[key];
