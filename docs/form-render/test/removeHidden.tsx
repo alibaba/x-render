@@ -130,6 +130,7 @@ export default () => {
       schema={schema} 
       onFinish={onFinish} 
       footer={true}
+      className='xxx'
       // removeHiddenData={false}
       onMount={() => {
         form.setValues({

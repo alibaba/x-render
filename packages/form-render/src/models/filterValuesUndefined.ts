@@ -30,7 +30,7 @@ export default (values: any, notFilter?: boolean) => {
       }
       if (isArray(item)) {
         const data = recursiveArray(item);
-        if (notFilter) {
+        if (notFilter || !data) {
           result[key] = data;
         } else {
           result[key] = (data || []).filter((item: any) => item !== undefined);

@@ -1,16 +1,16 @@
 import React, { useEffect, useContext, FC } from 'react';
 import { Form, Row, Col, Button, Space, ConfigProvider } from 'antd';
-import { useStore } from 'zustand';
 import classNames from 'classnames';
+import { cloneDeep } from 'lodash-es';
+import { useStore } from 'zustand';
 
-import { _cloneDeep, translation, isFunction } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesToBind } from '../models/bindValues';
-import filterHiddenValue from '../models/filterValuesHidden';
+import filterValuesHidden from '../models/filterValuesHidden';
 import filterValuesUndefined from '../models/filterValuesUndefined';
 import { getFormItemLayout } from '../models/layout';
-import { FRProps } from '../type';
+import { translation, isFunction } from '../utils';
 
 import {
   valuesWatch,
@@ -20,8 +20,9 @@ import {
   getSessionItem,
   setSessionItem
 } from '../models/formCoreUtils';
-import RenderCore from '../render-core';
 
+import { FRProps } from '../type';
+import RenderCore from '../render-core';
 import './index.less';
 
 const FormCore:FC<FRProps> = (props) => {
@@ -158,61 +159,39 @@ const FormCore:FC<FRProps> = (props) => {
     valuesWatch(changedValues, allValues, watch);
   };
 
-  const handleFinish = async (_values: any) => {
-    let values = _cloneDeep(_values);
-
-    console.log(values, 'values')
-
-
-    if (removeHiddenData) {
-      values = filterHiddenValue(values, flattenSchema);
-    } else {
-      values = _cloneDeep(form.getFieldsValue(true));
-    }
-
+  const transFormValues = (_values: any) => {
+    let values = cloneDeep(_values);
+    values = removeHiddenData ? filterValuesHidden(values, flattenSchema) : cloneDeep(form.getFieldsValue(true));
     values = parseValuesToBind(values, flattenSchema);
     values = filterValuesUndefined(values);
+    return values;
+  };
 
-    let fieldsError = beforeFinish
-      ? await beforeFinish({ data: values, schema, errors: [] })
-      : null;
-
+  const handleFinish = async (_values: any) => {
+    const values = transFormValues(_values);
+    const fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
     // console.log(values, form.getValues(true), _values);
-    // Stop submit
     if (fieldsError?.length > 0) {
       form.setFields(fieldsError);
       return;
     }
-
-    onSubmitLogger({ values: _values });
+    onSubmitLogger({ values });
     onFinish && onFinish(values, []);
   };
 
   const handleFinishFailed = async (params: any) => {
-    onSubmitLogger(params);
+    const values = transFormValues(params.values);
+    onSubmitLogger({ ...params, values });
     if (!onFinishFailed) {
       return;
     }
-    let values = _cloneDeep(params?.values);
-    if (!removeHiddenData) {
-      values = _cloneDeep(form.getFieldsValue(true));
-    }
-    values = parseValuesToBind(values, flattenSchema);
-    values = filterValuesUndefined(values);
-
     onFinishFailed({ ...params, values });
   };
 
   const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
-  
-  const classRest: any = {};
-  if (className) {
-    classRest[className] = true;
-  }
-
   return (
     <Form
-      className={classNames('fr-form', classRest )}
+      className={classNames('fr-form', { [className]: !!className } )}
       labelWrap={true}
       {...formProps}
       disabled={disabled}
@@ -220,7 +199,6 @@ const FormCore:FC<FRProps> = (props) => {
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
       onValuesChange={handleValuesChange}
-      // preserve={!removeHiddenData}
     >
       <Row gutter={displayType === 'row' ? 16 : 24}>
         <RenderCore schema={schema} />
