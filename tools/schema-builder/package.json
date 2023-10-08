@@ -1,6 +1,6 @@
 {
   "name": "@xrenders/schema-builder",
-  "version": "1.0.0-alpha.9",
+  "version": "1.0.0-alpha.10",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -86,8 +86,8 @@
     "pre-commit": "lint-staged"
   },
   "types": "./lib/index.d.ts",
-  "directories": {
-    "lib": "lib"
-  },
-  "author": "lhbxs"
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  }
 }
