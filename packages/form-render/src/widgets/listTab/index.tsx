@@ -86,7 +86,7 @@ const TabList: React.FC<ListTabProps> = (props) => {
       type='editable-card'
       {...retProps}
       onChange={setActiveKey}
-      activeKey={activeKey + ''}
+      activeKey={`${activeKey}`}
       onEdit={handleEdit}
       hideAdd={readOnly || hideAdd}
     >
