@@ -1,11 +1,11 @@
 import { useRef } from 'react';
 import { Form } from 'antd';
 
-
 import { transformFieldsData, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
 import { _isMatch, _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, hasFuncProperty } from '../utils';
 import filterValuesUndefined from './filterValuesUndefined';
+import filterValuesHidden from '../models/filterValuesHidden';
 import { flattenSchema as flatten } from './flattenSchema';
 import type { FormInstance } from '../type';
 
@@ -164,6 +164,7 @@ const useForm = () => {
   // 获取表单数据
   xform.getValues = (nameList?: any, filterFunc?: any) => {
     let values = form.getFieldsValue(getFieldName(nameList), filterFunc);
+    values = filterValuesHidden(values, flattenSchemaRef.current);
     values = filterValuesUndefined(values);
     return parseValuesToBind(values, flattenSchemaRef.current);
   }

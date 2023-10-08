@@ -121,7 +121,10 @@ export default () => {
   const form = useForm();
 
   const onFinish = (data) => {
-   console.log(data, '-----data')
+   
+
+   const values = form.getValues();
+   console.log(data, '-----data', values)
   };
 
   return (
