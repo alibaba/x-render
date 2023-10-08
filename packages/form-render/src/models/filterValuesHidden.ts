@@ -34,7 +34,7 @@ export default (_values: any, flattenSchema: object) => {
   };
   
   const recursiveObj = (obj: any, prePath?: string, parentData?: any) => {
-    const result = {};
+    const result = Object.create(Object.getPrototypeOf(obj));
 
     for (let key of Object.keys(obj)) {
       const item = obj[key];

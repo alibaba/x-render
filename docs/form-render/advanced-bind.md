@@ -71,7 +71,7 @@ export default Demo;
 ```
 
 ## 进阶
-- 对象嵌套情况， bind 要写决定路径
+- 对象嵌套情况， bind 要写绝对路径
 - List 组件嵌套情况，bind 路径从 List 嵌套的子节点开始写
 ```jsx
 import React from 'react';
