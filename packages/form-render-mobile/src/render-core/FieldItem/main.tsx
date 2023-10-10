@@ -36,7 +36,7 @@ export default (props: any) => {
   const configCtx = useContext(ConfigContext);
   
   const { form, widgets, methods, globalProps }: any = configCtx;
-  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
+  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, layout, ...otherSchema } = schema;
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
 
   useEffect(() => {
@@ -105,16 +105,13 @@ export default (props: any) => {
 
   const extra = getExtraView('extra', schema, widgets);
   const help = getExtraView('help', schema, widgets);
+  const tooltip = getExtraView('tooltip', schema, widgets);
   const ruleList = getRuleList(schema, form, methods);
   const readOnly = getValueFromKey('readOnly');
   const valuePropName = schema.valuePropName || valuePropNameMap[schema.widget] || undefined;
 
   if (readOnly) {
     fieldProps.readOnly = readOnly;
-  }
-
-  if (!label) {
-    noStyle = true;
   }
 
   if (readOnly) {
@@ -128,7 +125,7 @@ export default (props: any) => {
     valuePropName,
     hidden,
     extra,
-    help,
+    help: tooltip || help,
     noStyle,
     dependencies,
     name: path,
@@ -136,6 +133,13 @@ export default (props: any) => {
     rules: readOnly ? [] : ruleList,
     className:classnames('fr-field', {'fr-field-visibility': !visible})
   };
+
+  if (layout) {
+    itemProps.layout = {
+      column: 'vertical',
+      row: 'horizontal',
+    }[layout];
+  }
 
   if (!readOnly && needOnClick) {
     itemProps.onClick = () => {
