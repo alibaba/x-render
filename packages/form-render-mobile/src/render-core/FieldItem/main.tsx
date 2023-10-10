@@ -36,7 +36,7 @@ export default (props: any) => {
   const configCtx = useContext(ConfigContext);
   
   const { form, widgets, methods, globalProps }: any = configCtx;
-  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
+  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, layout, ...otherSchema } = schema;
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
 
   useEffect(() => {
@@ -113,9 +113,9 @@ export default (props: any) => {
     fieldProps.readOnly = readOnly;
   }
 
-  if (!label) {
-    noStyle = true;
-  }
+  // if (!label) {
+  //   noStyle = true;
+  // }
 
   if (readOnly) {
     Widget = getWidget(widgets, schema.readOnlyWidget, schema, true);
@@ -136,6 +136,13 @@ export default (props: any) => {
     rules: readOnly ? [] : ruleList,
     className:classnames('fr-field', {'fr-field-visibility': !visible})
   };
+
+  if (layout) {
+    itemProps.layout = {
+      column: 'vertical',
+      row: 'horizontal',
+    }[layout];
+  }
 
   if (!readOnly && needOnClick) {
     itemProps.onClick = () => {
