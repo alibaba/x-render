@@ -105,6 +105,7 @@ export default (props: any) => {
 
   const extra = getExtraView('extra', schema, widgets);
   const help = getExtraView('help', schema, widgets);
+  const tooltip = getExtraView('tooltip', schema, widgets);
   const ruleList = getRuleList(schema, form, methods);
   const readOnly = getValueFromKey('readOnly');
   const valuePropName = schema.valuePropName || valuePropNameMap[schema.widget] || undefined;
@@ -124,7 +125,7 @@ export default (props: any) => {
     valuePropName,
     hidden,
     extra,
-    help,
+    help: tooltip || help,
     noStyle,
     dependencies,
     name: path,
