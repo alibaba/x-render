@@ -113,10 +113,6 @@ export default (props: any) => {
     fieldProps.readOnly = readOnly;
   }
 
-  // if (!label) {
-  //   noStyle = true;
-  // }
-
   if (readOnly) {
     Widget = getWidget(widgets, schema.readOnlyWidget, schema, true);
   }
