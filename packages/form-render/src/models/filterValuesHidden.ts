@@ -34,7 +34,6 @@ export default (_values: any, flattenSchema: object) => {
   };
   
   const recursiveObj = (obj: any, prePath?: string, parentData?: any) => {
-    const result = Object.create(Object.getPrototypeOf(obj));
 
     for (let key of Object.keys(obj)) {
       const item = obj[key];
@@ -50,25 +49,26 @@ export default (_values: any, flattenSchema: object) => {
       if (schema?.hidden) {
         const hidden = transformHidden(schema.hidden, _values, parentData);
         if (hidden) {
+          obj[key] = undefined;
           continue;
         }
       }
       
       if (isObject(item)) {
-        result[key] = recursiveObj(item, path, parentData);
+        obj[key] = recursiveObj(item, path, parentData);
         continue;
       }
   
       if (isArray(item) && schema?.items) {
-        result[key] = recursiveArray(item, path) || [];
+        obj[key] = recursiveArray(item, path) || [];
         continue;
       }
 
-      result[key] = item;
+      obj[key] = item;
     }
 
-    return result;
+    return obj;
   };
   
-  return recursiveObj(_values);
+  return recursiveObj(_values) || {};
 }

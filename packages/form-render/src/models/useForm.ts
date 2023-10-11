@@ -1,9 +1,10 @@
 import { useRef } from 'react';
 import { Form } from 'antd';
+import { cloneDeep } from 'lodash-es';
 
 import { transformFieldsData, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
-import { _isMatch, _set, _get, _has, _cloneDeep, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, hasFuncProperty } from '../utils';
+import { _isMatch, _set, _get, _has, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, hasFuncProperty } from '../utils';
 import filterValuesUndefined from './filterValuesUndefined';
 import filterValuesHidden from '../models/filterValuesHidden';
 import { flattenSchema as flatten } from './flattenSchema';
@@ -123,7 +124,7 @@ const useForm = () => {
       return;
     }
 
-    const schema = _cloneDeep(schemaRef.current);
+    const schema = cloneDeep(schemaRef.current);
     Object.keys(obj || {}).forEach(path => {
       updateSchemaByPath(path, obj[path], schema);
     });
@@ -138,7 +139,7 @@ const useForm = () => {
       return;
     }
 
-    const schema = _cloneDeep(schemaRef.current);
+    const schema = cloneDeep(schemaRef.current);
     updateSchemaByPath(_path, _newSchema, schema);
     handleSchemaUpdate(schema);
   }
@@ -163,7 +164,7 @@ const useForm = () => {
 
   // 获取表单数据
   xform.getValues = (nameList?: any, filterFunc?: any) => {
-    let values = form.getFieldsValue(getFieldName(nameList), filterFunc);
+    let values = cloneDeep(form.getFieldsValue(getFieldName(nameList), filterFunc));
     values = filterValuesHidden(values, flattenSchemaRef.current);
     values = filterValuesUndefined(values);
     return parseValuesToBind(values, flattenSchemaRef.current);
