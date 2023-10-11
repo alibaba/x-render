@@ -20,34 +20,28 @@ export default (values: any, notFilter?: boolean) => {
   };
  
   const recursiveObj = (obj: any, filter = true) => {
-    let result = Object.create(Object.getPrototypeOf(obj));
-
     for (let key of Object.keys(obj)) {
       const item = obj[key];
+
       if (isObject(item)) {
-        result[key] = recursiveObj(item);
-        continue;
+        obj[key] = recursiveObj(item);
       }
+
       if (isArray(item)) {
         const data = recursiveArray(item);
         if (notFilter || !data) {
-          result[key] = data;
+          obj[key] = data;
         } else {
-          result[key] = (data || []).filter((item: any) => item !== undefined);
+          obj[key] = (data || []).filter((item: any) => item !== undefined);
         }
-        continue;
-      }
-      if (item !== undefined) {
-        result[key] = item;
       }
     }
 
-    result = omitBy(result, isUndefined);
-    if (Object.keys(result).length === 0 && filter) {
+    obj = omitBy(obj, isUndefined);
+    if (Object.keys(obj).length === 0 && filter) {
       return undefined;
     }
-
-    return result;
+    return obj;
   };
  
   return recursiveObj(values) || {};
