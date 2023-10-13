@@ -42,7 +42,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.1.4",
     "dayjs": "^1.11.7",
-    "form-render": "^2.2.15",
+    "form-render": "2.2.16",
     "lodash.get": "^4.4.2",
     "lodash.omit": "^4.4.2",
     "lodash.defaults": "^4.2.0",
