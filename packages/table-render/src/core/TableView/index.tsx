@@ -6,6 +6,7 @@ import { useTableStore } from '../store';
 import { getDate, getDateTime, getMoneyType, getDateRange, isObject, isFunction, getColumnKey } from '../../utils';
 import { renderDom } from './field';
 import { ColumnsSettingValueType } from '../../types';
+import { render } from 'enzyme';
 
 const ProTable: <RecordType extends object = any>(
   props: TableProps<RecordType> & {
@@ -83,6 +84,9 @@ const ProTable: <RecordType extends object = any>(
       }
 
       switch (result.valueType) {
+        case 'link':
+          result.render = (value: any, record: any, index: number) => renderDom(value, result, { record, index });
+          break;
         case 'date':
           result.render = (value: any) => renderDom(getDate(value, result.valueTypeProps?.format), result);
           break;

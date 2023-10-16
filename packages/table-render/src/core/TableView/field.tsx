@@ -1,8 +1,51 @@
-import { Tooltip, Progress, Space, Tag, Image } from 'antd';
+import { Tooltip, Progress, Space, Tag, Image, Typography } from 'antd';
 import React from 'react';
 import Copy from './copy';
 import { isObject, isArray, isFunction } from '../../utils';
 
+
+const renderLink = (value: string, item: any, { record, index } : { record: any, index: number }) =>  {
+  const { ellipsis, valueTypeProps } = item;
+  const { type, href, onClick } = valueTypeProps || {};
+
+  const handleClick = () => {
+    if (onClick) {
+      onClick(value, record, index);
+      return;
+    }
+
+    let linkUrl = href || value;
+    if (typeof href === 'function') {
+      linkUrl = href(value, record, index);
+    }
+
+    if (type === '_self') {
+      window.location.href = linkUrl;
+      return;
+    }
+
+    window.open(linkUrl);
+  };
+
+  // 省略
+  if (ellipsis) {
+    return (
+      <Typography.Text
+        style={{ width: '100%', color: '#1890ff', cursor: 'pointer' }}
+        ellipsis={{ tooltip: value }}
+        onClick={() => handleClick()}
+      >
+        {value}
+      </Typography.Text>
+    )
+  }
+
+  return (
+    <Typography.Link onClick={handleClick}>
+      {value}
+    </Typography.Link>
+  )
+};
 
 export const renderEllipsis = (
   dom: JSX.Element,
@@ -59,7 +102,7 @@ export const renderTag = (value: any, props: any) => {
 export const renderTags = (value: any, item: any) => {
   return (
     <Space style={{ flexWrap: 'wrap' }}>
-      {value?.map((ite: any) => {
+      {(value || [])?.map((ite: any) => {
         let data = ite;
         if (isFunction(item.valueTypeProps)) {
           data = item.valueTypeProps(ite);
@@ -80,7 +123,9 @@ export const renderImage = (value, props) => {
 }
 
 // 渲染单元格
-export const renderDom = (value: any, item: any) => {
+export const renderDom = (value: any, item: any, extra ?: { record: any, index: number }) => {
+  const { record, index } = extra || {};
+
   let val = value;
 
   if (item.enum && !isObject(val) && !isArray(val)) {
@@ -108,7 +153,11 @@ export const renderDom = (value: any, item: any) => {
   }
 
   if (item.valueType === 'image') {
-    return renderImage(value, item.valueTypeProps);
+    return renderImage(val, item.valueTypeProps);
+  }
+
+  if (item.valueType === 'link') {
+    return renderLink(val, item, { record, index });
   }
 
   const copyHoc = renderCopyable(val, item);
