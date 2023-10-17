@@ -33,7 +33,7 @@ export default function html({ value, options, schema = {} }) {
     value[1]
   ) {
     __html = `${value[0]} - ${value[1]}`;
-  } else if (value && ['number', 'string'].indexOf(value) === -1) {
+  } else if (value && ['number', 'string'].indexOf(typeof value) === -1) {
     __html = JSON.stringify(value);
   }
 
