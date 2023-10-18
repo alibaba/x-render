@@ -66,13 +66,39 @@ export const schema2 = {
       title: '酒店区域',
       type: 'string',
     },
+
     labels5: {
-      title: '酒店电话',
+      title: '酒店区域',
       type: 'string',
     },
-    labels6: {
-      title: '酒店价位',
+
+
+    created_at1: {
+      title: '成立时间',
+      type: 'string',
+      format: 'date',
+    },
+    labels11: {
+      title: '酒店星级',
       type: 'string',
     },
+    labels21: {
+      title: '酒店地址',
+      type: 'string',
+    },
+    labels31: {
+      title: '酒店状态',
+      type: 'string',
+    },
+    labels41: {
+      title: '酒店区域',
+      type: 'string',
+    },
+
+    labels51: {
+      title: '酒店区域',
+      type: 'string',
+    },
+    
   },
 };

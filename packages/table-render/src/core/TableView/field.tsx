@@ -95,19 +95,33 @@ export const renderProgress = (value: any, props: any) => {
 
 export const renderTag = (value: any, props: any) => {
   return (
-    <Tag {...props} key={value}>{value}</Tag>
+    <Tag color='blue' {...props} key={value}>{value}</Tag>
   );
 }
 
-export const renderTags = (value: any, item: any) => {
+export const renderTags = (_value: any, item: any) => {
+  let value = _value;
+  if (!Array.isArray(value)) {
+    value = `${_value}`.split(',');
+  }
   return (
     <Space style={{ flexWrap: 'wrap' }}>
       {(value || [])?.map((ite: any) => {
         let data = ite;
+        if (typeof ite === 'string') {
+          data = {
+            name: `${ite}`,
+          };
+          if (isObject(item.valueTypeProps)) {
+            data = {
+              name: `${ite}`,
+              ...item.valueTypeProps
+            };
+          }
+        }
         if (isFunction(item.valueTypeProps)) {
           data = item.valueTypeProps(ite);
         }
-
         const { name, ...otherProps } = data;
         return renderTag(name, otherProps);
       })}
