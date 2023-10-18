@@ -54,7 +54,7 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
     className,
     style,
     mode,
-    layoutAuto = true,
+    layoutAuto = false,
     form,
     hidden,
     loading,
