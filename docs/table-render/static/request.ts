@@ -12,7 +12,6 @@ const requestData = (params: any) => {
 
 
 export const searchApi = async (params) => {
-  console.log(params, '234234234');;
   const { success, data } = await requestData(params);
   if (success) {
     return {
