@@ -35,7 +35,6 @@ export const columns: ProColumnsType = [
   {
     title: '酒店GMV',
     sorter: true,
-    defaultSortOrder: 'descend',
     dataIndex: 'money',
     valueType: 'money',
   },
