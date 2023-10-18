@@ -1,5 +1,9 @@
 # 更新日志
 
+### 2.3.0
+- [+] 优化 search-form 折叠收起逻辑，不再判断 dom 真实渲染高度，提升渲染性能
+- [!] form.getValues 判断 removeHiddenData = true 时，才去除隐藏控件数据
+
 ### 2.2.18
 - [+] 优化 ListTab 性能优化
 ### 2.2.17 

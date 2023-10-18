@@ -12,10 +12,10 @@ const ActionView = (props: any) => {
     form,
     searchText,
     resetText,
-    collapsed,
+    hasCollapse,
     setLimitHeight,
     setExpand,
-    expand,
+    isExpand,
     loading,
     retainBtn,
     mode,
@@ -29,15 +29,12 @@ const ActionView = (props: any) => {
       onReset(form);
       return;
     }
-    
     form.resetFields();
     form.submit();
   };
 
   const handleCollapse = () => {
-    const flag = !expand;
-    setExpand(flag)
-    setLimitHeight(expand);
+    setExpand(!isExpand);
   };
 
   const searchBtnArr = typeof searchBtnRender === 'function' ? searchBtnRender(form.submit, handleReset, { loading }) : [];
@@ -68,9 +65,9 @@ const ActionView = (props: any) => {
       <Space>
         {submitShow && <Button loading={loading} type='primary' onClick={form.submit}>{searchText}</Button>}
         {resetShow && <Button onClick={handleReset}>{resetText}</Button>}
-        {collapsed && (
+        {hasCollapse && (
           <a onClick={handleCollapse} style={{ cursor: 'pointer' }}>
-            {expand ? (
+            {isExpand ? (
               <>
                 {t('fold')}
                 <UpOutlined />
