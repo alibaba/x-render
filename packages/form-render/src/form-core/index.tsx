@@ -71,6 +71,10 @@ const FormCore:FC<FRProps> = (props) => {
   }, [JSON.stringify(props.schema || {})]);
 
   useEffect(() => {
+    store.setState({ removeHiddenData });
+  }, [removeHiddenData]);
+
+  useEffect(() => {
     const context = {
       column,
       readOnly,

@@ -29,14 +29,12 @@ const ActionView = (props: any) => {
       onReset(form);
       return;
     }
-    
     form.resetFields();
     form.submit();
   };
 
   const handleCollapse = () => {
-    const flag = !isExpand;
-    setExpand(flag);
+    setExpand(!isExpand);
   };
 
   const searchBtnArr = typeof searchBtnRender === 'function' ? searchBtnRender(form.submit, handleReset, { loading }) : [];

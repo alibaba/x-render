@@ -152,6 +152,7 @@ const TableView: <RecordType extends object = any>(
     size: tableSize,
   };
  
+  // 需要判断一下，否则影响 table 的某些属性初始化渲染异常
   if (columns?.length === 0) {
     return null;
   }
