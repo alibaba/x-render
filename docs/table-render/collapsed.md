@@ -30,7 +30,7 @@ const Demo = () => {
       ref={tableRef}
       search={{
         schema: schema2,
-        collapsed: true,
+        collapsed: false,
       }}
       request={searchApi}
       columns={columns}
