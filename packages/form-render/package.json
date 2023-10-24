@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "2.3.0",
+  "version": "2.3.3",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -64,8 +64,7 @@
     "rc-color-picker": "^1.2.6",
     "virtualizedtableforantd4": "^1.1.2",
     "zustand": "^4.1.5",
-    "ahooks": "3.7.5",
-    "sanitize-html": "^2.11.0"
+    "ahooks": "^3.7.5"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",

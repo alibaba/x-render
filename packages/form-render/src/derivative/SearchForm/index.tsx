@@ -54,7 +54,7 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
     className,
     style,
     mode,
-    layoutAuto = true,
+    layoutAuto = false,
     form,
     hidden,
     loading,
@@ -140,6 +140,9 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
   };
 
   const properties = useMemo(() => {
+    if (!collapsed) {
+      return schema?.properties;
+    }
     const result = {};
     Object.keys(schema?.properties || {}).forEach((key, index) => {
       const item = { ...(schema.properties[key] || {}) };
@@ -152,7 +155,7 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
       result[key] = item;
     });
     return result;
-  }, [JSON.stringify(schema), column, isColumn, isExpand]);
+  }, [JSON.stringify(schema), column, isColumn, isExpand, collapsed]);
 
   const handleContainerResize = () => {
     if (!layoutAuto) {

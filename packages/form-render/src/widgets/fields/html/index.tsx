@@ -1,8 +1,7 @@
 import React from 'react';
 import { Image } from 'antd';
-import sanitizeHtml from 'sanitize-html';
 
-export default function html({ value, options, schema = {} }) {
+export default function html({ value, options, schema = {} } : any) {
   let __html = '-';
   
   if (schema.type === 'boolean') {
@@ -47,8 +46,5 @@ export default function html({ value, options, schema = {} }) {
       />
     );
   }
-
-  __html = sanitizeHtml(__html)
-
   return <div dangerouslySetInnerHTML={{ __html }} />;
 }
