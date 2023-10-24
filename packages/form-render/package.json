@@ -64,13 +64,11 @@
     "rc-color-picker": "^1.2.6",
     "virtualizedtableforantd4": "^1.1.2",
     "zustand": "^4.1.5",
-    "ahooks": "^3.7.5",
-    "sanitize-html": "^2.10.0"
+    "ahooks": "^3.7.5"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",
-    "rollup-plugin-copy": "^3.4.0",
-    "@types/sanitize-html": "^2.9.0"
+    "rollup-plugin-copy": "^3.4.0"
   },
   "peerDependencies": {
     "antd": "4.x || 5.x",
