@@ -108,7 +108,6 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
   });
 
   useMount(() => {
-    debugger;
     if (!collapsed) {
       return;
     }
@@ -119,7 +118,6 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
   });
 
   useUpdateEffect(() => {
-    debugger;
     if (!collapsed) {
       return;
     }
