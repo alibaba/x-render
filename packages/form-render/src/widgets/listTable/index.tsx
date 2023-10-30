@@ -56,6 +56,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
     hideCopy,
     hideMove,
     hideAdd,
+    hideOperate,
 
     addItem,
     copyItem,
@@ -132,7 +133,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
     };
   });
 
-  if (!readOnly) {
+  if (!readOnly && !hideOperate) {
     columns.push({
       title: colHeaderText,
       width: '190px',
