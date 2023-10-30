@@ -57,6 +57,7 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     hideCopy,
     hideMove,
     hideAdd,
+    hideOperate,
 
     addItem,
     copyItem,
@@ -129,7 +130,7 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     };
   });
 
-  if (!readOnly) {
+  if (!readOnly && !hideOperate) {
     columns.push({
       title: colHeaderText,
       width: '190px',
