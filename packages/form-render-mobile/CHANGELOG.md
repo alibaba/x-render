@@ -1,5 +1,8 @@
 # 更新日志
 
+### 1.0.14
+- [+] labelWidget、descWidget 增加 addons 访问属性
+- [-] 兼容 widget 大小写配置
 ### 1.0.13
 - [+] 增加输入控件单独配置布局 layout = 'row' | 'column'
 - [+] 补齐 tooltip 字段，与 PC 端保持一致
