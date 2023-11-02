@@ -126,7 +126,7 @@ export default (props: any) => {
   }
 
   // Render field components
-  let label = getLabel(schema, displayType, widgets);
+  let label = getLabel(schema, displayType, widgets, fieldProps.addons);
   let noStyle = getValueFromKey('noStyle');
 
   const span = getColSpan(formCtx, upperCtx, schema);
@@ -144,7 +144,7 @@ export default (props: any) => {
   const maxWidth = getValueFromKey('maxWidth');
   const { labelCol, fieldCol } = getFormItemLayout(Math.floor(24 / span * 1), schema, { displayType, labelWidth, _labelCol, _fieldCol });
   const valuePropName = schema.valuePropName || valuePropNameMap[widgetName] || undefined;
-  debugger;
+
   if (readOnly) {
     fieldProps.readOnly = readOnly;
   }
@@ -172,9 +172,7 @@ export default (props: any) => {
   }
 
   const initialValue = schema.default ?? schema.defaultValue;
-  debugger;
   const classRest = { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible, [schema.className] : !! schema.className };
-
 
   const formItem = (
     <Form.Item
