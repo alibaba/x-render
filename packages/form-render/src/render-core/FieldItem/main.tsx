@@ -11,7 +11,9 @@ import getRuleList from '../../models/validates';
 const UpperContext: any = createContext(() => {});
 const valuePropNameMap = {
   checkbox: 'checked',
-  switch: 'checked'
+  switch: 'checked',
+  Checkbox: 'checked',
+  Switch: 'checked'
 };
 
 import {
@@ -124,7 +126,7 @@ export default (props: any) => {
   }
 
   // Render field components
-  let label = getLabel(schema, displayType, widgets);
+  let label = getLabel(schema, displayType, widgets, fieldProps.addons);
   let noStyle = getValueFromKey('noStyle');
 
   const span = getColSpan(formCtx, upperCtx, schema);

@@ -97,13 +97,13 @@ export const getPath = (path: any) => {
   return path;
 };
 
-export const getLabel = (schema: any, displayType: string, widgets: any) => {
+export const getLabel = (schema: any, displayType: string, widgets: any, addons: any) => {
   const { title, description, descWidget, labelWidget } = schema;
 
   const LabelNode = widgets[labelWidget];
 
   if (LabelNode) {
-    return <LabelNode schema={schema} />
+    return <LabelNode schema={schema} addons={addons} />
   }
 
   if ((!description && !descWidget)) {
@@ -113,7 +113,7 @@ export const getLabel = (schema: any, displayType: string, widgets: any) => {
   const RenderDesc = () => {
     const Widget = widgets[descWidget];
     if (Widget) {
-      return <Widget schema={schema} />;
+      return <Widget schema={schema} addons={addons} />;
     }
 
     if (description) {
