@@ -1,5 +1,6 @@
 import Color from 'color';
 import { isUrl, isObject, isFunction } from '../utils';
+import { cloneDeep } from 'lodash-es';
 
 const insertLengthRule = (schema: any, rules: any[]) => {
   const { type, max, min, message } = schema;
@@ -68,7 +69,8 @@ export const transformRules = (rules = [], methods: any, form: any) => {
   }));
 };
 
-export default (schema: any, form: any, methods: any, fieldRef: any) => {
+export default (_schema: any, form: any, methods: any, fieldRef: any) => {
+  const schema = cloneDeep(_schema);
   let { 
     format,
     rules: ruleList = [],
