@@ -2,7 +2,6 @@ import React from 'react';
 
 const getProps = (props: any, filter: any[]) => {
   const result = {};
-  
   Object.keys(props).forEach(key => {
     if (filter.includes(key)) {
       return;
