@@ -1,8 +1,13 @@
 # 更新日志
 
+### 2.3.6
+- [!] 修复 List 组件初始化数据，删除按钮未显示
+- [!] 修复因配置 validator 导致通过 watch 触发 setSchemaBypath 初次不生效
+
 ### 2.3.5 
 - [+] labelWidget、descWidget 增加 addons 访问属性
-- [-] 兼容 widget 大小写配置
+- [!] 兼容 widget 大小写配置
+
 ### 2.3.0
 - [+] 优化 search-form 折叠收起逻辑，不再判断 dom 真实渲染高度，提升渲染性能
 - [!] form.getValues 判断 removeHiddenData = true 时，才去除隐藏控件数据
