@@ -56,13 +56,20 @@ externals: {
 * background: 'rgb(204,204,204, .33)'
 * padding: 20px
 */
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import SchemaBuilder from '@xrenders/schema-builder';
 
 const Demo = () => {
+
+  const domRef = useRef ();
+
+  useEffect(() => {
+    
+  }, [])
+
   return (
     <div style={{ height: '80vh' }}>
-      <SchemaBuilder importBtn={true} exportBtn={true} pubBtn={false} />
+      <SchemaBuilder importBtn={true} exportBtn={true} pubBtn={false} ref = {domRef}/>
     </div>
   );
 };

@@ -1,19 +1,31 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import createIframe from './createIframe';
 interface IProps {
   widgets: any
   settings: any
+  [key: string]: any
 }
 
 let iframe: any;
 
-const Design = (props: IProps) => {
+const Design = (props: IProps, ref: any) => {
   const { widgets, settings, ...restProps } = props;
   const containerRef: any = useRef();
 
+  useImperativeHandle(ref, () => ({
+    getValue: () => {
+      return iframe?.contentWindow?.__FR_ENGINE__?.expotSchema();
+    },
+    setValue: (schema: any) => {
+      return iframe?.contentWindow?.__FR_ENGINE__?.impotSchema(schema);
+    },
+    copyValue: () => {
+      return iframe?.contentWindow?.__FR_ENGINE__?.copySchema();
+    }
+  }))
+
   useEffect(() => {
     initIframe();
-
     window.addEventListener('message', engineOnLoad);
     return () => {
       window.removeEventListener('message', engineOnLoad);
@@ -46,4 +58,4 @@ const Design = (props: IProps) => {
   );
 }
 
-export default Design;
+export default forwardRef(Design);
