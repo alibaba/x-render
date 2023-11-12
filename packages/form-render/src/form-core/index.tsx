@@ -193,7 +193,6 @@ const FormCore:FC<FRProps> = (props) => {
   };
 
   const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
-  
   return (
     <Form
       className={classNames('fr-form', { [className]: !!className } )}
