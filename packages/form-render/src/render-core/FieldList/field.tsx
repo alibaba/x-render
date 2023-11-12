@@ -1,12 +1,9 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { Form, message, ConfigProvider, Button } from 'antd';
 import { isFunction, translation } from '../../utils';
 import { getWidget } from '../../models/mapping';
 import { transformRules } from '../../models/validates';
-
-const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string) => {
-  return schema[valueKey] ?? upperCtx[valueKey] ?? formCtx[valueKey];
-};
+import { getParamValue } from './modules';
 
 export default (props: any) => {
   const {
@@ -20,7 +17,6 @@ export default (props: any) => {
     upperCtx,
     formCtx,
     configContext,
-    listData,
     setListData
   } = props;
  
@@ -46,18 +42,8 @@ export default (props: any) => {
 
   let widgetName = schema.widget || 'cardList';
   const Widget = getWidget(widgetName, widgets);
-
   const { props: listProps, removeBtn, rules = [], ...otherSchema } = schema;
-
-  let defaultValue = schema.default ?? schema.defaultValue;
-  if (defaultValue === undefined && !['drawerList', 'list1'].includes(widgetName)) {
-    defaultValue = [{}];
-  }
-
-  useEffect(() => {
-    setListData(defaultValue ||[]);
-  }, []);
-
+  
   let {
     addBtnProps,
     delConfirmProps,
@@ -72,6 +58,51 @@ export default (props: any) => {
     onCopy,
     ...otherListProps
   } = listProps || {};
+
+  const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
+
+  const readOnly = getValueFromKey('readOnly');
+  const preRootPath = [...(rootPath || [])].splice(0, rootPath.length - 1);
+  const displayType = getValueFromKey('displayType');
+
+  if (hideMove === undefined && globalConfig?.listOperate?.hideMove) {
+    hideMove = globalConfig?.listOperate.hideMove;
+  }
+
+  const listData = form.getFieldValue([...preRootPath, ...path]) || [];
+  if (otherSchema?.min > 0 && listData.length <= otherSchema?.min) {
+    hideDelete = true;
+  }
+ 
+  if (otherSchema?.max > 0 && otherSchema?.max <= listData.length) {
+    hideAdd = true;
+  }
+
+  if (hideAdd) {
+    hideCopy = true;
+  }
+
+  if (readOnly) {
+    hideAdd = true;
+    hideCopy = true;
+    hideDelete = true;
+    hideMove = true;
+  }
+
+  const defaultValue = useMemo(() => {
+    let result = schema.default ?? schema.defaultValue;
+    if (result === undefined) {
+      result = form.getFieldValue([...preRootPath, ...path]);
+      if (!result && !['drawerList', 'list1'].includes(widgetName)) {
+        result = [{}];
+      }
+    }
+    return result;
+  }, []);
+
+  useEffect(() => {
+    setListData(defaultValue || []);
+  }, []);
 
   const handleAdd = (add: any) => (data?: any) => {
     let addFunc = onAdd;
@@ -140,35 +171,6 @@ export default (props: any) => {
     }
     form.setSchemaByPath(path, { hidden: true });
   };
-
-  const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
-
-  const readOnly = getValueFromKey('readOnly');
-  const preRootPath = [...(rootPath || [])].splice(0, rootPath.length - 1);
-  const displayType = getValueFromKey('displayType');
-
-  if (hideMove === undefined && globalConfig?.listOperate?.hideMove) {
-    hideMove = globalConfig?.listOperate.hideMove;
-  }
-
-  if (otherSchema?.min > 0 && listData.length <= otherSchema?.min) {
-    hideDelete = true;
-  }
- 
-  if (otherSchema?.max > 0 && otherSchema?.max <= listData.length) {
-    hideAdd = true;
-  }
-
-  if (hideAdd) {
-    hideCopy = true;
-  }
-
-  if (readOnly) {
-    hideAdd = true;
-    hideCopy = true;
-    hideDelete = true;
-    hideMove = true;
-  }
 
   const operateBtnType = globalConfig?.listOperate?.btnType;
 
@@ -281,7 +283,6 @@ export default (props: any) => {
           {removeBtn?.text || t('delete')}
         </Button>
       )}
-
     </>
   );
 }
