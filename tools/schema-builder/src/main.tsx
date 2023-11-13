@@ -34,8 +34,7 @@ const Design = (props: TSchemaBuilder, ref: any) => {
     if (event.data.type !== 'engine-load') {
       return;
     }
-
-    debugger;
+    
     iframe?.contentWindow?.__FR_ENGINE__?.init({
       settings,
       widgets,
