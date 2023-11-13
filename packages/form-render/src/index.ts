@@ -4,6 +4,7 @@ import * as defaultWidgets from './widgets';
 
 export * from './widgets';
 export { mapping } from './models/mapping';
+
 export { default as useForm } from './models/useForm';
 export { default as connectForm } from './form-core/connectForm';
 export { default as SearchForm } from './derivative/SearchForm';
