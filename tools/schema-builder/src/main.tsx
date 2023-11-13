@@ -14,13 +14,10 @@ const Design = (props: IProps, ref: any) => {
 
   useImperativeHandle(ref, () => ({
     getValue: () => {
-      return iframe?.contentWindow?.__FR_ENGINE__?.expotSchema();
+      return iframe?.contentWindow?.__FR_ENGINE__?.exportSchema?.();
     },
     setValue: (schema: any) => {
-      return iframe?.contentWindow?.__FR_ENGINE__?.impotSchema(schema);
-    },
-    copyValue: () => {
-      return iframe?.contentWindow?.__FR_ENGINE__?.copySchema();
+      return iframe?.contentWindow?.__FR_ENGINE__?.importSchema?.(schema);
     }
   }))
 
@@ -42,6 +39,7 @@ const Design = (props: IProps, ref: any) => {
       return;
     }
 
+    debugger;
     iframe?.contentWindow?.__FR_ENGINE__?.init({
       settings,
       widgets,
