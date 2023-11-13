@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import { _get, getWidget } from '../../utils';
 import { ConfigContext } from '../../models/context';
-import getRuleList from '../../models/validates';
+import getRuleList from 'form-render/es/models/validates';
 import FieldWrapper from './field';
 import { 
   getParamValue, 
@@ -108,7 +108,7 @@ export default (props: any) => {
   const extra = getExtraView('extra', schema, widgets);
   const help = getExtraView('help', schema, widgets);
   const tooltip = getExtraView('tooltip', schema, widgets);
-  const ruleList = getRuleList(schema, form, methods);
+  const ruleList = getRuleList(schema, form, methods, fieldRef);
   const readOnly = getValueFromKey('readOnly');
   const valuePropName = schema.valuePropName || valuePropNameMap[schema.widget] || undefined;
 

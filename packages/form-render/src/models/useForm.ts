@@ -6,7 +6,7 @@ import { transformFieldsData, getSchemaFullPath } from './formCoreUtils';
 import { parseBindToValues, parseValuesToBind } from './bindValues';
 import { _isMatch, _set, _get, _has, _merge, _mergeWith, isFunction, isObject, isArray, _isUndefined, hasFuncProperty } from '../utils';
 import filterValuesUndefined from './filterValuesUndefined';
-import filterValuesHidden from '../models/filterValuesHidden';
+import filterValuesHidden from './filterValuesHidden';
 import { flattenSchema as flatten } from './flattenSchema';
 import type { FormInstance } from '../type';
 

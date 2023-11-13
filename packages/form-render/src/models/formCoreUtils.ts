@@ -1,4 +1,3 @@
-
 import { isObject, isArray, _get, _has, isFunction, isObjType } from '../utils';
 
 const executeCallBack = (watchItem: any, value: any, path: string, index?: any) => {

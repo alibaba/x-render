@@ -1,7 +1,7 @@
 import React from 'react';
 import FieldItem from './FieldItem';
 import FieldList from './FieldList';
-import sortProperties from '../models/sortProperties';
+import sortProperties from 'form-render/es/models/sortProperties';
 interface RenderCoreProps {
   schema: any;
   rootPath?: any[] | undefined;

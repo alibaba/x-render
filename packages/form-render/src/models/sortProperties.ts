@@ -1,8 +1,8 @@
 export default (properties, orderKey = 'order') => {
   const orderHash = new Map();
   // order不为数字的数据
-  const unsortedList = [];
-  const insert = item => {
+  const unsortedList: any[] = [];
+  const insert = (item: any) => {
     const [, value] = item;
     if (typeof value[orderKey] !== 'number') {
       unsortedList.push(item);
