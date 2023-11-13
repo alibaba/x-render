@@ -1,4 +1,4 @@
-import { set, get, cloneDeep, has, merge, isUndefined, omitBy, mergeWith } from 'lodash-es';
+import { set, get, cloneDeep, has, merge, isUndefined, omitBy, mergeWith, some } from 'lodash-es';
 
 export const _set = set;
 export const _get = get;
@@ -181,4 +181,16 @@ export const getWidget = (widgets: any, widgetName: string, schema: any, readOnl
 
   return widget || null;
 }
+
+export const hasFuncProperty = (obj: any) => {
+  return some(obj, (value) => {
+    if (isFunction(value)) {
+      return true;
+    }
+    if (isObject(value)) {
+      return hasFuncProperty(value);
+    }
+    return false;
+  });
+};
 

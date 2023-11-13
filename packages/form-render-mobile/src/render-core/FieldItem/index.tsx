@@ -3,7 +3,7 @@ import { Form } from 'antd-mobile';
 
 import { _get } from '../../utils';
 import { FRContext } from '../../models/context';
-import { isHasExpression, parseAllExpression } from '../../models/expression';
+import { isHasExpression, parseAllExpression } from 'form-render/es/models/expression';
 import { getDependValues } from './module';
 import Main from './main';
 
