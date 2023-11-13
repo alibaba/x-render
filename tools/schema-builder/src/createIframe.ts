@@ -30,7 +30,7 @@ const createIframeContent = () => {
 
       <body>
         <div id="lce-container"></div>
-        <script type="text/javascript" src="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.10/js/index.js"></script>
+        <script type="text/javascript" src="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.11/js/index.js"></script>
       </body>
     </html>
   `;

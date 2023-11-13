@@ -1,19 +1,24 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import createIframe from './createIframe';
-interface IProps {
-  widgets: any
-  settings: any
-}
+import { TSchemaBuilder } from './type';
 
 let iframe: any;
 
-const Design = (props: IProps) => {
+const Design = (props: TSchemaBuilder, ref: any) => {
   const { widgets, settings, ...restProps } = props;
   const containerRef: any = useRef();
 
+  useImperativeHandle(ref, () => ({
+    getValue: () => {
+      return iframe?.contentWindow?.__FR_ENGINE__?.exportSchema?.();
+    },
+    setValue: (schema: any) => {
+      return iframe?.contentWindow?.__FR_ENGINE__?.importSchema?.(schema);
+    }
+  }))
+
   useEffect(() => {
     initIframe();
-
     window.addEventListener('message', engineOnLoad);
     return () => {
       window.removeEventListener('message', engineOnLoad);
@@ -29,7 +34,7 @@ const Design = (props: IProps) => {
     if (event.data.type !== 'engine-load') {
       return;
     }
-
+    
     iframe?.contentWindow?.__FR_ENGINE__?.init({
       settings,
       widgets,
@@ -46,4 +51,4 @@ const Design = (props: IProps) => {
   );
 }
 
-export default Design;
+export default forwardRef(Design);
