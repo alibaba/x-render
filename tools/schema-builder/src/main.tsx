@@ -1,14 +1,10 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import createIframe from './createIframe';
-interface IProps {
-  widgets: any
-  settings: any
-  [key: string]: any
-}
+import { TSchemaBuilder } from './type';
 
 let iframe: any;
 
-const Design = (props: IProps, ref: any) => {
+const Design = (props: TSchemaBuilder, ref: any) => {
   const { widgets, settings, ...restProps } = props;
   const containerRef: any = useRef();
 
