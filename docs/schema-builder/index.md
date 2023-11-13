@@ -56,49 +56,13 @@ externals: {
 * background: 'rgb(204,204,204, .33)'
 * padding: 20px
 */
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 import SchemaBuilder from '@xrenders/schema-builder';
 
-const schema = {
-  "type": "object",
-  "properties": {
-    "fr-bfuw": {
-      "title": "单行文本",
-      "type": "string",
-      "widget": "input"
-    },
-    "fr-5n84": {
-      "title": "单行文本",
-      "type": "string",
-      "widget": "input"
-    }
-  },
-  "displayType": "row",
-  "maxWidth": "340px"
-};
-
-
 const Demo = () => {
-
-  const domRef = useRef ();
-
-  
- 
   return (
     <div style={{ height: '80vh' }}>
-      <SchemaBuilder 
-        importBtn={true} 
-        exportBtn={true} 
-        pubBtn={false} 
-        ref = {domRef}
-        onMount={() => {
-          const value = domRef.current.getValue();
-         
-          domRef.current.setValue(schema);
-
-          domRef.current.copyValue(schema);
-        }}
-      />
+      <SchemaBuilder importBtn={true} exportBtn={true} pubBtn={false} />
     </div>
   );
 };
