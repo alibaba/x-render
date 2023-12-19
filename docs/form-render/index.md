@@ -44,8 +44,6 @@ import React from 'react';
 import FormRender, { useForm } from 'form-render';
 import schema from './schema/simple';
 
-console.log(version, 'xxxxx')
-
 export default () => {
   const form = useForm();
 
