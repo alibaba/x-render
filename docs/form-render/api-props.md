@@ -35,7 +35,7 @@ group:
 | configProvider   | antd 的 configProvider，配置透传                                                          | <a href="https://ant-design.antgroup.com/components/config-provider-cn/#API" target="_blank">ConfigProviderProps</a>             | -      |
 | validateMessages | 修改默认的校验提示信息，详见[ValidateMessages](/form-render/advanced-validate)                         | `Record<string, string>`                                                                              | -      |
 | id               | 表单的 id，一般用于标识一个表单的语义化名称                                               | `string \| number`                                                                                    | -      |
-
+| antdVersion              | antd 的版本                                               | `v4 \| v5`                                                                                    | `v5`     |
 ## FormInstance
 
 | <div style="width:200px">参数</div>              | 描述                                                                                                                  | 类型                                                                                                                |

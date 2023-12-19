@@ -1,5 +1,9 @@
 # 更新日志
 
+
+### 2.3.7
+- [+] 增加 antdVersion 配置字段，对应值 'v4' | 'v5'，用于处理 ant v4 与 v5 API 不兼容性警告提示，例如 visible & open，默认是 v5 版本。
+
 ### 2.3.6
 - [!] 修复 List 组件初始化数据，删除按钮未显示
 - [!] 修复因配置 validator 导致通过 watch 触发 setSchemaBypath 初次不生效

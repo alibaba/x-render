@@ -11,7 +11,7 @@ const createIframeContent = () => {
         <link href="https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/dist/next.var.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.1.11-beta.8/dist/css/engine-core.css" />
         <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.6/dist/css/engine-ext.css" />
-        <link rel="stylesheet" href="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.10/css/index.css" />
+        <link rel="stylesheet" href="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.11/css/index.css" />
 
         <script>
           window.React = window.parent.React;

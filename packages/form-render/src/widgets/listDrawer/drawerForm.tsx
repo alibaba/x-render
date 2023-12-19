@@ -18,8 +18,13 @@ const DrawerForm = (props: any) => {
     onClose();
   };
 
-  const drawerProps = {
-    visible: true,
+  let drawerProps: any = {
+    open: true
+  };
+  if ((window as any).antdVersion === 'v4')  {
+    drawerProps = {
+      visible: true
+    };
   }
 
   return (
@@ -27,7 +32,6 @@ const DrawerForm = (props: any) => {
       {...drawerProps}
       width={600}
       title={t('operate')}
-      open={true}
       onClose={handleClose}
       extra={
         <Space>
