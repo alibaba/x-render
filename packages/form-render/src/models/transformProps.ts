@@ -35,7 +35,7 @@ const transformProps =  (props: any) => {
     disabled,
     className,
     validateTrigger,
-    antVersion,
+    antdVersion,
     ...otherProps
   } = props;
 
@@ -78,7 +78,7 @@ const transformProps =  (props: any) => {
     maxWidth,
     className,
     validateTrigger,
-    antVersion
+    antdVersion
   };
 };
 

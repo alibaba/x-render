@@ -59,13 +59,13 @@ const FormCore:FC<FRProps> = (props) => {
     id,
     className,
     validateTrigger,
-    antVersion,
+    antdVersion,
   } = transformProps({ ...props, ...schemProps });
 
   useEffect(() => {
     form.__initStore(store);
     setTimeout(initial, 0);
-    (window as any).antVersion = antVersion;
+    (window as any).antdVersion = antdVersion;
   }, []);
 
   useEffect(() => {

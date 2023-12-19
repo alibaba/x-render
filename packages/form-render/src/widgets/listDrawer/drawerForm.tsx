@@ -21,7 +21,7 @@ const DrawerForm = (props: any) => {
   let drawerProps: any = {
     open: true
   };
-  if ((window as any).antVersion === 'v4')  {
+  if ((window as any).antdVersion === 'v4')  {
     drawerProps = {
       visible: true
     };

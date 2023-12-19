@@ -24,7 +24,7 @@ const TableCell = (props: any) => {
   let popoverProps: any = {
     open: popoverVisible
   };
-  if ((window as any).antVersion === 'v4')  {
+  if ((window as any).antdVersion === 'v4')  {
     popoverProps = {
       visible: popoverVisible
     };
