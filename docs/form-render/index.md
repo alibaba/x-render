@@ -41,7 +41,6 @@ npm i form-render --save
  * defaultShowCode: true
  */
 import React from 'react';
-import { version } from 'antd';
 import FormRender, { useForm } from 'form-render';
 import schema from './schema/simple';
 
