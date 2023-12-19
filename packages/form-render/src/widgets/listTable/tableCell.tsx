@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Popover, version } from 'antd';
+import { Popover } from 'antd';
 
 const TableCell = (props: any) => {
   const { renderCore, schema, dataIndex, ...otherProps } = props;
