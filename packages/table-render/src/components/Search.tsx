@@ -165,7 +165,7 @@ const Search: <RecordType extends object = any>(
     onFinish,
     ...props,
     form,
-    schema: formSchema,
+    schema: cloneDeep(formSchema),
     widgets: {
       searchBtn: () => <MySearchBtn {...btnProps} />,
       ...props.widgets,
