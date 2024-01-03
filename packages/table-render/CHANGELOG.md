@@ -1,5 +1,8 @@
 # Changelog
 
+### 1.3.15
+- [+] 修复 search schema 被篡改
+
 ### 1.3.14 
 - [+] 修复 `refresh` stay 之后 分页数据不更新
 ### 1.3.11
