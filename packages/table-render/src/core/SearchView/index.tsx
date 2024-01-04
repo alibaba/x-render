@@ -11,6 +11,7 @@ const Search: <RecordType extends object = any>(
     refresh,
     getState,
     onMount,
+    onSearch,
     watch: _watch,
     mode,
     form,
@@ -40,6 +41,9 @@ const Search: <RecordType extends object = any>(
   };
 
   const handleSearch = (data: any) => {
+    if (typeof onSearch === 'function') {
+      onSearch(data);
+    }
     refresh({ ...data, sorter });
   };
 

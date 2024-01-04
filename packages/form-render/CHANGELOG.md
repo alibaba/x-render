@@ -1,5 +1,7 @@
 # 更新日志
 
+### 2.3.8
+- [!] 修复 schema 多层嵌套下，getSchemaByPath 获取异常
 
 ### 2.3.7
 - [+] 增加 antdVersion 配置字段，对应值 'v4' | 'v5'，用于处理 ant v4 与 v5 API 不兼容性警告提示，例如 visible & open，默认是 v5 版本。
