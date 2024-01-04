@@ -108,10 +108,7 @@ const Demo = () => {
 
   return (
     <TableRender
-      search={{ 
-        schema,
-        onSearch: () => alert(1),
-        }}
+      search={{ schema }}
       request={api}
       columns={columns}
       title='最简表格'

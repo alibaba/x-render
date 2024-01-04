@@ -141,11 +141,11 @@ export const getSchemaFullPath = (path: string, schema: any) => {
 
   // 补全 object 类型 path 路径
   let result = 'properties';
-  (path.split('.')).forEach(item => {
+  const pathList = path.split('.');
+  pathList.forEach((item, index) => {
     const key = result + '.' + item;
     const itemSchema = _get(schema, key, {});
-
-    if (isObjType(itemSchema)) {
+    if (isObjType(itemSchema) && index !== pathList.length-1) {
       result = key + '.properties';
       return ;
     }

@@ -44,7 +44,6 @@ const Search: <RecordType extends object = any>(
     if (typeof onSearch === 'function') {
       onSearch(data);
     }
-
     refresh({ ...data, sorter });
   };
 
