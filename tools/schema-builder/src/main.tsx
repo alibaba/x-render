@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import createIframe from './createIframe';
+import * as defalutSetting from './settings';
+
 interface IProps {
   widgets: any
   settings: any
@@ -30,8 +32,12 @@ const Design = (props: IProps) => {
       return;
     }
 
+    debugger;
     iframe?.contentWindow?.__FR_ENGINE__?.init({
-      settings,
+      settings: {
+        ...defalutSetting,
+        ...settings
+      },
       widgets,
       // recordEnable: true,
       logo: {
