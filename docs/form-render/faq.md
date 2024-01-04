@@ -23,3 +23,18 @@ toc: false
 
 form-render 有生命周期的概念，请在 onMount 这个钩子里 set。
 
+##### 3. type 为 object 类型自定义组件没有接收到 value 与 onChange 属性 
+
+例如下面这种 Schema 结构的自定义组件，2.x 会判定它是容器组件并非表单控件，那如何解决这种误判呢？增加一个 widgetType: 'field'
+```js
+{
+  type: "object",
+  widget: "WidgetObj",
+  properties: {
+    name: {
+      title: "name",
+      type: "string",
+    }
+  }
+}
+```
