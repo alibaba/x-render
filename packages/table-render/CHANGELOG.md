@@ -1,5 +1,8 @@
 # 更新日志
 
+### 2.1.4
+-[!] 修复 onSearch 方法缺失
+
 ### 2.0.18
 -[!] 修复 table-render 切换 pageSize 无效
 ### 2.0.17
@@ -23,4 +26,4 @@
 -[+] table-render 新版发布上线，props 调整
 ### 2.0.0
 
-- [+] form-render 2.0 正式发版
+- [+] table-render 2.0 正式发版
