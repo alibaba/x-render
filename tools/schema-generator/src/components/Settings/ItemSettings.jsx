@@ -117,7 +117,7 @@ export default function ItemSettings({ widgets }) {
       isReady.current = true;
       console.error(error);
     }
-  }, [selected]);
+  }, [selected,settings]);
 
   useEffect(() => {
     validation && onItemErrorChange(form?.errorFields);
