@@ -18,7 +18,7 @@ interface ListTableProps {
   /*
    * 没有数据时是否隐藏表格
    */
-  hideTableWhenNoData?: boolean;
+  emptyHiddenTable?: boolean;
   [key: string]: any;
 };
 
@@ -61,8 +61,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
     hideMove,
     hideAdd,
     hideOperate,
-    hideTableWhenNoData,
-
+    hideEmptyTable,
     addItem,
     copyItem,
     moveItem,
@@ -188,7 +187,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
     });
   }
 
-  const showTable = fields.length > 0 ? true : !hideTableWhenNoData;
+  const showTable = fields.length > 0 ? true : !hideEmptyTable;
 
   return (
     <div className={classnames('fr-table-list', { 'fr-table-list-no-popover': !islidatePopover })}>
