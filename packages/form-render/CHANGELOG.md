@@ -1,5 +1,8 @@
 # 更新日志
 
+### 2.3.9
+- [+] TableList 增加 hideEmptyTable 属性
+
 ### 2.3.8
 - [!] 修复 schema 多层嵌套下，getSchemaByPath 获取异常
 
