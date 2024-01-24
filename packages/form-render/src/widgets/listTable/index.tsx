@@ -18,7 +18,7 @@ interface ListTableProps {
   /*
    * 没有数据时是否隐藏表格
    */
-  emptyHiddenTable?: boolean;
+  hideEmptyTable?: boolean;
   [key: string]: any;
 };
 
