@@ -1,6 +1,6 @@
 import { createMeta, inputPropsBasic } from '../utils';
 
-export default createMeta('Input', {
+export default createMeta('Inputx', {
   title: '单行文本',
   priority: 1000,
   props: [
@@ -43,7 +43,7 @@ export default createMeta('Input', {
       ]
     }
   ],
-  snippets: {
+  snippets: [{
     label: '单行文本',
     screenshot: 'icon-input',
     schema: {
@@ -53,5 +53,5 @@ export default createMeta('Input', {
         type: 'string'
       }
     }
-  }
+  }]
 });

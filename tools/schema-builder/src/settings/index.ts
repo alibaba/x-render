@@ -24,6 +24,6 @@ export { default as UrlInput } from './meta/urlInput';
 
 // 容器组件配置
 export { default as Form } from './meta/form';
-export { default as Card } from './meta/card';
+export { default as card } from './meta/card';
 export { default as CardList } from './meta/cardList';
 

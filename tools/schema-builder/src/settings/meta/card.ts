@@ -101,6 +101,7 @@ export default createMeta('Card', {
   title: '对象',
   category: '布局',
   group: '基础组件',
+  priority: -1,
   props,
   snippets,
   configure: {

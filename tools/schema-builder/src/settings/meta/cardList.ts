@@ -199,6 +199,7 @@ export default createMeta('CardList', {
   title: '列表',
   category: '布局',
   group: '基础组件',
+  priority: 1,
   props,
   snippets,
   configure: {

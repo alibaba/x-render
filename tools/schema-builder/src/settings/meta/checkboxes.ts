@@ -2,7 +2,7 @@ import { createMeta, optionsProp, getNotInputPropsBasic } from '../utils';
 
 export default createMeta('Checkboxes', {
   title: '点击多选框',
-  priority: 996,
+  // priority: 996,
   props: [
     {
       title: '基础配置',
