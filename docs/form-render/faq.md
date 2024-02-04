@@ -1,7 +1,6 @@
 ---
 order: 7
 toc: false
-hide: true
 ---
 
 # 常见问题
