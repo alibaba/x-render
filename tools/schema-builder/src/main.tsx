@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import createIframe from './createIframe';
-import * as defalutSetting from './settings';
+import * as defaultSetting from './settings';
 
 interface IProps {
   widgets: any
@@ -32,10 +32,11 @@ const Design = (props: IProps) => {
       return;
     }
 
-    debugger;
+    console.log(defaultSetting, 'defaultSetting', settings)
+    
     iframe?.contentWindow?.__FR_ENGINE__?.init({
       settings: {
-        ...defalutSetting,
+        ...defaultSetting,
         ...settings
       },
       widgets,

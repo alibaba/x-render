@@ -160,13 +160,13 @@ export const getInputPropsBasic = (defaultValueProp: any, placeholder?: any) => 
   if (placeholder) {
     result.splice(3, 0, defaultValueProp);
   }
-  return;
+  return result;
 }
 
 export const getNotInputPropsBasic = (defaultValueProp: any) => {
   const result = cloneDeep(notInputPropsBasic);
   result.splice(2, 0, defaultValueProp);
-  return;
+  return result;
 }
 
 export const uuid = () => {
