@@ -10,20 +10,17 @@ export { default as DatePicker } from './meta/date';
 export { default as DateRange } from './meta/dateRange';
 export { default as TimePicker } from './meta/time';
 export { default as TimeRange } from './meta/timeRange';
-
-// 其他组件配置
 export { default as Rate } from './meta/rate';
 export { default as Switch } from './meta/switch';
 export { default as Slider } from './meta/slider';
-export { default as TreeSelect } from './meta/treeSelect';
 
-// 自定义组件配置
+// 其他组件配置
 export { default as Color } from './meta/color';
 export { default as ImageInput } from './meta/imageInput';
 export { default as UrlInput } from './meta/urlInput';
+export { default as TreeSelect } from './meta/treeSelect';
 
 // 容器组件配置
 export { default as Form } from './meta/form';
 export { default as card } from './meta/card';
 export { default as CardList } from './meta/cardList';
-
