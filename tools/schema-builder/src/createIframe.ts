@@ -11,7 +11,7 @@ const createIframeContent = () => {
         <link href="https://alifd.alicdn.com/npm/@alifd/theme-lowcode-light@0.2.1/dist/next.var.min.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.2.3/dist/css/engine-core.css" />
         <link rel="stylesheet" href="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.6/dist/css/engine-ext.css" />
-        <link rel="stylesheet" href="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.14/css/index.css" />
+        <link rel="stylesheet" href="https://g.alicdn.com/fone-lowcode/fr-generator/1.1.0/css/index.css" />
 
         <script>
           window.React = window.parent.React;
@@ -25,12 +25,11 @@ const createIframeContent = () => {
         <script src="https://g.alicdn.com/code/lib/alifd__next/1.23.24/next.min.js"></script>
         <script crossorigin="anonymous" src="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine/1.2.3/dist/js/engine-core.js"></script>
         <script crossorigin="anonymous" src="https://uipaas-assets.com/prod/npm/@alilc/lowcode-engine-ext/1.0.6/dist/js/engine-ext.js"></script>
-
       </head>
 
       <body>
         <div id="lce-container"></div>
-        <script type="text/javascript" src="https://g.alicdn.com/fone-lowcode/fr-generator/1.0.14/js/index.js"></script>
+        <script type="text/javascript" src="https://g.alicdn.com/fone-lowcode/fr-generator/1.1.0/js/index.js"></script>
       </body>
     </html>
   `;

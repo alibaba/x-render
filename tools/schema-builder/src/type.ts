@@ -30,6 +30,7 @@ export interface TSchemaBuilder {
   defaultValue?: TSchema;
   widgets?: any;
   settings?: any;
+  editorWidgets?: any;
   onMount?: () => void;
   [key: string]: any
 }

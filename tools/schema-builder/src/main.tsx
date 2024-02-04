@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useImperativeHandle, forwardRef } from 'react';
 import createIframe from './createIframe';
+import * as defaultSetting from './settings';
+
 import { TSchemaBuilder } from './type';
 
 let iframe: any;
@@ -36,7 +38,10 @@ const Design = (props: TSchemaBuilder, ref: any) => {
     }
     
     iframe?.contentWindow?.__FR_ENGINE__?.init({
-      settings,
+      settings: {
+        ...defaultSetting,
+        ...settings
+      },
       widgets,
       // recordEnable: true,
       logo: {
