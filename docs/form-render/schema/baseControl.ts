@@ -91,10 +91,7 @@ export default {
     timeRange1: {
       title: '时间范围',
       type: 'range',
-      widget: 'timeRange',
-      props: {
-        format: "HH:mm"
-      },
+      widget: 'timeRange'
     },
     void2: {
       title: '其他组件',
