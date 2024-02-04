@@ -1,4 +1,3 @@
-
 import { _cloneDeep, isObjType, isListType } from '../utils/index';
 
 export const createDataSkeleton = (schema: any, formData?: any) => {

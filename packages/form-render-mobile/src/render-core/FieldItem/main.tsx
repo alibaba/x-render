@@ -5,7 +5,7 @@ import classnames from 'classnames';
 
 import { _get, getWidget } from '../../utils';
 import { ConfigContext } from '../../models/context';
-import getRuleList from '../../models/validates';
+import getRuleList from 'form-render/es/models/validates';
 import FieldWrapper from './field';
 import { 
   getParamValue, 
@@ -18,7 +18,9 @@ import {
 const UpperContext: any = createContext(() => {});
 const valuePropNameMap = {
   checkbox: 'checked',
-  switch: 'checked'
+  switch: 'checked',
+  Checkbox: 'checked',
+  Switch: 'checked'
 };
 
 export default (props: any) => {
@@ -36,7 +38,7 @@ export default (props: any) => {
   const configCtx = useContext(ConfigContext);
   
   const { form, widgets, methods, globalProps }: any = configCtx;
-  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
+  const { hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, layout, ...otherSchema } = schema;
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
 
   useEffect(() => {
@@ -100,21 +102,18 @@ export default (props: any) => {
   }
 
   // Render field components
-  let label = getLabel(schema, displayType, widgets);
+  let label = getLabel(schema, displayType, widgets, fieldProps.addons);
   let noStyle = getValueFromKey('noStyle');
 
   const extra = getExtraView('extra', schema, widgets);
   const help = getExtraView('help', schema, widgets);
-  const ruleList = getRuleList(schema, form, methods);
+  const tooltip = getExtraView('tooltip', schema, widgets);
+  const ruleList = getRuleList(schema, form, methods, fieldRef);
   const readOnly = getValueFromKey('readOnly');
   const valuePropName = schema.valuePropName || valuePropNameMap[schema.widget] || undefined;
 
   if (readOnly) {
     fieldProps.readOnly = readOnly;
-  }
-
-  if (!label) {
-    noStyle = true;
   }
 
   if (readOnly) {
@@ -128,7 +127,7 @@ export default (props: any) => {
     valuePropName,
     hidden,
     extra,
-    help,
+    help: tooltip || help,
     noStyle,
     dependencies,
     name: path,
@@ -136,6 +135,13 @@ export default (props: any) => {
     rules: readOnly ? [] : ruleList,
     className:classnames('fr-field', {'fr-field-visibility': !visible})
   };
+
+  if (layout) {
+    itemProps.layout = {
+      column: 'vertical',
+      row: 'horizontal',
+    }[layout];
+  }
 
   if (!readOnly && needOnClick) {
     itemProps.onClick = () => {

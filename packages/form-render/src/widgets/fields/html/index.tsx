@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image } from 'antd';
 
-export default function html({ value, options, schema = {} }) {
+export default function html({ value, options, schema = {} } : any) {
   let __html = '-';
   
   if (schema.type === 'boolean') {
@@ -33,7 +33,7 @@ export default function html({ value, options, schema = {} }) {
     value[1]
   ) {
     __html = `${value[0]} - ${value[1]}`;
-  } else if (value && ['number', 'string'].indexOf(value) === -1) {
+  } else if (value && ['number', 'string'].indexOf(typeof value) === -1) {
     __html = JSON.stringify(value);
   }
 
@@ -46,6 +46,5 @@ export default function html({ value, options, schema = {} }) {
       />
     );
   }
-
   return <div dangerouslySetInnerHTML={{ __html }} />;
 }

@@ -10,7 +10,7 @@ import 'dayjs/locale/zh-cn';
 
 import { createStore } from './models/store';
 import { FRContext, ConfigContext } from './models/context';
-import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
+import { validateMessagesEN, validateMessagesCN } from 'form-render/es/models/validateMessage';
 import * as defaultWidgets from './widgets';
 import { FRProps } from './type';
 

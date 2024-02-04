@@ -9,7 +9,7 @@ import Main from './field';
 const UpperContext = createContext(() => {});
 
 export default (props: any) => {
-  const [listData, setListData] = useState([]);
+  const [_, setListData] = useState([]);
   const { configContext } = props;
   
   const store = useContext(FRContext);
@@ -41,7 +41,9 @@ export default (props: any) => {
   const { labelCol, fieldCol } = getFormListLayout(getValueFromKey, displayType);
 
   let isInline = schema.display === 'inline';
-  if (!setListData?.length && widgetName !== 'drawerList') {
+  const preRootPath = [...(props.rootPath || [])].splice(0, props.rootPath.length - 1);
+  const listData = form.getFieldValue([...preRootPath, ...props.path]);
+  if (!listData?.length && widgetName !== 'drawerList') {
     isInline = true;
   }
 
@@ -79,7 +81,6 @@ export default (props: any) => {
           widgets={widgets}
           configContext={configContext}
           setListData={setListData}
-          listData={listData}
         />
       </Form.Item>
     </Col>

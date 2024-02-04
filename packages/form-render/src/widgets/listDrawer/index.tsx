@@ -44,8 +44,7 @@ const TableList: React.FC<Props> = (props: any) => {
     readOnly,
     widgets,
     pagination,
-
-
+    
     operateBtnType,
     addBtnProps,
     delConfirmProps,

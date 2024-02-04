@@ -16,6 +16,10 @@ interface ListVirtualProps {
   delConfirmProps: any;
   renderCore: any;
   rootPath: any;
+  /*
+   * 没有数据时是否隐藏表格
+   */
+  hideEmptyTable?: boolean;
   [key: string]: any;
 };
 
@@ -57,6 +61,8 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     hideCopy,
     hideMove,
     hideAdd,
+    hideOperate,
+    hideEmptyTable,
 
     addItem,
     copyItem,
@@ -129,7 +135,7 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     };
   });
 
-  if (!readOnly) {
+  if (!readOnly && !hideOperate) {
     columns.push({
       title: colHeaderText,
       width: '190px',
@@ -179,17 +185,21 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
     });
   }
 
+  const showTable = fields.length > 0 ? true : !hideEmptyTable;
+
   return (
     <>
-      <Table
-        className={classnames('fr-virtual-list', { 'fr-virtual-list-no-popover': !islidatePopover })}
-        size='middle'
-        columns={columns}
-        dataSource={fields}
-        pagination={false}
-        scroll={{ y: scrollY }}
-        components={vt}
-      />
+      {showTable && (
+        <Table
+          className={classnames('fr-virtual-list', { 'fr-virtual-list-no-popover': !islidatePopover })}
+          size='middle'
+          columns={columns}
+          dataSource={fields}
+          pagination={false}
+          scroll={{ y: scrollY }}
+          components={vt}
+        />
+      )}
       {(!schema.max || fields.length < schema.max) && !hideAdd && (
         <Button
           icon={<PlusOutlined />}

@@ -7,7 +7,7 @@ import { getDate, getDateTime, getMoneyType, getDateRange, isObject, isFunction,
 import { renderDom } from './field';
 import { ColumnsSettingValueType } from '../../types';
 
-const ProTable: <RecordType extends object = any>(
+const TableView: <RecordType extends object = any>(
   props: TableProps<RecordType> & {
     doSearch: (...arg: any[]) => void,
     locale?: 'zh-CN' | 'en-US';
@@ -83,6 +83,9 @@ const ProTable: <RecordType extends object = any>(
       }
 
       switch (result.valueType) {
+        case 'link':
+          result.render = (value: any, record: any, index: number) => renderDom(value, result, { record, index });
+          break;
         case 'date':
           result.render = (value: any) => renderDom(getDate(value, result.valueTypeProps?.format), result);
           break;
@@ -97,13 +100,6 @@ const ProTable: <RecordType extends object = any>(
           break;
         case 'money':
           result.render = (value: any) => renderDom(getMoneyType(value), result);
-          break;
-        case 'code':
-          result.render = (value: any) => renderDom(value, result);
-          break;
-        case 'progress':
-        case 'tag':
-          result.render = (value: any) => renderDom(value, result);
           break;
         case 'text':
         default:
@@ -128,8 +124,7 @@ const ProTable: <RecordType extends object = any>(
         }
         return i;
       });
-  }
-
+  };
 
   const proColumns = useMemo(() => {
     const proColumns = getProColumns(columns);
@@ -144,23 +139,24 @@ const ProTable: <RecordType extends object = any>(
     ...otherProps,
     columns: proColumns,
     onChange: handleChange,
-    // dataSource不准在使用ProTable时用props赋值
     dataSource,
-    pagination:
-      props.pagination === false
-        ? false
-        : {
-          size: 'small',
-          ...props.pagination,
-          ...pagination,
-          // pageSize: props.pagination?.pageSize || pagination.pageSize,
-          // total: props.pagination?.total || pagination.total,
-          // current: props.pagination?.current || pagination.current,
-        },
+    pagination: props.pagination === false ? false : {
+      size: 'small',
+      ...props.pagination,
+      ...pagination,
+      // pageSize: props.pagination?.pageSize || pagination.pageSize,
+      // total: props.pagination?.total || pagination.total,
+      // current: props.pagination?.current || pagination.current,
+    },
     loading,
     size: tableSize,
   };
+ 
+  // 需要判断一下，否则影响 table 的某些属性初始化渲染异常
+  if (columns?.length === 0) {
+    return null;
+  }
   return <Table {...tableProps} />
 }
 
-export default ProTable;
+export default TableView;

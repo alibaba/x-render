@@ -15,6 +15,10 @@ interface ListTableProps {
   delConfirmProps: any;
   renderCore: any;
   rootPath: any;
+  /*
+   * 没有数据时是否隐藏表格
+   */
+  hideEmptyTable?: boolean;
   [key: string]: any;
 };
 
@@ -56,7 +60,8 @@ const TableList: React.FC<ListTableProps> = (props) => {
     hideCopy,
     hideMove,
     hideAdd,
-
+    hideOperate,
+    hideEmptyTable,
     addItem,
     copyItem,
     moveItem,
@@ -132,7 +137,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
     };
   });
 
-  if (!readOnly) {
+  if (!readOnly && !hideOperate) {
     columns.push({
       title: colHeaderText,
       width: '190px',
@@ -140,19 +145,19 @@ const TableList: React.FC<ListTableProps> = (props) => {
       ...otherActionColumnProps,
       render: (_, field) => (
         <Form.Item>
-          <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>
+          <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical' />}>
             {!hideMove && (
               <>
-                <FButton 
+                <FButton
                   disabled={field.name === 0}
                   onClick={() => moveItem(field.name, field.name - 1)}
-                  icon={<ArrowUpOutlined/>}
+                  icon={<ArrowUpOutlined />}
                   {...moveUpBtnProps}
                 />
-                <FButton 
+                <FButton
                   disabled={field.name === fields.length - 1}
                   onClick={() => moveItem(field.name, field.name + 1)}
-                  icon={<ArrowDownOutlined/>}
+                  icon={<ArrowDownOutlined />}
                   {...moveDownBtnProps}
                 />
               </>
@@ -163,16 +168,16 @@ const TableList: React.FC<ListTableProps> = (props) => {
                 {...delConfirmProps}
               >
                 <FButton
-                  icon={<CloseOutlined/>}
+                  icon={<CloseOutlined />}
                   btnType={operateBtnType}
                   {...deleteBtnProps}
                 />
               </Popconfirm>
             )}
             {!hideCopy && (
-              <FButton 
+              <FButton
                 onClick={() => handleCopy(field.name)}
-                icon={<CopyOutlined/>}
+                icon={<CopyOutlined />}
                 {...copyBtnProps}
               />
             )}
@@ -182,17 +187,21 @@ const TableList: React.FC<ListTableProps> = (props) => {
     });
   }
 
+  const showTable = fields.length > 0 ? true : !hideEmptyTable;
+
   return (
     <div className={classnames('fr-table-list', { 'fr-table-list-no-popover': !islidatePopover })}>
-      <Table
-        size='middle'
-        scroll={{ x: 'max-content' }}
-        style={{ marginBottom: '12px'}}
-        {...retProps}
-        columns={columns}
-        dataSource={fields}
-        pagination={paginationConfig}
-      />
+      {showTable && (
+        <Table
+          size='middle'
+          scroll={{ x: 'max-content' }}
+          style={{ marginBottom: '12px' }}
+          {...retProps}
+          columns={columns}
+          dataSource={fields}
+          pagination={paginationConfig}
+        />
+      )}
       {(!schema.max || fields.length < schema.max) && !hideAdd && (
         <Button
           icon={<PlusOutlined />}

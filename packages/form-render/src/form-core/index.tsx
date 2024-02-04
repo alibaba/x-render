@@ -1,14 +1,16 @@
 import React, { useEffect, useContext, FC } from 'react';
 import { Form, Row, Col, Button, Space, ConfigProvider } from 'antd';
-import { useStore } from 'zustand';
 import classNames from 'classnames';
+import { cloneDeep } from 'lodash-es';
+import { useStore } from 'zustand';
 
-import { valueRemoveUndefined, _cloneDeep, translation, isFunction } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
 import { parseValuesToBind } from '../models/bindValues';
+import filterValuesHidden from '../models/filterValuesHidden';
+import filterValuesUndefined from '../models/filterValuesUndefined';
 import { getFormItemLayout } from '../models/layout';
-import { FRProps } from '../type';
+import { translation, isFunction } from '../utils';
 
 import {
   valuesWatch,
@@ -18,8 +20,9 @@ import {
   getSessionItem,
   setSessionItem
 } from '../models/formCoreUtils';
-import RenderCore from '../render-core';
 
+import { FRProps } from '../type';
+import RenderCore from '../render-core';
 import './index.less';
 
 const FormCore:FC<FRProps> = (props) => {
@@ -56,16 +59,22 @@ const FormCore:FC<FRProps> = (props) => {
     id,
     className,
     validateTrigger,
+    antdVersion,
   } = transformProps({ ...props, ...schemProps });
 
   useEffect(() => {
     form.__initStore(store);
     setTimeout(initial, 0);
+    (window as any).antdVersion = antdVersion;
   }, []);
 
   useEffect(() => {
     form.setSchema(props.schema, true);
   }, [JSON.stringify(props.schema || {})]);
+
+  useEffect(() => {
+    store.setState({ removeHiddenData });
+  }, [removeHiddenData]);
 
   useEffect(() => {
     const context = {
@@ -152,58 +161,43 @@ const FormCore:FC<FRProps> = (props) => {
   };
 
   const handleValuesChange = (changedValues: any, _allValues: any) => {
-    const allValues = valueRemoveUndefined(_allValues, true);
+    const allValues = filterValuesUndefined(_allValues, true);
     valuesWatch(changedValues, allValues, watch);
   };
 
-  const handleFinish = async (_values: any) => {
-    onSubmitLogger({ values: _values });
-    let values = _cloneDeep(_values);
-    if (!removeHiddenData) {
-      values = _cloneDeep(form.getFieldsValue(true));
-    }
+  const transFormValues = (_values: any) => {
+    let values = cloneDeep(_values);
+    values = removeHiddenData ? filterValuesHidden(values, flattenSchema) : cloneDeep(form.getFieldsValue(true));
     values = parseValuesToBind(values, flattenSchema);
-    values = valueRemoveUndefined(values);
+    values = filterValuesUndefined(values);
+    return values;
+  };
 
-    let fieldsError = beforeFinish
-      ? await beforeFinish({ data: values, schema, errors: [] })
-      : null;
-
-    // console.log(values, form.getValues(true));
-    // Stop submit
-    if (fieldsError) {
+  const handleFinish = async (_values: any) => {
+    const values = transFormValues(_values);
+    const fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
+    // console.log(values, form.getValues(true), _values);
+    if (fieldsError?.length > 0) {
       form.setFields(fieldsError);
       return;
     }
-
+    onSubmitLogger({ values });
     onFinish && onFinish(values, []);
   };
 
   const handleFinishFailed = async (params: any) => {
-    onSubmitLogger(params);
+    const values = transFormValues(params.values);
+    onSubmitLogger({ ...params, values });
     if (!onFinishFailed) {
       return;
     }
-    let values = _cloneDeep(params?.values);
-    if (!removeHiddenData) {
-      values = _cloneDeep(form.getFieldsValue(true));
-    }
-    values = parseValuesToBind(values, flattenSchema);
-    values = valueRemoveUndefined(values);
-
     onFinishFailed({ ...params, values });
   };
 
   const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
-  
-  const classRest: any = {};
-  if (className) {
-    classRest[className] = true;
-  }
-
   return (
     <Form
-      className={classNames('fr-form', classRest )}
+      className={classNames('fr-form', { [className]: !!className } )}
       labelWrap={true}
       {...formProps}
       disabled={disabled}

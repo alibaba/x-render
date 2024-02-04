@@ -1,5 +1,3 @@
-
-
 import { _cloneDeep, isObjType, isListType } from '../utils/index';
 import sortProperties from './sortProperties';
 

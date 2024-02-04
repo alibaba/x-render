@@ -39,6 +39,17 @@ const Demo = () => {
       // }
     },
     {
+      title: 'link',
+      dataIndex: 'link',
+      valueType: 'link',
+      width: '200px',
+      // valueTypeProps: { 配置图片大小 antd iamge props
+      //   type: '_self', // 默认是外跳，内部跳转需配置 self
+      //   onClick: (value, record, index) => void //也可以自定义点击事件
+      //   href: '跳转链接' // 默认显示 value 值，也可以重新配置， string ||  (value, record, index) => string
+      // }
+    },
+    {
       title: '复制、省略',
       dataIndex: 'address',
       valueType: 'text',
@@ -155,7 +166,8 @@ const Demo = () => {
       dateRange: ['2020-05-26T09:42:56Z', '2020-05-26T09:42:56Z'],
       timeRange: ['2020-05-26T09:42:56Z', '2020-05-26T09:42:56Z'],
       stateDate: '2020-05-26T09:42:56Z',
-      endDate: '2020-05-26T09:42:56Z'
+      endDate: '2020-05-26T09:42:56Z',
+      link: 'https://xrender.fun/'
     }];
 
     return {
@@ -172,7 +184,7 @@ const Demo = () => {
       columns={columns}
       toolbarRender={toolbarRender}
       scroll={{
-        x: 1500
+        x: 2000
       }}
     />
   )

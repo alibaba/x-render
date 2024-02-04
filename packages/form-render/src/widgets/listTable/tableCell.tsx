@@ -19,6 +19,16 @@ const TableCell = (props: any) => {
   if (!schema.properties[dataIndex].onStatusChange) {
     schema.properties[dataIndex].onStatusChange = onStatusChange;
   }
+
+  const popoverVisible = visible && errorMsg;
+  let popoverProps: any = {
+    open: popoverVisible
+  };
+  if ((window as any).antdVersion === 'v4')  {
+    popoverProps = {
+      visible: popoverVisible
+    };
+  }
   
   return (
     <div
@@ -36,7 +46,7 @@ const TableCell = (props: any) => {
         overlayClassName='fr-popover-error'
         content={errorMsg}
         placement='topRight'
-        open={visible && errorMsg}
+        {...popoverProps}
       >
         {renderCore({ ...otherProps, schema })}
       </Popover>

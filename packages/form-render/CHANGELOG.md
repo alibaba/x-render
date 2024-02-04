@@ -1,7 +1,36 @@
 # 更新日志
 
+### 2.3.9
+- [+] TableList 增加 hideEmptyTable 属性
+
+### 2.3.8
+- [!] 修复 schema 多层嵌套下，getSchemaByPath 获取异常
+
+### 2.3.7
+- [+] 增加 antdVersion 配置字段，对应值 'v4' | 'v5'，用于处理 ant v4 与 v5 API 不兼容性警告提示，例如 visible & open，默认是 v5 版本。
+
+### 2.3.6
+- [!] 修复 List 组件初始化数据，删除按钮未显示
+- [!] 修复因配置 validator 导致通过 watch 触发 setSchemaBypath 初次不生效
+
+### 2.3.5 
+- [+] labelWidget、descWidget 增加 addons 访问属性
+- [!] 兼容 widget 大小写配置
+
+### 2.3.0
+- [+] 优化 search-form 折叠收起逻辑，不再判断 dom 真实渲染高度，提升渲染性能
+- [!] form.getValues 判断 removeHiddenData = true 时，才去除隐藏控件数据
+
+### 2.2.18
+- [+] 优化 ListTab 性能优化
+### 2.2.17 
+- [!] List 嵌套下去默认去除隐藏值
+### 2.2.16
+- [!] 修复 SearchForm schema undefined 异常处理
+### 2.2.14
+- [!] 修复 List 嵌套下 输入控件被隐藏，提交数据值还能被获取
 ### 2.2.13
-- [!] 修复 list 嵌套 list 组件自身函数表达式不生效
+- [!] 修复 List 嵌套 list 组件自身函数表达式不生效
 ### 2.2.9
 - [!] 修复 schema 依赖更新异常
 ### 2.2.8

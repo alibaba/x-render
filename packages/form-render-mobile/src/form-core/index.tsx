@@ -1,12 +1,15 @@
 import React, { useEffect, useContext } from 'react';
 import { Form, Grid } from 'antd-mobile';
 import { useStore } from 'zustand';
-import cx from 'classnames';
+import classnames from 'classnames';
+import { cloneDeep } from 'lodash-es';
+import { parseValuesToBind } from 'form-render/es/models/bindValues';
+import filterValuesUndefined from 'form-render/es/models/filterValuesUndefined';
+import filterValuesHidden from 'form-render/es/models/filterValuesHidden';
 
 import { valueRemoveUndefined, _cloneDeep, isFunction } from '../utils';
 import { FRContext } from '../models/context';
 import transformProps from '../models/transformProps';
-import { parseValuesToBind } from '../models/bindValues';
 
 import {
   valuesWatch,
@@ -15,7 +18,7 @@ import {
   msToTime,
   getSessionItem,
   setSessionItem
-} from '../models/formCoreUtils';
+} from 'form-render/es/models/formCoreUtils';
 import RenderCore from '../render-core';
 
 import './index.less';
@@ -60,6 +63,10 @@ const FormCore = (props: any) => {
   }, [JSON.stringify(props.schema || {})]);
 
   useEffect(() => {
+    store.setState({ removeHiddenData });
+  }, [removeHiddenData]);
+
+  useEffect(() => {
     const context = {
       column,
       readOnly,
@@ -74,9 +81,11 @@ const FormCore = (props: any) => {
 
   const initial = async () => {
     onMount && await onMount();
-    const values = form.getValues();
-    immediateWatch(watch, values);
     onMountLogger();
+    setTimeout(() => {
+      const values = form.getValues();
+      immediateWatch(watch, values);
+    }, 0);
   };
 
   const onMountLogger = () => {
@@ -144,52 +153,39 @@ const FormCore = (props: any) => {
     valuesWatch(changedValues, allValues, watch);
   };
 
-  const handleFinish = async (_values: any) => {
-    onSubmitLogger({ values: _values });
-    let values = _cloneDeep(_values);
-    if (!removeHiddenData) {
-      values = _cloneDeep(form.getFieldsValue(true));
-    }
+  const transFormValues = (_values: any) => {
+    let values = cloneDeep(_values);
+    values = removeHiddenData ? filterValuesHidden(values, flattenSchema) : cloneDeep(form.getFieldsValue(true));
     values = parseValuesToBind(values, flattenSchema);
-    values = valueRemoveUndefined(values);
+    values = filterValuesUndefined(values);
+    return values;
+  };
 
-    let fieldsError = beforeFinish
-      ? await beforeFinish({ data: values, schema, errors: [] })
-      : null;
-
-    // console.log(values, form.getValues(true));
-    // Stop submit
-    if (fieldsError) {
+  const handleFinish = async (_values: any) => {
+    const values = transFormValues(_values);
+    const fieldsError = beforeFinish ? await beforeFinish({ data: values, schema, errors: [] }) : null;
+    // console.log(values, form.getValues(true), _values);
+    if (fieldsError?.length > 0) {
       form.setFields(fieldsError);
       return;
     }
-
+    onSubmitLogger({ values });
     onFinish && onFinish(values, []);
   };
 
   const handleFinishFailed = async (params: any) => {
-    onSubmitLogger(params);
+    const values = transFormValues(params.values);
+    onSubmitLogger({ ...params, values });
     if (!onFinishFailed) {
       return;
     }
-    let values = _cloneDeep(params?.values);
-    if (!removeHiddenData) {
-      values = _cloneDeep(form.getFieldsValue(true));
-    }
-    values = parseValuesToBind(values, flattenSchema);
-    values = valueRemoveUndefined(values);
-
     onFinishFailed({ ...params, values });
   };
-
-  const formClassName = cx('frm-form', className, {
-    ['frm-form-card']: isCardMode,
-  });
 
   return (
     <Form
       {...formProps}
-      className={formClassName}
+      className={classnames('frm-form', className, { ['frm-form-card']: isCardMode })}
       form={form}
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}

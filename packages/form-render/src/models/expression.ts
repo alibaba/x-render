@@ -49,7 +49,6 @@ export const isHasExpression = (schema: any) => {
   return result;
 };
 
-
 export const parseExpression = (func: any, formData = {}, parentPath: string | []) => {
   const parentData = get(formData, parentPath) || {};
 
@@ -60,7 +59,6 @@ export const parseExpression = (func: any, formData = {}, parentPath: string | [
         .replace(/formData/g, JSON.stringify(formData))
         .replace(/rootValue/g, JSON.stringify(parentData))}
     `;
-
     try {
       const result = Function(funcStr)();
       return result;
@@ -95,7 +93,6 @@ export function getValueByPath(formData, path) {
     console.error('path has to be a string');
   }
 }
-
 
 export const parseAllExpression = (_schema: any, _formData: any, dataPath: string, formSchema?: any) => {
   const schema = _cloneDeep(_schema);

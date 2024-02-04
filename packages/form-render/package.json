@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "2.2.14-beta.1",
+  "version": "2.3.9",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -26,8 +26,8 @@
       "email": "tw93@qq.com"
     },
     {
-      "name": "mankaiviky",
-      "email": "mankaiviky@163.com"
+      "name": "lhbxs",
+      "email": "596850703@qq.com"
     }
   ],
   "main": "lib/index.js",
@@ -64,7 +64,7 @@
     "rc-color-picker": "^1.2.6",
     "virtualizedtableforantd4": "^1.1.2",
     "zustand": "^4.1.5",
-    "ahooks": "3.7.5"
+    "ahooks": "^3.7.5"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",

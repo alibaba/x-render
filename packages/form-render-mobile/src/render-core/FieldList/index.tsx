@@ -3,7 +3,7 @@ import { Form, Grid } from 'antd-mobile';
 import { AddCircleOutline } from 'antd-mobile-icons';
 import { useStore } from 'zustand';
 import { FRContext, ConfigContext } from '../../models/context';
-import { parseAllExpression } from '../../models/expression';
+import { parseAllExpression } from 'form-render/es/models/expression';
 import { isFunction } from '../../utils';
 import './index.less';
 
