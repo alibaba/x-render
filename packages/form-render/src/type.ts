@@ -313,6 +313,7 @@ export interface FRProps extends Omit<AntdFormProps, 'form'> {
    * label 标签的文本对齐方式
    */
   labelAlign?: 'right' | 'left';
+  fieldCol?: number | ColProps;
   /**
    *  只读模式
    */
