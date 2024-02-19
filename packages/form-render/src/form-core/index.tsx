@@ -195,6 +195,23 @@ const FormCore:FC<FRProps> = (props) => {
   };
 
   const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
+
+  const footerDom: React.JSX.Element[] = [];
+  if (!footer?.reset?.hide) {
+    footerDom.push(
+      <Button {...footer?.reset} onClick={() => form.resetFields()}>
+        {footer?.reset?.text || t('reset')}
+      </Button>
+    );
+  }
+  if (!footer?.submit?.hide) {
+    footerDom.push(
+      <Button type="primary" onClick={form.submit} {...footer?.submit}>
+        {footer?.submit?.text || t('submit')}
+      </Button>
+    );
+  }
+  
   return (
     <Form
       className={classNames('fr-form', { [className]: !!className } )}
@@ -218,28 +235,10 @@ const FormCore:FC<FRProps> = (props) => {
               labelCol={operlabelCol}
               className='fr-hide-label'
             >
-              {isFunction(footer) ? ( 
-                <Space>{footer()}</Space>
-              ): (
-                <Space>
-                  {!footer?.reset?.hide && (
-                    <Button 
-                      {...footer?.reset} 
-                      onClick={() => form.resetFields()}
-                    >
-                      {footer?.reset?.text || t('reset')}
-                    </Button>
-                  )}
-                  {!footer?.submit?.hide && (
-                    <Button
-                      type='primary'
-                      onClick={form.submit}
-                      {...footer?.submit}
-                    >
-                      {footer?.submit?.text || t('submit')}
-                    </Button>
-                  )}
-                </Space>
+               {isFunction(footer) ? (
+                <Space>{footer(footerDom)}</Space>
+              ) : (
+                <Space>{footerDom}</Space>
               )}
             </Form.Item>
           </Col>
