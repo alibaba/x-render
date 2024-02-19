@@ -344,3 +344,26 @@ export default () => {
   );
 }
 ```
+
+- `footer` dom 元素透传
+```jsx
+import React, { useState } from 'react';
+import { Button, Space, Form, Radio } from 'antd';
+import FormRender, { useForm } from 'form-render';
+import schema from './schema/simple';
+
+export default () => {
+  const form = useForm();
+
+  return (
+    <FormRender
+      schema={schema}
+      form={form}
+      maxWidth={360}
+      footer={(dom) => (
+        <Space>{dom}</Space>
+      )}
+    />
+  );
+}
+```
