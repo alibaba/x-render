@@ -1,5 +1,8 @@
 # 更新日志
 
+### 2.4.0 
+- [+] FR 增加 footer 透传 actionBtns 
+
 ### 2.3.9
 - [+] TableList 增加 hideEmptyTable 属性
 

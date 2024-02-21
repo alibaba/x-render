@@ -403,7 +403,7 @@ export interface FRProps extends Omit<AntdFormProps, 'form'> {
   methods?: Record<string, Function>;
   operateExtra?: React.ReactNode;
   maxWidth?: number | string;
-  footer?: boolean | (() => React.ReactNode) | Partial<ActionProps> ;
+  footer?: boolean | ((dom: React.JSX.Element[]) => React.ReactNode) | Partial<ActionProps> ;
 }
 
 export interface SearchProps<RecordType> extends Omit<FRProps, 'form'> {
