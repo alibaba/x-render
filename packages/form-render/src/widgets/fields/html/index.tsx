@@ -1,11 +1,11 @@
-import React from 'react';
 import { Image } from 'antd';
+import React from 'react';
 
-export default function html({ value, options, schema = {} } : any) {
+export default function html({ value, checked, options, schema = {} } : any) {
   let __html = '-';
-  
+
   if (schema.type === 'boolean') {
-    __html = value === true ? '✔' : '✘';
+    __html = checked === true || value===true ? '✔' : '✘';
   } else if (options?.length > 0) {
     if (['string', 'number'].indexOf(typeof value) > -1) {
       const item = options.find(item => item.value === value);
