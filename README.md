@@ -193,3 +193,8 @@ https://user-images.githubusercontent.com/8736212/123383626-ff187a80-d5c5-11eb-8
 
 ## 互助答疑群
 <img style="height: 400px" src="https://img.alicdn.com/imgextra/i3/O1CN01HksNgs1DZNuQsORIp_!!6000000000230-0-tps-1242-1602.jpg">
+
+
+## Star 趋势
+
+[![Star History Chart](https://api.star-history.com/svg?repos=alibaba/x-render&type=Date)](https://star-history.com/#alibaba/x-render&Date)
