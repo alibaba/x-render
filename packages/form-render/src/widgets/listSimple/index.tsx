@@ -17,7 +17,7 @@ const getHasBackground = (fields: any[], hasBackground: boolean) => {
 const SimpleList = (props: any) => {
   const {
     form,
-    schema,
+    schema: _schema,
     fields,
     rootPath,
     renderCore,
@@ -41,6 +41,8 @@ const SimpleList = (props: any) => {
     removeItem,
     temporary
   } = props;
+
+  const schema = {..._schema, items: { ..._schema.items }};
 
   if (!schema.items.displayType) {
     schema.items.displayType = 'inline';
