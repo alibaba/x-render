@@ -58,46 +58,6 @@ export default () => {
       onFinish={onFinish} 
       maxWidth={360} 
       footer={true}
-      watch={{
-        "#": (allValues, changedValues) => {
-          // '#': () => {} 等同于 onValuesChange
-          // console.log('表单 allValues：', allValues);
-          setTimeout(() => {
-            form.setSchema(
-              {
-                type: "object",
-                displayType: "row",
-                column: 2,
-                properties: {
-                  input12: {
-                    title: "输入框xxxx",
-                    displayType: "row",
-                    type: "string",
-                    widget: "input",
-                  },
-                  number12: {
-                    title: "数字输入框",
-                    type: "number",
-                    widget: "inputNumber",
-                  },
-                  select12: {
-                    title: "下啦单选",
-                    widget: "select",
-                    props: {
-                      options: [
-                        { label: "东", value: "east" },
-                        { label: "西", value: "west" },
-                      ],
-                    },
-                  },
-                },
-              },
-              true
-            );
-          }, 0);
-          
-        }
-      }}
     />
   );
 }
