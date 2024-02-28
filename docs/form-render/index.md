@@ -42,146 +42,68 @@ npm i form-render --save
  */
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
-// import schema from './schema/simple';
-
-
-const schema = {
-  type: 'object',
-  properties: {
-    countryCode: {
-      type: 'number',
-      placeholder: '区域-目的地',
-      widget: 'select',
-      width: '50%',
-      required: true,
-      props: {}
-    },
-    cityCode: {
-      type: 'number',
-      placeholder: '区域-城市',
-      widget: 'select',
-      width: '50%',
-      props: {}
-    },
-    subConfigValue: {
-      title: '热门日期',
-      type: 'array',
-      widget: 'simpleList',
-      props: {
-        hideCopy: true,
-        delConfirmProps: {
-          overlayClassName: 'del-confirm-hot-date'
-        }
-      },
-      items: {
-        type: 'object',
-        properties: {
-          date: {
-            type: 'range',
-            widget: 'dateRange',
-            required: true,
-            props: {}
-          }
-        }
-      }
-    }
-  },
-  displayType: "row",
-  labelWidth: 100,
-};
+import schema from './schema/simple';
 
 export default () => {
   const form = useForm();
 
-  const onMount = () => {
-    debugger;
-    form.setSchemaByPath('countryCode', {
-      props: {
-        options: [{ value: 1, label: 1}],
-      },
-    });
-  };
-
-  const watch = {
-    countryCode: (value: string) => {
-      // form.setValues({ cityCode: undefined });
-      // form.setSchemaByPath('cityCode', {
-      //   props: {
-      //     options: cityMap[value].map((item: any) => ({
-      //       label: item.provinceName,
-      //       value: item.provinceCode,
-      //     })),
-      //   },
-      // });
-    },
+  const onFinish = (formData) => {
+    console.log('formData:', formData);
   };
 
   return (
-            <FormRender form={form} schema={schema} onMount={onMount} watch={watch}  />
-
-
-  )
-}
-// export default () => {
-//   const form = useForm();
-
-//   const onFinish = (formData) => {
-//     console.log('formData:', formData);
-//   };
-
-//   return (
-//     <FormRender 
-//       form={form} 
-//       schema={schema} 
-//       onFinish={onFinish} 
-//       maxWidth={360} 
-//       footer={true}
-//       watch={{
-//         "#": (allValues, changedValues) => {
-//           // '#': () => {} 等同于 onValuesChange
-//           // console.log('表单 allValues：', allValues);
-//           setTimeout(() => {
-//             form.setSchema(
-//               {
-//                 type: "object",
-//                 displayType: "row",
-//                 column: 2,
-//                 properties: {
-//                   input12: {
-//                     title: "输入框xxxx",
-//                     displayType: "row",
-//                     type: "string",
-//                     widget: "input",
-//                   },
-//                   number12: {
-//                     title: "数字输入框",
-//                     type: "number",
-//                     widget: "inputNumber",
-//                   },
-//                   select12: {
-//                     title: "下啦单选",
-//                     widget: "select",
-//                     props: {
-//                       options: [
-//                         { label: "东", value: "east" },
-//                         { label: "西", value: "west" },
-//                       ],
-//                     },
-//                   },
-//                 },
-//               },
-//               true
-//             );
-//           }, 0);
+    <FormRender 
+      form={form} 
+      schema={schema} 
+      onFinish={onFinish} 
+      maxWidth={360} 
+      footer={true}
+      watch={{
+        "#": (allValues, changedValues) => {
+          // '#': () => {} 等同于 onValuesChange
+          // console.log('表单 allValues：', allValues);
+          setTimeout(() => {
+            form.setSchema(
+              {
+                type: "object",
+                displayType: "row",
+                column: 2,
+                properties: {
+                  input12: {
+                    title: "输入框xxxx",
+                    displayType: "row",
+                    type: "string",
+                    widget: "input",
+                  },
+                  number12: {
+                    title: "数字输入框",
+                    type: "number",
+                    widget: "inputNumber",
+                  },
+                  select12: {
+                    title: "下啦单选",
+                    widget: "select",
+                    props: {
+                      options: [
+                        { label: "东", value: "east" },
+                        { label: "西", value: "west" },
+                      ],
+                    },
+                  },
+                },
+              },
+              true
+            );
+          }, 0);
           
-//         }
-//       }}
-//     />
-//   );
-// }
+        }
+      }}
+    />
+  );
+}
 ```
 
-<!-- **类组件**
+**类组件**
 
 对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks。
 
@@ -224,4 +146,4 @@ export default connectForm(Demo);
 
 <div>
   <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="80%"/>
-</div> -->
+</div>

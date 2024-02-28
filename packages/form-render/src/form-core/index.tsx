@@ -196,24 +196,21 @@ const FormCore:FC<FRProps> = (props) => {
 
   const operlabelCol = getFormItemLayout(column, {}, { labelWidth })?.labelCol;
 
-  const actionBtns = useMemo(() => {
-    const result: React.JSX.Element[] = [];
-    if (!footer?.reset?.hide) {
-      result.push(
-        <Button {...footer?.reset} onClick={() => form.resetFields()}>
-          {footer?.reset?.text || t('reset')}
-        </Button>
-      );
-    }
-    if (!footer?.submit?.hide) {
-      result.push(
-        <Button type='primary' onClick={form.submit} {...footer?.submit}>
-          {footer?.submit?.text || t('submit')}
-        </Button>
-      );
-    }
-    return result;
-  }, []);
+  const actionBtns = [];
+  if (!footer?.reset?.hide) {
+    actionBtns.push(
+      <Button {...footer?.reset} onClick={() => form.resetFields()}>
+        {footer?.reset?.text || t('reset')}
+      </Button>
+    );
+  }
+  if (!footer?.submit?.hide) {
+    actionBtns.push(
+      <Button type='primary' onClick={form.submit} {...footer?.submit}>
+        {footer?.submit?.text || t('submit')}
+      </Button>
+    );
+  }
   
   return (
     <Form
