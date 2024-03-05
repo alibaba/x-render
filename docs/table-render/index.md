@@ -53,9 +53,16 @@ npm i table-render --save
 import React from 'react';
 import TableRender from 'table-render';
 import { Button } from 'antd';
-import { InfoCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 
-const dataSource = [];
+type DataItem = {
+  id: string;
+  title: string;
+  created_at: number;
+}
+
+
+const dataSource: DataItem[] = [];
 for (let i = 0; i < 6; i++) {
   dataSource.push({
     id: i.toString(),
@@ -93,7 +100,7 @@ const columns = [
   },
   {
     title: '操作',
-    render: (row, record) => <a onClick={() => alert(row.title)}>编辑</a>,
+    render: (row: DataItem, _: DataItem) => <a onClick={() => alert(row.title)}>编辑</a>,
   }
 ];
 
