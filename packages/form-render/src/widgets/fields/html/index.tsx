@@ -1,9 +1,9 @@
-import React from 'react';
 import { Image } from 'antd';
+import React from 'react';
 
 export default function html({ value, checked, options, schema = {} } : any) {
   let __html = '-';
-  
+
   if (schema.type === 'boolean') {
     __html = (value === true || checked === true) ? '✔' : '✘';
   } else if (options?.length > 0) {
