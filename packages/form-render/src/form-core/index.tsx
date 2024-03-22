@@ -199,14 +199,14 @@ const FormCore:FC<FRProps> = (props) => {
   const actionBtns = [];
   if (!footer?.reset?.hide) {
     actionBtns.push(
-      <Button {...footer?.reset} onClick={() => form.resetFields()}>
+      <Button key='reset' {...footer?.reset} onClick={() => form.resetFields()}>
         {footer?.reset?.text || t('reset')}
       </Button>
     );
   }
   if (!footer?.submit?.hide) {
     actionBtns.push(
-      <Button type='primary' onClick={form.submit} {...footer?.submit}>
+      <Button key='submit' type='primary' onClick={form.submit} {...footer?.submit}>
         {footer?.submit?.text || t('submit')}
       </Button>
     );
