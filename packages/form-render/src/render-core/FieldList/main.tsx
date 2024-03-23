@@ -12,7 +12,7 @@ export default (props: any) => {
   const [_, setListData] = useState([]);
   const { configContext } = props;
   
-  const store = useContext(FRContext);
+  const store: any = useContext(FRContext);
   
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);

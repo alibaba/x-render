@@ -59,7 +59,7 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
   
     const langPack: any = { 
       ...antdLocale,
-      "FormRender": locales[locale],
+      'FormRender': locales[locale],
       ...configProvider?.locale
     };
 

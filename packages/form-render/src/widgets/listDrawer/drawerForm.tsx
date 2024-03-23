@@ -1,30 +1,16 @@
 import React, { useContext } from 'react';
 import { Button, Drawer, Space, ConfigProvider } from 'antd';
-import FRender, { useForm } from '../../index';
 import { translation } from '../utils';
 
 const DrawerForm = (props: any) => {
-  const { schema, widgets, onClose, data, configContext } = props;
+  const { children, onConfirm, onClose } = props;
 
-  const form: any = useForm();
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
-  const handleFinish = (data: any) => {
-    onClose(data);
-  };
-
-  const handleClose = () => {
-    onClose();
-  };
-
-  let drawerProps: any = {
-    open: true
-  };
+  let drawerProps: any = { open: true };
   if ((window as any).antdVersion === 'v4')  {
-    drawerProps = {
-      visible: true
-    };
+    drawerProps = { visible: true };
   }
 
   return (
@@ -32,26 +18,17 @@ const DrawerForm = (props: any) => {
       {...drawerProps}
       width={600}
       title={t('operate')}
-      onClose={handleClose}
+      onClose={onClose}
       extra={
         <Space>
-          <Button onClick={handleClose}>{t('cancel')}</Button>
-          <Button type="primary" onClick={form.submit}>
+          <Button onClick={onClose}>{t('cancel')}</Button>
+          <Button type='primary' onClick={onConfirm}>
             {t('confirm')}
           </Button>
         </Space>
       }
     >
-      <FRender
-        schema={schema.items}
-        initialValues={data}
-        form={form}
-        labelCol={{ span: 8 }}
-        widgets={widgets}
-        onFinish={handleFinish}
-        locale={configContext?.locale}
-        maxWidth='auto'
-      />
+      {children}
     </Drawer>
   );
 }
