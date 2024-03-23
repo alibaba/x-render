@@ -1,5 +1,8 @@
 # 更新日志
 
+### 2.4.3 
+- [!] 优化 drawerList 组件 watch 联动事件不生效，修复 validateTrigger 属性配置不生效。
+
 ### 2.4.0 
 - [+] FR 增加 footer 透传 actionBtns 
 

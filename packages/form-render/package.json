@@ -1,6 +1,6 @@
 {
   "name": "form-render",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
   "keywords": [
     "Form",
@@ -72,8 +72,8 @@
   },
   "peerDependencies": {
     "antd": "4.x || 5.x",
-    "react": ">=16.8.0",
-    "react-dom": ">=16.8.0"
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"
