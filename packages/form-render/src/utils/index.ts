@@ -92,8 +92,6 @@ export function isCheckBoxType(schema: any, readOnly: boolean) {
   }
 }
 
-
-
 export const translation = (configCtx: any) => (key: string) => {
   const locale = configCtx?.locale.FormRender;
   return locale[key];

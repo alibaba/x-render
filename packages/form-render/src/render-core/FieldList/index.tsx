@@ -12,10 +12,10 @@ export default (props: any) => {
   const { schema, rootPath } = props;
   const { items, ...listSchema } = schema || {};
 
-  const store = useContext(FRContext);
+  const store:any = useContext(FRContext);
   const { schema: formSchema } = store.getState();
 
-  const configCtx = useContext(ConfigContext);
+  const configCtx: any = useContext(ConfigContext);
   const mustacheDisabled = configCtx?.globalConfig?.mustacheDisabled;
   const dependencies = schema?.dependencies;
 
