@@ -5,10 +5,10 @@ export default function html({ value, checked, options, schema = {} } : any) {
   let __html = '-';
 
   if (schema.type === 'boolean') {
-    __html = checked === true || value===true ? '✔' : '✘';
+    __html = (value === true || checked === true) ? '✔' : '✘';
   } else if (options?.length > 0) {
     if (['string', 'number'].indexOf(typeof value) > -1) {
-      const item = options.find(item => item.value === value);
+      const item = options.find((item: any) => item.value === value);
       __html = item?.label || '-';
 
     } else if (Array.isArray(value)) {
