@@ -88,8 +88,12 @@ const TableList: React.FC<ListTableProps> = (props) => {
     copyItem(value);
   };
 
-  const columns: TableColumnsType<FormListFieldData> = sortProperties(Object.entries(itemSchema)).map(([dataIndex, item]) => {
-    const { required, title, width, tooltip } = item;
+  const columns: any = sortProperties(Object.entries(itemSchema)).map(([dataIndex, item]) => {
+    const { required, title, width, tooltip, columnHidden } = item;
+    if (columnHidden) {
+      return null;
+    }
+
     const tooltipProps = getTooltip(tooltip);
     return {
       dataIndex,
@@ -135,7 +139,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
         );
       }
     };
-  });
+  }).filter(item => item);
 
   if (!readOnly && !hideOperate) {
     columns.push({

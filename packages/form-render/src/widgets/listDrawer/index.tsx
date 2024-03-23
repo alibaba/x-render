@@ -6,6 +6,7 @@ import React, { useState, useRef } from 'react';
 import { Space, Table, Form, Button, Popconfirm, Tooltip, Divider } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, InfoCircleOutlined, CloseOutlined, CopyOutlined } from '@ant-design/icons';
 import type { FormListFieldData, FormListOperation, TableColumnsType } from 'antd';
+import sortProperties from '../../models/sortProperties';
 import FormDrawer from './drawerForm';
 import FButton from '../components/FButton';
 import './index.less';
@@ -54,6 +55,7 @@ const TableList: React.FC<Props> = (props: any) => {
     actionColumnProps,
     editorBtnProps,
 
+    hideOperate,
     hideDelete,
     hideCopy,
     hideMove,
@@ -105,15 +107,19 @@ const TableList: React.FC<Props> = (props: any) => {
     indexRef.current = null;
   };
 
-  const columns: TableColumnsType<FormListFieldData> = Object.keys(columnSchema).map(dataIndex => {
-    const { title, tooltip, width } = columnSchema[dataIndex];
-    const tooltipProps = getTooltip(tooltip);
+  const columns: any = sortProperties(Object.entries(columnSchema)).map(([dataIndex, item]) => {
+    const { required, title, tooltip, width, columnHidden } = item;
+    if (columnHidden) {
+      return null;
+    }
 
+    const tooltipProps = getTooltip(tooltip);
     return {
       dataIndex,
       width,
       title: (
         <>
+          {required && <span style={{ color: 'red', marginRight: '3px' }}>*</span>}
           <span>{title}</span>
           {tooltipProps && (
             <Tooltip placement='top' {...tooltipProps}>
@@ -136,9 +142,9 @@ const TableList: React.FC<Props> = (props: any) => {
         return renderCore({ schema: fieldSchema, parentPath: [field.name], rootPath: [...rootPath, field.name] });
       }
     }
-  });
+  }).filter(item => item);
 
-  if (!readOnly) {
+  if (!readOnly && !hideOperate) {
     columns.push({
       title: colHeaderText,
       width: '190px',

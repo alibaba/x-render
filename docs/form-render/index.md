@@ -42,7 +42,92 @@ npm i form-render --save
  */
 import React from 'react';
 import FormRender, { useForm } from 'form-render';
-import schema from './schema/simple';
+// import schema from './schema/simple';
+
+
+const schema = {
+"type":"object",
+"title":"质检报告配置类目维度",
+"properties":{
+"zzConfigList":{
+"type":"array",
+"title":"配置信息",
+"required":true,
+"rules":[
+{
+"required":true,
+"message":"必填"
+}
+],
+"widget":"drawerList",
+"items":{
+"type":"object",
+"widget":"lineTitle",
+"properties":{
+"cateId":{
+"type":"string",
+
+            "title":"末级类目ID",
+            "required":true,
+            "width":"50%",
+            "rules":[
+              {
+                "message":"长度超限，请确认",
+                "max":11
+              },
+              {
+                "message":"只允许填写数字",
+                "pattern":"^[0-9]+$"
+              },
+              {
+                "required":true,
+                "message":"[末级类目ID]必填"
+              }
+            ],
+            "default":""
+          },
+          "configs":{
+            "type":"array",
+            "title":"二级项",
+            "required":false,
+            "columnHidden": true,
+            "widget":"drawerList",
+            "items":{
+              "widget":"lineTitle",
+              "type":"object",
+              "properties":{
+                "firstId":{
+                  "type":"string",
+
+                  "title":"一级质检项ID",
+                  "required":true,
+                  "width":"50%",
+                  "rules":[
+                    {
+                      "message":"长度超限，请确认",
+                      "max":11
+                    },
+                    {
+                      "message":"只允许填写数字",
+                      "pattern":"^[0-9]+$"
+                    },
+                    {
+                      "required":true,
+                      "message":"[一级质检项ID]必填"
+                    }
+                  ],
+                  "default":""
+                },
+
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "displayType":"row"
+}
 
 export default () => {
   const form = useForm();
@@ -63,7 +148,7 @@ export default () => {
 }
 ```
 
-**类组件**
+<!-- **类组件**
 
 对于使用类组件的同学，可以使用 `connectForm` 替代 `useForm` hooks。
 
@@ -106,4 +191,4 @@ export default connectForm(Demo);
 
 <div>
   <img src="https://gw.alipayobjects.com/mdn/rms_e18934/afts/img/A*4QYNTbKU6xAAAAAAAAAAAABkARQnAQ?raw=true" width="80%"/>
-</div>
+</div> -->
