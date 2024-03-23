@@ -174,6 +174,7 @@ export default (props: any) => {
   const initialValue = schema.default ?? schema.defaultValue;
   const classRest = { 'fr-hide-label': label === 'fr-hide-label', 'fr-inline-field': inlineSelf, 'fr-field-visibility': !visible, [schema.className] : !! schema.className };
 
+  debugger;
   const formItem = (
     <Form.Item
       className={classnames('fr-field', classRest)}
@@ -190,7 +191,7 @@ export default (props: any) => {
       wrapperCol={fieldCol}
       noStyle={noStyle}
       dependencies={dependencies}
-      validateTrigger={ validateTrigger ?? fieldRef?.current?.validator ? 'onSubmit' : 'onChange' }
+      validateTrigger={ validateTrigger ?? (fieldRef?.current?.validator ? 'onSubmit' : 'onChange') }
     >
       {fieldProps.onStatusChange ? (
         <FieldWrapperStatus 
