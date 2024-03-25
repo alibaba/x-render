@@ -2,6 +2,7 @@ import { RuleItem } from 'async-validator';
 import * as React from 'react';
 import type { FormInstance as AntdFormInstance, FormProps as AntdFormProps, ColProps, TooltipProps } from 'antd';
 import type { ConfigProviderProps } from 'antd/es/config-provider';
+import type { FormProps as RcFormProps } from 'rc-field-form/lib/Form';
 
 export type { RuleItem } from 'async-validator';
 export type SchemaType =
@@ -333,7 +334,7 @@ export interface FRProps extends Omit<AntdFormProps, 'form'> {
   /**
    * 覆盖默认的校验信息
    */
-  validateMessages?: ConfigProviderProps['form']['validateMessages'];
+  validateMessages?: RcFormProps['validateMessages'];
   /**
    * 显示当前表单内部状态
    */
