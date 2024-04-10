@@ -231,7 +231,7 @@ const TableList: React.FC<Props> = (props: any) => {
           onClose={handleRepeal}
           onConfirm={hanldeConfirm}
         >
-          {renderCore({ schema: schema.items, parentPath: [fields.length - 1], rootPath: [...rootPath, fields.length - 1] })}
+          {renderCore({ schema: schema.items, parentPath: [indexRef.current === null ? fields.length - 1 : indexRef.current], rootPath: [...rootPath, indexRef.current === null ? fields.length - 1 : indexRef.current] })}
         </FormDrawer>
       )}
     </div>
