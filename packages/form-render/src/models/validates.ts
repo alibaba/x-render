@@ -53,7 +53,7 @@ const insertRequiredRule = (schema: any, rules: any[]) => {
 };
 
 export const transformRules = (rules = [], methods: any, form: any) => {
-  return rules.map(((item: any) => {
+  return cloneDeep(rules).map(((item: any) => {
     if (item.validator && !item.transformed) {
       const validator = isFunction(item.validator) ? item.validator : methods[item.validator];
       item.validator = async (_: any, value: any) => {
