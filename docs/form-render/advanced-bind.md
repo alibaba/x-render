@@ -51,7 +51,7 @@ const schema = {
 const Demo = () => {
   const form = useForm();
 
-  const onFinish = (formData: any) => {
+  const onFinish = (formData) => {
     console.log(formData, 'formData');
   };
 
@@ -126,7 +126,7 @@ const schema = {
 const Demo = () => {
   const form = useForm();
 
-  const onFinish = (formData: any) => {
+  const onFinish = (formData) => {
     console.log(formData, 'formData');
   };
 
@@ -180,7 +180,7 @@ const Demo = () => {
     form.setValues({ input: '1', input1: '2' });
   };
 
-  const onFinish = (formData: any) => {
+  const onFinish = (formData) => {
     console.log(formData, 'formData');
   };
 
@@ -238,7 +238,7 @@ const schema = {
 const Demo = () => {
   const form = useForm();
 
-  const onFinish = (formData: any) => {
+  const onFinish = (formData) => {
     console.log(formData, 'formData');
   };
 

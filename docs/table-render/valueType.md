@@ -77,7 +77,7 @@ const Demo = () => {
       title: '标签',
       dataIndex: 'tagText',
       valueType: 'tag',
-      valueTypeProps: (value: any, record: any) => ({
+      valueTypeProps: (value, record) => ({
         color: value === '1' ? 'red' :  'blue'
       }),
       enum: {

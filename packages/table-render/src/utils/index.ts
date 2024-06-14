@@ -1,11 +1,12 @@
 import dayjs from 'dayjs';
-import { set, get, cloneDeep, has, merge, isUndefined, omitBy, debounce } from 'lodash-es';
+import { set, get, cloneDeep, has as _has, merge, isUndefined, omitBy, debounce } from 'lodash-es';
 import { ProColumnsType } from '..';
 
 export const _set = set;
 export const _get = get;
 export const _cloneDeep = cloneDeep;
-export const _has = has;
+// export const _has = has;
+export { _has };
 export const _merge = merge;
 export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
@@ -81,11 +82,11 @@ export const translation = (configCtx: any) => (key: string) => {
 }
 
 
-/**  
+/**
  * 从 column 中获取 key
- * 
+ *
  * 优先级：key > dataIndex > title
- * 
+ *
  * @param column 表格列
  * @param fallback 备选值
  * @returns key

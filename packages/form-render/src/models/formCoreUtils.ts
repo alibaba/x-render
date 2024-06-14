@@ -7,8 +7,8 @@ const executeCallBack = (watchItem: any, value: any, path: string, index?: any) 
     } catch (error) {
       console.log(`${path}对应的watch函数执行报错：`, error);
     }
-  } 
-  
+  }
+
   if (isFunction(watchItem?.handler)) {
     try {
       watchItem.handler(value, index);
@@ -63,7 +63,7 @@ const traverseValues = ({ changedValues, allValues, flatValues }) => {
         last = false;
         traverseArray(item, fullItem, _path, index);
       }
-      
+
       if (isObject(item)) {
         last = false;
         traverseObj(item, fullItem, _path, index, flag);
@@ -93,7 +93,7 @@ export const valuesWatch = (changedValues: any, allValues: any, watch: any) => {
     if (!_has(flatValues, path)) {
       return;
     }
-    const { value, index } = _get(flatValues, path);
+    const { value, index } = _get(flatValues, path) as { value: any; index: any; };
     const item = watch[path];
     executeCallBack(item, value, path, index)
   });

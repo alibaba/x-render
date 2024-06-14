@@ -40,5 +40,5 @@
   "include": [
     "./src/"
   ],
-  "exclude": ["**/test", "**/lib", "**/es", "node_modules"]
+  "exclude": ["**/test", "**/lib", "**/es", "node_modules","/docs"]
 }
