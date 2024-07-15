@@ -5,10 +5,15 @@ const extractFormDataStrings = (list: string[]) => {
   let result = [];
   list.forEach(str => {
     // TODO: 为啥要拆开来获取？
-    const regex = /formData.\w+(.\w+)*(\(.*\))?/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
+    // const regex = /formData.\w+(.\w+)*(\(.*\))?/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
+    const regex = /formData(\.\w+|\[\w+\])(\.\w+|\[\w+\])*/g; // 1.同时匹配两种格式
     const matches = str.match(regex);
     if (matches) {
-      result = result.concat(matches);
+      result = result.concat(
+        matches.map(
+          match => match.replace(/\[(\w+)\]/g, '.$1') // 2.将中括号替换为点号
+        )
+      );
     }
   });
 
@@ -19,10 +24,15 @@ const extractFormDataStrings = (list: string[]) => {
 const extractRootValueStrings = (list: string[]) => {
   let result = [];
   list.forEach(str => {
-    const regex = /rootValue.\w+(.\w+)*(\(.*\))?/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
+    // const regex = /rootValue.\w+(.\w+)*(\(.*\))?/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
+    const regex = /rootValue(\.\w+|\[\w+\])(\.\w+|\[\w+\])*/g; // 1.同时匹配两种格式
     const matches = str.match(regex);
     if (matches) {
-      result = result.concat(matches);
+      result = result.concat(
+        matches.map(
+          match => match.replace(/\[(\w+)\]/g, '.$1') // 将中括号替换为点号
+        )
+      );
     }
   });
   return result;

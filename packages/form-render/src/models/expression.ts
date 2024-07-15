@@ -6,7 +6,7 @@ export const isExpression = (str: string) => {
   if (typeof str !== 'string') {
     return false;
   }
-  
+
   const pattern = /^{\s*{(.+)}\s*}$/s;
   const reg1 = /^{\s*{function\(.+}\s*}$/;
   return str.match(pattern) && !str.match(reg1);
@@ -53,9 +53,11 @@ export const parseExpression = (func: any, formData = {}, parentPath: string | [
   const parentData = get(formData, parentPath) || {};
 
   if (typeof func === 'string') {
-    const funcBody = func.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '').trim();
+    const formatFunc = func.replace(/\[(\w+)\]/g, '.$1'); // 将[]替换为.xxxxx
+    const funcBody = formatFunc.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '').trim();
+    const funcBodyStr = funcBody.replace(/(\.|\?\.)/g, '?.'); // 将. 和 ?. 统一替换为?.
     const funcStr = `
-      return ${funcBody
+      return ${funcBodyStr
         .replace(/formData/g, JSON.stringify(formData))
         .replace(/rootValue/g, JSON.stringify(parentData))}
     `;
@@ -66,8 +68,8 @@ export const parseExpression = (func: any, formData = {}, parentPath: string | [
       console.log(error, funcStr, parentPath);
       return null; // 如果计算有错误，return null 最合适
     }
-  } 
-  
+  }
+
   return func;
 }
 
