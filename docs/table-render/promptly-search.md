@@ -59,7 +59,7 @@ import { columns, toolbarRender } from './static/table';
 import { searchApi, searchApi2 } from './static/request';
 
 const Demo = () => {
-  const tableRef: any = useRef();
+  const tableRef = useRef();
 
   return (
     <TableRender
@@ -95,7 +95,7 @@ import { columns, toolbarRender } from './static/table';
 import { searchApi, searchApi2 } from './static/request';
 
 const Demo = () => {
-  const tableRef: any = useRef();
+  const tableRef = useRef();
 
   return (
     <TableRender

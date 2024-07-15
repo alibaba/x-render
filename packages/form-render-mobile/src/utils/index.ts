@@ -1,9 +1,10 @@
-import { set, get, cloneDeep, has, merge, isUndefined, omitBy, mergeWith, some } from 'lodash-es';
+import { set, get, cloneDeep, has as _has, merge, isUndefined, omitBy, mergeWith, some } from 'lodash-es';
 
 export const _set = set;
 export const _get = get;
 export const _cloneDeep = cloneDeep;
-export const _has = has;
+// export const _has = has;
+export { _has };
 export const _merge = merge;
 export const _isUndefined = isUndefined;
 export const _omitBy = omitBy;
@@ -116,7 +117,7 @@ export const valueRemoveUndefined = (values: any, notFilter?: boolean) => {
       if (isArray(item)) {
         return recursionArray(item);
       }
-      
+
       return item;
     });
 
@@ -128,7 +129,7 @@ export const valueRemoveUndefined = (values: any, notFilter?: boolean) => {
     }
     return result;
   };
- 
+
   const recursionObj = (_data: any) => {
     let data =  omitBy(_data, isUndefined);
 
