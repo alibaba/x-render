@@ -19,13 +19,13 @@ export type SchemaType =
 
 export type ActionProps = {
   submit: {
-    text: string;
-    hide: boolean;
+    text?: string;
+    hide?: boolean;
     [key: string]: any;
   },
   reset: {
-    text: string;
-    hide: boolean;
+    text?: string;
+    hide?: boolean;
     [key: string]: any;
   }
 }
