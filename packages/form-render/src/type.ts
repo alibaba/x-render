@@ -277,6 +277,10 @@ export type WatchProperties = {
   | ((value: any) => void);
 };
 
+interface ExtendedColProps extends ColProps {
+  // 额外的属性可以放在这里
+}
+
 export interface FRProps extends Omit<AntdFormProps, 'form'> {
   /**
    * 表单顶层的className
@@ -314,7 +318,7 @@ export interface FRProps extends Omit<AntdFormProps, 'form'> {
    * label 标签的文本对齐方式
    */
   labelAlign?: 'right' | 'left';
-  labelCol?: number | ColProps;
+  // labelCol?: number | ExtendedColProps;
   fieldCol?: number | ColProps;
   /**
    *  只读模式

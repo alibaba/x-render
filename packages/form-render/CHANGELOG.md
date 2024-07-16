@@ -1,4 +1,7 @@
 # 更新日志
+### 2.4.5
+- [+] 函数表达式兼容，formData.x['y'] 语法
+- [+] 适配，formData.x.y， formData.x undefined 时，表达式解析异常
 
 ### 2.4.3 
 - [!] 优化 drawerList 组件 watch 联动事件不生效，修复 validateTrigger 属性配置不生效。
