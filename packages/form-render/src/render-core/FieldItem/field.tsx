@@ -4,7 +4,7 @@ import { useUpdateEffect } from 'ahooks';
 import { _get, translation, isFunction } from '../../utils';
 
 export const FieldWrapperStatus = (props: any) => {
-  const { Field, fieldProps, maxWidth, initialValue, ...otherProps } = props;
+  const { Field, fieldProps, maxWidth, initialValue, acitonRender, ...otherProps } = props;
   const { onStatusChange, addons, ...otherFieldProps } = fieldProps;
   const style = maxWidth ? { maxWidth, ...fieldProps?.style } : { ...fieldProps?.style } ;
 
@@ -20,17 +20,24 @@ export const FieldWrapperStatus = (props: any) => {
   }, [JSON.stringify(initialValue)]);
 
   return (
-    <Field 
-      {...otherProps} 
-      {...otherFieldProps} 
-      style={style}
-      addons={addons}
-    />
+    <>
+      <Field 
+        {...otherProps}
+        {...otherFieldProps}
+        style={style}
+        addons={addons}
+      />
+      {acitonRender && (
+        <span className='ant-form-item-actions'>
+          {acitonRender()}
+        </span>
+      )}
+    </>
   );
 };
 
 export const FieldWrapper = (props: any) => {
-  const { Field, fieldProps, maxWidth, initialValue, ...otherProps } = props;
+  const { Field, fieldProps, maxWidth, initialValue, acitonRender, ...otherProps } = props;
   const { addons, schema } = fieldProps;
 
   const _style = maxWidth ? { maxWidth, ...fieldProps?.style }: { ...fieldProps?.style }
@@ -55,7 +62,7 @@ export const FieldWrapper = (props: any) => {
 
   return (
     <>
-      <Field 
+      <Field
         {...otherProps} 
         {...fieldProps}
         style={_style}
@@ -69,6 +76,11 @@ export const FieldWrapper = (props: any) => {
         >
           {removeBtn?.text || t('delete')}
         </Button>
+      )}
+      {acitonRender && (
+        <span className='fr-item-actions'>
+          {acitonRender()}
+        </span>
       )}
     </>
   );
