@@ -44,7 +44,7 @@ const TableList: React.FC<Props> = (props: any) => {
     readOnly,
     widgets,
     pagination,
-    
+
     operateBtnType,
     addBtnProps,
     delConfirmProps,
@@ -54,6 +54,7 @@ const TableList: React.FC<Props> = (props: any) => {
     moveDownBtnProps,
     actionColumnProps,
     editorBtnProps,
+    drawerProps,
 
     hideOperate,
     hideDelete,
@@ -61,6 +62,7 @@ const TableList: React.FC<Props> = (props: any) => {
     hideMove,
     hideAdd,
     hideEdit,
+    hideColumnNestedObject,
 
     operation,
     addItem,
@@ -81,7 +83,7 @@ const TableList: React.FC<Props> = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [itemData, setItemData] = useState(null);
   const indexRef = useRef<any>(null);
-  
+
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
     copyItem(value);
@@ -139,7 +141,7 @@ const TableList: React.FC<Props> = (props: any) => {
             }
           }
         };
-        return renderCore({ schema: fieldSchema, parentPath: [field.name], rootPath: [...rootPath, field.name] });
+        return renderCore({ schema: fieldSchema, parentPath: [field.name], rootPath: [...rootPath, field.name],hideColumnNestedObject });
       }
     }
   }).filter(item => item);
@@ -155,13 +157,13 @@ const TableList: React.FC<Props> = (props: any) => {
           <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>
             {!hideMove && (
               <>
-                <FButton 
+                <FButton
                   disabled={field.name === 0}
                   onClick={() => moveItem(field.name, field.name - 1)}
                   icon={<ArrowUpOutlined/>}
                   {...moveUpBtnProps}
                 />
-                <FButton 
+                <FButton
                   disabled={field.name === fields.length - 1}
                   onClick={() => moveItem(field.name, field.name + 1)}
                   icon={<ArrowDownOutlined/>}
@@ -182,14 +184,14 @@ const TableList: React.FC<Props> = (props: any) => {
               </Popconfirm>
             )}
             {!hideCopy && (
-              <FButton 
+              <FButton
                 onClick={() => handleCopy(field.name)}
                 icon={<CopyOutlined/>}
                 {...copyBtnProps}
               />
             )}
             {!hideEdit && (
-              <FButton 
+              <FButton
                 onClick={() => {
                   setVisible(true);
                   indexRef.current = field.name;
@@ -230,6 +232,7 @@ const TableList: React.FC<Props> = (props: any) => {
           configContext={configContext}
           onClose={handleRepeal}
           onConfirm={hanldeConfirm}
+          DrawerProps={drawerProps}
         >
           {renderCore({ schema: schema.items, parentPath: [fields.length - 1], rootPath: [...rootPath, fields.length - 1] })}
         </FormDrawer>

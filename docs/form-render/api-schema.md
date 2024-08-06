@@ -268,6 +268,10 @@ list: { // list 是字段名
 - 描述：删除确认弹窗属性，参考 <a href="https://ant.design/components/popconfirm-cn#api" target="_blank">Antd PopConfirm Props</a>
 - 类型：`PopConfirmProps`
 
+#### props.drawerProps
+- 描述：`drawerList` 中抽屉的属性，参考 <a href="https://ant.design/components/drawer-cn#api" target="_blank">Antd Drawer Props</a>
+- 类型：`DrawerProps`
+
 #### props.actionColumnProps
 - 描述：`tableList | drawerList | virtualList` 中操作列的属性，参考 <a href="https://ant.design/components/table-cn#column" target="_blank">Antd Table ColumnType</a>。 其中 `title` 使用 `colHeaderText` 代替。
 - 类型：`ColumnType`
@@ -287,6 +291,11 @@ list: { // list 是字段名
 #### props.hideDelete
 - 描述：是否隐藏删除按钮
 - 类型：`boolean`
+
+#### props.hideColumnNestedObject 
+- 描述：是否隐藏`drawerList`表格内部嵌套复杂元素的情况
+- 类型：`false` | `hide` | `collapse`
+- 默认：`false`
 
 #### props.onAdd
 - 描述：点击添加按钮回调函数
