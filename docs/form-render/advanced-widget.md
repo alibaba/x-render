@@ -25,7 +25,7 @@ FormRender 内置的控件可能不能满足功能上的需要，这时就需要
 
 ## 什么是 Widget
 
-widget 只是一个普通的 React 组件，它会接收到 FormRener 传递给它的一些 props。开发者可以根据这些 props 完成控件的受控、联动、校验等操作。
+widget 只是一个普通的 React 组件，它会接收到 FormRender 传递给它的一些 props。开发者可以根据这些 props 完成控件的受控、联动、校验等操作。
 
 比方说，我想在一个常规输入框的后面放一个按钮用于发送验证码。FormRender 的内置组件不能满足需求，那么我可以写一个如下的自定义组件：
 
