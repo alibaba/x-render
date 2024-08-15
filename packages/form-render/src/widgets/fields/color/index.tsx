@@ -19,7 +19,7 @@ const getAlphaFromHex = (hex = '#ffffff') => {
 };
 
 const Color = (props: any) => {
-  const { className, schema, disabled, readOnly, value, onChange, style } = props;
+  const { className, schema, disabled, disabledAlpha, readOnly, value, onChange, style } = props;
   
   const onPickerChange = (ev: any) => {
     if (disabled || readOnly) {
@@ -45,6 +45,7 @@ const Color = (props: any) => {
           animation='slide-up'
           color={(value && value.slice(0, 7)) || '#ffffff'}
           alpha={getAlphaFromHex(value)}
+          enableAlpha={!disabledAlpha}
           onChange={onPickerChange}
           disabled={true}
         />
