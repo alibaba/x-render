@@ -59,7 +59,7 @@ url: {
 
 ### type
 - 描述：表单字段的类型
-- 类型：`'string' | 'number' | 'boolean' | 'array' | 'range' | 'html' | 'block'`
+- 类型：`'string' | 'number' | 'boolean' | 'array' | 'range' | 'html' | 'void'`
 
 ### title 
 - 描述：表单字段的标签
@@ -159,14 +159,12 @@ rules: [
 ### props
 配置额外属性，如果使用的是 antd 组件 对应的就是 antd 组件的其他属性。例如：
 
+
+### action
+- 描述：输入控件支持配置自定义功能槽，显示在输入控件右边，通过 actions 值和 widgets 字段间映射，渲染自定义自定义功能槽。
+- 类型
 ```js
-props: {
-  options: [
-    lable: '',
-    value: '',
-    // disabled: '',
-  ]
-}
+actions: 'toolWidget' | { widget: 'toolWidget' } // toolWidget 通过 widgets 透传
 ```
 
 ## 三、嵌套控件配置项

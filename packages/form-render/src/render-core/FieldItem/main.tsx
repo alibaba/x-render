@@ -39,7 +39,18 @@ export default (props: any) => {
   const upperCtx: any = useContext(UpperContext);
 
   const { form, widgets, methods, globalProps } = configCtx;
-  const { reserveLabel, hidden, properties, dependencies, inlineMode: _inlineMode, remove, removeText, visible = true, ...otherSchema } = schema;
+  const { 
+    reserveLabel,
+    hidden,
+    properties,
+    dependencies,
+    inlineMode: _inlineMode,
+    remove,
+    removeText,
+    visible = true,
+    ...otherSchema
+  } = schema;
+
   const getValueFromKey = getParamValue(formCtx, upperCtx, schema);
   
   const widgetName = getWidgetName(schema);
@@ -130,8 +141,9 @@ export default (props: any) => {
   let noStyle = getValueFromKey('noStyle');
 
   const span = getColSpan(formCtx, upperCtx, schema);
-  const extra = getExtraView('extra', schema, widgets);
-  const help = getExtraView('help', schema, widgets);
+  const extra = getExtraView('extra', schema, widgets, fieldProps.addons);
+  const help = getExtraView('help', schema, widgets, fieldProps.addons);
+  const action = getExtraView('action', schema, widgets, fieldProps.addons);
 
   const tooltip = getTooltip(schema, displayType);
   const ruleList = getRuleList(schema, form, methods, fieldRef);
@@ -198,6 +210,7 @@ export default (props: any) => {
           fieldProps={fieldProps}
           maxWidth={maxWidth}
           initialValue={initialValue}
+          acitonRender={() => action}
         />
       ) : (
         <FieldWrapper
@@ -205,6 +218,7 @@ export default (props: any) => {
           fieldProps={fieldProps}
           maxWidth={maxWidth}
           initialValue={initialValue}
+          acitonRender={() => action}
         />
       )}
     </Form.Item>

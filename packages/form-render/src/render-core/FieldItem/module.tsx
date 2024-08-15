@@ -165,27 +165,26 @@ export const getTooltip = (schema: any, displayType: string) => {
   return null;
 };
 
-export const getExtraView = (extraKey: string, schema: any, widgets: any) => {
+export const getExtraView = (extraKey: string, schema: any, widgets: any, addons: any) => {
   const extra = schema[extraKey];
   if (!extra) {
     return;
   }
-
+  
   // extra 自定义
-  const widgetName = extra?.widget;
-  if (widgetName) {
-    const Widget = widgets[widgetName];
-    if (!Widget) {
-      return;
-    }
-    return <Widget schema={schema} />;
+  const widgetName = extra?.widget || extra;
+  const Widget = widgets[widgetName];
+  if (!!Widget) {
+    return <Widget schema={schema} addons={addons} />;
+  } if (!Widget && extra?.widget) {
+    return;
   }
-
 
   let __html = '';
   if (typeof extra === 'string') {
     __html = extra;
   }
+
   // 内部BU使用的口子，这个api不对外，也没有必要
   if (extra?.text) {
     __html = extra.text;
