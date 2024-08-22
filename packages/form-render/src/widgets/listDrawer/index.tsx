@@ -1,9 +1,5 @@
-
-
-
-
 import React, { useState, useRef } from 'react';
-import { Space, Table, Form, Button, Popconfirm, Tooltip, Divider } from 'antd';
+import { Space, Table, Form, Button, Popconfirm, Tooltip, Divider, Collapse } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined, PlusOutlined, InfoCircleOutlined, CloseOutlined, CopyOutlined } from '@ant-design/icons';
 import type { FormListFieldData, FormListOperation, TableColumnsType } from 'antd';
 import sortProperties from '../../models/sortProperties';
@@ -44,7 +40,7 @@ const TableList: React.FC<Props> = (props: any) => {
     readOnly,
     widgets,
     pagination,
-    
+
     operateBtnType,
     addBtnProps,
     delConfirmProps,
@@ -54,6 +50,7 @@ const TableList: React.FC<Props> = (props: any) => {
     moveDownBtnProps,
     actionColumnProps,
     editorBtnProps,
+    drawerProps,
 
     hideOperate,
     hideDelete,
@@ -61,6 +58,7 @@ const TableList: React.FC<Props> = (props: any) => {
     hideMove,
     hideAdd,
     hideEdit,
+    hideColumnNestedObject,
 
     operation,
     addItem,
@@ -81,7 +79,7 @@ const TableList: React.FC<Props> = (props: any) => {
   const [visible, setVisible] = useState(false);
   const [itemData, setItemData] = useState(null);
   const indexRef = useRef<any>(null);
-  
+
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
     copyItem(value);
@@ -94,7 +92,7 @@ const TableList: React.FC<Props> = (props: any) => {
 
   const handleRepeal = () => {
     if (!indexRef.current && indexRef.current !== 0) {
-      operation.remove(fields.length-1);
+      operation.remove(fields.length - 1);
     } else {
       form.setFieldValue([...rootPath, indexRef.current], itemData);
     }
@@ -107,42 +105,77 @@ const TableList: React.FC<Props> = (props: any) => {
     indexRef.current = null;
   };
 
-  const columns: any = sortProperties(Object.entries(columnSchema)).map(([dataIndex, item]) => {
-    const { required, title, tooltip, width, columnHidden } = item;
-    if (columnHidden) {
-      return null;
-    }
+  const columns: any = sortProperties(Object.entries(columnSchema))
+    .map(([dataIndex, item]) => {
+      const { required, title, tooltip, width, columnHidden } = item;
+      if (columnHidden) {
+        return null;
+      }
 
-    const tooltipProps = getTooltip(tooltip);
-    return {
-      dataIndex,
-      width,
-      title: (
-        <>
-          {required && <span style={{ color: 'red', marginRight: '3px' }}>*</span>}
-          <span>{title}</span>
-          {tooltipProps && (
-            <Tooltip placement='top' {...tooltipProps}>
-              <InfoCircleOutlined style={{ marginLeft: 6 }} />
-            </Tooltip>
-          )}
-        </>
-      ),
-      render: (_, field) => {
-        const fieldSchema = {
-          type: 'object',
-          properties: {
-            [dataIndex]: {
-              ...columnSchema[dataIndex],
-              noStyle: true,
-              readOnly: true,
+      const tooltipProps = getTooltip(tooltip);
+      return {
+        dataIndex,
+        width,
+        title: (
+          <>
+            {required && (
+              <span style={{ color: 'red', marginRight: '3px' }}>*</span>
+            )}
+            <span>{title}</span>
+            {tooltipProps && (
+              <Tooltip placement="top" {...tooltipProps}>
+                <InfoCircleOutlined style={{ marginLeft: 6 }} />
+              </Tooltip>
+            )}
+          </>
+        ),
+        render: (_, field) => {
+          const fieldSchema = {
+            type: 'object',
+            properties: {
+              [dataIndex]: {
+                ...columnSchema[dataIndex],
+                noStyle: true,
+                readOnly: true,
+              }
+            }
+          };
+          const fieldDataIndex = fieldSchema.properties[dataIndex];
+          const renderColumn = renderCore({
+            schema: fieldSchema,
+            parentPath: [field.name],
+            rootPath: [...rootPath, field.name],
+          });
+          if (
+            (fieldDataIndex?.type === 'array' &&
+              fieldDataIndex?.items?.type === 'object') ||
+            fieldDataIndex?.type === 'object'
+          ) {
+            if (hideColumnNestedObject === 'hide') {
+              return '-';
+            } else if (hideColumnNestedObject === 'collapse') {
+              return (
+                <Collapse
+                  ghost
+                  items={[
+                    {
+                      key: 'detail',
+                      label: '查看详情',
+                      children: renderColumn,
+                    },
+                  ]}
+                />
+              );
+            } else {
+              return renderColumn;
             }
           }
-        };
-        return renderCore({ schema: fieldSchema, parentPath: [field.name], rootPath: [...rootPath, field.name] });
-      }
-    }
-  }).filter(item => item);
+
+          return renderColumn;
+        },
+      };
+    })
+    .filter(item => item);
 
   if (!readOnly && !hideOperate) {
     columns.push({
@@ -155,13 +188,13 @@ const TableList: React.FC<Props> = (props: any) => {
           <Space className='fr-list-item-operate' split={operateBtnType !== 'icon' && <Divider type='vertical'/>}>
             {!hideMove && (
               <>
-                <FButton 
+                <FButton
                   disabled={field.name === 0}
                   onClick={() => moveItem(field.name, field.name - 1)}
                   icon={<ArrowUpOutlined/>}
                   {...moveUpBtnProps}
                 />
-                <FButton 
+                <FButton
                   disabled={field.name === fields.length - 1}
                   onClick={() => moveItem(field.name, field.name + 1)}
                   icon={<ArrowDownOutlined/>}
@@ -182,14 +215,14 @@ const TableList: React.FC<Props> = (props: any) => {
               </Popconfirm>
             )}
             {!hideCopy && (
-              <FButton 
+              <FButton
                 onClick={() => handleCopy(field.name)}
                 icon={<CopyOutlined/>}
                 {...copyBtnProps}
               />
             )}
             {!hideEdit && (
-              <FButton 
+              <FButton
                 onClick={() => {
                   setVisible(true);
                   indexRef.current = field.name;
@@ -230,6 +263,7 @@ const TableList: React.FC<Props> = (props: any) => {
           configContext={configContext}
           onClose={handleRepeal}
           onConfirm={hanldeConfirm}
+          DrawerProps={drawerProps}
         >
           {renderCore({ schema: schema.items, parentPath: [fields.length - 1], rootPath: [...rootPath, fields.length - 1] })}
         </FormDrawer>
