@@ -49,18 +49,18 @@ const renderItem = (props: RenderItemProps) => {
       schema={schema}
       path={path}
       rootPath={rootPath}
-      children= {child}
+      children={child}
       renderCore={RenderCore}
     />
   );
 }
 
-const RenderCore = (props: RenderCoreProps) : any => {
+const RenderCore = (props: RenderCoreProps): any => {
   const { schema, parentPath = [], rootPath = [] } = props;
   if (!schema || Object.keys(schema).length === 0) {
     return null;
   }
- 
+
   // render List.item
   if (schema?.items) {
     return renderItem({ schema: schema.items, path: parentPath, rootPath });
@@ -69,7 +69,7 @@ const RenderCore = (props: RenderCoreProps) : any => {
   // render Objiect | field
   return sortProperties(Object.entries(schema.properties || {})).map(([key, item]) => {
     const path = [...parentPath, key];
-   
+
     return renderItem({ schema: item, path, key, rootPath });
   });
 }
