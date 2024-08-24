@@ -305,11 +305,11 @@ list: { // list 是字段名
 
 #### props.onMove
 - 描述：点击移动按钮回调函数
-- 类型：`(operation, { schema, data, to }) => void`
+- 类型：`(operation, { schema, from, to }) => void`
 
 #### props.onCopy
 - 描述：点击复制按钮回调函数
-- 类型：`(operation, { schema, data }) => void`
+- 类型：`(operation, { schema, data, copyIndex }) => void`
 
 ### items
 动态项配置，可以是一个嵌套控件

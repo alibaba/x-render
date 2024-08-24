@@ -10,6 +10,7 @@
 */*/yarn-error.log
 
 .yarn
+.turbo/cookies
 
 # turbo
 */*/.turbo

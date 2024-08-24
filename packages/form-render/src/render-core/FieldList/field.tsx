@@ -132,21 +132,21 @@ export default (props: any) => {
     remove(index);
   };
 
-  const handleMove = (move: any) => (form: number, to: number) => {
+  const handleMove = (move: any) => (from: number, to: number) => {
     let moveFunc = onMove;
     if (typeof moveFunc === 'string') {
       moveFunc = methods[onMove];
     }
 
     if (isFunction(moveFunc)) {
-      moveFunc(() => move(form, to), { schema, form, to });
+      moveFunc(() => move(from, to), { schema, from, to });
       return;
     }
 
-    move(form, to);
+    move(from, to);
   };
 
-  const handleCopy = (add: any, fields: any) => (data: any) => {
+  const handleCopy = (add: any, fields: any) => (data: any, copyIndex: number) => {
     if (schema.max && fields.length === schema.max) {
       return message.warning(t('copy_max_tip'));
     }
@@ -156,7 +156,8 @@ export default (props: any) => {
     }
 
     if (isFunction(copyFunc)) {
-      copyFunc((funData?: any) => add(funData || data), { schema, data });
+      console.log(copyIndex, 'copyIndex')
+      copyFunc((funData?: any) => add(funData || data), { schema, data, copyIndex });
       return;
     }
     add(data);

@@ -83,7 +83,7 @@ const VirtualList: React.FC<ListVirtualProps> = (props) => {
 
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
-    copyItem(value);
+    copyItem(value, name);
   };
 
   const columns: TableColumnsType<FormListFieldData> = sortProperties(Object.entries(itemSchema)).map(([dataIndex, item]) => {

@@ -62,7 +62,7 @@ const CardList = (props: any) => {
 
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
-    copyItem(value);
+    copyItem(value, name);
   };
 
   return (
