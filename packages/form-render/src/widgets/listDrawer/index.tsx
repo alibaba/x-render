@@ -82,7 +82,7 @@ const TableList: React.FC<Props> = (props: any) => {
 
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
-    copyItem(value);
+    copyItem(value, name);
   };
 
   const handleAdd = () => {

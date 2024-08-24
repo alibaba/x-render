@@ -85,7 +85,7 @@ const TableList: React.FC<ListTableProps> = (props) => {
 
   const handleCopy = (name: number) => {
     const value = form.getFieldValue(rootPath.concat(name));
-    copyItem(value);
+    copyItem(value, name);
   };
 
   const columns: any = sortProperties(Object.entries(itemSchema)).map(([dataIndex, item]) => {
