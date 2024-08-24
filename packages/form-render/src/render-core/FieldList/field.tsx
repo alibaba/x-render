@@ -132,18 +132,18 @@ export default (props: any) => {
     remove(index);
   };
 
-  const handleMove = (move: any) => (form: number, to: number) => {
+  const handleMove = (move: any) => (from: number, to: number) => {
     let moveFunc = onMove;
     if (typeof moveFunc === 'string') {
       moveFunc = methods[onMove];
     }
 
     if (isFunction(moveFunc)) {
-      moveFunc(() => move(form, to), { schema, form, to });
+      moveFunc(() => move(from, to), { schema, from, to });
       return;
     }
 
-    move(form, to);
+    move(from, to);
   };
 
   const handleCopy = (add: any, fields: any) => (data: any) => {
