@@ -55,7 +55,8 @@ export const parseExpression = (func: any, formData = {}, parentPath: string | [
   if (typeof func === 'string') {
     const formatFunc = func.replace(/\[(\w+)\]/g, '.$1'); // 将[]替换为.xxxxx
     const funcBody = formatFunc.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '').trim();
-    const funcBodyStr = funcBody.replace(/(?<!\d)(\.|\?\.)(?!\d)/g, '?.'); // 将. 和 ?. 统一替换为?. 并排除数字中的.
+    const funcBodyTemp = funcBody.replace(/(\.|\?\.)/g, '?.'); // 将. 和 ?. 统一替换为?.
+    const funcBodyStr = funcBodyTemp.replace(/(\d+)\?\.(\d+)/, '$1.$2'); //  排除数字中的?.
     const funcStr = `
       return ${funcBodyStr
         .replace(/formData/g, JSON.stringify(formData))
