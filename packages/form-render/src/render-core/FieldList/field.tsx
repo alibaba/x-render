@@ -156,6 +156,7 @@ export default (props: any) => {
     }
 
     if (isFunction(copyFunc)) {
+      console.log(copyIndex, 'copyIndex')
       copyFunc((funData?: any) => add(funData || data), { schema, data, copyIndex });
       return;
     }

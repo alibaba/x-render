@@ -276,7 +276,7 @@ const schema = {
       type: 'array',
       widget: 'simpleList',
       props: {
-        hasBackground: true,
+        hasBackground: true
       },
       items: {
         type: 'object',
@@ -854,12 +854,12 @@ const schema = {
             type: 'string',
             enum: ['a', 'b', 'c'],
             enumNames: ['早', '中', '晚'],
-            widget: 'select',
-          },
-        },
-      },
-    },
-  },
+            widget: 'select'
+          }
+        }
+      }
+    }
+  }
 };
 
 export default () => {
@@ -905,12 +905,12 @@ const schema = {
             type: 'string',
             enum: ['a', 'b', 'c'],
             enumNames: ['早', '中', '晚'],
-            widget: 'select',
-          },
-        },
-      },
-    },
-  },
+            widget: 'select'
+          }
+        }
+      }
+    }
+  }
 };
 
 export default () => {

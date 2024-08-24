@@ -70,10 +70,11 @@ export default defineConfig({
   ],
   plugins: [require.resolve('./scripts/dumi-plugin/redirect')],
   alias: { 
+    'form-render/es':  path.resolve(__dirname, 'packages/form-render/src'),
     'form-render':  path.resolve(__dirname, 'packages/form-render/src'),
     'table-render':  path.resolve(__dirname, 'packages/table-render/src'),
+    'form-render-mobile':  path.resolve(__dirname, 'packages/form-render-mobile/src'),
     '@xrenders/schema-builder':  path.resolve(__dirname, 'tools/schema-builder/src'),
-    // 'form-render-mobile':  path.resolve(__dirname, 'packages/form-render-mobile/src'),
     '@xrenders/data-render':  path.resolve(__dirname, 'packages/data-render/src'),
   },
   codeSplitting: { jsStrategy: 'granularChunks' },
