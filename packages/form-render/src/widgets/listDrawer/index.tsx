@@ -238,6 +238,8 @@ const TableList: React.FC<Props> = (props: any) => {
     });
   }
 
+  const drawerIndex = indexRef.current ?? (fields.length - 1);
+
   return (
     <div className='fr-list-drawer'>
       <Table
@@ -257,15 +259,15 @@ const TableList: React.FC<Props> = (props: any) => {
       )}
       {visible && (
         <FormDrawer
+         {...drawerProps}
           schema={schema}
           data={itemData}
           widgets={widgets}
           configContext={configContext}
           onClose={handleRepeal}
           onConfirm={hanldeConfirm}
-          DrawerProps={drawerProps}
         >
-          {renderCore({ schema: schema.items, parentPath: [fields.length - 1], rootPath: [...rootPath, fields.length - 1] })}
+          {renderCore({ schema: schema.items, parentPath: [drawerIndex], rootPath: [...rootPath, drawerIndex] })}
         </FormDrawer>
       )}
     </div>
