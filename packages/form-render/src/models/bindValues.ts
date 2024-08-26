@@ -3,6 +3,7 @@ import {
   _cloneDeep,
   isArray,
   isObject,
+  safeGet
 } from '../utils/index';
 
 const isMultiBind = (array: string[]) => isArray(array) && array.every(item => typeof item === 'string');
@@ -140,7 +141,7 @@ export const parseBindToValues = (values: any, flatten: any) => {
   const data = _cloneDeep(values);
   const dealFieldList = (obj: any, [path, ...rest]: any, bind: any) => {
     if (rest.length === 1) {
-      const list = get(obj, path, []);
+      const list = safeGet(obj, path, []);
       list.forEach((item: any, index: number) => {
         if (bind === 'root') {
           list[index] = { [rest[0]] : item };

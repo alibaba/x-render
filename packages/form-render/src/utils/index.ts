@@ -110,4 +110,16 @@ export const hasFuncProperty = (obj: any) => {
   });
 };
 
+/**
+ * 安全地获取对象的值，如果值为 null 或 undefined，则返回 defaultValue。
+ *
+ * @param {Object} object - 要获取值的对象。
+ * @param {string|Array} path - 要获取的路径，可以是字符串或数组。
+ * @param {*} [defaultValue] - 如果值为 null 或 undefined，则返回 defaultValue。
+ * @returns {*} - 返回获取的值，或者默认值。
+ */
+export const safeGet = (object: any, path: string, defaultValue: any) => {
+  return get(object, path, defaultValue) ?? defaultValue;
+};
+
 
