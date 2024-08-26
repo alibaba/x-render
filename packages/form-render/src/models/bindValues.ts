@@ -1,4 +1,4 @@
-import { get, set, unset } from 'lodash-es';
+import { get, set, unset, assignIn } from 'lodash-es';
 import {
   _cloneDeep,
   isArray,
@@ -29,24 +29,38 @@ const transformPath = (path: string) => {
   return result;
 };
 
-const transformValueToBind = (data: any, path: any, bind: false | string | string[]) => {
+// 将 formData 数据按照 bind 配置进行转换
+const transformValuesToBind = (data: any, path: any, bind: false | string | string[], parentPath?: string) => {
+  // 配置 bind = false，在表单提交的时候可以将数据从 formData 中移除
   if (bind === false) {
     unset(data, path);
     return;
   } 
-  
+
+  // bind: string
   if (typeof bind === 'string') {
     let value = get(data, path);
-    const preValue = get(data, bind);
+    const preValue = get(data, bind === 'parent' ? parentPath : bind);
     if (isObject(preValue)) {
       value = { ...preValue, ...value };
     }
-    set(data, bind, value);
+
+    // 更新数据
+    if (bind === 'root' || parentPath === '#') { // 数据绑定到根节点
+      assignIn(data, value)
+    } else if (bind === 'parent') { // 数据绑定到父节点
+      set(data, parentPath, value);
+    } else { // 数据绑定到指定节点
+      set(data, bind, value);
+    }
+
+    // 移除原数据
     unset(data, path);
     return;
   } 
   
-  // The array is converted to multiple fields.
+  // bind: string[], 例如：bind: ['obj.startDate', 'obj.endDate'],
+  // 结果  [startDate, endDate] => {obj: { startDate, endDate }}
   if (isMultiBind(bind)) {
     const value = get(data, path);
     unset(data, path);
@@ -58,13 +72,42 @@ const transformValueToBind = (data: any, path: any, bind: false | string | strin
       });
     }
   }
-}
+};
 
-const transformBindToValue = (data: any, path: any, bind: any) => {
+// 按照 Bind 配置还原 formData 数据
+const transformBindToValue = (data: any, path: any, bind: false | string | string[], item?:any) => {
+  // bind: false 不用处理
+  if (bind === false) {
+    return;
+  }
+
+  // bind: string
   if (typeof bind === 'string') {
-    let value = get(data, bind);
+    let value = get(data, bind) ;
     const preValue = get(data, path);
-    if (isObject(preValue)) {
+
+    if (item?.children?.length > 0) {
+      value = { ...preValue, ...value };
+      let obj = null;
+      if (bind === 'root' || item.parent === '#') {
+        obj = data;
+      } else if (bind === 'parent') {
+        obj = get(data, item.parent);
+      }
+
+      item.children.forEach((item: any) => {
+        const list = item.split('.');
+        const key = list[list.length-1];
+        if (isObject(value[key])) {
+          value[key] = {
+            ...value?.[key],
+            ...obj?.[key]
+          }
+        } else if (!!obj) {
+          value[key] = obj[key];
+        }
+      })
+    } else if (isObject(preValue)) {
       value = { ...preValue, ...value };
     }
     set(data, path, value);
@@ -90,16 +133,16 @@ const transformBindToValue = (data: any, path: any, bind: any) => {
   }
 }
 
-
+// 转换表单数据
 export const parseValuesToBind = (values: any, flatten: any) => {
+  // console.log(values, flatten, 'parseValuesToBind');
   // No bind field exists, no processing
   if (!JSON.stringify(flatten).includes('bind')) {
     return values;
   }
-
   const data = _cloneDeep(values);
 
-  const dealFieldList = (obj: any, [path, ...rest]: any, bind: any) => {
+  const dealFieldList = (obj: any, [path, ...rest]: any, bind: any, ) => {
     if (rest.length === 1) {
       const list = get(obj, path, []);
       list.forEach((item: any, index: number) => {
@@ -108,7 +151,7 @@ export const parseValuesToBind = (values: any, flatten: any) => {
           list[index] = value;
           return;
         }
-        transformValueToBind(item, rest[0], bind);
+        transformValuesToBind(item, rest[0], bind);
       });
     }
 
@@ -122,22 +165,26 @@ export const parseValuesToBind = (values: any, flatten: any) => {
  
   Object.keys(flatten).forEach(key => {
     const bind = flatten[key]?.schema?.bind;
+    const parentPath = flatten[key]?.parent;
     if (bind === undefined) {
       return;
     }
     const path = transformPath(key);
-    isArray(path) ? dealFieldList(data, path, bind) : transformValueToBind(data, path, bind);
+    isArray(path) ? dealFieldList(data, path, bind) : transformValuesToBind(data, path, bind, parentPath);
   });
 
   return data;
 };
 
+// 还原表单数据
 export const parseBindToValues = (values: any, flatten: any) => {
+  console.log(values, flatten, 'parseBindToValues');
+  // No bind field exists, no processing
   if (!JSON.stringify(flatten).includes('bind')) {
     return values;
   }
-
   const data = _cloneDeep(values);
+
   const dealFieldList = (obj: any, [path, ...rest]: any, bind: any) => {
     if (rest.length === 1) {
       const list = get(obj, path, []);
@@ -157,15 +204,15 @@ export const parseBindToValues = (values: any, flatten: any) => {
       dealFieldList(value, rest, bind);
     }
   };
- 
+
   Object.keys(flatten).forEach(key => {
-    const bind = flatten[key]?.schema?.bind;
+    const item = flatten[key];
+    const bind = item.schema?.bind;
     if (bind === undefined) {
       return;
     }
     const path = transformPath(key);
-
-    isArray(path) ? dealFieldList(data, path, bind) : transformBindToValue(data, path, bind);
+    isArray(path) ? dealFieldList(data, path, bind) : transformBindToValue(data, path, bind, item);
   });
 
   return data;
