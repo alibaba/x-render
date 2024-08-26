@@ -119,8 +119,7 @@ export const hasFuncProperty = (obj: any) => {
  * @returns {*} - 返回获取的值，或者默认值。
  */
 export const safeGet = (object: any, path: string, defaultValue: any) => {
-  const value = get(object, path);
-  return value === null || value === undefined ? defaultValue : value;
+  return get(object, path, defaultValue) ?? defaultValue;
 };
 
 
