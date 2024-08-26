@@ -43,7 +43,6 @@ export function getSchemaFromFlatten(flatten: any, path = '#') {
 export function flattenSchema(_schema = {}, name?: any, parent?: any, _result?: any) {
   // 排序
   // _schema = orderBy(_schema, item => item.order, ['asc']);
-
   const result = _result || {};
 
   const schema: any = _cloneDeep(_schema) || {};
@@ -79,9 +78,9 @@ export function flattenSchema(_schema = {}, name?: any, parent?: any, _result?: 
   }
 
   if (schema.type) {
-    result[_name] = { parent, schema, children };
+    
   }
- 
+  result[_name] = { parent, schema, children };
   return result;
 }
 

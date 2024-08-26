@@ -8,7 +8,7 @@ group:
   order: 1
 ---
 
-# bind
+<!-- # bind
 
 类型：string | string[] | false
 
@@ -255,9 +255,111 @@ const Demo = () => {
 
 export default Demo;
 
+``` -->
+
+
+
+## 进阶
+- 对象嵌套情况， bind 要写绝对路径
+- List 组件嵌套情况，bind 路径从 List 嵌套的子节点开始写
+```jsx
+import React from 'react';
+import { Button } from 'antd';
+import FormRender, { useForm } from 'form-render';
+
+const delay = ms => new Promise(res => setTimeout(res, ms));
+
+const schema = {
+  type: 'object',
+  properties: {
+    obj: {
+      title: '对象',
+      type: 'object',
+      description: '对象嵌套 bind 要写决定路径',
+      // bind: 'root',
+      properties: {
+        a: {
+          title: '日期',
+          widget: 'input',
+        },
+        b: {
+          title: '日期',
+          widget: 'input',
+        },
+      }
+    },
+    obj2: {
+      title: '对象',
+      type: 'object',
+      description: '对象嵌套 bind 要写决定路径',
+      bind: 'parent',
+      properties: {
+        c: {
+          title: '日期',
+          widget: 'input',
+          bind: 'obj.c'
+        },
+        d: {
+          title: '日期',
+          widget: 'input',
+        },
+
+        obj3: {
+          title: '对象',
+          type: 'object',
+          description: '对象嵌套 bind 要写决定路径',
+          bind: 'parent',
+          properties: {
+            e: {
+              title: '日期',
+              widget: 'input',
+            },
+            f: {
+              title: '日期',
+              widget: 'input',
+            },
+            
+          }
+        }
+        
+      }
+    }
+  }
+};
+
+const Demo = () => {
+  const form = useForm();
+
+  const onFinish = (formData) => {
+    console.log(formData, 'formData');
+  };
+
+  return (
+    <FormRender
+      form={form}
+      schema={schema}
+      onFinish={onFinish}
+      footer={true}
+      maxWidth={400}
+      onMount={() => {
+        form.setValues({
+            d: 1,  e: 1, f: 1,
+          obj: {
+            c: 3,
+            a:1, b:1,
+          },
+
+          
+        })
+      }
+      }
+    />
+  );
+};
+
+export default Demo;
+
 ```
-
-
 
 
 
