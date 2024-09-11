@@ -34,8 +34,8 @@ const transformValueToBind = (data: any, path: any, bind: false | string | strin
   if (bind === false) {
     unset(data, path);
     return;
-  } 
-  
+  }
+
   if (typeof bind === 'string') {
     let value = get(data, path);
     const preValue = get(data, bind);
@@ -45,8 +45,8 @@ const transformValueToBind = (data: any, path: any, bind: false | string | strin
     set(data, bind, value);
     unset(data, path);
     return;
-  } 
-  
+  }
+
   // The array is converted to multiple fields.
   if (isMultiBind(bind)) {
     const value = get(data, path);
@@ -71,8 +71,8 @@ const transformBindToValue = (data: any, path: any, bind: any) => {
     set(data, path, value);
     unset(data, bind);
     return;
-  } 
-  
+  }
+
   // The array is converted to multiple fields.
   if (isMultiBind(bind)) {
     const value = [];
@@ -102,7 +102,7 @@ export const parseValuesToBind = (values: any, flatten: any) => {
 
   const dealFieldList = (obj: any, [path, ...rest]: any, bind: any) => {
     if (rest.length === 1) {
-      const list = get(obj, path, []);
+      const list = get(obj, path, [])||[];
       list.forEach((item: any, index: number) => {
         const value = get(item, rest[0]);
         if (bind === 'root') {
@@ -120,7 +120,7 @@ export const parseValuesToBind = (values: any, flatten: any) => {
       dealFieldList(value, rest, bind);
     }
   };
- 
+
   Object.keys(flatten).forEach(key => {
     const bind = flatten[key]?.schema?.bind;
     if (bind === undefined) {
@@ -158,7 +158,7 @@ export const parseBindToValues = (values: any, flatten: any) => {
       dealFieldList(value, rest, bind);
     }
   };
- 
+
   Object.keys(flatten).forEach(key => {
     const bind = flatten[key]?.schema?.bind;
     if (bind === undefined) {

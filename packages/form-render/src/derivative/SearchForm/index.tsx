@@ -204,7 +204,7 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
       className={classnames('fr-search', {[className]: !!className, 'fr-column-search': isColumn })}
       style={style}
       ref={containerRef}
-      onKeyDown={!closeReturnSearch && handleKeyDown}
+      onKeyDown={!closeReturnSearch ? handleKeyDown : undefined}
     >
       <FormRender
         displayType='row'

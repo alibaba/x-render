@@ -49,14 +49,38 @@ export const isHasExpression = (schema: any) => {
   return result;
 };
 
-export const parseExpression = (func: any, formData = {}, parentPath: string | []) => {
+const parseFunc = (funcBody: string) => {
+  const funcBodyTemp = funcBody.replace(/(\.|\?\.)/g, '?.'); // 将. 和 ?. 统一替换为?.
+  const funcBodyStr = funcBodyTemp.replace(/(\d+)\?\.(\d+)/g, '$1.$2'); //  排除数字中的?.
+  const result = [...funcBodyStr].reduce((acc, char, index) => {
+    if (char === '[') {
+      if (index > 0 && funcBodyStr[index - 1] !== '\n') {
+        // 排除开头[]
+        return `${acc}?.${char}`;
+      }
+    }
+    return `${acc}${char}`;
+  }, '');
+  return result;
+};
+
+export const parseExpression = (
+  func: any,
+  formData = {},
+  parentPath: string | []
+) => {
   const parentData = get(formData, parentPath) || {};
 
   if (typeof func === 'string') {
-    const formatFunc = func.replace(/\[(\w+)\]/g, '.$1'); // 将[]替换为.xxxxx
-    const funcBody = formatFunc.replace(/^{\s*{/g, '').replace(/}\s*}$/g, '').trim();
-    const funcBodyTemp = funcBody.replace(/(\.|\?\.)/g, '?.'); // 将. 和 ?. 统一替换为?.
-    const funcBodyStr = funcBodyTemp.replace(/(\d+)\?\.(\d+)/, '$1.$2'); //  排除数字中的?.
+    const funcBody = func
+      .replace(/^{\s*{/g, '')
+      .replace(/}\s*}$/g, '')
+      .trim();
+    let isHandleData =
+      funcBody?.startsWith('formData') || funcBody?.startsWith('rootValue');
+
+    let funcBodyStr = isHandleData ? parseFunc(funcBody) : funcBody;
+
     const funcStr = `
       return ${funcBodyStr
         .replace(/formData/g, JSON.stringify(formData))
