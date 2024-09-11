@@ -96,13 +96,24 @@ const TableList: React.FC<Props> = (props: any) => {
     } else {
       form.setFieldValue([...rootPath, indexRef.current], itemData);
     }
-    hanldeConfirm();
+    handleCloseDrawer();
   };
 
-  const hanldeConfirm = () => {
+  const handleCloseDrawer = () => {
     setItemData(null);
     setVisible(false);
     indexRef.current = null;
+  };
+
+  const hanldeConfirm = () => {
+    form
+      .validateFields()
+      .then(res => {
+        handleCloseDrawer();
+      })
+      .catch(error => {
+        console.log('表单校验错误', error);
+      });
   };
 
   const columns: any = sortProperties(Object.entries(columnSchema))
@@ -259,7 +270,7 @@ const TableList: React.FC<Props> = (props: any) => {
       )}
       {visible && (
         <FormDrawer
-         {...drawerProps}
+          {...drawerProps}
           schema={schema}
           data={itemData}
           widgets={widgets}

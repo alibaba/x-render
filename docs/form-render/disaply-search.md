@@ -185,4 +185,5 @@ export default () => {
 | resetText           | 自定义 重置按钮文案                      | `string`           |  重置  |
 | searchOnMount      | 组件初次挂载时，是否默认执行查询动作        | `boolean`           | true   | 
 | searchWithError    | 表单校验失败时，是否继续执行查询操作        | `boolean`           | true   |
+|closeReturnSearch   | 关闭回车查询                            | `boolean`           | -      |
 | `...`              | 详见 formRender [Props](/form-render/api-props) |            |        |

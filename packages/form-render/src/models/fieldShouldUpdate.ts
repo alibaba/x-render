@@ -10,9 +10,7 @@ const extractFormDataStrings = (list: string[]) => {
     const matches = str.match(regex);
     if (matches) {
       result = result.concat(
-        matches.map(
-          match => match.replace(/\[(\w+)\]/g, '.$1') // 2.将中括号替换为点号
-        )
+        matches
       );
     }
   });
@@ -29,9 +27,7 @@ const extractRootValueStrings = (list: string[]) => {
     const matches = str.match(regex);
     if (matches) {
       result = result.concat(
-        matches.map(
-          match => match.replace(/\[(\w+)\]/g, '.$1') // 将中括号替换为点号
-        )
+        matches
       );
     }
   });
@@ -66,19 +62,19 @@ const getListEveryResult = (list: string[], preValue: any, nextValue: any, dataP
 };
 
 export default (str: string, dataPath: string, dependencies: any[], shouldUpdateOpen: boolean) => (preValue: any, nextValue: any) => {
-  // dependencies 先不处理
-  if (dependencies) {
+    // dependencies 先不处理
+    if (dependencies) {
+      return true;
+    }
+
+    const formDataList = findStrList(str, 'formData');
+    const rootValueList = findStrList(str, 'rootValue');
+    const formDataRes = getListEveryResult(formDataList, preValue, nextValue, dataPath);
+    const rootValueRes = getListEveryResult(rootValueList, preValue, nextValue, dataPath);
+
+    if (formDataRes && rootValueRes) {
+      return false;
+    }
+
     return true;
-  }
-
-  const formDataList = findStrList(str, 'formData');
-  const rootValueList = findStrList(str, 'rootValue');
-  const formDataRes = getListEveryResult(formDataList, preValue, nextValue, dataPath);
-  const rootValueRes = getListEveryResult(rootValueList, preValue, nextValue, dataPath);
-
-  if (formDataRes && rootValueRes) {
-    return false;
-  }
-
-  return true;
-};
+  };
