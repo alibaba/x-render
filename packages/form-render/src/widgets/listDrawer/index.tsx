@@ -105,17 +105,6 @@ const TableList: React.FC<Props> = (props: any) => {
     indexRef.current = null;
   };
 
-  const hanldeConfirm = () => {
-    form
-      .validateFields()
-      .then(res => {
-        handleCloseDrawer();
-      })
-      .catch(error => {
-        console.log('表单校验错误', error);
-      });
-  };
-
   const columns: any = sortProperties(Object.entries(columnSchema))
     .map(([dataIndex, item]) => {
       const { required, title, tooltip, width, columnHidden } = item;
@@ -250,6 +239,19 @@ const TableList: React.FC<Props> = (props: any) => {
   }
 
   const drawerIndex = indexRef.current ?? (fields.length - 1);
+
+  const hanldeConfirm = () => {
+    const path = [...rootPath, drawerIndex]?.join('.');
+    form
+      .validateFields([path], { recursive: true })
+      .then(res => {
+        handleCloseDrawer();
+      })
+      .catch(error => {
+        console.log('表单校验错误', error);
+      });
+  };
+
 
   return (
     <div className='fr-list-drawer'>

@@ -96,7 +96,7 @@ const useForm = () => {
 
   const setStoreData = (data: any) => {
     const { setState } = storeRef.current;
-    
+
     if (!setState) {
       setTimeout(() => {
         setState({ schema: schemaRef.current, flattenSchema: flattenSchemaRef.current });
@@ -195,7 +195,7 @@ const useForm = () => {
         form.setFieldValue(name, value);
       }
     } catch (error) {
-      
+
     }
   }
 
@@ -324,13 +324,14 @@ const useForm = () => {
   }
 
   // 触发表单验证
-  xform.validateFields = (pathList?: string[]) => {
+  xform.validateFields = (pathList?: string[], config?: object) => {
     const nameList = (pathList || []).map(path => getFieldName(path));
     if (nameList.length > 0) {
-      return validateFields(nameList);
+      return validateFields(nameList, config);
     }
     return validateFields();
-  }
+  };
+
 
   xform.getFlattenSchema = (path?: string) => {
     if (!path) {
