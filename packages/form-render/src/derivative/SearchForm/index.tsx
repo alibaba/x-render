@@ -107,6 +107,12 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
     initMount();
   });
 
+  useUpdateEffect(() => {
+    if (isExpand) {
+      initMount();
+    }
+  }, [isExpand]);
+
   useMount(() => {
     if (!collapsed) {
       return;
