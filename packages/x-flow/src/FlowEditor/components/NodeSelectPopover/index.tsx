@@ -5,8 +5,8 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useEventListener } from 'ahooks';
 import { useShallow } from 'zustand/react/shallow';
 import { useClickAway } from 'ahooks';
-import { useSet } from '@/utils/hooks';
-import IconView from '@/components/IconView';
+import { useSet } from '../../utils/hooks';
+import IconView from '../../components/IconView';
 import useStore from '../../store';
 import './index.less';
 

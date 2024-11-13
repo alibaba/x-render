@@ -1,9 +1,10 @@
+import React from 'react';
 import { memo } from 'react';
 import produce from 'immer';
 import { useShallow } from 'zustand/react/shallow';
 import { useReactFlow, useViewport } from '@xyflow/react';
 import { useEventListener } from 'ahooks';
-import CustomNode from '../../../nodes';
+import CustomNode from '../CustomNode';
 import useStore from '../../store';
 
 const CandidateNode = () => {

@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { BezierEdge, EdgeLabelRenderer, getBezierPath, useReactFlow } from '@xyflow/react';
 import { useShallow } from 'zustand/react/shallow';

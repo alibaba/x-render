@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import classNames from 'classnames';
 import { Handle, Position } from '@xyflow/react';
 import './index.less';

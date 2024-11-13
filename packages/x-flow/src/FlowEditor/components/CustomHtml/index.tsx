@@ -1,6 +1,7 @@
+import React from 'react';
 import { Tooltip, Typography } from 'antd';
 import _ from 'lodash';
-import IconView from '@/components/IconView';
+import IconView from '../../components/IconView';
 
 const { Text } = Typography;
 

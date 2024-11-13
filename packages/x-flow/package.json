@@ -61,7 +61,8 @@
     "virtualizedtableforantd4": "^1.1.2",
     "ahooks": "^3.7.5",
     "zustand": "^4.5.4",
-    "@xyflow/react": "^12.3.2"
+    "@xyflow/react": "^12.3.2",
+    "@remixicon/react": "^4.2.0"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",
