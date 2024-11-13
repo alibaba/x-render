@@ -1,0 +1,48 @@
+.fai-reactflow-control {
+  display: flex;
+  align-items: center;
+  padding: 2px 1px;
+  border-radius: 8px;
+  border: 0.5px solid #f3f4f6;
+  background-color: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  color: #667085;
+  margin-left: 10px;
+}
+
+.control-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+
+  &.inactive:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: #374151;
+  }
+
+  &.active {
+    background-color: #ecfdf5;
+    color: #10b981;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}
+
+.icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.separator {
+  margin: 0 0.75rem;
+  width: 1px;
+  height: 0.875rem;
+  background-color: #e5e7eb;
+}

@@ -1,0 +1,41 @@
+.node-container {
+  border: 2px solid #fff;
+  border-radius: 14px;
+
+  .react-flow__edge-path,
+  .react-flow__connection-path {
+    stroke: #d0d5dc;
+    stroke-width: 2px;
+  }
+}
+
+.node-container-selected {
+  border: 2px solid #296dff;
+
+  .react-flow__handle::after {
+    display: none;
+  }
+}
+
+.react-flow__handle {
+  width: 32px;
+  height: 32px;
+  background: transparent;
+  border-radius: 0;
+  border: none;
+
+  :hover {
+    border: 2px solid #00a952;
+    transform: scale(1.25);
+  }
+}
+
+.react-flow__handle::after {
+  content: '';
+  --tw-bg-opacity: 1;
+  background-color: #2970ff;
+  width: 8px;
+  height: 2px;
+  display: block;
+  margin: 15px 0 0 12px;
+}

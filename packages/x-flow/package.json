@@ -1,0 +1,79 @@
+{
+  "name": "@xrenders/xflow",
+  "version": "0.0.1",
+  "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
+  "keywords": [
+    "Form",
+    "FormRender",
+    "Render",
+    "XRender",
+    "React",
+    "Json Schema",
+    "Ant Design"
+  ],
+  "homepage": "https://xrender.fun/form-render",
+  "bugs": {
+    "url": "https://github.com/alibaba/x-render/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alibaba/form-render.git"
+  },
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "lhbxs",
+      "email": "596850703@qq.com"
+    }
+  ],
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "files": [
+    "es",
+    "lib",
+    "package.json"
+  ],
+  "scripts": {
+    "beta": "npm publish --tag beta",
+    "build": "father-build",
+    "next": "npm publish --tag next",
+    "prepare": "npm run build",
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "postpublish": "git push --tags",
+    "test:ui": "vitest --ui"
+  },
+  "lint-staged": {
+    "*.{js,jsx,less,md,json}": [
+      "prettier --write"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write"
+    ]
+  },
+  "dependencies": {
+    "@ant-design/icons": "^4.0.2",
+    "async-validator": "^3.5.1",
+    "classnames": "^2.3.1",
+    "color": "^3.1.2",
+    "lodash-es": "^4.17.21",
+    "dayjs": "^1.11.7",
+    "rc-color-picker": "^1.2.6",
+    "virtualizedtableforantd4": "^1.1.2",
+    "ahooks": "^3.7.5",
+    "zustand": "^4.5.4",
+    "@xyflow/react": "^12.3.2"
+  },
+  "devDependencies": {
+    "deep-equal": "^2.0.3",
+    "rollup-plugin-copy": "^3.4.0"
+  },
+  "peerDependencies": {
+    "antd": "4.x || 5.x",
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "sideEffect": false
+}

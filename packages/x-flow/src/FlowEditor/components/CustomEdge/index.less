@@ -1,0 +1,34 @@
+
+.custom-edge-line {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: all;
+
+  .line-content {
+    width: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .icon-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #c6c6c6;
+    visibility: hidden;
+  }
+
+  .icon-box:hover {
+    background: #296dff;
+  }
+}
+
+.custom-edge-line:hover {
+  .icon-box {
+    visibility: visible;
+  }
+}
