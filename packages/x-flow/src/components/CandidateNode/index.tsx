@@ -5,7 +5,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useReactFlow, useViewport } from '@xyflow/react';
 import { useEventListener } from 'ahooks';
 import CustomNode from '../CustomNode';
-import useStore from '../../store';
+import useStore from '../../core/store';
 
 const CandidateNode = () => {
   const reactflow = useReactFlow();

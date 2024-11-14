@@ -5,9 +5,9 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useEventListener } from 'ahooks';
 import { useShallow } from 'zustand/react/shallow';
 import { useClickAway } from 'ahooks';
-import { useSet } from '../../utils/hooks';
+import { useSet } from '../../core/utils/hooks';
 import IconView from '../IconView';
-import useStore from '../../store';
+import useStore from '../../core/store';
 import './index.less';
 
 const items: any['items'] = [
@@ -53,7 +53,7 @@ const filterNodeList = (query: string, _nodeList: any[]) => {
 const NodeInfo = ({ icon, title, description }: any) => {
   return (
     <div className='node-info-tooltip'>
-      <div className='icon-box-max' style={{ background: icon.bgColor, marginRight: '8px' }}>
+      <div className='icon-box-max' style={{ background: icon?.bgColor, marginRight: '8px' }}>
         <IconView type={icon.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />
       </div>
       <div className='title'>
@@ -115,7 +115,7 @@ const SelectNodeView = ({ onCreate, nodeMenus, containerRef }: any) => {
             ) : (
               <Popover title={<NodeInfo {...item}/>} placement='right' arrow={false} key={item.type}>
                 <div className='node-item' onClick={(ev: any) => onCreate(ev, item.type)}>
-                  <span className='icon-box' style={{ background: item.icon.bgColor, marginRight: '8px' }}>
+                  <span className='icon-box' style={{ background: item.icon?.bgColor, marginRight: '8px' }}>
                     <IconView type={item.icon.type} style={{ color: '#fff', fontSize: 13, ...item?.icon?.smallStyle }} />
                   </span>
                   <span>{item.title}</span>

@@ -21,7 +21,21 @@ export const getKeyboardKeyNameBySystem = (key: string) => {
 
 export const capitalize = (string: string) => {
   if (typeof string !== 'string' || string.length === 0) {
-      return string;
+    return string;
   }
-  return string.charAt(0).toUpperCase() + string.slice(1);
+  return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
+}
+
+export const transformNodes = (nodes: any[]) => {
+  return nodes?.map(item => {
+    const { type, data, ...rest } = item;
+    return {
+      type: 'custom',
+      data: {
+        ...data,
+        _nodeType: type,
+      },
+      ...rest
+    }
+  })
 }

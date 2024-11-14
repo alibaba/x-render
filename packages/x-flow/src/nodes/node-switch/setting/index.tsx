@@ -2,7 +2,7 @@ import { forwardRef, useEffect, useMemo } from 'react';
 import { Collapse } from 'antd';
 import FormRender, { useForm } from 'form-render';
 import { useCollapse } from '@/hooks/useCollapse';
-import FAutoComplete from '../../../core/components/FAutoComplete';
+import FAutoComplete from '../../../components/FAutoComplete';
 import { getNodeSuggestOptions, getSuggestOptions } from '../../constant';
 import '../../index.less';
 import { getSchema, getSwitchSchema } from './schema';

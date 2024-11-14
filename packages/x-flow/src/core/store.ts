@@ -16,6 +16,7 @@ import _ from "lodash";
 export type AppNode = Node;
 
 export type AppState = {
+  layout: 'LR' | 'TB',
   nodes: AppNode[];
   edges: Edge[];
   nodeMenus: any[];
@@ -37,6 +38,7 @@ const useStore = create<AppState>()(
   immer(
     temporal(
       (set, get) => ({
+        layout: 'LR',
         nodes: [],
         edges: [],
         candidateNode: null,

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { ReactFlowProvider } from '@xyflow/react';
 import { ConfigProvider } from 'antd';
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
@@ -8,35 +9,31 @@ import 'dayjs/locale/zh-cn';
 import { createStore } from './models/store';
 import { FlowContext, ConfigContext } from './models/context';
 
-export default function withProvider<T>(Element: React.ComponentType<T>, defaultNodes?: any) : React.ComponentType<T> {
+export default function withProvider<T>(Element: React.ComponentType<T>, defaultNodeWidgets?: any) : React.ComponentType<T> {
   return (props: any) => {
     const {
       configProvider,
       locale = 'zh-CN',
-      nodeWidges,
+      nodeWidgets,
       methods,
-      ...otherProps
+      ...restProps
     } = props;
   
     const storeRef = useRef(createStore());
     const store: any = storeRef.current;
   
     useEffect(() => {
-      if (locale === 'en-US') {
-        dayjs.locale('en');
-        return;
-      }
-      dayjs.locale('zh-cn');
+      dayjs.locale(locale === 'en-US' ? 'en': 'zh-cn');
     }, [locale]);
 
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
     const configContext = {
       locale,
       methods,
-      widgets: { ...defaultNodes, ...nodeWidges },
+      nodeWidgets: { ...defaultNodeWidgets, ...nodeWidgets },
     };
   
-    const langPack: any = { 
+    const languagePackage = { 
       ...antdLocale,
       ...configProvider?.locale
     };
@@ -44,14 +41,16 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
     return (
       <ConfigProvider
         {...configProvider}
-        locale={langPack}
+        locale={languagePackage}
       >
         <ConfigContext.Provider value={configContext}>
           <FlowContext.Provider value={store}>
-            <Element {...otherProps} />
+            <ReactFlowProvider>
+              <Element {...restProps} />
+            </ReactFlowProvider>
           </FlowContext.Provider>
         </ConfigContext.Provider>
       </ConfigProvider>
     );
-  };
+  }
 }

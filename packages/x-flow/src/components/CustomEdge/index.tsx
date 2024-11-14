@@ -3,8 +3,8 @@ import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { BezierEdge, EdgeLabelRenderer, getBezierPath, useReactFlow } from '@xyflow/react';
 import { useShallow } from 'zustand/react/shallow';
 import produce from 'immer';
-import { uuid } from '../../utils';
-import useStore from '../../store';
+import { uuid } from '../../core/utils';
+import useStore from '../../core/store';
 import NodeSelectPopover from '../NodeSelectPopover';
 import './index.less';
 

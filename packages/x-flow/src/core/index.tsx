@@ -1,11 +1,9 @@
 import type { FC } from 'react';
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState, useContext } from 'react';
 import { useEventListener, useMemoizedFn } from 'ahooks';
 import produce, { setAutoFreeze } from 'immer';
 import { debounce } from 'lodash';
 import { useShallow } from 'zustand/react/shallow';
-import { ReactFlowProvider } from '@xyflow/react';
-
 import {
   Background,
   BackgroundVariant,
@@ -16,16 +14,17 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useEventEmitterContextContext } from '../context/event-emitter';
-import CandidateNode from './components/CandidateNode';
-import CustomEdge from './components/CustomEdge';
-import PanelContainer from './components/PanelContainer';
+import CandidateNode from '../components/CandidateNode';
+import CustomEdge from '../components/CustomEdge';
+import PanelContainer from '../components/PanelContainer';
 import './index.less';
-import CustomNodeComponent from './components/CustomNode';
+import CustomNodeComponent from '../components/CustomNode';
 import Operator from './operator';
 import useStore, { useUndoRedo } from './store';
 import XFlowProps from './types';
-import { capitalize, uuid } from './utils';
+import { capitalize, uuid, transformNodes } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
+import { ConfigContext } from '../models/context';
 
 const edgeTypes = { buttonedge: memo(CustomEdge) };
 const CustomNode = memo(CustomNodeComponent);
@@ -38,6 +37,8 @@ const CustomNode = memo(CustomNodeComponent);
  */
 const FlowEditor: FC<XFlowProps> = memo((props) => {
   const { nodeMenus, nodes: originalNodes, edges: originalEdges } = props;
+  const configCtx: any = useContext(ConfigContext);
+
 
 
 
@@ -47,6 +48,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
     const { updateEdge, addNodes, addEdges, zoomTo } = useReactFlow();
     const { undo, redo, record } = useUndoRedo(false);
     const {
+      layout,
       nodes,
       edges,
       onNodesChange,
@@ -61,6 +63,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
       useShallow((state) => ({
         nodes: state.nodes,
         edges: state.edges,
+        layout: state.layout,
         setNodes: state.setNodes,
         setEdges: state.setEdges,
         setNodeMenus: state.setNodeMenus,
@@ -84,7 +87,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
 
     useEffect(() => {
       setNodeMenus(nodeMenus);
-      setNodes(originalNodes);
+      setNodes(transformNodes(originalNodes));
       setEdges(originalEdges);
     }, [JSON.stringify(originalNodes)]);
 
@@ -196,23 +199,41 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
       setNodes([...nodes]);
     }, 200);
 
+    
     const nodeTypes = useMemo(() => {
       return {
-        custom: (props: any) => (
-          <CustomNode {...props} onClick={setActiveNode} />
-        ),
+        custom: (props: any) => {
+          const { data, ...rest } = props;
+          const { _nodeType, ...restData } = data || {};
+          return (
+            <CustomNode 
+              {...rest} 
+              data={{...restData}} 
+              type={_nodeType}
+              layout={layout}
+              onClick={setActiveNode}
+            />
+          );
+        }
       };
     }, []);
-    const { icon, description } =
-      nodeMenus.find(
+
+
+
+
+
+
+    
+    const { icon, description } = nodeMenus.find(
         (item) => item.type?.toLowerCase() === activeNode?.node?.toLowerCase(),
       ) || {};
 
-    // const NodeEditor = PanelComponentMap[capitalize(`${activeNode?.node}Setting`)];
+    // const NodeEditor = useMemo(() => {
+    //   return configCtx.nodeWidgets[capitalize(`${activeNode?.type}Panel`)] || <div>1</div>;
+    // }, [activeNode?.id]);
 
     return (
-      <ReactFlowProvider>
-          <div id="workflow-container" ref={workflowContainerRef}>
+      <div id='xflow-container' ref={workflowContainerRef}>
         <Operator handleRedo={undo} handleUndo={redo} addNode={handleAddNode} />
         <CandidateNode />
         <ReactFlow
@@ -265,10 +286,11 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
           <Background
             gap={[16, 16]}
             size={0.6}
-            color="black"
+            color='black'
             variant={BackgroundVariant.Dots}
           />
         </ReactFlow>
+
         {activeNode && (
           <PanelContainer
             icon={icon}
@@ -278,12 +300,13 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
             onClose={() => setActiveNode(null)}
             node={activeNode}
           >
-            {/* <NodeEditor data={activeNode} onChange={handleNodeValueChange} /> */}
+            {/* <NodeEditor 
+              data={activeNode}
+              onChange={handleNodeValueChange}
+            /> */}
           </PanelContainer>
         )}
       </div>
-
-      </ReactFlowProvider>
     );
   },
 );

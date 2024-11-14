@@ -1,2 +1,2 @@
-export { default as NodeInput } from './node-input';
-export { default as NodeOutput } from './node-output';
+export { default as InputNode } from './node-input';
+export { default as OutputNode } from './node-output';
