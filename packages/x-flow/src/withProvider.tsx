@@ -1,23 +1,19 @@
 import React, { useEffect, useRef } from 'react';
 import { ConfigProvider } from 'antd';
-import dayjs from 'dayjs';
-import { useUnmount } from 'ahooks';
-
 import zhCN from 'antd/lib/locale/zh_CN';
 import enUS from 'antd/lib/locale/en_US';
-import locales from './locales';
+import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 
 import { createStore } from './models/store';
-import { FRContext, ConfigContext } from './models/context';
-import { validateMessagesEN, validateMessagesCN } from './models/validateMessage';
+import { FlowContext, ConfigContext } from './models/context';
 
-export default function withProvider<T>(Element: React.ComponentType<T>, defaultWidgets?: any) : React.ComponentType<T> {
+export default function withProvider<T>(Element: React.ComponentType<T>, defaultNodes?: any) : React.ComponentType<T> {
   return (props: any) => {
     const {
       configProvider,
       locale = 'zh-CN',
-      widgets,
+      nodeWidges,
       methods,
       ...otherProps
     } = props;
@@ -33,20 +29,15 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
       dayjs.locale('zh-cn');
     }, [locale]);
 
-  
-   
-  
     const antdLocale = locale === 'zh-CN' ? zhCN : enUS;
-    const formValidateMessages = locale === 'zh-CN' ? validateMessagesCN : validateMessagesEN;
     const configContext = {
       locale,
-      widgets: { ...defaultWidgets, ...widgets },
       methods,
+      widgets: { ...defaultNodes, ...nodeWidges },
     };
   
     const langPack: any = { 
       ...antdLocale,
-      'FormRender': locales[locale],
       ...configProvider?.locale
     };
 
@@ -56,9 +47,9 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
         locale={langPack}
       >
         <ConfigContext.Provider value={configContext}>
-          <FRContext.Provider value={store}>
+          <FlowContext.Provider value={store}>
             <Element {...otherProps} />
-          </FRContext.Provider>
+          </FlowContext.Provider>
         </ConfigContext.Provider>
       </ConfigProvider>
     );

@@ -4,6 +4,8 @@ import { useEventListener, useMemoizedFn } from 'ahooks';
 import produce, { setAutoFreeze } from 'immer';
 import { debounce } from 'lodash';
 import { useShallow } from 'zustand/react/shallow';
+import { ReactFlowProvider } from '@xyflow/react';
+
 import {
   Background,
   BackgroundVariant,
@@ -21,7 +23,7 @@ import './index.less';
 import CustomNodeComponent from './components/CustomNode';
 import Operator from './operator';
 import useStore, { useUndoRedo } from './store';
-import { FlowEditorProps } from './types';
+import XFlowProps from './types';
 import { capitalize, uuid } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 
@@ -29,13 +31,12 @@ const edgeTypes = { buttonedge: memo(CustomEdge) };
 const CustomNode = memo(CustomNodeComponent);
 
 
-
 /***
  *
- * ReactFlow 入口
+ * XFlow 入口
  *
  */
-const FlowEditor: FC<FlowEditorProps> = memo((props) => {
+const FlowEditor: FC<XFlowProps> = memo((props) => {
   const { nodeMenus, nodes: originalNodes, edges: originalEdges } = props;
 
 
@@ -210,7 +211,8 @@ const FlowEditor: FC<FlowEditorProps> = memo((props) => {
     // const NodeEditor = PanelComponentMap[capitalize(`${activeNode?.node}Setting`)];
 
     return (
-      <div id="workflow-container" ref={workflowContainerRef}>
+      <ReactFlowProvider>
+          <div id="workflow-container" ref={workflowContainerRef}>
         <Operator handleRedo={undo} handleUndo={redo} addNode={handleAddNode} />
         <CandidateNode />
         <ReactFlow
@@ -280,6 +282,8 @@ const FlowEditor: FC<FlowEditorProps> = memo((props) => {
           </PanelContainer>
         )}
       </div>
+
+      </ReactFlowProvider>
     );
   },
 );

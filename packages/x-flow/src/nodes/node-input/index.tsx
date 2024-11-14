@@ -1,5 +1,5 @@
 import React, { memo } from 'react';
-import NodeContainer from '../../FlowEditor/components/NodeContainer';
+import NodeContainer from '../../core/components/NodeContainer';
 
 export default memo((props: any) => {
   const { onClick } = props;

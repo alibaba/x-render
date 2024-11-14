@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import NodeContainer from '../../FlowEditor/components/NodeContainer';
+import NodeContainer from '../../core/components/NodeContainer';
 
 
 const getNodeList = (str: string) => {

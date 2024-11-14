@@ -1,23 +1,10 @@
-import FlowEditor from './FlowEditor';
+import FlowCore from './core';
 import withProvider from './withProvider';
-import * as defaultNodes from './nodes';
+import * as nodes from './nodes';
 export { default as useForm } from './models/useForm';
-
 
 export type {
   default as FR,
-  Schema,
-  FRProps,
-  FormInstance,
-  FormParams,
-  FieldParams,
-  WatchProperties,
-  SchemaType,
-  SchemaBase,
-  ValidateParams,
-  ResetParams,
-  RuleItem,
-  WidgetProps,
-} from './type';
+} from './core/types';
 
-export default withProvider(FlowEditor, defaultNodes);
+export default withProvider(FlowCore, nodes);

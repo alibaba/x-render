@@ -1,5 +1,5 @@
 import { createContext, useRef, useContext } from 'react';
-import { createStore } from 'zustand/vanilla'
+import { createStore } from 'zustand/vanilla';
 
 type Shape = {
   appId: string

@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { AnyObject } from 'antd/lib/_util/type';
 import FormRender, { useForm } from 'form-render';
 import { ICard, TYPES } from '../../constant';
-import FAutoComplete from '../../../FlowEditor/components/FAutoComplete';
+import FAutoComplete from '../../../core/components/FAutoComplete';
 
 export interface GlobalOutputProps {
   data?: AnyObject;

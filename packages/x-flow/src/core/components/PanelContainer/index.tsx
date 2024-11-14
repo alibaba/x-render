@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider, Drawer, Input, Space } from 'antd';
-import IconView from '../../components/IconView';
+import IconView from '../IconView';
 import './index.less';
 
 const getDescription = (nodeType: string, description: string) => {

@@ -1,4 +1,4 @@
-import { createStore as createx } from 'zustand';
+import { createStore as create } from 'zustand';
 
 type FormStore = {
   schema?: any;
@@ -10,7 +10,7 @@ type FormStore = {
 };
 
 // 将 useStore 改为 createStore， 并把它改为 create 方法
-export const createStore = () => createx<FormStore>((setState: any, get: any) => ({
+export const createStore = () => create<FormStore>((setState: any, get: any) => ({
   initialized: false,
   schema: {},
   flattenSchema: {},
