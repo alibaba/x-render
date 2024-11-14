@@ -49,7 +49,7 @@ export default () => {
   const nodes = [
     {
       id: '1', // 节点 ID
-      type: 'Input', // 节点类型
+      type: 'Start', // 节点类型
       data: {}, // 节点配置数据
       position: { // 节点画布坐标位置
         x: 100,
@@ -58,7 +58,7 @@ export default () => {
     },
     {
       id: '2',
-      type: 'Output', // 节点类型
+      type: 'End', // 节点类型
       data: {}, // 节点配置数据
       position: { // 节点画布坐标位置
         x: 300,

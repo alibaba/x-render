@@ -26,7 +26,7 @@ export default memo((props: any) => {
         ['xflow-node-container-tb']: layout === 'TB'
       })}
     >
-      {capitalize(type)!== 'Input' && (
+      {capitalize(type)!== 'Start' && (
         <Handle
           type='target'
           position={targetPosition}
@@ -39,7 +39,7 @@ export default memo((props: any) => {
         data={data} 
         onClick={() => onClick(data)}
       />
-      {capitalize(type) !== 'Output' && (
+      {capitalize(type) !== 'End' && (
         <Handle
           type='source'
           position={sourcePosition}

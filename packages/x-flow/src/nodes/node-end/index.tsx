@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import NodeContainer from '../../components/NodeContainer';
 
 export default memo((props: any) => {
