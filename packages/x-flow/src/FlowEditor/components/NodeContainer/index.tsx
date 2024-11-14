@@ -1,5 +1,5 @@
-import { memo } from 'react';
-import IconView from '@/components/IconView';
+import React, { memo } from 'react';
+import IconView from '../../components/IconView';
 import classNames from 'classnames';
 import './index.less';
 

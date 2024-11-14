@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 // import UndoRedo from '../header/undo-redo'
 import ZoomInOut from './ZoomInOut';
 import UndoRedo from './UndoRedo';

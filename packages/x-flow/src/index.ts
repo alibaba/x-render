@@ -1,6 +1,6 @@
 import FlowEditor from './FlowEditor';
 import withProvider from './withProvider';
-import * as defaultWidgets from './widgets';
+import * as defaultNodes from './nodes';
 export { default as useForm } from './models/useForm';
 
 
@@ -20,4 +20,4 @@ export type {
   WidgetProps,
 } from './type';
 
-export default withProvider(FlowEditor, defaultWidgets);
+export default withProvider(FlowEditor, defaultNodes);

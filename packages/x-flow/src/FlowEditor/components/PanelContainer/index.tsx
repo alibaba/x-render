@@ -1,8 +1,6 @@
 import React from 'react';
 import { Divider, Drawer, Input, Space } from 'antd';
-import IconView from '@/components/IconView';
-import { useFlow } from '@/hooks/useWorkFlow';
-import NodeDebugDrawer from '../NodeDebugDrawer';
+import IconView from '../../components/IconView';
 import './index.less';
 
 const getDescription = (nodeType: string, description: string) => {
@@ -17,20 +15,10 @@ const getDescription = (nodeType: string, description: string) => {
 
 const Panel = (props: any) => {
   const { onClose, children, title, icon, nodeType, disabled, node } = props;
-  const { handleItemDebug } = useFlow();
-
-  const [nodeDebugVisible, setNodeDebugVisible] = React.useState(false);
 
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
   const description = getDescription(nodeType, props.description);
 
-  const handleNodeDebug = async () => {
-    const res = await handleItemDebug(node);
-    if (!res) {
-      return;
-    }
-    setNodeDebugVisible(true);
-  };
 
   return (
     <Drawer
@@ -62,7 +50,7 @@ const Panel = (props: any) => {
                     <IconView
                       type="icon-bofang"
                       style={{ fontSize: 18 }}
-                      onClick={handleNodeDebug}
+                     
                     />
                     <Divider type="vertical" />
                   </>
@@ -91,12 +79,6 @@ const Panel = (props: any) => {
       }
     >
       {children}
-      <NodeDebugDrawer
-        node={props.node}
-        title={title}
-        visible={nodeDebugVisible}
-        onClose={() => setNodeDebugVisible(false)}
-      />
     </Drawer>
   );
 };

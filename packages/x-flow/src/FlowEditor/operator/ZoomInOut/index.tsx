@@ -1,10 +1,10 @@
 import type { FC } from 'react';
-import { Fragment, memo } from 'react';
+import React, { Fragment, memo } from 'react';
 import { Button, Popover, Tooltip } from 'antd';
 import { useReactFlow, useViewport } from '@xyflow/react';
 import { getKeyboardKeyNameBySystem } from '../../utils';
 import ShortcutsName from './shortcuts-name';
-import IconView from '@/components/IconView';
+import IconView from '../../components/IconView';
 import './index.less';
 
 enum ZoomType {

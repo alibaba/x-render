@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useEventListener, useMemoizedFn } from 'ahooks';
 import produce, { setAutoFreeze } from 'immer';
 import { debounce } from 'lodash';
@@ -18,8 +18,7 @@ import CandidateNode from './components/CandidateNode';
 import CustomEdge from './components/CustomEdge';
 import PanelContainer from './components/PanelContainer';
 import './index.less';
-import CustomNodeComponent from '../nodes';
-import { PanelComponentMap } from '../nodes/nodes';
+import CustomNodeComponent from './components/CustomNode';
 import Operator from './operator';
 import useStore, { useUndoRedo } from './store';
 import { FlowEditorProps } from './types';
@@ -28,13 +27,20 @@ import autoLayoutNodes from './utils/autoLayoutNodes';
 
 const edgeTypes = { buttonedge: memo(CustomEdge) };
 const CustomNode = memo(CustomNodeComponent);
+
+
+
 /***
  *
  * ReactFlow 入口
  *
  */
-const FlowEditor: FC<FlowEditorProps> = memo(
-  ({ nodeMenus, nodes: originalNodes, edges: originalEdges }) => {
+const FlowEditor: FC<FlowEditorProps> = memo((props) => {
+  const { nodeMenus, nodes: originalNodes, edges: originalEdges } = props;
+
+
+
+
     const workflowContainerRef = useRef<HTMLDivElement>(null);
     const store = useStoreApi();
     const { updateEdge, addNodes, addEdges, zoomTo } = useReactFlow();
@@ -77,8 +83,7 @@ const FlowEditor: FC<FlowEditorProps> = memo(
 
     useEffect(() => {
       setNodeMenus(nodeMenus);
-      const _nodes: any = autoLayoutNodes(originalNodes, originalEdges);
-      setNodes(_nodes);
+      setNodes(originalNodes);
       setEdges(originalEdges);
     }, [JSON.stringify(originalNodes)]);
 
@@ -202,8 +207,7 @@ const FlowEditor: FC<FlowEditorProps> = memo(
         (item) => item.type?.toLowerCase() === activeNode?.node?.toLowerCase(),
       ) || {};
 
-    const NodeEditor =
-      PanelComponentMap[capitalize(`${activeNode?.node}Setting`)];
+    // const NodeEditor = PanelComponentMap[capitalize(`${activeNode?.node}Setting`)];
 
     return (
       <div id="workflow-container" ref={workflowContainerRef}>
@@ -272,7 +276,7 @@ const FlowEditor: FC<FlowEditorProps> = memo(
             onClose={() => setActiveNode(null)}
             node={activeNode}
           >
-            <NodeEditor data={activeNode} onChange={handleNodeValueChange} />
+            {/* <NodeEditor data={activeNode} onChange={handleNodeValueChange} /> */}
           </PanelContainer>
         )}
       </div>

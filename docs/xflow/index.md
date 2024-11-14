@@ -6,7 +6,7 @@ mobile: false
 
 <div style="display:flex;align-items:center;margin-bottom:24px">
   <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="logo" width="48px"/>
-  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">DataView</span>
+  <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">xflow</span>
 </div>
 <p style="display:flex;justify-content:space-between;width:440px">
   <a href="https://www.npmjs.com/package/@xrenders/data-render" target="_blank">
@@ -23,12 +23,12 @@ mobile: false
   </a>
 </p>
 
-中后台详情页解决方案，通过 schema 协议渲染页面
+画布流程编排解决方案
 
 
 ## 安装
 ```shell
-npm i @xrenders/data-render --save
+npm i @xrenders/xflow --save
 ```
 
 ## 使用方式
@@ -41,13 +41,42 @@ npm i @xrenders/data-render --save
  * defaultShowCode: true
  */
 import React from 'react';
-import DataView from '@xrenders/x-flow';
+import XFlow from '@xrenders/xflow';
 import schema from './schema/basic';
 import data from './data/basic';
 
 export default () => {
+  const nodes = [
+    {
+      id: '1', // 节点 ID
+      type: 'custom', // 节点类型
+      data: {}, // 节点配置数据
+      position: { // 节点画布坐标位置
+        x: 100,
+        y: 300,
+      }
+    },
+    {
+      id: '2',
+      type: 'custom', // 节点类型
+      data: {}, // 节点配置数据
+      position: { // 节点画布坐标位置
+        x: 300,
+        y: 600,
+      }
+    }
+  ]
+
+  const nodeMenus = [];
+
   return (
-    <DataView schema={schema} data={data} />
+    <div style={{ height: '600px' }}>
+      <XFlow 
+        nodes={nodes}
+        nodeMenus={nodeMenus}
+      
+      />
+    </div>
   );
 }
 ```

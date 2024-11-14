@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import { ReactFlowProvider } from '@xyflow/react';
 import { WorkflowContextProvider } from './context';
 import FlowEditor from './main';
