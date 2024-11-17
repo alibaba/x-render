@@ -166,7 +166,6 @@ export default () => {
         nodes={nodes}
         edges={[]}
         nodeMenus={nodeMenus}
-        layout='TB'
       />
     </div>
   );

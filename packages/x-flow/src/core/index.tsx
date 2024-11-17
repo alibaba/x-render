@@ -248,7 +248,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
           defaultEdgeOptions={{
             type: 'buttonedge',
             style: {
-              strokeWidth: 1.2, // 线粗细
+              strokeWidth: 1.5, // 线粗细
             },
             markerEnd: {
               type: MarkerType.ArrowClosed, // 箭头

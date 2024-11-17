@@ -1,4 +1,6 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useContext, useState } from 'react';
+import { Tooltip } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import classNames from 'classnames';
 import { Handle, Position } from '@xyflow/react';
 import { capitalize } from '../../core/utils';
@@ -8,8 +10,9 @@ import './index.less';
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick } = props;
   const configCtx: any = useContext(ConfigContext);
-
   const NodeWidget = configCtx?.nodeWidgets[`${capitalize(type)}Node`];
+
+  const [isHovered, setIsHovered] = useState(false);
 
   let targetPosition = Position.Left;
   let sourcePosition = Position.Right;
@@ -24,6 +27,8 @@ export default memo((props: any) => {
         ['xflow-node-container-selected']: !!selected,
         ['xflow-node-container-tb']: layout === 'TB'
       })}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {capitalize(type)!== 'Start' && (
         <Handle
@@ -43,7 +48,23 @@ export default memo((props: any) => {
           type='source'
           position={sourcePosition}
           isConnectable={isConnectable}
-        />
+        >
+          {(selected || isHovered) && (
+            <div className='xflow-node-add-box'>
+              <Tooltip 
+                title='点击添加节点'
+                arrow={false}
+                overlayInnerStyle={{
+                  background: '#fff',
+                  color: '#354052',
+                  fontSize: '12px'
+                }}
+                >
+                <PlusOutlined style={{ color: '#fff', fontSize: 10 }}/>
+              </Tooltip>
+            </div>
+          )}
+        </Handle>
       )}
     </div>
   );

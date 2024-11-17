@@ -14,11 +14,6 @@
     background: transparent;
     border-radius: 0;
     border: none;
-  
-    :hover {
-      border: 2px solid #00a952;
-      transform: scale(1.25);
-    }
   }
   
   .react-flow__handle::after {
@@ -29,6 +24,19 @@
     height: 10px;
     display: block;
     margin: 11px 0 8px 15px;
+  }
+
+  .xflow-node-add-box {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2970ff;
   }
 }
 
