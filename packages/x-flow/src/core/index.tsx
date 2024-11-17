@@ -26,7 +26,6 @@ import { capitalize, uuid, transformNodes } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 import { ConfigContext } from '../models/context';
 
-const edgeTypes = { buttonedge: memo(CustomEdge) };
 const CustomNode = memo(CustomNodeComponent);
 
 
@@ -56,6 +55,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
       onConnect,
       setNodes,
       setEdges,
+      setLayout,
       setNodeMenus,
       setCandidateNode,
       setMousePosition,
@@ -64,6 +64,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
         nodes: state.nodes,
         edges: state.edges,
         layout: state.layout,
+        setLayout: state.setLayout,
         setNodes: state.setNodes,
         setEdges: state.setEdges,
         setNodeMenus: state.setNodeMenus,
@@ -86,6 +87,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
     }, []);
 
     useEffect(() => {
+      setLayout(props.layout);
       setNodeMenus(nodeMenus);
       setNodes(transformNodes(originalNodes));
       setEdges(originalEdges);
@@ -216,8 +218,9 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
           );
         }
       };
-    }, []);
+    }, [layout]);
 
+    const edgeTypes = { buttonedge: (edgeProps: any) => <CustomEdge layout={layout} {...edgeProps} /> };
 
 
 

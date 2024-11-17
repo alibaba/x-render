@@ -27,6 +27,7 @@ export type AppState = {
   onConnect: OnConnect;
   setNodes: (nodes: AppNode[]) => void;
   setEdges: (edges: Edge[]) => void;
+  setLayout: (layout: 'LR' | 'TB') => void;
   setNodeMenus: (nodeMenus: any[]) => void;
   setCandidateNode: (candidateNode: any) => void;
   setMousePosition: (mousePosition: any) => void;
@@ -73,6 +74,12 @@ const useStore = create<AppState>()(
         },
         setMousePosition: (mousePosition: any) => {
           set({ mousePosition });
+        },
+        setLayout: (layout: 'LR' | 'TB') => {
+          if (!layout) {
+            return;
+          }
+          set({ layout });
         }
       }),
       {

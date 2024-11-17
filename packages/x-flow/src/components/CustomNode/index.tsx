@@ -2,7 +2,6 @@ import React, { memo, useContext } from 'react';
 import classNames from 'classnames';
 import { Handle, Position } from '@xyflow/react';
 import { capitalize } from '../../core/utils';
-
 import { ConfigContext } from '../../models/context';
 import './index.less';
 

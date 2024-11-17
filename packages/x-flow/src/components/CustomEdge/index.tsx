@@ -1,10 +1,11 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { BezierEdge, EdgeLabelRenderer, getBezierPath, useReactFlow } from '@xyflow/react';
 import { useShallow } from 'zustand/react/shallow';
 import produce from 'immer';
 import { uuid } from '../../core/utils';
 import useStore from '../../core/store';
+import { ConfigContext } from '../../models/context';
 import NodeSelectPopover from '../NodeSelectPopover';
 import './index.less';
 
@@ -20,7 +21,10 @@ export default memo((edge: any) => {
     selected,
     source,
     target,
+    layout,
   } = edge;
+
+  const configCtx: any = useContext(ConfigContext);
 
   const reactflow = useReactFlow();
   const [edgePath, labelX, labelY] = getBezierPath({
@@ -56,12 +60,22 @@ export default memo((edge: any) => {
     });
     setNodes(newNodes);
   };
+
+  let edgeExtra: any = {
+    sourceX: edge.sourceX - 15,
+    targetX: edge.targetX + 15
+  }
+  if (layout === 'TB') {
+    edgeExtra = {
+      sourceY: edge.sourceY - 15,
+      targetY: edge.targetY + 13
+    }
+  }
   
   return (
     <BezierEdge
       {...edge}
-      sourceY={edge.sourceY - 15}
-      targetY={edge.targetY + 13}
+      {...edgeExtra}
       selected={false}
       edgePath={edgePath}
       label={
@@ -87,4 +101,4 @@ export default memo((edge: any) => {
       }
     />
   );
-});
+})
