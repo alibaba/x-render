@@ -2,7 +2,6 @@
 import React, { useCallback, useState, useRef } from 'react';
 import { Popover, Input, Tabs } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { useEventListener } from 'ahooks';
 import { useShallow } from 'zustand/react/shallow';
 import { useClickAway } from 'ahooks';
 import { useSet } from '../../core/utils/hooks';
@@ -154,14 +153,14 @@ export default (props: any) => {
 
   const handAddNode = useCallback<any>((ev: any, type: any) => {
     ev.stopPropagation(); // 阻止事件冒泡
-    addNode({ node: type });
+    addNode({ _nodeType: type });
     setOpen(false);
   }, []);
 
   return (
     <Popover
       content={<SelectNodeView onCreate={handAddNode} nodeMenus={nodeMenus} containerRef={ref}/>} 
-      zIndex={1000}
+      zIndex={2000}
       trigger='click'
       arrow={false}
       open={open}

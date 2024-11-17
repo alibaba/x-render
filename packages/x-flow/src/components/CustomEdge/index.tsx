@@ -1,32 +1,27 @@
-import React, { memo, useContext } from 'react';
+import React, { memo, useState } from 'react';
 import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
 import { BezierEdge, EdgeLabelRenderer, getBezierPath, useReactFlow } from '@xyflow/react';
 import { useShallow } from 'zustand/react/shallow';
 import produce from 'immer';
 import { uuid } from '../../core/utils';
 import useStore from '../../core/store';
-import { ConfigContext } from '../../models/context';
 import NodeSelectPopover from '../NodeSelectPopover';
 import './index.less';
 
 export default memo((edge: any) => {
   const {
-    label,
     id,
+    selected,
     sourceX,
     sourceY,
     targetX,
     targetY,
-    data,
-    selected,
     source,
     target,
-    layout,
   } = edge;
 
-  const configCtx: any = useContext(ConfigContext);
-
   const reactflow = useReactFlow();
+  const [isHovered, setIsHovered] = useState(false);
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
@@ -36,13 +31,21 @@ export default memo((edge: any) => {
 
   const {
     nodes,
+    edges,
     setNodes,
+    setEdges,
     mousePosition,
+    onEdgesChange,
+    layout,
   } = useStore(
     useShallow((state: any) => ({
+      layout: state.layout,
       nodes: state.nodes,
+      edges: state.edges,
       mousePosition: state.mousePosition,
-      setNodes: state.setNodes
+      setNodes: state.setNodes,
+      setEdges: state.setEdges,
+      onEdgesChange: state.onEdgesChange
     }))
   );
 
@@ -50,15 +53,36 @@ export default memo((edge: any) => {
     const { screenToFlowPosition } = reactflow;
     const { x, y } = screenToFlowPosition({ x: mousePosition.pageX, y: mousePosition.pageY });
 
+
+    const targetId = uuid();
     const newNodes = produce(nodes, (draft: any) => {
       draft.push({
-        id: uuid(),
+        id: targetId,
         type: 'custom',
         data,
         position: { x, y }
       });
     });
+
+    const newEdges = produce(edges, (draft: any) => {
+      draft.push(...[
+        {
+          id: uuid(),
+          source,
+          target: targetId,
+        },
+        {
+          id: uuid(),
+          source: targetId,
+          target,
+        }
+    ])
+
+    });
+   
     setNodes(newNodes);
+    setEdges(newEdges);
+    onEdgesChange([{ id, type: 'remove' }]);
   };
 
   let edgeExtra: any = {
@@ -73,32 +97,36 @@ export default memo((edge: any) => {
   }
   
   return (
-    <BezierEdge
-      {...edge}
-      {...edgeExtra}
-      selected={false}
-      edgePath={edgePath}
-      label={
-        <EdgeLabelRenderer>
-          <div
-            className='custom-edge-line'
-            style={{
-              transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
-            }}
-          >
-            <div className='line-content'>
-              <div className='icon-box'>
-                <CloseOutlined style={{ color: '#fff', fontSize: 12 }} />
+    <g
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <BezierEdge
+        {...edge}
+        {...edgeExtra}
+        edgePath={edgePath}
+        label={
+          isHovered && <EdgeLabelRenderer>
+            <div
+              className='custom-edge-line'
+              style={{
+                transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
+              }}
+            >
+              <div className='line-content'>
+                <div className='line-icon-box' onClick={() => onEdgesChange([{ id, type: 'remove' }])}>
+                    <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
+                  </div>
+                <NodeSelectPopover placement='right' addNode={handleAddNode}>
+                  <div className='line-icon-box'>
+                    <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
+                  </div>
+                </NodeSelectPopover>
               </div>
-              <NodeSelectPopover placement='right' addNode={handleAddNode}>
-                <div className='icon-box'>
-                  <PlusOutlined style={{ color: '#fff', fontSize: 12 }} />
-                </div>
-              </NodeSelectPopover>
             </div>
-          </div>
-        </EdgeLabelRenderer>
-      }
-    />
+          </EdgeLabelRenderer>
+        }
+      />
+    </g>
   );
 })

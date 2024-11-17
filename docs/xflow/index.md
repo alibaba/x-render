@@ -50,7 +50,7 @@ import data from './data/basic';
 const nodeMenus = [
   {
     title: 'Input',
-    type: 'Input',
+    type: 'Start',
     icon: {
       type: 'icon-start',
       bgColor: '#17B26A',
@@ -58,7 +58,7 @@ const nodeMenus = [
   },
   {
     title: 'Output',
-    type: 'Output',
+    type: 'End',
     icon: {
       type: 'icon-end',
       bgColor: '#F79009',
@@ -160,11 +160,15 @@ export default () => {
     }
   ];
 
+  const edges = [
+    { source: '1', target: '2', id: '234123' }
+  ]
+
   return (
     <div style={{ height: '600px' }}>
       <XFlow 
         nodes={nodes}
-        edges={[]}
+        edges={edges}
         nodeMenus={nodeMenus}
       />
     </div>
