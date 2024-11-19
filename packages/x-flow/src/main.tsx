@@ -13,14 +13,14 @@ import {
   useStoreApi,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useEventEmitterContextContext } from '../context/event-emitter';
-import CandidateNode from '../components/CandidateNode';
-import CustomEdge from '../components/CustomEdge';
-import PanelContainer from '../components/PanelContainer';
+import { useEventEmitterContextContext } from './models/event-emitter';
+import CandidateNode from './components/CandidateNode';
+import CustomEdge from './components/CustomEdge';
+import PanelContainer from './components/PanelContainer';
 import './index.less';
-import CustomNodeComponent from '../components/CustomNode';
+import CustomNodeComponent from './components/CustomNode';
 import Operator from './operator';
-import useStore, { useUndoRedo } from './store';
+import useStore, { useUndoRedo } from './models/store';
 import XFlowProps from './types';
 import { capitalize, uuid, transformNodes } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';

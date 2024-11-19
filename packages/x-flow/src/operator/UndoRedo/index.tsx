@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { RiArrowGoBackLine, RiArrowGoForwardFill } from '@remixicon/react'
 import { Button, Tooltip } from 'antd';
-import IconView from '../../../components/IconView';
+import IconView from '../../components/IconView';
 import './index.less';
 
 export type UndoRedoProps = {

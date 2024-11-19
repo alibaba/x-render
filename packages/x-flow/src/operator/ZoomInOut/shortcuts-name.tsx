@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import React, { memo } from 'react'
 import { getKeyboardKeyNameBySystem } from '../../utils'
 import cn from 'classnames'
 

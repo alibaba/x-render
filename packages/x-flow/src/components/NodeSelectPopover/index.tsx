@@ -4,9 +4,9 @@ import { Popover, Input, Tabs } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
 import { useShallow } from 'zustand/react/shallow';
 import { useClickAway } from 'ahooks';
-import { useSet } from '../../core/utils/hooks';
+import { useSet } from '../../utils/hooks';
 import IconView from '../IconView';
-import useStore from '../../core/store';
+import useStore from '../../models/store';
 import './index.less';
 
 const items: any['items'] = [

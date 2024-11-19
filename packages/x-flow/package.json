@@ -1,17 +1,11 @@
 {
   "name": "@xrenders/xflow",
   "version": "0.0.1",
-  "description": "通过 JSON Schema 生成标准 Form，常用于自定义搭建配置界面生成",
+  "description": "一款功能强大、易用灵活的流程编辑器框架，帮助你轻松构建复杂的工作流和流程产品",
   "keywords": [
-    "Form",
-    "FormRender",
-    "Render",
-    "XRender",
-    "React",
-    "Json Schema",
-    "Ant Design"
+    "xflow"
   ],
-  "homepage": "https://xrender.fun/form-render",
+  "homepage": "https://xrender.fun/xflow",
   "bugs": {
     "url": "https://github.com/alibaba/x-render/issues"
   },
@@ -52,13 +46,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.2",
-    "async-validator": "^3.5.1",
     "classnames": "^2.3.1",
-    "color": "^3.1.2",
     "lodash-es": "^4.17.21",
     "dayjs": "^1.11.7",
-    "rc-color-picker": "^1.2.6",
-    "virtualizedtableforantd4": "^1.1.2",
     "ahooks": "^3.7.5",
     "zustand": "^4.5.4",
     "@xyflow/react": "^12.3.2",

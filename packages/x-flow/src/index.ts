@@ -1,10 +1,9 @@
-import FlowCore from './core';
+import Main from './main';
 import withProvider from './withProvider';
 import * as nodes from './nodes';
-export { default as useForm } from './models/useForm';
 
 export type {
-  default as FR,
-} from './core/types';
+default as FR,
+} from './types';
 
-export default withProvider(FlowCore, nodes);
+export default withProvider(Main, nodes);

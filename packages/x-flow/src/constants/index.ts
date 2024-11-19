@@ -1,5 +1,5 @@
-import type { Var } from './types'
-import { BlockEnum, VarType } from './types';
+import type { Var } from '../types'
+import { BlockEnum, VarType } from '../types';
 
 export const CUSTOM_ITERATION_START_NODE = 'custom-iteration-start'
 

@@ -7,9 +7,9 @@ import {
   RiStickyNoteAddLine,
 } from '@remixicon/react';
 import { Tooltip, Button } from 'antd';
-import IconView from '../../../components/IconView';
-import { useEventEmitterContextContext } from '../../../context/event-emitter';
-import NodeSelectPopover from '../../../components/NodeSelectPopover';
+import IconView from '../../components/IconView';
+import { useEventEmitterContextContext } from '../../models/event-emitter';
+import NodeSelectPopover from '../../components/NodeSelectPopover';
 import './index.less';
 
 const Control = (props: any) => {

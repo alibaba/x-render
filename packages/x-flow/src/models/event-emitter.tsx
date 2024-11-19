@@ -1,5 +1,4 @@
-'use client'
-
+import React from 'react';
 import { useEventEmitter } from 'ahooks';
 import type { EventEmitter } from 'ahooks/lib/useEventEmitter';
 import { createContext, useContext } from 'use-context-selector';
