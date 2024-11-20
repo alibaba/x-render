@@ -46,11 +46,11 @@ import schema from './schema/basic';
 import data from './data/basic';
 
 
-
-const nodeMenus = [
+const settings = [
   {
     title: 'Input',
     type: 'Start',
+    hidden: true,
     icon: {
       type: 'icon-start',
       bgColor: '#17B26A',
@@ -59,6 +59,7 @@ const nodeMenus = [
   {
     title: 'Output',
     type: 'End',
+    hidden: true,
     icon: {
       type: 'icon-end',
       bgColor: '#F79009',
@@ -135,6 +136,30 @@ const nodeMenus = [
       type: 'icon-gongju',
       bgColor: '#2E90FA'
     }
+  },
+  {
+    title: '工具',
+    type: '_group',
+    items: [
+      {
+    title: '代码执行',
+    type: 'Code',
+    description: '执行一段 Groovy 或 Python 或 NodeJS 代码实现自定义逻辑',
+    icon: {
+      type: 'icon-code',
+      bgColor: '#2E90FA'
+    }
+  },
+  {
+    title: '工具',
+    type: 'tool',
+    description: '允许使用工具能力',
+    icon: {
+      type: 'icon-gongju',
+      bgColor: '#2E90FA'
+    }
+  },
+    ]
   }
 ];
 
@@ -166,10 +191,12 @@ export default () => {
 
   return (
     <div style={{ height: '600px' }}>
-      <XFlow 
-        nodes={nodes}
-        edges={edges}
-        nodeMenus={nodeMenus}
+      <XFlow
+        initialValues={{ nodes, edges }}
+        settings={settings}
+        nodeSelector={{
+          showSearch: true,
+        }}
       />
     </div>
   );

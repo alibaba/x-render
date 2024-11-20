@@ -17,13 +17,15 @@ import { useEventEmitterContextContext } from './models/event-emitter';
 import CandidateNode from './components/CandidateNode';
 import CustomEdge from './components/CustomEdge';
 import PanelContainer from './components/PanelContainer';
-import './index.less';
+
 import CustomNodeComponent from './components/CustomNode';
 import Operator from './operator';
 import useStore, { useUndoRedo } from './models/store';
 import XFlowProps from './types';
 import { capitalize, uuid, transformNodes } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
+
+import './index.less';
 
 const CustomNode = memo(CustomNodeComponent);
 const edgeTypes = { buttonedge: memo(CustomEdge) };
@@ -34,7 +36,7 @@ const edgeTypes = { buttonedge: memo(CustomEdge) };
  *
  */
 const FlowEditor: FC<XFlowProps> = memo((props) => {
-  const { nodeMenus, nodes: originalNodes, edges: originalEdges } = props;
+  const { initialValues, settings } = props;
   const workflowContainerRef = useRef<HTMLDivElement>(null);
   const store = useStoreApi();
   const { updateEdge, addNodes, addEdges, zoomTo } = useReactFlow();
@@ -49,7 +51,6 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
     setNodes,
     setEdges,
     setLayout,
-    setNodeMenus,
     setCandidateNode,
     setMousePosition,
   } = useStore(
@@ -60,7 +61,6 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
       setLayout: state.setLayout,
       setNodes: state.setNodes,
       setEdges: state.setEdges,
-      setNodeMenus: state.setNodeMenus,
       setMousePosition: state.setMousePosition,
       setCandidateNode: state.setCandidateNode,
       onNodesChange: state.onNodesChange,
@@ -81,10 +81,9 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
 
   useEffect(() => {
     setLayout(props.layout);
-    setNodeMenus(nodeMenus);
-    setNodes(transformNodes(originalNodes));
-    setEdges(originalEdges);
-  }, [JSON.stringify(originalNodes)]);
+    setNodes(transformNodes(initialValues?.nodes));
+    setEdges(initialValues?.edges);
+  }, []);
 
   useEventListener('keydown', (e) => {
     if ((e.key === 'd' || e.key === 'D') && (e.ctrlKey || e.metaKey))
@@ -219,12 +218,12 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
   }, [layout]);
 
     // const edgeTypes = { buttonedge: (edgeProps: any) => <CustomEdge layout={layout} {...edgeProps} /> };
-    const { icon, description } = nodeMenus.find(
+    const { icon, description } = settings.find(
         (item) => item.type?.toLowerCase() === activeNode?.node?.toLowerCase(),
       ) || {};
 
     // const NodeEditor = useMemo(() => {
-    //   return configCtx.nodeWidgets[capitalize(`${activeNode?.type}Panel`)] || <div>1</div>;
+    //   return configCtx.widgets[capitalize(`${activeNode?.type}Panel`)] || <div>1</div>;
     // }, [activeNode?.id]);
 
     console.log(nodes, '23123123nodes', edges)

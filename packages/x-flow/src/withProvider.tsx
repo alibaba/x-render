@@ -3,20 +3,24 @@ import { ConfigProvider } from 'antd';
 import { ReactFlowProvider } from '@xyflow/react';
 import { FlowContext, ConfigContext } from './models/context';
 
-export default function withProvider<T>(Element: React.ComponentType<T>, defaultNodeWidgets?: any) : React.ComponentType<T> {
+export default function withProvider<T>(Element: React.ComponentType<T>, defaultWidgets?: any) : React.ComponentType<T> {
   return (props: any) => {
     const {
       configProvider,
-      nodeWidgets,
+      widgets,
       methods,
+      nodeSelector,
+      settings,
       ...restProps
     } = props;
   
     const configContext = {
       methods,
-      nodeWidgets: { 
-        ...defaultNodeWidgets,
-        ...nodeWidgets
+      nodeSelector,
+      settings,
+      widgets: { 
+        ...defaultWidgets,
+        ...widgets
       }
     };
   
@@ -25,7 +29,7 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
         <ConfigContext.Provider value={configContext}>
           <FlowContext.Provider value={{}}>
             <ReactFlowProvider>
-              <Element {...restProps} />
+              <Element {...restProps} settings={settings} />
             </ReactFlowProvider>
           </FlowContext.Provider>
         </ConfigContext.Provider>

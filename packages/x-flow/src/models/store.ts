@@ -19,7 +19,6 @@ export type AppState = {
   layout: 'LR' | 'TB',
   nodes: AppNode[];
   edges: Edge[];
-  nodeMenus: any[];
   candidateNode: any;
   mousePosition: any;
   onNodesChange: OnNodesChange<AppNode>;
@@ -28,7 +27,6 @@ export type AppState = {
   setNodes: (nodes: AppNode[]) => void;
   setEdges: (edges: Edge[]) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
-  setNodeMenus: (nodeMenus: any[]) => void;
   setCandidateNode: (candidateNode: any) => void;
   setMousePosition: (mousePosition: any) => void;
 };

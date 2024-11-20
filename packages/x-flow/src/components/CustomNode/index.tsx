@@ -8,13 +8,13 @@ import { Handle, Position, useReactFlow } from '@xyflow/react';
 import useStore from '../../models/store';
 import { capitalize, uuid } from '../../utils';
 import { ConfigContext } from '../../models/context';
-import NodeSelectPopover from '../NodeSelectPopover';
+import NodeSelectPopover from '../NodesPopover';
 import './index.less';
 
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick } = props;
   const configCtx: any = useContext(ConfigContext);
-  const NodeWidget = configCtx?.nodeWidgets[`${capitalize(type)}Node`];
+  const NodeWidget = configCtx?.widgets[`${capitalize(type)}Node`];
 
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();

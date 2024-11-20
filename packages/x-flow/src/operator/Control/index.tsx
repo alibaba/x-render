@@ -9,7 +9,7 @@ import {
 import { Tooltip, Button } from 'antd';
 import IconView from '../../components/IconView';
 import { useEventEmitterContextContext } from '../../models/event-emitter';
-import NodeSelectPopover from '../../components/NodeSelectPopover';
+import NodeSelectPopover from '../../components/NodesPopover';
 import './index.less';
 
 const Control = (props: any) => {
