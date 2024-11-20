@@ -8,8 +8,8 @@ import CustomNode from '../CustomNode';
 import useStore from '../../models/store';
 
 const CandidateNode = () => {
-  const reactflow = useReactFlow();
   const { zoom } = useViewport();
+  const reactflow = useReactFlow();
 
   const {
     nodes,
@@ -30,6 +30,9 @@ const CandidateNode = () => {
       onEdgesChange: state.onEdgesChange,
     }))
   );
+
+
+  console.log(candidateNode, 'candidateNode+++')
 
   useEventListener('click', (ev) => {
     if (!candidateNode) {
@@ -76,7 +79,7 @@ const CandidateNode = () => {
         transformOrigin: '0 0',
       }}
     >
-      <CustomNode {...candidateNode as any} />
+      <CustomNode {...candidateNode as any} type={candidateNode?.data?._nodeType } />
     </div>
   );
 }

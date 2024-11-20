@@ -14,7 +14,7 @@ import './index.less';
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick } = props;
   const { widgets, settingMap } = useContext(ConfigContext);
-  const NodeWidget = widgets[`${capitalize(type)}Node`];
+  const NodeWidget = widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
 
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
@@ -66,9 +66,6 @@ export default memo((props: any) => {
     targetPosition = Position.Top;
     sourcePosition = Position.Bottom;
   }
-
-  console.log(settingMap, 'settingMap=====')
-
 
   return (
     <div

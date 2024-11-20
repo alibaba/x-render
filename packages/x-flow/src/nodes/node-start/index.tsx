@@ -4,7 +4,6 @@ import NodeContainer from '../../components/NodeContainer';
 export default memo((props: any) => {
   const { onClick } = props;
   
-
   return (
     <NodeContainer
       className='custom-node-code'
