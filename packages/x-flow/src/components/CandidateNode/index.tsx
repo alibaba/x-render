@@ -31,9 +31,6 @@ const CandidateNode = () => {
     }))
   );
 
-
-  console.log(candidateNode, 'candidateNode+++')
-
   useEventListener('click', (ev) => {
     if (!candidateNode) {
       return;
@@ -56,27 +53,21 @@ const CandidateNode = () => {
     setCandidateNode(null);
   });
 
-  useEventListener('contextmenu', (e) => {
-    // const { candidateNode } = workflowStore.getState()
-    // if (candidateNode) {
-    //   e.preventDefault()
-    //   workflowStore.setState({ candidateNode: undefined })
-    // }
-  })
-
   if (!candidateNode) {
     return null
   }
+
+  console.log(mousePosition, '=======000000')
   
   return (
     <div
-      className='absolute z-10'
       style={{
-        zIndex: 100,
         left: mousePosition?.elementX,
         top: mousePosition?.elementY,
         transform: `scale(${zoom})`,
         transformOrigin: '0 0',
+        position: 'absolute',
+        zIndex: 10000
       }}
     >
       <CustomNode {...candidateNode as any} type={candidateNode?.data?._nodeType } />
