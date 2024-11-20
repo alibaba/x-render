@@ -1,5 +1,5 @@
 import React from 'react';
-interface TNodeItem {
+export interface TNodeItem {
   title: string; // 节点 title
   type: string; // 节点类型 _group 比较te s
   description?: string; // 节点描述
@@ -10,15 +10,10 @@ interface TNodeItem {
   }
 }
 
-interface TNodeGroup {
+export interface TNodeGroup {
   title: string; // 节点 title
   type: '_group',
   items: TNodeItem[]
-}
-
-export interface TNodeSelector {
-  showSearch: boolean; // 配置是否可搜索
-  items: (TNodeGroup | TNodeItem)[]
 }
 
 export interface TNodeMenu {
@@ -28,6 +23,10 @@ export interface TNodeMenu {
   onClick: ({}: { type: string }) => void
 }
 
+export interface TNodeSelector {
+  showSearch: boolean; // 配置是否可搜索
+  items: (TNodeGroup | TNodeItem)[]
+}
 
 export interface XFlowProps {
   initialValues: {
@@ -35,9 +34,8 @@ export interface XFlowProps {
     edges: any
   };
   layout: 'LR' | 'TB';
-  nodeOptions: TNodeSelector;
   widges: any; // 自定义组件
-  settings: any; // 节点配置
+  settings: (TNodeGroup | TNodeItem)[]; // 节点配置
   nodeSelector: TNodeSelector;
 }
 

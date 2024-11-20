@@ -51,6 +51,7 @@ const settings = [
     title: 'Input',
     type: 'Start',
     hidden: true,
+    targetHandleHidden: true,
     icon: {
       type: 'icon-start',
       bgColor: '#17B26A',
@@ -60,6 +61,7 @@ const settings = [
     title: 'Output',
     type: 'End',
     hidden: true,
+    sourceHandleHidden: true,
     icon: {
       type: 'icon-end',
       bgColor: '#F79009',

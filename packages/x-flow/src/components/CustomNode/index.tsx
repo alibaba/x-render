@@ -5,16 +5,16 @@ import classNames from 'classnames';
 import produce from 'immer';
 import { useShallow } from 'zustand/react/shallow';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
-import useStore from '../../models/store';
 import { capitalize, uuid } from '../../utils';
+import useStore from '../../models/store';
 import { ConfigContext } from '../../models/context';
 import NodeSelectPopover from '../NodesPopover';
 import './index.less';
 
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick } = props;
-  const configCtx: any = useContext(ConfigContext);
-  const NodeWidget = configCtx?.widgets[`${capitalize(type)}Node`];
+  const { widgets, settingMap } = useContext(ConfigContext);
+  const NodeWidget = widgets[`${capitalize(type)}Node`];
 
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
@@ -60,13 +60,15 @@ export default memo((props: any) => {
     setEdges(newEdges);
   };
 
-
   let targetPosition = Position.Left;
   let sourcePosition = Position.Right;
   if (layout === 'TB') {
     targetPosition = Position.Top;
     sourcePosition = Position.Bottom;
   }
+
+  console.log(settingMap, 'settingMap=====')
+
 
   return (
     <div
@@ -77,7 +79,7 @@ export default memo((props: any) => {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      { (
+      {!settingMap?.[type]?.targetHandleHidden && (
         <Handle
           type='target'
           position={targetPosition}
@@ -90,7 +92,7 @@ export default memo((props: any) => {
         data={data} 
         onClick={() => onClick(data)}
       />
-      {(
+      {!settingMap?.[type]?.sourceHandleHidden && (
         <Handle
           type='source'
           position={sourcePosition}
