@@ -72,7 +72,9 @@ const useStore = create<AppState>()(
         },
         addNodes: payload => {
           const newNodes = get().nodes.concat(payload);
-          set({ nodes: newNodes });
+          useTemporalStore().record(() => {
+            set({ nodes: newNodes });
+          })
         },
         addEdges: payload => {
           set({ edges: get().edges.concat(payload) });
