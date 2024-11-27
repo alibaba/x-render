@@ -1,9 +1,3 @@
-import type { FC } from 'react';
-import React, { memo, useEffect, useMemo, useRef, useState, useContext } from 'react';
-import { useEventListener, useMemoizedFn } from 'ahooks';
-import produce, { setAutoFreeze } from 'immer';
-import { debounce } from 'lodash';
-import { useShallow } from 'zustand/react/shallow';
 import {
   Background,
   BackgroundVariant,
@@ -13,18 +7,25 @@ import {
   useStoreApi,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { useEventEmitterContextContext } from './models/event-emitter';
+import { useEventListener, useMemoizedFn } from 'ahooks';
+import produce, { setAutoFreeze } from 'immer';
+import { debounce } from 'lodash';
+import type { FC } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 import CandidateNode from './components/CandidateNode';
 import CustomEdge from './components/CustomEdge';
 import PanelContainer from './components/PanelContainer';
+import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
-import Operator from './operator';
 import useStore, { useUndoRedo } from './models/store';
+import Operator from './operator';
 import XFlowProps from './types';
-import { capitalize, uuid, transformNodes } from './utils';
+import { transformNodes, uuid } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 
+import NodeEditor from './components/NodeEditor';
 import './index.less';
 
 const CustomNode = memo(CustomNodeComponent);
@@ -35,7 +36,7 @@ const edgeTypes = { buttonedge: memo(CustomEdge) };
  * XFlow 入口
  *
  */
-const FlowEditor: FC<XFlowProps> = memo((props) => {
+const FlowEditor: FC<XFlowProps> = memo(props => {
   const { initialValues, settings } = props;
   const workflowContainerRef = useRef<HTMLDivElement>(null);
   const store = useStoreApi();
@@ -54,7 +55,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
     setCandidateNode,
     setMousePosition,
   } = useStore(
-    useShallow((state) => ({
+    useShallow(state => ({
       nodes: state.nodes,
       edges: state.edges,
       layout: state.layout,
@@ -66,9 +67,8 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
       onNodesChange: state.onNodesChange,
       onEdgesChange: state.onEdgesChange,
       onConnect: state.onConnect,
-    })),
+    }))
   );
-
   const [activeNode, setActiveNode] = useState<any>(null);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
     setEdges(initialValues?.edges);
   }, []);
 
-  useEventListener('keydown', (e) => {
+  useEventListener('keydown', e => {
     if ((e.key === 'd' || e.key === 'D') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
     if ((e.key === 'z' || e.key === 'Z') && (e.ctrlKey || e.metaKey))
@@ -96,7 +96,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
       e.preventDefault();
   });
 
-  useEventListener('mousemove', (e) => {
+  useEventListener('mousemove', e => {
     const containerClientRect =
       workflowContainerRef.current?.getBoundingClientRect();
     if (containerClientRect) {
@@ -121,7 +121,6 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
       setActiveNode(null);
     }
   });
-
 
   // 新增节点
   const handleAddNode = (data: any) => {
@@ -162,7 +161,7 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
         source: '2',
         target: newNode.id,
       });
-      const targetEdge = edges.find((edge) => edge.source === '2');
+      const targetEdge = edges.find(edge => edge.source === '2');
       updateEdge(targetEdge?.id as string, {
         source: newNode.id,
       });
@@ -171,8 +170,8 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
 
   // edge 移入/移出效果
   const getUpdateEdgeConfig = useMemoizedFn((edge: any, color: string) => {
-    const newEdges = produce(edges, (draft) => {
-      const currEdge: any = draft.find((e) => e.id === edge.id);
+    const newEdges = produce(edges, draft => {
+      const currEdge: any = draft.find(e => e.id === edge.id);
       currEdge.style = {
         ...edge.style,
         stroke: color,
@@ -187,10 +186,10 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
 
   const handleNodeValueChange = debounce((data: any) => {
     for (let node of nodes) {
-      if (node.id === activeNode.name) {
+      if (node.id === data.id) {
         node.data = {
           ...node?.data,
-          ...data,
+          ...data?.values,
         };
         break;
       }
@@ -198,139 +197,144 @@ const FlowEditor: FC<XFlowProps> = memo((props) => {
     setNodes([...nodes]);
   }, 200);
 
-    
   const nodeTypes = useMemo(() => {
     return {
       custom: (props: any) => {
-        const { data, ...rest } = props;
+        const { data, id, ...rest } = props;
         const { _nodeType, ...restData } = data || {};
         return (
-          <CustomNode 
-            {...rest} 
-            data={{...restData}} 
+          <CustomNode
+            {...rest}
+            data={{ ...restData }}
             type={_nodeType}
             layout={layout}
-            onClick={setActiveNode}
+            onClick={e => {
+              setActiveNode({ id, _nodeType, values: { ...restData } });
+            }}
           />
         );
-      }
+      },
     };
   }, [layout]);
 
-    // const edgeTypes = { buttonedge: (edgeProps: any) => <CustomEdge layout={layout} {...edgeProps} /> };
-    const { icon, description } = settings.find(
-        (item) => item.type?.toLowerCase() === activeNode?.node?.toLowerCase(),
-      ) || {};
+  // const edgeTypes = { buttonedge: (edgeProps: any) => <CustomEdge layout={layout} {...edgeProps} /> };
+  const { icon, description } =
+    settings.find(
+      item => item.type?.toLowerCase() === activeNode?.node?.toLowerCase()
+    ) || {};
 
-    // const NodeEditor = useMemo(() => {
-    //   return configCtx.widgets[capitalize(`${activeNode?.type}Panel`)] || <div>1</div>;
-    // }, [activeNode?.id]);
-
-    console.log(nodes, '23123123nodes', edges)
-
+  const NodeEditorWrap = useMemo(() => {
     return (
-      <div id='xflow-container' ref={workflowContainerRef}>
-        <Operator handleRedo={undo} handleUndo={redo} addNode={handleAddNode} />
-        <CandidateNode />
-        <ReactFlow
-          nodeTypes={nodeTypes}
-          edgeTypes={edgeTypes}
-          nodes={nodes}
-          edges={edges}
-          minZoom={0.3}
-          defaultEdgeOptions={{
-            type: 'buttonedge',
-            style: {
-              strokeWidth: 1.5, // 线粗细
-            },
-            markerEnd: {
-              type: MarkerType.ArrowClosed, // 箭头
-            },
-          }}
-          onConnect={onConnect}
-          // onNodesChange={(changes) => {
-          //   const recordTypes = new Set(['add', 'remove']);
-          //   changes.forEach((change) => {
-          //     if (recordTypes.has(change.type)) {
-          //       record(() => {
-          //         onNodesChange([change]);
-          //       });
-          //     } else {
-          //       onNodesChange([change]);
-          //     }
-          //   });
-          // }}
-          onNodesChange={(changes) => {
-            const recordTypes = new Set(['add', 'remove']);
-            changes.forEach((change) => {
-              console.log(
-                '🚀 ~ file: main.tsx:226 ~ changes.forEach ~ change:',
-                change,
-              );
-
-              const removeChanges = changes.filter(
-                (change) => change.type === 'remove',
-              );
-
-              if (removeChanges.length > 0) {
-                removeChanges.forEach((change) => {
-                  eventEmitter?.emit({ type: 'deleteNode', payload: change });
-                });
-              }
-              if (recordTypes.has(change.type)) {
-                record(() => {
-                  onNodesChange([change]);
-                });
-              } else {
-                onNodesChange([change]);
-              }
-            });
-          }}
-          onEdgesChange={(changes) => {
-            const recordTypes = new Set(['add', 'remove']);
-            changes.forEach((change) => {
-              if (recordTypes.has(change.type)) {
-                record(() => {
-                  onEdgesChange([change]);
-                });
-              } else {
-                onEdgesChange([change]);
-              }
-            });
-          }}
-          onEdgeMouseEnter={(_, edge: any) => {
-            getUpdateEdgeConfig(edge, '#2970ff');
-          }}
-          onEdgeMouseLeave={(_, edge) => {
-            getUpdateEdgeConfig(edge, '#c9c9c9');
-          }}
-        >
-          <Background
-            gap={[16, 16]}
-            size={0.6}
-            color='black'
-            variant={BackgroundVariant.Dots}
-          />
-        </ReactFlow>
-
-        {activeNode && (
-          <PanelContainer
-            icon={icon}
-            title={activeNode?.name}
-            nodeType={activeNode?.node}
-            description={description}
-            onClose={() => setActiveNode(null)}
-            node={activeNode}
-          >
-            {/* <NodeEditor 
-              data={activeNode}
-              onChange={handleNodeValueChange}
-            /> */}
-          </PanelContainer>
-        )}
-      </div>
+      <NodeEditor
+        data={activeNode?.values}
+        onChange={handleNodeValueChange}
+        nodeType={activeNode?._nodeType}
+        id={activeNode?.id}
+      />
     );
-  },
-);
+  }, [activeNode?.id]);
+
+  return (
+    <div id="xflow-container" ref={workflowContainerRef}>
+      <Operator handleRedo={undo} handleUndo={redo} addNode={handleAddNode} />
+      <CandidateNode />
+      <ReactFlow
+        nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
+        nodes={nodes}
+        edges={edges}
+        minZoom={0.3}
+        defaultEdgeOptions={{
+          type: 'buttonedge',
+          style: {
+            strokeWidth: 1.5, // 线粗细
+          },
+          markerEnd: {
+            type: MarkerType.ArrowClosed, // 箭头
+          },
+        }}
+        onConnect={onConnect}
+        // onNodesChange={(changes) => {
+        //   const recordTypes = new Set(['add', 'remove']);
+        //   changes.forEach((change) => {
+        //     if (recordTypes.has(change.type)) {
+        //       record(() => {
+        //         onNodesChange([change]);
+        //       });
+        //     } else {
+        //       onNodesChange([change]);
+        //     }
+        //   });
+        // }}
+        onNodesChange={changes => {
+          const recordTypes = new Set(['add', 'remove']);
+          changes.forEach(change => {
+            console.log(
+              '🚀 ~ file: main.tsx:226 ~ changes.forEach ~ change:',
+              change
+            );
+
+            const removeChanges = changes.filter(
+              change => change.type === 'remove'
+            );
+
+            if (removeChanges.length > 0) {
+              removeChanges.forEach(change => {
+                eventEmitter?.emit({ type: 'deleteNode', payload: change });
+              });
+            }
+            if (recordTypes.has(change.type)) {
+              record(() => {
+                onNodesChange([change]);
+              });
+            } else {
+              onNodesChange([change]);
+            }
+          });
+        }}
+        onEdgesChange={changes => {
+          const recordTypes = new Set(['add', 'remove']);
+          changes.forEach(change => {
+            if (recordTypes.has(change.type)) {
+              record(() => {
+                onEdgesChange([change]);
+              });
+            } else {
+              onEdgesChange([change]);
+            }
+          });
+        }}
+        onEdgeMouseEnter={(_, edge: any) => {
+          getUpdateEdgeConfig(edge, '#2970ff');
+        }}
+        onEdgeMouseLeave={(_, edge) => {
+          getUpdateEdgeConfig(edge, '#c9c9c9');
+        }}
+      >
+        <Background
+          gap={[16, 16]}
+          size={0.6}
+          color="black"
+          variant={BackgroundVariant.Dots}
+        />
+      </ReactFlow>
+
+      {activeNode && (
+        <PanelContainer
+          // icon={icon}
+          // title={activeNode?.name}
+          id={activeNode?.id}
+          nodeType={activeNode?._nodeType}
+          // description={description}
+          onClose={() => setActiveNode(null)}
+          node={activeNode}
+          // disabled
+        >
+          {NodeEditorWrap}
+        </PanelContainer>
+      )}
+    </div>
+  );
+});
 
 export default FlowEditor;
