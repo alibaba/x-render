@@ -45,9 +45,6 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         // readOnly={readonly}
         widgets={widgets}
         watch={watch}
-        // onMount={() => {
-        //   form.setValues({ list: data?.list || [] });
-        // }}
       />
     );
   } else {

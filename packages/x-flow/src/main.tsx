@@ -202,6 +202,7 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
       custom: (props: any) => {
         const { data, id, ...rest } = props;
         const { _nodeType, ...restData } = data || {};
+
         return (
           <CustomNode
             {...rest}
@@ -321,13 +322,11 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
 
       {activeNode && (
         <PanelContainer
-          // icon={icon}
-          // title={activeNode?.name}
           id={activeNode?.id}
           nodeType={activeNode?._nodeType}
-          // description={description}
           onClose={() => setActiveNode(null)}
           node={activeNode}
+          data={activeNode?.values}
           // disabled
         >
           {NodeEditorWrap}
