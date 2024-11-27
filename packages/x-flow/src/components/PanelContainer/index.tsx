@@ -1,5 +1,7 @@
 import { Divider, Drawer, Input, Space } from 'antd';
-import React, { FC, useContext } from 'react';
+import produce from 'immer';
+import { debounce } from 'lodash';
+import React, { FC, useContext, useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { ConfigContext } from '../../models/context';
 import useStore from '../../models/store';
@@ -11,9 +13,10 @@ interface IPanelProps {
   nodeType: string;
   onClose: () => void;
   node?: { id: string; _isCandidate: boolean; _nodeType: string };
-  description?: string; // 业务描述---to do ：确认一下取的地方
+  description?: string; // 业务描述---to do ：确认一下取的地方---从data里面取？
   children?: any;
   id: string;
+  data: any; // data值
 }
 
 const getDescription = (nodeType: string, description: string) => {
@@ -28,7 +31,16 @@ const getDescription = (nodeType: string, description: string) => {
 
 const Panel: FC<IPanelProps> = (props: any) => {
   // disabled属性取的地方可能不对------to do
-  const { onClose, children, nodeType, disabled, node, description,id } = props;
+  const {
+    onClose,
+    children,
+    nodeType,
+    disabled,
+    node,
+    description,
+    id,
+    data,
+  } = props;
   // 1.获取节点配置信息
   const { settingMap } = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
@@ -40,7 +52,27 @@ const Panel: FC<IPanelProps> = (props: any) => {
   );
 
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
+  const [descVal, setDescVal] = useState(data?.desc);
+  const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
+
   // const description = getDescription(nodeType, props.description);
+
+  const handleNodeValueChange = debounce((data: any) => {
+    const newNodes = produce(nodes, draft => {
+      const node = draft.find(n => n.id === id);
+      if (node) {
+        // 更新节点的 data
+        node.data = { ...node.data, ...data };
+      }
+    });
+    setNodes(newNodes);
+  }, 100);
+
+  useEffect(() => {
+    setDescVal(data?.desc);
+    setTitleVal(data?.title || nodeSetting?.title);
+  }, [JSON.stringify(data), id]);
+
 
   return (
     <Drawer
@@ -67,9 +99,12 @@ const Panel: FC<IPanelProps> = (props: any) => {
               ) : (
                 <Input
                   style={{ width: '100%' }}
-                  value={nodeSetting?.title}
-                  onChange={val => {
-                    // console.log('名称改变', val);
+                  // defaultValue={data?.title || nodeSetting?.title}
+                  value={titleVal} //  || nodeSetting?.title
+                  onChange={e => {
+                    setTitleVal(e.target.value);
+                    handleNodeValueChange({ title: e.target.value });
+
                   }}
                 />
               )}
@@ -98,7 +133,13 @@ const Panel: FC<IPanelProps> = (props: any) => {
               <Input.TextArea
                 placeholder="添加描述..."
                 autoSize={{ minRows: 1 }}
-                defaultValue={description}
+                value={descVal}
+                // value={data?.desc}
+                // defaultValue={description}
+                onChange={e => {
+                  setDescVal(e.target.value);
+                  handleNodeValueChange({ desc: e.target.value });
+                }}
               />
             )}
           </div>
