@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 import { temporal } from 'zundo';
+import isDeepEqual from 'fast-deep-equal';
 import {
   addEdge,
   applyNodeChanges,
@@ -26,6 +27,8 @@ export type AppState = {
   onConnect: OnConnect;
   setNodes: (nodes: AppNode[]) => void;
   setEdges: (edges: Edge[]) => void;
+  addNodes: (nodes: AppNode[]) => void;
+  addEdges: (edges: Edge[]) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
   setCandidateNode: (candidateNode: any) => void;
   setMousePosition: (mousePosition: any) => void;
@@ -59,10 +62,20 @@ const useStore = create<AppState>()(
           });
         },
         setNodes: (nodes) => {
-          set({ nodes });
+          // 只记录节点变化
+          useTemporalStore().record(() => {
+            set({ nodes });
+          });
         },
         setEdges: (edges) => {
           set({ edges });
+        },
+        addNodes: payload => {
+          const newNodes = get().nodes.concat(payload);
+          set({ nodes: newNodes });
+        },
+        addEdges: payload => {
+          set({ edges: get().edges.concat(payload) });
         },
         setNodeMenus: (nodeMenus: any) => {
           set({ nodeMenus });
@@ -81,6 +94,8 @@ const useStore = create<AppState>()(
         }
       }),
       {
+        // nodes 和 edges 是引用类型，所以使用深比较
+        equality: isDeepEqual,
         // 偏函数
         partialize: (state) => {
           const { nodes, edges } = state;
@@ -89,27 +104,28 @@ const useStore = create<AppState>()(
             nodes,
           };
         },
+        onSave(pastState, currentState) {
+          console.log('onSave', pastState, currentState);
+        },
       },
     ),
   ),
 );
 
 
-export const useUndoRedo = (isTracking = true) => {
-  const temporalStore = useStore.temporal.getState();
-  if (temporalStore.isTracking) {
-    // 暂停时间旅行机器，
-    temporalStore.pause();
-  }
-
+export const useTemporalStore = () => {
   return {
-    ...temporalStore,
+    ...useStore.temporal.getState(),
     record: (callback: () => void) => {
+      const temporalStore = useStore.temporal.getState();
       temporalStore.resume();
       callback();
       temporalStore.pause();
     }
   }
 };
+
+// 默认关闭时间机器
+useStore.temporal.getState().pause();
 
 export default useStore;

@@ -86,7 +86,7 @@ export default memo((props: any) => {
       <NodeWidget
         id={id}
         type={type}
-        data={data} 
+        data={data}
         onClick={() => onClick(data)}
       />
       {!settingMap?.[type]?.sourceHandleHidden && (
@@ -97,8 +97,8 @@ export default memo((props: any) => {
         >
           {(selected || isHovered) && (
             <div className='xflow-node-add-box'>
-               <NodeSelectPopover placement='right' addNode={handleAddNode}>
-                  <Tooltip 
+              <NodeSelectPopover placement='right' addNode={handleAddNode}>
+                  <Tooltip
                     title='点击添加节点'
                     arrow={false}
                     overlayInnerStyle={{

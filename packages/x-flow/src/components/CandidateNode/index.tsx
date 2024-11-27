@@ -13,9 +13,9 @@ const CandidateNode = () => {
 
   const {
     nodes,
-    setNodes,
     candidateNode,
     mousePosition,
+    addNodes,
     setCandidateNode
   } = useStore(
     useShallow((state: any) => ({
@@ -23,8 +23,7 @@ const CandidateNode = () => {
       edges: state.edges,
       candidateNode: state.candidateNode,
       mousePosition: state.mousePosition,
-      setNodes: state.setNodes,
-      setEdges: state.setEdges,
+      addNodes: state.addNodes,
       setCandidateNode: state.setCandidateNode,
       onNodesChange: state.onNodesChange,
       onEdgesChange: state.onEdgesChange,
@@ -49,7 +48,7 @@ const CandidateNode = () => {
         position: { x, y }
       });
     });
-    setNodes(newNodes);
+    addNodes(newNodes);
     setCandidateNode(null);
   });
 
@@ -58,7 +57,7 @@ const CandidateNode = () => {
   }
 
   console.log(mousePosition, '=======000000')
-  
+
   return (
     <div
       style={{

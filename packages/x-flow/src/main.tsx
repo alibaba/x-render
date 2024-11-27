@@ -19,7 +19,7 @@ import PanelContainer from './components/PanelContainer';
 import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
-import useStore, { useUndoRedo } from './models/store';
+import useStore from './models/store';
 import Operator from './operator';
 import XFlowProps from './types';
 import { transformNodes, uuid } from './utils';
@@ -40,8 +40,8 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
   const { initialValues, settings } = props;
   const workflowContainerRef = useRef<HTMLDivElement>(null);
   const store = useStoreApi();
-  const { updateEdge, addNodes, addEdges, zoomTo } = useReactFlow();
-  const { undo, redo, record } = useUndoRedo(false);
+  const { updateEdge, zoomTo } = useReactFlow();
+  // const { undo, redo, record } = useTemporalStore();
   const {
     layout,
     nodes,
@@ -51,6 +51,8 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
     onConnect,
     setNodes,
     setEdges,
+    addNodes,
+    addEdges,
     setLayout,
     setCandidateNode,
     setMousePosition,
@@ -62,6 +64,8 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
       setLayout: state.setLayout,
       setNodes: state.setNodes,
       setEdges: state.setEdges,
+      addNodes: state.addNodes,
+      addEdges: state.addEdges,
       setMousePosition: state.setMousePosition,
       setCandidateNode: state.setCandidateNode,
       onNodesChange: state.onNodesChange,
@@ -134,14 +138,6 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
       },
     };
     setCandidateNode(newNode);
-    // record(() => {
-    //   addNodes(newNode);
-    //   addEdges({
-    //     id: uuid(),
-    //     source: '1',
-    //     target: newNode.id,
-    //   });
-    // });
   };
 
   // 插入节点
@@ -154,7 +150,7 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
         y: 0,
       },
     };
-    record(() => {
+    // record(() => {
       addNodes(newNode);
       addEdges({
         id: uuid(),
@@ -165,7 +161,7 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
       updateEdge(targetEdge?.id as string, {
         source: newNode.id,
       });
-    });
+    // });
   };
 
   // edge 移入/移出效果
@@ -236,7 +232,6 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
 
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
-      <Operator handleRedo={undo} handleUndo={redo} addNode={handleAddNode} />
       <CandidateNode />
       <ReactFlow
         nodeTypes={nodeTypes}
@@ -267,42 +262,10 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
         //   });
         // }}
         onNodesChange={changes => {
-          const recordTypes = new Set(['add', 'remove']);
-          changes.forEach(change => {
-            console.log(
-              '🚀 ~ file: main.tsx:226 ~ changes.forEach ~ change:',
-              change
-            );
-
-            const removeChanges = changes.filter(
-              change => change.type === 'remove'
-            );
-
-            if (removeChanges.length > 0) {
-              removeChanges.forEach(change => {
-                eventEmitter?.emit({ type: 'deleteNode', payload: change });
-              });
-            }
-            if (recordTypes.has(change.type)) {
-              record(() => {
-                onNodesChange([change]);
-              });
-            } else {
-              onNodesChange([change]);
-            }
-          });
+          onNodesChange(changes)
         }}
         onEdgesChange={changes => {
-          const recordTypes = new Set(['add', 'remove']);
-          changes.forEach(change => {
-            if (recordTypes.has(change.type)) {
-              record(() => {
-                onEdgesChange([change]);
-              });
-            } else {
-              onEdgesChange([change]);
-            }
-          });
+          onEdgesChange(changes);
         }}
         onEdgeMouseEnter={(_, edge: any) => {
           getUpdateEdgeConfig(edge, '#2970ff');
@@ -311,6 +274,7 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
           getUpdateEdgeConfig(edge, '#c9c9c9');
         }}
       >
+        <Operator addNode={handleAddNode} />
         <Background
           gap={[16, 16]}
           size={0.6}

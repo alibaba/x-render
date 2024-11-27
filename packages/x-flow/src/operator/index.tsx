@@ -5,22 +5,19 @@ import UndoRedo from './UndoRedo';
 import Control from './Control';
 
 import './index.less';
+import { useTemporalStore } from '../models/store';
 
 export type OperatorProps = {
-  handleUndo: () => void
-  handleRedo: () => void
   addNode: any;
 }
 
-const Operator = ({ handleUndo, handleRedo, addNode }: OperatorProps) => {
+const Operator = ({ addNode }: OperatorProps) => {
+  const { undo, redo, pastStates, futureStates } = useTemporalStore();
   return (
     <div className='fai-reactflow-operator'>
       <div className='operator-section'>
         <ZoomInOut />
-        <UndoRedo
-          handleRedo={handleRedo} 
-          handleUndo={handleUndo}
-        />
+        <UndoRedo handleUndo={() => undo()} handleRedo={() => redo()} pastStates={pastStates} futureStates={futureStates} />
         <Control addNode={addNode} />
       </div>
     </div>
