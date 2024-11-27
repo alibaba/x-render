@@ -45,6 +45,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         // readOnly={readonly}
         widgets={widgets}
         watch={watch}
+        size={'small'}
       />
     );
   } else {
