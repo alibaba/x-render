@@ -29,7 +29,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   );
 
   useEffect(() => {
-    if (nodeSetting?.schema) {
+    if (nodeSetting?.settingSchema) {
       form.resetFields();
       form.setValues(data || {});
     } else if (nodeSetting?.settingWidget) {
@@ -37,7 +37,6 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
     } else {
     }
 
-    console.log('data', data);
   }, [JSON.stringify(data), id]);
 
   const handleNodeValueChange = debounce((data: any) => {
@@ -64,19 +63,17 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       <NodeWidget
         value={customVal}
         onChange={values => {
-          console.log('onChange000', values);
           setCustomVal(values);
           // onChange({ id, values: { ...values } });
           handleNodeValueChange({ ...values });
         }}
       />
     );
-  } else if (nodeSetting?.schema) {
+  } else if (nodeSetting?.settingSchema) {
     return (
       <FormRender
-        schema={nodeSetting?.schema}
+        schema={nodeSetting?.settingSchema}
         form={form}
-        // readOnly={readonly}
         widgets={widgets}
         watch={watch}
         size={'small'}

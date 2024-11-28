@@ -9,7 +9,7 @@ export interface TNodeItem {
     type: string;
     bgColor: string;
   };
-  schema?: Schema; // 节点的配置schema（弹窗） string为自定义组件
+  settingSchema?: Schema; // 节点的配置schema（弹窗） string为自定义组件
   settingWidget?: string; // 自定义组件
   hideDesc?: boolean;// 隐藏业务描述
 }

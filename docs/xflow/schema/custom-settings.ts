@@ -8,7 +8,16 @@ export default [
       type: 'icon-start',
       bgColor: '#17B26A',
     },
-    settingWidget:"customWidget"
+    settingSchema: {
+      type: 'object',
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'customWidget',
+        },
+      }
+    },
   },
   {
     title: '结束',

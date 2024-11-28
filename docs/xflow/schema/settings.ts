@@ -8,7 +8,7 @@ export default [
       type: 'icon-start',
       bgColor: '#17B26A',
     },
-    schema: {
+    settingSchema: {
       type: 'object',
       properties: {
         input: {
@@ -77,7 +77,7 @@ export default [
       type: 'icon-end',
       bgColor: '#F79009',
     },
-    schema: {
+    settingSchema: {
       type: "object",
       properties: {
         input: {
