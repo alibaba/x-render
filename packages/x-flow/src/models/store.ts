@@ -1,80 +1,92 @@
-import { create } from 'zustand';
-import { immer } from 'zustand/middleware/immer';
-import { temporal } from 'zundo';
-import isDeepEqual from 'fast-deep-equal';
+import { useTemporalStore } from '../hooks/useStore';
 import {
   addEdge,
-  applyNodeChanges,
   applyEdgeChanges,
+  applyNodeChanges,
   Edge,
   Node,
-  OnNodesChange,
-  OnEdgesChange,
   OnConnect,
+  OnEdgesChange,
+  OnNodesChange,
 } from '@xyflow/react';
-import _ from "lodash";
+import isDeepEqual from 'fast-deep-equal';
+import { temporal } from 'zundo';
+import { createStore as createZustandStore } from 'zustand';
 
-export type AppNode = Node;
+export type XFlowProps = {
+  nodes?: Node[];
+  edges?: Edge[];
+  layout?: 'LR' | 'TB';
+};
 
-export type AppState = {
-  layout: 'LR' | 'TB',
-  nodes: AppNode[];
-  edges: Edge[];
+export type XFlowStore = ReturnType<typeof createStore>;
+
+export type XFlowNode = Node;
+
+export type XFlowState = {
+  layout?: 'LR' | 'TB';
+  nodes?: XFlowNode[];
+  edges?: Edge[];
   candidateNode: any;
   mousePosition: any;
-  onNodesChange: OnNodesChange<AppNode>;
+  onNodesChange: OnNodesChange<XFlowNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  setNodes: (nodes: AppNode[]) => void;
+  setNodes: (nodes: XFlowNode[]) => void;
   setEdges: (edges: Edge[]) => void;
-  addNodes: (nodes: AppNode[]) => void;
+  addNodes: (nodes: XFlowNode[]) => void;
   addEdges: (edges: Edge[]) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
   setCandidateNode: (candidateNode: any) => void;
   setMousePosition: (mousePosition: any) => void;
 };
 
-// 这是我们的 useStore hook，我们可以在我们的组件中使用它来获取 store 并调用动作
-// 注意：immer 使用方式是 create()(immer(() => ({})))
-const useStore = create<AppState>()(
-  immer(
+const createStore = (initProps?: Partial<XFlowProps>) => {
+  const DEFAULT_PROPS: XFlowProps = {
+    layout: 'LR',
+    nodes: [],
+    edges: []
+  };
+
+  return createZustandStore<XFlowState>()(
     temporal(
       (set, get) => ({
-        layout: 'LR',
+        ...DEFAULT_PROPS,
+        initProps,
         nodes: [],
         edges: [],
         candidateNode: null,
         nodeMenus: [],
         mousePosition: { pageX: 0, pageY: 0, elementX: 0, elementY: 0 },
-        onNodesChange: (changes) => {
+        onNodesChange: changes => {
           set({
             nodes: applyNodeChanges(changes, get().nodes),
           });
         },
-        onEdgesChange: (changes) => {
+        onEdgesChange: changes => {
           set({
             edges: applyEdgeChanges(changes, get().edges),
           });
         },
-        onConnect: (connection) => {
+        onConnect: connection => {
           set({
             edges: addEdge(connection, get().edges),
           });
         },
-        setNodes: (nodes) => {
+        setNodes: nodes => {
           // 只记录节点变化
-          useTemporalStore().record(() => {
+          // useTemporalStore().record(() => {
             set({ nodes });
-          });
+          // });
         },
-        setEdges: (edges) => {
+        setEdges: edges => {
           set({ edges });
         },
         addNodes: payload => {
           const newNodes = get().nodes.concat(payload);
-          useTemporalStore().record(() => {
+          // useTemporalStore().record(() => {
             set({ nodes: newNodes });
-          })
+          // });
         },
         addEdges: payload => {
           set({ edges: get().edges.concat(payload) });
@@ -82,7 +94,7 @@ const useStore = create<AppState>()(
         setNodeMenus: (nodeMenus: any) => {
           set({ nodeMenus });
         },
-        setCandidateNode: (candidateNode) => {
+        setCandidateNode: candidateNode => {
           set({ candidateNode });
         },
         setMousePosition: (mousePosition: any) => {
@@ -93,13 +105,13 @@ const useStore = create<AppState>()(
             return;
           }
           set({ layout });
-        }
+        },
       }),
       {
         // nodes 和 edges 是引用类型，所以使用深比较
         equality: isDeepEqual,
         // 偏函数
-        partialize: (state) => {
+        partialize: state => {
           const { nodes, edges } = state;
           return {
             edges,
@@ -109,25 +121,9 @@ const useStore = create<AppState>()(
         onSave(pastState, currentState) {
           console.log('onSave', pastState, currentState);
         },
-      },
-    ),
-  ),
-);
-
-
-export const useTemporalStore = () => {
-  return {
-    ...useStore.temporal.getState(),
-    record: (callback: () => void) => {
-      const temporalStore = useStore.temporal.getState();
-      temporalStore.resume();
-      callback();
-      temporalStore.pause();
-    }
-  }
+      }
+    )
+  );
 };
 
-// 默认关闭时间机器
-useStore.temporal.getState().pause();
-
-export default useStore;
+export { createStore };

@@ -4,7 +4,7 @@ import { debounce } from 'lodash';
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
 import { ConfigContext } from '../../models/context';
-import useStore from '../../models/store';
+import { useStore } from '../../hooks/useStore';
 import IconView from '../IconView';
 import './index.less';
 

@@ -1,9 +1,13 @@
-import Main from './main';
+import XFlow from './XFlow';
 import withProvider from './withProvider';
+
 import * as nodes from './nodes';
 
 export type {
 default as FR,
 } from './types';
 
-export default withProvider(Main, nodes);
+export { XFlowProvider } from './components/XFlowProvider';
+export { useXFlow } from './hooks/useXFlow';
+export { useStore, useStoreApi } from './hooks/useStore';
+export default withProvider(XFlow, nodes);

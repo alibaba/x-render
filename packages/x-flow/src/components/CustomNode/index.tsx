@@ -6,7 +6,7 @@ import produce from 'immer';
 import { useShallow } from 'zustand/react/shallow';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
 import { capitalize, uuid } from '../../utils';
-import useStore from '../../models/store';
+import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
 import NodeSelectPopover from '../NodesPopover';
 import './index.less';

@@ -5,7 +5,7 @@ import { useShallow } from 'zustand/react/shallow';
 import { useReactFlow, useViewport } from '@xyflow/react';
 import { useEventListener } from 'ahooks';
 import CustomNode from '../CustomNode';
-import useStore from '../../models/store';
+import { useStore } from '../../hooks/useStore';
 
 const CandidateNode = () => {
   const { zoom } = useViewport();

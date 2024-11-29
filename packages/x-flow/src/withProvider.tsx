@@ -1,9 +1,8 @@
-import React, { useMemo } from 'react';
-import { ConfigProvider } from 'antd';
 import { ReactFlowProvider } from '@xyflow/react';
-import { FlowContext, ConfigContext } from './models/context';
+import { ConfigProvider } from 'antd';
+import React, { useMemo } from 'react';
+import { ConfigContext } from './models/context';
 import { TNodeGroup, TNodeItem } from './types';
-
 interface ProviderProps<T> {
   configProvider?: any;
   widgets?: any;
@@ -13,7 +12,10 @@ interface ProviderProps<T> {
   [key: string]: any;
 }
 
-export default function withProvider<T>(Element: React.ComponentType<T>, defaultWidgets?: any) : React.ComponentType<T> {
+export default function withProvider<T>(
+  Element: React.ComponentType<T>,
+  defaultWidgets?: any
+): React.ComponentType<T> {
   return (props: ProviderProps<T>) => {
     const {
       configProvider,
@@ -43,22 +45,20 @@ export default function withProvider<T>(Element: React.ComponentType<T>, default
       nodeSelector,
       settings,
       settingMap,
-      widgets: { 
+      widgets: {
         ...defaultWidgets,
-        ...widgets
-      }
+        ...widgets,
+      },
     };
-  
+
     return (
       <ConfigProvider {...configProvider}>
         <ConfigContext.Provider value={configContext}>
-          <FlowContext.Provider value={{}}>
-            <ReactFlowProvider>
-              <Element {...restProps} settings={settings} />
-            </ReactFlowProvider>
-          </FlowContext.Provider>
+          <ReactFlowProvider>
+            <Element {...restProps} settings={settings} />
+          </ReactFlowProvider>
         </ConfigContext.Provider>
       </ConfigProvider>
     );
-  }
+  };
 }

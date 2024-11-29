@@ -4,7 +4,6 @@ import {
   MarkerType,
   ReactFlow,
   useReactFlow,
-  useStoreApi,
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useEventListener, useMemoizedFn } from 'ahooks';
@@ -19,7 +18,7 @@ import PanelContainer from './components/PanelContainer';
 import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
-import useStore from './models/store';
+import { useStore, useStoreApi } from './hooks/useStore';
 import Operator from './operator';
 import XFlowProps from './types';
 import { transformNodes, uuid } from './utils';
@@ -27,6 +26,7 @@ import autoLayoutNodes from './utils/autoLayoutNodes';
 
 import NodeEditor from './components/NodeEditor';
 import './index.less';
+import { Wrapper } from './Wrapper';
 
 const CustomNode = memo(CustomNodeComponent);
 const edgeTypes = { buttonedge: memo(CustomEdge) };
@@ -36,7 +36,7 @@ const edgeTypes = { buttonedge: memo(CustomEdge) };
  * XFlow 入口
  *
  */
-const FlowEditor: FC<XFlowProps> = memo(props => {
+const App: FC<XFlowProps> = memo(props => {
   const { initialValues, settings } = props;
   const workflowContainerRef = useRef<HTMLDivElement>(null);
   const store = useStoreApi();
@@ -87,6 +87,7 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
     setLayout(props.layout);
     setNodes(transformNodes(initialValues?.nodes));
     setEdges(initialValues?.edges);
+    store.temporal.getState().pause();
   }, []);
 
   useEventListener('keydown', e => {
@@ -141,28 +142,28 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
   };
 
   // 插入节点
-  const handleInsertNode = () => {
-    const newNode = {
-      id: uuid(),
-      data: { label: 'new node' },
-      position: {
-        x: 0,
-        y: 0,
-      },
-    };
-    // record(() => {
-      addNodes(newNode);
-      addEdges({
-        id: uuid(),
-        source: '2',
-        target: newNode.id,
-      });
-      const targetEdge = edges.find(edge => edge.source === '2');
-      updateEdge(targetEdge?.id as string, {
-        source: newNode.id,
-      });
-    // });
-  };
+  // const handleInsertNode = () => {
+  //   const newNode = {
+  //     id: uuid(),
+  //     data: { label: 'new node' },
+  //     position: {
+  //       x: 0,
+  //       y: 0,
+  //     },
+  //   };
+  //   // record(() => {
+  //   addNodes(newNode);
+  //   addEdges({
+  //     id: uuid(),
+  //     source: '2',
+  //     target: newNode.id,
+  //   });
+  //   const targetEdge = edges.find(edge => edge.source === '2');
+  //   updateEdge(targetEdge?.id as string, {
+  //     source: newNode.id,
+  //   });
+  //   // });
+  // };
 
   // edge 移入/移出效果
   const getUpdateEdgeConfig = useMemoizedFn((edge: any, color: string) => {
@@ -215,10 +216,10 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
   }, [layout]);
 
   // const edgeTypes = { buttonedge: (edgeProps: any) => <CustomEdge layout={layout} {...edgeProps} /> };
-  const { icon, description } =
-    settings.find(
-      item => item.type?.toLowerCase() === activeNode?.node?.toLowerCase()
-    ) || {};
+  // const { icon, description } =
+  //   settings.find(
+  //     item => item.type?.toLowerCase() === activeNode?.node?.toLowerCase()
+  //   ) || {};
 
   const NodeEditorWrap = useMemo(() => {
     return (
@@ -233,7 +234,6 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
 
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
-      <CandidateNode />
       <ReactFlow
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
@@ -250,20 +250,8 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
           },
         }}
         onConnect={onConnect}
-        // onNodesChange={(changes) => {
-        //   const recordTypes = new Set(['add', 'remove']);
-        //   changes.forEach((change) => {
-        //     if (recordTypes.has(change.type)) {
-        //       record(() => {
-        //         onNodesChange([change]);
-        //       });
-        //     } else {
-        //       onNodesChange([change]);
-        //     }
-        //   });
-        // }}
         onNodesChange={changes => {
-          onNodesChange(changes)
+          onNodesChange(changes);
         }}
         onEdgesChange={changes => {
           onEdgesChange(changes);
@@ -275,6 +263,7 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
           getUpdateEdgeConfig(edge, '#c9c9c9');
         }}
       >
+        <CandidateNode />
         <Operator addNode={handleAddNode} />
         <Background
           gap={[16, 16]}
@@ -282,22 +271,29 @@ const FlowEditor: FC<XFlowProps> = memo(props => {
           color="black"
           variant={BackgroundVariant.Dots}
         />
+        {activeNode && (
+          <PanelContainer
+            id={activeNode?.id}
+            nodeType={activeNode?._nodeType}
+            onClose={() => setActiveNode(null)}
+            node={activeNode}
+            data={activeNode?.values}
+            // disabled
+          >
+            {NodeEditorWrap}
+          </PanelContainer>
+        )}
       </ReactFlow>
-
-      {activeNode && (
-        <PanelContainer
-          id={activeNode?.id}
-          nodeType={activeNode?._nodeType}
-          onClose={() => setActiveNode(null)}
-          node={activeNode}
-          data={activeNode?.values}
-          // disabled
-        >
-          {NodeEditorWrap}
-        </PanelContainer>
-      )}
     </div>
   );
 });
 
-export default FlowEditor;
+const XFlow: FC<XFlowProps> = (props) => {
+  const { initialValues } = props;
+  return (
+    <Wrapper nodes={initialValues?.nodes} edges={initialValues.edges}>
+      <App {...props}/>
+    </Wrapper>
+  );
+};
+export default XFlow;

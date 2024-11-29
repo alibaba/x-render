@@ -63,6 +63,6 @@ export default (nodes: any, edges: any) => {
       }
     })
   });
-  
+
   return newNodes;
 }

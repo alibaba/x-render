@@ -1,9 +1,7 @@
 
 import React, { useCallback, useState, useRef, useContext } from 'react';
 import { Popover } from 'antd';
-import { useShallow } from 'zustand/react/shallow';
 import { useClickAway } from 'ahooks';
-import useStore from '../../models/store';
 import { ConfigContext } from '../../models/context';
 import NodesMenu from '../NodesMenu';
 
@@ -48,7 +46,7 @@ export default (props: any) => {
           ref={ref}
           items={settings}
           showSearch={showSearch}
-          onClick={handCreateNode} 
+          onClick={handCreateNode}
         />
       )}
     >

@@ -4,7 +4,7 @@ import { BezierEdge, EdgeLabelRenderer, getBezierPath, useReactFlow } from '@xyf
 import { useShallow } from 'zustand/react/shallow';
 import produce from 'immer';
 import { uuid } from '../../utils';
-import useStore from '../../models/store';
+import { useStore } from '../../hooks/useStore';
 import NodeSelectPopover from '../NodesPopover';
 import './index.less';
 
@@ -79,7 +79,7 @@ export default memo((edge: any) => {
     ])
 
     });
-   
+
     setNodes(newNodes);
     setEdges(newEdges);
     onEdgesChange([{ id, type: 'remove' }]);
@@ -95,7 +95,7 @@ export default memo((edge: any) => {
       targetY: edge.targetY + 13
     }
   }
-  
+
   return (
     <g
       onMouseEnter={() => setIsHovered(true)}
