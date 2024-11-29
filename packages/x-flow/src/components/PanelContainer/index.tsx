@@ -59,7 +59,14 @@ const Panel: FC<IPanelProps> = (props: any) => {
 
   const handleNodeValueChange = debounce((data: any) => {
     const newNodes = produce(nodes, draft => {
-      const node = draft.find(n => n.id === id);
+      let node = null;
+      // 反向查询ID，因为有多个ID相同的元素
+      for (let i = draft?.length - 1; i >= 0; i--) {
+        if (draft[i].id === id) {
+          node = draft[i];
+          break;
+        }
+      }
       if (node) {
         // 更新节点的 data
         node.data = { ...node.data, ...data };

@@ -3,8 +3,8 @@ import produce from 'immer';
 import { debounce } from 'lodash';
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { ConfigContext } from '../../models/context';
 import { useStore } from '../../hooks/useStore';
+import { ConfigContext } from '../../models/context';
 
 interface INodeEditorProps {
   data: any;
@@ -36,12 +36,18 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       setCustomVal(data);
     } else {
     }
-
   }, [JSON.stringify(data), id]);
 
   const handleNodeValueChange = debounce((data: any) => {
     const newNodes = produce(nodes, draft => {
-      const node = draft.find(n => n.id === id);
+      let node = null;
+      // 反向查询ID，因为有多个ID相同的元素
+      for (let i = draft?.length - 1; i >= 0; i--) {
+        if (draft[i].id === id) {
+          node = draft[i];
+          break;
+        }
+      }
       if (node) {
         // 更新节点的 data
         node.data = { ...node.data, ...data };
