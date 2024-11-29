@@ -108,16 +108,6 @@ export default [
       type: 'icon-model',
       bgColor: '#6172F3',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: 'Prompt',
@@ -127,16 +117,6 @@ export default [
       type: 'icon-prompt',
       bgColor: '#17B26A',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: '知识库',
@@ -146,16 +126,6 @@ export default [
       type: 'icon-knowledge',
       bgColor: '#6172F3',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: 'Switch',
@@ -165,16 +135,6 @@ export default [
       type: 'icon-switch',
       bgColor: '#06AED4',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: 'HSF',
@@ -184,16 +144,6 @@ export default [
       type: 'icon-hsf',
       bgColor: '#875BF7',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: 'Http',
@@ -203,16 +153,6 @@ export default [
       type: 'icon-http',
       bgColor: '#875BF7',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: '代码执行',
@@ -222,16 +162,6 @@ export default [
       type: 'icon-code',
       bgColor: '#2E90FA',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: '工具',
@@ -241,16 +171,6 @@ export default [
       type: 'icon-gongju',
       bgColor: '#2E90FA',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: '工具',
@@ -264,16 +184,6 @@ export default [
           type: 'icon-code',
           bgColor: '#2E90FA',
         },
-        settingSchema: {
-          type: "object",
-          properties: {
-            input: {
-              title: '变量一',
-              type: 'string',
-              widget: 'input',
-            },
-          }
-        }
       },
       {
         title: '工具',
@@ -283,16 +193,6 @@ export default [
           type: 'icon-gongju',
           bgColor: '#2E90FA',
         },
-        settingSchema: {
-          type: "object",
-          properties: {
-            input: {
-              title: '变量一',
-              type: 'string',
-              widget: 'input',
-            },
-          }
-        }
       },
     ],
   },

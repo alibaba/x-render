@@ -1,14 +1,18 @@
-export default [
+import XFlow from '@xrenders/xflow';
+// import settings from './setting';
+import React from 'react';
+
+const settings = [
   {
-    title: '开始',
+    title: '开始',   // 节点名称
     type: 'Start',
     hidden: true,
     targetHandleHidden: true,
-    icon: {
-      type: 'icon-start',
-      bgColor: '#17B26A',
+    icon: {          // 图标描述
+      type: 'icon-start',    // icon-font
+      bgColor: '#17B26A',    // 图标背景颜色
     },
-    settingSchema: {
+    settingSchema: {     // 自定义节点配置
       type: 'object',
       properties: {
         input: {
@@ -101,63 +105,6 @@ export default [
     }
   },
   {
-    title: 'LLM',
-    type: 'LLM',
-    description: '调用大语言模型回答问题或者对自然语言进行处理',
-    icon: {
-      type: 'icon-model',
-      bgColor: '#6172F3',
-    },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
-  },
-  {
-    title: 'Prompt',
-    type: 'Prompt',
-    description: '通过精心设计提示词，提升大语言模型回答效果',
-    icon: {
-      type: 'icon-prompt',
-      bgColor: '#17B26A',
-    },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
-  },
-  {
-    title: '知识库',
-    type: 'knowledge',
-    description: '允许你从知识库中查询与用户问题相关的文本内容',
-    icon: {
-      type: 'icon-knowledge',
-      bgColor: '#6172F3',
-    },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
-  },
-  {
     title: 'Switch',
     type: 'Switch',
     description: '允许你根据 if/else 条件将 workflow 拆分成两个分支',
@@ -165,54 +112,6 @@ export default [
       type: 'icon-switch',
       bgColor: '#06AED4',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
-  },
-  {
-    title: 'HSF',
-    type: 'hsf',
-    description: '允许通过 HSF 协议发送服务器请求',
-    icon: {
-      type: 'icon-hsf',
-      bgColor: '#875BF7',
-    },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
-  },
-  {
-    title: 'Http',
-    type: 'http',
-    description: '允许通过 HTTP 协议发送服务器请求',
-    icon: {
-      type: 'icon-http',
-      bgColor: '#875BF7',
-    },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: '代码执行',
@@ -222,16 +121,6 @@ export default [
       type: 'icon-code',
       bgColor: '#2E90FA',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: '工具',
@@ -241,20 +130,10 @@ export default [
       type: 'icon-gongju',
       bgColor: '#2E90FA',
     },
-    settingSchema: {
-      type: "object",
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'input',
-        },
-      }
-    }
   },
   {
     title: '工具',
-    type: '_group',
+    type: '_group',   // 节点分组
     items: [
       {
         title: '代码执行',
@@ -264,16 +143,6 @@ export default [
           type: 'icon-code',
           bgColor: '#2E90FA',
         },
-        settingSchema: {
-          type: "object",
-          properties: {
-            input: {
-              title: '变量一',
-              type: 'string',
-              widget: 'input',
-            },
-          }
-        }
       },
       {
         title: '工具',
@@ -283,17 +152,68 @@ export default [
           type: 'icon-gongju',
           bgColor: '#2E90FA',
         },
-        settingSchema: {
-          type: "object",
-          properties: {
-            input: {
-              title: '变量一',
-              type: 'string',
-              widget: 'input',
-            },
-          }
-        }
       },
     ],
   },
-];
+]
+export default () => {
+  const nodes = [
+    {
+      type: 'Start',
+      id: '1',
+      position: { x: -35, y: 268 },
+    },
+    {
+      type: 'Switch',
+      id: '2',
+      position: { x: 277.5, y: 268 },
+    },
+    {
+      type: 'Code',
+      id: '3',
+      position: { x: 675, y: 123.75 },
+    },
+    {
+      type: 'tool',
+      id: '4',
+      position: { x: 686.25, y: 495 },
+    },
+    {
+      type: 'End',
+      id: '5',
+      position: { x: 1176.2499999999998, y: 281.25 },
+    },
+  ];
+  const edges = [
+    { source: '1', target: '2', id: 'e1-2' },
+    {
+      source: '2',
+      target: '3',
+      id: 'e2-3',
+    },
+    { source: '2', target: '4', id: 'e2-4' },
+    {
+      source: '3',
+      target: '5',
+      id: 'e3-5',
+    },
+    {
+      source: '4',
+      target: '5',
+      id: 'e4-5',
+    },
+  ];
+
+  return (
+    <div style={{ height: '600px' }}>
+      <XFlow
+        initialValues={{ nodes, edges }}
+        settings={settings}  // 节点配置
+        nodeSelector={{
+          showSearch: true,
+        }}
+        layout="LR"
+      />
+    </div>
+  );
+};
