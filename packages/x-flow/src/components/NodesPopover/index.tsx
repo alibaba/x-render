@@ -1,25 +1,37 @@
-
-import React, { useCallback, useState, useRef, useContext } from 'react';
-import { Popover } from 'antd';
-import { useShallow } from 'zustand/react/shallow';
 import { useClickAway } from 'ahooks';
-import useStore from '../../models/store';
+import { Popover } from 'antd';
+import React, {
+  forwardRef,
+  useCallback,
+  useContext,
+  useImperativeHandle,
+  useRef,
+  useState,
+} from 'react';
 import { ConfigContext } from '../../models/context';
 import NodesMenu from '../NodesMenu';
 
-export default (props: any) => {
-  const { addNode,  children } = props;
+export default forwardRef((props: any, popoverRef) => {
+  const { addNode, children, onNodeSelectPopoverChange } = props;
 
   const ref = useRef<any>(null);
   const closeRef: any = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
   const { settings, nodeSelector } = useContext(ConfigContext);
-  const { showSearch, popoverProps = { placement: 'top' } } = nodeSelector || {};
+  const { showSearch, popoverProps = { placement: 'top' } } =
+    nodeSelector || {};
+
+  useImperativeHandle(popoverRef, () => ({
+    changeOpen: val => {
+      setOpen(val);
+    },
+  }));
 
   useClickAway(() => {
     if (closeRef.current) {
       setOpen(false);
+      onNodeSelectPopoverChange && onNodeSelectPopoverChange(false);
       closeRef.current = false;
     }
   }, ref);
@@ -27,6 +39,7 @@ export default (props: any) => {
   const handCreateNode = useCallback<any>(({ type }) => {
     addNode({ _nodeType: type });
     setOpen(false);
+    onNodeSelectPopoverChange && onNodeSelectPopoverChange(false);
   }, []);
 
   return (
@@ -35,24 +48,24 @@ export default (props: any) => {
       arrow={false}
       overlayInnerStyle={{ padding: '12px 6px' }}
       {...popoverProps}
-      trigger='click'
+      trigger="click"
       open={open}
       onOpenChange={() => {
         setTimeout(() => {
           closeRef.current = true;
           setOpen(true);
-        }, 50)
+        }, 50);
       }}
-      content={(
+      content={
         <NodesMenu
           ref={ref}
           items={settings}
           showSearch={showSearch}
-          onClick={handCreateNode} 
+          onClick={handCreateNode}
         />
-      )}
+      }
     >
       {children}
     </Popover>
   );
-}
+});

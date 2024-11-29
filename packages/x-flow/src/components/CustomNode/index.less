@@ -9,13 +9,13 @@
   }
 
   .react-flow__handle {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     background: transparent;
     border-radius: 0;
     border: none;
   }
-  
+
   .react-flow__handle::after {
     content: '';
     --tw-bg-opacity: 1;
@@ -24,6 +24,12 @@
     height: 10px;
     display: block;
     margin: 11px 0 8px 15px;
+  }
+
+  .react-flow__handle:hover {
+    .xflow-node-add-box {
+      scale: 130%;
+    }
   }
 
   .xflow-node-add-box {
@@ -37,6 +43,8 @@
     align-items: center;
     justify-content: center;
     background-color: #2970ff;
+    pointer-events: none;
+    transition: all 0.3s;
   }
 }
 
@@ -59,4 +67,3 @@
     display: none;
   }
 }
-
