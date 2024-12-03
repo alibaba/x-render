@@ -41,8 +41,6 @@ npm i @xrenders/xflow --save
  */
 import React from 'react';
 import XFlow from '@xrenders/xflow';
-import schema from './schema/basic';
-import data from './data/basic';
 import settings from './schema/settings';
 
 export default () => {
@@ -76,9 +74,6 @@ export default () => {
       <XFlow
         initialValues={{ nodes, edges }}
         settings={settings}
-        nodeSelector={{
-          showSearch: true,
-        }}
       />
     </div>
   );

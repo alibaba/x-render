@@ -1,10 +1,10 @@
 ---
-order: 3
-title: '布局方向'
+order: 1
+title: '画布布局'
 mobile: false
 group: 
   title: 最佳展示
-  order: 2
+  order: 1
 ---
 # 布局方向
 

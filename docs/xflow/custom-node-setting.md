@@ -1,21 +1,21 @@
 ---
 order: 2
-title: '自定义组件'
+toc: content
 mobile: false
 group: 
   title: 最佳展示
-  order: 2
+  order: 1
 ---
-# 自定义组件
 
-## 自定义配置组件
+# 节点配置面板
+节点配置面板支持以下两种渲染方式自定义：
 
-使用`settingWidget`自定义业务配置组件
+- **Schema 方式**: 适用于节点配置较为简单的场景。通过 FormRender 配置 schema 来实现快速渲染。
+- **Widget 方式**: 针对复杂的配置需求，schema 无法满足时，可以通过自定义组件进行灵活渲染。
 
- <code src="./demo/custom-flow/index.tsx"></code> 
 
-
-## 在schema中自定义组件
+## Schema
+通过配置节点的 settingSchema 属性，实现节点数据配置项的自定义渲染。
 
 ```jsx
 import { Input } from 'antd';
@@ -60,9 +60,6 @@ export default () => {
       <XFlow
         initialValues={{ nodes, edges }}
         settings={settings}
-        nodeSelector={{
-          showSearch: true,
-        }}
         widgets={{ customWidget }}
       />
     </div>
@@ -72,7 +69,7 @@ export default () => {
 
 ``` 
 
-## 自定义业务配置信息展示组件
-使用`nodeWidget`自定义节点的业务配置信息展示组件，在节点内部展示业务配置信息 
+## Widget
+通过配置节点的 `settingWidget` 属性，实现节点数据配置项的自定义渲染。
 
-<code src="./demo/nodeWidget"></code>
+<code src="./demo/custom-flow/index.tsx"></code>
