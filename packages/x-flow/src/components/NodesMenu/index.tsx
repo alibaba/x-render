@@ -24,7 +24,7 @@ const searchNodeList = (query: string, list: any[]) => {
 
     if (currentNode.title.toLowerCase().includes(searchTerm)) {
       result.push(currentNode);
-    } else if (currentNode.type === '_group' && currentNode.items) {
+    } else if (currentNode?.type === '_group' && currentNode.items) {
       const matchingItems = searchList(currentNode.items);
       if (matchingItems.length > 0) {
         result.push({ ...currentNode, items: matchingItems });
@@ -40,7 +40,7 @@ const MenuTooltip = ({ icon, title, description }: any) => {
   return (
     <div className='xflow-node-menu-tooltip'>
       <div className='icon-box-max' style={{ background: icon?.bgColor, marginRight: '8px' }}>
-        <IconView type={icon.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />
+        <IconView type={icon?.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />
       </div>
       <div className='title'>
         {title}
@@ -58,18 +58,18 @@ const MenuItem = (props: any) => {
   return (
     <Popover
       key={type}
-      title={<MenuTooltip {...props} />} 
-      placement='right' 
+      title={<MenuTooltip {...props} />}
+      placement='right'
       arrow={false}
     >
-      <div 
-        className='menu-item' 
+      <div
+        className='menu-item'
         onClick={onClick(type)}
       >
         <span className='icon-box' style={{ background: icon?.bgColor, marginRight: '8px' }}>
-          <IconView 
-            type={icon?.type} 
-            style={{ color: '#fff', fontSize: 13 }} 
+          <IconView
+            type={icon?.type}
+            style={{ color: '#fff', fontSize: 13 }}
           />
         </span>
         <span>{title}</span>
@@ -84,9 +84,9 @@ const filterHiddenMenu = (list: any) => {
 }
 
 /**
- * 
+ *
  * 节点菜单List
- * 
+ *
  */
 const NodesMenu = (props: TNodeMenu, ref: Ref<HTMLDivElement>) => {
   const { items, showSearch, onClick } = props;

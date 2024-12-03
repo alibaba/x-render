@@ -4,8 +4,9 @@ import { ConfigContext } from '../../models/context';
 
 export default memo((props: any) => {
   const { onClick, type, data } = props;
-  const { settingMap } = useContext(ConfigContext);
+  const { settingMap, widgets } = useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
+  const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
 
   return (
     <NodeContainer
@@ -19,6 +20,7 @@ export default memo((props: any) => {
       onClick={onClick}
       hideDesc={nodeSetting?.hideDesc || !data?.desc}
       desc={data?.desc}
+      NodeWidget={NodeWidget ? <NodeWidget data={data} /> : undefined}
     />
   );
 });

@@ -12,7 +12,7 @@ group:
 
 使用`settingWidget`自定义业务配置组件
 
-<code src="./demo/custom-flow/index.tsx"></code>
+ <code src="./demo/custom-flow/index.tsx"></code> 
 
 
 ## 在schema中自定义组件
@@ -70,4 +70,9 @@ export default () => {
 }
 
 
-```
+``` 
+
+## 自定义业务配置信息展示组件
+使用`nodeWidget`自定义节点的业务配置信息展示组件，在节点内部展示业务配置信息 
+
+<code src="./demo/nodeWidget"></code>

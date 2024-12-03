@@ -20,6 +20,8 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const { settingMap, widgets } = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const [customVal, setCustomVal] = useState(data);
+  const CustomSettingWidget = widgets[`${nodeType}NodeSettingWidget`]; // 内置setting组件
+  const NodeWidget = widgets[nodeSetting?.settingWidget]; // 自定义面板配置组件
 
   const { nodes, setNodes } = useStore(
     useShallow((state: any) => ({
@@ -30,11 +32,14 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
 
   useEffect(() => {
     if (nodeSetting?.settingSchema) {
+      // 自定义Schema
       form.resetFields();
       form.setValues(data || {});
     } else if (nodeSetting?.settingWidget) {
+      // 自定义组件
       setCustomVal(data);
     } else {
+      //可能为内置schema或者是没有
     }
   }, [JSON.stringify(data), id]);
 
@@ -63,14 +68,12 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
     },
   };
 
-  if (nodeSetting?.settingWidget) {
-    const NodeWidget = widgets[nodeSetting?.settingWidget];
+  if (nodeSetting?.settingWidget && NodeWidget) {
     return (
       <NodeWidget
         value={customVal}
         onChange={values => {
           setCustomVal(values);
-          // onChange({ id, values: { ...values } });
           handleNodeValueChange({ ...values });
         }}
       />
@@ -83,6 +86,16 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         widgets={widgets}
         watch={watch}
         size={'small'}
+      />
+    );
+  } else if (CustomSettingWidget) {
+    // 内置节点
+    return (
+      <CustomSettingWidget
+        onChange={val => {
+          handleNodeValueChange({ ...val });
+        }}
+        value={data}
       />
     );
   } else {

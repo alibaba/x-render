@@ -1,15 +1,31 @@
-import { PlusOutlined } from '@ant-design/icons';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
-import { Tooltip } from 'antd';
 import classNames from 'classnames';
 import produce from 'immer';
-import React, { memo, useContext, useRef, useState } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import { useShallow } from 'zustand/react/shallow';
-import { ConfigContext } from '../../models/context';
 import { useStore } from '../../hooks/useStore';
+import { ConfigContext } from '../../models/context';
 import { capitalize, uuid } from '../../utils';
-import NodeSelectPopover from '../NodesPopover';
 import './index.less';
+import SourceHandle from './sourceHandle';
+
+const generateRandomArray = (x: number, type?: string) => {
+  const randomArray = [];
+  for (let i = 0; i < x; i++) {
+    if (type === 'Switch') {
+      if (i === 0) {
+        randomArray.push({ id: uuid(), switchTitle: 'IF' });
+      } else if (i === x - 1) {
+        randomArray.push({ id: uuid(), switchTitle: 'ELSE' });
+      } else {
+        randomArray.push({ id: uuid(), switchTitle: 'ELIF' });
+      }
+    } else {
+      randomArray.push({ id: uuid() });
+    }
+  }
+  return randomArray;
+};
 
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick } = props;
@@ -17,10 +33,6 @@ export default memo((props: any) => {
   const NodeWidget =
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
-  const [isShowTooltip, setIsShowTooltip] = useState(false);
-  const popoverRef = useRef(null);
-  const [openNodeSelectPopover, setOpenNodeSelectPopover] = useState(false);
-
   const reactflow = useReactFlow();
   const { edges, nodes, setNodes, setEdges, mousePosition } = useStore(
     useShallow((state: any) => ({
@@ -32,6 +44,18 @@ export default memo((props: any) => {
       onEdgesChange: state.onEdgesChange,
     }))
   );
+  // data中的switchData的长度，即：if和if else 的数量,条件数量
+  const switchDataLength =
+    data?.switchData?.length >= 1 ? Number(data?.switchData?.length + 1) : 2;
+  const nodeHeight = 45; // 每次增长的节点高度
+  // 1.switch节点 if,else数量
+  const sourceHandleNum =
+    type === 'Switch'
+      ? generateRandomArray(switchDataLength, 'Switch')
+      : generateRandomArray(1);
+  const nodeMinHeight =
+    type === 'Switch' ? Number(switchDataLength * nodeHeight) : undefined;
+
 
   // 增加节点并进行联系
   const handleAddNode = (data: any) => {
@@ -89,45 +113,23 @@ export default memo((props: any) => {
         type={type}
         data={data}
         onClick={() => onClick(data)}
+        nodeMinHeight={nodeMinHeight}
       />
       {!settingMap?.[type]?.sourceHandleHidden && (
-        <Handle
-          type="source"
-          position={sourcePosition}
-          isConnectable={isConnectable}
-          onMouseEnter={() => setIsShowTooltip(true)}
-          onMouseLeave={() => setIsShowTooltip(false)}
-          onClick={e => {
-            e.stopPropagation();
-            popoverRef?.current?.changeOpen(true);
-            setIsShowTooltip(false);
-            setOpenNodeSelectPopover(true);
-          }}
-        >
-          {(selected || isHovered || openNodeSelectPopover) && (
-            <div className="xflow-node-add-box">
-              <NodeSelectPopover
-                placement="right"
-                addNode={handleAddNode}
-                ref={popoverRef}
-                onNodeSelectPopoverChange={(val)=>setOpenNodeSelectPopover(val)}
-              >
-                <Tooltip
-                  title="点击添加节点"
-                  arrow={false}
-                  overlayInnerStyle={{
-                    background: '#fff',
-                    color: '#354052',
-                    fontSize: '12px',
-                  }}
-                  open={isShowTooltip}
-                >
-                  <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
-                </Tooltip>
-              </NodeSelectPopover>
-            </div>
-          )}
-        </Handle>
+        <>
+          {sourceHandleNum?.map((item, key) => (
+            <SourceHandle
+              position={sourcePosition}
+              isConnectable={isConnectable}
+              selected={selected}
+              isHovered={isHovered}
+              handleAddNode={handleAddNode}
+              id={item.id}
+              style={key === 0 ? { top: 40 } : { top: 40 * key + 40 }}
+              switchTitle={item?.switchTitle}
+            />
+          ))}
+        </>
       )}
     </div>
   );

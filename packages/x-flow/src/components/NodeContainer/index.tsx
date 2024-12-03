@@ -7,7 +7,7 @@ import './index.less';
 const { Text, Paragraph } = Typography;
 
 export default memo((props: any) => {
-  const { className, onClick, children, icon, title, desc, hideDesc } = props;
+  const { className, onClick, children, icon, title, desc, hideDesc, NodeWidget, nodeMinHeight } = props;
 
   return (
     <div
@@ -15,6 +15,7 @@ export default memo((props: any) => {
         [className]: !!className,
       })}
       onClick={onClick}
+      style={nodeMinHeight ? { minHeight: nodeMinHeight } : {}}
     >
       <div className="node-title">
         <span className="icon-box" style={{ background: icon?.bgColor }}>
@@ -30,6 +31,11 @@ export default memo((props: any) => {
       </div>
       <div className="node-body">{children}</div>
       {/* {!hideDesc && !!desc && <div className="node-desc">{desc}</div>} */}
+      {
+        NodeWidget && <div className='node-widget'>
+          {NodeWidget}
+        </div>
+      }
       {!hideDesc && !!desc && (
         <Paragraph
           ellipsis={{
@@ -41,7 +47,6 @@ export default memo((props: any) => {
           {desc}
         </Paragraph>
       )}
-      {/* 在这里的节点下方添加一个自定义组件 */}
     </div>
   );
 });
