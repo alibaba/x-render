@@ -1,10 +1,10 @@
 ---
-order: 4
-title: '节点配置'
+order: 1
+title: '节点菜单配置'
 mobile: false
 group: 
   title: 最佳展示
-  order: 2
+  order: 1
 ---
 # 节点配置
 

@@ -13,7 +13,7 @@ interface ProviderProps<T> {
 }
 
 export default function withProvider<T>(
-  Element: React.ComponentType<T>,
+  Element: any,
   defaultWidgets?: any
 ): React.ComponentType<T> {
   return (props: ProviderProps<T>) => {
