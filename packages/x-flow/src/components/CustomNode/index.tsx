@@ -12,16 +12,17 @@ import SourceHandle from './sourceHandle';
 const generateRandomArray = (x: number, type?: string) => {
   const randomArray = [];
   for (let i = 0; i < x; i++) {
+    const id=`id_${i}`
     if (type === 'Switch') {
       if (i === 0) {
-        randomArray.push({ id: uuid(), switchTitle: 'IF' });
+        randomArray.push({ id , switchTitle: 'IF' });
       } else if (i === x - 1) {
-        randomArray.push({ id: uuid(), switchTitle: 'ELSE' });
+        randomArray.push({ id, switchTitle: 'ELSE' });
       } else {
-        randomArray.push({ id: uuid(), switchTitle: 'ELIF' });
+        randomArray.push({ id, switchTitle: 'ELIF' });
       }
     } else {
-      randomArray.push({ id: uuid() });
+      randomArray.push({ id });
     }
   }
   return randomArray;
@@ -117,15 +118,15 @@ export default memo((props: any) => {
       />
       {!settingMap?.[type]?.sourceHandleHidden && (
         <>
-          {sourceHandleNum?.map((item, key) => (
+          {(sourceHandleNum||[])?.map((item, key) => (
             <SourceHandle
               position={sourcePosition}
               isConnectable={isConnectable}
               selected={selected}
               isHovered={isHovered}
               handleAddNode={handleAddNode}
-              id={item.id}
-              style={key === 0 ? { top: 40 } : { top: 40 * key + 40 }}
+              id={item?.id}
+              style={item?.switchTitle ? key === 0 ? { top: 40 } : { top: 40 * key + 40 }:{}}
               switchTitle={item?.switchTitle}
             />
           ))}
