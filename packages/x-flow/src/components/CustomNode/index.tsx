@@ -2,7 +2,7 @@ import { Handle, Position, useReactFlow } from '@xyflow/react';
 import classNames from 'classnames';
 import produce from 'immer';
 import React, { memo, useContext, useState } from 'react';
-import { useShallow } from 'zustand/react/shallow';
+import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
 import { capitalize, uuid } from '../../utils';
@@ -12,10 +12,10 @@ import SourceHandle from './sourceHandle';
 const generateRandomArray = (x: number, type?: string) => {
   const randomArray = [];
   for (let i = 0; i < x; i++) {
-    const id=`id_${i}`
+    const id = `id_${i}`;
     if (type === 'Switch') {
       if (i === 0) {
-        randomArray.push({ id , switchTitle: 'IF' });
+        randomArray.push({ id, switchTitle: 'IF' });
       } else if (i === x - 1) {
         randomArray.push({ id, switchTitle: 'ELSE' });
       } else {
@@ -36,14 +36,15 @@ export default memo((props: any) => {
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
   const { edges, nodes, setNodes, setEdges, mousePosition } = useStore(
-    useShallow((state: any) => ({
+    (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,
       mousePosition: state.mousePosition,
       setNodes: state.setNodes,
       setEdges: state.setEdges,
       onEdgesChange: state.onEdgesChange,
-    }))
+    }),
+    shallow
   );
   // data中的switchData的长度，即：if和if else 的数量,条件数量
   const switchDataLength =
@@ -56,7 +57,6 @@ export default memo((props: any) => {
       : generateRandomArray(1);
   const nodeMinHeight =
     type === 'Switch' ? Number(switchDataLength * nodeHeight) : undefined;
-
 
   // 增加节点并进行联系
   const handleAddNode = (data: any) => {
@@ -118,7 +118,7 @@ export default memo((props: any) => {
       />
       {!settingMap?.[type]?.sourceHandleHidden && (
         <>
-          {(sourceHandleNum||[])?.map((item, key) => (
+          {(sourceHandleNum || [])?.map((item, key) => (
             <SourceHandle
               position={sourcePosition}
               isConnectable={isConnectable}
@@ -126,7 +126,13 @@ export default memo((props: any) => {
               isHovered={isHovered}
               handleAddNode={handleAddNode}
               id={item?.id}
-              style={item?.switchTitle ? key === 0 ? { top: 40 } : { top: 40 * key + 40 }:{}}
+              style={
+                item?.switchTitle
+                  ? key === 0
+                    ? { top: 40 }
+                    : { top: 40 * key + 40 }
+                  : {}
+              }
               switchTitle={item?.switchTitle}
             />
           ))}

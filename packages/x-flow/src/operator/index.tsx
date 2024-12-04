@@ -5,7 +5,7 @@ import UndoRedo from './UndoRedo';
 import Control from './Control';
 
 import './index.less';
-import { useTemporalStore } from '../hooks/useStore';
+import { useTemporalStore } from '../hooks/useTemporalStore';
 
 export type OperatorProps = {
   addNode: any;

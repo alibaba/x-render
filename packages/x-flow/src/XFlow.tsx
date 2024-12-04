@@ -11,7 +11,6 @@ import produce, { setAutoFreeze } from 'immer';
 import { debounce } from 'lodash';
 import type { FC } from 'react';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
-import { useShallow } from 'zustand/react/shallow';
 import CandidateNode from './components/CandidateNode';
 import CustomEdge from './components/CustomEdge';
 import PanelContainer from './components/PanelContainer';
@@ -19,14 +18,17 @@ import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
 import { useStore, useStoreApi } from './hooks/useStore';
+import { useTemporalStore } from './hooks/useTemporalStore';
+
 import Operator from './operator';
-import XFlowProps from './types';
+import FlowProps from './types';
 import { transformNodes, uuid } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 
+import { shallow } from 'zustand/shallow';
 import NodeEditor from './components/NodeEditor';
+import { useFlow } from './hooks/useFlow';
 import './index.less';
-import { Wrapper } from './Wrapper';
 
 const CustomNode = memo(CustomNodeComponent);
 const edgeTypes = { buttonedge: memo(CustomEdge) };
@@ -36,12 +38,11 @@ const edgeTypes = { buttonedge: memo(CustomEdge) };
  * XFlow 入口
  *
  */
-const App: FC<XFlowProps> = memo(props => {
+const XFlow: FC<FlowProps> = memo(props => {
   const { initialValues, settings } = props;
   const workflowContainerRef = useRef<HTMLDivElement>(null);
   const store = useStoreApi();
-  const { updateEdge, zoomTo } = useReactFlow();
-  // const { undo, redo, record } = useTemporalStore();
+  const { zoomTo } = useReactFlow();
   const {
     layout,
     nodes,
@@ -49,32 +50,26 @@ const App: FC<XFlowProps> = memo(props => {
     onNodesChange,
     onEdgesChange,
     onConnect,
-    setNodes,
-    setEdges,
-    addNodes,
-    addEdges,
     setLayout,
     setCandidateNode,
     setMousePosition,
   } = useStore(
-    useShallow(state => ({
+    state => ({
       nodes: state.nodes,
       edges: state.edges,
       layout: state.layout,
       setLayout: state.setLayout,
-      setNodes: state.setNodes,
-      setEdges: state.setEdges,
-      addNodes: state.addNodes,
-      addEdges: state.addEdges,
       setMousePosition: state.setMousePosition,
       setCandidateNode: state.setCandidateNode,
       onNodesChange: state.onNodesChange,
       onEdgesChange: state.onEdgesChange,
       onConnect: state.onConnect,
-    }))
+    }),
+    shallow
   );
+  const { setNodes, setEdges } = useFlow();
   const [activeNode, setActiveNode] = useState<any>(null);
-
+  const temporalStore = useTemporalStore();
   useEffect(() => {
     zoomTo(0.8);
     setAutoFreeze(false);
@@ -85,9 +80,10 @@ const App: FC<XFlowProps> = memo(props => {
 
   useEffect(() => {
     setLayout(props.layout);
+    // TODO: 默认关闭时间机器，可以向 zundo 贡献一个配置
+    temporalStore.pause();
     setNodes(transformNodes(initialValues?.nodes));
     setEdges(initialValues?.edges);
-    store.temporal.getState().pause();
   }, []);
 
   useEventListener('keydown', e => {
@@ -288,12 +284,4 @@ const App: FC<XFlowProps> = memo(props => {
   );
 });
 
-const XFlow: FC<XFlowProps> = (props) => {
-  const { initialValues } = props;
-  return (
-    <Wrapper nodes={initialValues?.nodes} edges={initialValues.edges}>
-      <App {...props}/>
-    </Wrapper>
-  );
-};
 export default XFlow;
