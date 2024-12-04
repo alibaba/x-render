@@ -9,14 +9,14 @@ mobile: false
   <span style="font-size:30px;font-weight:600;display:inline-block;margin-left:12px">XFlow</span>
 </div>
 <p style="display:flex;justify-content:space-between;width:440px">
-  <a href="https://www.npmjs.com/package/@xrenders/data-render" target="_blank">
-    <img alt="npm" src="https://img.shields.io/npm/v/@xrenders/data-render.svg?maxAge=3600&style=flat-square">
+  <a href="https://www.npmjs.com/package/@xrenders/xflow" target="_blank">
+    <img alt="npm" src="https://img.shields.io/npm/v/@xrenders/xflow.svg?maxAge=3600&style=flat-square">
   </a>
-  <a href="https://npmjs.org/package/@xrenders/data-render" target="_blank">
-    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/@xrenders/data-render.svg?style=flat-square">
+  <a href="https://npmjs.org/package/@xrenders/xflow" target="_blank">
+    <img alt="NPM downloads" src="https://img.shields.io/npm/dm/@xrenders/xflow.svg?style=flat-square">
   </a>
-  <a href="https://npmjs.org/package/@xrenders/data-render" target="_blank">
-    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/@xrenders/data-render.svg?style=flat-square">
+  <a href="https://npmjs.org/package/@xrenders/xflow" target="_blank">
+    <img alt="NPM all downloads" src="https://img.shields.io/npm/dt/@xrenders/xflow.svg?style=flat-square">
   </a>
   <a>
     <img alt="PRs Welcome" src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square">
