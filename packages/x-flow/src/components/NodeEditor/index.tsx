@@ -2,7 +2,7 @@ import FormRender, { useForm } from 'form-render';
 import produce from 'immer';
 import { debounce } from 'lodash';
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { useShallow } from 'zustand/react/shallow';
+import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
 
@@ -24,10 +24,11 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const NodeWidget = widgets[nodeSetting?.settingWidget]; // 自定义面板配置组件
 
   const { nodes, setNodes } = useStore(
-    useShallow((state: any) => ({
+    (state: any) => ({
       nodes: state.nodes,
       setNodes: state.setNodes,
-    }))
+    }),
+    shallow
   );
 
   useEffect(() => {

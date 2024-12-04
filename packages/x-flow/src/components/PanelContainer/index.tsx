@@ -2,9 +2,9 @@ import { Divider, Drawer, Input, Space } from 'antd';
 import produce from 'immer';
 import { debounce } from 'lodash';
 import React, { FC, useContext, useEffect, useState } from 'react';
-import { useShallow } from 'zustand/react/shallow';
-import { ConfigContext } from '../../models/context';
+import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
+import { ConfigContext } from '../../models/context';
 import IconView from '../IconView';
 import './index.less';
 
@@ -31,24 +31,17 @@ const getDescription = (nodeType: string, description: string) => {
 
 const Panel: FC<IPanelProps> = (props: any) => {
   // disabled属性取的地方可能不对------to do
-  const {
-    onClose,
-    children,
-    nodeType,
-    disabled,
-    node,
-    description,
-    id,
-    data,
-  } = props;
+  const { onClose, children, nodeType, disabled, node, description, id, data } =
+    props;
   // 1.获取节点配置信息
   const { settingMap } = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
-    useShallow((state: any) => ({
+    (state: any) => ({
       nodes: state.nodes,
       setNodes: state.setNodes,
-    }))
+    }),
+    shallow
   );
 
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
@@ -80,7 +73,6 @@ const Panel: FC<IPanelProps> = (props: any) => {
     setTitleVal(data?.title || nodeSetting?.title);
   }, [JSON.stringify(data), id]);
 
-
   return (
     <Drawer
       rootClassName="custom-node-panel"
@@ -111,7 +103,6 @@ const Panel: FC<IPanelProps> = (props: any) => {
                   onChange={e => {
                     setTitleVal(e.target.value);
                     handleNodeValueChange({ title: e.target.value });
-
                   }}
                 />
               )}

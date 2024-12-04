@@ -1,4 +1,3 @@
-import { useTemporalStore } from '../hooks/useStore';
 import {
   addEdge,
   applyEdgeChanges,
@@ -11,52 +10,53 @@ import {
 } from '@xyflow/react';
 import isDeepEqual from 'fast-deep-equal';
 import { temporal } from 'zundo';
-import { createStore as createZustandStore } from 'zustand';
+import { createWithEqualityFn } from 'zustand/traditional';
 
-export type XFlowProps = {
+export type FlowProps = {
   nodes?: Node[];
   edges?: Edge[];
+  panOnDrag?: boolean;
   layout?: 'LR' | 'TB';
 };
 
-export type XFlowStore = ReturnType<typeof createStore>;
+export type FlowStore = ReturnType<typeof createStore>;
 
-export type XFlowNode = Node;
+export type FlowNode = Node;
 
-export type XFlowState = {
+export type FlowState = {
   layout?: 'LR' | 'TB';
-  nodes?: XFlowNode[];
+  nodes?: FlowNode[];
   edges?: Edge[];
+  panOnDrag?: boolean;
   candidateNode: any;
   mousePosition: any;
-  onNodesChange: OnNodesChange<XFlowNode>;
+  onNodesChange: OnNodesChange<FlowNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  setNodes: (nodes: XFlowNode[]) => void;
+  setNodes: (nodes: FlowNode[]) => void;
   setEdges: (edges: Edge[]) => void;
-  addNodes: (nodes: XFlowNode[]) => void;
+  addNodes: (nodes: FlowNode[]) => void;
   addEdges: (edges: Edge[]) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
   setCandidateNode: (candidateNode: any) => void;
   setMousePosition: (mousePosition: any) => void;
 };
 
-const createStore = (initProps?: Partial<XFlowProps>) => {
-  const DEFAULT_PROPS: XFlowProps = {
+const createStore = (initProps?: Partial<FlowProps>) => {
+  const DEFAULT_PROPS: FlowProps = {
     layout: 'LR',
+    panOnDrag: true,
     nodes: [],
     edges: []
   };
 
-  return createZustandStore<XFlowState>()(
+  return createWithEqualityFn<FlowState>()(
     temporal(
       (set, get) => ({
         ...DEFAULT_PROPS,
-        initProps,
-        nodes: [],
-        edges: [],
+        ...initProps,
         candidateNode: null,
-        nodeMenus: [],
+        // nodeMenus: [],
         mousePosition: { pageX: 0, pageY: 0, elementX: 0, elementY: 0 },
         onNodesChange: changes => {
           set({
@@ -73,27 +73,28 @@ const createStore = (initProps?: Partial<XFlowProps>) => {
             edges: addEdge(connection, get().edges),
           });
         },
+        getNodes: () => {
+          return get().nodes;
+        },
         setNodes: nodes => {
-          // 只记录节点变化
-          // useTemporalStore().record(() => {
-            set({ nodes });
-          // });
+          set({ nodes });
         },
         setEdges: edges => {
           set({ edges });
         },
+        getEdges: () => {
+          return get().nodes;
+        },
         addNodes: payload => {
           const newNodes = get().nodes.concat(payload);
-          // useTemporalStore().record(() => {
-            set({ nodes: newNodes });
-          // });
+          set({ nodes: newNodes });
         },
         addEdges: payload => {
           set({ edges: get().edges.concat(payload) });
         },
-        setNodeMenus: (nodeMenus: any) => {
-          set({ nodeMenus });
-        },
+        // setNodeMenus: (nodeMenus: any) => {
+        //   set({ nodeMenus });
+        // },
         setCandidateNode: candidateNode => {
           set({ candidateNode });
         },
@@ -122,7 +123,8 @@ const createStore = (initProps?: Partial<XFlowProps>) => {
           console.log('onSave', pastState, currentState);
         },
       }
-    )
+    ),
+    Object.is
   );
 };
 

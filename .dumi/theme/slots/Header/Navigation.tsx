@@ -13,10 +13,10 @@ const Navigation: React.FC = () => {
       label: <Link to="/table-render">TableRender</Link>,
       key: 'table-render',
     },
-    {
-      label: <Link to="/xflow">XFlow</Link>,
-      key: 'xflow',
-    },
+    // {
+    //   label: <Link to="/xflow">XFlow</Link>,
+    //   key: 'xflow',
+    // },
     {
       label: <Link to="/form-render-mobile">FRMobile</Link>,
       key: 'form-render-mobile',
