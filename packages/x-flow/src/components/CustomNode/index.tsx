@@ -1,6 +1,5 @@
 import { Handle, Position, useReactFlow } from '@xyflow/react';
 import classNames from 'classnames';
-import produce from 'immer';
 import React, { memo, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
@@ -35,7 +34,7 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { edges, nodes, addNodes, addEdges, mousePosition } = useStore(
+  const { addNodes, addEdges, mousePosition } = useStore(
     (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,
