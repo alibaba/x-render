@@ -7,6 +7,7 @@ export default [
       type: 'icon-switch',
       bgColor: '#06AED4',
     },
+   nodeWidget: "customWidget"   // 自定义节点面板渲染
   },
   {
     title: '开始',

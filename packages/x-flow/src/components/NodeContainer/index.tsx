@@ -7,21 +7,8 @@ import './index.less';
 const { Text, Paragraph } = Typography;
 
 export default memo((props: any) => {
-  const { 
-    className, 
-    onClick, 
-    children, 
-    icon, 
-    title, 
-    desc, 
-    hideDesc, 
-    NodeWidget, 
-    nodeMinHeight,
-    iconFontUrl
-  } = props;
-
+  const { className, onClick, children, icon, title, desc, hideDesc, NodeWidget, iconFontUrl } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
-
 
   return (
     <div
@@ -29,13 +16,11 @@ export default memo((props: any) => {
         [className]: !!className,
       })}
       onClick={onClick}
-      style={nodeMinHeight ? { minHeight: nodeMinHeight } : {}}
     >
       <div className='node-title'>
         <span className='icon-box' style={{ background: icon?.bgColor }}>
           <IconBox {...icon} />
         </span>
-        {/* <span style={{ marginLeft: '8px' }}>{title}</span> */}
         <Text
           style={{ width: 188, marginLeft: '8px' }}
           ellipsis={{ tooltip: title }}
@@ -43,8 +28,7 @@ export default memo((props: any) => {
           {title}
         </Text>
       </div>
-      <div className='node-body'>{children}</div>
-      {/* {!hideDesc && !!desc && <div className='node-desc'>{desc}</div>} */}
+      <div className="node-body">{children}</div>
       {
         NodeWidget && <div className='node-widget'>
           {NodeWidget}
