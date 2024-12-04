@@ -11,7 +11,6 @@ export default memo((props: any) => {
     selected,
     isHovered,
     handleAddNode,
-    id,
     switchTitle,
     ...rest
   } = props;
@@ -32,12 +31,13 @@ export default memo((props: any) => {
         setIsShowTooltip(false);
         setOpenNodeSelectPopover(true);
       }}
-      id={id}
       {...rest}
     >
       {(selected || isHovered || openNodeSelectPopover) && (
         <>
-          {switchTitle && <div className="xflow-node-switch-title">{switchTitle}</div>}
+          {switchTitle && (
+            <div className="xflow-node-switch-title">{switchTitle}</div>
+          )}
           <div className="xflow-node-add-box">
             <NodeSelectPopover
               placement="right"

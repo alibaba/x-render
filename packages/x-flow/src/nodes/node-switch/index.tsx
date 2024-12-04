@@ -8,7 +8,11 @@ export default memo((props: any) => {
     onClick,
     type,
     data,
-    nodeMinHeight
+    position,
+    isConnectable,
+    selected,
+    isHovered,
+    handleAddNode,
   } = props;
   const { settingMap, widgets } = useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
@@ -26,8 +30,17 @@ export default memo((props: any) => {
       onClick={onClick}
       hideDesc={nodeSetting?.hideDesc || !data?.desc}
       desc={data?.desc}
-      NodeWidget={NodeWidget ? <NodeWidget data={data} /> : <SwitchBuildInNodeWidget data={data} />}
-      nodeMinHeight={nodeMinHeight}
+      NodeWidget={
+        <SwitchBuildInNodeWidget
+          data={data}
+          position={position}
+          isConnectable={isConnectable}
+          selected={selected}
+          isHovered={isHovered}
+          handleAddNode={handleAddNode}
+          CustomNodeWidget={NodeWidget}
+        />
+      }
     />
   );
 });

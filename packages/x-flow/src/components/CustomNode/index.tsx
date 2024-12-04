@@ -8,25 +8,6 @@ import { capitalize, uuid } from '../../utils';
 import './index.less';
 import SourceHandle from './sourceHandle';
 
-const generateRandomArray = (x: number, type?: string) => {
-  const randomArray = [];
-  for (let i = 0; i < x; i++) {
-    const id = `id_${i}`;
-    if (type === 'Switch') {
-      if (i === 0) {
-        randomArray.push({ id, switchTitle: 'IF' });
-      } else if (i === x - 1) {
-        randomArray.push({ id, switchTitle: 'ELSE' });
-      } else {
-        randomArray.push({ id, switchTitle: 'ELIF' });
-      }
-    } else {
-      randomArray.push({ id });
-    }
-  }
-  return randomArray;
-};
-
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick } = props;
   const { widgets, settingMap } = useContext(ConfigContext);
@@ -34,7 +15,7 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, mousePosition } = useStore(
+  const { addNodes, addEdges, mousePosition,nodes,edges } = useStore(
     (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,
@@ -45,17 +26,7 @@ export default memo((props: any) => {
     }),
     shallow
   );
-  // data中的switchData的长度，即：if和if else 的数量,条件数量
-  const switchDataLength =
-    data?.switchData?.length >= 1 ? Number(data?.switchData?.length + 1) : 2;
-  const nodeHeight = 45; // 每次增长的节点高度
-  // 1.switch节点 if,else数量
-  const sourceHandleNum =
-    type === 'Switch'
-      ? generateRandomArray(switchDataLength, 'Switch')
-      : generateRandomArray(1);
-  const nodeMinHeight =
-    type === 'Switch' ? Number(switchDataLength * nodeHeight) : undefined;
+  const isSwitchNode = type === 'Switch';
 
   // 增加节点并进行联系
   const handleAddNode = (data: any) => {
@@ -87,7 +58,7 @@ export default memo((props: any) => {
     targetPosition = Position.Top;
     sourcePosition = Position.Bottom;
   }
-
+ console.log("1", JSON.stringify(nodes), '=====',JSON.stringify(edges))
   return (
     <div
       className={classNames('xflow-node-container', {
@@ -109,28 +80,21 @@ export default memo((props: any) => {
         type={type}
         data={data}
         onClick={() => onClick(data)}
-        nodeMinHeight={nodeMinHeight}
+        position={sourcePosition}
+        isConnectable={isConnectable}
+        selected={selected}
+        isHovered={isHovered}
+        handleAddNode={handleAddNode}
       />
-      {!settingMap?.[type]?.sourceHandleHidden && (
+      {!settingMap?.[type]?.sourceHandleHidden && !isSwitchNode && (
         <>
-          {(sourceHandleNum || [])?.map((item, key) => (
-            <SourceHandle
-              position={sourcePosition}
-              isConnectable={isConnectable}
-              selected={selected}
-              isHovered={isHovered}
-              handleAddNode={handleAddNode}
-              id={item?.id}
-              style={
-                item?.switchTitle
-                  ? key === 0
-                    ? { top: 40 }
-                    : { top: 40 * key + 40 }
-                  : {}
-              }
-              switchTitle={item?.switchTitle}
-            />
-          ))}
+          <SourceHandle
+            position={sourcePosition}
+            isConnectable={isConnectable}
+            selected={selected}
+            isHovered={isHovered}
+            handleAddNode={handleAddNode}
+          />
         </>
       )}
     </div>
