@@ -1,13 +1,27 @@
 import { Typography } from 'antd';
 import classNames from 'classnames';
-import React, { memo } from 'react';
-import IconView from '../IconView';
+import React, { memo, useMemo } from 'react';
+import createIconFont from '../../utils/createIconFont';
 import './index.less';
 
 const { Text, Paragraph } = Typography;
 
 export default memo((props: any) => {
-  const { className, onClick, children, icon, title, desc, hideDesc, NodeWidget, nodeMinHeight } = props;
+  const { 
+    className, 
+    onClick, 
+    children, 
+    icon, 
+    title, 
+    desc, 
+    hideDesc, 
+    NodeWidget, 
+    nodeMinHeight,
+    iconFontUrl
+  } = props;
+
+  const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
+
 
   return (
     <div
@@ -17,9 +31,9 @@ export default memo((props: any) => {
       onClick={onClick}
       style={nodeMinHeight ? { minHeight: nodeMinHeight } : {}}
     >
-      <div className="node-title">
-        <span className="icon-box" style={{ background: icon?.bgColor }}>
-          <IconView {...icon} />
+      <div className='node-title'>
+        <span className='icon-box' style={{ background: icon?.bgColor }}>
+          <IconBox {...icon} />
         </span>
         {/* <span style={{ marginLeft: '8px' }}>{title}</span> */}
         <Text
@@ -29,8 +43,8 @@ export default memo((props: any) => {
           {title}
         </Text>
       </div>
-      <div className="node-body">{children}</div>
-      {/* {!hideDesc && !!desc && <div className="node-desc">{desc}</div>} */}
+      <div className='node-body'>{children}</div>
+      {/* {!hideDesc && !!desc && <div className='node-desc'>{desc}</div>} */}
       {
         NodeWidget && <div className='node-widget'>
           {NodeWidget}
@@ -42,7 +56,7 @@ export default memo((props: any) => {
             rows: 2,
             tooltip: { title: desc, placement: 'topRight' },
           }}
-          className="node-desc"
+          className='node-desc'
         >
           {desc}
         </Paragraph>

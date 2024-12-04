@@ -41,6 +41,7 @@ export interface FlowProps {
   widgets: any; // 自定义组件
   settings: (TNodeGroup | TNodeItem)[]; // 节点配置
   nodeSelector: TNodeSelector;
+  iconFontUrl: string;
 }
 
 export default FlowProps;

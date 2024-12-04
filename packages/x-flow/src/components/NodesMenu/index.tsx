@@ -1,9 +1,9 @@
-
-import React, { forwardRef, Ref } from 'react';
+import React, { forwardRef, Ref, useContext, useMemo } from 'react';
 import { Popover, Input } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { ConfigContext } from '../../models/context';
 import { useSet } from '../../utils/hooks';
-import IconView from '../IconView';
+import createIconFont from '../../utils/createIconFont';
 import { TNodeMenu } from '../../types';
 import './index.less';
 
@@ -36,11 +36,13 @@ const searchNodeList = (query: string, list: any[]) => {
 };
 
 // 悬浮菜单项详细描述
-const MenuTooltip = ({ icon, title, description }: any) => {
+const MenuTooltip = ({ icon, title, description, iconFontUrl }: any) => {
+  const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
+
   return (
     <div className='xflow-node-menu-tooltip'>
       <div className='icon-box-max' style={{ background: icon?.bgColor, marginRight: '8px' }}>
-        <IconView type={icon?.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />
+        <IconBox type={icon?.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />
       </div>
       <div className='title'>
         {title}
@@ -54,7 +56,9 @@ const MenuTooltip = ({ icon, title, description }: any) => {
 
 // 节点菜单项
 const MenuItem = (props: any) => {
-  const { title, type, icon, onClick } = props;
+  const { title, type, icon, onClick, iconFontUrl } = props;
+  const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
+
   return (
     <Popover
       key={type}
@@ -67,7 +71,7 @@ const MenuItem = (props: any) => {
         onClick={onClick(type)}
       >
         <span className='icon-box' style={{ background: icon?.bgColor, marginRight: '8px' }}>
-          <IconView
+          <IconBox
             type={icon?.type}
             style={{ color: '#fff', fontSize: 13 }}
           />
@@ -90,6 +94,7 @@ const filterHiddenMenu = (list: any) => {
  */
 const NodesMenu = (props: TNodeMenu, ref: Ref<HTMLDivElement>) => {
   const { items, showSearch, onClick } = props;
+  const { iconFontUrl } = useContext(ConfigContext);
 
   const [state, setState] = useSet({
     menuList: [...items]
@@ -122,12 +127,21 @@ const NodesMenu = (props: TNodeMenu, ref: Ref<HTMLDivElement>) => {
           <div key={`${item.type}-${index}`}>
             <div className='menu-group-title'>{item.title}</div>
             {filterHiddenMenu(item.items).map((data: any, index: number) => (
-               <MenuItem {...data} onClick={handleItemClick} key={index} />
+              <MenuItem
+                iconFontUrl={iconFontUrl}
+                {...data} 
+                onClick={handleItemClick} 
+                key={index}
+              />
             ))}
           </div>
         ) : (
           <div key={`${item.type}-${index}`}>
-            <MenuItem {...item} onClick={handleItemClick} />
+            <MenuItem
+              iconFontUrl={iconFontUrl}
+              {...item}
+              onClick={handleItemClick}
+            />
           </div>
         ))}
       </div>
