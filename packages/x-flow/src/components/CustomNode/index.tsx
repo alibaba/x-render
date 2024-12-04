@@ -35,13 +35,13 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { edges, nodes, setNodes, setEdges, mousePosition } = useStore(
+  const { edges, nodes, addNodes, addEdges, mousePosition } = useStore(
     (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,
       mousePosition: state.mousePosition,
-      setNodes: state.setNodes,
-      setEdges: state.setEdges,
+      addNodes: state.addNodes,
+      addEdges: state.addEdges,
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
@@ -67,23 +67,19 @@ export default memo((props: any) => {
     });
     const targetId = uuid();
 
-    const newNodes = produce(nodes, (draft: any) => {
-      draft.push({
-        id: targetId,
-        type: 'custom',
-        data,
-        position: { x, y },
-      });
-    });
-    const newEdges = produce(edges, (draft: any) => {
-      draft.push({
-        id: uuid(),
-        source: id,
-        target: targetId,
-      });
-    });
-    setNodes(newNodes);
-    setEdges(newEdges);
+    const newNodes = {
+      id: targetId,
+      type: 'custom',
+      data,
+      position: { x, y },
+    };
+    const newEdges = {
+      id: uuid(),
+      source: id,
+      target: targetId,
+    };
+    addNodes(newNodes);
+    addEdges(newEdges);
   };
 
   let targetPosition = Position.Left;
