@@ -4,7 +4,7 @@ export default [
     type: 'Switch',
     description: '允许你根据 if/else 条件将 workflow 拆分成两个分支',
     icon: {
-      type: 'icon-switch',
+      type: 'icon-fenzhi',
       bgColor: '#06AED4',
     },
    nodeWidget: "customWidget"   // 自定义节点面板渲染
