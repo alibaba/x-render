@@ -56,7 +56,7 @@ const createStore = (initProps?: Partial<XFlowProps>) => {
         nodes: [],
         edges: [],
         candidateNode: null,
-        nodeMenus: [],
+        // nodeMenus: [],
         mousePosition: { pageX: 0, pageY: 0, elementX: 0, elementY: 0 },
         onNodesChange: changes => {
           set({
@@ -91,9 +91,9 @@ const createStore = (initProps?: Partial<XFlowProps>) => {
         addEdges: payload => {
           set({ edges: get().edges.concat(payload) });
         },
-        setNodeMenus: (nodeMenus: any) => {
-          set({ nodeMenus });
-        },
+        // setNodeMenus: (nodeMenus: any) => {
+        //   set({ nodeMenus });
+        // },
         setCandidateNode: candidateNode => {
           set({ candidateNode });
         },
