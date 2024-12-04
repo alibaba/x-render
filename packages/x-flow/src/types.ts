@@ -32,7 +32,7 @@ export interface TNodeSelector {
   items: (TNodeGroup | TNodeItem)[];
 }
 
-export interface XFlowProps {
+export interface FlowProps {
   initialValues: {
     nodes: any[];
     edges: any;
@@ -43,4 +43,4 @@ export interface XFlowProps {
   nodeSelector: TNodeSelector;
 }
 
-export default XFlowProps;
+export default FlowProps;

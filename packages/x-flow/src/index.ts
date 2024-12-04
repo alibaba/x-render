@@ -7,7 +7,9 @@ export type {
 default as FR,
 } from './types';
 
-export { XFlowProvider } from './components/XFlowProvider';
-export { useXFlow } from './hooks/useXFlow';
-export { useStore, useStoreApi } from './hooks/useStore';
+export { FlowProvider } from './components/FlowProvider';
+export { useFlow } from './hooks/useFlow';
+export { useNodes } from './hooks/useNodes';
+export { useEdges } from './hooks/useEdges';
+
 export default withProvider(XFlow, nodes);
