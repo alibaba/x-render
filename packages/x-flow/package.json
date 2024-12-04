@@ -52,7 +52,6 @@
     "ahooks": "^3.7.5",
     "zustand": "^4.5.4",
     "@xyflow/react": "^12.3.2",
-    "@remixicon/react": "^4.2.0",
     "@dagrejs/dagre": "^1.1.3",
     "zundo": "^2.1.0",
     "use-context-selector": "^1.4.1",
