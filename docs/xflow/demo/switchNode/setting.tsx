@@ -16,6 +16,16 @@ export default [
       type: 'icon-prompt',
       bgColor: '#17B26A',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '提示词',
+          type: 'string',
+          widget: 'textArea',
+        },
+      }
+    },
   },
   {
     title: '知识库',
@@ -24,6 +34,16 @@ export default [
     icon: {
       type: 'icon-knowledge',
       bgColor: '#6172F3',
+    },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '知识库',
+          type: 'string',
+          widget: 'textArea',
+        },
+      }
     },
   },
 ];
