@@ -15,6 +15,7 @@ import { createWithEqualityFn } from 'zustand/traditional';
 export type FlowProps = {
   nodes?: Node[];
   edges?: Edge[];
+  panOnDrag?: boolean;
   layout?: 'LR' | 'TB';
 };
 
@@ -26,6 +27,7 @@ export type FlowState = {
   layout?: 'LR' | 'TB';
   nodes?: FlowNode[];
   edges?: Edge[];
+  panOnDrag?: boolean;
   candidateNode: any;
   mousePosition: any;
   onNodesChange: OnNodesChange<FlowNode>;
@@ -43,6 +45,7 @@ export type FlowState = {
 const createStore = (initProps?: Partial<FlowProps>) => {
   const DEFAULT_PROPS: FlowProps = {
     layout: 'LR',
+    panOnDrag: true,
     nodes: [],
     edges: []
   };

@@ -47,6 +47,7 @@ const XFlow: FC<FlowProps> = memo(props => {
     layout,
     nodes,
     edges,
+    panOnDrag,
     onNodesChange,
     onEdgesChange,
     onConnect,
@@ -58,6 +59,7 @@ const XFlow: FC<FlowProps> = memo(props => {
       nodes: state.nodes,
       edges: state.edges,
       layout: state.layout,
+      panOnDrag: state.panOnDrag,
       setLayout: state.setLayout,
       setMousePosition: state.setMousePosition,
       setCandidateNode: state.setCandidateNode,
@@ -231,6 +233,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
       <ReactFlow
+        panOnDrag={panOnDrag}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         nodes={nodes}
