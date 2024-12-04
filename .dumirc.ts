@@ -76,6 +76,7 @@ export default defineConfig({
     'form-render-mobile':  path.resolve(__dirname, 'packages/form-render-mobile/src'),
     '@xrenders/schema-builder':  path.resolve(__dirname, 'tools/schema-builder/src'),
     '@xrenders/data-render':  path.resolve(__dirname, 'packages/data-render/src'),
+    '@xrenders/xflow':  path.resolve(__dirname, 'packages/x-flow/src'),
   },
   codeSplitting: { jsStrategy: 'granularChunks' },
   //...(process.env.NODE_ENV === 'development' ? {} : { ssr: {} }),

@@ -1,7 +1,7 @@
-import React from 'react';
+import { CodeOutlined, DownOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { Link } from 'dumi';
-import { CodeOutlined, DownOutlined, MobileOutlined, SwapOutlined, ToolOutlined } from '@ant-design/icons';
+import React from 'react';
 
 const Navigation: React.FC = () => {
   const items: any = [
@@ -13,9 +13,13 @@ const Navigation: React.FC = () => {
       label: <Link to="/table-render">TableRender</Link>,
       key: 'table-render',
     },
+    // {
+    //   label: <Link to="/xflow">XFlow</Link>,
+    //   key: 'xflow',
+    // },
     {
       label: <Link to="/form-render-mobile">FRMobile</Link>,
-      key: 'form-render-mobile'
+      key: 'form-render-mobile',
     },
     // {
     //   label: <Link to="/data-render">DataView</Link>,
@@ -23,7 +27,7 @@ const Navigation: React.FC = () => {
     // },
     {
       label: <Link to="/playground">Playground</Link>,
-      key: 'playground'
+      key: 'playground',
     },
     {
       label: <Link to="/schema-builder">SchemaBuilder</Link>,
@@ -33,17 +37,23 @@ const Navigation: React.FC = () => {
       label: (
         <div>
           <span>更多</span>
-          <DownOutlined style={{fontSize: 12, color: '#666', marginLeft: 3}} />
+          <DownOutlined
+            style={{ fontSize: 12, color: '#666', marginLeft: 3 }}
+          />
         </div>
       ),
       children: [
         {
-          label: <a href="https://1.xrender.fun/chart-render" target='_black'>ChartRender</a>,
+          label: (
+            <a href="https://1.xrender.fun/chart-render" target="_black">
+              ChartRender
+            </a>
+          ),
           key: 'chart-render',
           icon: <CodeOutlined />,
-        }
-      ]
-    }
+        },
+      ],
+    },
   ];
 
   return <Menu disabledOverflow items={items} mode="horizontal" />;

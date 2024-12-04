@@ -1,0 +1,78 @@
+.xflow-node-container {
+  border: 2px solid #fff;
+  border-radius: 14px;
+
+  .react-flow__edge-path,
+  .react-flow__connection-path {
+    stroke: #d0d5dc;
+    stroke-width: 2px;
+  }
+
+  .react-flow__handle {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border-radius: 0;
+    border: none;
+  }
+
+  .react-flow__handle::after {
+    content: '';
+    --tw-bg-opacity: 1;
+    background-color: #2970ff;
+    width: 2px;
+    height: 10px;
+    display: block;
+    margin: 11px 0 8px 15px;
+  }
+
+  .react-flow__handle:hover {
+    .xflow-node-add-box {
+      scale: 130%;
+    }
+  }
+
+  .xflow-node-add-box {
+    position: absolute;
+    top: 8px;
+    right: 9px;
+    width: 16px;
+    height: 16px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2970ff;
+    pointer-events: none;
+    transition: all 0.3s;
+  }
+
+  .xflow-node-switch-title{
+          position: absolute;
+    left: -45px;
+    top: 6px;
+    font-weight: 600;
+        text-align: right;
+    width: 35px;
+  }
+}
+
+.xflow-node-container-tb {
+  .react-flow__handle::after {
+    content: '';
+    --tw-bg-opacity: 1;
+    background-color: #2970ff;
+    width: 8px;
+    height: 2px;
+    display: block;
+    margin: 15px 0 0 12px;
+  }
+}
+
+.xflow-node-container-selected {
+  border: 2px solid #296dff;
+
+  .react-flow__handle::after {
+    display: none;
+  }
+}
