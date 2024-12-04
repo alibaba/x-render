@@ -6,3 +6,98 @@
 2024-12-04T01:57:03.387307Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
 2024-12-04T01:57:03.489850Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/hooks/useXFlow.ts"), AnchoredSystemPathBuf("packages/x-flow/src/components/CustomNode/index.tsx"), AnchoredSystemPathBuf("docs/xflow/XFlowProvider.md"), AnchoredSystemPathBuf("packages/x-flow/src/hooks/useEdges.ts"), AnchoredSystemPathBuf("packages/x-flow/src/components/CandidateNode/index.tsx"), AnchoredSystemPathBuf("docs/xflow/demo/flow-provider/edges.ts"), AnchoredSystemPathBuf("packages/x-flow/src/components/FlowProvider"), AnchoredSystemPathBuf("docs/xflow/demo/xflow-provider"), AnchoredSystemPathBuf("packages/x-flow/src/hooks/useFlow.ts"), AnchoredSystemPathBuf("packages/x-flow/src/hooks/useTemporalStore.ts"), AnchoredSystemPathBuf("packages/x-flow/src/components/CustomEdge/index.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/components/XFlowProvider"), AnchoredSystemPathBuf("packages/x-flow/src/operator/Control/index.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/hooks/useStore.ts"), AnchoredSystemPathBuf("docs/xflow/demo/flow-provider/nodes.ts"), AnchoredSystemPathBuf("packages/x-flow/src/components/XFlowProvider/index.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/types.ts"), AnchoredSystemPathBuf("packages/x-flow/src/withProvider.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/operator/index.tsx"), AnchoredSystemPathBuf("docs/xflow/demo/flow-provider/index.tsx"), AnchoredSystemPathBuf(".turbo/daemon/58af6c43ce0c4d29-turbo.log.2024-12-04"), AnchoredSystemPathBuf("packages/x-flow/src/components/FlowProvider/index.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/XFlow.tsx"), AnchoredSystemPathBuf("docs/xflow/demo/xflow-provider/index.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/components/PanelContainer/index.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/hooks/useNodes.ts"), AnchoredSystemPathBuf("packages/x-flow/src/models/context.ts"), AnchoredSystemPathBuf("packages/x-flow/package.json"), AnchoredSystemPathBuf("docs/xflow/FlowProvider.md"), AnchoredSystemPathBuf("packages/x-flow/src/models/store.ts"), AnchoredSystemPathBuf("docs/xflow/demo/flow-provider"), AnchoredSystemPathBuf("docs/xflow/demo/flow-provider/setting.tsx"), AnchoredSystemPathBuf(".dumi/theme/slots/Header/Navigation.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/Wrapper.tsx"), AnchoredSystemPathBuf("docs/xflow/demo/xflow-provider/setting.tsx"), AnchoredSystemPathBuf("packages/x-flow/src/index.ts"), AnchoredSystemPathBuf("packages/x-flow/src/components/NodeEditor/index.tsx")}
 2024-12-04T01:57:03.489860Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-12-04T02:02:45.185787Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:02:45.185812Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:02:45.185916Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:02:58.688093Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:02:58.688105Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:02:58.701161Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:04:17.888788Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/utils/createIconFont.ts")}
+2024-12-04T02:04:17.888797Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:04:17.888834Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:05:18.288096Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/utils/createIconFont.ts")}
+2024-12-04T02:05:18.288109Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:10:35.384082Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/types.ts")}
+2024-12-04T02:10:35.384091Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:11:05.484219Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/withProvider.tsx")}
+2024-12-04T02:11:05.484235Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:11:13.484884Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/withProvider.tsx")}
+2024-12-04T02:11:13.484902Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:12:29.168302Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:12:29.168323Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:15:25.664194Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:15:25.664211Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:15:25.768684Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:15:25.768692Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:15:25.768718Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:15:43.563383Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:15:43.563398Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:16:50.062422Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:16:50.062441Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:16:50.163131Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:16:50.163149Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:16:50.163218Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:17:39.363527Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:17:39.363536Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:18:04.062963Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:18:04.062972Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:18:10.463714Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:18:10.463726Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:18:49.361743Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:18:49.361755Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:18:49.363845Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:20:35.659889Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/PanelContainer/index.tsx")}
+2024-12-04T02:20:35.659907Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:21:01.061839Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/PanelContainer/index.tsx")}
+2024-12-04T02:21:01.061862Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:22:02.660020Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/PanelContainer/index.tsx")}
+2024-12-04T02:22:02.660032Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:22:48.064171Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/PanelContainer/index.tsx")}
+2024-12-04T02:22:48.064181Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:23:13.661187Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/PanelContainer/index.tsx")}
+2024-12-04T02:23:13.661205Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:23:13.672898Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:23:35.863089Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/CustomHtml/index.tsx")}
+2024-12-04T02:23:35.863105Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:23:35.888091Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:24:34.258187Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/CustomHtml")}
+2024-12-04T02:24:34.258197Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:25:23.459497Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodeContainer/index.tsx")}
+2024-12-04T02:25:23.459511Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:25:23.517056Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:26:59.256311Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/nodes/node-common/index.tsx")}
+2024-12-04T02:26:59.256326Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:27:14.360435Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/nodes/node-common/index.tsx")}
+2024-12-04T02:27:14.360446Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:29:50.318142Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodeContainer/index.tsx")}
+2024-12-04T02:29:50.318154Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:30:35.512507Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodeContainer/index.tsx")}
+2024-12-04T02:30:35.512518Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:30:47.510591Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodeContainer/index.tsx")}
+2024-12-04T02:30:47.510603Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:31:01.212277Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodeContainer/index.tsx")}
+2024-12-04T02:31:01.212295Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:31:20.309931Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/nodes/node-common/index.tsx")}
+2024-12-04T02:31:20.309941Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:31:52.011763Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/nodes/node-common/index.tsx")}
+2024-12-04T02:31:52.011774Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:31:52.020830Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun
+2024-12-04T02:32:12.310098Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/nodes/node-end/index.tsx")}
+2024-12-04T02:32:12.310110Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:32:28.910367Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/nodes/node-start/index.tsx")}
+2024-12-04T02:32:28.910376Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:32:41.912347Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/nodes/node-switch/index.tsx")}
+2024-12-04T02:32:41.912357Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:32:44.508527Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/nodes/node-switch/index.tsx")}
+2024-12-04T02:32:44.508541Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:33:13.607908Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:33:13.607923Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:33:16.507105Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/NodesMenu/index.tsx")}
+2024-12-04T02:33:16.507115Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:33:40.209657Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/components/PanelContainer/index.tsx")}
+2024-12-04T02:33:40.209675Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T02:35:40.408984Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".gitignore")}
+2024-12-04T02:35:40.409001Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2024-12-04T05:45:15.025538Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/x-flow/src/operator/ZoomInOut/index.tsx")}
+2024-12-04T05:45:15.025565Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@xrenders/xflow"), path: AnchoredSystemPathBuf("packages/x-flow") }}))
+2024-12-04T05:45:15.034848Z  WARN turborepo_lib::package_changes_watcher: hashes are the same, no need to rerun

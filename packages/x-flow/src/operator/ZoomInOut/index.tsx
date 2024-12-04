@@ -99,7 +99,7 @@ const ZoomInOut: FC = () => {
   } = useReactFlow();
 
   const { zoom } = useViewport();
-  
+
   const handleZoom = (type: string) => {
     if (type === ZoomType.zoomToFit)
       fitView()
@@ -123,23 +123,23 @@ const ZoomInOut: FC = () => {
   return (
     <div className='fai-reactflow-zoominout'>
       <Tooltip title='放大'>
-        <Button 
-          type='text' 
-          icon={<IconView type='icon-zoomout' style={{ fontSize: 18, color: '#667085' }} />} 
+        <Button
+          type='text'
+          icon={<IconView type='icon-zoomout' style={{ fontSize: 18, color: '#667085' }} />}
           onClick={(e) => {
             e.stopPropagation();
             zoomOut();
           }}
         />
       </Tooltip>
-      <div style={{ fontSize: '13px', fontWeight: 500, padding: '0 2px' }}>
+      <div style={{ fontSize: '13px', fontWeight: 500, padding: '0 2px', textAlign: 'center', width: '32px' }}>
         <Popover content={<ZoomSelect handleZoom={handleZoom} />} zIndex={1000} trigger='click'>
           {parseFloat(`${zoom * 100}`).toFixed(0)}%
         </Popover>
       </div>
       <Tooltip title='缩小'>
-        <Button 
-          type='text' 
+        <Button
+          type='text'
           icon={<IconView type='icon-zoomin' style={{ fontSize: 18, color: '#667085' }} />}
           onClick={(e) => {
             e.stopPropagation();

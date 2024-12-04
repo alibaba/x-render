@@ -1,6 +1,6 @@
 import FormRender, { Schema, useForm } from 'form-render';
-import React, { memo } from 'react';
-import '../index.less'
+import React, { memo, useEffect } from 'react';
+import '../index.less';
 
 interface INodeSwitchSettingPorps {
   onChange: (val: any) => void;
@@ -10,12 +10,12 @@ interface INodeSwitchSettingPorps {
 const schema: Schema = {
   type: 'object',
   span: 24,
-  displayType: "row",
+  displayType: 'row',
   properties: {
     switchData: {
       type: 'array',
       widget: 'simpleList',
-      display:"block",
+      display: 'block',
       props: {
         hideCopy: true,
         hideMove: true,
@@ -44,16 +44,18 @@ export default memo((props: INodeSwitchSettingPorps) => {
     },
   };
 
+  useEffect(() => {
+    form.resetFields();
+    form.setValues(value || {});
+  }, [JSON.stringify(value)]);
+
   return (
     <FormRender
       schema={schema}
       form={form}
       watch={watch}
       size={'small'}
-      onMount={() => {
-        form.setValues(value || {});
-      }}
-      className='custom-node-switch-setting'
+      className="custom-node-switch-setting"
     />
   );
 });
