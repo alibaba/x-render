@@ -107,7 +107,7 @@ const ZoomInOut: FC = () => {
       <Tooltip title="放大">
         <Button
           type="text"
-          icon={<IconView type="icon-zoomout" className="icon" />}
+          icon={<IconView type="icon-zoom-out-line" className="icon" />}
           onClick={e => {
             e.stopPropagation();
             zoomOut();
@@ -134,7 +134,7 @@ const ZoomInOut: FC = () => {
       <Tooltip title="缩小">
         <Button
           type="text"
-          icon={<IconView type="icon-zoomin" className="icon" />}
+          icon={<IconView type="icon-zoom-in-line" className="icon" />}
           onClick={e => {
             e.stopPropagation();
             zoomIn();
