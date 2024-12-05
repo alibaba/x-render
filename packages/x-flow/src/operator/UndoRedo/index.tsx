@@ -16,7 +16,7 @@ export default memo(({ handleUndo, handleRedo, pastStates, futureStates }: UndoR
       <Tooltip title='撤销'>
         <Button
           type='text'
-          icon={<IconView type='icon-undo'  className="icon" />}
+          icon={<IconView type='icon-undo' className="icon" style={{ color: !pastStates?.length ? 'rgba(0, 0, 0, 0.25)':  '#666F83'}} />}
           onClick={handleUndo}
           disabled={!pastStates?.length}
         />
@@ -24,7 +24,7 @@ export default memo(({ handleUndo, handleRedo, pastStates, futureStates }: UndoR
       <Tooltip title='重做'>
         <Button
           type='text'
-          icon={<IconView type='icon-redo' className="icon" />}
+          icon={<IconView type='icon-redo' className="icon" style={{ color: !futureStates?.length ? 'rgba(0, 0, 0, 0.25)' : '#666F83' }} />}
           onClick={handleRedo}
           disabled={!futureStates?.length}
         />

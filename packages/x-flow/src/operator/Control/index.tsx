@@ -34,13 +34,33 @@ const Control = (props: any) => {
         </Tooltip>
       </NodeSelectPopover>
       <Tooltip title="添加注释">
-        <div className="control-item" onClick={addNote}>
+        {/* <div onClick={addNote} className="control-item">
           <IconView type="icon-sticky-note-add-line" className="icon" />
-        </div>
+        </div> */}
+        <Button
+          type="text"
+          icon={<IconView type="icon-sticky-note-add-line" className="icon" />}
+          onClick={addNote}
+        />
       </Tooltip>
       <div className="separator"></div>
       <Tooltip title="指针模式">
-        <div
+        <Button
+          type="text"
+          icon={
+            <IconView
+              type="icon-zhizhen"
+              className="icon"
+              style={{
+                color: !panOnDrag ? 'rgb(21,94,239)' : '#666F83',
+                fontSize: '14px',
+              }}
+            />
+          }
+          onClick={() => panOnDrag && handleInteractionModeChange(false)}
+          style={{ backgroundColor: !panOnDrag ? 'rgb(239,244,255)' : '' }}
+        />
+        {/* <div
           className="control-item"
           onClick={() => panOnDrag && handleInteractionModeChange(false)}
         >
@@ -52,10 +72,10 @@ const Control = (props: any) => {
               fontSize:'14px'
             }}
           />
-        </div>
+        </div> */}
       </Tooltip>
       <Tooltip title="手模式">
-        <div
+        {/* <div
           className="control-item"
           onClick={() => !panOnDrag && handleInteractionModeChange(true)}
         >
@@ -66,7 +86,24 @@ const Control = (props: any) => {
               color: panOnDrag ? 'rgba(0, 0, 0, 0.25)' : '#666F83',
             }}
           />
-        </div>
+        </div> */}
+        <Button
+          type="text"
+          icon={
+            <IconView
+              type="icon-xianxingshouzhangtubiao"
+              className="icon"
+              style={{
+                color: panOnDrag ? 'rgb(21,94,239)' : '#666F83',
+              }}
+            />
+          }
+          onClick={() => !panOnDrag && handleInteractionModeChange(true)}
+          style={{
+            backgroundColor: panOnDrag ? 'rgb(239,244,255)' : '',
+            marginLeft: '1px',
+          }}
+        />
       </Tooltip>
       <div className="separator"></div>
       <Tooltip title="整理节点">
