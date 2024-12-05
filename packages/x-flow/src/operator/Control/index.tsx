@@ -45,10 +45,11 @@ const Control = (props: any) => {
           onClick={() => panOnDrag && handleInteractionModeChange(false)}
         >
           <IconView
-            type="icon-indicator"
+            type="icon-zhizhen"
             className="icon"
             style={{
               color: !panOnDrag ? 'rgba(0, 0, 0, 0.25)' : '#666F83',
+              fontSize:'14px'
             }}
           />
         </div>
