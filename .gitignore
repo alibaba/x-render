@@ -12,6 +12,7 @@
 .yarn
 .turbo/cookies
 .turbo/daemon
+.turbo
 
 # turbo
 */*/.turbo
