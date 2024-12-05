@@ -13,7 +13,9 @@ title: API
 | layout        | 节点布局的方向                       | `LR \| TB`                                                  | LR     | - |
 | widgets       | 自定义组件                           | `Record<string, ReactNode>`                                 | -      | - |
 | settings      | 节点配置，定义页面中可拖动的节点配置 | ( [TNodeGroup](#tnodegroup) \| [TNodeItem](#tnodeitem) )[ ] |        |
-| nodeSelector  | 节点选择器配置，可控制节点的可搜索性 | `TNodeSelector`                                             |        |
+| nodeSelector  | 节点选择器配置，可控制节点的可搜索性 | `TNodeSelector`      
+| iconFontUrl   | iconfont url，用于配置图标渲染 | `String`                                             |        |
+                                       |        |
 
 ### TNodeGroup
 

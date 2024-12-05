@@ -8,15 +8,19 @@ export default memo((props: any) => {
     onClick,
     type,
     data,
-    nodeMinHeight
+    position,
+    isConnectable,
+    selected,
+    isHovered,
+    handleAddNode,
   } = props;
-  const { settingMap, widgets } = useContext(ConfigContext);
+  const { settingMap, widgets, iconFontUrl } = useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
 
   return (
     <NodeContainer
-      className="custom-node-code"
+      className='custom-node-code'
       title={data?.title || nodeSetting?.title || 'Switch'}
       icon={{
         type: nodeSetting?.icon?.type || 'icon-switch',
@@ -26,8 +30,18 @@ export default memo((props: any) => {
       onClick={onClick}
       hideDesc={nodeSetting?.hideDesc || !data?.desc}
       desc={data?.desc}
-      NodeWidget={NodeWidget ? <NodeWidget data={data} /> : <SwitchBuildInNodeWidget data={data} />}
-      nodeMinHeight={nodeMinHeight}
+      iconFontUrl={iconFontUrl}
+      NodeWidget={
+        <SwitchBuildInNodeWidget
+          data={data}
+          position={position}
+          isConnectable={isConnectable}
+          selected={selected}
+          isHovered={isHovered}
+          handleAddNode={handleAddNode}
+          CustomNodeWidget={NodeWidget}
+        />
+      }
     />
   );
 });

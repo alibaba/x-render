@@ -25,6 +25,7 @@ export default function withProvider<T>(
       nodeSelector,
       settings,
       initialValues,
+      iconFontUrl,
       ...restProps
     } = props;
 
@@ -47,6 +48,7 @@ export default function withProvider<T>(
       nodeSelector,
       settings,
       settingMap,
+      iconFontUrl,
       widgets: {
         ...defaultWidgets,
         ...widgets,
