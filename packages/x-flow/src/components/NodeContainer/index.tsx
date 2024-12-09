@@ -7,7 +7,17 @@ import './index.less';
 const { Text, Paragraph } = Typography;
 
 export default memo((props: any) => {
-  const { className, onClick, children, icon, title, desc, hideDesc, NodeWidget, iconFontUrl } = props;
+  const {
+    className,
+    onClick,
+    children,
+    icon,
+    title,
+    desc,
+    hideDesc,
+    NodeWidget,
+    iconFontUrl,
+  } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
   return (
@@ -17,30 +27,44 @@ export default memo((props: any) => {
       })}
       onClick={onClick}
     >
-      <div className='node-title'>
-        <span className='icon-box' style={{ background: icon?.bgColor }}>
+      <div className="node-title">
+        <span className="icon-box" style={{ background: icon?.bgColor }}>
           <IconBox {...icon} />
         </span>
         <Text
           style={{ width: 188, marginLeft: '8px' }}
-          ellipsis={{ tooltip: title }}
+          ellipsis={{
+            tooltip: {
+              title: title,
+              placement: 'topRight',
+              color: '#ffff',
+              overlayInnerStyle: {
+                color: '#354052',
+                fontSize: '12px',
+              },
+            },
+          }}
         >
           {title}
         </Text>
       </div>
       <div className="node-body">{children}</div>
-      {
-        NodeWidget && <div className='node-widget'>
-          {NodeWidget}
-        </div>
-      }
+      {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
       {!hideDesc && !!desc && (
         <Paragraph
           ellipsis={{
             rows: 2,
-            tooltip: { title: desc, placement: 'topRight' },
+            tooltip: {
+              title: desc,
+              placement: 'bottomRight',
+              color: '#ffff',
+              overlayInnerStyle: {
+                color: '#354052',
+                fontSize: '12px',
+              },
+            },
           }}
-          className='node-desc'
+          className="node-desc"
         >
           {desc}
         </Paragraph>

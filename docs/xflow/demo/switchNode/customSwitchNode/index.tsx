@@ -12,7 +12,7 @@ export default () => {
       type: 'Switch',
       id: '2',
       position: { x: 171.25, y: 218.75 },
-      data: { switchData:[{value:"条件1"}]}
+      data: { list:[{value:"条件1"}]}
     },
   ];
 

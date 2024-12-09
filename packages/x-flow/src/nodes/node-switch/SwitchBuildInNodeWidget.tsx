@@ -16,7 +16,7 @@ export default memo((props: any) => {
 
   return (
     <Flex vertical className="node-switch-widget" gap={5}>
-      {(data?.switchData || [{}])?.map((item, index) => (
+      {(data?.list || [{}])?.map((item, index) => (
         <div className="node-switch-widget-item" key={index}>
           <div className="item-header">
             <div className="item-title">{index === 0 ? 'IF' : 'ELIF'}</div>
