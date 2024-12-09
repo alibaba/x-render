@@ -1,7 +1,9 @@
-import { Flex } from 'antd';
+import { Flex, Typography } from 'antd';
 import React, { memo } from 'react';
 import SourceHandle from '../../components/CustomNode/sourceHandle';
 import './index.less';
+
+const { Paragraph } = Typography;
 
 export default memo((props: any) => {
   const {
@@ -36,7 +38,22 @@ export default memo((props: any) => {
             ) : (
               <>
                 {item?.value && (
-                  <div className="item-content-in">{item?.value}</div>
+                  <Paragraph
+                    className="item-content-in"
+                    ellipsis={{
+                      rows: 5,
+                      tooltip: {
+                        title: item?.value,
+                        color: '#ffff',
+                        overlayInnerStyle: {
+                          color: '#354052',
+                          fontSize: '12px',
+                        },
+                      },
+                    }}
+                  >
+                    {item?.value}
+                  </Paragraph>
                 )}
               </>
             )}
