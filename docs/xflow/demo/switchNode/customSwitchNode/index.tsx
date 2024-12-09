@@ -2,8 +2,8 @@ import XFlow from '@xrenders/xflow';
 import settings from './setting';
 import React from 'react';
 
-const customWidget = ({ data, key, item }) => {
-  return <p style={{ wordWrap: 'break-word' }}>{item?.value}</p>;
+const customWidget = ({ data, index }) => {
+  return <p style={{ wordWrap: 'break-word' }}>{data?.value}-{index}</p>;
 };
 
 export default () => {

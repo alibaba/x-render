@@ -58,7 +58,6 @@ export default memo((props: any) => {
     targetPosition = Position.Top;
     sourcePosition = Position.Bottom;
   }
- console.log("1", JSON.stringify(nodes), '=====',JSON.stringify(edges))
   return (
     <div
       className={classNames('xflow-node-container', {

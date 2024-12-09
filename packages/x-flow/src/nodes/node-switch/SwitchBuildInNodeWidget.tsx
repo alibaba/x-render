@@ -32,7 +32,7 @@ export default memo((props: any) => {
           </div>
           <div className="item-content">
             {CustomNodeWidget ? (
-              <CustomNodeWidget data={data} key={index} item={item} />
+              <CustomNodeWidget data={item} index={index} />
             ) : (
               <>
                 {item?.value && (
