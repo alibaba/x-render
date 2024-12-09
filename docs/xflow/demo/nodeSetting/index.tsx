@@ -12,6 +12,7 @@ const settings = [
       type: 'icon-start',    // icon-font
       bgColor: '#17B26A',    // 图标背景颜色
     },
+    nodeConfigPanelWidth: 500,
     settingSchema: {     // 自定义节点配置
       type: 'object',
       properties: {
@@ -213,6 +214,7 @@ export default () => {
           showSearch: true,
         }}
         layout="LR"
+        configPanelWidth={410}
       />
     </div>
   );

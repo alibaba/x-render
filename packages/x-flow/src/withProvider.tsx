@@ -26,6 +26,7 @@ export default function withProvider<T>(
       settings,
       initialValues,
       iconFontUrl,
+      configPanelWidth,
       ...restProps
     } = props;
 
@@ -49,6 +50,7 @@ export default function withProvider<T>(
       settings,
       settingMap,
       iconFontUrl,
+      configPanelWidth,
       widgets: {
         ...defaultWidgets,
         ...widgets,
