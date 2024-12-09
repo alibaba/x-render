@@ -1,7 +1,8 @@
-import { Typography } from 'antd';
+import { Popover, Tooltip, Typography } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useMemo } from 'react';
 import createIconFont from '../../utils/createIconFont';
+import { MenuTooltip } from '../NodesMenu';
 import './index.less';
 
 const { Text, Paragraph } = Typography;
@@ -28,9 +29,26 @@ export default memo((props: any) => {
       onClick={onClick}
     >
       <div className="node-title">
-        <span className="icon-box" style={{ background: icon?.bgColor }}>
-          <IconBox {...icon} />
-        </span>
+        <Popover
+          title={<MenuTooltip {...props} />}
+          placement="bottomLeft"
+          trigger="click"
+        >
+          <Tooltip
+            title="点击图标查看节点信息"
+            arrow={false}
+            placement="topLeft"
+            color="#fff"
+            overlayInnerStyle={{
+              color: '#354052',
+              fontSize: '12px',
+            }}
+          >
+            <span className="icon-box" style={{ background: icon?.bgColor }}>
+              <IconBox {...icon} />
+            </span>
+          </Tooltip>
+        </Popover>
         <Text
           style={{ width: 188, marginLeft: '8px' }}
           ellipsis={{
@@ -48,6 +66,7 @@ export default memo((props: any) => {
           {title}
         </Text>
       </div>
+
       <div className="node-body">{children}</div>
       {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
       {!hideDesc && !!desc && (

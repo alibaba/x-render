@@ -36,7 +36,7 @@ const searchNodeList = (query: string, list: any[]) => {
 };
 
 // 悬浮菜单项详细描述
-const MenuTooltip = ({ icon, title, description, iconFontUrl }: any) => {
+export const MenuTooltip = ({ icon, title, description, iconFontUrl }: any) => {
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
   return (
@@ -129,8 +129,8 @@ const NodesMenu = (props: TNodeMenu, ref: Ref<HTMLDivElement>) => {
             {filterHiddenMenu(item.items).map((data: any, index: number) => (
               <MenuItem
                 iconFontUrl={iconFontUrl}
-                {...data} 
-                onClick={handleItemClick} 
+                {...data}
+                onClick={handleItemClick}
                 key={index}
               />
             ))}

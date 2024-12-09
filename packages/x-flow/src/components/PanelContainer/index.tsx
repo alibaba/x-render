@@ -104,7 +104,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
               <Space size={[4, 4]}>
                 {!isDisabled && (
                   <>
-                    <IconView type='icon-bofang' style={{ fontSize: 18 }} />
+                    <IconView type='icon-yunhang' style={{ fontSize: 16 }} />
                     <Divider type='vertical' />
                   </>
                 )}
