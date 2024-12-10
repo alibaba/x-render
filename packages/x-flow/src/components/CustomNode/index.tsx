@@ -27,7 +27,6 @@ export default memo((props: any) => {
     shallow
   );
   const isSwitchNode = type === 'Switch';
-
   // 增加节点并进行联系
   const handleAddNode = (data: any) => {
     const { screenToFlowPosition } = reactflow;

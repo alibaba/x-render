@@ -27,6 +27,7 @@ export default function withProvider<T>(
       initialValues,
       iconFontUrl,
       configPanelWidth,
+      hideLineInsertBtn,
       ...restProps
     } = props;
 
@@ -51,6 +52,7 @@ export default function withProvider<T>(
       settingMap,
       iconFontUrl,
       configPanelWidth,
+      hideLineInsertBtn,
       widgets: {
         ...defaultWidgets,
         ...widgets,

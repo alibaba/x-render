@@ -16,6 +16,7 @@ title: API
 | nodeSelector     | 节点选择器配置，可控制节点的可搜索性 | `TNodeSelector`                                             |
 | iconFontUrl      | iconfont url，用于配置图标渲染       | `String`                                                    |        |
 | configPanelWidth | 统一设置配置面板宽度                 | `number`                                                    | 400    |
+| hideLineInsertBtn |是否隐藏两个节点之间，连线上的增加节点按钮               | `boolean`                                                    |  false   |
 
 
 ### TNodeGroup

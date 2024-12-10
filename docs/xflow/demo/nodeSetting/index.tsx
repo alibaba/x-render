@@ -215,6 +215,7 @@ export default () => {
         }}
         layout="LR"
         configPanelWidth={410}
+        hideLineInsertBtn={true}
       />
     </div>
   );
