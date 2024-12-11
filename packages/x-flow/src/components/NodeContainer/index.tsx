@@ -18,9 +18,9 @@ export default memo((props: any) => {
     hideDesc,
     NodeWidget,
     iconFontUrl,
+    iconSvg
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
-
   return (
     <div
       className={classNames('custom-node-container', {
@@ -45,7 +45,7 @@ export default memo((props: any) => {
             }}
           >
             <span className="icon-box" style={{ background: icon?.bgColor }}>
-              <IconBox {...icon} />
+              {iconSvg ? iconSvg : <IconBox {...icon} /> }
             </span>
           </Tooltip>
         </Popover>

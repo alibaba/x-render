@@ -36,13 +36,13 @@ const searchNodeList = (query: string, list: any[]) => {
 };
 
 // 悬浮菜单项详细描述
-export const MenuTooltip = ({ icon, title, description, iconFontUrl }: any) => {
+export const MenuTooltip = ({ icon, title, description, iconFontUrl, iconSvg }: any) => {
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
   return (
     <div className='xflow-node-menu-tooltip'>
-      <div className='icon-box-max' style={{ background: icon?.bgColor, marginRight: '8px' }}>
-        <IconBox type={icon?.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />
+      <div className='icon-box-max' style={{ background: icon?.bgColor || '#F79009', marginRight: '8px' }}>
+        {iconSvg ? iconSvg :<IconBox type={icon?.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />}
       </div>
       <div className='title'>
         {title}
@@ -56,7 +56,8 @@ export const MenuTooltip = ({ icon, title, description, iconFontUrl }: any) => {
 
 // 节点菜单项
 const MenuItem = (props: any) => {
-  const { title, type, icon, onClick, iconFontUrl } = props;
+
+  const { title, type, icon, onClick, iconFontUrl, iconSvg } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
   return (
@@ -70,11 +71,12 @@ const MenuItem = (props: any) => {
         className='menu-item'
         onClick={onClick(type)}
       >
-        <span className='icon-box' style={{ background: icon?.bgColor, marginRight: '8px' }}>
-          <IconBox
+        <span className='icon-box' style={{ background: icon?.bgColor || '#F79009', marginRight: '8px' }}>
+          {iconSvg ? iconSvg :
+            <IconBox
             type={icon?.type}
             style={{ color: '#fff', fontSize: 13 }}
-          />
+            />}
         </span>
         <span>{title}</span>
       </div>
@@ -107,7 +109,7 @@ const NodesMenu = (props: TNodeMenu, ref: Ref<HTMLDivElement>) => {
   }
 
   const handleSearch = (ev: any) => {
-    setState({ menuList: searchNodeList(ev.target.value, items)})
+    setState({ menuList: searchNodeList(ev.target.value, items) })
   };
 
   return (

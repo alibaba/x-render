@@ -24,6 +24,7 @@ export default memo((props: any) => {
       NodeWidget={NodeWidget ? <NodeWidget data={data} /> : undefined}
       iconFontUrl={iconFontUrl}
       description={nodeDescription} // 不允许用户更改的节点描述
+      iconSvg={nodeSetting?.iconSvg}
     />
   );
 });
