@@ -15,7 +15,7 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, mousePosition,nodes,edges } = useStore(
+  const { addNodes, addEdges, mousePosition } = useStore(
     (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,

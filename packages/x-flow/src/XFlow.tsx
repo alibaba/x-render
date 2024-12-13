@@ -190,6 +190,7 @@ const XFlow: FC<FlowProps> = memo(() => {
         return (
           <CustomNode
             {...rest}
+            id={id}
             data={{ ...restData }}
             type={_nodeType}
             layout={layout}
