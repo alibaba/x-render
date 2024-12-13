@@ -39,9 +39,9 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
+  const { hideDesc, nodeConfigPanelWidth, iconSvg } = nodeSetting;
 
   // const description = getDescription(nodeType, props.description);
-
   const handleNodeValueChange = debounce((data: any) => {
     const newNodes = produce(nodes, draft => {
       let node = null;
@@ -69,31 +69,36 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
 
   return (
     <Drawer
+      getContainer={false}
       rootClassName="custom-node-panel"
       open={true}
-      width={nodeSetting?.nodeConfigPanelWidth || configPanelWidth || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
+      width={nodeConfigPanelWidth || configPanelWidth || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
       mask={false}
       onClose={onClose}
+      headerStyle={{ paddingBottom: '12px' }}
       title={
         <>
           <div className="title-box">
             <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
               <span
                 className="icon-box"
-                style={{ background: nodeSetting?.icon?.bgColor }}
+                style={{ background: nodeSetting?.icon?.bgColor || '#F79009'}}
               >
-                <Icon
-                  style={{ fontSize: 14, color: '#fff' }}
-                  type={nodeSetting?.icon?.type}
-                />
+                {iconSvg ? (
+                  iconSvg
+                ) : (
+                  <Icon
+                    style={{ fontSize: 14, color: '#fff' }}
+                    type={nodeSetting?.icon?.type}
+                  />
+                )}
               </span>
               {isDisabled ? (
                 <span style={{ marginLeft: '11px' }}>{nodeSetting?.title}</span>
               ) : (
                 <Input
                   style={{ width: '100%' }}
-                  // defaultValue={data?.title || nodeSetting?.title}
-                  value={titleVal} //  || nodeSetting?.title
+                  value={titleVal}
                   onChange={e => {
                     setTitleVal(e.target.value);
                     handleNodeValueChange({ title: e.target.value });
@@ -118,23 +123,23 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
               </Space>
             </div>
           </div>
-          <div className="desc-box">
-            {isDisabled ? (
-              description
-            ) : (
-              <Input.TextArea
-                placeholder="添加描述..."
-                autoSize={{ minRows: 1 }}
-                value={descVal}
-                // value={data?.desc}
-                // defaultValue={description}
-                onChange={e => {
-                  setDescVal(e.target.value);
-                  handleNodeValueChange({ desc: e.target.value });
-                }}
-              />
-            )}
-          </div>
+          {!hideDesc && (
+            <div className="desc-box">
+              {isDisabled ? (
+                description
+              ) : (
+                <Input.TextArea
+                  placeholder="添加描述..."
+                  autoSize={{ minRows: 1 }}
+                  value={descVal}
+                  onChange={e => {
+                    setDescVal(e.target.value);
+                    handleNodeValueChange({ desc: e.target.value });
+                  }}
+                />
+              )}
+            </div>
+          )}
         </>
       }
     >

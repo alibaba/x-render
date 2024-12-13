@@ -257,7 +257,7 @@ const XFlow: FC<FlowProps> = memo(() => {
         }}
       >
         <CandidateNode />
-        <Operator addNode={handleAddNode} />
+        <Operator addNode={handleAddNode} xflowRef={workflowContainerRef} />
         <Background
           gap={[16, 16]}
           size={0.6}

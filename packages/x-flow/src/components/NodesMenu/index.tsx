@@ -66,6 +66,7 @@ const MenuItem = (props: any) => {
       title={<MenuTooltip {...props} />}
       placement='right'
       arrow={false}
+      getPopupContainer={() => document.getElementById('xflow-container')}
     >
       <div
         className='menu-item'

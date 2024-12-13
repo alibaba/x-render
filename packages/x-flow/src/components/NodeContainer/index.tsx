@@ -33,6 +33,7 @@ export default memo((props: any) => {
           title={<MenuTooltip {...props} />}
           placement="bottomLeft"
           trigger="click"
+          getPopupContainer={() => document.getElementById('xflow-container')}
         >
           <Tooltip
             title="点击图标查看节点信息"
@@ -43,6 +44,7 @@ export default memo((props: any) => {
               color: '#354052',
               fontSize: '12px',
             }}
+            getPopupContainer={() => document.getElementById('xflow-container')}
           >
             <span className="icon-box" style={{ background: icon?.bgColor }}>
               {iconSvg ? iconSvg : <IconBox {...icon} /> }
@@ -60,6 +62,7 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
+              getPopupContainer:() => document.getElementById('xflow-container')
             },
           }}
         >
@@ -81,6 +84,7 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
+              getPopupContainer: () => document.getElementById('xflow-container')
             },
           }}
           className="node-desc"

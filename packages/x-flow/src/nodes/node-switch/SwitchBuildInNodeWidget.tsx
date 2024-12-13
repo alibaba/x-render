@@ -1,4 +1,4 @@
-import { Flex, Typography } from 'antd';
+import { Space, Typography } from 'antd';
 import React, { memo } from 'react';
 import SourceHandle from '../../components/CustomNode/sourceHandle';
 import './index.less';
@@ -17,7 +17,7 @@ export default memo((props: any) => {
   } = props;
 
   return (
-    <Flex vertical className="node-switch-widget" gap={5}>
+    <Space direction='vertical' className="node-switch-widget" size={5}>
       {(data?.list || [{}])?.map((item, index) => (
         <div className="node-switch-widget-item" key={index}>
           <div className="item-header">
@@ -49,6 +49,7 @@ export default memo((props: any) => {
                           color: '#354052',
                           fontSize: '12px',
                         },
+                        getPopupContainer: () => document.getElementById('xflow-container')
                       },
                     }}
                   >
@@ -74,6 +75,6 @@ export default memo((props: any) => {
           />
         </div>
       </div>
-    </Flex>
+    </Space>
   );
 });
