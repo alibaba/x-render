@@ -69,6 +69,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
 
   return (
     <Drawer
+      getContainer={false}
       rootClassName="custom-node-panel"
       open={true}
       width={nodeSetting?.nodeConfigPanelWidth || configPanelWidth || 400} // 改为配置的width 节点的width > 全局的width>  默认 400

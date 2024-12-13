@@ -49,6 +49,7 @@ export default memo((props: any) => {
                           color: '#354052',
                           fontSize: '12px',
                         },
+                        getPopupContainer: () => document.getElementById('xflow-container')
                       },
                     }}
                   >

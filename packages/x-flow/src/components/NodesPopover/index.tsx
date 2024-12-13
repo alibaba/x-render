@@ -44,6 +44,7 @@ export default forwardRef((props: any, popoverRef) => {
 
   return (
     <Popover
+      getPopupContainer={() => document.getElementById('xflow-container')}
       zIndex={2000}
       arrow={false}
       overlayInnerStyle={{ padding: '12px 6px' }}
