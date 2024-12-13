@@ -25,6 +25,7 @@ export default function withProvider<T>(
       nodeSelector,
       settings,
       initialValues,
+      layout,
       iconFontUrl,
       configPanelWidth,
       hideLineInsertBtn,
@@ -66,6 +67,7 @@ export default function withProvider<T>(
             <FlowProviderWrapper
               nodes={initialValues?.nodes}
               edges={initialValues?.edges}
+              layout={layout}
             >
               <Element
                 {...restProps}

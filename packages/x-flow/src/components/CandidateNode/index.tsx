@@ -41,7 +41,6 @@ const CandidateNode = () => {
       },
       position: { x, y },
     };
-    // @ts-ignore
     addNodes(newNodes);
     setCandidateNode(null);
   });

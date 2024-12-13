@@ -29,19 +29,25 @@ export interface TNodeMenu {
 
 export interface TNodeSelector {
   showSearch: boolean; // 配置是否可搜索
-  items: (TNodeGroup | TNodeItem)[];
+  items?: (TNodeGroup | TNodeItem)[];
 }
 
 export interface FlowProps {
-  initialValues: {
+  initialValues?: {
     nodes: any[];
     edges: any;
   };
-  layout: 'LR' | 'TB';
-  widgets: any; // 自定义组件
-  settings: (TNodeGroup | TNodeItem)[]; // 节点配置
-  nodeSelector: TNodeSelector;
-  iconFontUrl: string;
+  layout?: 'LR' | 'TB';
+  /**
+   * 自定义组件
+   */
+  widgets?: any;
+  /**
+   * 节点配置
+   */
+  settings?: (TNodeGroup | TNodeItem)[];
+  nodeSelector?: TNodeSelector;
+  iconFontUrl?: string;
 }
 
 export default FlowProps;

@@ -18,17 +18,16 @@ import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
 import { useStore, useStoreApi } from './hooks/useStore';
-import { useTemporalStore } from './hooks/useTemporalStore';
 
 import Operator from './operator';
 import FlowProps from './types';
-import { transformNodes, uuid } from './utils';
+import { uuid } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 
 import { shallow } from 'zustand/shallow';
 import NodeEditor from './components/NodeEditor';
-import { useFlow } from './hooks/useFlow';
 import './index.less';
+import { useTemporalStore } from './hooks/useTemporalStore';
 
 const CustomNode = memo(CustomNodeComponent);
 const edgeTypes = { buttonedge: memo(CustomEdge) };
@@ -38,8 +37,7 @@ const edgeTypes = { buttonedge: memo(CustomEdge) };
  * XFlow 入口
  *
  */
-const XFlow: FC<FlowProps> = memo(props => {
-  const { initialValues, settings } = props;
+const XFlow: FC<FlowProps> = memo(() => {
   const workflowContainerRef = useRef<HTMLDivElement>(null);
   const store = useStoreApi();
   const { zoomTo } = useReactFlow();
@@ -47,45 +45,38 @@ const XFlow: FC<FlowProps> = memo(props => {
     layout,
     nodes,
     edges,
+    setNodes,
+    setEdges,
     panOnDrag,
     onNodesChange,
     onEdgesChange,
     onConnect,
-    setLayout,
     setCandidateNode,
     setMousePosition,
   } = useStore(
-    state => ({
-      nodes: state.nodes,
-      edges: state.edges,
-      layout: state.layout,
-      panOnDrag: state.panOnDrag,
-      setLayout: state.setLayout,
-      setMousePosition: state.setMousePosition,
-      setCandidateNode: state.setCandidateNode,
-      onNodesChange: state.onNodesChange,
-      onEdgesChange: state.onEdgesChange,
-      onConnect: state.onConnect,
+    s => ({
+      nodes: s.nodes,
+      edges: s.edges,
+      setNodes: s.setNodes,
+      setEdges: s.setEdges,
+      layout: s.layout,
+      panOnDrag: s.panOnDrag,
+      setMousePosition: s.setMousePosition,
+      setCandidateNode: s.setCandidateNode,
+      onNodesChange: s.onNodesChange,
+      onEdgesChange: s.onEdgesChange,
+      onConnect: s.onConnect,
     }),
     shallow
   );
-  const { setNodes, setEdges } = useFlow();
+  const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
-  const temporalStore = useTemporalStore();
   useEffect(() => {
     zoomTo(0.8);
     setAutoFreeze(false);
     return () => {
       setAutoFreeze(true);
     };
-  }, []);
-
-  useEffect(() => {
-    setLayout(props.layout);
-    // TODO: 默认关闭时间机器，可以向 zundo 贡献一个配置
-    temporalStore.pause();
-    setNodes(transformNodes(initialValues?.nodes));
-    setEdges(initialValues?.edges);
   }, []);
 
   useEventListener('keydown', e => {
@@ -149,7 +140,6 @@ const XFlow: FC<FlowProps> = memo(props => {
   //       y: 0,
   //     },
   //   };
-  //   // record(() => {
   //   addNodes(newNode);
   //   addEdges({
   //     id: uuid(),
@@ -160,7 +150,6 @@ const XFlow: FC<FlowProps> = memo(props => {
   //   updateEdge(targetEdge?.id as string, {
   //     source: newNode.id,
   //   });
-  //   // });
   // };
 
   // edge 移入/移出效果
@@ -213,12 +202,6 @@ const XFlow: FC<FlowProps> = memo(props => {
     };
   }, [layout]);
 
-  // const edgeTypes = { buttonedge: (edgeProps: any) => <CustomEdge layout={layout} {...edgeProps} /> };
-  // const { icon, description } =
-  //   settings.find(
-  //     item => item.type?.toLowerCase() === activeNode?.node?.toLowerCase()
-  //   ) || {};
-
   const NodeEditorWrap = useMemo(() => {
     return (
       <NodeEditor
@@ -250,7 +233,15 @@ const XFlow: FC<FlowProps> = memo(props => {
         }}
         onConnect={onConnect}
         onNodesChange={changes => {
-          onNodesChange(changes);
+          changes.forEach(change => {
+            if (change.type === 'remove' || change.type === 'add') {
+              record(() => {
+                onNodesChange(changes);
+              })
+            } else {
+              onNodesChange(changes);
+            }
+          })
         }}
         onEdgesChange={changes => {
           onEdgesChange(changes);
@@ -260,6 +251,9 @@ const XFlow: FC<FlowProps> = memo(props => {
         }}
         onEdgeMouseLeave={(_, edge) => {
           getUpdateEdgeConfig(edge, '#c9c9c9');
+        }}
+        onNodesDelete={() => {
+          // setActiveNode(null);
         }}
       >
         <CandidateNode />

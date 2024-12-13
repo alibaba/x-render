@@ -9,11 +9,13 @@ export const useTemporalStore = () => {
       '[XFlow]: Seems like you have not used zustand provider as an ancestor.'
     );
   }
+  const temporalStore = store.temporal.getState();
+  // 默认关闭时间机器
+  temporalStore.pause();
 
   return {
     ...store.temporal.getState(),
     record: (callback: () => void) => {
-      const temporalStore = store.temporal.getState();
       temporalStore.resume();
       callback();
       temporalStore.pause();
