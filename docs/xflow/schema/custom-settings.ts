@@ -59,6 +59,7 @@ export default [
       type: 'icon-model',
       bgColor: '#6172F3',
     },
+    hideDesc:true // 隐藏配置面板描述信息
   },
   {
     title: 'Prompt',
