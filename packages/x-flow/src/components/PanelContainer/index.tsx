@@ -39,7 +39,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
-  const { hideDesc, nodeConfigPanelWidth } = nodeSetting;
+  const { hideDesc, nodeConfigPanelWidth, iconSvg } = nodeSetting;
 
   // const description = getDescription(nodeType, props.description);
   const handleNodeValueChange = debounce((data: any) => {
@@ -82,12 +82,16 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
             <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
               <span
                 className="icon-box"
-                style={{ background: nodeSetting?.icon?.bgColor }}
+                style={{ background: nodeSetting?.icon?.bgColor || '#F79009'}}
               >
-                <Icon
-                  style={{ fontSize: 14, color: '#fff' }}
-                  type={nodeSetting?.icon?.type}
-                />
+                {iconSvg ? (
+                  iconSvg
+                ) : (
+                  <Icon
+                    style={{ fontSize: 14, color: '#fff' }}
+                    type={nodeSetting?.icon?.type}
+                  />
+                )}
               </span>
               {isDisabled ? (
                 <span style={{ marginLeft: '11px' }}>{nodeSetting?.title}</span>
