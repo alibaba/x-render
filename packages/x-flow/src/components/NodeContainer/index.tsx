@@ -28,25 +28,25 @@ export default memo((props: any) => {
       })}
       onClick={onClick}
     >
-      <div className="node-title">
+      <div className='node-title'>
         <Popover
           title={<MenuTooltip {...props} />}
-          placement="bottomLeft"
-          trigger="click"
-          getPopupContainer={() => document.getElementById('xflow-container')}
+          placement='bottomLeft'
+          trigger='click'
+          getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
         >
           <Tooltip
-            title="点击图标查看节点信息"
+            title='点击图标查看节点信息'
             arrow={false}
-            placement="topLeft"
-            color="#fff"
+            placement='topLeft'
+            color='#fff'
             overlayInnerStyle={{
               color: '#354052',
               fontSize: '12px',
             }}
-            getPopupContainer={() => document.getElementById('xflow-container')}
+            getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
           >
-            <span className="icon-box" style={{ background: icon?.bgColor }}>
+            <span className='icon-box' style={{ background: icon?.bgColor }}>
               {iconSvg ? iconSvg : <IconBox {...icon} /> }
             </span>
           </Tooltip>
@@ -62,7 +62,7 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
-              getPopupContainer:() => document.getElementById('xflow-container')
+              getPopupContainer:() => document.getElementById('xflow-container') as HTMLElement
             },
           }}
         >
@@ -70,8 +70,8 @@ export default memo((props: any) => {
         </Text>
       </div>
 
-      <div className="node-body">{children}</div>
-      {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
+      <div className='node-body'>{children}</div>
+      {NodeWidget && <div className='node-widget'>{NodeWidget}</div>}
       {!hideDesc && !!desc && (
         <Paragraph
           ellipsis={{
@@ -84,10 +84,10 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
-              getPopupContainer: () => document.getElementById('xflow-container')
+              getPopupContainer: () => document.getElementById('xflow-container') as HTMLElement
             },
           }}
-          className="node-desc"
+          className='node-desc'
         >
           {desc}
         </Paragraph>

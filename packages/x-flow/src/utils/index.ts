@@ -166,7 +166,7 @@ export const transformNodes = (nodes: any[]) => {
 
 
 export const getAntdVersion = () => {
-  const majorVersion = parseInt(antdVersion.split('.')[0], 10);
+  const majorVersion = parseInt(antdVersion?.split('.')?.[0], 10);
   if (majorVersion >= 5) {
     return 'V5'
   } else if (majorVersion === 4) {

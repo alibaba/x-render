@@ -80,7 +80,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       className: 'custom-node-panel',
       visible: true,
     };
-  }, [])
+  }, []);
 
   return (
     <Drawer

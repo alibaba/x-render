@@ -54,7 +54,7 @@ export default memo((props: any) => {
                   fontSize: '12px',
                 }}
                 open={isShowTooltip}
-                getPopupContainer={() => document.getElementById('xflow-container')}
+                getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
               >
                 <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
               </Tooltip>
