@@ -8,16 +8,17 @@ import CustomNode from '../CustomNode';
 const CandidateNode = () => {
   const { zoom } = useViewport();
   const reactflow = useReactFlow();
-  const { candidateNode, mousePosition, setCandidateNode, addNodes } = useStore(
-    (state: any) => ({
-      nodes: state.nodes,
-      edges: state.edges,
-      addNodes: state.addNodes,
-      candidateNode: state.candidateNode,
-      mousePosition: state.mousePosition,
-      setCandidateNode: state.setCandidateNode,
-      onNodesChange: state.onNodesChange,
-      onEdgesChange: state.onEdgesChange,
+  const { candidateNode, mousePosition, setIsAddingNode, setCandidateNode, addNodes } = useStore(
+    (s: any) => ({
+      nodes: s.nodes,
+      edges: s.edges,
+      addNodes: s.addNodes,
+      candidateNode: s.candidateNode,
+      setIsAddingNode: s.setIsAddingNode,
+      mousePosition: s.mousePosition,
+      setCandidateNode: s.setCandidateNode,
+      onNodesChange: s.onNodesChange,
+      onEdgesChange: s.onEdgesChange,
     }),
     shallow
   );
@@ -42,6 +43,7 @@ const CandidateNode = () => {
       position: { x, y },
     };
     addNodes(newNodes);
+    setIsAddingNode(false)
     setCandidateNode(null);
   });
 

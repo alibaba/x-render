@@ -52,6 +52,7 @@ const XFlow: FC<FlowProps> = memo(() => {
     onEdgesChange,
     onConnect,
     setCandidateNode,
+    isAddingNode,
     setMousePosition,
   } = useStore(
     s => ({
@@ -62,6 +63,7 @@ const XFlow: FC<FlowProps> = memo(() => {
       layout: s.layout,
       panOnDrag: s.panOnDrag,
       setMousePosition: s.setMousePosition,
+      isAddingNode: s.isAddingNode,
       setCandidateNode: s.setCandidateNode,
       onNodesChange: s.onNodesChange,
       onEdgesChange: s.onEdgesChange,
@@ -101,6 +103,9 @@ const XFlow: FC<FlowProps> = memo(() => {
         elementY: e.clientY - containerClientRect.top,
       });
     }
+  }, {
+    target: workflowContainerRef.current,
+    enable: isAddingNode
   });
 
   const { eventEmitter } = useEventEmitterContextContext();

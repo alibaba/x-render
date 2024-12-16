@@ -28,6 +28,7 @@ export type FlowState = {
   nodes?: FlowNode[];
   edges?: Edge[];
   panOnDrag?: boolean;
+  isAddingNode?: boolean;
   candidateNode: any;
   mousePosition: any;
   onNodesChange: OnNodesChange<FlowNode>;
@@ -38,6 +39,7 @@ export type FlowState = {
   addNodes: (nodes: FlowNode[]) => void;
   addEdges: (edges: Edge[]) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
+  setIsAddingNode: (payload: boolean) => void;
   setCandidateNode: (candidateNode: any) => void;
   setMousePosition: (mousePosition: any) => void;
 };
@@ -55,6 +57,7 @@ const createStore = (initProps?: Partial<FlowProps>) => {
       (set, get) => ({
         ...DEFAULT_PROPS,
         ...initProps,
+        isAddingNode: false,
         candidateNode: null,
         // nodeMenus: [],
         mousePosition: { pageX: 0, pageY: 0, elementX: 0, elementY: 0 },
@@ -95,6 +98,9 @@ const createStore = (initProps?: Partial<FlowProps>) => {
         // setNodeMenus: (nodeMenus: any) => {
         //   set({ nodeMenus });
         // },
+        setIsAddingNode: payload => {
+          set({ isAddingNode: payload });
+        },
         setCandidateNode: candidateNode => {
           set({ candidateNode });
         },
