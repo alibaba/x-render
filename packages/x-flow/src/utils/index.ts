@@ -1,7 +1,6 @@
+import { version as antdVersion } from 'antd';
 import { customAlphabet } from 'nanoid';
 export const uuid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 16);
-
-
 
 import { isMatch, some, set, get, cloneDeep, has as _has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
 
@@ -127,10 +126,6 @@ export const safeGet = (object: any, path: string, defaultValue: any) => {
   return get(object, path, defaultValue) ?? defaultValue;
 };
 
-
-
-
-
 export const isMac = () => {
   return navigator.userAgent.toUpperCase().includes('MAC')
 }
@@ -167,4 +162,16 @@ export const transformNodes = (nodes: any[]) => {
       ...rest
     }
   })
+}
+
+
+export const getAntdVersion = () => {
+  const majorVersion = parseInt(antdVersion.split('.')[0], 10);
+  if (majorVersion >= 5) {
+    return 'V5'
+  } else if (majorVersion === 4) {
+    return 'V4';
+  } else {
+    return 'V4'
+  }
 }

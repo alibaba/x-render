@@ -11,6 +11,7 @@ import React, {
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
 import NodesMenu from '../NodesMenu';
+import './index.less';
 
 export default forwardRef((props: any, popoverRef) => {
   const { addNode, children, onNodeSelectPopoverChange } = props;
@@ -47,6 +48,7 @@ export default forwardRef((props: any, popoverRef) => {
 
   return (
     <Popover
+      overlayClassName='nodes-popover'
       getPopupContainer={() => document.getElementById('xflow-container')}
       zIndex={2000}
       arrow={false}
