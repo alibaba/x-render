@@ -18,9 +18,9 @@ export default memo((props: any) => {
     hideDesc,
     NodeWidget,
     iconFontUrl,
+    iconSvg
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
-
   return (
     <div
       className={classNames('custom-node-container', {
@@ -33,6 +33,7 @@ export default memo((props: any) => {
           title={<MenuTooltip {...props} />}
           placement="bottomLeft"
           trigger="click"
+          getPopupContainer={() => document.getElementById('xflow-container')}
         >
           <Tooltip
             title="点击图标查看节点信息"
@@ -43,9 +44,10 @@ export default memo((props: any) => {
               color: '#354052',
               fontSize: '12px',
             }}
+            getPopupContainer={() => document.getElementById('xflow-container')}
           >
             <span className="icon-box" style={{ background: icon?.bgColor }}>
-              <IconBox {...icon} />
+              {iconSvg ? iconSvg : <IconBox {...icon} /> }
             </span>
           </Tooltip>
         </Popover>
@@ -60,6 +62,7 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
+              getPopupContainer:() => document.getElementById('xflow-container')
             },
           }}
         >
@@ -81,6 +84,7 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
+              getPopupContainer: () => document.getElementById('xflow-container')
             },
           }}
           className="node-desc"

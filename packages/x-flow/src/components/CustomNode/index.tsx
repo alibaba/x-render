@@ -15,7 +15,7 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, mousePosition,nodes,edges } = useStore(
+  const { addNodes, addEdges, mousePosition } = useStore(
     (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,
@@ -27,7 +27,6 @@ export default memo((props: any) => {
     shallow
   );
   const isSwitchNode = type === 'Switch';
-
   // 增加节点并进行联系
   const handleAddNode = (data: any) => {
     const { screenToFlowPosition } = reactflow;

@@ -6,12 +6,13 @@ import {
   useReactFlow,
 } from '@xyflow/react';
 import produce from 'immer';
-import React, { memo, useState } from 'react';
+import React, { memo, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { uuid } from '../../utils';
 import NodeSelectPopover from '../NodesPopover';
 import './index.less';
+import { ConfigContext } from '../../models/context';
 
 export default memo((edge: any) => {
   const { id, selected, sourceX, sourceY, targetX, targetY, source, target } =
@@ -25,6 +26,9 @@ export default memo((edge: any) => {
     targetX,
     targetY,
   });
+
+  const { hideLineInsertBtn } =
+    useContext(ConfigContext);
 
   const {
     nodes,
@@ -45,7 +49,7 @@ export default memo((edge: any) => {
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
-  );
+    );
 
   const handleAddNode = (data: any) => {
     const { screenToFlowPosition } = reactflow;
@@ -122,11 +126,13 @@ export default memo((edge: any) => {
                   >
                     <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
                   </div>
-                  <NodeSelectPopover placement="right" addNode={handleAddNode}>
-                    <div className="line-icon-box">
-                      <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
-                    </div>
-                  </NodeSelectPopover>
+                  {
+                    !hideLineInsertBtn && <NodeSelectPopover placement="right" addNode={handleAddNode}>
+                      <div className="line-icon-box">
+                        <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
+                      </div>
+                    </NodeSelectPopover>
+                  }
                 </div>
               </div>
             </EdgeLabelRenderer>

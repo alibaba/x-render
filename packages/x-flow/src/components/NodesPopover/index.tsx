@@ -8,12 +8,15 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
 import NodesMenu from '../NodesMenu';
 
 export default forwardRef((props: any, popoverRef) => {
   const { addNode, children, onNodeSelectPopoverChange } = props;
-
+  const { setIsAddingNode } = useStore(s => ({
+    setIsAddingNode: s.setIsAddingNode,
+  }));
   const ref = useRef<any>(null);
   const closeRef: any = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
@@ -44,6 +47,7 @@ export default forwardRef((props: any, popoverRef) => {
 
   return (
     <Popover
+      getPopupContainer={() => document.getElementById('xflow-container')}
       zIndex={2000}
       arrow={false}
       overlayInnerStyle={{ padding: '12px 6px' }}
@@ -52,6 +56,7 @@ export default forwardRef((props: any, popoverRef) => {
       open={open}
       onOpenChange={() => {
         setTimeout(() => {
+          setIsAddingNode(true);
           closeRef.current = true;
           setOpen(true);
         }, 50);

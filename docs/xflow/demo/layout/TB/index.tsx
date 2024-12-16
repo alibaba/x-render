@@ -62,11 +62,11 @@ export default () => {
     <div style={{ height: '600px' }}>
       <XFlow
         initialValues={{ nodes, edges }}
-        settings={settings}
+        settings={settings as any}
         nodeSelector={{
           showSearch: true,
         }}
-        layout="TB"
+        layout="LR"
       />
     </div>
   );

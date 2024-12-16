@@ -108,6 +108,16 @@ export default [
       type: 'icon-model',
       bgColor: '#6172F3',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: 'Prompt',

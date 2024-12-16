@@ -104,7 +104,7 @@ const ZoomInOut: FC = () => {
 
   return (
     <div className="fai-reactflow-zoominout">
-      <Tooltip title="放大">
+      <Tooltip title="放大" getPopupContainer={() => document.getElementById('xflow-container')}>
         <Button
           type="text"
           icon={<IconView type="icon-zoom-out-line" className="icon" />}
@@ -131,7 +131,7 @@ const ZoomInOut: FC = () => {
           {parseFloat(`${zoom * 100}`).toFixed(0)}%
         </Popover>
       </div>
-      <Tooltip title="缩小">
+      <Tooltip title="缩小" getPopupContainer={() => document.getElementById('xflow-container')}>
         <Button
           type="text"
           icon={<IconView type="icon-zoom-in-line" className="icon" />}
