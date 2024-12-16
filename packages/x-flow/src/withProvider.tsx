@@ -1,4 +1,3 @@
-import { ReactFlowProvider } from '@xyflow/react';
 import { ConfigProvider } from 'antd';
 import React, { useMemo } from 'react';
 import { FlowProviderWrapper } from './components/FlowProvider';
@@ -62,21 +61,19 @@ export default function withProvider<T>(
 
     return (
       <ConfigProvider {...configProvider}>
-        <ReactFlowProvider>
-          <ConfigContext.Provider value={configContext}>
-            <FlowProviderWrapper
-              nodes={initialValues?.nodes}
-              edges={initialValues?.edges}
-              layout={layout}
-            >
-              <Element
-                {...restProps}
-                initialValues={initialValues}
-                settings={settings}
-              />
-            </FlowProviderWrapper>
-          </ConfigContext.Provider>
-        </ReactFlowProvider>
+        <ConfigContext.Provider value={configContext}>
+          <FlowProviderWrapper
+            nodes={initialValues?.nodes}
+            edges={initialValues?.edges}
+            layout={layout}
+          >
+            <Element
+              {...restProps}
+              initialValues={initialValues}
+              settings={settings}
+            />
+          </FlowProviderWrapper>
+        </ConfigContext.Provider>
       </ConfigProvider>
     );
   };

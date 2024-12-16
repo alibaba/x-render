@@ -1,10 +1,10 @@
+import { ReactFlowProvider } from '@xyflow/react';
+import React, { memo, ReactNode, useContext, useEffect, useState } from 'react';
+
 import { useStore } from '../../hooks/useStore';
 import StoreContext, { Provider } from '../../models/context';
 import { createStore } from '../../models/store';
 import { transformNodes } from '../../utils';
-
-import type { ReactNode } from 'react';
-import React, { memo, useContext, useEffect, useState } from 'react';
 
 export const FlowProvider = memo<{
   initialNodes?: any[];
@@ -18,7 +18,11 @@ export const FlowProvider = memo<{
     })
   );
 
-  return <Provider value={store}>{children}</Provider>;
+  return (
+    <ReactFlowProvider>
+      <Provider value={store}>{children}</Provider>
+    </ReactFlowProvider>
+  );
 });
 
 const InitialProvider = ({ nodes, edges, layout, children }) => {
