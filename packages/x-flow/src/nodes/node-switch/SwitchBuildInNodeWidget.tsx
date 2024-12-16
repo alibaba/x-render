@@ -1,7 +1,9 @@
-import { Flex } from 'antd';
+import { Space, Typography } from 'antd';
 import React, { memo } from 'react';
 import SourceHandle from '../../components/CustomNode/sourceHandle';
 import './index.less';
+
+const { Paragraph } = Typography;
 
 export default memo((props: any) => {
   const {
@@ -15,8 +17,8 @@ export default memo((props: any) => {
   } = props;
 
   return (
-    <Flex vertical className="node-switch-widget" gap={5}>
-      {(data?.switchData || [{}])?.map((item, index) => (
+    <Space direction='vertical' className="node-switch-widget" size={5}>
+      {(data?.list || [{}])?.map((item, index) => (
         <div className="node-switch-widget-item" key={index}>
           <div className="item-header">
             <div className="item-title">{index === 0 ? 'IF' : 'ELIF'}</div>
@@ -32,11 +34,27 @@ export default memo((props: any) => {
           </div>
           <div className="item-content">
             {CustomNodeWidget ? (
-              <CustomNodeWidget data={data} key={index} item={item} />
+              <CustomNodeWidget data={item} index={index} />
             ) : (
               <>
                 {item?.value && (
-                  <div className="item-content-in">{item?.value}</div>
+                  <Paragraph
+                    className="item-content-in"
+                    ellipsis={{
+                      rows: 5,
+                      tooltip: {
+                        title: item?.value,
+                        color: '#ffff',
+                        overlayInnerStyle: {
+                          color: '#354052',
+                          fontSize: '12px',
+                        },
+                        getPopupContainer: () => document.getElementById('xflow-container')
+                      },
+                    }}
+                  >
+                    {item?.value}
+                  </Paragraph>
                 )}
               </>
             )}
@@ -57,6 +75,6 @@ export default memo((props: any) => {
           />
         </div>
       </div>
-    </Flex>
+    </Space>
   );
 });

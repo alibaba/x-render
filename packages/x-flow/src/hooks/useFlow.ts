@@ -1,40 +1,65 @@
-import { useMemo } from 'react';
+import { Edge, useReactFlow } from '@xyflow/react';
 import { useMemoizedFn } from 'ahooks';
-import { useStoreApi } from './useStore';
-import { useTemporalStore } from './useTemporalStore';
+import { useMemo } from 'react';
 import { FlowNode } from '../models/store';
-import { Edge } from '@xyflow/react';
+import { useStoreApi } from './useStore';
 
+// useFlow 维护原则
+// 1. 尽量复用 reactflow 已有的方法，不要重复造轮子
+// 2. 非必要不暴露新的方法和状态
 export const useFlow = () => {
   const storeApi = useStoreApi();
   const instance = storeApi.getState();
-  const temporalStore = useTemporalStore();
-
-  const getNodes = useMemoizedFn(() => storeApi.getState().nodes);
-  const getEdges = useMemoizedFn(() => storeApi.getState().edges);
-  const setNodes = useMemoizedFn((nodes: FlowNode[]) => {
-    temporalStore.record(() => {
-      storeApi.getState().setNodes(nodes);
-    })
-  })
-  const addNodes = useMemoizedFn((nodes: FlowNode[]) => {
-    temporalStore.record(() => {
-      storeApi.getState().addNodes(nodes);
-    })
-  })
-  const setEdges = useMemoizedFn((edges: Edge[]) => {
-    storeApi.getState().setEdges(edges);
-  })
-  const addEdges = useMemoizedFn((edges: Edge[]) => {
-    storeApi.getState().addEdges(edges);
-  })
-
-  return useMemo(() => ({
-    setNodes,
-    addNodes,
-    setEdges,
-    addEdges,
+  const {
+    zoomIn,
+    zoomOut,
+    zoomTo,
+    getZoom,
+    setViewport,
+    getViewport,
+    fitView,
+    setCenter,
+    fitBounds,
+    toObject,
     getNodes,
     getEdges,
-  }), [instance]);
+    screenToFlowPosition,
+    flowToScreenPosition
+  } = useReactFlow();
+  const setNodes = useMemoizedFn((nodes: FlowNode[]) => {
+    storeApi.getState().setNodes(nodes);
+  });
+  const addNodes = useMemoizedFn((nodes: FlowNode[]) => {
+    storeApi.getState().addNodes(nodes);
+  });
+  const setEdges = useMemoizedFn((edges: Edge[]) => {
+    storeApi.getState().setEdges(edges);
+  });
+  const addEdges = useMemoizedFn((edges: Edge[]) => {
+    storeApi.getState().addEdges(edges);
+  });
+
+  return useMemo(
+    () => ({
+      setNodes,
+      addNodes,
+      setEdges,
+      addEdges,
+      getNodes,
+      getEdges,
+      toObject,
+      zoomIn,
+      zoomOut,
+      zoomTo,
+      getZoom,
+      setViewport,
+      getViewport,
+      fitView,
+      setCenter,
+      fitBounds,
+      screenToFlowPosition,
+      flowToScreenPosition
+    }),
+    [instance]
+  );
 };

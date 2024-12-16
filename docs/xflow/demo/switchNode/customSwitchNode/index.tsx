@@ -2,8 +2,8 @@ import XFlow from '@xrenders/xflow';
 import settings from './setting';
 import React from 'react';
 
-const customWidget = ({ data, key, item }) => {
-  return <p style={{ wordWrap: 'break-word' }}>{item?.value}</p>;
+const customWidget = ({ data, index }) => {
+  return <p style={{ wordWrap: 'break-word' }}>{data?.value}-{index}</p>;
 };
 
 export default () => {
@@ -12,7 +12,7 @@ export default () => {
       type: 'Switch',
       id: '2',
       position: { x: 171.25, y: 218.75 },
-      data: { switchData:[{value:"条件1"}]}
+      data: { list:[{value:"条件1"}]}
     },
   ];
 

@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { useClickAway } from 'ahooks';
 import { Popover } from 'antd';
 import React, {
@@ -8,17 +9,22 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
 import NodesMenu from '../NodesMenu';
+import { getAntdVersion  } from '../../utils';
+import './index.less';
 
 export default forwardRef((props: any, popoverRef) => {
   const { addNode, children, onNodeSelectPopoverChange } = props;
-
+  const { setIsAddingNode } = useStore(s => ({
+    setIsAddingNode: s.setIsAddingNode,
+  }));
   const ref = useRef<any>(null);
   const closeRef: any = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
-  const { settings, nodeSelector } = useContext(ConfigContext);
+  const { settings, nodeSelector }: any = useContext(ConfigContext);
   const { showSearch, popoverProps = { placement: 'top' } } =
     nodeSelector || {};
 
@@ -42,16 +48,32 @@ export default forwardRef((props: any, popoverRef) => {
     onNodeSelectPopoverChange && onNodeSelectPopoverChange(false);
   }, []);
 
+  const popoverVersionProps = useMemo(() => {
+    const version = getAntdVersion();
+    if (version === 'V5') {
+      return {
+        open,
+      };
+    }
+    // V4
+    return {
+      visible: open,
+    };
+  }, [open]);
+
   return (
     <Popover
+      overlayClassName='nodes-popover'
+      getPopupContainer={() => document.getElementById('xflow-container')}
       zIndex={2000}
       arrow={false}
       overlayInnerStyle={{ padding: '12px 6px' }}
       {...popoverProps}
-      trigger="click"
-      open={open}
+      trigger='click'
+      {...popoverVersionProps}
       onOpenChange={() => {
         setTimeout(() => {
+          setIsAddingNode(true);
           closeRef.current = true;
           setOpen(true);
         }, 50);

@@ -7,6 +7,7 @@ export default memo((props: any) => {
   const { settingMap, widgets, iconFontUrl } = useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
+  const nodeDescription = nodeSetting?.description || '';
 
   return (
     <NodeContainer
@@ -22,6 +23,8 @@ export default memo((props: any) => {
       desc={data?.desc}
       NodeWidget={NodeWidget ? <NodeWidget data={data} /> : undefined}
       iconFontUrl={iconFontUrl}
+      description={nodeDescription} // 不允许用户更改的节点描述
+      iconSvg={nodeSetting?.iconSvg}
     />
   );
 });

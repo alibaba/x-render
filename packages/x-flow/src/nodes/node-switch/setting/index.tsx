@@ -12,7 +12,7 @@ const schema: Schema = {
   span: 24,
   displayType: 'row',
   properties: {
-    switchData: {
+    list: {
       type: 'array',
       widget: 'simpleList',
       display: 'block',

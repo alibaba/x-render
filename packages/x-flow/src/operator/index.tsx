@@ -9,16 +9,17 @@ import { useTemporalStore } from '../hooks/useTemporalStore';
 
 export type OperatorProps = {
   addNode: any;
+  xflowRef: any;
 }
 
-const Operator = ({ addNode }: OperatorProps) => {
+const Operator = ({ addNode, xflowRef }: OperatorProps) => {
   const { undo, redo, pastStates, futureStates } = useTemporalStore();
   return (
     <div className='fai-reactflow-operator'>
       <div className='operator-section'>
         <ZoomInOut />
         <UndoRedo handleUndo={() => undo()} handleRedo={() => redo()} pastStates={pastStates} futureStates={futureStates} />
-        <Control addNode={addNode} />
+        <Control addNode={addNode} xflowRef={xflowRef} />
       </div>
     </div>
   );

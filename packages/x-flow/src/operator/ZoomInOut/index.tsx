@@ -51,14 +51,14 @@ const ZOOM_IN_OUT_OPTIONS = [
 
 const ZoomSelect = ({ handleZoom }: any) => {
   return (
-    <div className="fai-reactflow-zoom-select">
+    <div className='fai-reactflow-zoom-select'>
       {ZOOM_IN_OUT_OPTIONS.map((options, i) => (
         <Fragment key={i}>
-          {i !== 0 && <div className="parting-line" />}
-          <div className="p-1">
+          {i !== 0 && <div className='parting-line' />}
+          <div className='p-1'>
             {options.map(option => (
               <div
-                className="zoom-item"
+                className='zoom-item'
                 key={option.key}
                 onClick={() => handleZoom(option.key)}
               >
@@ -103,11 +103,11 @@ const ZoomInOut: FC = () => {
   };
 
   return (
-    <div className="fai-reactflow-zoominout">
-      <Tooltip title="放大">
+    <div className='fai-reactflow-zoominout'>
+      <Tooltip title='放大' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
         <Button
-          type="text"
-          icon={<IconView type="icon-zoomout" className="icon" />}
+          type='text'
+          icon={<IconView type='icon-zoom-out-line' className='icon' />}
           onClick={e => {
             e.stopPropagation();
             zoomOut();
@@ -126,15 +126,15 @@ const ZoomInOut: FC = () => {
         <Popover
           content={<ZoomSelect handleZoom={handleZoom} />}
           zIndex={1000}
-          trigger="click"
+          trigger='click'
         >
           {parseFloat(`${zoom * 100}`).toFixed(0)}%
         </Popover>
       </div>
-      <Tooltip title="缩小">
+      <Tooltip title='缩小' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
         <Button
-          type="text"
-          icon={<IconView type="icon-zoomin" className="icon" />}
+          type='text'
+          icon={<IconView type='icon-zoom-in-line' className='icon' />}
           onClick={e => {
             e.stopPropagation();
             zoomIn();
