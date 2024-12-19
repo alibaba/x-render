@@ -7,7 +7,7 @@ title: API
 
 ## XFlow
 
-| 属性              | 描述                                       | 类型                                                        | 默认值 |
+| 属性                 | 描述                                       | 类型                                                        | 默认值 |
 | ----------------- | ------------------------------------------ | ----------------------------------------------------------- | ------ |
 | initialValues     | 初始的节点和边数据                         | `{nodes:any[],edges:any[]}`                                 | -      | - |
 | layout            | 节点布局的方向                             | `LR \| TB`                                                  | LR     | - |
@@ -15,10 +15,29 @@ title: API
 | settings          | 节点配置，定义页面中可拖动的节点配置       | ( [TNodeGroup](#tnodegroup) \| [TNodeItem](#tnodeitem) )[ ] |        |
 | nodeSelector      | 节点选择器配置，可控制节点的可搜索性       | `TNodeSelector`                                             |
 | iconFontUrl       | iconfont url，用于配置图标渲染             | `String`                                                    |        |
-| configPanelWidth  | 统一设置配置面板宽度                       | `number`                                                    | 400    |
-| hideLineInsertBtn | 是否隐藏两个节点之间，连线上的增加节点按钮 | `boolean`                                                   | false  |
+| globalConfig | 全局的面板和节点配置 |     {nodePanel:[TNodePanel](#tnodepanel),nodeView:[TNodeView](#tnodeview)}                                            |    |
 
-### TNodeGroup
+## TNodePanel
+
+面板相关配置
+
+| 属性  | 描述         | 类型          | 默认值 |
+| ----- | ------------ | ------------- | ------ |
+| width | 设置配置面板宽度     | `string \| number`      |    400    |
+| hideDesc  |   是否在配置面板中显示节点的描述信息  | `boolean`      | false |
+
+
+
+## TNodeView
+
+节点相关配置
+
+| 属性  | 描述         | 类型          | 默认值 |
+| ----- | ------------ | ------------- | ------ |
+| hideEdgeAddBtn | 是否隐藏两个节点之间，连线上的增加节点按钮    | `boolean`      |    false    |
+
+
+## TNodeGroup
 
 节点分组配置
 
@@ -37,7 +56,6 @@ title: API
 | title                | 节点名称                                                                                                                                         | `string`                                                                                                                                                        |        |
 | type                 | 节点类型                                                                                                                                         | `string`                                                                                                                                                        |        |
 | hidden               | 是否在配置面板中显示节点                                                                                                                         | `boolean`                                                                                                                                                       | false  |
-| hideDesc               | 是否在配置面板中显示节点的描述信息                                                                                                                | `boolean`                                                                                                                                                       | false  |
 | targetHandleHidden   | 是否隐藏左侧输入连接头                                                                                                                           | `boolean`                                                                                                                                                       | false  |
 | sourceHandleHidden   | 是否隐藏右侧输出连接头                                                                                                                           | `boolean`                                                                                                                                                       | false  |
 | icon                 | 节点的图标配置                                                                                                                                   | `{type:string;bgColor:string}`                                                                                                                                  |        |
@@ -45,7 +63,7 @@ title: API
 | settingSchema        | 节点的业务配置信息，详见[form-render 文档](/form-render/api-schema)。同时设置`settingSchema`和`settingWidget`只生效`settingWidget`               | <a target="_blank" href="https://github.com/alibaba/x-render/blob/e2feff8fdb3bef5537b92a2157dbbf40b9d4eb17/packages/form-render/src/type.ts#L32">SchemaBase</a> |        |
 | settingWidget        | 自定义节点的业务配置组件，在弹窗中展示。同时设置`settingSchema`和`settingWidget`只生效`settingWidget`。定义之后需要在`widgets`中引入自定义组件。 | `string`                                                                                                                                                        |        |
 | nodeWidget           | 自定义节点的业务配置信息展示组件，在节点内部展示业务配置信息。定义之后需要在`widgets`中引入自定义组件。                                          | `string`                                                                                                                                                        |        |
-| nodeConfigPanelWidth | 单独设置节点配置面板宽度                                                                                                                         | `string`                                                                                                                                                        | 400    |
+| nodePanel | 自定义节点的面板配置信息                                                                                                                         | [TNodePanel](#tnodepanel)                                                                                                                                                        |     |
 
 ## TNodeSelector
 

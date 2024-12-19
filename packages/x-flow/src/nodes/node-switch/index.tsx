@@ -14,10 +14,11 @@ export default memo((props: any) => {
     isHovered,
     handleAddNode,
   } = props;
-  const { settingMap, widgets, iconFontUrl } = useContext(ConfigContext);
+  const { settingMap, widgets, iconFontUrl, globalConfig } = useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
   const nodeDescription = nodeSetting?.description || '';
+  const hideDesc = nodeSetting?.nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
 
   return (
     <NodeContainer
@@ -29,7 +30,7 @@ export default memo((props: any) => {
         bgColor: nodeSetting?.icon?.bgColor || '#06AED4',
       }}
       onClick={onClick}
-      hideDesc={nodeSetting?.hideDesc || !data?.desc}
+      hideDesc={hideDesc}
       desc={data?.desc}
       iconFontUrl={iconFontUrl}
       NodeWidget={

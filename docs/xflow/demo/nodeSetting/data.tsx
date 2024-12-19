@@ -9,7 +9,10 @@ export const settings = [
       type: 'icon-start', // icon-font
       bgColor: '#17B26A', // 图标背景颜色
     },
-    nodeConfigPanelWidth: 500,
+    nodePanel: {
+      width: 600,
+      hideDesc:false,
+    },
     settingSchema: {
       // 自定义节点配置
       type: 'object',

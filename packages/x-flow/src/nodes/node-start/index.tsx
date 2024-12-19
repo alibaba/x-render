@@ -4,11 +4,11 @@ import { ConfigContext } from '../../models/context';
 
 export default memo((props: any) => {
   const { onClick, type, data } = props;
-  const { settingMap, widgets, iconFontUrl } = useContext(ConfigContext);
+  const { settingMap, widgets, iconFontUrl,globalConfig } = useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
   const nodeDescription = nodeSetting?.description || '';
-
+  const hideDesc = nodeSetting?.nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
 
   return (
     <NodeContainer
@@ -20,7 +20,7 @@ export default memo((props: any) => {
         bgColor: nodeSetting?.icon?.bgColor || '#17B26A',
       }}
       onClick={onClick}
-      hideDesc={nodeSetting?.hideDesc || !data?.desc}
+      hideDesc={hideDesc}
       desc={data?.desc}
       NodeWidget={NodeWidget ? <NodeWidget data={data} /> : undefined}
       iconFontUrl={iconFontUrl}

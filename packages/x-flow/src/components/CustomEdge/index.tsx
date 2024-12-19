@@ -27,8 +27,8 @@ export default memo((edge: any) => {
     targetY,
   });
 
-  const { hideLineInsertBtn } =
-    useContext(ConfigContext);
+  const { globalConfig } = useContext(ConfigContext);
+  const hideEdgeAddBtn = globalConfig?.nodeView?.hideEdgeAddBtn ?? false;
 
   const {
     nodes,
@@ -127,7 +127,7 @@ export default memo((edge: any) => {
                     <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
                   </div>
                   {
-                    !hideLineInsertBtn && <NodeSelectPopover placement="right" addNode={handleAddNode}>
+                    !hideEdgeAddBtn && <NodeSelectPopover placement="right" addNode={handleAddNode}>
                       <div className="line-icon-box">
                         <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
                       </div>

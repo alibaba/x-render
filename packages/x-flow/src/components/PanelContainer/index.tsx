@@ -26,7 +26,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const { onClose, children, nodeType, disabled, node, description, id, data } =
     props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, configPanelWidth }: any = useContext(ConfigContext);
+  const { settingMap, iconFontUrl, globalConfig }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
     (state: any) => ({
@@ -39,7 +39,9 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
-  const { hideDesc, nodeConfigPanelWidth, iconSvg } = nodeSetting;
+  const { nodePanel, iconSvg } = nodeSetting;
+  const hideDesc = nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
+
 
   // const description = getDescription(nodeType, props.description);
   const handleNodeValueChange = debounce((data: any) => {
@@ -86,7 +88,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     <Drawer
       {...drawerVersionProps}
       getContainer={false}
-      width={nodeConfigPanelWidth || configPanelWidth || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
+      width={nodePanel?.width || globalConfig?.nodePanel?.width || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
       mask={false}
       onClose={onClose}
       headerStyle={{ paddingBottom: '12px' }}

@@ -14,7 +14,7 @@ export const Flow = () => {
         console.info("打印边数据", getEdges())
         console.info("打印视口数据", getViewport())
         console.info("打印画布数据", toObject())
-      }}>打印画布数据</Button>
+      }} style={{marginBottom:"10px"}}>打印画布数据</Button>
       <XFlow
         initialValues={{ nodes, edges }}
         settings={settings as any}  // 节点配置
@@ -22,8 +22,15 @@ export const Flow = () => {
           showSearch: true,
         }}
         layout="LR"
-        configPanelWidth={410}
-        hideLineInsertBtn={true}
+        globalConfig={{
+          nodePanel: {
+            width: '400px',
+            hideDesc:true
+          },
+          nodeView: {
+            hideEdgeAddBtn:true,
+          }
+        }}
       />
     </>
   )

@@ -12,6 +12,10 @@ export interface TNodeItem {
   settingSchema?: Schema; // 节点的配置schema（弹窗） string为自定义组件
   settingWidget?: string; // 自定义组件
   hideDesc?: boolean;// 隐藏业务描述
+  nodePanel?: {  // 配置面板属性设置
+    width?: string | number; // 配置面板宽度
+    hideDesc?: boolean; // 配置面板描述
+  }
 }
 
 export interface TNodeGroup {
@@ -48,6 +52,15 @@ export interface FlowProps {
   settings?: (TNodeGroup | TNodeItem)[];
   nodeSelector?: TNodeSelector;
   iconFontUrl?: string;
+  globalConfig?: {
+    nodePanel?: {  // 配置面板属性设置
+      width?: string | number; // 配置面板宽度
+      hideDesc?: boolean; // 配置面板描述
+    },
+    nodeView?: {
+      hideEdgeAddBtn: boolean;// 是否隐藏两个节点之间，连线上的增加节点按钮
+    }
+  }
 }
 
 export default FlowProps;
