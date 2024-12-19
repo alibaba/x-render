@@ -26,7 +26,7 @@ export default memo((props: any) => {
     }),
     shallow
   );
-  const isSwitchNode = type === 'Switch';
+  const isSwitchNode = type === 'Switch' || type === 'Parallel'; // 判断是否为条件节点/并行节点
   // 增加节点并进行联系
   const handleAddNode = (data: any) => {
     const { screenToFlowPosition } = reactflow;

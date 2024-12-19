@@ -16,8 +16,8 @@ const schema: Schema = {
       type: 'array',
       widget: 'simpleList',
       display: 'block',
-      min: 1,
-      default:[{}],
+      min: 2,
+      default:[{},{}],
       props: {
         hideCopy: true,
         hideMove: true,
@@ -26,7 +26,7 @@ const schema: Schema = {
         type: 'object',
         properties: {
           value: {
-            title: '条件',
+            title: '事件',
             type: 'string',
           },
         },
@@ -41,6 +41,7 @@ export default memo((props: INodeSwitchSettingPorps) => {
 
   const watch = {
     '#': (allValues: any) => {
+
       onChange({ ...allValues });
     },
   };
