@@ -1,7 +1,8 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Handle } from '@xyflow/react';
 import { Tooltip } from 'antd';
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useMemo, useRef, useState } from 'react';
+import { getAntdVersion } from '../../utils';
 import NodeSelectPopover from '../NodesPopover';
 
 export default memo((props: any) => {
@@ -17,6 +18,19 @@ export default memo((props: any) => {
   const [isShowTooltip, setIsShowTooltip] = useState(false);
   const [openNodeSelectPopover, setOpenNodeSelectPopover] = useState(false);
   const popoverRef = useRef(null);
+
+  const toolTipVersionProps = useMemo(() => {
+    const version = getAntdVersion();
+    if (version === 'V5') {
+      return {
+        open: isShowTooltip,
+      };
+    }
+    // V4
+    return {
+      visible: isShowTooltip,
+    };
+  }, [isShowTooltip]);
 
   return (
     <Handle
@@ -53,8 +67,11 @@ export default memo((props: any) => {
                   color: '#354052',
                   fontSize: '12px',
                 }}
-                open={isShowTooltip}
-                getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
+                color='#fff'
+                {...toolTipVersionProps}
+                getPopupContainer={() =>
+                  document.getElementById('xflow-container') as HTMLElement
+                }
               >
                 <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
               </Tooltip>

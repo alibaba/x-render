@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useClickAway } from 'ahooks';
 import { Popover } from 'antd';
 import React, {
@@ -6,13 +5,14 @@ import React, {
   useCallback,
   useContext,
   useImperativeHandle,
+  useMemo,
   useRef,
   useState,
 } from 'react';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
+import { getAntdVersion } from '../../utils';
 import NodesMenu from '../NodesMenu';
-import { getAntdVersion  } from '../../utils';
 import './index.less';
 
 export default forwardRef((props: any, popoverRef) => {
@@ -29,9 +29,7 @@ export default forwardRef((props: any, popoverRef) => {
     nodeSelector || {};
 
   useImperativeHandle(popoverRef, () => ({
-    changeOpen: val => {
-      setOpen(val);
-    },
+    changeOpen: openChange,
   }));
 
   useClickAway(() => {
@@ -48,36 +46,39 @@ export default forwardRef((props: any, popoverRef) => {
     onNodeSelectPopoverChange && onNodeSelectPopoverChange(false);
   }, []);
 
+  const openChange = () => {
+    setTimeout(() => {
+      setIsAddingNode(true);
+      closeRef.current = true;
+      setOpen(true);
+    }, 50);
+  };
+
   const popoverVersionProps = useMemo(() => {
     const version = getAntdVersion();
     if (version === 'V5') {
       return {
         open,
+        onOpenChange: openChange,
       };
     }
     // V4
     return {
       visible: open,
+      onVisibleChange: openChange,
     };
   }, [open]);
 
   return (
     <Popover
-      overlayClassName='nodes-popover'
+      overlayClassName="nodes-popover"
       getPopupContainer={() => document.getElementById('xflow-container')}
       zIndex={2000}
       arrow={false}
       overlayInnerStyle={{ padding: '12px 6px' }}
       {...popoverProps}
-      trigger='click'
+      trigger="click"
       {...popoverVersionProps}
-      onOpenChange={() => {
-        setTimeout(() => {
-          setIsAddingNode(true);
-          closeRef.current = true;
-          setOpen(true);
-        }, 50);
-      }}
       content={
         <NodesMenu
           ref={ref}
