@@ -1,4 +1,4 @@
-import { Popover, Tooltip, Typography } from 'antd';
+import { Popover, Typography } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useMemo } from 'react';
 import createIconFont from '../../utils/createIconFont';
@@ -18,7 +18,7 @@ export default memo((props: any) => {
     hideDesc,
     NodeWidget,
     iconFontUrl,
-    iconSvg
+    iconSvg,
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
   return (
@@ -28,14 +28,16 @@ export default memo((props: any) => {
       })}
       onClick={onClick}
     >
-      <div className='node-title'>
+      <div className="node-title">
         <Popover
-          title={<MenuTooltip {...props} />}
-          placement='bottomLeft'
-          trigger='click'
-          getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
+          content={<MenuTooltip {...props} />}
+          placement="bottomLeft"
+          trigger="hover"
+          getPopupContainer={() =>
+            document.getElementById('xflow-container') as HTMLElement
+          }
         >
-          <Tooltip
+          {/* <Tooltip
             title='点击图标查看节点信息'
             arrow={false}
             placement='topLeft'
@@ -45,11 +47,11 @@ export default memo((props: any) => {
               fontSize: '12px',
             }}
             getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
-          >
-            <span className='icon-box' style={{ background: icon?.bgColor }}>
-              {iconSvg ? iconSvg : <IconBox {...icon} /> }
-            </span>
-          </Tooltip>
+          > */}
+          <span className="icon-box" style={{ background: icon?.bgColor }}>
+            {iconSvg ? iconSvg : <IconBox {...icon} />}
+          </span>
+          {/* </Tooltip> */}
         </Popover>
         <Text
           style={{ width: 188, marginLeft: '8px' }}
@@ -62,7 +64,8 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
-              getPopupContainer:() => document.getElementById('xflow-container') as HTMLElement
+              getPopupContainer: () =>
+                document.getElementById('xflow-container') as HTMLElement,
             },
           }}
         >
@@ -70,8 +73,8 @@ export default memo((props: any) => {
         </Text>
       </div>
 
-      <div className='node-body'>{children}</div>
-      {NodeWidget && <div className='node-widget'>{NodeWidget}</div>}
+      <div className="node-body">{children}</div>
+      {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
       {!hideDesc && !!desc && (
         <Paragraph
           ellipsis={{
@@ -84,10 +87,11 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
-              getPopupContainer: () => document.getElementById('xflow-container') as HTMLElement
+              getPopupContainer: () =>
+                document.getElementById('xflow-container') as HTMLElement,
             },
           }}
-          className='node-desc'
+          className="node-desc"
         >
           {desc}
         </Paragraph>

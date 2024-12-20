@@ -63,7 +63,7 @@ const MenuItem = (props: any) => {
   return (
     <Popover
       key={type}
-      title={<MenuTooltip {...props} />}
+      content={<MenuTooltip {...props} />}
       placement='right'
       arrow={false}
       getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
