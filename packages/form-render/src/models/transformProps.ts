@@ -36,6 +36,7 @@ const transformProps =  (props: any) => {
     className,
     validateTrigger,
     antdVersion,
+    onlyFormItem,
     ...otherProps
   } = props;
 
@@ -78,7 +79,8 @@ const transformProps =  (props: any) => {
     maxWidth,
     className,
     validateTrigger,
-    antdVersion
+    antdVersion,
+    onlyFormItem
   };
 };
 
