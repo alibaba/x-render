@@ -27,9 +27,12 @@ export const Flow = () => {
             width: '400px',
             hideDesc:true
           },
-          nodeView: {
+          edge: {
             hideEdgeAddBtn:true,
-          }
+          },
+          nodeView: {
+            hideTitleTips: true
+          },
         }}
       />
     </>

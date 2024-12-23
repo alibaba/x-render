@@ -19,8 +19,10 @@ export default memo((props: any) => {
     NodeWidget,
     iconFontUrl,
     iconSvg,
+    hideTitleTips,
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
+
   return (
     <div
       className={classNames('custom-node-container', {
@@ -29,30 +31,24 @@ export default memo((props: any) => {
       onClick={onClick}
     >
       <div className="node-title">
-        <Popover
-          content={<MenuTooltip {...props} />}
-          placement="bottomLeft"
-          trigger="hover"
-          getPopupContainer={() =>
-            document.getElementById('xflow-container') as HTMLElement
-          }
-        >
-          {/* <Tooltip
-            title='点击图标查看节点信息'
-            arrow={false}
-            placement='topLeft'
-            color='#fff'
-            overlayInnerStyle={{
-              color: '#354052',
-              fontSize: '12px',
-            }}
-            getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
-          > */}
+        {!hideTitleTips ? (
+          <Popover
+            content={<MenuTooltip {...props} />}
+            placement="bottomLeft"
+            trigger="hover"
+            getPopupContainer={() =>
+              document.getElementById('xflow-container') as HTMLElement
+            }
+          >
+            <span className="icon-box" style={{ background: icon?.bgColor }}>
+              {iconSvg ? iconSvg : <IconBox {...icon} />}
+            </span>
+          </Popover>
+        ) : (
           <span className="icon-box" style={{ background: icon?.bgColor }}>
             {iconSvg ? iconSvg : <IconBox {...icon} />}
           </span>
-          {/* </Tooltip> */}
-        </Popover>
+        )}
         <Text
           style={{ width: 188, marginLeft: '8px' }}
           ellipsis={{

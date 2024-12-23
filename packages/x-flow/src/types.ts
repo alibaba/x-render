@@ -58,6 +58,9 @@ export interface FlowProps {
       hideDesc?: boolean; // 配置面板描述
     },
     nodeView?: {
+      hideTitleTips: boolean;
+    },
+    edge: {
       hideEdgeAddBtn: boolean;// 是否隐藏两个节点之间，连线上的增加节点按钮
     }
   }

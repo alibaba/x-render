@@ -28,7 +28,7 @@ export default memo((edge: any) => {
   });
 
   const { globalConfig } = useContext(ConfigContext);
-  const hideEdgeAddBtn = globalConfig?.nodeView?.hideEdgeAddBtn ?? false;
+  const hideEdgeAddBtn = globalConfig?.edge?.hideEdgeAddBtn ?? false;
 
   const {
     nodes,

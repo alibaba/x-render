@@ -15,7 +15,7 @@ title: API
 | settings          | 节点配置，定义页面中可拖动的节点配置       | ( [TNodeGroup](#tnodegroup) \| [TNodeItem](#tnodeitem) )[ ] |        |
 | nodeSelector      | 节点选择器配置，可控制节点的可搜索性       | `TNodeSelector`                                             |
 | iconFontUrl       | iconfont url，用于配置图标渲染             | `String`                                                    |        |
-| globalConfig | 全局的面板和节点配置 |     {nodePanel:[TNodePanel](#tnodepanel),nodeView:[TNodeView](#tnodeview)}                                            |    |
+| globalConfig | 全局的面板和节点配置 |     {nodePanel:[TNodePanel](#tnodepanel),nodeView:[TNodeView](#tnodeview),edge:[TEdge](#tedge)}                                            |    |
 
 ## TNodePanel
 
@@ -34,8 +34,15 @@ title: API
 
 | 属性  | 描述         | 类型          | 默认值 |
 | ----- | ------------ | ------------- | ------ |
-| hideEdgeAddBtn | 是否隐藏两个节点之间，连线上的增加节点按钮    | `boolean`      |    false    |
+| hideTitleTips | 是否隐藏节点标题的tooltip描述信息提示    | `boolean`      |    false    |
 
+## TEdge
+
+边的全局配置
+
+| 属性  | 描述         | 类型          | 默认值 |
+| ----- | ------------ | ------------- | ------ |
+| hideEdgeAddBtn | 是否隐藏两个节点之间，连线上的增加节点按钮    | `boolean`      |    false    |
 
 ## TNodeGroup
 
