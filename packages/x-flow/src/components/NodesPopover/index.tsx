@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { getAntdVersion } from '../../utils';
+import { getAntdVersion, uuid } from '../../utils';
 import NodesMenu from '../NodesMenu';
 import './index.less';
 
@@ -41,7 +41,11 @@ export default forwardRef((props: any, popoverRef) => {
   }, ref);
 
   const handCreateNode = useCallback<any>(({ type }) => {
-    addNode({ _nodeType: type });
+    if (type === 'Switch') {
+      addNode({ _nodeType: type, list: [{ '_conditionId':`condition_${uuid()}`}] });
+    } else {
+      addNode({ _nodeType: type });
+    }
     setOpen(false);
     onNodeSelectPopoverChange && onNodeSelectPopoverChange(false);
   }, []);

@@ -15,7 +15,7 @@ import './index.less';
 import { ConfigContext } from '../../models/context';
 
 export default memo((edge: any) => {
-  const { id, selected, sourceX, sourceY, targetX, targetY, source, target } =
+  const { id, selected, sourceX, sourceY, targetX, targetY, source, target, sourceHandleId } =
     edge;
 
   const reactflow = useReactFlow();
@@ -75,6 +75,7 @@ export default memo((edge: any) => {
             id: uuid(),
             source,
             target: targetId,
+            ...sourceHandleId && { sourceHandle: sourceHandleId }
           },
           {
             id: uuid(),

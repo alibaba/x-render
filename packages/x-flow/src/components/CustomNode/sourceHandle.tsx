@@ -47,12 +47,12 @@ export default memo((props: any) => {
       }}
       {...rest}
     >
-      {(selected || isHovered || openNodeSelectPopover) && (
+      {(selected || isHovered || openNodeSelectPopover ) && (
         <>
           {switchTitle && (
             <div className="xflow-node-switch-title">{switchTitle}</div>
           )}
-          <div className="xflow-node-add-box">
+          {isConnectable && <div className="xflow-node-add-box">
             <NodeSelectPopover
               placement="right"
               addNode={handleAddNode}
@@ -76,7 +76,7 @@ export default memo((props: any) => {
                 <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
               </Tooltip>
             </NodeSelectPopover>
-          </div>
+          </div>}
         </>
       )}
     </Handle>

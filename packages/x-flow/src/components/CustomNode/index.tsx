@@ -28,7 +28,7 @@ export default memo((props: any) => {
   );
   const isSwitchNode = type === 'Switch' || type === 'Parallel'; // 判断是否为条件节点/并行节点
   // 增加节点并进行联系
-  const handleAddNode = (data: any) => {
+  const handleAddNode = (data: any, sourceHandle?:string) => {
     const { screenToFlowPosition } = reactflow;
     const { x, y } = screenToFlowPosition({
       x: mousePosition.pageX + 100,
@@ -46,6 +46,7 @@ export default memo((props: any) => {
       id: uuid(),
       source: id,
       target: targetId,
+      ...sourceHandle && { sourceHandle }
     };
     addNodes(newNodes);
     addEdges(newEdges);

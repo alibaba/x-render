@@ -5,6 +5,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
+import { uuid } from '../../utils';
 
 interface INodeEditorProps {
   data: any;
@@ -56,6 +57,19 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       }
       if (node) {
         // 更新节点的 data
+        if (node?.data?._nodeType === 'Switch' && data?.list?.length) {
+         data['list']= data?.list?.map((item,index) => {
+            if (item?._conditionId) {
+              return item;
+            } else {
+              if (node?.data?.list[index]?._conditionId) {
+                return { ...item, _conditionId: node?.data?.list[index]?._conditionId };
+              } else {
+                return { ...item, _conditionId: `condition_${uuid()}` };
+              }
+            }
+          });
+        }
         node.data = { ...node.data, ...data };
       }
     });
@@ -65,7 +79,6 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const watch = {
     '#': (allValues: any) => {
       handleNodeValueChange({ ...allValues });
-      // onChange({ id, values: { ...allValues } });
     },
   };
 

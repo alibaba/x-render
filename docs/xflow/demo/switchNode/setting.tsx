@@ -11,7 +11,7 @@ export default [
   {
     title: '开始',
     type: 'Start',
-    hidden: true,
+    // hidden: true,
     targetHandleHidden: true,
     icon: {
       type: 'icon-start',
@@ -80,7 +80,7 @@ export default [
   {
     title: '结束',
     type: 'End',
-    hidden: true,
+    // hidden: true,
     sourceHandleHidden: true,
     icon: {
       type: 'icon-end',
