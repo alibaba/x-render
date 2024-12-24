@@ -9,14 +9,23 @@ import produce from 'immer';
 import React, { memo, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
-import { uuid } from '../../utils';
+import { ConfigContext } from '../../models/context';
+import { uuid, uuid4 } from '../../utils';
 import NodeSelectPopover from '../NodesPopover';
 import './index.less';
-import { ConfigContext } from '../../models/context';
 
 export default memo((edge: any) => {
-  const { id, selected, sourceX, sourceY, targetX, targetY, source, target, sourceHandleId } =
-    edge;
+  const {
+    id,
+    selected,
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    source,
+    target,
+    sourceHandleId,
+  } = edge;
 
   const reactflow = useReactFlow();
   const [isHovered, setIsHovered] = useState(false);
@@ -27,7 +36,7 @@ export default memo((edge: any) => {
     targetY,
   });
 
-  const { globalConfig } = useContext(ConfigContext);
+  const { globalConfig, settingMap } = useContext(ConfigContext);
   const hideEdgeAddBtn = globalConfig?.edge?.hideEdgeAddBtn ?? false;
 
   const {
@@ -49,7 +58,7 @@ export default memo((edge: any) => {
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
-    );
+  );
 
   const handleAddNode = (data: any) => {
     const { screenToFlowPosition } = reactflow;
@@ -59,11 +68,16 @@ export default memo((edge: any) => {
     });
 
     const targetId = uuid();
+    const title = settingMap[data?._nodeType]?.title || data?._nodeType;
+
     const newNodes = produce(nodes, (draft: any) => {
       draft.push({
         id: targetId,
         type: 'custom',
-        data,
+        data: {
+          ...data,
+          title: `${title}_${uuid4()}`,
+        },
         position: { x, y },
       });
     });
@@ -75,7 +89,7 @@ export default memo((edge: any) => {
             id: uuid(),
             source,
             target: targetId,
-            ...sourceHandleId && { sourceHandle: sourceHandleId }
+            ...(sourceHandleId && { sourceHandle: sourceHandleId }),
           },
           {
             id: uuid(),
@@ -127,13 +141,16 @@ export default memo((edge: any) => {
                   >
                     <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
                   </div>
-                  {
-                    !hideEdgeAddBtn && <NodeSelectPopover placement="right" addNode={handleAddNode}>
+                  {!hideEdgeAddBtn && (
+                    <NodeSelectPopover
+                      placement="right"
+                      addNode={handleAddNode}
+                    >
                       <div className="line-icon-box">
                         <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
                       </div>
                     </NodeSelectPopover>
-                  }
+                  )}
                 </div>
               </div>
             </EdgeLabelRenderer>

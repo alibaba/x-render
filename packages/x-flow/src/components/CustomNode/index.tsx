@@ -4,7 +4,7 @@ import React, { memo, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { capitalize, uuid } from '../../utils';
+import { capitalize, uuid, uuid4 } from '../../utils';
 import './index.less';
 import SourceHandle from './sourceHandle';
 
@@ -28,18 +28,22 @@ export default memo((props: any) => {
   );
   const isSwitchNode = type === 'Switch' || type === 'Parallel'; // 判断是否为条件节点/并行节点
   // 增加节点并进行联系
-  const handleAddNode = (data: any, sourceHandle?:string) => {
+  const handleAddNode = (data: any, sourceHandle?: string) => {
     const { screenToFlowPosition } = reactflow;
     const { x, y } = screenToFlowPosition({
       x: mousePosition.pageX + 100,
       y: mousePosition.pageY + 100,
     });
     const targetId = uuid();
+    const title = settingMap[data?._nodeType]?.title || data?._nodeType;
 
     const newNodes = {
       id: targetId,
       type: 'custom',
-      data,
+      data: {
+        ...data,
+         title: `${title}_${uuid4()}`
+      },
       position: { x, y },
     };
     const newEdges = {

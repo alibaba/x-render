@@ -10,7 +10,7 @@ import { useEventListener, useMemoizedFn } from 'ahooks';
 import produce, { setAutoFreeze } from 'immer';
 import { debounce } from 'lodash';
 import type { FC } from 'react';
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+import React, { memo, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import CandidateNode from './components/CandidateNode';
 import CustomEdge from './components/CustomEdge';
 import PanelContainer from './components/PanelContainer';
@@ -21,13 +21,14 @@ import { useStore, useStoreApi } from './hooks/useStore';
 
 import Operator from './operator';
 import FlowProps from './types';
-import { uuid } from './utils';
+import { uuid, uuid4 } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 
 import { shallow } from 'zustand/shallow';
 import NodeEditor from './components/NodeEditor';
 import './index.less';
 import { useTemporalStore } from './hooks/useTemporalStore';
+import { ConfigContext } from './models/context';
 
 const CustomNode = memo(CustomNodeComponent);
 const edgeTypes = { buttonedge: memo(CustomEdge) };
@@ -73,6 +74,8 @@ const XFlow: FC<FlowProps> = memo(() => {
   );
   const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
+  const { settingMap } = useContext(ConfigContext);
+
   useEffect(() => {
     zoomTo(0.8);
     setAutoFreeze(false);
@@ -80,6 +83,7 @@ const XFlow: FC<FlowProps> = memo(() => {
       setAutoFreeze(true);
     };
   }, []);
+
 
   useEventListener('keydown', e => {
     if ((e.key === 'd' || e.key === 'D') && (e.ctrlKey || e.metaKey))
@@ -123,10 +127,14 @@ const XFlow: FC<FlowProps> = memo(() => {
 
   // 新增节点
   const handleAddNode = (data: any) => {
+    const title = settingMap[data?._nodeType]?.title || data?._nodeType;
     const newNode = {
       id: uuid(),
       type: 'custom',
-      data,
+      data: {
+        ...data,
+        title: `${title}_${uuid4()}`
+      },
       position: {
         x: 0,
         y: 0,

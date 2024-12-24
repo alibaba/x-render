@@ -1,6 +1,7 @@
 import { version as antdVersion } from 'antd';
 import { customAlphabet } from 'nanoid';
 export const uuid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 16);
+export const uuid4 = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 4);
 
 import { isMatch, some, set, get, cloneDeep, has as _has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
 
