@@ -40,7 +40,7 @@ export default memo((props: any) => {
             getPopupContainer={() =>
               document.getElementById('xflow-container') as HTMLElement
             }
-            overlayInnerStyle={{ padding: '12px 6px' }}
+            overlayInnerStyle={{ padding: '12px 16px' }}
           >
             <span className="icon-box" style={{ background: icon?.bgColor }}>
               {iconSvg ? iconSvg : <IconBox {...icon} />}
