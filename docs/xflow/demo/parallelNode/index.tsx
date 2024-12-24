@@ -5,75 +5,94 @@ import React from 'react'
 export default () => {
   const nodes = [
     {
-      type: 'Start',
-
-      id: '1',
-      position: {
-        x: -40,
-        y: 217.02097759552555,
-      },
-    },
-    {
-      type: 'End',
-      position:{
-      "x": 733,
-      "y": 70
-    },
-      id: '2',
-    },
-    {
-      id: 'qga2pm66shrcn0ir',
-      position: {
-        "x": 320,
-        "y": 228
-      },
+      id: 'mcelcsg6pinydoy7',
       type: 'Parallel',
       data: {
         list: [
           {
-            value: '并行事件1',
+            _parallelId: 'parallel_30ds0x3evus7ogo2',
+            value: '事件1',
           },
           {
-            value: '并行事件2',
+            _parallelId: 'parallel_m1l276eelcgn7s1p',
+            value: '事件2',
+            _parallelTitle: '自定义事件名称'
           },
         ],
       },
+      position: {
+        x: -40,
+        y: 281.25,
+      },
     },
     {
-      id: 'z0ps4v0c8xkvuu5c',
+      id: '4m9tee00n819nyyy',
+      type: 'tool',
       position: {
-        "x": 640,
-        "y": 461
+        x: 400,
+        y: 227.5,
       },
-      type: 'Code',
+    },
+    {
+      id: 'j0kufl0o4fca4ee9',
+      type: 'knowledge',
+
+      position: {
+        x: 312.5,
+        y: 438.75,
+      },
+
+    },
+    {
+      id: 'w4be9edh4bhdlokm',
+      type: 'Start',
+      position: {
+        x: -379.21875,
+        y: 348.75,
+      },
+    },
+    {
+      id: '3qloq2p1x3wcwbzg',
+      type: 'End',
+      position: {
+        x: 675,
+        y: 360,
+      },
     },
   ];
 
   const edges = [
     {
-      source: '1',
-      target: 'qga2pm66shrcn0ir',
-      id: 'xy-edge__1-qga2pm66shrcn0ir',
+      id: 'ky0eedrd6t2hqq81',
+      source: 'mcelcsg6pinydoy7',
+      target: '4m9tee00n819nyyy',
+      sourceHandle: 'parallel_30ds0x3evus7ogo2',
     },
     {
-      source: 'qga2pm66shrcn0ir',
-      sourceHandle: 'id_0',
-      target: '2',
-      id: 'xy-edge__qga2pm66shrcn0irid_0-2',
+      id: '7tm5a339lj94ugtn',
+      source: 'mcelcsg6pinydoy7',
+      target: 'j0kufl0o4fca4ee9',
+      sourceHandle: 'parallel_m1l276eelcgn7s1p',
     },
     {
-      source: 'qga2pm66shrcn0ir',
-      sourceHandle: 'id_1',
-      target: 'z0ps4v0c8xkvuu5c',
-      id: 'xy-edge__qga2pm66shrcn0irid_1-z0ps4v0c8xkvuu5c',
+      type: 'buttonedge',
+      source: 'w4be9edh4bhdlokm',
+      target: 'mcelcsg6pinydoy7',
+      id: 'xy-edge__w4be9edh4bhdlokm-mcelcsg6pinydoy7',
     },
     {
-      source: 'z0ps4v0c8xkvuu5c',
-      target: '2',
-      id: 'xy-edge__z0ps4v0c8xkvuu5c-2',
+      type: 'buttonedge',
+      source: '4m9tee00n819nyyy',
+      target: '3qloq2p1x3wcwbzg',
+      id: 'xy-edge__4m9tee00n819nyyy-3qloq2p1x3wcwbzg',
+    },
+    {
+      type: 'buttonedge',
+      source: 'j0kufl0o4fca4ee9',
+      target: '3qloq2p1x3wcwbzg',
+      id: 'xy-edge__j0kufl0o4fca4ee9-3qloq2p1x3wcwbzg',
     },
   ];
-
   return (
     <div style={{ height: '600px' }}>
       <XFlow

@@ -175,3 +175,42 @@ export const getAntdVersion = () => {
     return 'V4'
   }
 }
+
+// 安全的JSON.stringify
+export function safeJsonStringify(obj: Object) {
+  const seen = new WeakSet();
+
+  function replacer(key, value) {
+    // 循环引用
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return '[Circular]';
+      }
+      seen.add(value);
+    }
+
+    // React
+    if (value && typeof value === 'object' && value._owner) {
+      return '[React Element]';
+    }
+
+    // BigInt
+    if (typeof value === 'bigint') {
+      return value.toString();
+    }
+
+    // 其他无法序列化的类型
+    if (typeof value === 'function') {
+      return `[Function: ${value.name || 'anonymous'}]`;
+    }
+
+    return value;
+  }
+
+  try {
+    return JSON.stringify(obj, replacer, 2);
+  } catch (error) {
+    console.error('json.stringify error', error);
+    return null;
+  }
+}

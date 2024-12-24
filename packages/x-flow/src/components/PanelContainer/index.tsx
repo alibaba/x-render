@@ -6,7 +6,7 @@ import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
 import createIconFont from '../../utils/createIconFont';
-import { getAntdVersion  } from '../../utils';
+import { getAntdVersion, safeJsonStringify  } from '../../utils';
 import IconView from '../IconView';
 import './index.less';
 
@@ -65,7 +65,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   useEffect(() => {
     setDescVal(data?.desc);
     setTitleVal(data?.title || nodeSetting?.title);
-  }, [JSON.stringify(data), id]);
+  }, [safeJsonStringify(data), id]);
 
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
