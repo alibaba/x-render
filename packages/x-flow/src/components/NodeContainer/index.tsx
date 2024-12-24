@@ -2,8 +2,8 @@ import { Popover, Typography } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useMemo } from 'react';
 import createIconFont from '../../utils/createIconFont';
-import { MenuTooltip } from '../NodesMenu';
 import './index.less';
+import TitleMenuTooltip from './TitleMenuTooltip';
 
 const { Text, Paragraph } = Typography;
 
@@ -21,7 +21,7 @@ export default memo((props: any) => {
     iconSvg,
     hideTitleTips,
   } = props;
-  const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
+  const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl])
 
   return (
     <div
@@ -33,12 +33,14 @@ export default memo((props: any) => {
       <div className="node-title">
         {!hideTitleTips ? (
           <Popover
-            content={<MenuTooltip {...props} />}
+            overlayClassName="nodes-popover"
+            content={<TitleMenuTooltip {...props} />}
             placement="bottomLeft"
             trigger="hover"
             getPopupContainer={() =>
               document.getElementById('xflow-container') as HTMLElement
             }
+            overlayInnerStyle={{ padding: '12px 6px' }}
           >
             <span className="icon-box" style={{ background: icon?.bgColor }}>
               {iconSvg ? iconSvg : <IconBox {...icon} />}
