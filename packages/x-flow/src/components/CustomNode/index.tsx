@@ -115,6 +115,7 @@ export default memo((props: any) => {
               {
                 label: '删除',
                 key: 'delete',
+                danger: true,
                 onClick: handleDeleteNode,
               },
             ],
