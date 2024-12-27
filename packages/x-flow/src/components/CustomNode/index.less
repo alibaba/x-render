@@ -1,13 +1,23 @@
 .xflow-node-container {
   border: 2px solid #fff;
   border-radius: 14px;
-
+  position: relative;
   .react-flow__edge-path,
   .react-flow__connection-path {
     stroke: #d0d5dc;
     stroke-width: 2px;
   }
-
+  .xflow-node-actions-container {
+    cursor: pointer;
+    position: absolute;
+    top: -4px;
+    background: #ffffff;
+    transform: translate(0, -100%);
+    right: 6px;
+    padding: 0 2px;
+    border-radius: 4px;
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, .05);
+  }
   .react-flow__handle {
     width: 30px;
     height: 30px;

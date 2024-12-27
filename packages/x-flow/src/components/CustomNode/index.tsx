@@ -1,6 +1,9 @@
+import { MoreOutlined } from '@ant-design/icons';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
+import { Dropdown, message } from "antd";
+
 import classNames from 'classnames';
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useCallback, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
@@ -15,13 +18,15 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, mousePosition } = useStore(
+  const { addNodes, addEdges, copyNode, pasteNode, mousePosition } = useStore(
     (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,
       mousePosition: state.mousePosition,
       addNodes: state.addNodes,
       addEdges: state.addEdges,
+      copyNode: state.copyNode,
+      pasteNode: state.pasteNode,
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
@@ -42,7 +47,7 @@ export default memo((props: any) => {
       type: 'custom',
       data: {
         ...data,
-         title: `${title}_${uuid4()}`
+        title: `${title}_${uuid4()}`,
       },
       position: { x, y },
     };
@@ -50,7 +55,7 @@ export default memo((props: any) => {
       id: uuid(),
       source: id,
       target: targetId,
-      ...sourceHandle && { sourceHandle }
+      ...(sourceHandle && { sourceHandle }),
     };
     addNodes(newNodes);
     addEdges(newEdges);
@@ -62,6 +67,16 @@ export default memo((props: any) => {
     targetPosition = Position.Top;
     sourcePosition = Position.Bottom;
   }
+
+  const handleCopyNode = useCallback(() => {
+    copyNode(id);
+    message.success('复制成功');
+  }, [copyNode]);
+
+  const handlePasteNode = useCallback(() => {
+    pasteNode(id)
+  }, [pasteNode]);
+
   return (
     <div
       className={classNames('xflow-node-container', {
@@ -77,6 +92,31 @@ export default memo((props: any) => {
           position={targetPosition}
           isConnectable={isConnectable}
         />
+      )}
+      {selected && (
+        <Dropdown
+          menu={{
+            items: [
+              {
+                label: '复制',
+                key: ' copy',
+                onClick: handleCopyNode,
+              },
+              {
+                label: '粘贴',
+                key: 'paste',
+                onClick: handlePasteNode,
+              },
+            ],
+          }}
+          trigger={['click', 'contextMenu']}
+        >
+          <div className="xflow-node-actions-container">
+          <MoreOutlined
+            style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
+          ></MoreOutlined>
+        </div>
+        </Dropdown>
       )}
       <NodeWidget
         id={id}
