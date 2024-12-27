@@ -18,7 +18,7 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, copyNode, pasteNode, mousePosition } = useStore(
+  const { addNodes, addEdges, copyNode, pasteNode, deleteNode, mousePosition } = useStore(
     (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,
@@ -27,6 +27,7 @@ export default memo((props: any) => {
       addEdges: state.addEdges,
       copyNode: state.copyNode,
       pasteNode: state.pasteNode,
+      deleteNode: state.deleteNode,
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
@@ -77,6 +78,10 @@ export default memo((props: any) => {
     pasteNode(id)
   }, [pasteNode]);
 
+  const handleDeleteNode = useCallback(() => {
+    deleteNode(id)
+  }, [pasteNode]);
+
   return (
     <div
       className={classNames('xflow-node-container', {
@@ -106,6 +111,11 @@ export default memo((props: any) => {
                 label: '粘贴',
                 key: 'paste',
                 onClick: handlePasteNode,
+              },
+              {
+                label: '删除',
+                key: 'delete',
+                onClick: handleDeleteNode,
               },
             ],
           }}

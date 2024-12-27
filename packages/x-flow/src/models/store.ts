@@ -41,6 +41,7 @@ export type FlowState = {
   setEdges: (edges: Edge[]) => void;
   addNodes: (nodes: FlowNode[]| FlowNode) => void;
   addEdges: (edges: Edge[] | Edge) => void;
+  deleteNode: (nodeId: string) => void;
   copyNode: (nodeId: string) => void;
   pasteNode: (nodeId: string) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
@@ -141,6 +142,11 @@ const createStore = (initProps?: Partial<FlowProps>) => {
               copyNodes: [],
             });
           }
+        },
+        deleteNode: (nodeId) => {
+          set({
+            nodes: get().nodes.filter((node) => node.id !== nodeId),
+          });
         },
       }),
       {
