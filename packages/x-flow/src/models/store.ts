@@ -1,3 +1,4 @@
+import { generateCopyNodes, uuid } from '../utils';
 import {
   addEdge,
   applyEdgeChanges,
@@ -27,6 +28,8 @@ export type FlowState = {
   layout?: 'LR' | 'TB';
   nodes?: FlowNode[];
   edges?: Edge[];
+  copyNodes: FlowNode[];
+  copyEdges: Edge[];
   panOnDrag?: boolean;
   isAddingNode?: boolean;
   candidateNode: any;
@@ -36,8 +39,11 @@ export type FlowState = {
   onConnect: OnConnect;
   setNodes: (nodes: FlowNode[]) => void;
   setEdges: (edges: Edge[]) => void;
-  addNodes: (nodes: FlowNode[]) => void;
-  addEdges: (edges: Edge[]) => void;
+  addNodes: (nodes: FlowNode[]| FlowNode) => void;
+  addEdges: (edges: Edge[] | Edge) => void;
+  deleteNode: (nodeId: string) => void;
+  copyNode: (nodeId: string) => void;
+  pasteNode: (nodeId: string) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
   setIsAddingNode: (payload: boolean) => void;
   setCandidateNode: (candidateNode: any) => void;
@@ -57,6 +63,8 @@ const createStore = (initProps?: Partial<FlowProps>) => {
       (set, get) => ({
         ...DEFAULT_PROPS,
         ...initProps,
+        copyNodes: [],
+        copyEdges: [],
         isAddingNode: false,
         candidateNode: null,
         // nodeMenus: [],
@@ -112,6 +120,33 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             return;
           }
           set({ layout });
+        },
+        copyNode: (nodeId) => {
+          const copyNodes = generateCopyNodes(
+            get().nodes.find((node) => node.id === nodeId),
+          );
+          set({
+            copyNodes,
+          });
+        },
+        pasteNode: (nodeId) => {
+          if (get().copyNodes.length > 0) {
+            const newEdges = {
+              id: uuid(),
+              source: nodeId,
+              target: get().copyNodes[0].id,
+            };
+            get().addNodes(get().copyNodes);
+            get().addEdges(newEdges);
+            set({
+              copyNodes: [],
+            });
+          }
+        },
+        deleteNode: (nodeId) => {
+          set({
+            nodes: get().nodes.filter((node) => node.id !== nodeId),
+          });
         },
       }),
       {
