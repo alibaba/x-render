@@ -10,11 +10,13 @@ export const FlowProvider = memo<{
   initialNodes?: any[];
   initialEdges?: any[];
   children: ReactNode;
-}>(({ initialNodes: nodes = [], initialEdges: edges = [], children }) => {
+  layout?: 'LR' | 'TB';
+}>(({ initialNodes: nodes = [], initialEdges: edges = [], children, layout = 'LR' }) => {
   const [store] = useState(() =>
     createStore({
       nodes,
       edges,
+      layout
     })
   );
 
@@ -52,7 +54,7 @@ export const FlowProviderWrapper = ({
   nodes: any[];
   edges: any[];
   layout?: 'LR' | 'TB';
-}) => {
+  }) => {
   const isWrapped = useContext(StoreContext);
 
   if (isWrapped) {
@@ -64,7 +66,7 @@ export const FlowProviderWrapper = ({
   }
 
   return (
-    <FlowProvider initialNodes={transformNodes(nodes)} initialEdges={edges}>
+    <FlowProvider initialNodes={transformNodes(nodes)} initialEdges={edges} layout={layout}>
       {children}
     </FlowProvider>
   );

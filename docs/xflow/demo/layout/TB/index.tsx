@@ -66,7 +66,7 @@ export default () => {
         nodeSelector={{
           showSearch: true,
         }}
-        layout="LR"
+        layout="TB"
       />
     </div>
   );
