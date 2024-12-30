@@ -16,6 +16,8 @@ title: API
 | nodeSelector      | 节点选择器配置，可控制节点的可搜索性       | `TNodeSelector`                                             |
 | iconFontUrl       | iconfont url，用于配置图标渲染             | `String`                                                    |        |
 | globalConfig | 全局的面板和节点配置 |     {nodePanel:[TNodePanel](#tnodepanel),nodeView:[TNodeView](#tnodeview),edge:[TEdge](#tedge)}                                            |    |
+| logPanel | 日志面板配置 |    [TLogPanel](#tlogpanel)                                         |    |
+| onNodeClick | 节点点击事件 |   `NodeMouseHandler`                                        |    |
 
 ## TNodePanel
 
@@ -35,6 +37,7 @@ title: API
 | 属性  | 描述         | 类型          | 默认值 |
 | ----- | ------------ | ------------- | ------ |
 | hideTitleTips | 是否隐藏节点标题的tooltip描述信息提示    | `boolean`      |    false    |
+| status | 节点状态自定义配置,自定义节点不同状态的颜色展示。name:状态名称，color:颜色值。    | `Array<{name:string;color:string}>`      |    []    |
 
 ## TEdge
 
@@ -53,6 +56,28 @@ title: API
 | title | 分组名称     | `string`      |        |
 | type  | 分组类型     | `_group`      | _group |
 | items | 节点配置信息 | `TNodeItem[]` |        |
+
+## TLogPanel
+
+日志面板配置
+
+| 属性  | 描述         | 类型          | 默认值 |
+| ----- | ------------ | ------------- | ------ |
+| logList |   日志面板数据     | [TLogListItem](#tloglistitem)      |        |
+| loading  |   日志面板loading效果  | `boolean`      | false |
+| logWidget  |   自定义日志面板展示  | `string`      |  |
+
+## TLogListItem
+
+日志面板数据格式
+
+| 属性  | 描述         | 类型          | 默认值 |
+| ----- | ------------ | ------------- | ------ |
+| statusPanel |   日志面板数据,isBadge是否以badge形式展示状态  |    `{status: Array<{ label: string; value?: string; isBadge?: boolean }>;extra?: string \| ReactNode}`  |        |
+| codePanel  |   代码面板数据渲染，如果没有 codePanel，则不渲染代码面板。title:代码面板标题，code:代码面板数据 | `Array<{ title: string; code: string }>`      |  |
+| nodeId  |   节点ID，必填  | `string`      |  |
+
+
 
 ## TNodeItem
 

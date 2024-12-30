@@ -1,5 +1,5 @@
 import { ConfigProvider } from 'antd';
-import React, { useEffect, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { FlowProviderWrapper } from './components/FlowProvider';
 import { ConfigContext } from './models/context';
 import { TNodeGroup, TNodeItem } from './types';
@@ -27,6 +27,7 @@ export default function withProvider<T>(
       layout,
       iconFontUrl,
       globalConfig,
+      logPanel,
       ...restProps
     } = props;
     const settingMap = useMemo(() => {
@@ -50,13 +51,12 @@ export default function withProvider<T>(
       settingMap,
       iconFontUrl,
       globalConfig,
+      logPanel,
       widgets: {
         ...defaultWidgets,
         ...widgets,
       },
     };
-
-
 
     return (
       <ConfigProvider {...configProvider}>

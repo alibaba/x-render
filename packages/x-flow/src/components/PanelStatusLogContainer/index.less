@@ -1,4 +1,4 @@
-.custom-node-panel {
+.node-log-panel {
   .ant-drawer-content-wrapper {
     top: 54px;
     bottom: 14px;
@@ -43,13 +43,15 @@
   .icon-box {
     width: 24px;
     height: 24px;
-    min-width: 24px;
-    min-height: 24px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 5px;
+    cursor: pointer;
+  }
+  .title-content {
+    margin-left: 11px;
   }
 
   .title-actions {
@@ -108,21 +110,26 @@
     font-weight: 600;
   }
 
-  .ant-table-thead >tr>th {
+  .ant-table-thead > tr > th {
     font-size: 12px;
     font-weight: normal;
   }
 
-  .ant-table-tbody>tr>td {
+  .ant-table-tbody > tr > td {
     padding: 4px !important;
   }
 
-  input, select, textarea, .ant-select-selector {
+  input,
+  select,
+  textarea,
+  .ant-select-selector {
     font-size: 12px !important;
     min-height: 30px;
   }
 
-  input, select, .ant-select-selector {
+  input,
+  select,
+  .ant-select-selector {
     height: 30px !important;
     line-height: 30px !important;
   }
@@ -131,5 +138,14 @@
     .ant-btn {
       font-size: 12px;
     }
+  }
+}
+
+.no-header-line {
+  .ant-drawer-header{
+    border-bottom: none;
+  }
+  .ant-drawer-body{
+    padding: 0px 0px 12px 0px;
   }
 }

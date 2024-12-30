@@ -14,6 +14,7 @@ import React, { memo, useContext, useEffect, useMemo, useRef, useState } from 'r
 import CandidateNode from './components/CandidateNode';
 import CustomEdge from './components/CustomEdge';
 import PanelContainer from './components/PanelContainer';
+import PanelStatusLogContainer from './components/PanelStatusLogContainer';
 import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
@@ -26,8 +27,9 @@ import autoLayoutNodes from './utils/autoLayoutNodes';
 
 import { shallow } from 'zustand/shallow';
 import NodeEditor from './components/NodeEditor';
-import './index.less';
+import NodeLogPanel from './components/NodeLogPanel';
 import { useTemporalStore } from './hooks/useTemporalStore';
+import './index.less';
 import { ConfigContext } from './models/context';
 
 const CustomNode = memo(CustomNodeComponent);
@@ -38,7 +40,7 @@ const edgeTypes = { buttonedge: memo(CustomEdge) };
  * XFlow 入口
  *
  */
-const XFlow: FC<FlowProps> = memo(() => {
+const XFlow: FC<FlowProps> = memo(props => {
   const workflowContainerRef = useRef<HTMLDivElement>(null);
   const store = useStoreApi();
   const { zoomTo } = useReactFlow();
@@ -75,6 +77,9 @@ const XFlow: FC<FlowProps> = memo(() => {
   const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
   const { settingMap } = useContext(ConfigContext);
+  const [openPanel, setOpenPanel] = useState<boolean>(true);
+  const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
+  const { onNodeClick } = props;
 
   useEffect(() => {
     zoomTo(0.8);
@@ -83,7 +88,6 @@ const XFlow: FC<FlowProps> = memo(() => {
       setAutoFreeze(true);
     };
   }, []);
-
 
   useEventListener('keydown', e => {
     if ((e.key === 'd' || e.key === 'D') && (e.ctrlKey || e.metaKey))
@@ -96,21 +100,25 @@ const XFlow: FC<FlowProps> = memo(() => {
       e.preventDefault();
   });
 
-  useEventListener('mousemove', e => {
-    const containerClientRect =
-      workflowContainerRef.current?.getBoundingClientRect();
-    if (containerClientRect) {
-      setMousePosition({
-        pageX: e.clientX,
-        pageY: e.clientY,
-        elementX: e.clientX - containerClientRect.left,
-        elementY: e.clientY - containerClientRect.top,
-      });
+  useEventListener(
+    'mousemove',
+    e => {
+      const containerClientRect =
+        workflowContainerRef.current?.getBoundingClientRect();
+      if (containerClientRect) {
+        setMousePosition({
+          pageX: e.clientX,
+          pageY: e.clientY,
+          elementX: e.clientX - containerClientRect.left,
+          elementY: e.clientY - containerClientRect.top,
+        });
+      }
+    },
+    {
+      target: workflowContainerRef.current,
+      enable: isAddingNode,
     }
-  }, {
-    target: workflowContainerRef.current,
-    enable: isAddingNode
-  });
+  );
 
   const { eventEmitter } = useEventEmitterContextContext();
   eventEmitter?.useSubscription((v: any) => {
@@ -133,7 +141,7 @@ const XFlow: FC<FlowProps> = memo(() => {
       type: 'custom',
       data: {
         ...data,
-        title: `${title}_${uuid4()}`
+        title: `${title}_${uuid4()}`,
       },
       position: {
         x: 0,
@@ -198,8 +206,7 @@ const XFlow: FC<FlowProps> = memo(() => {
     return {
       custom: (props: any) => {
         const { data, id, ...rest } = props;
-        const { _nodeType, ...restData } = data || {};
-
+        const { _nodeType, _status, ...restData } = data || {};
         return (
           <CustomNode
             {...rest}
@@ -207,8 +214,16 @@ const XFlow: FC<FlowProps> = memo(() => {
             data={{ ...restData }}
             type={_nodeType}
             layout={layout}
+            status={_status}
             onClick={e => {
-              setActiveNode({ id, _nodeType, values: { ...restData } });
+              setActiveNode({
+                id,
+                _nodeType,
+                values: { ...restData },
+                _status,
+              });
+              setOpenPanel(true);
+              setOpenLogPanel(true);
             }}
           />
         );
@@ -223,6 +238,18 @@ const XFlow: FC<FlowProps> = memo(() => {
         onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
+      />
+    );
+  }, [activeNode?.id]);
+
+  const NodeLogWrap = useMemo(() => {
+    return (
+      <NodeLogPanel
+        data={activeNode?.values}
+        onChange={handleNodeValueChange}
+        nodeType={activeNode?._nodeType}
+        id={activeNode?.id}
+        node={activeNode}
       />
     );
   }, [activeNode?.id]);
@@ -251,11 +278,11 @@ const XFlow: FC<FlowProps> = memo(() => {
             if (change.type === 'remove' || change.type === 'add') {
               record(() => {
                 onNodesChange(changes);
-              })
+              });
             } else {
               onNodesChange(changes);
             }
-          })
+          });
         }}
         onEdgesChange={changes => {
           onEdgesChange(changes);
@@ -269,6 +296,9 @@ const XFlow: FC<FlowProps> = memo(() => {
         onNodesDelete={() => {
           // setActiveNode(null);
         }}
+        onNodeClick={(event, node) => {
+          onNodeClick && onNodeClick(event, node);
+        }}
       >
         <CandidateNode />
         <Operator addNode={handleAddNode} xflowRef={workflowContainerRef} />
@@ -278,17 +308,36 @@ const XFlow: FC<FlowProps> = memo(() => {
           color="black"
           variant={BackgroundVariant.Dots}
         />
-        {activeNode && (
+        {activeNode && openPanel && (
           <PanelContainer
             id={activeNode?.id}
             nodeType={activeNode?._nodeType}
-            onClose={() => setActiveNode(null)}
+            onClose={() => {
+              setOpenPanel(false);
+              // 如果日志面板关闭
+              if (!activeNode?._status || !openLogPanel) {
+                setActiveNode(null);
+              }
+            }}
             node={activeNode}
             data={activeNode?.values}
-            // disabled
+            openLogPanel={openLogPanel}
           >
             {NodeEditorWrap}
           </PanelContainer>
+        )}
+        {activeNode?._status && openLogPanel && (
+          <PanelStatusLogContainer
+            id={activeNode?.id}
+            nodeType={activeNode?._nodeType}
+            onClose={() => {
+              setOpenLogPanel(false);
+              !openPanel && setActiveNode(null);
+            }}
+            data={activeNode?.values}
+          >
+            {NodeLogWrap}
+          </PanelStatusLogContainer>
         )}
       </ReactFlow>
     </div>

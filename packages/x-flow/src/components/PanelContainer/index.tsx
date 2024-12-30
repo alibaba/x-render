@@ -1,12 +1,12 @@
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { Divider, Drawer, Input, Space } from 'antd';
 import produce from 'immer';
 import { debounce } from 'lodash';
+import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
+import { getAntdVersion, safeJsonStringify } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
-import { getAntdVersion, safeJsonStringify  } from '../../utils';
 import IconView from '../IconView';
 import './index.less';
 
@@ -14,19 +14,35 @@ interface IPanelProps {
   disabled?: boolean; // 是否禁用  ---to do：确认一下取的地方
   nodeType: string;
   onClose: () => void;
-  node?: { id: string; _isCandidate: boolean; _nodeType: string };
+  node?: {
+    id: string;
+    _isCandidate: boolean;
+    _nodeType: string;
+    _status?: string | undefined;
+  };
   description?: string; // 业务描述---to do ：确认一下取的地方---从data里面取？
   children?: any;
   id: string;
   data: any; // data值
+  openLogPanel?: boolean; // 日志面板是否打开
 }
 
 const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   // disabled属性取的地方可能不对------to do
-  const { onClose, children, nodeType, disabled, node, description, id, data } =
-    props;
+  const {
+    onClose,
+    children,
+    nodeType,
+    disabled,
+    node,
+    description,
+    id,
+    data,
+    openLogPanel,
+  } = props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, globalConfig }: any = useContext(ConfigContext);
+  const { settingMap, iconFontUrl, globalConfig }: any =
+    useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
     (state: any) => ({
@@ -35,13 +51,13 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     }),
     shallow
   );
-
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
   const { nodePanel, iconSvg } = nodeSetting;
-  const hideDesc = nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
-
+  const hideDesc =
+    nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
+  const isShowStatusPanel = Boolean(node?._status && openLogPanel);
 
   // const description = getDescription(nodeType, props.description);
   const handleNodeValueChange = debounce((data: any) => {
@@ -92,13 +108,17 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       mask={false}
       onClose={onClose}
       headerStyle={{ paddingBottom: '12px' }}
+      style={{
+        position: 'absolute',
+        right: isShowStatusPanel ? 410 : 0,
+      }}
       title={
         <>
-          <div className='title-box'>
+          <div className="title-box">
             <div style={{ display: 'flex', alignItems: 'center', flex: 1 }}>
               <span
-                className='icon-box'
-                style={{ background: nodeSetting?.icon?.bgColor || '#F79009'}}
+                className="icon-box"
+                style={{ background: nodeSetting?.icon?.bgColor || '#F79009' }}
               >
                 {iconSvg ? (
                   iconSvg
@@ -122,17 +142,17 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 />
               )}
             </div>
-            <div className='title-actions'>
+            <div className="title-actions">
               <Space size={[4, 4]}>
                 {!isDisabled && (
                   <>
-                    <IconView type='icon-yunhang' style={{ fontSize: 16 }} />
-                    <Divider type='vertical' />
+                    <IconView type="icon-yunhang" style={{ fontSize: 16 }} />
+                    <Divider type="vertical" />
                   </>
                 )}
                 {/* <IconView type='icon-help'/> */}
                 <IconView
-                  type='icon-remove'
+                  type="icon-remove"
                   style={{ fontSize: 16 }}
                   onClick={onClose}
                 />
@@ -140,12 +160,12 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
             </div>
           </div>
           {!hideDesc && (
-            <div className='desc-box'>
+            <div className="desc-box">
               {isDisabled ? (
                 description
               ) : (
                 <Input.TextArea
-                  placeholder='添加描述...'
+                  placeholder="添加描述..."
                   autoSize={{ minRows: 1 }}
                   value={descVal}
                   onChange={e => {
