@@ -52,7 +52,6 @@ export default () => {
           {
             _parallelId: 'parallel_m1l276eelcgn7s1p',
             value: '事件2',
-            _parallelTitle: '自定义事件名称',
           },
         ],
         logTrackList: [

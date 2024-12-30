@@ -28,7 +28,7 @@ export default function withProvider<T>(
       iconFontUrl,
       globalConfig,
       logPanel,
-      antdVersion='V4',
+      antdVersion='V5',
       ...restProps
     } = props;
     const settingMap = useMemo(() => {
