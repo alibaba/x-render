@@ -5,7 +5,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { getAntdVersion, safeJsonStringify } from '../../utils';
+import {  safeJsonStringify } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import './index.less';
@@ -41,7 +41,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     openLogPanel,
   } = props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, globalConfig }: any =
+  const { settingMap, iconFontUrl, globalConfig, antdVersion }: any =
     useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
@@ -86,8 +86,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
   const drawerVersionProps = useMemo(() => {
-    const version = getAntdVersion();
-    if (version === 'V5') {
+    if (antdVersion === 'V5') {
       return {
         rootClassName: 'custom-node-panel',
         open: true,

@@ -2,7 +2,6 @@ import { Drawer, Popover } from 'antd';
 import classNames from 'classnames';
 import React, { FC, useContext, useMemo } from 'react';
 import { ConfigContext } from '../../models/context';
-import { getAntdVersion } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import TitleMenuTooltip from '../NodeContainer/TitleMenuTooltip';
@@ -19,7 +18,7 @@ interface IPanelProps {
 const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
   const { onClose, children, nodeType } = props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, globalConfig, logPanel, widgets }: any =
+  const { settingMap, iconFontUrl, globalConfig, logPanel, widgets, antdVersion }: any =
     useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodePanel, iconSvg } = nodeSetting;
@@ -29,8 +28,7 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
   const isCustomWidget = !Boolean(logPanel?.logWidget && CustomWidget);
 
   const drawerVersionProps = useMemo(() => {
-    const version = getAntdVersion();
-    if (version === 'V5') {
+    if (antdVersion === 'V5') {
       return {
         rootClassName: classNames('node-log-panel', {
           'no-header-line': isCustomWidget,

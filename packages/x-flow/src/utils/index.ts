@@ -1,4 +1,3 @@
-// import { version as antdVersion } from 'antd';
 import { customAlphabet } from 'nanoid';
 import tinycolor from 'tinycolor2';
 export const uuid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 16);
@@ -6,7 +5,6 @@ export const uuid4 = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 4);
 
 import { isMatch, some, set, get, cloneDeep, has as _has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
 
-const antdVersion = "5.22.6"
 export const _set = set;
 export const _get = get;
 export const _cloneDeep = cloneDeep;
@@ -173,16 +171,17 @@ export const transformNodes = (nodes: any[]) => {
   });
 };
 
-export const getAntdVersion = () => {
-  const majorVersion = parseInt(antdVersion?.split('.')?.[0], 10);
-  if (majorVersion >= 5) {
-    return 'V5';
-  } else if (majorVersion === 4) {
-    return 'V4';
-  } else {
-    return 'V4';
-  }
-};
+// 废弃：
+// export const getAntdVersion = () => {
+//   const majorVersion = parseInt(antdVersion?.split('.')?.[0], 10);
+//   if (majorVersion >= 5) {
+//     return 'V5';
+//   } else if (majorVersion === 4) {
+//     return 'V4';
+//   } else {
+//     return 'V4';
+//   }
+// };
 
 // 安全的JSON.stringify
 export function safeJsonStringify(obj: Object) {
