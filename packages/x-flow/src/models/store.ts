@@ -84,7 +84,7 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             edges: addEdge(connection, get().edges),
           });
         },
-        setNodes: (nodes, isVanilla = true) => {
+        setNodes: (nodes, isVanilla = false) => {
           set({ nodes: isVanilla ? nodes : transformNodes(nodes) });
         },
         getNodes: () => {
@@ -96,7 +96,7 @@ const createStore = (initProps?: Partial<FlowProps>) => {
         getEdges: () => {
           return get().nodes;
         },
-        addNodes: (payload, isVanilla = true) => {
+        addNodes: (payload, isVanilla = false) => {
           const newNodes = get().nodes.concat(payload);
           set({ nodes: isVanilla ? newNodes :  transformNodes(newNodes) });
         },
