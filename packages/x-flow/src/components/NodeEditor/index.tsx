@@ -58,12 +58,18 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       if (node) {
         // 更新节点的 data
         if (node?.data?._nodeType === 'Switch' && data?.list?.length) {
-         data['list']= data?.list?.map((item,index) => {
+          data['list'] = (data?.list||[])?.map((item, index) => {
             if (item?._conditionId) {
               return item;
             } else {
-              if (node?.data?.list[index]?._conditionId) {
-                return { ...item, _conditionId: node?.data?.list[index]?._conditionId };
+              if (
+                node?.data?.list?.length &&
+                node?.data?.list[index]?._conditionId
+              ) {
+                return {
+                  ...item,
+                  _conditionId: node?.data?.list[index]?._conditionId,
+                };
               } else {
                 return { ...item, _conditionId: `condition_${uuid()}` };
               }
@@ -75,7 +81,10 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
               return item;
             } else {
               if (node?.data?.list[index]?._parallelId) {
-                return { ...item, _parallelId: node?.data?.list[index]?._parallelId };
+                return {
+                  ...item,
+                  _parallelId: node?.data?.list[index]?._parallelId,
+                };
               } else {
                 return { ...item, _parallelId: `parallel_${uuid()}` };
               }
