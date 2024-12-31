@@ -42,7 +42,7 @@ const edgeTypes = { buttonedge: memo(CustomEdge) };
  */
 const XFlow: FC<FlowProps> = memo(props => {
   const workflowContainerRef = useRef<HTMLDivElement>(null);
-  const store = useStoreApi();
+  const storeApi = useStoreApi();
   const { zoomTo } = useReactFlow();
   const {
     layout,
@@ -124,7 +124,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   eventEmitter?.useSubscription((v: any) => {
     // 整理画布
     if (v.type === 'auto-layout-nodes') {
-      const newNodes: any = autoLayoutNodes(store.getState().nodes, edges);
+      const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, edges);
       setNodes(newNodes, false);
     }
 

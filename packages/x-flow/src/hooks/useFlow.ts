@@ -3,6 +3,7 @@ import { useMemoizedFn } from 'ahooks';
 import { useMemo } from 'react';
 import { FlowNode } from '../models/store';
 import { useStoreApi } from './useStore';
+import autoLayoutNodes from '../utils/autoLayoutNodes';
 
 // useFlow 维护原则
 // 1. 尽量复用 reactflow 已有的方法，不要重复造轮子
@@ -38,6 +39,10 @@ export const useFlow = () => {
   const addEdges = useMemoizedFn((edges: Edge[]) => {
     storeApi.getState().addEdges(edges);
   });
+  const runAutoLayout = useMemoizedFn(() => {
+    const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, storeApi.getState().edges);
+    setNodes(newNodes, false);
+  });
 
   return useMemo(
     () => ({
@@ -58,7 +63,8 @@ export const useFlow = () => {
       setCenter,
       fitBounds,
       screenToFlowPosition,
-      flowToScreenPosition
+      flowToScreenPosition,
+      runAutoLayout
     }),
     [instance]
   );
