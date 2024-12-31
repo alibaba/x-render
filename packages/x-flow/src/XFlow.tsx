@@ -199,7 +199,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         break;
       }
     }
-    setNodes([...nodes]);
+    setNodes([...nodes], false);
   }, 200);
 
   const nodeTypes = useMemo(() => {

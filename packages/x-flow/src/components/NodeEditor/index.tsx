@@ -94,7 +94,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         node.data = { ...node.data, ...data };
       }
     });
-    setNodes(newNodes);
+    setNodes(newNodes, false);
   }, 100);
 
   const watch = {

@@ -75,7 +75,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
         node.data = { ...node.data, ...data };
       }
     });
-    setNodes(newNodes);
+    setNodes(newNodes, false);
   }, 100);
 
   useEffect(() => {
