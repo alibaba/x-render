@@ -136,7 +136,7 @@ const createStore = (initProps?: Partial<FlowProps>) => {
               source: nodeId,
               target: get().copyNodes[0].id,
             };
-            get().addNodes(get().copyNodes);
+            get().addNodes(get().copyNodes, false);
             get().addEdges(newEdges);
             set({
               copyNodes: [],

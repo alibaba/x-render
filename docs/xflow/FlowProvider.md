@@ -35,6 +35,7 @@ group:
 - fitBounds：适应边界
 - screenToFlowPosition：将屏幕坐标转换为画布坐标
 - flowToScreenPosition：将画布坐标转换为屏幕坐标
+- runAutoLayout：自动布局节点
 
 ## useNodes
 
