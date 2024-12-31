@@ -1,3 +1,4 @@
+import { EventEmitterContextProvider } from './models/event-emitter';
 import { ConfigProvider } from 'antd';
 import React, { useMemo } from 'react';
 import { FlowProviderWrapper } from './components/FlowProvider';
@@ -26,11 +27,11 @@ export default function withProvider<T>(
       initialValues,
       layout,
       iconFontUrl,
-      configPanelWidth,
-      hideLineInsertBtn,
+      globalConfig,
+      logPanel,
+      antdVersion = 'V5',
       ...restProps
     } = props;
-
     const settingMap = useMemo(() => {
       const obj: Record<string, any> = {};
       settings?.forEach((node: any) => {
@@ -51,8 +52,9 @@ export default function withProvider<T>(
       settings,
       settingMap,
       iconFontUrl,
-      configPanelWidth,
-      hideLineInsertBtn,
+      globalConfig,
+      logPanel,
+      antdVersion,
       widgets: {
         ...defaultWidgets,
         ...widgets,
@@ -62,17 +64,19 @@ export default function withProvider<T>(
     return (
       <ConfigProvider {...configProvider}>
         <ConfigContext.Provider value={configContext}>
-          <FlowProviderWrapper
-            nodes={initialValues?.nodes}
-            edges={initialValues?.edges}
-            layout={layout}
-          >
-            <Element
-              {...restProps}
-              initialValues={initialValues}
-              settings={settings}
-            />
-          </FlowProviderWrapper>
+          <EventEmitterContextProvider>
+            <FlowProviderWrapper
+              nodes={initialValues?.nodes}
+              edges={initialValues?.edges}
+              layout={layout}
+            >
+              <Element
+                {...restProps}
+                initialValues={initialValues}
+                settings={settings}
+              />
+            </FlowProviderWrapper>
+          </EventEmitterContextProvider>
         </ConfigContext.Provider>
       </ConfigProvider>
     );

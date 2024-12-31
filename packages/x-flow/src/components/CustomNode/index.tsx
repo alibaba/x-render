@@ -1,53 +1,67 @@
+import { MoreOutlined } from '@ant-design/icons';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
+import { Dropdown, message } from "antd";
+
 import classNames from 'classnames';
-import React, { memo, useContext, useState } from 'react';
+import React, { memo, useCallback, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { capitalize, uuid } from '../../utils';
+import { capitalize, transformNodeStatus, uuid, uuid4 } from '../../utils';
 import './index.less';
 import SourceHandle from './sourceHandle';
 
 export default memo((props: any) => {
-  const { id, type, data, layout, isConnectable, selected, onClick } = props;
-  const { widgets, settingMap } = useContext(ConfigContext);
+  const { id, type, data, layout, isConnectable, selected, onClick, status } =
+    props;
+  const { widgets, settingMap, globalConfig } = useContext(ConfigContext);
+  const deletable = globalConfig?.edge?.deletable ?? true;
   const NodeWidget =
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, mousePosition } = useStore(
+  const { addNodes, addEdges, copyNode, pasteNode, deleteNode, mousePosition } = useStore(
     (state: any) => ({
       nodes: state.nodes,
       edges: state.edges,
       mousePosition: state.mousePosition,
       addNodes: state.addNodes,
       addEdges: state.addEdges,
+      copyNode: state.copyNode,
+      pasteNode: state.pasteNode,
+      deleteNode: state.deleteNode,
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
   );
-  const isSwitchNode = type === 'Switch';
+  const isSwitchNode = type === 'Switch' || type === 'Parallel'; // 判断是否为条件节点/并行节点
   // 增加节点并进行联系
-  const handleAddNode = (data: any) => {
+  const handleAddNode = (data: any, sourceHandle?: string) => {
     const { screenToFlowPosition } = reactflow;
     const { x, y } = screenToFlowPosition({
       x: mousePosition.pageX + 100,
       y: mousePosition.pageY + 100,
     });
     const targetId = uuid();
+    const title = settingMap[data?._nodeType]?.title || data?._nodeType;
 
     const newNodes = {
       id: targetId,
       type: 'custom',
-      data,
+      data: {
+        ...data,
+        title: `${title}_${uuid4()}`
+      },
       position: { x, y },
     };
     const newEdges = {
       id: uuid(),
       source: id,
       target: targetId,
+      deletable,
+      ...(sourceHandle && { sourceHandle }),
     };
-    addNodes(newNodes);
+    addNodes(newNodes, false);
     addEdges(newEdges);
   };
 
@@ -57,6 +71,25 @@ export default memo((props: any) => {
     targetPosition = Position.Top;
     sourcePosition = Position.Bottom;
   }
+
+  const handleCopyNode = useCallback(() => {
+    copyNode(id);
+    message.success('复制成功');
+  }, [copyNode]);
+
+  const handlePasteNode = useCallback(() => {
+    pasteNode(id)
+  }, [pasteNode]);
+
+  const handleDeleteNode = useCallback(() => {
+    deleteNode(id)
+  }, [pasteNode]);
+
+
+  // 节点状态处理
+  const statusObj = transformNodeStatus(globalConfig?.nodeView?.status || []);
+  const nodeBorderColor = statusObj[status]?.color;
+
   return (
     <div
       className={classNames('xflow-node-container', {
@@ -65,6 +98,7 @@ export default memo((props: any) => {
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      style={{ '--nodeBorderColor': nodeBorderColor }}
     >
       {!settingMap?.[type]?.targetHandleHidden && (
         <Handle
@@ -72,6 +106,37 @@ export default memo((props: any) => {
           position={targetPosition}
           isConnectable={isConnectable}
         />
+      )}
+      {selected && (
+        <Dropdown
+          menu={{
+            items: [
+              {
+                label: '复制',
+                key: ' copy',
+                onClick: handleCopyNode,
+              },
+              {
+                label: '粘贴',
+                key: 'paste',
+                onClick: handlePasteNode,
+              },
+              {
+                label: '删除',
+                key: 'delete',
+                danger: true,
+                onClick: handleDeleteNode,
+              },
+            ],
+          }}
+          trigger={['click', 'contextMenu']}
+        >
+          <div className="xflow-node-actions-container">
+          <MoreOutlined
+            style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
+          ></MoreOutlined>
+        </div>
+        </Dropdown>
       )}
       <NodeWidget
         id={id}

@@ -9,14 +9,23 @@ import produce from 'immer';
 import React, { memo, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
-import { uuid } from '../../utils';
+import { ConfigContext } from '../../models/context';
+import { uuid, uuid4 } from '../../utils';
 import NodeSelectPopover from '../NodesPopover';
 import './index.less';
-import { ConfigContext } from '../../models/context';
 
 export default memo((edge: any) => {
-  const { id, selected, sourceX, sourceY, targetX, targetY, source, target } =
-    edge;
+  const {
+    id,
+    selected,
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    source,
+    target,
+    sourceHandleId,
+  } = edge;
 
   const reactflow = useReactFlow();
   const [isHovered, setIsHovered] = useState(false);
@@ -27,14 +36,16 @@ export default memo((edge: any) => {
     targetY,
   });
 
-  const { hideLineInsertBtn } =
-    useContext(ConfigContext);
+  const { globalConfig, settingMap } = useContext(ConfigContext);
+  const hideEdgeAddBtn = globalConfig?.edge?.hideEdgeAddBtn ?? false;
+  const hideEdgeDelBtn = globalConfig?.edge?.hideEdgeDelBtn ?? false;
+  const deletable = globalConfig?.edge?.deletable ?? true;
 
   const {
     nodes,
     edges,
-    setNodes,
-    setEdges,
+    addNodes,
+    addEdges,
     mousePosition,
     onEdgesChange,
     layout,
@@ -44,12 +55,12 @@ export default memo((edge: any) => {
       nodes: state.nodes,
       edges: state.edges,
       mousePosition: state.mousePosition,
-      setNodes: state.setNodes,
-      setEdges: state.setEdges,
+      addNodes: state.addNodes,
+      addEdges: state.addEdges,
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
-    );
+  );
 
   const handleAddNode = (data: any) => {
     const { screenToFlowPosition } = reactflow;
@@ -59,11 +70,16 @@ export default memo((edge: any) => {
     });
 
     const targetId = uuid();
+    const title = settingMap[data?._nodeType]?.title || data?._nodeType;
+
     const newNodes = produce(nodes, (draft: any) => {
       draft.push({
         id: targetId,
         type: 'custom',
-        data,
+        data: {
+          ...data,
+          title: `${title}_${uuid4()}`,
+        },
         position: { x, y },
       });
     });
@@ -75,18 +91,21 @@ export default memo((edge: any) => {
             id: uuid(),
             source,
             target: targetId,
+            deletable:deletable,
+            ...(sourceHandleId && { sourceHandle: sourceHandleId }),
           },
           {
             id: uuid(),
             source: targetId,
+            deletable:deletable,
             target,
           },
         ]
       );
     });
 
-    setNodes(newNodes);
-    setEdges(newEdges);
+    addNodes(newNodes, false);
+    addEdges(newEdges);
     onEdgesChange([{ id, type: 'remove' }]);
   };
 
@@ -120,19 +139,24 @@ export default memo((edge: any) => {
                 }}
               >
                 <div className="line-content">
-                  <div
-                    className="line-icon-box"
-                    onClick={() => onEdgesChange([{ id, type: 'remove' }])}
-                  >
-                    <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
-                  </div>
-                  {
-                    !hideLineInsertBtn && <NodeSelectPopover placement="right" addNode={handleAddNode}>
+                  {!hideEdgeDelBtn && (
+                    <div
+                      className="line-icon-box"
+                      onClick={() => onEdgesChange([{ id, type: 'remove' }])}
+                    >
+                      <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
+                    </div>
+                  )}
+                  {!hideEdgeAddBtn && (
+                    <NodeSelectPopover
+                      placement="right"
+                      addNode={handleAddNode}
+                    >
                       <div className="line-icon-box">
                         <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
                       </div>
                     </NodeSelectPopover>
-                  }
+                  )}
                 </div>
               </div>
             </EdgeLabelRenderer>

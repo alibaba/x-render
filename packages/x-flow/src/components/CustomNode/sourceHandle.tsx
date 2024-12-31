@@ -1,8 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Handle } from '@xyflow/react';
 import { Tooltip } from 'antd';
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useContext, useMemo, useRef, useState } from 'react';
 import NodeSelectPopover from '../NodesPopover';
+import { ConfigContext } from '../../models/context';
+
 
 export default memo((props: any) => {
   const {
@@ -17,6 +19,20 @@ export default memo((props: any) => {
   const [isShowTooltip, setIsShowTooltip] = useState(false);
   const [openNodeSelectPopover, setOpenNodeSelectPopover] = useState(false);
   const popoverRef = useRef(null);
+   const { antdVersion }: any = useContext(ConfigContext);
+
+
+  const toolTipVersionProps = useMemo(() => {
+    if (antdVersion === 'V5') {
+      return {
+        open: isShowTooltip,
+      };
+    }
+    // V4
+    return {
+      visible: isShowTooltip,
+    };
+  }, [isShowTooltip]);
 
   return (
     <Handle
@@ -33,12 +49,12 @@ export default memo((props: any) => {
       }}
       {...rest}
     >
-      {(selected || isHovered || openNodeSelectPopover) && (
+      {(selected || isHovered || openNodeSelectPopover ) && (
         <>
           {switchTitle && (
             <div className="xflow-node-switch-title">{switchTitle}</div>
           )}
-          <div className="xflow-node-add-box">
+          {isConnectable && <div className="xflow-node-add-box">
             <NodeSelectPopover
               placement="right"
               addNode={handleAddNode}
@@ -53,13 +69,16 @@ export default memo((props: any) => {
                   color: '#354052',
                   fontSize: '12px',
                 }}
-                open={isShowTooltip}
-                getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
+                color='#fff'
+                {...toolTipVersionProps}
+                getPopupContainer={() =>
+                  document.getElementById('xflow-container') as HTMLElement
+                }
               >
                 <PlusOutlined style={{ color: '#fff', fontSize: 10 }} />
               </Tooltip>
             </NodeSelectPopover>
-          </div>
+          </div>}
         </>
       )}
     </Handle>

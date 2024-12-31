@@ -1,4 +1,4 @@
-export default [
+export const settings = [
   {
     title: '开始',
     type: 'Start',
@@ -36,34 +36,34 @@ export default [
             options: [
               { label: '早', value: 'a' },
               { label: '中', value: 'b' },
-              { label: '晚', value: 'c' }
-            ]
-          }
+              { label: '晚', value: 'c' },
+            ],
+          },
         },
         textarea1: {
           title: '长文本',
           type: 'string',
-          widget: 'textArea'
+          widget: 'textArea',
         },
         date1: {
           title: '日期选择',
           type: 'string',
-          widget: 'datePicker'
+          widget: 'datePicker',
         },
         dateRange1: {
           title: '日期范围',
           type: 'range',
-          widget: 'dateRange'
+          widget: 'dateRange',
         },
         time1: {
           title: '时间选择',
           type: 'string',
-          widget: 'timePicker'
+          widget: 'timePicker',
         },
         timeRange1: {
           title: '时间范围',
           type: 'range',
-          widget: 'timeRange'
+          widget: 'timeRange',
         },
       },
     },
@@ -78,7 +78,7 @@ export default [
       bgColor: '#F79009',
     },
     settingSchema: {
-      type: "object",
+      type: 'object',
       properties: {
         input: {
           title: '变量一',
@@ -97,8 +97,8 @@ export default [
             ],
           },
         },
-      }
-    }
+      },
+    },
   },
   {
     title: 'LLM',
@@ -195,5 +195,86 @@ export default [
         },
       },
     ],
+  },
+];
+
+export const nodes = [
+  {
+    type: 'Start',
+    id: '1',
+    position: {
+      x: 346.25,
+      y: -75.54414939880371,
+    },
+  },
+  {
+    type: 'Switch',
+    id: 'b6zsd6w5ah2b209t',
+    position: {
+      x: 346.25,
+      y: 41.75,
+    },
+    data: {
+      list: [
+        {
+          _conditionId: 'iawoyh5niyi6zjob',
+        },
+      ],
+    },
+  },
+  {
+    type: 'Code',
+    id: '3',
+    position: {
+      x: 53,
+      y: 207.5,
+    },
+  },
+  {
+    type: 'tool',
+    id: '4',
+    position: {
+      x: 676,
+      y: 220,
+    },
+  },
+  {
+    type: 'End',
+    id: '5',
+    position: {
+      x: 388.7499999999998,
+      y: 497.5,
+    },
+  },
+];
+export const edges = [
+  {
+    source: '3',
+    target: '5',
+    id: 'e3-5',
+  },
+  {
+    source: '4',
+    target: '5',
+    id: 'e4-5',
+  },
+  {
+    id: 'px7fsmha99pju315',
+    source: '1',
+    target: 'b6zsd6w5ah2b209t',
+  },
+  {
+    type: 'buttonedge',
+    source: 'b6zsd6w5ah2b209t',
+    sourceHandle: 'iawoyh5niyi6zjob',
+    target: '3',
+    id: 'xy-edge__b6zsd6w5ah2b209tiawoyh5niyi6zjob-3',
+  },
+  {
+    type: 'buttonedge',
+    source: 'b6zsd6w5ah2b209t',
+    sourceHandle: 'condition_else',
+    target: '4',
+    id: 'xy-edge__b6zsd6w5ah2b209tcondition_else-4',
   },
 ];

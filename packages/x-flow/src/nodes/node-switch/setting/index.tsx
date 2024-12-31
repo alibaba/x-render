@@ -1,6 +1,7 @@
 import FormRender, { Schema, useForm } from 'form-render';
 import React, { memo, useEffect } from 'react';
 import '../index.less';
+import { safeJsonStringify } from '../../../utils';
 
 interface INodeSwitchSettingPorps {
   onChange: (val: any) => void;
@@ -16,10 +17,11 @@ const schema: Schema = {
       type: 'array',
       widget: 'simpleList',
       display: 'block',
+      min: 1,
+      default:[{}],
       props: {
         hideCopy: true,
         hideMove: true,
-        hideDelete: true,
       },
       items: {
         type: 'object',
@@ -47,7 +49,7 @@ export default memo((props: INodeSwitchSettingPorps) => {
   useEffect(() => {
     form.resetFields();
     form.setValues(value || {});
-  }, [JSON.stringify(value)]);
+  }, [safeJsonStringify(value)]);
 
   return (
     <FormRender

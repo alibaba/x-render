@@ -1,7 +1,10 @@
+import { Position } from '@xyflow/react';
+import classNames from 'classnames';
 import React, { memo, useContext } from 'react';
 import NodeContainer from '../../components/NodeContainer';
 import { ConfigContext } from '../../models/context';
 import SwitchBuildInNodeWidget from './SwitchBuildInNodeWidget';
+import './index.less';
 
 export default memo((props: any) => {
   const {
@@ -14,14 +17,23 @@ export default memo((props: any) => {
     isHovered,
     handleAddNode,
   } = props;
-  const { settingMap, widgets, iconFontUrl } = useContext(ConfigContext);
+  const { settingMap, widgets, iconFontUrl, globalConfig } =
+    useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
   const nodeDescription = nodeSetting?.description || '';
+  const hideDesc =
+    nodeSetting?.nodePanel?.hideDesc ??
+    globalConfig?.nodePanel?.hideDesc ??
+    false;
+  const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
+  const isSwitchBottom = position === Position.Bottom;
 
   return (
     <NodeContainer
-      className='custom-node-code'
+      className={classNames('custom-node-code', {
+        'switch-node-code-bottom': isSwitchBottom,
+      })}
       title={data?.title || nodeSetting?.title || 'Switch'}
       icon={{
         type: nodeSetting?.icon?.type || 'icon-switch',
@@ -29,7 +41,7 @@ export default memo((props: any) => {
         bgColor: nodeSetting?.icon?.bgColor || '#06AED4',
       }}
       onClick={onClick}
-      hideDesc={nodeSetting?.hideDesc || !data?.desc}
+      hideDesc={hideDesc}
       desc={data?.desc}
       iconFontUrl={iconFontUrl}
       NodeWidget={
@@ -41,10 +53,13 @@ export default memo((props: any) => {
           isHovered={isHovered}
           handleAddNode={handleAddNode}
           CustomNodeWidget={NodeWidget}
+          isSwitchBottom={isSwitchBottom}
         />
       }
       description={nodeDescription} // 不允许用户更改的节点描述
       iconSvg={nodeSetting?.iconSvg}
+      hideTitleTips={hideTitleTips}
+      isSwitchBottom={isSwitchBottom}
     />
   );
 });

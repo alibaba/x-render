@@ -1,9 +1,9 @@
-import { Popover, Tooltip, Typography } from 'antd';
+import { Popover, Typography } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useMemo } from 'react';
 import createIconFont from '../../utils/createIconFont';
-import { MenuTooltip } from '../NodesMenu';
 import './index.less';
+import TitleMenuTooltip from './TitleMenuTooltip';
 
 const { Text, Paragraph } = Typography;
 
@@ -18,60 +18,14 @@ export default memo((props: any) => {
     hideDesc,
     NodeWidget,
     iconFontUrl,
-    iconSvg
+    iconSvg,
+    hideTitleTips,
+    isSwitchBottom,
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
-  return (
-    <div
-      className={classNames('custom-node-container', {
-        [className]: !!className,
-      })}
-      onClick={onClick}
-    >
-      <div className='node-title'>
-        <Popover
-          title={<MenuTooltip {...props} />}
-          placement='bottomLeft'
-          trigger='click'
-          getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
-        >
-          <Tooltip
-            title='点击图标查看节点信息'
-            arrow={false}
-            placement='topLeft'
-            color='#fff'
-            overlayInnerStyle={{
-              color: '#354052',
-              fontSize: '12px',
-            }}
-            getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
-          >
-            <span className='icon-box' style={{ background: icon?.bgColor }}>
-              {iconSvg ? iconSvg : <IconBox {...icon} /> }
-            </span>
-          </Tooltip>
-        </Popover>
-        <Text
-          style={{ width: 188, marginLeft: '8px' }}
-          ellipsis={{
-            tooltip: {
-              title: title,
-              placement: 'topRight',
-              color: '#ffff',
-              overlayInnerStyle: {
-                color: '#354052',
-                fontSize: '12px',
-              },
-              getPopupContainer:() => document.getElementById('xflow-container') as HTMLElement
-            },
-          }}
-        >
-          {title}
-        </Text>
-      </div>
 
-      <div className='node-body'>{children}</div>
-      {NodeWidget && <div className='node-widget'>{NodeWidget}</div>}
+  const renderDesc = () => (
+    <>
       {!hideDesc && !!desc && (
         <Paragraph
           ellipsis={{
@@ -84,14 +38,87 @@ export default memo((props: any) => {
                 color: '#354052',
                 fontSize: '12px',
               },
-              getPopupContainer: () => document.getElementById('xflow-container') as HTMLElement
+              getPopupContainer: () =>
+                document.getElementById('xflow-container') as HTMLElement,
             },
           }}
-          className='node-desc'
+          className="node-desc"
         >
           {desc}
         </Paragraph>
       )}
+    </>
+  );
+
+  const renderDescAndNodeWidget = () => {
+    if (isSwitchBottom) {
+      // 条件节点且为TB布局
+      return (
+        <>
+          {renderDesc()}
+          {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
+          {renderDesc()}
+        </>
+      );
+    }
+  };
+
+  return (
+    <div
+      className={classNames('custom-node-container', {
+        [className]: !!className,
+      })}
+      onClick={onClick}
+    >
+      <div className="node-title">
+        {!hideTitleTips ? (
+          <Popover
+            overlayClassName="nodes-popover"
+            content={<TitleMenuTooltip {...props} />}
+            placement="bottomLeft"
+            trigger="hover"
+            getPopupContainer={() =>
+              document.getElementById('xflow-container') as HTMLElement
+            }
+            overlayInnerStyle={{ padding: '12px 16px' }}
+          >
+            <span className="icon-box" style={{ background: icon?.bgColor }}>
+              {iconSvg ? iconSvg : <IconBox {...icon} />}
+            </span>
+          </Popover>
+        ) : (
+          <span className="icon-box" style={{ background: icon?.bgColor }}>
+            {iconSvg ? iconSvg : <IconBox {...icon} />}
+          </span>
+        )}
+        <Text
+          style={{ width: 188, marginLeft: '8px' }}
+          ellipsis={{
+            tooltip: {
+              title: title,
+              placement: 'topRight',
+              color: '#ffff',
+              overlayInnerStyle: {
+                color: '#354052',
+                fontSize: '12px',
+              },
+              getPopupContainer: () =>
+                document.getElementById('xflow-container') as HTMLElement,
+            },
+          }}
+        >
+          {title}
+        </Text>
+      </div>
+
+      <div className="node-body">{children}</div>
+      {renderDescAndNodeWidget()}
     </div>
   );
 });

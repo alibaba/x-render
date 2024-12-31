@@ -9,7 +9,10 @@ export const settings = [
       type: 'icon-start', // icon-font
       bgColor: '#17B26A', // 图标背景颜色
     },
-    nodeConfigPanelWidth: 500,
+    nodePanel: {
+      width: 600,
+      hideDesc: false,
+    },
     settingSchema: {
       // 自定义节点配置
       type: 'object',
@@ -169,8 +172,15 @@ export const nodes = [
   },
   {
     type: 'Switch',
-    id: '2',
+    id: 'b6zsd6w5ah2b209t',
     position: { x: 277.5, y: 268 },
+    data: {
+      list: [
+        {
+          _conditionId: 'iawoyh5niyi6zjob',
+        },
+      ],
+    },
   },
   {
     type: 'Code',
@@ -189,13 +199,6 @@ export const nodes = [
   },
 ];
 export const edges = [
-  { source: '1', target: '2', id: 'e1-2' },
-  {
-    source: '2',
-    target: '3',
-    id: 'e2-3',
-  },
-  { source: '2', target: '4', id: 'e2-4' },
   {
     source: '3',
     target: '5',
@@ -205,5 +208,24 @@ export const edges = [
     source: '4',
     target: '5',
     id: 'e4-5',
+  },
+  {
+    id: 'px7fsmha99pju315',
+    source: '1',
+    target: 'b6zsd6w5ah2b209t',
+  },
+  {
+    type: 'buttonedge',
+    source: 'b6zsd6w5ah2b209t',
+    sourceHandle: 'iawoyh5niyi6zjob',
+    target: '3',
+    id: 'xy-edge__b6zsd6w5ah2b209tiawoyh5niyi6zjob-3',
+  },
+  {
+    type: 'buttonedge',
+    source: 'b6zsd6w5ah2b209t',
+    sourceHandle: 'condition_else',
+    target: '4',
+    id: 'xy-edge__b6zsd6w5ah2b209tcondition_else-4',
   },
 ];

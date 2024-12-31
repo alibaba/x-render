@@ -1,4 +1,4 @@
-export default [
+export  const settings=[
   {
     title: '开始',
     type: 'Start',
@@ -195,5 +195,72 @@ export default [
         },
       },
     ],
+  },
+];
+
+
+export const nodes = [
+  {
+    type: 'Start',
+    id: '1',
+    position: { x: -35, y: 268 },
+  },
+  {
+    type: 'Switch',
+    id: 'b6zsd6w5ah2b209t',
+    position: { x: 277.5, y: 268 },
+    data: {
+      list: [
+        {
+          _conditionId: 'iawoyh5niyi6zjob',
+        },
+      ],
+    },
+  },
+  {
+    type: 'Code',
+    id: '3',
+    position: { x: 675, y: 123.75 },
+  },
+  {
+    type: 'tool',
+    id: '4',
+    position: { x: 686.25, y: 495 },
+  },
+  {
+    type: 'End',
+    id: '5',
+    position: { x: 1176.2499999999998, y: 281.25 },
+  },
+];
+export const edges = [
+  {
+    source: '3',
+    target: '5',
+    id: 'e3-5',
+  },
+  {
+    source: '4',
+    target: '5',
+    id: 'e4-5',
+  },
+  {
+    id: 'px7fsmha99pju315',
+    source: '1',
+    target: 'b6zsd6w5ah2b209t',
+  },
+  {
+    type: 'buttonedge',
+    source: 'b6zsd6w5ah2b209t',
+    sourceHandle: 'iawoyh5niyi6zjob',
+    target: '3',
+    id: 'xy-edge__b6zsd6w5ah2b209tiawoyh5niyi6zjob-3',
+  },
+  {
+    type: 'buttonedge',
+    source: 'b6zsd6w5ah2b209t',
+    sourceHandle: 'condition_else',
+    target: '4',
+    id: 'xy-edge__b6zsd6w5ah2b209tcondition_else-4',
   },
 ];

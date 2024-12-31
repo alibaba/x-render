@@ -1,67 +1,148 @@
 import XFlow from '@xrenders/xflow';
 import settings from './setting';
+import React from 'react';
 
 export default () => {
   const nodes = [
     {
+      id: 'hwqfyj734kgwljvt',
       type: 'Start',
-      id: '1',
-      position: { x: -130, y: 290 },
+      position: {
+        x: -159.0597703862493,
+        y: 323.4293111587479,
+      },
     },
     {
+      id: 'kshd2hp4vqm8ww19',
       type: 'Switch',
-      id: '2',
-      position: { x: 171.25, y: 218.75 },
-      data: { list: [{ value: '条件1' }] },
+      position: {
+        x: 180.79626287562883,
+        y: 209.9170981759363,
+      },
+      data: {
+        list: [
+          {
+            _conditionId: 'condition_1nmzbhnbtv1se6sd', // 对应的 sourceHandle: 'condition_1nmzbhnbtv1se6sd'的边
+            value: '条件1',
+          },
+          {
+            value: '条件2',
+            _conditionId: 'condition_enxhwfca1ebn55td', // 对应sourceHandle: 'condition_enxhwfca1ebn55td'的边
+          },
+          {
+            value: '条件3',
+            _conditionId: 'condition_z1f7b93zwbx1xycu',// 对应sourceHandle: 'condition_z1f7b93zwbx1xycu'的边
+          },
+        ],
+        desc: '',
+      },
     },
     {
-      type: 'End',
-      id: '3',
-      position: { x: 915, y: 287.5 },
-    },
-    {
-      id: 'g29rz9ol4ugqz8m8',
+      id: 'ql61j2tdli4xage0',
       type: 'Prompt',
-      position: { x: 525, y: 210 },
+      position: {
+        x: 578.75,
+        y: 176.25,
+      },
     },
     {
-      id: 'swqutt73ihfa9lkb',
+      id: 'fab1j735q8iow6u3',
       type: 'knowledge',
-      position: { x: 522.5, y: 472.5 },
+      position: {
+        x: 577.5,
+        y: 318.75,
+      },
+    },
+    {
+      id: '9mc5i628mfrxdow0',
+      type: 'Prompt',
+      position: {
+        x: 603.75,
+        y: 422.5,
+      },
+    },
+    {
+      id: 'xgkajbbgs8cls8r1',
+      type: 'knowledge',
+      position: {
+        x: 932.5,
+        y: 556.25,
+      },
+    },
+    {
+      id: 'anmv2kcadqxj4k63',
+      type: 'Prompt',
+      position: {
+        x: 540,
+        y: 555,
+      },
+    },
+    {
+      id: '1obmsf5g1xfsypdj',
+      type: 'End',
+      position: {
+        x: 1359.5373712437117,
+        y: 359.3804592275014,
+      },
     },
   ];
 
   const edges = [
     {
-      source: '1',
-      target: '2',
-      id: 'xy-edge__1-2',
+      id: '0lnn4hks9wnz0lnq',
+      source: 'hwqfyj734kgwljvt',
+      target: 'kshd2hp4vqm8ww19',
     },
     {
-      source: '2',
-      sourceHandle: 'id_0',
-      target: 'g29rz9ol4ugqz8m8',
-      id: 'xy-edge__2id_0-g29rz9ol4ugqz8m8',
-    },
-    { id: 'w6vmrun9sos4t6ds', target: 'swqutt73ihfa9lkb' },
-    {
-      source: '2',
-      sourceHandle: 'id_else',
-      target: 'swqutt73ihfa9lkb',
-      id: 'xy-edge__2id_else-swqutt73ihfa9lkb',
+      id: '5s6af77jbcqvzfod',
+      source: 'kshd2hp4vqm8ww19',// switch节点的边
+      target: 'ql61j2tdli4xage0',
+      sourceHandle: 'condition_1nmzbhnbtv1se6sd', // 对应 _conditionId为'condition_1nmzbhnbtv1se6sd'的条件
     },
     {
-      source: 'g29rz9ol4ugqz8m8',
-      target: '3',
-      id: 'xy-edge__g29rz9ol4ugqz8m8-3',
+      id: '6tw709qgc3mtazrv',
+      source: 'kshd2hp4vqm8ww19',// switch节点的边
+      target: 'fab1j735q8iow6u3',
+      sourceHandle: 'condition_enxhwfca1ebn55td', // 对应 _conditionId为'condition_enxhwfca1ebn55td'的条件
     },
     {
-      source: 'swqutt73ihfa9lkb',
-      target: '3',
-      id: 'xy-edge__swqutt73ihfa9lkb-3',
+      id: 'vzlvdo69ljcqegc8',
+      source: 'kshd2hp4vqm8ww19',// switch节点的边
+      target: '9mc5i628mfrxdow0',
+      sourceHandle: 'condition_z1f7b93zwbx1xycu',// 对应 _conditionId为'condition_z1f7b93zwbx1xycu'的条件
+    },
+    {
+      id: 'j8p8fnr5au9k25pb',
+      source: 'kshd2hp4vqm8ww19',// switch节点的边
+      target: 'anmv2kcadqxj4k63',
+      sourceHandle: 'condition_else',// condition_else 对应默认路径ELSE
+    },
+    {
+      id: '0qfpkc9vcjdb31qp',
+      source: 'anmv2kcadqxj4k63',
+      target: 'xgkajbbgs8cls8r1',
+    },
+    {
+      id: '5h05o312rfbj4559',
+      source: 'ql61j2tdli4xage0',
+      target: '1obmsf5g1xfsypdj',
+    },
+    {
+      source: 'fab1j735q8iow6u3',
+      target: '1obmsf5g1xfsypdj',
+      id: 'xy-edge__fab1j735q8iow6u3-1obmsf5g1xfsypdj',
+    },
+    {
+      source: '9mc5i628mfrxdow0',
+      target: '1obmsf5g1xfsypdj',
+      id: 'xy-edge__9mc5i628mfrxdow0-1obmsf5g1xfsypdj',
+    },
+    {
+      source: 'xgkajbbgs8cls8r1',
+      target: '1obmsf5g1xfsypdj',
+      id: 'xy-edge__xgkajbbgs8cls8r1-1obmsf5g1xfsypdj',
     },
   ];
-
   return (
     <div style={{ height: '600px' }}>
       <XFlow

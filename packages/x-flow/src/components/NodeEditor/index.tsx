@@ -5,6 +5,7 @@ import React, { FC, useContext, useEffect, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
+import { safeJsonStringify, uuid } from '../../utils';
 
 interface INodeEditorProps {
   data: any;
@@ -42,7 +43,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
     } else {
       //可能为内置schema或者是没有
     }
-  }, [JSON.stringify(data), id]);
+  }, [safeJsonStringify(data), id]);
 
   const handleNodeValueChange = debounce((data: any) => {
     const newNodes = produce(nodes, draft => {
@@ -56,16 +57,49 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       }
       if (node) {
         // 更新节点的 data
+        if (node?.data?._nodeType === 'Switch' && data?.list?.length) {
+          data['list'] = (data?.list||[])?.map((item, index) => {
+            if (item?._conditionId) {
+              return item;
+            } else {
+              if (
+                node?.data?.list?.length &&
+                node?.data?.list[index]?._conditionId
+              ) {
+                return {
+                  ...item,
+                  _conditionId: node?.data?.list[index]?._conditionId,
+                };
+              } else {
+                return { ...item, _conditionId: `condition_${uuid()}` };
+              }
+            }
+          });
+        } else if (node?.data?._nodeType === 'Parallel' && data?.list?.length) {
+          data['list'] = data?.list?.map((item, index) => {
+            if (item?._parallelId) {
+              return item;
+            } else {
+              if (node?.data?.list[index]?._parallelId) {
+                return {
+                  ...item,
+                  _parallelId: node?.data?.list[index]?._parallelId,
+                };
+              } else {
+                return { ...item, _parallelId: `parallel_${uuid()}` };
+              }
+            }
+          });
+        }
         node.data = { ...node.data, ...data };
       }
     });
-    setNodes(newNodes);
+    setNodes(newNodes, false);
   }, 100);
 
   const watch = {
     '#': (allValues: any) => {
       handleNodeValueChange({ ...allValues });
-      // onChange({ id, values: { ...allValues } });
     },
   };
 
