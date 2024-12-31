@@ -1,13 +1,49 @@
 import XFlow from '@xrenders/xflow';
+import React,{ useState } from 'react';
 import settings from './setting';
-import React from 'react'
 
 export default () => {
+  const [logList, setLogList] = useState<any>([
+    {
+      nodeId:'mcelcsg6pinydoy7',
+      statusPanel: {
+        status: [
+          {
+            label: '状态',
+            isBadge: true,
+            // value:"失败"
+          },
+          {
+            label: '执行时间',
+            value: '0.01s',
+          },
+          {
+            label: '总token数',
+            value: '0tokens',
+          },
+        ],
+        // extra: <span>哈哈哈哈哈哈哈哈</span>,
+        extra: '测试测试',
+      },
+      codePanel: [
+        {
+          title: '输出数据',
+          code: "{'target_language':'english','query':'string'}",
+        },
+        {
+          title: '报错信息',
+          code: "{'target_language':'english','query':'string'}",
+        },
+      ],
+    },
+  ]);
+  const [loading, setLoading] = useState<boolean>(false);
   const nodes = [
     {
       id: 'mcelcsg6pinydoy7',
       type: 'Parallel',
       data: {
+        _status: 'warning',
         list: [
           {
             _parallelId: 'parallel_30ds0x3evus7ogo2',
@@ -16,6 +52,16 @@ export default () => {
           {
             _parallelId: 'parallel_m1l276eelcgn7s1p',
             value: '事件2',
+          },
+        ],
+        logTrackList: [
+          {
+            title: '输出数据1',
+            code: "{'target_language':'english','query':'string'}",
+          },
+          {
+            title: '报错信息2',
+            code: "{'target_language':'english','query':'string'}",
           },
         ],
       },
@@ -31,16 +77,20 @@ export default () => {
         x: 400,
         y: 227.5,
       },
+      data: {
+        _status: 'custom-succsess',
+      },
     },
     {
       id: 'j0kufl0o4fca4ee9',
       type: 'knowledge',
-
+      // data: {
+      //   _status: "custom-error"
+      // },
       position: {
         x: 312.5,
         y: 438.75,
       },
-
     },
     {
       id: 'w4be9edh4bhdlokm',
@@ -49,6 +99,9 @@ export default () => {
         x: -379.21875,
         y: 348.75,
       },
+      data: {
+        _status: 'success',
+      },
     },
     {
       id: '3qloq2p1x3wcwbzg',
@@ -56,6 +109,9 @@ export default () => {
       position: {
         x: 675,
         y: 360,
+      },
+      data: {
+        _status: 'warning',
       },
     },
   ];
@@ -99,6 +155,27 @@ export default () => {
         settings={settings}
         nodeSelector={{
           showSearch: true,
+        }}
+        logPanel={{
+          // 日志面板
+          logList, // 日志面板接受的数据
+          loading, // 日志面板loading
+        }}
+        globalConfig={{
+          nodeView: {
+            status: [
+              {
+                value: 'custom-error',
+                color: 'red',
+                name: '失败状态',
+              },
+              {
+                value: 'custom-succsess',
+                color: 'green',
+                name: '成功状态',
+              },
+            ],
+          },
         }}
       />
     </div>

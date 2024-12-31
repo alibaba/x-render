@@ -7,13 +7,14 @@ import React, { memo, useCallback, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { capitalize, uuid, uuid4 } from '../../utils';
+import { capitalize, transformNodeStatus, uuid, uuid4 } from '../../utils';
 import './index.less';
 import SourceHandle from './sourceHandle';
 
 export default memo((props: any) => {
-  const { id, type, data, layout, isConnectable, selected, onClick } = props;
-  const { widgets, settingMap } = useContext(ConfigContext);
+  const { id, type, data, layout, isConnectable, selected, onClick, status } =
+    props;
+  const { widgets, settingMap, globalConfig } = useContext(ConfigContext);
   const NodeWidget =
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
@@ -48,7 +49,7 @@ export default memo((props: any) => {
       type: 'custom',
       data: {
         ...data,
-        title: `${title}_${uuid4()}`,
+        title: `${title}_${uuid4()}`
       },
       position: { x, y },
     };
@@ -82,6 +83,11 @@ export default memo((props: any) => {
     deleteNode(id)
   }, [pasteNode]);
 
+
+  // 节点状态处理
+  const statusObj = transformNodeStatus(globalConfig?.nodeView?.status || []);
+  const nodeBorderColor = statusObj[status]?.color;
+
   return (
     <div
       className={classNames('xflow-node-container', {
@@ -90,6 +96,7 @@ export default memo((props: any) => {
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      style={{ '--nodeBorderColor': nodeBorderColor }}
     >
       {!settingMap?.[type]?.targetHandleHidden && (
         <Handle

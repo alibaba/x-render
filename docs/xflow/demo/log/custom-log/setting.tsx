@@ -1,8 +1,8 @@
-export  const settings=[
+export default [
   {
     title: '开始',
     type: 'Start',
-    hidden: true,
+    // hidden: true,
     targetHandleHidden: true,
     icon: {
       type: 'icon-start',
@@ -71,7 +71,7 @@ export  const settings=[
   {
     title: '结束',
     type: 'End',
-    hidden: true,
+    // hidden: true,
     sourceHandleHidden: true,
     icon: {
       type: 'icon-end',
@@ -101,6 +101,15 @@ export  const settings=[
     }
   },
   {
+    title: 'Parallel',
+    type: 'Parallel',
+    description: '并行节点',
+    icon: {
+      type: 'icon-parallel',
+      bgColor: '#06AED4',
+    },
+  },
+  {
     title: 'LLM',
     type: 'LLM',
     description: '调用大语言模型回答问题或者对自然语言进行处理',
@@ -108,6 +117,16 @@ export  const settings=[
       type: 'icon-model',
       bgColor: '#6172F3',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: 'Prompt',
@@ -117,6 +136,16 @@ export  const settings=[
       type: 'icon-prompt',
       bgColor: '#17B26A',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: '知识库',
@@ -126,6 +155,16 @@ export  const settings=[
       type: 'icon-knowledge',
       bgColor: '#6172F3',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: 'Switch',
@@ -135,6 +174,16 @@ export  const settings=[
       type: 'icon-fenzhi',
       bgColor: '#06AED4',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: 'HSF',
@@ -144,6 +193,16 @@ export  const settings=[
       type: 'icon-hsf',
       bgColor: '#875BF7',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: 'Http',
@@ -153,6 +212,16 @@ export  const settings=[
       type: 'icon-http',
       bgColor: '#875BF7',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: '代码执行',
@@ -162,6 +231,16 @@ export  const settings=[
       type: 'icon-code',
       bgColor: '#2E90FA',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: '工具',
@@ -171,6 +250,16 @@ export  const settings=[
       type: 'icon-gongju',
       bgColor: '#2E90FA',
     },
+    settingSchema: {
+      type: "object",
+      properties: {
+        input: {
+          title: '变量一',
+          type: 'string',
+          widget: 'input',
+        },
+      }
+    }
   },
   {
     title: '工具',
@@ -184,6 +273,16 @@ export  const settings=[
           type: 'icon-code',
           bgColor: '#2E90FA',
         },
+        settingSchema: {
+          type: "object",
+          properties: {
+            input: {
+              title: '变量一',
+              type: 'string',
+              widget: 'input',
+            },
+          }
+        }
       },
       {
         title: '工具',
@@ -193,74 +292,17 @@ export  const settings=[
           type: 'icon-gongju',
           bgColor: '#2E90FA',
         },
+        settingSchema: {
+          type: "object",
+          properties: {
+            input: {
+              title: '变量一',
+              type: 'string',
+              widget: 'input',
+            },
+          }
+        }
       },
     ],
-  },
-];
-
-
-export const nodes = [
-  {
-    type: 'Start',
-    id: '1',
-    position: { x: -35, y: 268 },
-  },
-  {
-    type: 'Switch',
-    id: 'b6zsd6w5ah2b209t',
-    position: { x: 277.5, y: 268 },
-    data: {
-      list: [
-        {
-          _conditionId: 'iawoyh5niyi6zjob',
-        },
-      ],
-    },
-  },
-  {
-    type: 'Code',
-    id: '3',
-    position: { x: 675, y: 123.75 },
-  },
-  {
-    type: 'tool',
-    id: '4',
-    position: { x: 686.25, y: 495 },
-  },
-  {
-    type: 'End',
-    id: '5',
-    position: { x: 1176.2499999999998, y: 281.25 },
-  },
-];
-export const edges = [
-  {
-    source: '3',
-    target: '5',
-    id: 'e3-5',
-  },
-  {
-    source: '4',
-    target: '5',
-    id: 'e4-5',
-  },
-  {
-    id: 'px7fsmha99pju315',
-    source: '1',
-    target: 'b6zsd6w5ah2b209t',
-  },
-  {
-    type: 'buttonedge',
-    source: 'b6zsd6w5ah2b209t',
-    sourceHandle: 'iawoyh5niyi6zjob',
-    target: '3',
-    id: 'xy-edge__b6zsd6w5ah2b209tiawoyh5niyi6zjob-3',
-  },
-  {
-    type: 'buttonedge',
-    source: 'b6zsd6w5ah2b209t',
-    sourceHandle: 'condition_else',
-    target: '4',
-    id: 'xy-edge__b6zsd6w5ah2b209tcondition_else-4',
   },
 ];

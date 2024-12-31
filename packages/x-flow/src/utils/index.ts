@@ -1,11 +1,10 @@
-// import { version as antdVersion } from 'antd';
 import { customAlphabet } from 'nanoid';
+import tinycolor from 'tinycolor2';
 export const uuid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 16);
 export const uuid4 = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 4);
 
 import { isMatch, some, set, get, cloneDeep, has as _has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
 
-const antdVersion = "5.22.6"
 export const _set = set;
 export const _get = get;
 export const _cloneDeep = cloneDeep;
@@ -21,12 +20,12 @@ export const _isMatch = isMatch;
 export const isObject = (data: any) => {
   const str = Object.prototype.toString.call(data);
   return str.indexOf('Object') > -1;
-}
+};
 
 export const isArray = (data: any) => {
   const str = Object.prototype.toString.call(data);
   return str.indexOf('Array') > -1;
-}
+};
 
 export const isFunction = (data: any) => typeof data === 'function';
 
@@ -37,7 +36,7 @@ export function isUrl(string: string) {
   return protocolRE.test(string);
 }
 
-export const isNumber = (str: string | number) => !isNaN(Number(str))
+export const isNumber = (str: string | number) => !isNaN(Number(str));
 
 export const getArray = (arr, defaultValue = []) => {
   if (Array.isArray(arr)) return arr;
@@ -82,12 +81,20 @@ export function getFormat(format) {
 // TODO: to support case that item is not an object
 export function isObjType(schema: any) {
   //return schema?.type === 'object' && schema.properties && !schema.widget;
-  return schema?.type === 'object' && schema?.properties && schema?.widgetType !== 'field';
-};
+  return (
+    schema?.type === 'object' &&
+    schema?.properties &&
+    schema?.widgetType !== 'field'
+  );
+}
 
 export function isListType(schema: any) {
-  return schema?.type === 'array' && isObjType(schema?.items) && schema?.enum === undefined;
-};
+  return (
+    schema?.type === 'array' &&
+    isObjType(schema?.items) &&
+    schema?.enum === undefined
+  );
+}
 
 export function isCheckBoxType(schema: any, readOnly: boolean) {
   if (readOnly) return false;
@@ -105,7 +112,7 @@ export const translation = (configCtx: any) => (key: string) => {
 };
 
 export const hasFuncProperty = (obj: any) => {
-  return _some(obj, (value) => {
+  return _some(obj, value => {
     if (isFunction(value)) {
       return true;
     }
@@ -129,28 +136,26 @@ export const safeGet = (object: any, path: string, defaultValue: any) => {
 };
 
 export const isMac = () => {
-  return navigator.userAgent.toUpperCase().includes('MAC')
-}
+  return navigator.userAgent.toUpperCase().includes('MAC');
+};
 
 const specialKeysNameMap: Record<string, string | undefined> = {
   ctrl: '⌘',
   alt: '⌥',
-}
+};
 
 export const getKeyboardKeyNameBySystem = (key: string) => {
-  if (isMac())
-    return specialKeysNameMap[key] || key
+  if (isMac()) return specialKeysNameMap[key] || key;
 
-  return key
-}
-
+  return key;
+};
 
 export const capitalize = (string: string) => {
   if (typeof string !== 'string' || string.length === 0) {
     return string;
   }
   return `${string.charAt(0).toUpperCase()}${string.slice(1)}`;
-}
+};
 
 export const transformNodes = (nodes: any[]) => {
   return nodes?.map(item => {
@@ -161,22 +166,22 @@ export const transformNodes = (nodes: any[]) => {
         ...data,
         _nodeType: type,
       },
-      ...rest
-    }
-  })
-}
+      ...rest,
+    };
+  });
+};
 
-
-export const getAntdVersion = () => {
-  const majorVersion = parseInt(antdVersion?.split('.')?.[0], 10);
-  if (majorVersion >= 5) {
-    return 'V5'
-  } else if (majorVersion === 4) {
-    return 'V4';
-  } else {
-    return 'V4'
-  }
-}
+// 废弃：
+// export const getAntdVersion = () => {
+//   const majorVersion = parseInt(antdVersion?.split('.')?.[0], 10);
+//   if (majorVersion >= 5) {
+//     return 'V5';
+//   } else if (majorVersion === 4) {
+//     return 'V4';
+//   } else {
+//     return 'V4';
+//   }
+// };
 
 // 安全的JSON.stringify
 export function safeJsonStringify(obj: Object) {
@@ -218,3 +223,48 @@ export function safeJsonStringify(obj: Object) {
 }
 
 export * from './flow'
+
+// 内置节点状态
+export const NODE_STATUS = {
+  success: {
+    color: '#52c41a',
+    name:"成功"
+  },
+  error: {
+    color: '#ff4d4f',
+    name:"失败"
+  },
+  warning: {
+    color: '#faad14',
+    name:"告警"
+  },
+};
+
+export const transformNodeStatus = (statusList = []) => {
+  const obj: Record<string, any> = {};
+  statusList?.forEach((status: { name: string; color: string; value: string; }) => {
+    if (status?.value && status?.color)
+      obj[status.value] = {
+        color: status.color,
+        name:status?.name
+      };
+  });
+
+  return {
+    ...NODE_STATUS,
+    ...obj,
+  };
+};
+
+// 处理颜色值
+export function getTransparentColor(colorInput:string,alpha:number) {
+  const color = tinycolor(colorInput);
+  const alphaNum = Number(alpha);
+  if (!color.isValid()) {
+    return;
+  }
+  color.setAlpha(alphaNum);
+  // 返回 RGBA 格式的颜色字符串
+  return color.toRgbString();
+}
+

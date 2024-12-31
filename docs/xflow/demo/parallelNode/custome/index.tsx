@@ -2,6 +2,12 @@ import XFlow from '@xrenders/xflow';
 import settings from './setting';
 import React from 'react'
 
+const CustomParallel = ({data,index}) => {
+  // data：为data.list循环数据中当前条件的item
+  // index：为data.list循环数据中当前条件的index
+  return <p style={{ wordWrap: 'break-word' }}>{data?.value}-{index}</p>;
+}
+
 export default () => {
   const nodes = [
     {
@@ -100,6 +106,7 @@ export default () => {
         nodeSelector={{
           showSearch: true,
         }}
+        widgets={{ CustomParallel }}
       />
     </div>
   );

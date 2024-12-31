@@ -1,13 +1,22 @@
 import XFlow from '@xrenders/xflow';
+import { useState } from 'react';
 import settings from './setting';
-import React from 'react'
+import { fakeApi } from './utils';
+
+const CustomLogPanel = ({ logList, node }) => {
+  console.log('自定义组件', logList, node);
+  return <p>自定义组件:{node?.id}</p>;
+};
 
 export default () => {
+  const [logList, setLogList] = useState<any>();
+  const [loading, setLoading] = useState<boolean>(false);
   const nodes = [
     {
       id: 'mcelcsg6pinydoy7',
       type: 'Parallel',
       data: {
+        _status: 'warning',
         list: [
           {
             _parallelId: 'parallel_30ds0x3evus7ogo2',
@@ -31,16 +40,17 @@ export default () => {
         x: 400,
         y: 227.5,
       },
+      data: {
+        _status: 'custom-success',
+      },
     },
     {
       id: 'j0kufl0o4fca4ee9',
       type: 'knowledge',
-
       position: {
         x: 312.5,
         y: 438.75,
       },
-
     },
     {
       id: 'w4be9edh4bhdlokm',
@@ -49,6 +59,9 @@ export default () => {
         x: -379.21875,
         y: 348.75,
       },
+      data: {
+        _status: 'success',
+      },
     },
     {
       id: '3qloq2p1x3wcwbzg',
@@ -56,6 +69,9 @@ export default () => {
       position: {
         x: 675,
         y: 360,
+      },
+      data: {
+        _status: 'warning',
       },
     },
   ];
@@ -99,6 +115,30 @@ export default () => {
         settings={settings}
         nodeSelector={{
           showSearch: true,
+        }}
+        widgets={{ CustomLogPanel }}
+        logPanel={{
+          // 日志面板
+          logList, // 日志面板接受的数据
+          loading, // 日志面板loading
+          logWidget: 'CustomLogPanel',
+        }}
+        globalConfig={{
+          nodeView: {
+            status: [
+              {
+                value: 'custom-success',
+                color: 'green',
+                name: '自定义成功状态',
+              },
+            ],
+          },
+        }}
+        onNodeClick={async (e, node) => {
+          setLoading(true);
+          const logList = await fakeApi('xx', {});
+          setLogList([logList]);
+          setLoading(false);
         }}
       />
     </div>

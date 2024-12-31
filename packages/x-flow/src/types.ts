@@ -1,5 +1,6 @@
+import { NodeMouseHandler } from '@xyflow/react';
 import { Schema } from 'form-render';
-import React from 'react';
+import React, { ReactNode } from 'react';
 export interface TNodeItem {
   title: string; // 节点 title
   type: string; // 节点类型 _group 比较te
@@ -11,11 +12,12 @@ export interface TNodeItem {
   };
   settingSchema?: Schema; // 节点的配置schema（弹窗） string为自定义组件
   settingWidget?: string; // 自定义组件
-  hideDesc?: boolean;// 隐藏业务描述
-  nodePanel?: {  // 配置面板属性设置
+  hideDesc?: boolean; // 隐藏业务描述
+  nodePanel?: {
+    // 配置面板属性设置
     width?: string | number; // 配置面板宽度
     hideDesc?: boolean; // 配置面板描述
-  }
+  };
 }
 
 export interface TNodeGroup {
@@ -31,9 +33,46 @@ export interface TNodeMenu {
   onClick: ({}: { type: string }) => void;
 }
 
+export interface TNodePanel {
+  // 配置面板属性设置
+  width?: string | number; // 配置面板宽度
+  hideDesc?: boolean; // 配置面板描述
+}
+
 export interface TNodeSelector {
   showSearch: boolean; // 配置是否可搜索
   items?: (TNodeGroup | TNodeItem)[];
+}
+
+export interface TLogListItem {
+  // 日志数据格式：
+  statusPanel?: {
+    status?: Array<{ label: string; value?: string; isBadge?: boolean }>; // isBadge是否为badge形式显示状态
+    extra?: string | ReactNode;
+  };
+  codePanel?: Array<{ title: string; code: string }>;
+  nodeId: string;// 节点ID
+}
+
+export interface TLogPanel {
+  // 日志面板
+  // logData: any; // 日志面板接受的数据
+  logList: Array<TLogListItem>; // 日志面板的所有数据===》默认能拿到页面所有节点的日志数据
+  loading?: boolean; // 日志面板loading
+  logWidget?: string; // 自定义日志面板组件
+}
+
+export interface TNodeView {
+  hideTitleTips?: boolean;
+  status?: Array<{
+    name: string; // 状态名称
+    color: string; // 状态颜色
+  }>;
+}
+
+export interface TEdge {
+  // 边的配置
+  hideEdgeAddBtn?: boolean; // 是否隐藏两个节点之间，连线上的增加节点按钮
 }
 
 export interface FlowProps {
@@ -53,17 +92,12 @@ export interface FlowProps {
   nodeSelector?: TNodeSelector;
   iconFontUrl?: string;
   globalConfig?: {
-    nodePanel?: {  // 配置面板属性设置
-      width?: string | number; // 配置面板宽度
-      hideDesc?: boolean; // 配置面板描述
-    },
-    nodeView?: {
-      hideTitleTips: boolean;
-    },
-    edge: {
-      hideEdgeAddBtn: boolean;// 是否隐藏两个节点之间，连线上的增加节点按钮
-    }
-  }
+    nodePanel?: TNodePanel;
+    nodeView?: TNodeView;
+    edge?: TEdge;
+  };
+  logPanel?: TLogPanel; // 日志面板配置
+  onNodeClick?: NodeMouseHandler;
 }
 
 export default FlowProps;

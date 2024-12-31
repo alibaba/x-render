@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { getAntdVersion, uuid } from '../../utils';
+import { uuid } from '../../utils';
 import NodesMenu from '../NodesMenu';
 import './index.less';
 
@@ -24,7 +24,7 @@ export default forwardRef((props: any, popoverRef) => {
   const closeRef: any = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
-  const { settings, nodeSelector }: any = useContext(ConfigContext);
+  const { settings, nodeSelector, antdVersion }: any = useContext(ConfigContext);
   const { showSearch, popoverProps = { placement: 'top' } } =
     nodeSelector || {};
 
@@ -61,8 +61,7 @@ export default forwardRef((props: any, popoverRef) => {
   };
 
   const popoverVersionProps = useMemo(() => {
-    const version = getAntdVersion();
-    if (version === 'V5') {
+    if (antdVersion === 'V5') {
       return {
         open,
         onOpenChange: openChange,

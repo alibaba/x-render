@@ -38,7 +38,31 @@ export default memo((props: any) => {
         <div className="node-switch-widget-item" key={index}>
           <div className="item-header">
             <div className="item-title">
-              {item?._parallelTitle ?? `事件${index}` }
+              {CustomNodeWidget ? (
+                <CustomNodeWidget data={item} index={index} />
+              ) : (
+                <>
+                  {item?.value && (
+                    <Paragraph
+                      className="item-content-in"
+                      ellipsis={{
+                        rows: 1,
+                        tooltip: {
+                          title: item?.value,
+                          color: '#ffff',
+                          overlayInnerStyle: {
+                            color: '#354052',
+                            fontSize: '12px',
+                          },
+                          getPopupContainer: () => document.getElementById('xflow-container')
+                        },
+                      }}
+                    >
+                      {item?.value}
+                    </Paragraph>
+                  )}
+                </>
+              )}
             </div>
             <SourceHandle
               position={position}
@@ -55,33 +79,6 @@ export default memo((props: any) => {
               id={item?._parallelId}
               className="item-handle"
             />
-          </div>
-          <div className="item-content">
-            {CustomNodeWidget ? (
-              <CustomNodeWidget data={item} index={index} />
-            ) : (
-              <>
-                {item?.value && (
-                  <Paragraph
-                    className="item-content-in"
-                    ellipsis={{
-                      rows: 5,
-                      tooltip: {
-                        title: item?.value,
-                        color: '#ffff',
-                        overlayInnerStyle: {
-                          color: '#354052',
-                          fontSize: '12px',
-                        },
-                        getPopupContainer: () => document.getElementById('xflow-container')
-                      },
-                    }}
-                  >
-                    {item?.value}
-                  </Paragraph>
-                )}
-              </>
-            )}
           </div>
         </div>
       ))}

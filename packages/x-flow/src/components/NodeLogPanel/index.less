@@ -1,0 +1,141 @@
+.node-log-container {
+  .log-header-tab {
+
+    .ant-tabs-nav,
+    .ant-tabs-content-holder {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+  }
+
+  .log-status-panel {
+    border: 1px solid var(--status-color);
+    // min-height: 100px;
+    border-radius: 6px;
+    padding: 8px 15px;
+    background-color: var(--status-bg-color);
+    box-shadow: inset 0px 0px var(--status-box-shadow),
+      inset 0 0px 24px 0 var(--status-box-shadow);
+
+    .log-status-panel-wrap {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .log-status-panel-single {
+      justify-content: flex-start;
+    }
+
+    .log-status-panel-extra {
+      .log-status-panel-extra-text {
+        margin-bottom: 0;
+        font-size: 12px;
+      }
+    }
+  }
+
+  .log-status-item {
+    // border: 1px solid red;
+    width: 100px;
+    margin-bottom: 5px;
+
+    .log-status-item-title {
+      width: 100%;
+      font-size: 10px;
+      color: #676f83;
+    }
+
+    .log-status-item-content {
+      width: 100%;
+      font-size: 13px;
+    }
+
+    .log-status-item-badge {
+      .ant-badge-status-text {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .log-code-panel {
+    margin-top: 10px;
+    border: 1px solid #d0d5dc;
+    border-radius: 6px;
+    padding: 1px;
+    background-color: #f2f4f7;
+
+    .log-code-title {
+      background-color: #f2f4f7;
+      padding: 6px 16px;
+      display: flex;
+      justify-content: space-between;
+
+      .log-code-title-text {
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .log-code-copy {
+        cursor: pointer;
+        font-size: 12px;
+      }
+    }
+
+    .log-code-editor {
+      height: 172px;
+      border-radius: 6px;
+    }
+  }
+
+  .log-track-panel {
+
+    .log-track-node {
+      margin-bottom: 10px;
+
+      .log-track-collapse {
+        font-size: 12px;
+        border-radius: 8px;
+
+        .log-track-collapse-panel {
+          .ant-collapse-header {
+            padding: 6px;
+
+            .ant-collapse-expand-icon {
+              height: 20px;
+              padding-inline-end: 6px
+            }
+          }
+
+          .track-collapse-header {
+            // border: 1px solid red;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+
+            .track-icon-box {
+              width: 20px;
+              height: 20px;
+              border-radius: 6px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-right: 8px;
+            }
+          }
+
+          .track-extra-badge {
+            .ant-badge-status-text {
+              font-size: 12px;
+            }
+          }
+
+          .ant-collapse-content {
+            padding: 0 5px 10px 5px;
+          }
+        }
+      }
+    }
+  }
+}

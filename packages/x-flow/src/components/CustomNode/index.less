@@ -1,5 +1,5 @@
 .xflow-node-container {
-  border: 2px solid #fff;
+  border: 2px solid var(--nodeBorderColor,#fff);
   border-radius: 14px;
   position: relative;
   .react-flow__edge-path,
@@ -29,7 +29,7 @@
   .react-flow__handle::after {
     content: '';
     --tw-bg-opacity: 1;
-    background-color: #2970ff;
+    background-color: var(--nodeBorderColor,#2970ff);  // 把手颜色
     width: 2px;
     height: 10px;
     display: block;

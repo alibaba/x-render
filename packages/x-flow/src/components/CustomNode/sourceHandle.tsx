@@ -1,9 +1,10 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Handle } from '@xyflow/react';
 import { Tooltip } from 'antd';
-import React, { memo, useMemo, useRef, useState } from 'react';
-import { getAntdVersion } from '../../utils';
+import React, { memo, useContext, useMemo, useRef, useState } from 'react';
 import NodeSelectPopover from '../NodesPopover';
+import { ConfigContext } from '../../models/context';
+
 
 export default memo((props: any) => {
   const {
@@ -18,10 +19,11 @@ export default memo((props: any) => {
   const [isShowTooltip, setIsShowTooltip] = useState(false);
   const [openNodeSelectPopover, setOpenNodeSelectPopover] = useState(false);
   const popoverRef = useRef(null);
+   const { antdVersion }: any = useContext(ConfigContext);
+
 
   const toolTipVersionProps = useMemo(() => {
-    const version = getAntdVersion();
-    if (version === 'V5') {
+    if (antdVersion === 'V5') {
       return {
         open: isShowTooltip,
       };
