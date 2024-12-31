@@ -10,7 +10,14 @@ import { useEventListener, useMemoizedFn } from 'ahooks';
 import produce, { setAutoFreeze } from 'immer';
 import { debounce } from 'lodash';
 import type { FC } from 'react';
-import React, { memo, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, {
+  memo,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import CandidateNode from './components/CandidateNode';
 import CustomEdge from './components/CustomEdge';
 import PanelContainer from './components/PanelContainer';
@@ -76,7 +83,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   );
   const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
-  const { settingMap,globalConfig } = useContext(ConfigContext);
+  const { settingMap, globalConfig } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const { onNodeClick } = props;
@@ -250,6 +257,12 @@ const XFlow: FC<FlowProps> = memo(props => {
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
         node={activeNode}
+        onTrackCollapseChange={data => {
+          if (data) {
+            setActiveNode(data);
+            setOpenPanel(true);
+          }
+        }}
       />
     );
   }, [activeNode?.id]);
@@ -273,7 +286,7 @@ const XFlow: FC<FlowProps> = memo(props => {
           markerEnd: {
             type: MarkerType.ArrowClosed, // 箭头
           },
-          deletable:deletable //默认连线属性受此项控制
+          deletable: deletable, //默认连线属性受此项控制
         }}
         onConnect={onConnect}
         onNodesChange={changes => {

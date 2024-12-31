@@ -12,10 +12,11 @@ interface INodeEditorProps {
   nodeType: string;
   id: string;
   node: any;
+  onTrackCollapseChange: (data:any) => void;// 追踪面板点击collapse方法
 }
 
 const NodeLogPanel: FC<INodeEditorProps> = (props: any) => {
-  const { data, onChange, nodeType, id, node } = props;
+  const { data, onChange, nodeType, id, node ,onTrackCollapseChange } = props;
   const { widgets, globalConfig, logPanel } = useContext(ConfigContext);
   const {
     nodeView: { status = [] },
@@ -45,7 +46,7 @@ const NodeLogPanel: FC<INodeEditorProps> = (props: any) => {
               )}
             </Tabs.TabPane>
             <Tabs.TabPane tab="追踪" key="track">
-              <TrackPanel logList={logPanel?.logList || []} />
+              <TrackPanel logList={logPanel?.logList || []} onTrackCollapseChange={onTrackCollapseChange} />
             </Tabs.TabPane>
           </Tabs>
         </Spin>
