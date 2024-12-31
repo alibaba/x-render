@@ -37,7 +37,7 @@ export type FlowState = {
   onNodesChange: OnNodesChange<FlowNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  setNodes: (nodes: FlowNode[]) => void;
+  setNodes: (nodes: FlowNode[], isVanilla?: boolean) => void;
   setEdges: (edges: Edge[]) => void;
   addNodes: (nodes: FlowNode[]| FlowNode, isVanilla?: boolean) => void;
   addEdges: (edges: Edge[] | Edge) => void;
@@ -84,8 +84,8 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             edges: addEdge(connection, get().edges),
           });
         },
-        setNodes: nodes => {
-          set({ nodes: transformNodes(nodes) });
+        setNodes: (nodes, isVanilla = true) => {
+          set({ nodes: isVanilla ? nodes : transformNodes(nodes) });
         },
         getNodes: () => {
           return get().nodes;
