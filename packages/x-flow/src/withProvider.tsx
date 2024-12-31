@@ -29,7 +29,8 @@ export default function withProvider<T>(
       iconFontUrl,
       globalConfig,
       logPanel,
-      antdVersion = 'V5',
+      onMenuItemClick,
+      antdVersion ='V5',
       ...restProps
     } = props;
     const settingMap = useMemo(() => {
@@ -55,6 +56,7 @@ export default function withProvider<T>(
       globalConfig,
       logPanel,
       antdVersion,
+      onMenuItemClick,
       widgets: {
         ...defaultWidgets,
         ...widgets,

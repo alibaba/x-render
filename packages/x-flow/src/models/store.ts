@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import { generateCopyNodes, transformNodes, uuid } from '../utils';
 import {
   addEdge,
@@ -43,7 +44,7 @@ export type FlowState = {
   addEdges: (edges: Edge[] | Edge) => void;
   deleteNode: (nodeId: string) => void;
   copyNode: (nodeId: string) => void;
-  pasteNode: (nodeId: string) => void;
+  pasteNode: (nodeId: string,data?:Record<string,string>) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
   setIsAddingNode: (payload: boolean) => void;
   setCandidateNode: (candidateNode: any) => void;
@@ -129,18 +130,21 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             copyNodes,
           });
         },
-        pasteNode: (nodeId) => {
+        pasteNode: (nodeId,data = {}) => {
           if (get().copyNodes.length > 0) {
             const newEdges = {
               id: uuid(),
               source: nodeId,
               target: get().copyNodes[0].id,
+              ...data
             };
             get().addNodes(get().copyNodes, false);
             get().addEdges(newEdges);
             set({
               copyNodes: [],
             });
+          }else{
+            message.warning('请先复制节点！')
           }
         },
         deleteNode: (nodeId) => {

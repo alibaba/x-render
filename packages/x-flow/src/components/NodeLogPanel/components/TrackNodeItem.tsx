@@ -1,5 +1,5 @@
 import { Badge, Collapse, Empty, Typography } from 'antd';
-import React, { memo, useContext, useMemo, useState } from 'react';
+import React, { memo, useContext, useMemo } from 'react';
 import { ConfigContext } from '../../../models/context';
 import { transformNodeStatus } from '../../../utils';
 import createIconFont from '../../../utils/createIconFont';
@@ -12,16 +12,18 @@ interface ITrackNodeItemProps {
   nodeStatus: string;
   node: any;
   logTrackList?: []; // 默认的追踪数据
+  onTrackCollapseChange: (data: any) => void;
 }
 
 export default memo((props: ITrackNodeItemProps) => {
-  const { nodeType, nodeStatus, node, logTrackList } = props;
+  const { nodeType, nodeStatus, node, logTrackList, onTrackCollapseChange } =
+    props;
 
   const { settingMap, iconFontUrl, globalConfig, widgets }: any =
     useContext(ConfigContext);
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
   const nodeSetting = settingMap[nodeType] || {};
-  const {  iconSvg } = nodeSetting;
+  const { iconSvg } = nodeSetting;
   const {
     nodeView: { status = [] },
     logPanel,
@@ -32,6 +34,12 @@ export default memo((props: ITrackNodeItemProps) => {
     <div className="log-track-node">
       <Collapse
         className="log-track-collapse"
+        onChange={arr => {
+          if (node) {
+            const { _nodeType, _status, ...rest } = node?.data;
+            onTrackCollapseChange({ id: node?.id, values: { ...rest }, _nodeType, _status });
+          }
+        }}
       >
         <Panel
           header={
@@ -89,7 +97,11 @@ export default memo((props: ITrackNodeItemProps) => {
               <CodePanel codeData={item} key={index} />
             ))
           ) : (
-              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description='暂无日志信息' style={{fontSize:'12px'}} />
+            <Empty
+              image={Empty.PRESENTED_IMAGE_SIMPLE}
+              description="暂无日志信息"
+              style={{ fontSize: '12px' }}
+            />
           )}
         </Panel>
       </Collapse>
