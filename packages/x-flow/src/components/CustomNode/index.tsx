@@ -61,7 +61,7 @@ export default memo((props: any) => {
       deletable,
       ...(sourceHandle && { sourceHandle }),
     };
-    addNodes(newNodes);
+    addNodes(newNodes, false);
     addEdges(newEdges);
   };
 
