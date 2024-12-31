@@ -2,8 +2,10 @@ import { MoreOutlined } from '@ant-design/icons';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
 import { Dropdown, message } from "antd";
 
+import { ItemType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
-import React, { memo, useCallback, useContext, useState } from 'react';
+import { isFunction } from 'lodash';
+import React, { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
@@ -14,8 +16,10 @@ import SourceHandle from './sourceHandle';
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick, status } =
     props;
-  const { widgets, settingMap, globalConfig } = useContext(ConfigContext);
+  const { widgets, settingMap, globalConfig, onMenuItemClick } =
+    useContext(ConfigContext);
   const deletable = globalConfig?.edge?.deletable ?? true;
+
   const NodeWidget =
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
@@ -50,7 +54,7 @@ export default memo((props: any) => {
       type: 'custom',
       data: {
         ...data,
-        title: `${title}_${uuid4()}`
+        title: `${title}_${uuid4()}`,
       },
       position: { x, y },
     };
@@ -77,14 +81,92 @@ export default memo((props: any) => {
     message.success('复制成功');
   }, [copyNode]);
 
-  const handlePasteNode = useCallback(() => {
-    pasteNode(id)
-  }, [pasteNode]);
+  const handlePasteNode = useCallback(
+    (data?: { sourceHandle: string }) => {
+      pasteNode(id, data);
+    },
+    [pasteNode]
+  );
 
   const handleDeleteNode = useCallback(() => {
-    deleteNode(id)
+    deleteNode(id);
   }, [pasteNode]);
 
+  const itemClick = e => {
+    if (!e.key) {
+      return;
+    }
+    const sourceHandle = e.item.props?.sourcehandle;
+    if (isFunction(onMenuItemClick)) {
+      const data: Record<string, string> = {
+        key: e.key,
+        nodeId: id,
+      };
+      if (type === 'Switch' && e.key.startsWith('paste-') && sourceHandle) {
+        data['sourceHandle'] = sourceHandle;
+      }
+      onMenuItemClick(data);
+    } else {
+      if (e.key === 'copy') {
+        handleCopyNode();
+      } else if (e.key === 'paste') {
+        handlePasteNode();
+      } else if (e.key === 'delete') {
+        handleDeleteNode();
+      } else if (e.key.startsWith('paste-')) {
+        if (sourceHandle) {
+          handlePasteNode({
+            sourceHandle,
+          });
+        } else {
+          handlePasteNode();
+        }
+      }
+    }
+  };
+
+  const menuItem: ItemType[] = useMemo(() => {
+    if (type === 'Switch') {
+      let list = [];
+      if (Array.isArray(data.list)) {
+        const len = data.list.length;
+        list = data.list.map((r, i) => {
+          if (i === 0) {
+            return {
+              label: `粘贴到第${i + 1}个出口`,
+              key: 'paste-' + i,
+              index: i,
+              id: id,
+            };
+          } else {
+            return {
+              label: `粘贴到第${i + 1}个出口`,
+              key: 'paste-' + i,
+              id: id,
+              index: i,
+              sourcehandle: r._conditionId,
+            };
+          }
+        });
+      }
+      return [
+        ...list,
+        {
+          label: `粘贴到第${list.length + 1}个出口`,
+          key: 'paste-' + (list.length + 1),
+          id: id,
+          index: list.length + 1,
+          sourcehandle: 'condition_else',
+        },
+      ];
+    }
+    return [
+      {
+        label: '粘贴',
+        key: 'paste',
+      },
+    ];
+  }, [type]);
 
   // 节点状态处理
   const statusObj = transformNodeStatus(globalConfig?.nodeView?.status || []);
@@ -113,29 +195,24 @@ export default memo((props: any) => {
             items: [
               {
                 label: '复制',
-                key: ' copy',
-                onClick: handleCopyNode,
+                key: 'copy',
               },
-              {
-                label: '粘贴',
-                key: 'paste',
-                onClick: handlePasteNode,
-              },
+              ...menuItem,
               {
                 label: '删除',
                 key: 'delete',
                 danger: true,
-                onClick: handleDeleteNode,
               },
             ],
+            onClick: itemClick,
           }}
           trigger={['click', 'contextMenu']}
         >
           <div className="xflow-node-actions-container">
-          <MoreOutlined
-            style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
-          ></MoreOutlined>
-        </div>
+            <MoreOutlined
+              style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
+            ></MoreOutlined>
+          </div>
         </Dropdown>
       )}
       <NodeWidget

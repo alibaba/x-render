@@ -73,8 +73,8 @@ export interface TNodeView {
 export interface TEdge {
   // 边的配置
   hideEdgeAddBtn?: boolean; // 是否隐藏两个节点之间，连线上的增加节点按钮
-  hideEdgeDelBtn?:boolean; // 是否隐藏两个节点之间，连线上的删除节点按钮
-  deletable?:boolean // 是否允许删除线条 初始化的edges不受此项影响
+  hideEdgeDelBtn?: boolean; // 是否隐藏两个节点之间，连线上的删除节点按钮
+  deletable?: boolean; // 是否允许删除线条 初始化的edges不受此项影响
 }
 
 export interface FlowProps {
@@ -100,6 +100,12 @@ export interface FlowProps {
   };
   logPanel?: TLogPanel; // 日志面板配置
   onNodeClick?: NodeMouseHandler;
+  onMenuItemClick: (itemInfo: ItemInfo) => void;
+}
+interface ItemInfo {
+  key: 'copy' | 'paste' | 'delete' | string;
+  nodeId: string;
+  sourceHandle?: string;
 }
 
 export default FlowProps;
