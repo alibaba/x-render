@@ -29,8 +29,8 @@ export const useFlow = () => {
   const setNodes = useMemoizedFn((nodes: FlowNode[]) => {
     storeApi.getState().setNodes(nodes);
   });
-  const addNodes = useMemoizedFn((nodes: FlowNode[]) => {
-    storeApi.getState().addNodes(nodes);
+  const addNodes = useMemoizedFn((nodes: FlowNode[], isVanilla = true) => {
+    storeApi.getState().addNodes(nodes, isVanilla);
   });
   const setEdges = useMemoizedFn((edges: Edge[]) => {
     storeApi.getState().setEdges(edges);

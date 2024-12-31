@@ -39,7 +39,7 @@ export type FlowState = {
   onConnect: OnConnect;
   setNodes: (nodes: FlowNode[]) => void;
   setEdges: (edges: Edge[]) => void;
-  addNodes: (nodes: FlowNode[]| FlowNode) => void;
+  addNodes: (nodes: FlowNode[]| FlowNode, isVanilla?: boolean) => void;
   addEdges: (edges: Edge[] | Edge) => void;
   deleteNode: (nodeId: string) => void;
   copyNode: (nodeId: string) => void;
@@ -96,9 +96,9 @@ const createStore = (initProps?: Partial<FlowProps>) => {
         getEdges: () => {
           return get().nodes;
         },
-        addNodes: payload => {
+        addNodes: (payload, isVanilla = true) => {
           const newNodes = get().nodes.concat(payload);
-          set({ nodes: newNodes });
+          set({ nodes: isVanilla ? newNodes :  transformNodes(newNodes) });
         },
         addEdges: payload => {
           set({ edges: get().edges.concat(payload) });
