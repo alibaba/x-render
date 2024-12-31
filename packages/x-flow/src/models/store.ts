@@ -1,4 +1,4 @@
-import { generateCopyNodes, uuid } from '../utils';
+import { generateCopyNodes, transformNodes, uuid } from '../utils';
 import {
   addEdge,
   applyEdgeChanges,
@@ -84,11 +84,11 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             edges: addEdge(connection, get().edges),
           });
         },
+        setNodes: nodes => {
+          set({ nodes: transformNodes(nodes) });
+        },
         getNodes: () => {
           return get().nodes;
-        },
-        setNodes: nodes => {
-          set({ nodes });
         },
         setEdges: edges => {
           set({ edges });

@@ -32,7 +32,7 @@ const InitialProvider = ({ nodes, edges, layout, children }) => {
     setLayout: s.setLayout,
   }));
   useEffect(() => {
-    setNodes(transformNodes(nodes));
+    setNodes(nodes);
     setLayout(layout);
     setEdges(edges);
   }, []);
