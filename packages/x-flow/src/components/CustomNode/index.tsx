@@ -180,7 +180,7 @@ export default memo((props: any) => {
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ '--nodeBorderColor': nodeBorderColor }}
+      style={{ '--nodeBorderColor': nodeBorderColor } as React.CSSProperties}
     >
       {!settingMap?.[type]?.targetHandleHidden && (
         <Handle

@@ -102,9 +102,9 @@ export default memo((props: any) => {
           quickSuggestions: false,
           minimap: { enabled: false },
           // wordWrap: 'on',
-          unicodeHighlight: {
-            ambiguousCharacters: false,
-          },
+          // unicodeHighlight: {
+          //   ambiguousCharacters: false,
+          // },
         }}
         onMount={handleEditorDidMount}
         // loading={''}
