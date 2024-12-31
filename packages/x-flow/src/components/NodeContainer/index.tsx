@@ -20,8 +20,54 @@ export default memo((props: any) => {
     iconFontUrl,
     iconSvg,
     hideTitleTips,
+    isSwitchBottom,
   } = props;
-  const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl])
+  const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
+
+  const renderDesc = () => (
+    <>
+      {!hideDesc && !!desc && (
+        <Paragraph
+          ellipsis={{
+            rows: 2,
+            tooltip: {
+              title: desc,
+              placement: 'bottomRight',
+              color: '#ffff',
+              overlayInnerStyle: {
+                color: '#354052',
+                fontSize: '12px',
+              },
+              getPopupContainer: () =>
+                document.getElementById('xflow-container') as HTMLElement,
+            },
+          }}
+          className="node-desc"
+        >
+          {desc}
+        </Paragraph>
+      )}
+    </>
+  );
+
+  const renderDescAndNodeWidget = () => {
+    if (isSwitchBottom) {
+      // 条件节点且为TB布局
+      return (
+        <>
+          {renderDesc()}
+          {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
+          {renderDesc()}
+        </>
+      );
+    }
+  };
 
   return (
     <div
@@ -72,28 +118,7 @@ export default memo((props: any) => {
       </div>
 
       <div className="node-body">{children}</div>
-      {NodeWidget && <div className="node-widget">{NodeWidget}</div>}
-      {!hideDesc && !!desc && (
-        <Paragraph
-          ellipsis={{
-            rows: 2,
-            tooltip: {
-              title: desc,
-              placement: 'bottomRight',
-              color: '#ffff',
-              overlayInnerStyle: {
-                color: '#354052',
-                fontSize: '12px',
-              },
-              getPopupContainer: () =>
-                document.getElementById('xflow-container') as HTMLElement,
-            },
-          }}
-          className="node-desc"
-        >
-          {desc}
-        </Paragraph>
-      )}
+      {renderDescAndNodeWidget()}
     </div>
   );
 });
