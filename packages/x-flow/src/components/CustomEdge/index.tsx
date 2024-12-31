@@ -38,12 +38,14 @@ export default memo((edge: any) => {
 
   const { globalConfig, settingMap } = useContext(ConfigContext);
   const hideEdgeAddBtn = globalConfig?.edge?.hideEdgeAddBtn ?? false;
+  const hideEdgeDelBtn = globalConfig?.edge?.hideEdgeDelBtn ?? false;
+  const deletable = globalConfig?.edge?.deletable ?? true;
 
   const {
     nodes,
     edges,
-    setNodes,
-    setEdges,
+    addNodes,
+    addEdges,
     mousePosition,
     onEdgesChange,
     layout,
@@ -53,8 +55,8 @@ export default memo((edge: any) => {
       nodes: state.nodes,
       edges: state.edges,
       mousePosition: state.mousePosition,
-      setNodes: state.setNodes,
-      setEdges: state.setEdges,
+      addNodes: state.addNodes,
+      addEdges: state.addEdges,
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
@@ -89,19 +91,21 @@ export default memo((edge: any) => {
             id: uuid(),
             source,
             target: targetId,
+            deletable:deletable,
             ...(sourceHandleId && { sourceHandle: sourceHandleId }),
           },
           {
             id: uuid(),
             source: targetId,
+            deletable:deletable,
             target,
           },
         ]
       );
     });
 
-    setNodes(newNodes);
-    setEdges(newEdges);
+    addNodes(newNodes, false);
+    addEdges(newEdges);
     onEdgesChange([{ id, type: 'remove' }]);
   };
 
@@ -135,12 +139,14 @@ export default memo((edge: any) => {
                 }}
               >
                 <div className="line-content">
-                  <div
-                    className="line-icon-box"
-                    onClick={() => onEdgesChange([{ id, type: 'remove' }])}
-                  >
-                    <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
-                  </div>
+                  {!hideEdgeDelBtn && (
+                    <div
+                      className="line-icon-box"
+                      onClick={() => onEdgesChange([{ id, type: 'remove' }])}
+                    >
+                      <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
+                    </div>
+                  )}
                   {!hideEdgeAddBtn && (
                     <NodeSelectPopover
                       placement="right"

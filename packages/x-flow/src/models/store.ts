@@ -1,4 +1,4 @@
-import { generateCopyNodes, uuid } from '../utils';
+import { generateCopyNodes, transformNodes, uuid } from '../utils';
 import {
   addEdge,
   applyEdgeChanges,
@@ -37,9 +37,9 @@ export type FlowState = {
   onNodesChange: OnNodesChange<FlowNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  setNodes: (nodes: FlowNode[]) => void;
+  setNodes: (nodes: FlowNode[], isTransform?: boolean) => void;
   setEdges: (edges: Edge[]) => void;
-  addNodes: (nodes: FlowNode[]| FlowNode) => void;
+  addNodes: (nodes: FlowNode[]| FlowNode, isTransform?: boolean) => void;
   addEdges: (edges: Edge[] | Edge) => void;
   deleteNode: (nodeId: string) => void;
   copyNode: (nodeId: string) => void;
@@ -84,11 +84,12 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             edges: addEdge(connection, get().edges),
           });
         },
+        setNodes: (nodes, isTransform = true) => {
+          console.info("setNodes nodes", nodes, isTransform);
+          set({ nodes: isTransform ? transformNodes(nodes) : nodes });
+        },
         getNodes: () => {
           return get().nodes;
-        },
-        setNodes: nodes => {
-          set({ nodes });
         },
         setEdges: edges => {
           set({ edges });
@@ -96,9 +97,9 @@ const createStore = (initProps?: Partial<FlowProps>) => {
         getEdges: () => {
           return get().nodes;
         },
-        addNodes: payload => {
+        addNodes: (payload, isTransform = false) => {
           const newNodes = get().nodes.concat(payload);
-          set({ nodes: newNodes });
+          set({ nodes: isTransform ? newNodes :  transformNodes(newNodes) });
         },
         addEdges: payload => {
           set({ edges: get().edges.concat(payload) });

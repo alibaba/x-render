@@ -15,6 +15,7 @@ export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick, status } =
     props;
   const { widgets, settingMap, globalConfig } = useContext(ConfigContext);
+  const deletable = globalConfig?.edge?.deletable ?? true;
   const NodeWidget =
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
@@ -57,6 +58,7 @@ export default memo((props: any) => {
       id: uuid(),
       source: id,
       target: targetId,
+      deletable,
       ...(sourceHandle && { sourceHandle }),
     };
     addNodes(newNodes);

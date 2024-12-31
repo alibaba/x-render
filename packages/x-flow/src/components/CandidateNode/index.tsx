@@ -42,7 +42,8 @@ const CandidateNode = () => {
       },
       position: { x, y },
     };
-    addNodes(newNodes);
+    console.info("newNodes", newNodes);
+    addNodes(newNodes, false);
     setIsAddingNode(false)
     setCandidateNode(null);
   });
