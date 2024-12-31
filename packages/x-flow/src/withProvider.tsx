@@ -1,3 +1,4 @@
+import { EventEmitterContextProvider } from './models/event-emitter';
 import { ConfigProvider } from 'antd';
 import React, { useMemo } from 'react';
 import { FlowProviderWrapper } from './components/FlowProvider';
@@ -28,7 +29,7 @@ export default function withProvider<T>(
       iconFontUrl,
       globalConfig,
       logPanel,
-      antdVersion='V5',
+      antdVersion = 'V5',
       ...restProps
     } = props;
     const settingMap = useMemo(() => {
@@ -63,17 +64,19 @@ export default function withProvider<T>(
     return (
       <ConfigProvider {...configProvider}>
         <ConfigContext.Provider value={configContext}>
-          <FlowProviderWrapper
-            nodes={initialValues?.nodes}
-            edges={initialValues?.edges}
-            layout={layout}
-          >
-            <Element
-              {...restProps}
-              initialValues={initialValues}
-              settings={settings}
-            />
-          </FlowProviderWrapper>
+          <EventEmitterContextProvider>
+            <FlowProviderWrapper
+              nodes={initialValues?.nodes}
+              edges={initialValues?.edges}
+              layout={layout}
+            >
+              <Element
+                {...restProps}
+                initialValues={initialValues}
+                settings={settings}
+              />
+            </FlowProviderWrapper>
+          </EventEmitterContextProvider>
         </ConfigContext.Provider>
       </ConfigProvider>
     );

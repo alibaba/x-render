@@ -122,10 +122,10 @@ const XFlow: FC<FlowProps> = memo(props => {
 
   const { eventEmitter } = useEventEmitterContextContext();
   eventEmitter?.useSubscription((v: any) => {
-    // 整理节点
+    // 整理画布
     if (v.type === 'auto-layout-nodes') {
       const newNodes: any = autoLayoutNodes(store.getState().nodes, edges);
-      setNodes(newNodes);
+      setNodes(newNodes, false);
     }
 
     if (v.type === 'deleteNode') {

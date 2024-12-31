@@ -42,8 +42,8 @@ export default memo((edge: any) => {
   const {
     nodes,
     edges,
-    setNodes,
-    setEdges,
+    addNodes,
+    addEdges,
     mousePosition,
     onEdgesChange,
     layout,
@@ -53,8 +53,8 @@ export default memo((edge: any) => {
       nodes: state.nodes,
       edges: state.edges,
       mousePosition: state.mousePosition,
-      setNodes: state.setNodes,
-      setEdges: state.setEdges,
+      addNodes: state.addNodes,
+      addEdges: state.addEdges,
       onEdgesChange: state.onEdgesChange,
     }),
     shallow
@@ -100,8 +100,8 @@ export default memo((edge: any) => {
       );
     });
 
-    setNodes(newNodes);
-    setEdges(newEdges);
+    addNodes(newNodes, false);
+    addEdges(newEdges);
     onEdgesChange([{ id, type: 'remove' }]);
   };
 

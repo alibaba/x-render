@@ -58,7 +58,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       if (node) {
         // 更新节点的 data
         if (node?.data?._nodeType === 'Switch' && data?.list?.length) {
-         data['list']= data?.list?.map((item,index) => {
+          data['list']= data?.list?.map((item,index) => {
             if (item?._conditionId) {
               return item;
             } else {

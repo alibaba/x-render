@@ -80,7 +80,7 @@ const Control = (props: any) => {
         />
       </Tooltip>
       <div className='separator'></div>
-      <Tooltip title='整理节点' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
+      <Tooltip title='整理画布' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
         <Button
           type='text'
           icon={<IconView type='icon-function-add-line1' className='icon' />}

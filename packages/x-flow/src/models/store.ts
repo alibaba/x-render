@@ -37,9 +37,9 @@ export type FlowState = {
   onNodesChange: OnNodesChange<FlowNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
-  setNodes: (nodes: FlowNode[], isVanilla?: boolean) => void;
+  setNodes: (nodes: FlowNode[], isTransform?: boolean) => void;
   setEdges: (edges: Edge[]) => void;
-  addNodes: (nodes: FlowNode[]| FlowNode, isVanilla?: boolean) => void;
+  addNodes: (nodes: FlowNode[]| FlowNode, isTransform?: boolean) => void;
   addEdges: (edges: Edge[] | Edge) => void;
   deleteNode: (nodeId: string) => void;
   copyNode: (nodeId: string) => void;
@@ -84,8 +84,9 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             edges: addEdge(connection, get().edges),
           });
         },
-        setNodes: (nodes, isVanilla = false) => {
-          set({ nodes: isVanilla ? nodes : transformNodes(nodes) });
+        setNodes: (nodes, isTransform = true) => {
+          console.info("setNodes nodes", nodes, isTransform);
+          set({ nodes: isTransform ? transformNodes(nodes) : nodes });
         },
         getNodes: () => {
           return get().nodes;
@@ -96,9 +97,9 @@ const createStore = (initProps?: Partial<FlowProps>) => {
         getEdges: () => {
           return get().nodes;
         },
-        addNodes: (payload, isVanilla = false) => {
+        addNodes: (payload, isTransform = false) => {
           const newNodes = get().nodes.concat(payload);
-          set({ nodes: isVanilla ? newNodes :  transformNodes(newNodes) });
+          set({ nodes: isTransform ? newNodes :  transformNodes(newNodes) });
         },
         addEdges: payload => {
           set({ edges: get().edges.concat(payload) });
