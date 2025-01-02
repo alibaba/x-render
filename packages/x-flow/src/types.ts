@@ -77,6 +77,16 @@ export interface TEdge {
   deletable?: boolean; // 是否允许删除线条 初始化的edges不受此项影响
 }
 
+export interface TControl{
+  hideAddNode?:boolean
+  hideAnnotate?:boolean
+}
+
+// export interface THandle{
+//   isConnectableStart?:boolean
+//   isConnectableEnd?:boolean
+// }
+
 export interface FlowProps {
   initialValues?: {
     nodes: any[];
@@ -97,10 +107,13 @@ export interface FlowProps {
     nodePanel?: TNodePanel;
     nodeView?: TNodeView;
     edge?: TEdge;
+    controls?:TControl
+    //handle?:THandle
   };
   logPanel?: TLogPanel; // 日志面板配置
   onNodeClick?: NodeMouseHandler;
-  onMenuItemClick: (itemInfo: ItemInfo) => void;
+  onMenuItemClick: (itemInfo: ItemInfo,defaultAction:()=>void) => void;
+
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;
