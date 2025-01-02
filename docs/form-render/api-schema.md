@@ -259,7 +259,7 @@ list: { // list 是字段名
 配置列表控件，可配置如下属性
 
 #### props.addBtnProps
-- 描述：添加按钮属性，参考 <a href="https://ant.design/components/button-cn#api" target="_blank">Antd Button Props</a>()
+- 描述：添加按钮属性，参考 <a href="https://ant.design/components/button-cn#api" target="_blank">Antd Button Props</a>
 - 类型：`ButtonProps`
 
 #### props.delConfirmProps
