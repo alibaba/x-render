@@ -24,7 +24,7 @@ export default forwardRef((props: any, popoverRef) => {
   const closeRef: any = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
-  const { settings, nodeSelector, antdVersion }: any = useContext(ConfigContext);
+  const { settings, nodeSelector, antdVersion ,readOnly }: any = useContext(ConfigContext);
   const { showSearch, popoverProps = { placement: 'top' } } =
     nodeSelector || {};
 
@@ -56,7 +56,9 @@ export default forwardRef((props: any, popoverRef) => {
     setTimeout(() => {
       setIsAddingNode(true);
       closeRef.current = true;
-      setOpen(true);
+      if(!readOnly){
+        setOpen(true);
+      }
     }, 50);
   };
 

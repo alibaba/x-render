@@ -18,7 +18,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const { data, onChange, nodeType, id } = props;
   const form = useForm();
   // // 1.获取节点配置信息
-  const { settingMap, widgets } = useContext(ConfigContext);
+  const { settingMap, widgets,readOnly} = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const [customVal, setCustomVal] = useState(data);
   const CustomSettingWidget = widgets[`${nodeType}NodeSettingWidget`]; // 内置setting组件
@@ -112,6 +112,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
           setCustomVal(values);
           handleNodeValueChange({ ...values });
         }}
+        readOnly={readOnly}
       />
     );
   } else if (nodeSetting?.settingSchema) {
@@ -122,6 +123,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         widgets={widgets}
         watch={watch}
         size={'small'}
+        readOnly={readOnly}
       />
     );
   } else if (CustomSettingWidget) {
@@ -132,6 +134,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
           handleNodeValueChange({ ...val });
         }}
         value={data}
+        readOnly={readOnly}
       />
     );
   } else {

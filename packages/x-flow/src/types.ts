@@ -113,6 +113,7 @@ export interface FlowProps {
   logPanel?: TLogPanel; // 日志面板配置
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick: (itemInfo: ItemInfo,defaultAction:()=>void) => void;
+  readOnly?:boolean
 
 }
 interface ItemInfo {
