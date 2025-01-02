@@ -18,7 +18,7 @@ title: API
 | globalConfig | 全局的面板和节点配置 |     {nodePanel:[TNodePanel](#tnodepanel),nodeView:[TNodeView](#tnodeview),edge:[TEdge](#tedge)}                                            |    |
 | logPanel | 日志面板配置 |    [TLogPanel](#tlogpanel)                                         |    |
 | onNodeClick | 节点点击事件 |   `NodeMouseHandler`                                        |    |
-| antdVersion | antd 的版本 |   `V4 \| V5`                                        |  `V4`  |
+| antdVersion | antd 的版本 |   `V4 \| V5`                                        |  `V5`  |
 
 ## TNodePanel
 
