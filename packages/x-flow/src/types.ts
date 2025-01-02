@@ -87,6 +87,10 @@ export interface TControl{
 //   isConnectableEnd?:boolean
 // }
 
+export interface TPanel{
+  onClose:(activeNodeId:string)=>void
+}
+
 export interface FlowProps {
   initialValues?: {
     nodes: any[];
@@ -111,10 +115,10 @@ export interface FlowProps {
     //handle?:THandle
   };
   logPanel?: TLogPanel; // 日志面板配置
+  readOnly?:boolean//只读模式
+  panel?:TPanel //表单配置面板
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick: (itemInfo: ItemInfo,defaultAction:()=>void) => void;
-  readOnly?:boolean
-
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;

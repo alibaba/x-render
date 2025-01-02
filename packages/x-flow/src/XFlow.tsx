@@ -86,7 +86,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig,readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick } = props;
+  const { onNodeClick,panel } = props;
 
   useEffect(() => {
     zoomTo(0.8);
@@ -341,6 +341,7 @@ const XFlow: FC<FlowProps> = memo(props => {
               if (!activeNode?._status || !openLogPanel) {
                 setActiveNode(null);
               }
+              panel.onClose && panel.onClose(activeNode?.id)
             }}
             node={activeNode}
             data={activeNode?.values}
