@@ -86,7 +86,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig,readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick,panel = {} } = props;
+  const { onNodeClick,panel = {} as any } = props;
 
   useEffect(() => {
     zoomTo(0.8);

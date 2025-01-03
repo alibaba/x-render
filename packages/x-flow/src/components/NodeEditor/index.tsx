@@ -1,6 +1,6 @@
-import FormRender, { useForm } from 'form-render';
+import FormRender, { Schema, useForm } from 'form-render';
 import produce from 'immer';
-import { debounce } from 'lodash';
+import { debounce, isFunction } from 'lodash';
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
@@ -18,11 +18,23 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const { data, onChange, nodeType, id } = props;
   const form = useForm();
   // // 1.获取节点配置信息
-  const { settingMap, widgets,readOnly} = useContext(ConfigContext);
+  const { settingMap, widgets, readOnly } = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const [customVal, setCustomVal] = useState(data);
   const CustomSettingWidget = widgets[`${nodeType}NodeSettingWidget`]; // 内置setting组件
   const NodeWidget = widgets[nodeSetting?.settingWidget]; // 自定义面板配置组件
+  const getSettingSchema = nodeSetting['getSettingSchema'];
+  const [asyncSchema, setAsyncSchema] = useState<Schema>({});
+
+  async function getSchema() {
+    const shema = await getSettingSchema(id, nodeType, form).catch(() => ({}));
+    setAsyncSchema(shema);
+  }
+  useEffect(() => {
+    if (isFunction(getSettingSchema)) {
+      getSchema();
+    }
+  }, []);
 
   const { nodes, setNodes } = useStore(
     (state: any) => ({
@@ -58,7 +70,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       if (node) {
         // 更新节点的 data
         if (node?.data?._nodeType === 'Switch' && data?.list?.length) {
-          data['list'] = (data?.list||[])?.map((item, index) => {
+          data['list'] = (data?.list || [])?.map((item, index) => {
             if (item?._conditionId) {
               return item;
             } else {
@@ -95,7 +107,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       }
     });
 
-    setNodes(newNodes,false);
+    setNodes(newNodes, false);
   }, 100);
 
   const watch = {
@@ -119,6 +131,17 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
     return (
       <FormRender
         schema={nodeSetting?.settingSchema}
+        form={form}
+        widgets={widgets}
+        watch={watch}
+        size={'small'}
+        readOnly={readOnly}
+      />
+    );
+  } else if (isFunction(getSettingSchema) && Object.keys(asyncSchema).length > 0) {
+    return (
+      <FormRender
+        schema={asyncSchema}
         form={form}
         widgets={widgets}
         watch={watch}

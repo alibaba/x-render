@@ -146,6 +146,7 @@ export default memo((props: any) => {
               key: 'paste-' + i,
               index: i,
               id: id,
+              sourcehandle: r._conditionId,
             };
           } else {
             return {
@@ -185,7 +186,7 @@ export default memo((props: any) => {
     <Menu onClick={itemClick}>
       <Menu.Item key={'copy'}>复制</Menu.Item>
       {menuItem.map((r: any) => {
-        return <Menu.Item {...r}>{r.label}</Menu.Item>;
+        return <Menu.Item {...r} key={r.key}>{r.label}</Menu.Item>;
       })}
       <Menu.Item key={'delete'} danger={true}>删除</Menu.Item>
     </Menu>

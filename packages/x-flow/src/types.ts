@@ -1,5 +1,5 @@
 import { NodeMouseHandler,Handle } from '@xyflow/react';
-import { Schema } from 'form-render';
+import { Schema,useForm } from 'form-render';
 import React, { ReactNode ,ComponentProps} from 'react';
 
 type HandleProps = ComponentProps<typeof Handle>
@@ -21,6 +21,7 @@ export interface TNodeItem {
     width?: string | number; // 配置面板宽度
     hideDesc?: boolean; // 配置面板描述
   };
+  getSettingSchema?:(nodeId:string,nodeType:string,form:ReturnType<typeof useForm>)=>Promise<Schema>
 }
 
 export interface TNodeGroup {
