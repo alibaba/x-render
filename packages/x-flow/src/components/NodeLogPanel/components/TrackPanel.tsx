@@ -6,7 +6,7 @@ import TrackNodeItem from './TrackNodeItem';
 
 // 追踪面板，默认值展示有状态的节点
 export default memo((props: any) => {
-  const { logList } = props;
+  const { logList, onTrackCollapseChange } = props;
   const { nodes, setNodes } = useStore(
     (state: any) => ({
       nodes: state.nodes,
@@ -31,6 +31,7 @@ export default memo((props: any) => {
             nodeStatus={item?.data?._status}
             node={item}
             logTrackList={item?.logTrackList || []}
+            onTrackCollapseChange={onTrackCollapseChange}
           />
         ))
       ) : (

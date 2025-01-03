@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import createIconFont from '../../utils/createIconFont';
 
-const TitleMenuTooltip = ({ icon, title, description, iconFontUrl, iconSvg }: any) => {
+const TitleMenuTooltip = ({ icon, nodeSettingTitle, description, iconFontUrl, iconSvg }: any) => {
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
   return (
@@ -11,7 +11,7 @@ const TitleMenuTooltip = ({ icon, title, description, iconFontUrl, iconSvg }: an
         {iconSvg ? iconSvg :<IconBox type={icon?.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />}
       </div>
       <div className='title'>
-          {title}
+          {nodeSettingTitle}
         </div>
       </div>
       <div className='description'>

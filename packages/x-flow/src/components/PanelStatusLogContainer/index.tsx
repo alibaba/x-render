@@ -55,6 +55,9 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
       headerStyle={{
         paddingBottom: '12px',
       }}
+      style={{
+        position: 'absolute',
+      }}
       title={
         <>
           <div className="title-box">

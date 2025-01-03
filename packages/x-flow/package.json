@@ -56,7 +56,8 @@
     "tinycolor2": "^1.6.0",
     "use-context-selector": "^1.4.1",
     "zundo": "^2.1.0",
-    "zustand": "^4.5.4"
+    "zustand": "^4.5.4",
+    "@monaco-editor/react": "^4.4.6"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",

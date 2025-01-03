@@ -41,7 +41,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     openLogPanel,
   } = props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, globalConfig, antdVersion }: any =
+  const { settingMap, iconFontUrl, globalConfig, antdVersion,readOnly }: any =
     useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
@@ -75,7 +75,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
         node.data = { ...node.data, ...data };
       }
     });
-    setNodes(newNodes, false);
+    setNodes(newNodes,false);
   }, 100);
 
   useEffect(() => {
@@ -171,6 +171,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                     setDescVal(e.target.value);
                     handleNodeValueChange({ desc: e.target.value });
                   }}
+                  disabled={readOnly}
                 />
               )}
             </div>

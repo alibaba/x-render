@@ -36,7 +36,7 @@ export default memo((edge: any) => {
     targetY,
   });
 
-  const { globalConfig, settingMap } = useContext(ConfigContext);
+  const { globalConfig, settingMap,readOnly } = useContext(ConfigContext);
   const hideEdgeAddBtn = globalConfig?.edge?.hideEdgeAddBtn ?? false;
   const hideEdgeDelBtn = globalConfig?.edge?.hideEdgeDelBtn ?? false;
   const deletable = globalConfig?.edge?.deletable ?? true;
@@ -142,7 +142,12 @@ export default memo((edge: any) => {
                   {!hideEdgeDelBtn && (
                     <div
                       className="line-icon-box"
-                      onClick={() => onEdgesChange([{ id, type: 'remove' }])}
+                      onClick={() => {
+                        if(readOnly){
+                          return
+                        }
+                        onEdgesChange([{ id, type: 'remove' }])
+                      }}
                     >
                       <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
                     </div>

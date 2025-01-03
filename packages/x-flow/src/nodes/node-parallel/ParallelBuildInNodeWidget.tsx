@@ -1,11 +1,11 @@
 import { Space, Typography } from 'antd';
+import classNames from 'classnames';
 import React, { memo } from 'react';
-import SourceHandle from '../../components/CustomNode/sourceHandle';
-import './index.less';
-import { uuid } from '../../utils';
-import { useStore } from '../../hooks/useStore';
 import { shallow } from 'zustand/shallow';
-
+import SourceHandle from '../../components/CustomNode/sourceHandle';
+import { useStore } from '../../hooks/useStore';
+import { uuid } from '../../utils';
+import './index.less';
 
 const { Paragraph } = Typography;
 
@@ -18,6 +18,7 @@ export default memo((props: any) => {
     isHovered,
     handleAddNode,
     CustomNodeWidget,
+    isSwitchBottom,
   } = props;
 
   const { nodes, edges } = useStore(
@@ -33,9 +34,25 @@ export default memo((props: any) => {
   );
 
   return (
-    <Space direction='vertical' className="node-switch-widget" size={5}>
-      {(data?.list || [{ _parallelId: `parallel_${uuid()}` }, { _parallelId: `parallel_${uuid()}` }])?.map((item, index) => (
-        <div className="node-switch-widget-item" key={index}>
+    <Space
+      direction={isSwitchBottom ? 'horizontal' : 'vertical'}
+      className={classNames('node-parallel-widget', {
+        'node-parallel-widget-bottom': isSwitchBottom,
+      })}
+      size={5}
+    >
+      {(
+        data?.list || [
+          { _parallelId: `parallel_${uuid()}` },
+          { _parallelId: `parallel_${uuid()}` },
+        ]
+      )?.map((item, index) => (
+        <div
+          className={classNames('node-parallel-widget-item', {
+            'node-parallel-bottom-item': isSwitchBottom,
+          })}
+          key={index}
+        >
           <div className="item-header">
             <div className="item-title">
               {CustomNodeWidget ? (
@@ -54,7 +71,8 @@ export default memo((props: any) => {
                             color: '#354052',
                             fontSize: '12px',
                           },
-                          getPopupContainer: () => document.getElementById('xflow-container')
+                          getPopupContainer: () =>
+                            document.getElementById('xflow-container'),
                         },
                       }}
                     >

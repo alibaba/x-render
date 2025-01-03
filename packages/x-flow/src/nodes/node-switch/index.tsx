@@ -60,6 +60,7 @@ export default memo((props: any) => {
       iconSvg={nodeSetting?.iconSvg}
       hideTitleTips={hideTitleTips}
       isSwitchBottom={isSwitchBottom}
+      nodeSettingTitle={nodeSetting?.title || 'Switch'}
     />
   );
 });

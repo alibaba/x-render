@@ -6,6 +6,7 @@ import { safeJsonStringify } from '../../../utils';
 interface INodeSwitchSettingPorps {
   onChange: (val: any) => void;
   value: any;
+  readOnly:boolean
 }
 
 const schema: Schema = {
@@ -58,6 +59,7 @@ export default memo((props: INodeSwitchSettingPorps) => {
       watch={watch}
       size={'small'}
       className="custom-node-switch-setting"
+      readOnly={props.readOnly}
     />
   );
 });

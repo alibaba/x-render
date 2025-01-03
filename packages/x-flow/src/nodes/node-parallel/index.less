@@ -26,7 +26,7 @@
   }
 }
 
-.node-switch-widget {
+.node-parallel-widget {
   width: 100%;
 
   .item-header {
@@ -35,10 +35,15 @@
     .item-title {
       text-align: right;
       font-weight: 600;
+      min-height: 30px;
+
+      .ant-typography {
+        margin-bottom: 0;
+      }
     }
 
     .item-handle {
-      right: -16px;
+      right: -12px;
     }
   }
 
@@ -52,6 +57,29 @@
       word-wrap: break-word;
       text-align: justify;
     }
+  }
+}
 
+// TB 模式样式：
+.node-parallel-widget-bottom {
+  width: 100%;
+  align-items: end;
+
+  .node-parallel-bottom-item {
+    width: 100px;
+    .item-header {
+      .item-title {
+        text-align: center;
+        font-weight: 600;
+        min-width: 50px;
+
+        .ant-typography {
+          margin-bottom: 0;
+        }
+      }
+      .item-handle {
+        bottom: -4px;
+      }
+    }
   }
 }

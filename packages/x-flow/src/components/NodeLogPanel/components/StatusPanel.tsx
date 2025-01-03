@@ -77,7 +77,7 @@ export default memo((props: any) => {
         '--status-color': statusColor,
         '--status-bg-color': bgColor,
         '--status-box-shadow': boxShadowColor,
-      }}
+      } as React.CSSProperties}
     >
       <div
         className={classNames('log-status-panel-wrap', {

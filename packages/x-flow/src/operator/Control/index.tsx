@@ -1,17 +1,22 @@
 import { Button, Tooltip } from 'antd';
 import type { MouseEvent } from 'react';
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import IconView from '../../components/IconView';
 import NodeSelectPopover from '../../components/NodesPopover';
 import { useStore, useStoreApi } from '../../hooks/useStore';
+import { ConfigContext } from '../../models/context';
 import { useEventEmitterContextContext } from '../../models/event-emitter';
 
-import './index.less';
 import { useFullscreen } from 'ahooks';
+import './index.less';
 
 const Control = (props: any) => {
   const { addNode, xflowRef } = props;
-  const [isFullscreen, {toggleFullscreen }] = useFullscreen(xflowRef);
+  const [isFullscreen, { toggleFullscreen }] = useFullscreen(xflowRef);
+  const { globalConfig } = useContext(ConfigContext);
+
+  const hideAddNode = globalConfig?.controls?.hideAddNode ?? false;
+  const hideAnnotate = globalConfig?.controls?.hideAnnotate ?? false;
 
   const addNote = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
@@ -27,22 +32,38 @@ const Control = (props: any) => {
 
   return (
     <div className='fai-reactflow-control'>
-      <NodeSelectPopover addNode={addNode}>
-        <Tooltip title='添加节点' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
+      {!hideAddNode && (
+        <NodeSelectPopover addNode={addNode}>
+          <Tooltip
+            title="添加节点"
+            getPopupContainer={() =>
+              document.getElementById('xflow-container') as HTMLElement
+            }
+          >
+            <Button
+              type="text"
+              icon={<IconView type="icon-add-circle" className="icon" />}
+            />
+          </Tooltip>
+        </NodeSelectPopover>
+      )}
+      {!hideAnnotate && (
+        <Tooltip
+          title="添加注释"
+          getPopupContainer={() =>
+            document.getElementById('xflow-container') as HTMLElement
+          }
+        >
           <Button
-            type='text'
-            icon={<IconView type='icon-add-circle' className='icon' />}
+            type="text"
+            icon={
+              <IconView type="icon-sticky-note-add-line" className="icon" />
+            }
+            onClick={addNote}
           />
         </Tooltip>
-      </NodeSelectPopover>
-      <Tooltip title='添加注释' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
-        <Button
-          type='text'
-          icon={<IconView type='icon-sticky-note-add-line' className='icon' />}
-          onClick={addNote}
-        />
-      </Tooltip>
-      <div className='separator'></div>
+      )}
+      {!(hideAddNode && hideAnnotate) && <div className='separator'></div>}
       <Tooltip title='指针模式' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
         <Button
           type='text'
