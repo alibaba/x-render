@@ -19,8 +19,8 @@ export default memo((props: any) => {
   const [isShowTooltip, setIsShowTooltip] = useState(false);
   const [openNodeSelectPopover, setOpenNodeSelectPopover] = useState(false);
   const popoverRef = useRef(null);
-   const { antdVersion }: any = useContext(ConfigContext);
-
+  const { antdVersion,globalConfig } = useContext(ConfigContext);
+  const handleProps = globalConfig?.handle || {}
 
   const toolTipVersionProps = useMemo(() => {
     if (antdVersion === 'V5') {
@@ -47,6 +47,7 @@ export default memo((props: any) => {
         setIsShowTooltip(false);
         setOpenNodeSelectPopover(true);
       }}
+      {...handleProps}
       {...rest}
     >
       {(selected || isHovered || openNodeSelectPopover ) && (

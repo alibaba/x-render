@@ -16,7 +16,7 @@ import SourceHandle from './sourceHandle';
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick, status } =
     props;
-  const { widgets, settingMap, globalConfig, onMenuItemClick, antdVersion } =
+  const { widgets, settingMap, globalConfig, onMenuItemClick, antdVersion,readOnly } =
     useContext(ConfigContext);
   const deletable = globalConfig?.edge?.deletable ?? true;
 
@@ -126,7 +126,7 @@ export default memo((props: any) => {
       if (type === 'Switch' && e.key.startsWith('paste-') && sourceHandle) {
         data['sourceHandle'] = sourceHandle;
       }
-      onMenuItemClick(data, () => {
+      onMenuItemClick(data as any, () => {
         defaultAction(e, sourceHandle);
       });
     } else {
@@ -187,7 +187,7 @@ export default memo((props: any) => {
       {menuItem.map((r: any) => {
         return <Menu.Item {...r}>{r.label}</Menu.Item>;
       })}
-      <Menu.Item key={'delete'}>删除</Menu.Item>
+      <Menu.Item key={'delete'} danger={true}>删除</Menu.Item>
     </Menu>
   );
 
@@ -237,7 +237,7 @@ export default memo((props: any) => {
         />
       )}
       {selected && (
-        <Dropdown {...dropdownVersionProps} trigger={['click', 'contextMenu']}>
+        <Dropdown disabled={readOnly} {...dropdownVersionProps} trigger={['click', 'contextMenu']}>
           <div className="xflow-node-actions-container">
             <MoreOutlined
               style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}

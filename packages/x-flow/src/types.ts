@@ -1,6 +1,9 @@
-import { NodeMouseHandler } from '@xyflow/react';
+import { NodeMouseHandler,Handle } from '@xyflow/react';
 import { Schema } from 'form-render';
-import React, { ReactNode } from 'react';
+import React, { ReactNode ,ComponentProps} from 'react';
+
+type HandleProps = ComponentProps<typeof Handle>
+
 export interface TNodeItem {
   title: string; // 节点 title
   type: string; // 节点类型 _group 比较te
@@ -82,10 +85,11 @@ export interface TControl{
   hideAnnotate?:boolean
 }
 
-// export interface THandle{
-//   isConnectableStart?:boolean
-//   isConnectableEnd?:boolean
-// }
+export interface THandle{
+  // isConnectableStart?:boolean
+  // isConnectableEnd?:boolean
+  isValidConnection?:HandleProps['isValidConnection']
+}
 
 export interface TPanel{
   onClose:(activeNodeId:string)=>void
@@ -112,7 +116,7 @@ export interface FlowProps {
     nodeView?: TNodeView;
     edge?: TEdge;
     controls?:TControl
-    //handle?:THandle
+    handle?:THandle
   };
   logPanel?: TLogPanel; // 日志面板配置
   readOnly?:boolean//只读模式
