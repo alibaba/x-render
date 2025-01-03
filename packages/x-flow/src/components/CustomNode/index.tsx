@@ -176,7 +176,7 @@ export default memo((props: any) => {
         key: 'paste',
       },
     ];
-  }, [type]);
+  }, [type,data]);
 
   // 节点状态处理
   const statusObj = transformNodeStatus(globalConfig?.nodeView?.status || []);
