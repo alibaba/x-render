@@ -119,6 +119,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   if (nodeSetting?.settingWidget && NodeWidget) {
     return (
       <NodeWidget
+        {...nodeSetting?.settingWidgetProps}
         value={customVal}
         onChange={values => {
           setCustomVal(values);

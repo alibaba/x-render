@@ -131,7 +131,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   eventEmitter?.useSubscription((v: any) => {
     // 整理画布
     if (v.type === 'auto-layout-nodes') {
-      const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, edges);
+      const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, edges, layout);
       setNodes(newNodes, false);
     }
 

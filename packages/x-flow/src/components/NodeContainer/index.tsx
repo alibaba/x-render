@@ -21,6 +21,7 @@ export default memo((props: any) => {
     iconSvg,
     hideTitleTips,
     isSwitchBottom,
+    nodeSettingTitle
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
