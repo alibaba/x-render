@@ -19,6 +19,8 @@ title: API
 | logPanel | 日志面板配置 |    [TLogPanel](#tlogpanel)                                         |    |
 | onNodeClick | 节点点击事件 |   `NodeMouseHandler`                                        |    |
 | antdVersion | antd 的版本 |   `V4 \| V5`                                        |  `V5`  |
+| readOnly |只读模式 |   `boolean`                                        |  `false`  |
+
 
 ## TNodePanel
 
@@ -95,6 +97,7 @@ title: API
 | iconSvg                | 节点的图标配置Svg格式                                                                                                                                   | `SVGSVGElement`                                                                                                                                  |        |
 | settingSchema        | 节点的业务配置信息，详见[form-render 文档](/form-render/api-schema)。同时设置`settingSchema`和`settingWidget`只生效`settingWidget`               | <a target="_blank" href="https://github.com/alibaba/x-render/blob/e2feff8fdb3bef5537b92a2157dbbf40b9d4eb17/packages/form-render/src/type.ts#L32">SchemaBase</a> |        |
 | settingWidget        | 自定义节点的业务配置组件，在弹窗中展示。同时设置`settingSchema`和`settingWidget`只生效`settingWidget`。定义之后需要在`widgets`中引入自定义组件。 | `string`                                                                                                                                                        |        |
+| settingWidgetProps        | 用于向`settingWidget`自定义组件中传递自定义参数 | `object`                                                                                                                                                        |        |
 | nodeWidget           | 自定义节点的业务配置信息展示组件，在节点内部展示业务配置信息。定义之后需要在`widgets`中引入自定义组件。                                          | `string`                                                                                                                                                        |        |
 | nodePanel | 自定义节点的面板配置信息                                                                                                                         | [TNodePanel](#tnodepanel)                                                                                                                                                        |     |
 
