@@ -40,7 +40,7 @@ export const useFlow = () => {
     storeApi.getState().addEdges(edges);
   });
   const runAutoLayout = useMemoizedFn(() => {
-    const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, storeApi.getState().edges);
+    const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, storeApi.getState().edges, storeApi.getState().layout);
     setNodes(newNodes, false);
   });
 
