@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash-es'
 export const CUSTOM_NODE = 'custom';
 export const CUSTOM_EDGE = 'custom';
 
-export const getLayoutByDagre = (originNodes: any[], originEdges: any[]) => {
+export const getLayoutByDagre = (originNodes: any[], originEdges: any[], rankdir: 'TB' | 'BT' | 'LR' | 'RL') => {
   const dagreGraph = new dagre.graphlib.Graph()
   dagreGraph.setDefaultEdgeLabel(() => ({}))
 
@@ -13,7 +13,7 @@ export const getLayoutByDagre = (originNodes: any[], originEdges: any[]) => {
   const edges = cloneDeep(originEdges).filter(edge => !edge.data?.isInIteration)
   dagreGraph.setGraph({
     ranker: 'network-simplex', // 节点分层算法，可选：'tight-tree' 'longest-path' 'network-simplex'
-    rankdir: 'TB', // 图的延展方向，可选： 'TB' | 'BT' | 'LR' | 'RL'
+    rankdir, // 图的延展方向，可选： 'TB' | 'BT' | 'LR' | 'RL'
     nodesep: 150,  // 同层各个节点之间的间距
     ranksep: 150, // 图的各个层次之间的间距
     // align: '', // 节点对齐方式，可选：'UL' | 'UR' | 'DL' | 'DR' | undefined
@@ -34,10 +34,9 @@ export const getLayoutByDagre = (originNodes: any[], originEdges: any[]) => {
   return dagreGraph;
 }
 
-export default (nodes: any, edges: any) => {
-  const layout = getLayoutByDagre(nodes, edges);
+export default (nodes: any, edges: any, rankdir: 'LR' | 'TB') => {
+  const layout = getLayoutByDagre(nodes, edges, rankdir);
   const rankMap: any = {} as Record<string, Node>;
-
   nodes.forEach((node: any) => {
     if (!node.parentId && node.type === CUSTOM_NODE) {
       const rank: any = layout.node(node.id).rank!
