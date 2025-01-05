@@ -34,7 +34,7 @@ import {
 export default (props: any) => {
   const { configCtx, store, schema, path, children, dependValues, rootPath } = props;
 
-  const fieldRef: any = useRef();
+  const fieldRef: any = useRef(null);
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
 
