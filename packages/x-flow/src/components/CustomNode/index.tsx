@@ -20,6 +20,9 @@ export default memo((props: any) => {
     useContext(ConfigContext);
   const deletable = globalConfig?.edge?.deletable ?? true;
 
+  // const isConnectableStart = globalConfig?.handle?.isConnectableStart ?? true;
+  // const isConnectableEnd = globalConfig?.handle?.isConnectableEnd ?? true;
+
   const NodeWidget =
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
@@ -92,6 +95,24 @@ export default memo((props: any) => {
     deleteNode(id);
   }, [pasteNode]);
 
+  const defaultAction = (e, sourceHandle) => {
+    if (e.key === 'copy') {
+      handleCopyNode();
+    } else if (e.key === 'paste') {
+      handlePasteNode();
+    } else if (e.key === 'delete') {
+      handleDeleteNode();
+    } else if (e.key.startsWith('paste-')) {
+      if (sourceHandle) {
+        handlePasteNode({
+          sourceHandle,
+        });
+      } else {
+        handlePasteNode();
+      }
+    }
+  };
+
   const itemClick = e => {
     if (!e.key) {
       return;
@@ -105,23 +126,11 @@ export default memo((props: any) => {
       if (type === 'Switch' && e.key.startsWith('paste-') && sourceHandle) {
         data['sourceHandle'] = sourceHandle;
       }
-      onMenuItemClick(data);
+      onMenuItemClick(data, () => {
+        defaultAction(e, sourceHandle);
+      });
     } else {
-      if (e.key === 'copy') {
-        handleCopyNode();
-      } else if (e.key === 'paste') {
-        handlePasteNode();
-      } else if (e.key === 'delete') {
-        handleDeleteNode();
-      } else if (e.key.startsWith('paste-')) {
-        if (sourceHandle) {
-          handlePasteNode({
-            sourceHandle,
-          });
-        } else {
-          handlePasteNode();
-        }
-      }
+      defaultAction(e, sourceHandle);
     }
   };
 
@@ -187,6 +196,8 @@ export default memo((props: any) => {
           type="target"
           position={targetPosition}
           isConnectable={isConnectable}
+          // isConnectableStart={isConnectableStart}
+          // isConnectableEnd={isConnectableEnd}
         />
       )}
       {selected && (
@@ -234,6 +245,8 @@ export default memo((props: any) => {
             selected={selected}
             isHovered={isHovered}
             handleAddNode={handleAddNode}
+            // isConnectableStart={isConnectableStart}
+            // isConnectableEnd={isConnectableEnd}
           />
         </>
       )}
