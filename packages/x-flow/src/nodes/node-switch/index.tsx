@@ -54,12 +54,14 @@ export default memo((props: any) => {
           handleAddNode={handleAddNode}
           CustomNodeWidget={NodeWidget}
           isSwitchBottom={isSwitchBottom}
+          nodeSetting={nodeSetting}
         />
       }
       description={nodeDescription} // 不允许用户更改的节点描述
       iconSvg={nodeSetting?.iconSvg}
       hideTitleTips={hideTitleTips}
       isSwitchBottom={isSwitchBottom}
+      nodeSettingTitle={nodeSetting?.title || 'Switch'}
     />
   );
 });

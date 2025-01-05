@@ -8,7 +8,10 @@ export default [
       type: 'icon-start',
       bgColor: '#17B26A',
     },
-    settingWidget:"customWidget"
+    settingWidget: "customWidget",
+    settingWidgetProps: {
+      params: "test"
+    }
   },
   {
     title: '结束',

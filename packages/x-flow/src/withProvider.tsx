@@ -31,6 +31,7 @@ export default function withProvider<T>(
       logPanel,
       onMenuItemClick,
       antdVersion ='V5',
+      readOnly,
       ...restProps
     } = props;
     const settingMap = useMemo(() => {
@@ -57,6 +58,7 @@ export default function withProvider<T>(
       logPanel,
       antdVersion,
       onMenuItemClick,
+      readOnly,
       widgets: {
         ...defaultWidgets,
         ...widgets,

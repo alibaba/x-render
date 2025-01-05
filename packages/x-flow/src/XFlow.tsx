@@ -83,10 +83,10 @@ const XFlow: FC<FlowProps> = memo(props => {
   );
   const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
-  const { settingMap, globalConfig } = useContext(ConfigContext);
+  const { settingMap, globalConfig,readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick } = props;
+  const { onNodeClick,panel = {} as any } = props;
 
   useEffect(() => {
     zoomTo(0.8);
@@ -131,7 +131,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   eventEmitter?.useSubscription((v: any) => {
     // 整理画布
     if (v.type === 'auto-layout-nodes') {
-      const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, edges);
+      const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, edges, layout);
       setNodes(newNodes, false);
     }
 
@@ -288,6 +288,12 @@ const XFlow: FC<FlowProps> = memo(props => {
           },
           deletable: deletable, //默认连线属性受此项控制
         }}
+        onBeforeDelete={async()=>{
+          if(readOnly){
+            return false
+          }
+          return true
+        }}
         onConnect={onConnect}
         onNodesChange={changes => {
           changes.forEach(change => {
@@ -315,6 +321,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         onNodeClick={(event, node) => {
           onNodeClick && onNodeClick(event, node);
         }}
+
       >
         <CandidateNode />
         <Operator addNode={handleAddNode} xflowRef={workflowContainerRef} />
@@ -334,6 +341,7 @@ const XFlow: FC<FlowProps> = memo(props => {
               if (!activeNode?._status || !openLogPanel) {
                 setActiveNode(null);
               }
+              panel.onClose && panel.onClose(activeNode?.id)
             }}
             node={activeNode}
             data={activeNode?.values}

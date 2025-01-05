@@ -1,6 +1,9 @@
-import { NodeMouseHandler } from '@xyflow/react';
-import { Schema } from 'form-render';
-import React, { ReactNode } from 'react';
+import { NodeMouseHandler,Handle } from '@xyflow/react';
+import { Schema,useForm } from 'form-render';
+import React, { ReactNode ,ComponentProps} from 'react';
+
+type HandleProps = ComponentProps<typeof Handle>
+
 export interface TNodeItem {
   title: string; // 节点 title
   type: string; // 节点类型 _group 比较te
@@ -12,12 +15,14 @@ export interface TNodeItem {
   };
   settingSchema?: Schema; // 节点的配置schema（弹窗） string为自定义组件
   settingWidget?: string; // 自定义组件
+  settingWidgetProps?: object;// 自定义组件参数
   hideDesc?: boolean; // 隐藏业务描述
   nodePanel?: {
     // 配置面板属性设置
     width?: string | number; // 配置面板宽度
     hideDesc?: boolean; // 配置面板描述
   };
+  getSettingSchema?:(nodeId:string,nodeType:string,form:ReturnType<typeof useForm>)=>Promise<Schema>
 }
 
 export interface TNodeGroup {
@@ -82,10 +87,15 @@ export interface TControl{
   hideAnnotate?:boolean
 }
 
-// export interface THandle{
-//   isConnectableStart?:boolean
-//   isConnectableEnd?:boolean
-// }
+export interface THandle{
+  // isConnectableStart?:boolean
+  // isConnectableEnd?:boolean
+  isValidConnection?:HandleProps['isValidConnection']
+}
+
+export interface TPanel{
+  onClose:(activeNodeId:string)=>void
+}
 
 export interface FlowProps {
   initialValues?: {
@@ -108,12 +118,13 @@ export interface FlowProps {
     nodeView?: TNodeView;
     edge?: TEdge;
     controls?:TControl
-    //handle?:THandle
+    handle?:THandle
   };
   logPanel?: TLogPanel; // 日志面板配置
+  readOnly?:boolean//只读模式
+  panel?:TPanel //表单配置面板
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick: (itemInfo: ItemInfo,defaultAction:()=>void) => void;
-
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;

@@ -29,6 +29,7 @@ export default memo((props: any) => {
       description={nodeDescription} // 不允许用户更改的节点描述
       iconSvg={nodeSetting?.iconSvg}
       hideTitleTips={hideTitleTips}
+      nodeSettingTitle={nodeSetting.title}
     />
   );
 });

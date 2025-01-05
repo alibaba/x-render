@@ -1,6 +1,6 @@
 import { MoreOutlined } from '@ant-design/icons';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
-import { Dropdown, message } from "antd";
+import { Dropdown, Menu, message } from 'antd';
 
 import { ItemType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
@@ -16,7 +16,7 @@ import SourceHandle from './sourceHandle';
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick, status } =
     props;
-  const { widgets, settingMap, globalConfig, onMenuItemClick } =
+  const { widgets, settingMap, globalConfig, onMenuItemClick, antdVersion,readOnly } =
     useContext(ConfigContext);
   const deletable = globalConfig?.edge?.deletable ?? true;
 
@@ -126,7 +126,7 @@ export default memo((props: any) => {
       if (type === 'Switch' && e.key.startsWith('paste-') && sourceHandle) {
         data['sourceHandle'] = sourceHandle;
       }
-      onMenuItemClick(data, () => {
+      onMenuItemClick(data as any, () => {
         defaultAction(e, sourceHandle);
       });
     } else {
@@ -146,6 +146,7 @@ export default memo((props: any) => {
               key: 'paste-' + i,
               index: i,
               id: id,
+              sourcehandle: r._conditionId,
             };
           } else {
             return {
@@ -175,11 +176,47 @@ export default memo((props: any) => {
         key: 'paste',
       },
     ];
-  }, [type]);
+  }, [type,data]);
 
   // 节点状态处理
   const statusObj = transformNodeStatus(globalConfig?.nodeView?.status || []);
   const nodeBorderColor = statusObj[status]?.color;
+
+  const menu = (
+    <Menu onClick={itemClick}>
+      <Menu.Item key={'copy'}>复制</Menu.Item>
+      {menuItem.map((r: any) => {
+        return <Menu.Item {...r} key={r.key}>{r.label}</Menu.Item>;
+      })}
+      <Menu.Item key={'delete'} danger={true}>删除</Menu.Item>
+    </Menu>
+  );
+
+  const dropdownVersionProps = useMemo(() => {
+    if (antdVersion === 'V5') {
+      return {
+        menu: {
+          items: [
+            {
+              label: '复制',
+              key: 'copy',
+            },
+            ...menuItem,
+            {
+              label: '删除',
+              key: 'delete',
+              danger: true,
+            },
+          ],
+          onClick: itemClick,
+        },
+      };
+    }
+    // V4
+    return {
+      overlay: menu,
+    };
+  }, [menuItem]);
 
   return (
     <div
@@ -201,24 +238,7 @@ export default memo((props: any) => {
         />
       )}
       {selected && (
-        <Dropdown
-          menu={{
-            items: [
-              {
-                label: '复制',
-                key: 'copy',
-              },
-              ...menuItem,
-              {
-                label: '删除',
-                key: 'delete',
-                danger: true,
-              },
-            ],
-            onClick: itemClick,
-          }}
-          trigger={['click', 'contextMenu']}
-        >
+        <Dropdown disabled={readOnly} {...dropdownVersionProps} trigger={['click', 'contextMenu']}>
           <div className="xflow-node-actions-container">
             <MoreOutlined
               style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
