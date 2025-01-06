@@ -5,7 +5,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import {  safeJsonStringify } from '../../utils';
+import { safeJsonStringify } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import './index.less';
@@ -41,8 +41,14 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     openLogPanel,
   } = props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, globalConfig, antdVersion,readOnly }: any =
-    useContext(ConfigContext);
+  const {
+    settingMap,
+    iconFontUrl,
+    globalConfig,
+    antdVersion,
+    readOnly,
+    onDebug,
+  }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
     (state: any) => ({
@@ -75,7 +81,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
         node.data = { ...node.data, ...data };
       }
     });
-    setNodes(newNodes,false);
+    setNodes(newNodes, false);
   }, 100);
 
   useEffect(() => {
@@ -143,7 +149,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
             </div>
             <div className="title-actions">
               <Space size={[4, 4]}>
-                {!isDisabled && (
+                {!isDisabled && onDebug && (
                   <>
                     <IconView type="icon-yunhang" style={{ fontSize: 16 }} />
                     <Divider type="vertical" />

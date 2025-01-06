@@ -135,6 +135,7 @@ export interface FlowProps {
   onMenuItemClick: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode:(type:string,NodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
   // 单点调试方法
+  onDebug?: () => void;// 单点调试方法
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;
