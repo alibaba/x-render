@@ -1,5 +1,6 @@
 import { useClickAway } from 'ahooks';
 import { Popover } from 'antd';
+import { isFunction } from 'lodash';
 import React, {
   forwardRef,
   useCallback,
@@ -24,7 +25,7 @@ export default forwardRef((props: any, popoverRef) => {
   const closeRef: any = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
-  const { settings, nodeSelector, antdVersion ,readOnly }: any = useContext(ConfigContext);
+  const { settings, nodeSelector, antdVersion ,readOnly ,clickAddNode,settingMap }: any = useContext(ConfigContext);
   const { showSearch, popoverProps = { placement: 'top' } } =
     nodeSelector || {};
 
@@ -41,13 +42,20 @@ export default forwardRef((props: any, popoverRef) => {
   }, ref);
 
   const handCreateNode = useCallback<any>(({ type }) => {
-    if (type === 'Switch') {
-      addNode({ _nodeType: type, list: [{ '_conditionId':`${uuid()}`}] });
-    } else if (type === 'Parallel') {
-      addNode({ _nodeType: type, list: [{ _parallelId: `parallel_${uuid()}` }, { _parallelId: `parallel_${uuid()}` }] });
-    } else {
-      addNode({ _nodeType: type });
+    if (isFunction(clickAddNode)) {
+      clickAddNode(type,settingMap[type],( data = {} )=>{
+        addNode({ _nodeType: type, ...data })
+      });
+    }else{
+      if (type === 'Switch') {
+        addNode({ _nodeType: type, list: [{ '_id':`${uuid()}`}] });
+      } else if (type === 'Parallel') {
+        addNode({ _nodeType: type, list: [{ _id: `id_${uuid()}` }, { _id: `id_${uuid()}` }] });
+      } else {
+        addNode({ _nodeType: type });
+      }
     }
+
     setOpen(false);
     onNodeSelectPopoverChange && onNodeSelectPopoverChange(false);
   }, []);
@@ -56,7 +64,7 @@ export default forwardRef((props: any, popoverRef) => {
     setTimeout(() => {
       setIsAddingNode(true);
       closeRef.current = true;
-      if(!readOnly){
+      if (!readOnly) {
         setOpen(true);
       }
     }, 50);

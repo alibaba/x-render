@@ -21,7 +21,7 @@ export const Flow = () => {
         nodeSelector={{
           showSearch: true,
         }}
-        layout="TB"
+        // layout="TB"
         globalConfig={{
           nodePanel: {
             width: '400px',

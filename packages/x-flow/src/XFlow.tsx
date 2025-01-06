@@ -321,7 +321,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         onNodeClick={(event, node) => {
           onNodeClick && onNodeClick(event, node);
         }}
-
+        deleteKeyCode={globalConfig?.deleteKeyCode}
       >
         <CandidateNode />
         <Operator addNode={handleAddNode} xflowRef={workflowContainerRef} />
