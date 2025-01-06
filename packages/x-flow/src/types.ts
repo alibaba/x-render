@@ -28,6 +28,8 @@ export interface TNodeItem {
     valueKey: string;
     titleKey: string;
   }
+  disabledCopy:boolean
+  disabledDelete:boolean
 }
 
 export interface TNodeGroup {
@@ -124,13 +126,15 @@ export interface FlowProps {
     edge?: TEdge;
     controls?:TControl
     handle?:THandle
+    deleteKeyCode?:string | string[] | null
   };
   logPanel?: TLogPanel; // 日志面板配置
   readOnly?:boolean//只读模式
   panel?:TPanel //表单配置面板
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick: (itemInfo: ItemInfo, defaultAction: () => void) => void;
-  clickAddNode: (type: string, addNode: (initData?: Record<string, any>) => void) => void;
+  clickAddNode:(type:string,NodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
+  // 单点调试方法
   onDebug?: () => void;// 单点调试方法
 }
 interface ItemInfo {

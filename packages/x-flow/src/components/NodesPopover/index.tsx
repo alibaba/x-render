@@ -25,7 +25,7 @@ export default forwardRef((props: any, popoverRef) => {
   const closeRef: any = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
-  const { settings, nodeSelector, antdVersion ,readOnly ,clickAddNode }: any = useContext(ConfigContext);
+  const { settings, nodeSelector, antdVersion ,readOnly ,clickAddNode,settingMap }: any = useContext(ConfigContext);
   const { showSearch, popoverProps = { placement: 'top' } } =
     nodeSelector || {};
 
@@ -43,7 +43,7 @@ export default forwardRef((props: any, popoverRef) => {
 
   const handCreateNode = useCallback<any>(({ type }) => {
     if (isFunction(clickAddNode)) {
-      clickAddNode(type, ( data = {} )=>{
+      clickAddNode(type,settingMap[type],( data = {} )=>{
         addNode({ _nodeType: type, ...data })
       });
     }else{
