@@ -71,19 +71,19 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         // 更新节点的 data
         if (node?.data?._nodeType === 'Switch' && data?.list?.length) {
           data['list'] = (data?.list || [])?.map((item, index) => {
-            if (item?._conditionId) {
+            if (item?._id) {
               return item;
             } else {
               if (
                 node?.data?.list?.length &&
-                node?.data?.list[index]?._conditionId
+                node?.data?.list[index]?._id
               ) {
                 return {
                   ...item,
-                  _conditionId: node?.data?.list[index]?._conditionId,
+                  _id: node?.data?.list[index]?._id,
                 };
               } else {
-                return { ...item, _conditionId: `condition_${uuid()}` };
+                return { ...item, _id: `id_${uuid()}` };
               }
             }
           });

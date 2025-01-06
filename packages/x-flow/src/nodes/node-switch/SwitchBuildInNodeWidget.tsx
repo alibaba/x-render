@@ -36,15 +36,15 @@ export default memo((props: any) => {
         position={position}
         isConnectable={
           (edges || [])?.filter(
-            flow => flow?.sourceHandle === item?._conditionId
+            flow => flow?.sourceHandle === item?._id
           )?.length === 0
         }
         selected={selected}
         isHovered={isHovered}
         handleAddNode={data => {
-          handleAddNode(data, item?._conditionId);
+          handleAddNode(data, item?._id);
         }}
-        id={item?._conditionId}
+        id={item?._id}
         className="item-handle"
       />
     </div>
@@ -89,7 +89,7 @@ export default memo((props: any) => {
       })}
       size={5}
     >
-      {(data?.list || [{ _conditionId: `condition_${uuid()}` }])?.map(
+      {(data?.list || [{ _id: `id_${uuid()}` }])?.map(
         (item, index) => (
           <div
             className={classNames('node-switch-widget-item', {
@@ -122,16 +122,16 @@ export default memo((props: any) => {
             position={position}
             isConnectable={
               (edges || [])?.filter(
-                flow => flow?.sourceHandle === 'condition_else'
+                flow => flow?.sourceHandle === 'id_else'
               )?.length === 0
             }
             selected={selected}
             isHovered={isHovered}
             handleAddNode={data => {
-              handleAddNode(data, 'condition_else');
+              handleAddNode(data, 'id_else');
             }}
             className="item-handle"
-            id={'condition_else'}
+            id={'id_else'}
           />
         </div>
       </div>

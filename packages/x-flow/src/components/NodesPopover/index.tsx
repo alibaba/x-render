@@ -42,7 +42,7 @@ export default forwardRef((props: any, popoverRef) => {
 
   const handCreateNode = useCallback<any>(({ type }) => {
     if (type === 'Switch') {
-      addNode({ _nodeType: type, list: [{ '_conditionId':`${uuid()}`}] });
+      addNode({ _nodeType: type, list: [{ '_id':`${uuid()}`}] });
     } else if (type === 'Parallel') {
       addNode({ _nodeType: type, list: [{ _id: `id_${uuid()}` }, { _id: `id_${uuid()}` }] });
     } else {

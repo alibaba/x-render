@@ -11,14 +11,14 @@ group:
 ## 条件内置节点
 内置条件节点，可以直接设置type为`Switch`使用。
 
-条件节点的数据格式为`data:{list:[{value:"条件1",_conditionId:"condition_${随机数}"}]}`，`_conditionId`为边数据的`sourceHandle`，以便条件和边一一对应。
-有条件参数value(可以通过自定义条件节点配置面板更改配置参数)的放入list数组里面作为`IF或者ELIF`渲染，没有条件参数的，为默认执行路径`ELSE`,`ELSE`路径的固定`_conditionId`为`condition_else`,即边数据的`sourceHandle`必须为`condition_else`才能链接`ELSE`链接头，比如：
+条件节点的数据格式为`data:{list:[{value:"条件1",_id:"id_${随机数}"}]}`，`_id`为边数据的`sourceHandle`，以便条件和边一一对应。
+有条件参数value(可以通过自定义条件节点配置面板更改配置参数)的放入list数组里面作为`IF或者ELIF`渲染，没有条件参数的，为默认执行路径`ELSE`,`ELSE`路径的固定`_id`为`id_else`,即边数据的`sourceHandle`必须为`id_else`才能链接`ELSE`链接头，比如：
 ```js
  {
       id: 'j8p8fnr5au9k25pb',
       source: 'kshd2hp4vqm8ww19',
       target: 'anmv2kcadqxj4k63',
-      sourceHandle: 'condition_else', // else路径的边
+      sourceHandle: 'id_else', // else路径的边
  }
 ```
 

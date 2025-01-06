@@ -146,7 +146,7 @@ export default memo((props: any) => {
               key: 'paste-' + i,
               index: i,
               id: id,
-              sourcehandle: r._conditionId,
+              sourcehandle: r._id,
             };
           } else {
             return {
@@ -154,7 +154,7 @@ export default memo((props: any) => {
               key: 'paste-' + i,
               id: id,
               index: i,
-              sourcehandle: r._conditionId,
+              sourcehandle: r._id,
             };
           }
         });
@@ -166,7 +166,7 @@ export default memo((props: any) => {
           key: 'paste-' + (list.length + 1),
           id: id,
           index: list.length + 1,
-          sourcehandle: 'condition_else',
+          sourcehandle: 'id_else',
         },
       ];
     }
