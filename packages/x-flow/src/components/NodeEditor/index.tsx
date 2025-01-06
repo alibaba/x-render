@@ -69,30 +69,16 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       }
       if (node) {
         // 更新节点的 data
-        if (node?.data?._nodeType === 'Switch' && data?.list?.length) {
+        if (
+          (node?.data?._nodeType === 'Switch' ||
+            node?.data?._nodeType === 'Parallel') &&
+          data?.list?.length
+        ) {
           data['list'] = (data?.list || [])?.map((item, index) => {
             if (item?._id) {
               return item;
             } else {
-              if (
-                node?.data?.list?.length &&
-                node?.data?.list[index]?._id
-              ) {
-                return {
-                  ...item,
-                  _id: node?.data?.list[index]?._id,
-                };
-              } else {
-                return { ...item, _id: `id_${uuid()}` };
-              }
-            }
-          });
-        } else if (node?.data?._nodeType === 'Parallel' && data?.list?.length) {
-          data['list'] = data?.list?.map((item, index) => {
-            if (item?._id) {
-              return item;
-            } else {
-              if (node?.data?.list[index]?._id) {
+              if (node?.data?.list?.length && node?.data?.list[index]?._id) {
                 return {
                   ...item,
                   _id: node?.data?.list[index]?._id,
@@ -139,7 +125,10 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         readOnly={readOnly}
       />
     );
-  } else if (isFunction(getSettingSchema) && Object.keys(asyncSchema).length > 0) {
+  } else if (
+    isFunction(getSettingSchema) &&
+    Object.keys(asyncSchema).length > 0
+  ) {
     return (
       <FormRender
         schema={asyncSchema}
