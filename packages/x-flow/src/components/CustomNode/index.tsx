@@ -19,7 +19,8 @@ export default memo((props: any) => {
   const { widgets, settingMap, globalConfig, onMenuItemClick, antdVersion,readOnly } =
     useContext(ConfigContext);
   const deletable = globalConfig?.edge?.deletable ?? true;
-
+  const disabledCopy = settingMap[type]?.disabledCopy ?? false
+  const disabledDelete = settingMap[type]?.disabledDelete ?? false
   // const isConnectableStart = globalConfig?.handle?.isConnectableStart ?? true;
   // const isConnectableEnd = globalConfig?.handle?.isConnectableEnd ?? true;
 
@@ -184,11 +185,11 @@ export default memo((props: any) => {
 
   const menu = (
     <Menu onClick={itemClick}>
-      <Menu.Item key={'copy'}>复制</Menu.Item>
+      <Menu.Item key={'copy'} disabled={disabledCopy}>复制</Menu.Item>
       {menuItem.map((r: any) => {
         return <Menu.Item {...r} key={r.key}>{r.label}</Menu.Item>;
       })}
-      <Menu.Item key={'delete'} danger={true}>删除</Menu.Item>
+      <Menu.Item key={'delete'} danger={true} disabled={disabledDelete}>删除</Menu.Item>
     </Menu>
   );
 
@@ -200,12 +201,14 @@ export default memo((props: any) => {
             {
               label: '复制',
               key: 'copy',
+              disabled:disabledCopy
             },
             ...menuItem,
             {
               label: '删除',
               key: 'delete',
               danger: true,
+              disabled:disabledDelete
             },
           ],
           onClick: itemClick,
