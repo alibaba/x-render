@@ -22,7 +22,7 @@ export interface TNodeItem {
     width?: string | number; // 配置面板宽度
     hideDesc?: boolean; // 配置面板描述
   };
-  getSettingSchema?: (nodeId: string, nodeType: string, form: ReturnType<typeof useForm>) => Promise<Schema>;
+  getSettingSchema?: (nodeId: string, nodeType: string, nodeItem:TNodeItem,nodeData:any,form: ReturnType<typeof useForm>) => Promise<Schema>;
   switchExtra: {   // 条件节点额外属性配置
     hideElse: boolean;
     valueKey: string;
@@ -133,7 +133,7 @@ export interface FlowProps {
   panel?:TPanel //表单配置面板
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
-  clickAddNode?:(type:string,NodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
+  clickAddNode?:(type:string,nodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
   // 单点调试方法
   onTesting?: () => void;// 单点调试方法
 }

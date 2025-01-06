@@ -27,7 +27,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const [asyncSchema, setAsyncSchema] = useState<Schema>({});
 
   async function getSchema() {
-    const shema = await getSettingSchema(id, nodeType, form).catch(() => ({}));
+    const shema = await getSettingSchema(id, nodeType,nodeSetting,data,form).catch(() => ({}));
     setAsyncSchema(shema);
   }
   useEffect(() => {
