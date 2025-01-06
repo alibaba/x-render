@@ -20,7 +20,7 @@ title: API
 | onNodeClick   | 节点点击事件                         | `NodeMouseHandler`                                                                          |         |
 | antdVersion   | antd 的版本                          | `V4 \| V5`                                                                                  | `V5`    |
 | readOnly      | 只读模式                             | `boolean`                                                                                   | `false` |
-| onDebug      | 单点调试方法                             | `() => void`                                                                                   |  |
+| onTesting      | 单点调试方法                             | `() => void`                                                                                   |  |
 
 
 ## TNodePanel

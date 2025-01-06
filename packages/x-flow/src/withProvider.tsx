@@ -33,7 +33,7 @@ export default function withProvider<T>(
       antdVersion ='V5',
       readOnly,
       clickAddNode,
-      onDebug,
+      onTesting,
       ...restProps
     } = props;
     const settingMap = useMemo(() => {
@@ -66,7 +66,7 @@ export default function withProvider<T>(
         ...defaultWidgets,
         ...widgets,
       },
-      onDebug
+      onTesting
     };
 
     return (

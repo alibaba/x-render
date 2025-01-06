@@ -47,7 +47,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     globalConfig,
     antdVersion,
     readOnly,
-    onDebug,
+    onTesting,
   }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
@@ -149,7 +149,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
             </div>
             <div className="title-actions">
               <Space size={[4, 4]}>
-                {!isDisabled && onDebug && (
+                {!isDisabled && onTesting && (
                   <>
                     <IconView type="icon-yunhang" style={{ fontSize: 16 }} />
                     <Divider type="vertical" />
