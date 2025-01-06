@@ -7,6 +7,11 @@ export default [
       type: 'icon-fenzhi',
       bgColor: '#06AED4',
     },
+    switchExtra: {   // 条件节点额外属性配置
+      // hideElse: true,
+      valueKey: 'value',
+      titleKey: 'name'
+    }
   },
   {
     title: '开始',

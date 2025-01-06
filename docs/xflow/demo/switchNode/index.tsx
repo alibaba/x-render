@@ -1,6 +1,5 @@
 import XFlow from '@xrenders/xflow';
 import settings from './setting';
-import React from 'react';
 
 export default () => {
   const nodes = [
@@ -24,14 +23,18 @@ export default () => {
           {
             _id: 'id_1nmzbhnbtv1se6sd', // 对应的 sourceHandle: 'id_1nmzbhnbtv1se6sd'的边
             value: '条件1',
+            name: "这里是条件一",
+            title:"默认title"
           },
           {
             value: '条件2',
             _id: 'id_enxhwfca1ebn55td', // 对应sourceHandle: 'id_enxhwfca1ebn55td'的边
+            name:"这里是条件一"
           },
           {
             value: '条件3',
-            _id: 'id_z1f7b93zwbx1xycu',// 对应sourceHandle: 'id_z1f7b93zwbx1xycu'的边
+            _id: 'id_z1f7b93zwbx1xycu', // 对应sourceHandle: 'id_z1f7b93zwbx1xycu'的边
+            name:'这里是条件一'
           },
         ],
         desc: '',
@@ -95,27 +98,27 @@ export default () => {
     },
     {
       id: '5s6af77jbcqvzfod',
-      source: 'kshd2hp4vqm8ww19',// switch节点的边
+      source: 'kshd2hp4vqm8ww19', // switch节点的边
       target: 'ql61j2tdli4xage0',
       sourceHandle: 'id_1nmzbhnbtv1se6sd', // 对应 _id为'id_1nmzbhnbtv1se6sd'的条件
     },
     {
       id: '6tw709qgc3mtazrv',
-      source: 'kshd2hp4vqm8ww19',// switch节点的边
+      source: 'kshd2hp4vqm8ww19', // switch节点的边
       target: 'fab1j735q8iow6u3',
       sourceHandle: 'id_enxhwfca1ebn55td', // 对应 _id为'id_enxhwfca1ebn55td'的条件
     },
     {
       id: 'vzlvdo69ljcqegc8',
-      source: 'kshd2hp4vqm8ww19',// switch节点的边
+      source: 'kshd2hp4vqm8ww19', // switch节点的边
       target: '9mc5i628mfrxdow0',
-      sourceHandle: 'id_z1f7b93zwbx1xycu',// 对应 _id为'id_z1f7b93zwbx1xycu'的条件
+      sourceHandle: 'id_z1f7b93zwbx1xycu', // 对应 _id为'id_z1f7b93zwbx1xycu'的条件
     },
     {
       id: 'j8p8fnr5au9k25pb',
-      source: 'kshd2hp4vqm8ww19',// switch节点的边
+      source: 'kshd2hp4vqm8ww19', // switch节点的边
       target: 'anmv2kcadqxj4k63',
-      sourceHandle: 'id_else',// id_else 对应默认路径ELSE
+      sourceHandle: 'id_else', // id_else 对应默认路径ELSE
     },
     {
       id: '0qfpkc9vcjdb31qp',

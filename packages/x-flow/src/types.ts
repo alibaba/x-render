@@ -22,7 +22,12 @@ export interface TNodeItem {
     width?: string | number; // 配置面板宽度
     hideDesc?: boolean; // 配置面板描述
   };
-  getSettingSchema?:(nodeId:string,nodeType:string,form:ReturnType<typeof useForm>)=>Promise<Schema>
+  getSettingSchema?: (nodeId: string, nodeType: string, form: ReturnType<typeof useForm>) => Promise<Schema>;
+  switchExtra: {   // 条件节点额外属性配置
+    hideElse: boolean;
+    valueKey: string;
+    titleKey: string;
+  }
 }
 
 export interface TNodeGroup {
