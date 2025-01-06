@@ -132,8 +132,8 @@ export interface FlowProps {
   readOnly?:boolean//只读模式
   panel?:TPanel //表单配置面板
   onNodeClick?: NodeMouseHandler;
-  onMenuItemClick: (itemInfo: ItemInfo, defaultAction: () => void) => void;
-  clickAddNode:(type:string,NodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
+  onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
+  clickAddNode?:(type:string,NodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
   // 单点调试方法
   onTesting?: () => void;// 单点调试方法
 }
