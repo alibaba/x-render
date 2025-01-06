@@ -27,7 +27,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const [asyncSchema, setAsyncSchema] = useState<Schema>({});
 
   async function getSchema() {
-    const shema = await getSettingSchema(id, nodeType, form).catch(() => ({}));
+    const shema = await getSettingSchema(id, nodeType,nodeSetting,data,form).catch(() => ({}));
     setAsyncSchema(shema);
   }
   useEffect(() => {
@@ -69,36 +69,22 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       }
       if (node) {
         // 更新节点的 data
-        if (node?.data?._nodeType === 'Switch' && data?.list?.length) {
+        if (
+          (node?.data?._nodeType === 'Switch' ||
+            node?.data?._nodeType === 'Parallel') &&
+          data?.list?.length
+        ) {
           data['list'] = (data?.list || [])?.map((item, index) => {
-            if (item?._conditionId) {
+            if (item?._id) {
               return item;
             } else {
-              if (
-                node?.data?.list?.length &&
-                node?.data?.list[index]?._conditionId
-              ) {
+              if (node?.data?.list?.length && node?.data?.list[index]?._id) {
                 return {
                   ...item,
-                  _conditionId: node?.data?.list[index]?._conditionId,
+                  _id: node?.data?.list[index]?._id,
                 };
               } else {
-                return { ...item, _conditionId: `condition_${uuid()}` };
-              }
-            }
-          });
-        } else if (node?.data?._nodeType === 'Parallel' && data?.list?.length) {
-          data['list'] = data?.list?.map((item, index) => {
-            if (item?._parallelId) {
-              return item;
-            } else {
-              if (node?.data?.list[index]?._parallelId) {
-                return {
-                  ...item,
-                  _parallelId: node?.data?.list[index]?._parallelId,
-                };
-              } else {
-                return { ...item, _parallelId: `parallel_${uuid()}` };
+                return { ...item, _id: `id_${uuid()}` };
               }
             }
           });
@@ -139,7 +125,10 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         readOnly={readOnly}
       />
     );
-  } else if (isFunction(getSettingSchema) && Object.keys(asyncSchema).length > 0) {
+  } else if (
+    isFunction(getSettingSchema) &&
+    Object.keys(asyncSchema).length > 0
+  ) {
     return (
       <FormRender
         schema={asyncSchema}

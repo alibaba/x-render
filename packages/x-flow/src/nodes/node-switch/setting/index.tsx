@@ -40,7 +40,6 @@ const schema: Schema = {
 export default memo((props: INodeSwitchSettingPorps) => {
   const form = useForm();
   const { onChange, value } = props;
-  console.log('%cprops', 'background-color: darkorange', props);
 
   const watch = {
     '#': (allValues: any) => {

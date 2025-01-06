@@ -32,7 +32,7 @@ export default (props: any) => {
 
   const [needOnClick, setNeedOnClick] = useState(false);
 
-  const fieldRef: any = useRef();
+  const fieldRef: any = useRef(null);
   const formCtx: any = useStore(store, (state: any) => state.context);
   const upperCtx: any = useContext(UpperContext);
   const configCtx = useContext(ConfigContext);

@@ -16,12 +16,14 @@ export default () => {
       data: {
         list: [
           {
-            _parallelId: 'parallel_30ds0x3evus7ogo2',
+            _id: 'id_30ds0x3evus7ogo2',
             value: '事件1',
+            title: "事件1"
           },
           {
-            _parallelId: 'parallel_m1l276eelcgn7s1p',
+            _id: 'id_m1l276eelcgn7s1p',
             value: '事件2',
+            title: "事件1"
           },
         ],
       },
@@ -71,13 +73,13 @@ export default () => {
       id: 'ky0eedrd6t2hqq81',
       source: 'mcelcsg6pinydoy7',
       target: '4m9tee00n819nyyy',
-      sourceHandle: 'parallel_30ds0x3evus7ogo2',
+      sourceHandle: 'id_30ds0x3evus7ogo2',
     },
     {
       id: '7tm5a339lj94ugtn',
       source: 'mcelcsg6pinydoy7',
       target: 'j0kufl0o4fca4ee9',
-      sourceHandle: 'parallel_m1l276eelcgn7s1p',
+      sourceHandle: 'id_m1l276eelcgn7s1p',
     },
     {
       type: 'buttonedge',

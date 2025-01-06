@@ -3,7 +3,18 @@ import tinycolor from 'tinycolor2';
 export const uuid = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 16);
 export const uuid4 = customAlphabet('0123456789abcdefghijklmnopqrstuvwxyz', 4);
 
-import { isMatch, some, set, get, cloneDeep, has as _has, merge, mergeWith, isUndefined, omitBy } from 'lodash-es';
+import {
+  has as _has,
+  cloneDeep,
+  get,
+  isMatch,
+  isUndefined,
+  merge,
+  mergeWith,
+  omitBy,
+  set,
+  some,
+} from 'lodash-es';
 
 export const _set = set;
 export const _get = get;
@@ -160,14 +171,58 @@ export const capitalize = (string: string) => {
 export const transformNodes = (nodes: any[]) => {
   return nodes?.map(item => {
     const { type, data, ...rest } = item;
-    return {
-      type: 'custom',
-      data: {
-        ...data,
-        _nodeType: type,
-      },
-      ...rest,
-    };
+
+    if (type === 'Switch' || type === 'Parallel') {
+      return {
+        type: 'custom',
+        data: {
+          ...data,
+          _nodeType: type,
+          ...(data?.list?.length && {
+            list: (data?.list || [])?.map(n => {
+              if (n?._id) {
+                return n;
+              } else {
+                return { ...n, _id: `id_${uuid()}` };
+              }
+            }),
+          }),
+        },
+        ...rest,
+      };
+    } else {
+      return {
+        type: 'custom',
+        data: {
+          ...data,
+          _nodeType: type,
+        },
+        ...rest,
+      };
+    }
+  });
+};
+
+export const transformSwitchNodes = (nodes: any[]) => {
+  return (nodes || [])?.map(item => {
+    if (item?.type === 'Switch' || item?.type === 'Parallel') {
+      const { list, ...rest } = item?.data;
+      return {
+        ...item,
+        data: {
+          ...rest,
+          list: (list || [])?.map(item => {
+            if (item?._id) {
+              return item;
+            } else {
+              return { ...item, _id: `id_${uuid()}` };
+            }
+          }),
+        },
+      };
+    } else {
+      return item;
+    }
   });
 };
 
@@ -222,33 +277,35 @@ export function safeJsonStringify(obj: Object) {
   }
 }
 
-export * from './flow'
+export * from './flow';
 
 // 内置节点状态
 export const NODE_STATUS = {
   success: {
     color: '#52c41a',
-    name:"成功"
+    name: '成功',
   },
   error: {
     color: '#ff4d4f',
-    name:"失败"
+    name: '失败',
   },
   warning: {
     color: '#faad14',
-    name:"告警"
+    name: '告警',
   },
 };
 
 export const transformNodeStatus = (statusList = []) => {
   const obj: Record<string, any> = {};
-  statusList?.forEach((status: { name: string; color: string; value: string; }) => {
-    if (status?.value && status?.color)
-      obj[status.value] = {
-        color: status.color,
-        name:status?.name
-      };
-  });
+  statusList?.forEach(
+    (status: { name: string; color: string; value: string }) => {
+      if (status?.value && status?.color)
+        obj[status.value] = {
+          color: status.color,
+          name: status?.name,
+        };
+    }
+  );
 
   return {
     ...NODE_STATUS,
@@ -257,7 +314,7 @@ export const transformNodeStatus = (statusList = []) => {
 };
 
 // 处理颜色值
-export function getTransparentColor(colorInput:string,alpha:number) {
+export function getTransparentColor(colorInput: string, alpha: number) {
   const color = tinycolor(colorInput);
   const alphaNum = Number(alpha);
   if (!color.isValid()) {
@@ -267,4 +324,3 @@ export function getTransparentColor(colorInput:string,alpha:number) {
   // 返回 RGBA 格式的颜色字符串
   return color.toRgbString();
 }
-
