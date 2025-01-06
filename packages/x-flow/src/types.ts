@@ -130,6 +130,7 @@ export interface FlowProps {
   panel?:TPanel //表单配置面板
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick: (itemInfo: ItemInfo, defaultAction: () => void) => void;
+  clickAddNode:(type:string,addNode:(initData?:Record<string,any>)=>void)=>void
   // 单点调试方法
 }
 interface ItemInfo {
