@@ -44,7 +44,7 @@ export default forwardRef((props: any, popoverRef) => {
     if (type === 'Switch') {
       addNode({ _nodeType: type, list: [{ '_conditionId':`${uuid()}`}] });
     } else if (type === 'Parallel') {
-      addNode({ _nodeType: type, list: [{ _parallelId: `parallel_${uuid()}` }, { _parallelId: `parallel_${uuid()}` }] });
+      addNode({ _nodeType: type, list: [{ _id: `id_${uuid()}` }, { _id: `id_${uuid()}` }] });
     } else {
       addNode({ _nodeType: type });
     }

@@ -124,7 +124,8 @@ export interface FlowProps {
   readOnly?:boolean//只读模式
   panel?:TPanel //表单配置面板
   onNodeClick?: NodeMouseHandler;
-  onMenuItemClick: (itemInfo: ItemInfo,defaultAction:()=>void) => void;
+  onMenuItemClick: (itemInfo: ItemInfo, defaultAction: () => void) => void;
+  // 单点调试方法
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;

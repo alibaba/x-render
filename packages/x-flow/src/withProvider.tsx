@@ -30,7 +30,7 @@ export default function withProvider<T>(
       globalConfig,
       logPanel,
       onMenuItemClick,
-      antdVersion ='V5',
+      antdVersion ='V4',
       readOnly,
       ...restProps
     } = props;

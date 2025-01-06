@@ -40,7 +40,7 @@ group:
 <code src="./demo/switchNode/customSwitchNode/index.tsx"></code>
 
 ## 并行节点
-  内置并行节点，可以直接设置type为`Parallel`使用，并行节点的数据格式为`data:{list:[{value:"条件1",_parallelId:"parallel_${随机数}"}]}`,`_parallelId`为边数据的`sourceHandle`，以便条件和边一一对应。
+  内置并行节点，可以直接设置type为`Parallel`使用，并行节点的数据格式为`data:{list:[{title:"事件一",value:"值1",_id:"id_${随机数}"}]}`,`_id`为边数据的`sourceHandle`，以便条件和边一一对应。
 
 
   并行节点的每个连接头只能连接一个节点，不能连接多个节点，如果要更换节点，可以通过删除已连接节点或者在连接线上新增节点的方式更换目标节点。

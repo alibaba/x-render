@@ -89,16 +89,16 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
           });
         } else if (node?.data?._nodeType === 'Parallel' && data?.list?.length) {
           data['list'] = data?.list?.map((item, index) => {
-            if (item?._parallelId) {
+            if (item?._id) {
               return item;
             } else {
-              if (node?.data?.list[index]?._parallelId) {
+              if (node?.data?.list[index]?._id) {
                 return {
                   ...item,
-                  _parallelId: node?.data?.list[index]?._parallelId,
+                  _id: node?.data?.list[index]?._id,
                 };
               } else {
-                return { ...item, _parallelId: `parallel_${uuid()}` };
+                return { ...item, _id: `id_${uuid()}` };
               }
             }
           });
