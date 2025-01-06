@@ -4,28 +4,35 @@ import React, { memo, ReactNode, useContext, useEffect, useState } from 'react';
 import { useStore } from '../../hooks/useStore';
 import StoreContext, { Provider } from '../../models/context';
 import { createStore } from '../../models/store';
-import { transformNodes } from '../../utils';
+import { transformNodes, transformSwitchNodes } from '../../utils';
 
 export const FlowProvider = memo<{
   initialNodes?: any[];
   initialEdges?: any[];
   children: ReactNode;
   layout?: 'LR' | 'TB';
-}>(({ initialNodes: nodes = [], initialEdges: edges = [], children, layout = 'LR' }) => {
-  const [store] = useState(() =>
-    createStore({
-      nodes,
-      edges,
-      layout
-    })
-  );
+}>(
+  ({
+    initialNodes: nodes = [],
+    initialEdges: edges = [],
+    children,
+    layout = 'LR',
+  }) => {
+    const [store] = useState(() =>
+      createStore({
+        nodes,
+        edges,
+        layout,
+      })
+    );
 
-  return (
-    <ReactFlowProvider>
-      <Provider value={store}>{children}</Provider>
-    </ReactFlowProvider>
-  );
-});
+    return (
+      <ReactFlowProvider>
+        <Provider value={store}>{children}</Provider>
+      </ReactFlowProvider>
+    );
+  }
+);
 
 const InitialProvider = ({ nodes, edges, layout, children }) => {
   const { setNodes, setEdges, setLayout } = useStore(s => ({
@@ -54,19 +61,23 @@ export const FlowProviderWrapper = ({
   nodes: any[];
   edges: any[];
   layout?: 'LR' | 'TB';
-  }) => {
+}) => {
   const isWrapped = useContext(StoreContext);
 
   if (isWrapped) {
     return (
-      <InitialProvider nodes={nodes} edges={edges} layout={layout}>
+      <InitialProvider nodes={transformSwitchNodes(nodes)} edges={edges} layout={layout}>
         {children}
       </InitialProvider>
     );
   }
 
   return (
-    <FlowProvider initialNodes={transformNodes(nodes)} initialEdges={edges} layout={layout}>
+    <FlowProvider
+      initialNodes={transformNodes(nodes)}
+      initialEdges={edges}
+      layout={layout}
+    >
       {children}
     </FlowProvider>
   );
