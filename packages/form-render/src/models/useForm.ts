@@ -73,7 +73,7 @@ const useForm = () => {
   const [form] = Form.useForm();
 
   const flattenSchemaRef = useRef({});
-  const storeRef: any = useRef();
+  const storeRef: any = useRef(null);
   const schemaRef = useRef({});
   const fieldRefs = useRef({});
 
