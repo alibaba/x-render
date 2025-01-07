@@ -36,6 +36,7 @@ group:
 | validateMessages | 修改默认的校验提示信息，详见[ValidateMessages](/form-render/advanced-validate)                         | `Record<string, string>`                                                                              | -      |
 | id               | 表单的 id，一般用于标识一个表单的语义化名称                                               | `string \| number`                                                                                    | -      |
 | antdVersion              | antd 的版本                                               | `v4 \| v5`                                                                                    | `v5`     |
+
 ## FormInstance
 
 | <div style="width:200px">参数</div>              | 描述                                                                                                                  | 类型                                                                                                                |
@@ -47,7 +48,7 @@ group:
 | setValueByPath    | 外部修改指定单个 field 的数据(原名 onItemChange)                                                                      | `(path: Path, value: any) => void`                                                                                  |
 | setSchemaByPath   | 指定路径修改 schema                                                                                                   | `(path: Path, schema: any) => void`                                                                                  |
 | setSchema         | 指定多个路径修改 schema，cover 传true将直接替换 schema                                                                                               | `({ path: value }, cover?: boolean) => void`                                                                                         |
-| getValues         | 获取表单内部维护的数据, 如果参数为空则返回当前所有数据                                                                | `(nameList?: Path[], filterFunc?: (meta: { touched: boolean, validating: boolean }) => boolean) => any`             |
+| getValues         | 获取表单内部维护的数据, 如果参数为空则返回当前所有数据                                                                | `(nameList?: Path[], filterFunc?: (meta: { touched: boolean, validating: boolean },isFilterUndefined?:boolean) => boolean) => any`             |
 | getHiddenValues   | 获取隐藏的表单数据                                                                                                    | `() => any`                                                                                                         |
 | getSchema            | 获取表单的 schema                                                                                                         | `()=> object`                                                                                                            |
 | removeErrorField  | 外部手动删除某一个 path 下所有的校验信息                                                                              | `(path: Path) => void`                                                                                              |                                                                                    |
