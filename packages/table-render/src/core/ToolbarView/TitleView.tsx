@@ -9,7 +9,7 @@ const TitleView = (props: any) => {
   const handleTabChange = (ev: any) => {
     const _tabIndex = ev.target.value;
     if (isFunction(onTabChange)) {
-      return onTabChange(_tabIndex, ev);
+      onTabChange(_tabIndex, ev);
     }
     setState({ tab: _tabIndex });
   };

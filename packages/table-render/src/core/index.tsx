@@ -34,6 +34,7 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
     tableWrapper,
     autoRequest = true,
     columns,
+    onTabChange,
     ...tableProps
   } = props;
 
@@ -192,6 +193,7 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
         title={title}
         tableSize={tableSize}
         currentTab={currentTab}
+        onTabChange={onTabChange}
         toolbarAction={toolbarAction}
         toolbarRender={toolbarRender}
         setState={setState}
