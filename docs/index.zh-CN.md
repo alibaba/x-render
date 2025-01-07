@@ -30,7 +30,3 @@ footer: false
 <a href="https://github.com/alibaba/x-render/graphs/contributors">
   <img style="height: 500px; margin-bottom: 50px" src="https://contrib.rocks/image?repo=alibaba/form-render" />
 </a>
-
-## 互助答疑群
-
-<img style="height: 400px" src="https://img.alicdn.com/imgextra/i3/O1CN01fIgx0D2A2vBV5Ztdt_!!6000000008146-0-tps-1242-1602.jpg">
