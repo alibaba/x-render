@@ -163,13 +163,13 @@ const useForm = () => {
   }
 
   // 获取表单数据
-  xform.getValues = (nameList?: any, filterFunc?: any, isFilterUndefined:boolean=true) => {
+  xform.getValues = (nameList?: any, filterFunc?: any, notFilterUndefined?:boolean) => {
     let values = cloneDeep(form.getFieldsValue(getFieldName(nameList), filterFunc));
     const { removeHiddenData } = storeRef.current?.getState() || {};
     if (removeHiddenData) {
       values = filterValuesHidden(values, flattenSchemaRef.current);
     }
-    if (isFilterUndefined) {
+    if (!notFilterUndefined) {
       values = filterValuesUndefined(values);
     }
     return parseValuesToBind(values, flattenSchemaRef.current);
