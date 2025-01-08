@@ -135,7 +135,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                   />
                 )}
               </span>
-              {isDisabled ? (
+              {isDisabled || readOnly ? (
                 <span style={{ marginLeft: '11px' }}>{titleVal}</span>
               ) : (
                 <Input
@@ -167,7 +167,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
           </div>
           {!hideDesc && (
             <div className="desc-box">
-              {isDisabled ? (
+              {isDisabled  ? (
                 description
               ) : (
                 <Input.TextArea
@@ -178,7 +178,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                     setDescVal(e.target.value);
                     handleNodeValueChange({ desc: e.target.value });
                   }}
-                  disabled={readOnly}
+                 disabled={readOnly}
                 />
               )}
             </div>
