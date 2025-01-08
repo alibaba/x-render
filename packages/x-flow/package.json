@@ -57,7 +57,10 @@
     "use-context-selector": "^1.4.1",
     "zundo": "^2.1.0",
     "zustand": "^4.5.4",
-    "@monaco-editor/react": "^4.4.6"
+    "@monaco-editor/react": "^4.6.0",
+    "monaco-editor-webpack-plugin": "^4.1.1",
+    "react-monaco-editor": "^0.44.0",
+    "react-simple-code-editor": "^0.11.0"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",
