@@ -72,7 +72,7 @@
     "babel-plugin-transform-remove-console": "^6.9.4",
     "chart-render": "^0.1.9",
     "cross-env": "^7.0.3",
-    "dumi": "2.2.16",
+    "dumi": "2.4.17",
     "dumi-theme-mobile": "^2.0.4",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
