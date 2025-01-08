@@ -1,64 +1,28 @@
 import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
-import Editor from '@monaco-editor/react';
+import { json } from '@codemirror/lang-json';
+import { EditorView } from '@codemirror/view';
+import CodeMirror from '@uiw/react-codemirror';
 import { Typography } from 'antd';
 import { isString } from 'lodash';
-import React, { memo, useRef, useState } from 'react';
-
-const DEFAULT_THEME = {
-  base: 'vs',
-  inherit: true,
-  rules: [],
-  colors: {
-    'editor.background': '#F2F4F7',
-  },
-};
+import React, { memo, useState } from 'react';
 
 export default memo((props: any) => {
   const { codeData } = props;
   const [isCopy, setIsCopy] = useState(false);
-  const editorRef = useRef<any>(null);
   const isRenderTitle = isString(codeData?.title);
 
-  const handleEditorDidMount = (editor: any, monaco: any) => {
-    editorRef.current = editor;
-    monaco.editor.defineTheme('default-theme', DEFAULT_THEME);
-
-    monaco.editor.defineTheme('blur-theme', {
-      base: 'vs',
-      inherit: true,
-      rules: [],
-      colors: {
-        'editor.background': '#F2F4F7',
-      },
-    });
-
-    monaco.editor.defineTheme('focus-theme', {
-      base: 'vs',
-      inherit: true,
-      rules: [],
-      colors: {
-        'editor.background': '#ffffff',
-      },
-    });
-
-    monaco.editor.setTheme('default-theme');
-  };
-
   const copyCode = () => {
-    if (editorRef.current) {
-      const code = editorRef.current.getValue();
-      navigator.clipboard
-        .writeText(code)
-        .then(() => {
-          setIsCopy(true);
-          setTimeout(() => {
-            setIsCopy(false);
-          }, 1000);
-        })
-        .catch(err => {
-          console.error('Failed to copy: ', err);
-        });
-    }
+    navigator.clipboard
+      .writeText(codeData?.code)
+      .then(() => {
+        setIsCopy(true);
+        setTimeout(() => {
+          setIsCopy(false);
+        }, 1000);
+      })
+      .catch(err => {
+        console.error('Failed to copy: ', err);
+      });
   };
 
   return (
@@ -91,23 +55,16 @@ export default memo((props: any) => {
           <CopyOutlined className="log-code-copy" onClick={copyCode} />
         )}
       </div>
-      <Editor
-        className="log-code-editor"
-        language={'json'}
-        theme={'default-theme'}
+      <CodeMirror
         value={codeData?.code}
-        options={{
-          readOnly: true,
-          domReadOnly: true,
-          quickSuggestions: false,
-          minimap: { enabled: false },
-          // wordWrap: 'on',
-          // unicodeHighlight: {
-          //   ambiguousCharacters: false,
-          // },
-        }}
-        onMount={handleEditorDidMount}
-        // loading={''}
+        className="log-code-editor"
+        extensions={[json(), EditorView.lineWrapping]}
+        height="172px"
+        minHeight="172px"
+        width="100%"
+        theme="none"
+        readOnly={true}
+        editable={false}
       />
     </div>
   );
