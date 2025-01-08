@@ -35,8 +35,8 @@ export default memo((props: any) => {
     <div className="item-header">
       <div className="item-title">
         {switchExtra?.titleKey
-          ? item[switchExtra?.titleKey]
-          : item?.title || `条件${index}`}
+          ? item[switchExtra?.titleKey] || `条件${index}`
+          : item?.title}
       </div>
       <SourceHandle
         position={position}

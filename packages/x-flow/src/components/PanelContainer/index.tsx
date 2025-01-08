@@ -109,6 +109,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     <Drawer
       {...drawerVersionProps}
       getContainer={false}
+      key={id}
       width={nodePanel?.width || globalConfig?.nodePanel?.width || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
       mask={false}
       onClose={onClose}
@@ -135,7 +136,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 )}
               </span>
               {isDisabled ? (
-                <span style={{ marginLeft: '11px' }}>{nodeSetting?.title}</span>
+                <span style={{ marginLeft: '11px' }}>{titleVal}</span>
               ) : (
                 <Input
                   style={{ width: '100%' }}

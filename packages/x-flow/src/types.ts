@@ -28,8 +28,8 @@ export interface TNodeItem {
     valueKey: string;
     titleKey: string;
   }
-  disabledCopy:boolean
-  disabledDelete:boolean
+  disabledCopy?:boolean
+  disabledDelete?:boolean
 }
 
 export interface TNodeGroup {
