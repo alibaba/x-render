@@ -27,9 +27,14 @@ export interface TNodeItem {
     hideElse: boolean;
     valueKey: string;
     titleKey: string;
-  }
-  disabledCopy?:boolean
-  disabledDelete?:boolean
+  };
+  parallelExtra: {  // 并行节点额外配置
+    valueKey: string;
+    titleKey: string;
+  };
+  disabledCopy?: boolean;
+  disabledDelete?: boolean;
+
 }
 
 export interface TNodeGroup {
