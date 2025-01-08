@@ -77,8 +77,8 @@ export default memo((edge: any) => {
         id: targetId,
         type: 'custom',
         data: {
-          ...data,
           title: `${title}_${uuid4()}`,
+          ...data,
         },
         position: { x, y },
       });

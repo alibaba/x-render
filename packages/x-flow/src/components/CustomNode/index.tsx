@@ -57,8 +57,8 @@ export default memo((props: any) => {
       id: targetId,
       type: 'custom',
       data: {
-        ...data,
         title: `${title}_${uuid4()}`,
+        ...data,
       },
       position: { x, y },
     };

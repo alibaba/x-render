@@ -49,6 +49,7 @@ export interface TNodePanel {
   // 配置面板属性设置
   width?: string | number; // 配置面板宽度
   hideDesc?: boolean; // 配置面板描述
+  onClose?:(activeNodeId:string)=>void
 }
 
 export interface TNodeSelector {
@@ -99,11 +100,6 @@ export interface THandle{
   // isConnectableEnd?:boolean
   isValidConnection?:HandleProps['isValidConnection']
 }
-
-export interface TPanel{
-  onClose:(activeNodeId:string)=>void
-}
-
 export interface FlowProps {
   initialValues?: {
     nodes: any[];
@@ -130,7 +126,6 @@ export interface FlowProps {
   };
   logPanel?: TLogPanel; // 日志面板配置
   readOnly?:boolean//只读模式
-  panel?:TPanel //表单配置面板
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode?:(type:string,nodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
