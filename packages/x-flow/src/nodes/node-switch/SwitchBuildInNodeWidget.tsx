@@ -31,29 +31,31 @@ export default memo((props: any) => {
     shallow
   );
 
-  const renderTitle = (item, index) => (
-    <div className="item-header">
-      <div className="item-title">
-        {switchExtra?.titleKey
-          ? item[switchExtra?.titleKey]
-          : item?.title || `条件${index}`}
+  const renderTitle = (item, index) => {
+    const defTitle = item?.title || `条件${index}`;
+    const title = switchExtra?.titleKey
+      ? item[switchExtra?.titleKey]
+      : defTitle;
+    return (
+      <div className="item-header">
+        <div className="item-title">{title}</div>
+        <SourceHandle
+          position={position}
+          isConnectable={
+            (edges || [])?.filter(flow => flow?.sourceHandle === item?._id)
+              ?.length === 0
+          }
+          selected={selected}
+          isHovered={isHovered}
+          handleAddNode={data => {
+            handleAddNode(data, item?._id);
+          }}
+          id={item?._id}
+          className="item-handle"
+        />
       </div>
-      <SourceHandle
-        position={position}
-        isConnectable={
-          (edges || [])?.filter(flow => flow?.sourceHandle === item?._id)
-            ?.length === 0
-        }
-        selected={selected}
-        isHovered={isHovered}
-        handleAddNode={data => {
-          handleAddNode(data, item?._id);
-        }}
-        id={item?._id}
-        className="item-handle"
-      />
-    </div>
-  );
+    );
+  };
 
   const renderContent = (item, index) => {
     const value = switchExtra?.valueKey

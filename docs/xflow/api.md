@@ -101,7 +101,9 @@ title: API
 | settingWidgetProps | 用于向`settingWidget`自定义组件中传递自定义参数                                                                                                  | `object`                                                                                                                                                        |        |
 | nodeWidget         | 自定义节点的业务配置信息展示组件，在节点内部展示业务配置信息。定义之后需要在`widgets`中引入自定义组件。                                          | `string`                                                                                                                                                        |        |
 | nodePanel          | 自定义节点的面板配置信息                                                                                                                         | [TNodePanel](#tnodepanel)                                                                                                                                       |        |
-| switchExtra        | 条件节几点属性配置                                                                                                                               | [TSwitchExtra](#tswitchextra)                                                                                                                                   |        |
+| switchExtra        | 条件节点属性配置                                                                                                                               | [TSwitchExtra](#tswitchextra)                                                                                                                                   |        |
+| parallelExtra        | 并行节点属性配置                                                                                                                               | [TParallelExtra](#tparallelextra)                                                                                                                                   |        |
+
 
 
 ## TNodeSelector
@@ -119,3 +121,9 @@ title: API
 | valueKey | 自定义节点 value 的字段          | `string`  |        |
 | titleKey | 自定义节点 title 的字段          | `string`  |        |
 
+## TParallelExtra
+
+| 属性     | 描述                             | 类型      | 默认值 |
+| -------- | -------------------------------- | --------- | ------ |
+| valueKey | 自定义节点 value 的字段          | `string`  |        |
+| titleKey | 自定义节点 title 的字段          | `string`  |        |

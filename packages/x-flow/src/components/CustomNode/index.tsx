@@ -19,8 +19,9 @@ export default memo((props: any) => {
   const { widgets, settingMap, globalConfig, onMenuItemClick, antdVersion,readOnly } =
     useContext(ConfigContext);
   const deletable = globalConfig?.edge?.deletable ?? true;
-  const disabledCopy = settingMap[type]?.disabledCopy ?? false
-  const disabledDelete = settingMap[type]?.disabledDelete ?? false
+  const disabledCopy = settingMap[type]?.disabledCopy ?? false;
+  const disabledDelete = settingMap[type]?.disabledDelete ?? false;
+  const switchExtra = settingMap[type]?.switchExtra || {};
   // const isConnectableStart = globalConfig?.handle?.isConnectableStart ?? true;
   // const isConnectableEnd = globalConfig?.handle?.isConnectableEnd ?? true;
 
@@ -160,16 +161,18 @@ export default memo((props: any) => {
           }
         });
       }
-      return [
-        ...list,
-        {
-          label: `粘贴到第${list.length + 1}个出口`,
-          key: 'paste-' + (list.length + 1),
-          id: id,
-          index: list.length + 1,
-          sourcehandle: 'id_else',
-        },
-      ];
+      const defaultElse = switchExtra?.hideElse
+        ? []
+        : [
+            {
+              label: `粘贴到第${list.length + 1}个出口`,
+              key: 'paste-' + (list.length + 1),
+              id: id,
+              index: list.length + 1,
+              sourcehandle: 'id_else',
+            },
+          ];
+      return [...list, ...defaultElse];
     }
     return [
       {
@@ -177,7 +180,7 @@ export default memo((props: any) => {
         key: 'paste',
       },
     ];
-  }, [type,data]);
+  }, [type, data]);
 
   // 节点状态处理
   const statusObj = transformNodeStatus(globalConfig?.nodeView?.status || []);
@@ -185,11 +188,19 @@ export default memo((props: any) => {
 
   const menu = (
     <Menu onClick={itemClick}>
-      <Menu.Item key={'copy'} disabled={disabledCopy}>复制</Menu.Item>
+      <Menu.Item key={'copy'} disabled={disabledCopy}>
+        复制
+      </Menu.Item>
       {menuItem.map((r: any) => {
-        return <Menu.Item {...r} key={r.key}>{r.label}</Menu.Item>;
+        return (
+          <Menu.Item {...r} key={r.key}>
+            {r.label}
+          </Menu.Item>
+        );
       })}
-      <Menu.Item key={'delete'} danger={true} disabled={disabledDelete}>删除</Menu.Item>
+      <Menu.Item key={'delete'} danger={true} disabled={disabledDelete}>
+        删除
+      </Menu.Item>
     </Menu>
   );
 
@@ -201,14 +212,14 @@ export default memo((props: any) => {
             {
               label: '复制',
               key: 'copy',
-              disabled:disabledCopy
+              disabled: disabledCopy,
             },
             ...menuItem,
             {
               label: '删除',
               key: 'delete',
               danger: true,
-              disabled:disabledDelete
+              disabled: disabledDelete,
             },
           ],
           onClick: itemClick,
@@ -240,15 +251,17 @@ export default memo((props: any) => {
           // isConnectableEnd={isConnectableEnd}
         />
       )}
-      {selected && (
-        <Dropdown disabled={readOnly} {...dropdownVersionProps} trigger={['click', 'contextMenu']}>
-          <div className="xflow-node-actions-container">
-            <MoreOutlined
-              style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
-            ></MoreOutlined>
-          </div>
-        </Dropdown>
-      )}
+      <Dropdown
+        disabled={readOnly}
+        {...dropdownVersionProps}
+        //trigger={['click', 'contextMenu']}
+      >
+        <div className="xflow-node-actions-container">
+          <MoreOutlined
+            style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
+          ></MoreOutlined>
+        </div>
+      </Dropdown>
       <NodeWidget
         id={id}
         type={type}
@@ -276,3 +289,4 @@ export default memo((props: any) => {
     </div>
   );
 });
+

@@ -19,7 +19,10 @@ export default memo((props: any) => {
     handleAddNode,
     CustomNodeWidget,
     isSwitchBottom,
+    nodeSetting,
   } = props;
+
+  const { parallelExtra } = nodeSetting;
 
   const { nodes, edges } = useStore(
     (state: any) => ({
@@ -33,60 +36,21 @@ export default memo((props: any) => {
     shallow
   );
 
-  const renderTitle = (item, index) => (
-    <div className="item-header">
-      <div className="item-title">
-        {item?.title && (
-          <Paragraph
-            className="item-content-in"
-            ellipsis={{
-              rows: 1,
-              tooltip: {
-                title: item?.title,
-                color: '#ffff',
-                overlayInnerStyle: {
-                  color: '#354052',
-                  fontSize: '12px',
-                },
-                getPopupContainer: () =>
-                  document.getElementById('xflow-container'),
-              },
-            }}
-          >
-            {item?.title}
-          </Paragraph>
-        )}
-      </div>
-      <SourceHandle
-        position={position}
-        isConnectable={
-          (edges || [])?.filter(flow => flow?.sourceHandle === item?._id)
-            ?.length === 0
-        }
-        selected={selected}
-        isHovered={isHovered}
-        handleAddNode={data => {
-          handleAddNode(data, item?._id);
-        }}
-        id={item?._id}
-        className="item-handle"
-      />
-    </div>
-  );
-
-  const renderContent = (item, index) => (
-    <div className="item-content">
-      {CustomNodeWidget ? (
-        <CustomNodeWidget data={item} index={index} />
-      ) : (
-        <>
-          {item?.value && (
+  const renderTitle = (item, index) => {
+    const defTitle = item?.title || `事件${index}`;
+    const title = parallelExtra?.titleKey
+      ? item[parallelExtra?.titleKey]
+      : defTitle;
+    return (
+      <div className="item-header">
+        <div className="item-title">
+          {title && (
             <Paragraph
               className="item-content-in"
               ellipsis={{
-                rows: 5,
+                rows: 1,
                 tooltip: {
-                  title: item?.value,
+                  title: item?.title,
                   color: '#ffff',
                   overlayInnerStyle: {
                     color: '#354052',
@@ -97,13 +61,63 @@ export default memo((props: any) => {
                 },
               }}
             >
-              {item?.value}
+              {title}
             </Paragraph>
           )}
-        </>
-      )}
-    </div>
-  );
+        </div>
+        <SourceHandle
+          position={position}
+          isConnectable={
+            (edges || [])?.filter(flow => flow?.sourceHandle === item?._id)
+              ?.length === 0
+          }
+          selected={selected}
+          isHovered={isHovered}
+          handleAddNode={data => {
+            handleAddNode(data, item?._id);
+          }}
+          id={item?._id}
+          className="item-handle"
+        />
+      </div>
+    );
+  };
+
+  const renderContent = (item, index) => {
+    const value = parallelExtra?.valueKey
+      ? item[parallelExtra?.valueKey]
+      : item?.value;
+    return (
+      <div className="item-content">
+        {CustomNodeWidget ? (
+          <CustomNodeWidget data={item} index={index} />
+        ) : (
+          <>
+            {value && (
+              <Paragraph
+                className="item-content-in"
+                ellipsis={{
+                  rows: 5,
+                  tooltip: {
+                    title: item?.value,
+                    color: '#ffff',
+                    overlayInnerStyle: {
+                      color: '#354052',
+                      fontSize: '12px',
+                    },
+                    getPopupContainer: () =>
+                      document.getElementById('xflow-container'),
+                  },
+                }}
+              >
+                {value}
+              </Paragraph>
+            )}
+          </>
+        )}
+      </div>
+    );
+  };
 
   return (
     <Space
