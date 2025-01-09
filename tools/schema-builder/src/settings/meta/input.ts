@@ -1,6 +1,6 @@
 import { createMeta, inputPropsBasic } from '../utils';
 
-export default createMeta('Inputx', {
+export default createMeta('Input', {
   title: '单行文本',
   priority: 1000,
   props: [
