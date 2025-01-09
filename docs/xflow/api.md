@@ -20,7 +20,6 @@ title: API
 | onNodeClick   | 节点点击事件                         | `NodeMouseHandler`                                                                          |         |
 | antdVersion   | antd 的版本                          | `V4 \| V5`                                                                                  | `V5`    |
 | readOnly      | 只读模式                             | `boolean`                                                                                   | `false` |
-| onTesting      | 单点调试方法                             | `() => void`                                                                                   |  |
 
 
 ## TNodePanel
@@ -103,6 +102,8 @@ title: API
 | nodePanel          | 自定义节点的面板配置信息                                                                                                                         | [TNodePanel](#tnodepanel)                                                                                                                                       |        |
 | switchExtra        | 条件节点属性配置                                                                                                                               | [TSwitchExtra](#tswitchextra)                                                                                                                                   |        |
 | parallelExtra        | 并行节点属性配置                                                                                                                               | [TParallelExtra](#tparallelextra)                                                                                                                                   |        |
+| onTesting      | 节点的单点调试方法                         | `(node,nodes) => void`                                                                                   |  |
+
 
 
 

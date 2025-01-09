@@ -47,7 +47,6 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     globalConfig,
     antdVersion,
     readOnly,
-    onTesting,
   }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
@@ -60,7 +59,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
-  const { nodePanel, iconSvg } = nodeSetting;
+  const { nodePanel, iconSvg, onTesting } = nodeSetting;
   const hideDesc =
     nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const isShowStatusPanel = Boolean(node?._status && openLogPanel);
@@ -152,7 +151,15 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
               <Space size={[4, 4]}>
                 {!isDisabled && onTesting && (
                   <>
-                    <IconView type="icon-yunhang" style={{ fontSize: 16 }} />
+                    <IconView
+                      type="icon-yunhang"
+                      onClick={() => {
+                        const n =
+                          nodes?.find(item => item?.id === node?.id) || {};
+                        onTesting(n, nodes);
+                      }}
+                      style={{ fontSize: 16 }}
+                    />
                     <Divider type="vertical" />
                   </>
                 )}
@@ -167,7 +174,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
           </div>
           {!hideDesc && (
             <div className="desc-box">
-              {isDisabled  ? (
+              {isDisabled ? (
                 description
               ) : (
                 <Input.TextArea
@@ -178,7 +185,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                     setDescVal(e.target.value);
                     handleNodeValueChange({ desc: e.target.value });
                   }}
-                 disabled={readOnly}
+                  disabled={readOnly}
                 />
               )}
             </div>
