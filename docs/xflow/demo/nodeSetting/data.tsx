@@ -114,6 +114,9 @@ export const settings = [
       type: 'icon-switch',
       bgColor: '#06AED4',
     },
+    onTesting: (node, nodes) => {
+      console.log("单点调试",node,nodes)
+    },
   },
   {
     title: '工具',

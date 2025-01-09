@@ -34,7 +34,7 @@ export interface TNodeItem {
   };
   disabledCopy?: boolean;
   disabledDelete?: boolean;
-
+  onTesting: (node,nodes) => void;// 单点调试方法
 }
 
 export interface TNodeGroup {
@@ -134,8 +134,6 @@ export interface FlowProps {
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode?:(type:string,nodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
-  // 单点调试方法
-  onTesting?: () => void;// 单点调试方法
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;
