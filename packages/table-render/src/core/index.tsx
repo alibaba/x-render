@@ -34,6 +34,7 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
     tableWrapper,
     autoRequest = true,
     columns,
+    onTabChange,
     ...tableProps
   } = props;
 
@@ -57,8 +58,13 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
       pagination
     };
 
-    if (typeof tableProps?.pagination === 'object' && tableProps?.pagination?.pageSize) {
-      initState.pagination.pageSize = tableProps.pagination.pageSize;
+    if (typeof tableProps?.pagination === 'object') {
+      if (tableProps?.pagination?.current) {
+        initState.pagination.current = tableProps.pagination.current;
+      }
+      if (tableProps?.pagination?.pageSize) {
+        initState.pagination.pageSize = tableProps.pagination.pageSize;
+      }
     }
     setState(initState);
   }, []);
@@ -192,6 +198,7 @@ const RenderCore: React.FC<TableRenderProps & { tableRef: any }> = props => {
         title={title}
         tableSize={tableSize}
         currentTab={currentTab}
+        onTabChange={onTabChange}
         toolbarAction={toolbarAction}
         toolbarRender={toolbarRender}
         setState={setState}

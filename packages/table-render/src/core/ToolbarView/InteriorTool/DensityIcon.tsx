@@ -10,7 +10,7 @@ const DesityIcon = () => {
   const configCtx = useContext(ConfigProvider.ConfigContext);
   const t = translation(configCtx);
 
-  const dropRef = useRef<any>(); // class组件用 React.createRef()
+  const dropRef = useRef<any>(null); // class组件用 React.createRef()
   const tableSize = useTableStore((state) => state.tableSize);
   const setState = useTableStore((state) => state.setState);
 

@@ -25,7 +25,7 @@ const TableRender = React.forwardRef<TableContext, TableRenderProps>((props, ref
     ...otherProps
   } = props;
 
-  const storeRef = React.useRef<UseBoundStore<StoreApi<TableRenderProps>>>();
+  const storeRef = React.useRef<UseBoundStore<StoreApi<TableRenderProps>>>(null);
   if (!storeRef.current) {
     storeRef.current = createStore();
   }

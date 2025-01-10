@@ -2,7 +2,7 @@ import { useReducer, useRef, useEffect, useState } from 'react';
 import { message } from 'antd';
 
 export function usePrevious(value: any) {
-  const ref = useRef();
+  const ref = useRef(null);
   useEffect(() => {
     ref.current = value;
   }, [value]);

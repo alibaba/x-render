@@ -1,6 +1,6 @@
 {
   "name": "@xrenders/xflow",
-  "version": "1.0.0-beta.5",
+  "version": "1.0.3-beta.2",
   "description": "一款功能强大、易用灵活的流程编辑器框架，帮助你轻松构建复杂的工作流和流程产品",
   "keywords": [
     "xflow"
@@ -46,7 +46,9 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.0.2",
+    "@codemirror/lang-json": "^6.0.1",
     "@dagrejs/dagre": "^1.1.3",
+    "@uiw/react-codemirror": "^4.23.7",
     "@xyflow/react": "^12.3.2",
     "ahooks": "^3.7.5",
     "classnames": "^2.3.1",
@@ -56,8 +58,7 @@
     "tinycolor2": "^1.6.0",
     "use-context-selector": "^1.4.1",
     "zundo": "^2.1.0",
-    "zustand": "^4.5.4",
-    "@monaco-editor/react": "^4.4.6"
+    "zustand": "^4.5.4"
   },
   "devDependencies": {
     "deep-equal": "^2.0.3",
@@ -71,9 +72,5 @@
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
-  "sideEffect": false,
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
-    "access": "public"
-  }
+  "sideEffect": false
 }

@@ -30,6 +30,9 @@ const Demo = () => {
       search={{
         schema: schema
       }}
+       onTabChange={(a) => {
+        console.log('onTabChange');
+      }}
       request={[
         { name: '我的', api: searchApi },
         { name: '全部', api: searchApi2 }

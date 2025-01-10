@@ -5,7 +5,7 @@ const VirtualCell = (props: any) => {
   const { renderCore, schema, dataIndex, ...otherProps } = props;
   const [errorMsg, setErrorMsg] = useState(null);
   const [visible, setVisible] = useState<boolean>();
-  const mouseRef = useRef<any>();
+  const mouseRef = useRef<any>(null);
 
   const onStatusChange = (_: any, errors: any[]) => {
     const message = errors[0] || null;

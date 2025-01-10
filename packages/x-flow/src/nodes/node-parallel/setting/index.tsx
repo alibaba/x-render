@@ -11,14 +11,14 @@ interface INodeSwitchSettingPorps {
 
 const schema: Schema = {
   type: 'object',
-  span: 24,
-  displayType: 'row',
+  displayType:'row',
+  // span: 24,
   properties: {
     list: {
       type: 'array',
       widget: 'simpleList',
-      display: 'block',
-      min: 2,
+      // display: 'block',
+      // min: 2,
       default:[{},{}],
       props: {
         hideCopy: true,
@@ -27,9 +27,21 @@ const schema: Schema = {
       items: {
         type: 'object',
         properties: {
+          title: {
+            title: '标题',
+            type: 'string',
+            props: {
+              allowClear:true
+            },
+            span:6
+          },
           value: {
             title: '事件',
             type: 'string',
+            props: {
+              allowClear: true
+            },
+            span: 6
           },
         },
       },

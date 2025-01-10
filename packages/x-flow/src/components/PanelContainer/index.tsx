@@ -5,7 +5,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import {  safeJsonStringify } from '../../utils';
+import { safeJsonStringify } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import './index.less';
@@ -41,8 +41,13 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     openLogPanel,
   } = props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, globalConfig, antdVersion,readOnly }: any =
-    useContext(ConfigContext);
+  const {
+    settingMap,
+    iconFontUrl,
+    globalConfig,
+    antdVersion,
+    readOnly,
+  }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
     (state: any) => ({
@@ -54,7 +59,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
-  const { nodePanel, iconSvg } = nodeSetting;
+  const { nodePanel, iconSvg, onTesting } = nodeSetting;
   const hideDesc =
     nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const isShowStatusPanel = Boolean(node?._status && openLogPanel);
@@ -75,7 +80,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
         node.data = { ...node.data, ...data };
       }
     });
-    setNodes(newNodes,false);
+    setNodes(newNodes, false);
   }, 100);
 
   useEffect(() => {
@@ -103,6 +108,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     <Drawer
       {...drawerVersionProps}
       getContainer={false}
+      key={id}
       width={nodePanel?.width || globalConfig?.nodePanel?.width || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
       mask={false}
       onClose={onClose}
@@ -128,8 +134,8 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                   />
                 )}
               </span>
-              {isDisabled ? (
-                <span style={{ marginLeft: '11px' }}>{nodeSetting?.title}</span>
+              {isDisabled || readOnly ? (
+                <span style={{ marginLeft: '11px' }}>{titleVal}</span>
               ) : (
                 <Input
                   style={{ width: '100%' }}
@@ -143,9 +149,17 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
             </div>
             <div className="title-actions">
               <Space size={[4, 4]}>
-                {!isDisabled && (
+                {!isDisabled && onTesting && (
                   <>
-                    <IconView type="icon-yunhang" style={{ fontSize: 16 }} />
+                    <IconView
+                      type="icon-yunhang"
+                      onClick={() => {
+                        const n =
+                          nodes?.find(item => item?.id === node?.id) || {};
+                        onTesting(n, nodes);
+                      }}
+                      style={{ fontSize: 16 }}
+                    />
                     <Divider type="vertical" />
                   </>
                 )}

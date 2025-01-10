@@ -114,6 +114,9 @@ export const settings = [
       type: 'icon-switch',
       bgColor: '#06AED4',
     },
+    onTesting: (node, nodes) => {
+      console.log("单点调试",node,nodes)
+    },
   },
   {
     title: '工具',
@@ -177,7 +180,7 @@ export const nodes = [
     data: {
       list: [
         {
-          _conditionId: 'iawoyh5niyi6zjob',
+          _id: 'iawoyh5niyi6zjob',
         },
       ],
     },
@@ -224,8 +227,8 @@ export const edges = [
   {
     type: 'buttonedge',
     source: 'b6zsd6w5ah2b209t',
-    sourceHandle: 'condition_else',
+    sourceHandle: 'id_else',
     target: '4',
-    id: 'xy-edge__b6zsd6w5ah2b209tcondition_else-4',
+    id: 'xy-edge__b6zsd6w5ah2b209tid_else-4',
   },
 ];

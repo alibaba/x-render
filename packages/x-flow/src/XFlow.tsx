@@ -8,7 +8,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { useEventListener, useMemoizedFn } from 'ahooks';
 import produce, { setAutoFreeze } from 'immer';
-import { debounce } from 'lodash';
+import { debounce, isFunction } from 'lodash';
 import type { FC } from 'react';
 import React, {
   memo,
@@ -86,7 +86,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig,readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick,panel = {} as any } = props;
+  const { onNodeClick } = props;
 
   useEffect(() => {
     zoomTo(0.8);
@@ -147,8 +147,8 @@ const XFlow: FC<FlowProps> = memo(props => {
       id: uuid(),
       type: 'custom',
       data: {
-        ...data,
         title: `${title}_${uuid4()}`,
+        ...data,
       },
       position: {
         x: 0,
@@ -268,6 +268,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   }, [activeNode?.id]);
 
   const deletable = globalConfig?.edge?.deletable ?? true;
+  const panelonClose = globalConfig?.nodePanel?.onClose
 
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
@@ -321,7 +322,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         onNodeClick={(event, node) => {
           onNodeClick && onNodeClick(event, node);
         }}
-
+        deleteKeyCode={globalConfig?.deleteKeyCode}
       >
         <CandidateNode />
         <Operator addNode={handleAddNode} xflowRef={workflowContainerRef} />
@@ -341,7 +342,9 @@ const XFlow: FC<FlowProps> = memo(props => {
               if (!activeNode?._status || !openLogPanel) {
                 setActiveNode(null);
               }
-              panel.onClose && panel.onClose(activeNode?.id)
+              if(isFunction(panelonClose)){
+                panelonClose(activeNode?.id)
+              }
             }}
             node={activeNode}
             data={activeNode?.values}
