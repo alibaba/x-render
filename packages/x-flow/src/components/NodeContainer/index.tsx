@@ -1,11 +1,10 @@
-import { Popover, Typography } from 'antd';
+import { Popover } from 'antd';
 import classNames from 'classnames';
 import React, { memo, useMemo } from 'react';
 import createIconFont from '../../utils/createIconFont';
+import TextEllipsis from '../TextEllipsis';
 import './index.less';
 import TitleMenuTooltip from './TitleMenuTooltip';
-
-const { Text, Paragraph } = Typography;
 
 export default memo((props: any) => {
   const {
@@ -21,32 +20,14 @@ export default memo((props: any) => {
     iconSvg,
     hideTitleTips,
     isSwitchBottom,
-    nodeSettingTitle
+    nodeSettingTitle,
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
   const renderDesc = () => (
     <>
       {!hideDesc && !!desc && (
-        <Paragraph
-          ellipsis={{
-            rows: 2,
-            tooltip: {
-              title: desc,
-              placement: 'bottomRight',
-              color: '#ffff',
-              overlayInnerStyle: {
-                color: '#354052',
-                fontSize: '12px',
-              },
-              getPopupContainer: () =>
-                document.getElementById('xflow-container') as HTMLElement,
-            },
-          }}
-          className="node-desc"
-        >
-          {desc}
-        </Paragraph>
+        <TextEllipsis text={desc} rows={2} type="paragraph" />
       )}
     </>
   );
@@ -98,24 +79,7 @@ export default memo((props: any) => {
             {iconSvg ? iconSvg : <IconBox {...icon} />}
           </span>
         )}
-        <Text
-          style={{ width: 188, marginLeft: '8px' }}
-          ellipsis={{
-            tooltip: {
-              title: title,
-              placement: 'topRight',
-              color: '#ffff',
-              overlayInnerStyle: {
-                color: '#354052',
-                fontSize: '12px',
-              },
-              getPopupContainer: () =>
-                document.getElementById('xflow-container') as HTMLElement,
-            },
-          }}
-        >
-          {title}
-        </Text>
+        <TextEllipsis text={title} style={{ width: 188, marginLeft: '8px' }} />
       </div>
 
       <div className="node-body">{children}</div>

@@ -1,12 +1,12 @@
-import { Badge, Collapse, Empty, Typography } from 'antd';
+import { Badge, Collapse, Empty } from 'antd';
 import React, { memo, useContext, useMemo } from 'react';
 import { ConfigContext } from '../../../models/context';
 import { transformNodeStatus } from '../../../utils';
 import createIconFont from '../../../utils/createIconFont';
+import TextEllipsis from '../../TextEllipsis';
 import CodePanel from './CodePanel';
 
 const { Panel } = Collapse;
-const { Text } = Typography;
 interface ITrackNodeItemProps {
   nodeType: string;
   nodeStatus: string;
@@ -30,6 +30,8 @@ export default memo((props: ITrackNodeItemProps) => {
   } = globalConfig;
   const statusObj = transformNodeStatus(status || []);
   const statusData = statusObj[nodeStatus];
+
+  console.log('测试', nodeSetting, props);
   return (
     <div className="log-track-node">
       <Collapse
@@ -37,7 +39,12 @@ export default memo((props: ITrackNodeItemProps) => {
         onChange={arr => {
           if (node) {
             const { _nodeType, _status, ...rest } = node?.data;
-            onTrackCollapseChange({ id: node?.id, values: { ...rest }, _nodeType, _status });
+            onTrackCollapseChange({
+              id: node?.id,
+              values: { ...rest },
+              _nodeType,
+              _status,
+            });
           }
         }}
       >
@@ -59,23 +66,11 @@ export default memo((props: ITrackNodeItemProps) => {
                   />
                 )}
               </span>
-              <Text
+
+              <TextEllipsis
+                text={node?.data?.title || nodeSetting?.title}
                 style={{ width: '100%', fontSize: '12px' }}
-                ellipsis={{
-                  tooltip: {
-                    title: nodeSetting?.title,
-                    color: '#ffff',
-                    overlayInnerStyle: {
-                      color: '#354052',
-                      fontSize: '12px',
-                    },
-                    getPopupContainer: () =>
-                      document.getElementById('xflow-container') as HTMLElement,
-                  },
-                }}
-              >
-                {nodeSetting?.title}
-              </Text>
+              />
             </div>
           }
           key={node?.id}

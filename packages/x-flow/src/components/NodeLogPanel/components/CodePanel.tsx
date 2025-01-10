@@ -2,9 +2,9 @@ import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
 import { json } from '@codemirror/lang-json';
 import { EditorView } from '@codemirror/view';
 import CodeMirror from '@uiw/react-codemirror';
-import { Typography } from 'antd';
 import { isString } from 'lodash';
 import React, { memo, useState } from 'react';
+import TextEllipsis from '../../TextEllipsis';
 
 export default memo((props: any) => {
   const { codeData } = props;
@@ -29,23 +29,10 @@ export default memo((props: any) => {
     <div className="log-code-panel">
       <div className="log-code-title">
         {isRenderTitle ? (
-          <Typography.Text
+          <TextEllipsis
+            text={codeData?.title}
             className="log-code-title-text"
-            ellipsis={{
-              tooltip: {
-                title: codeData?.title,
-                color: '#ffff',
-                overlayInnerStyle: {
-                  color: '#354052',
-                  fontSize: '12px',
-                },
-                getPopupContainer: () =>
-                  document.getElementById('xflow-container') as HTMLElement,
-              },
-            }}
-          >
-            {codeData?.title}
-          </Typography.Text>
+          />
         ) : (
           <>{codeData?.title}</>
         )}

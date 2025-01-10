@@ -1,13 +1,13 @@
-import { Space, Typography } from 'antd';
+import { Space } from 'antd';
 import classNames from 'classnames';
 import React, { memo } from 'react';
 import { shallow } from 'zustand/shallow';
 import SourceHandle from '../../components/CustomNode/sourceHandle';
+import TextEllipsis from '../../components/TextEllipsis';
 import { useStore } from '../../hooks/useStore';
 import { uuid } from '../../utils';
 import './index.less';
 
-const { Paragraph } = Typography;
 
 export default memo((props: any) => {
   const {
@@ -44,26 +44,7 @@ export default memo((props: any) => {
     return (
       <div className="item-header">
         <div className="item-title">
-          {title && (
-            <Paragraph
-              className="item-content-in"
-              ellipsis={{
-                rows: 1,
-                tooltip: {
-                  title: item?.title,
-                  color: '#ffff',
-                  overlayInnerStyle: {
-                    color: '#354052',
-                    fontSize: '12px',
-                  },
-                  getPopupContainer: () =>
-                    document.getElementById('xflow-container'),
-                },
-              }}
-            >
-              {title}
-            </Paragraph>
-          )}
+          {title && <TextEllipsis text={title} rows={1} type="paragraph" />}
         </div>
         <SourceHandle
           position={position}
@@ -93,26 +74,7 @@ export default memo((props: any) => {
           <CustomNodeWidget data={item} index={index} />
         ) : (
           <>
-            {value && (
-              <Paragraph
-                className="item-content-in"
-                ellipsis={{
-                  rows: 5,
-                  tooltip: {
-                    title: item?.value,
-                    color: '#ffff',
-                    overlayInnerStyle: {
-                      color: '#354052',
-                      fontSize: '12px',
-                    },
-                    getPopupContainer: () =>
-                      document.getElementById('xflow-container'),
-                  },
-                }}
-              >
-                {value}
-              </Paragraph>
-            )}
+            {value && <TextEllipsis text={value} rows={5} type="paragraph" />}
           </>
         )}
       </div>
