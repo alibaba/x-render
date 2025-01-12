@@ -18,11 +18,17 @@ const Control = (props: any) => {
   const hideAddNode = globalConfig?.controls?.hideAddNode ?? false;
   const hideAnnotate = globalConfig?.controls?.hideAnnotate ?? false;
 
+  const { setIsAddingNode, panOnDrag } = useStore(s => ({
+    setIsAddingNode: s.setIsAddingNode,
+    panOnDrag: s.panOnDrag,
+  }));
+
   const addNote = (e: MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
+    setIsAddingNode(true);
+    addNode({ _nodeType: 'Note' });
   };
   const storeApi = useStoreApi();
-  const panOnDrag = useStore(s => s.panOnDrag);
 
   const { eventEmitter } = useEventEmitterContextContext();
 
@@ -31,7 +37,7 @@ const Control = (props: any) => {
   };
 
   return (
-    <div className='fai-reactflow-control'>
+    <div className="fai-reactflow-control">
       {!hideAddNode && (
         <NodeSelectPopover addNode={addNode}>
           <Tooltip
@@ -63,14 +69,19 @@ const Control = (props: any) => {
           />
         </Tooltip>
       )}
-      {!(hideAddNode && hideAnnotate) && <div className='separator'></div>}
-      <Tooltip title='指针模式' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
+      {!(hideAddNode && hideAnnotate) && <div className="separator"></div>}
+      <Tooltip
+        title="指针模式"
+        getPopupContainer={() =>
+          document.getElementById('xflow-container') as HTMLElement
+        }
+      >
         <Button
-          type='text'
+          type="text"
           icon={
             <IconView
-              type='icon-zhizhen'
-              className='icon'
+              type="icon-zhizhen"
+              className="icon"
               style={{
                 color: !panOnDrag ? 'rgb(21,94,239)' : '#666F83',
                 fontSize: '14px',
@@ -81,13 +92,18 @@ const Control = (props: any) => {
           style={{ backgroundColor: !panOnDrag ? 'rgb(239,244,255)' : '' }}
         />
       </Tooltip>
-      <Tooltip title='手模式' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
+      <Tooltip
+        title="手模式"
+        getPopupContainer={() =>
+          document.getElementById('xflow-container') as HTMLElement
+        }
+      >
         <Button
-          type='text'
+          type="text"
           icon={
             <IconView
-              type='icon-xianxingshouzhangtubiao'
-              className='icon'
+              type="icon-xianxingshouzhangtubiao"
+              className="icon"
               style={{
                 color: panOnDrag ? 'rgb(21,94,239)' : '#666F83',
               }}
@@ -100,20 +116,36 @@ const Control = (props: any) => {
           }}
         />
       </Tooltip>
-      <div className='separator'></div>
-      <Tooltip title='整理画布' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
+      <div className="separator"></div>
+      <Tooltip
+        title="整理画布"
+        getPopupContainer={() =>
+          document.getElementById('xflow-container') as HTMLElement
+        }
+      >
         <Button
-          type='text'
-          icon={<IconView type='icon-function-add-line1' className='icon' />}
+          type="text"
+          icon={<IconView type="icon-function-add-line1" className="icon" />}
           onClick={() => {
             eventEmitter?.emit({ type: 'auto-layout-nodes' } as any);
           }}
         />
       </Tooltip>
-      <Tooltip title='画布全屏' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
+      <Tooltip
+        title="画布全屏"
+        getPopupContainer={() =>
+          document.getElementById('xflow-container') as HTMLElement
+        }
+      >
         <Button
-          type='text'
-          icon={<IconView type={isFullscreen ? 'icon-fullscreen-exit' : 'icon-fullscreen'} className='icon'  style={{fontSize:'14px'}}/>}
+          type="text"
+          icon={
+            <IconView
+              type={isFullscreen ? 'icon-fullscreen-exit' : 'icon-fullscreen'}
+              className="icon"
+              style={{ fontSize: '14px' }}
+            />
+          }
           onClick={toggleFullscreen}
         />
       </Tooltip>

@@ -29,21 +29,23 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, copyNode, pasteNode, deleteNode, mousePosition } = useStore(
-    (state: any) => ({
-      nodes: state.nodes,
-      edges: state.edges,
-      mousePosition: state.mousePosition,
-      addNodes: state.addNodes,
-      addEdges: state.addEdges,
-      copyNode: state.copyNode,
-      pasteNode: state.pasteNode,
-      deleteNode: state.deleteNode,
-      onEdgesChange: state.onEdgesChange,
-    }),
-    shallow
-  );
-  const isSwitchNode = type === 'Switch' || type === 'Parallel'; // 判断是否为条件节点/并行节点
+  const { addNodes, addEdges, copyNode, pasteNode, deleteNode, mousePosition } =
+    useStore(
+      (state: any) => ({
+        nodes: state.nodes,
+        edges: state.edges,
+        mousePosition: state.mousePosition,
+        addNodes: state.addNodes,
+        addEdges: state.addEdges,
+        copyNode: state.copyNode,
+        pasteNode: state.pasteNode,
+        deleteNode: state.deleteNode,
+        onEdgesChange: state.onEdgesChange,
+      }),
+      shallow
+    );
+  const isNote = type === 'Note';
+  const isSwitchNode = type === 'Switch' || type === 'Parallel' || isNote; // 判断是否为条件节点/并行节点/注释节点
   // 增加节点并进行联系
   const handleAddNode = (data: any, sourceHandle?: string) => {
     const { screenToFlowPosition } = reactflow;
@@ -231,18 +233,18 @@ export default memo((props: any) => {
       overlay: menu,
     };
   }, [menuItem]);
-
   return (
     <div
       className={classNames('xflow-node-container', {
         ['xflow-node-container-selected']: !!selected,
         ['xflow-node-container-tb']: layout === 'TB',
+        ['xflow-node-container-note']: isNote,
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ '--nodeBorderColor': nodeBorderColor } as React.CSSProperties}
     >
-      {!settingMap?.[type]?.targetHandleHidden && (
+      {!settingMap?.[type]?.targetHandleHidden && !isNote && (
         <Handle
           type="target"
           position={targetPosition}
@@ -289,4 +291,3 @@ export default memo((props: any) => {
     </div>
   );
 });
-
