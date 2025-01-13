@@ -41,13 +41,8 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     openLogPanel,
   } = props;
   // 1.获取节点配置信息
-  const {
-    settingMap,
-    iconFontUrl,
-    globalConfig,
-    antdVersion,
-    readOnly,
-  }: any = useContext(ConfigContext);
+  const { settingMap, iconFontUrl, globalConfig, antdVersion, readOnly }: any =
+    useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
     (state: any) => ({
@@ -179,7 +174,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
               ) : (
                 <Input.TextArea
                   placeholder="添加描述..."
-                  autoSize={{ minRows: 1 }}
+                  autoSize={{ minRows: 1, maxRows: 3 }}
                   value={descVal}
                   onChange={e => {
                     setDescVal(e.target.value);
