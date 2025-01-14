@@ -16,8 +16,14 @@ import SourceHandle from './sourceHandle';
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick, status } =
     props;
-  const { widgets, settingMap, globalConfig, onMenuItemClick, antdVersion,readOnly } =
-    useContext(ConfigContext);
+  const {
+    widgets,
+    settingMap,
+    globalConfig,
+    onMenuItemClick,
+    antdVersion,
+    readOnly,
+  } = useContext(ConfigContext);
   const deletable = globalConfig?.edge?.deletable ?? true;
   const disabledCopy = settingMap[type]?.disabledCopy ?? false;
   const disabledDelete = settingMap[type]?.disabledDelete ?? false;
@@ -46,6 +52,8 @@ export default memo((props: any) => {
     );
   const isNote = type === 'Note';
   const isSwitchNode = type === 'Switch' || type === 'Parallel' || isNote; // 判断是否为条件节点/并行节点/注释节点
+  const connectable = readOnly ? false : isConnectable;
+
   // 增加节点并进行联系
   const handleAddNode = (data: any, sourceHandle?: string) => {
     const { screenToFlowPosition } = reactflow;
@@ -248,29 +256,31 @@ export default memo((props: any) => {
         <Handle
           type="target"
           position={targetPosition}
-          isConnectable={isConnectable}
+          isConnectable={connectable}
           // isConnectableStart={isConnectableStart}
           // isConnectableEnd={isConnectableEnd}
         />
       )}
-      <Dropdown
-        disabled={readOnly}
-        {...dropdownVersionProps}
-        //trigger={['click', 'contextMenu']}
-      >
-        <div className="xflow-node-actions-container">
-          <MoreOutlined
-            style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
-          ></MoreOutlined>
-        </div>
-      </Dropdown>
+      {!readOnly && (
+        <Dropdown
+          disabled={readOnly}
+          {...dropdownVersionProps}
+          //trigger={['click', 'contextMenu']}
+        >
+          <div className="xflow-node-actions-container">
+            <MoreOutlined
+              style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
+            ></MoreOutlined>
+          </div>
+        </Dropdown>
+      )}
       <NodeWidget
         id={id}
         type={type}
         data={data}
         onClick={() => onClick(data)}
         position={sourcePosition}
-        isConnectable={isConnectable}
+        isConnectable={connectable}
         selected={selected}
         isHovered={isHovered}
         handleAddNode={handleAddNode}
@@ -279,7 +289,7 @@ export default memo((props: any) => {
         <>
           <SourceHandle
             position={sourcePosition}
-            isConnectable={isConnectable}
+            isConnectable={connectable}
             selected={selected}
             isHovered={isHovered}
             handleAddNode={handleAddNode}

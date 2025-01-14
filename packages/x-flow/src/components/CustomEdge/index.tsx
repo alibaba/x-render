@@ -36,7 +36,7 @@ export default memo((edge: any) => {
     targetY,
   });
 
-  const { globalConfig, settingMap,readOnly } = useContext(ConfigContext);
+  const { globalConfig, settingMap, readOnly } = useContext(ConfigContext);
   const hideEdgeAddBtn = globalConfig?.edge?.hideEdgeAddBtn ?? false;
   const hideEdgeDelBtn = globalConfig?.edge?.hideEdgeDelBtn ?? false;
   const deletable = globalConfig?.edge?.deletable ?? true;
@@ -91,13 +91,13 @@ export default memo((edge: any) => {
             id: uuid(),
             source,
             target: targetId,
-            deletable:deletable,
+            deletable: deletable,
             ...(sourceHandleId && { sourceHandle: sourceHandleId }),
           },
           {
             id: uuid(),
             source: targetId,
-            deletable:deletable,
+            deletable: deletable,
             target,
           },
         ]
@@ -139,20 +139,20 @@ export default memo((edge: any) => {
                 }}
               >
                 <div className="line-content">
-                  {!hideEdgeDelBtn && (
+                  {!hideEdgeDelBtn && !readOnly && (
                     <div
                       className="line-icon-box"
                       onClick={() => {
-                        if(readOnly){
-                          return
+                        if (readOnly) {
+                          return;
                         }
-                        onEdgesChange([{ id, type: 'remove' }])
+                        onEdgesChange([{ id, type: 'remove' }]);
                       }}
                     >
                       <CloseOutlined style={{ color: '#fff', fontSize: 10 }} />
                     </div>
                   )}
-                  {!hideEdgeAddBtn && (
+                  {!hideEdgeAddBtn && !readOnly && (
                     <NodeSelectPopover
                       placement="right"
                       addNode={handleAddNode}

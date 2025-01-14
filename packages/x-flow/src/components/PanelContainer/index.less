@@ -5,6 +5,14 @@
     right: 12px;
     border-radius: 20px;
     height: auto; // 兼容antd4
+
+    .ant-drawer-header-title,
+    .ant-drawer-title {
+      width: 100%;
+      .title-box > div:first-child {
+        max-width: 85%;
+      }
+    }
   }
 
   .ant-drawer-close {
@@ -27,6 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     .ant-input {
       border-color: #fff;
       font-weight: 600;
@@ -63,11 +72,20 @@
     font-size: 12px;
     line-height: 32px;
     font-weight: normal;
+
     .ant-input-outlined {
       border-color: #fff;
     }
+
     textarea {
       margin-top: 12px;
+    }
+
+    .readOnly-desc {
+      line-height: 20px;
+      color: #676f83;
+      font-size: 12px;
+      margin-top: 10px;
     }
   }
 
@@ -109,21 +127,26 @@
     font-weight: 600;
   }
 
-  .ant-table-thead >tr>th {
+  .ant-table-thead > tr > th {
     font-size: 12px;
     font-weight: normal;
   }
 
-  .ant-table-tbody>tr>td {
+  .ant-table-tbody > tr > td {
     padding: 4px !important;
   }
 
-  input, select, textarea, .ant-select-selector {
+  input,
+  select,
+  textarea,
+  .ant-select-selector {
     font-size: 12px !important;
     min-height: 30px;
   }
 
-  input, select, .ant-select-selector {
+  input,
+  select,
+  .ant-select-selector {
     height: 30px !important;
     line-height: 30px !important;
   }

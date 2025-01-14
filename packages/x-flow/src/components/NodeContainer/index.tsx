@@ -27,7 +27,7 @@ export default memo((props: any) => {
   const renderDesc = () => (
     <>
       {!hideDesc && !!desc && (
-        <TextEllipsis text={desc} rows={2} type="paragraph" />
+        <TextEllipsis text={desc} rows={2} type="paragraph" className='node-desc' />
       )}
     </>
   );

@@ -13,7 +13,7 @@ import './index.less';
 const Control = (props: any) => {
   const { addNode, xflowRef } = props;
   const [isFullscreen, { toggleFullscreen }] = useFullscreen(xflowRef);
-  const { globalConfig } = useContext(ConfigContext);
+  const { globalConfig, readOnly } = useContext(ConfigContext);
 
   const hideAddNode = globalConfig?.controls?.hideAddNode ?? false;
   const hideAnnotate = globalConfig?.controls?.hideAnnotate ?? false;
@@ -38,7 +38,7 @@ const Control = (props: any) => {
 
   return (
     <div className="fai-reactflow-control">
-      {!hideAddNode && (
+      {!hideAddNode && !readOnly && (
         <NodeSelectPopover addNode={addNode}>
           <Tooltip
             title="添加节点"
@@ -53,7 +53,7 @@ const Control = (props: any) => {
           </Tooltip>
         </NodeSelectPopover>
       )}
-      {!hideAnnotate && (
+      {!hideAnnotate && !readOnly && (
         <Tooltip
           title="添加注释"
           getPopupContainer={() =>
@@ -69,7 +69,7 @@ const Control = (props: any) => {
           />
         </Tooltip>
       )}
-      {!(hideAddNode && hideAnnotate) && <div className="separator"></div>}
+      {!(hideAddNode && hideAnnotate) && !readOnly && <div className="separator"></div>}
       <Tooltip
         title="指针模式"
         getPopupContainer={() =>

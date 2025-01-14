@@ -51,7 +51,6 @@ const TextEllipsis: FC<ITextEllipsisProps> = ({
       if (type === 'paragraph') {
         const { offsetHeight, scrollHeight, clientHeight } =
           typographyRef.current;
-        console.log('88888', scrollHeight, offsetHeight, clientHeight);
         setIsEllipse(scrollHeight > clientHeight);
       } else {
         const isEllipse = isEleEllipsis(typographyRef?.current);
