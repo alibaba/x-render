@@ -247,6 +247,7 @@ export default memo((props: any) => {
         ['xflow-node-container-selected']: !!selected,
         ['xflow-node-container-tb']: layout === 'TB',
         ['xflow-node-container-note']: isNote,
+        [`xflow-node-container-status-${status}`]: status,
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

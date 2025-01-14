@@ -1,15 +1,22 @@
-import { CheckOutlined, CopyOutlined } from '@ant-design/icons';
+import {
+  ArrowsAltOutlined,
+  CheckOutlined,
+  CopyOutlined,
+  ShrinkOutlined,
+} from '@ant-design/icons';
 import { json } from '@codemirror/lang-json';
 import { EditorView } from '@codemirror/view';
 import CodeMirror from '@uiw/react-codemirror';
+import classNames from 'classnames';
 import { isString } from 'lodash';
 import React, { memo, useState } from 'react';
 import TextEllipsis from '../../TextEllipsis';
 
 export default memo((props: any) => {
-  const { codeData } = props;
+  const { codeData, onFullScreenChange } = props;
   const [isCopy, setIsCopy] = useState(false);
   const isRenderTitle = isString(codeData?.title);
+  const [isFullScreen, setIsFullScreen] = useState(false);
 
   const copyCode = () => {
     navigator.clipboard
@@ -26,7 +33,7 @@ export default memo((props: any) => {
   };
 
   return (
-    <div className="log-code-panel">
+    <div className={classNames('log-code-panel', { ['log-code-panel-full']: isFullScreen })}>
       <div className="log-code-title">
         {isRenderTitle ? (
           <TextEllipsis
@@ -36,18 +43,37 @@ export default memo((props: any) => {
         ) : (
           <>{codeData?.title}</>
         )}
-        {isCopy ? (
-          <CheckOutlined className="log-code-copy" />
-        ) : (
-          <CopyOutlined className="log-code-copy" onClick={copyCode} />
-        )}
+        <div>
+          {isCopy ? (
+            <CheckOutlined className="log-code-copy" />
+          ) : (
+            <CopyOutlined className="log-code-copy" onClick={copyCode} />
+          )}
+          {isFullScreen ? (
+            <ShrinkOutlined
+              onClick={() => {
+                setIsFullScreen(false);
+                onFullScreenChange(false);
+              }}
+              className="log-code-copy"
+            />
+          ) : (
+            <ArrowsAltOutlined
+              onClick={() => {
+                setIsFullScreen(true);
+                onFullScreenChange(true);
+              }}
+              className="log-code-copy"
+            />
+          )}
+        </div>
       </div>
       <CodeMirror
         value={codeData?.code}
         className="log-code-editor"
         extensions={[json(), EditorView.lineWrapping]}
-        height="172px"
         minHeight="172px"
+        maxHeight="58vh"
         width="100%"
         theme="none"
         readOnly={true}

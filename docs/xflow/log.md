@@ -34,7 +34,7 @@ group:
     {value: 'warning',color: '#faad14',name: '告警'}
   ]
   ```
- - **自定义状态**:可通过`globalConfig.nodeView.status`自定义节点状态，同名可覆盖内置状态颜色。
+ - **自定义状态**:可通过`globalConfig.nodeView.status`自定义节点状态，同名可覆盖内置状态颜色。注意:`value`只能为`string`类型！
     ```js
       globalConfig={{
           nodeView: {

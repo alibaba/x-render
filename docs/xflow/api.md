@@ -69,6 +69,8 @@ title: API
 | logList   | 日志面板数据        | [TLogListItem](#tloglistitem) |        |
 | loading   | 日志面板loading效果 | `boolean`                     | false  |
 | logWidget | 自定义日志面板展示  | `string`                      |        |
+| width | 日志面板宽度 | `number`                      | 400       |
+
 
 ## TLogListItem
 
