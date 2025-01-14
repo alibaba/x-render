@@ -31,7 +31,6 @@ export default memo((props: ITrackNodeItemProps) => {
   const statusObj = transformNodeStatus(status || []);
   const statusData = statusObj[nodeStatus];
 
-  console.log('测试', nodeSetting, props);
   return (
     <div className="log-track-node">
       <Collapse
@@ -89,7 +88,7 @@ export default memo((props: ITrackNodeItemProps) => {
         >
           {logTrackList?.length ? (
             (logTrackList || [])?.map((item, index) => (
-              <CodePanel codeData={item} key={index} />
+              <CodePanel codeData={item} key={index} isShowFullScreen={false} />
             ))
           ) : (
             <Empty

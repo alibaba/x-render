@@ -8,6 +8,7 @@ import {
   cloneDeep,
   get,
   isMatch,
+  isNil,
   isUndefined,
   merge,
   mergeWith,
@@ -299,7 +300,7 @@ export const transformNodeStatus = (statusList = []) => {
   const obj: Record<string, any> = {};
   statusList?.forEach(
     (status: { name: string; color: string; value: string }) => {
-      if (status?.value && status?.color)
+      if (isTruthy(status?.value) && status?.color)
         obj[status.value] = {
           color: status.color,
           name: status?.name,
@@ -323,4 +324,15 @@ export function getTransparentColor(colorInput: string, alpha: number) {
   color.setAlpha(alphaNum);
   // 返回 RGBA 格式的颜色字符串
   return color.toRgbString();
+}
+
+export function isTruthy(value: any) {
+  if (isNil(value)) {
+    return false;
+  }
+
+  if (isNumber(value) && value === 0) {
+    return true;
+  }
+  return Boolean(value);
 }

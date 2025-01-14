@@ -13,7 +13,7 @@ import React, { memo, useState } from 'react';
 import TextEllipsis from '../../TextEllipsis';
 
 export default memo((props: any) => {
-  const { codeData, onFullScreenChange } = props;
+  const { codeData, onFullScreenChange, isShowFullScreen = true } = props;
   const [isCopy, setIsCopy] = useState(false);
   const isRenderTitle = isString(codeData?.title);
   const [isFullScreen, setIsFullScreen] = useState(false);
@@ -33,7 +33,11 @@ export default memo((props: any) => {
   };
 
   return (
-    <div className={classNames('log-code-panel', { ['log-code-panel-full']: isFullScreen })}>
+    <div
+      className={classNames('log-code-panel', {
+        ['log-code-panel-full']: isFullScreen,
+      })}
+    >
       <div className="log-code-title">
         {isRenderTitle ? (
           <TextEllipsis
@@ -49,23 +53,25 @@ export default memo((props: any) => {
           ) : (
             <CopyOutlined className="log-code-copy" onClick={copyCode} />
           )}
-          {isFullScreen ? (
-            <ShrinkOutlined
-              onClick={() => {
-                setIsFullScreen(false);
-                onFullScreenChange(false);
-              }}
-              className="log-code-copy"
-            />
-          ) : (
-            <ArrowsAltOutlined
-              onClick={() => {
-                setIsFullScreen(true);
-                onFullScreenChange(true);
-              }}
-              className="log-code-copy"
-            />
-          )}
+          {isFullScreen
+            ? isShowFullScreen && (
+                <ShrinkOutlined
+                  onClick={() => {
+                    setIsFullScreen(false);
+                    onFullScreenChange && onFullScreenChange(false);
+                  }}
+                  className="log-code-copy"
+                />
+              )
+            : isShowFullScreen && (
+                <ArrowsAltOutlined
+                  onClick={() => {
+                    setIsFullScreen(true);
+                    onFullScreenChange && onFullScreenChange(true);
+                  }}
+                  className="log-code-copy"
+                />
+              )}
         </div>
       </div>
       <CodeMirror

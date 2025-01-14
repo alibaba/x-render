@@ -29,7 +29,7 @@ import { useStore, useStoreApi } from './hooks/useStore';
 
 import Operator from './operator';
 import FlowProps from './types';
-import { uuid, uuid4 } from './utils';
+import { isTruthy, uuid, uuid4 } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 
 import { shallow } from 'zustand/shallow';
@@ -268,7 +268,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   }, [activeNode?.id]);
 
   const deletable = globalConfig?.edge?.deletable ?? true;
-  const panelonClose = globalConfig?.nodePanel?.onClose
+  const panelonClose = globalConfig?.nodePanel?.onClose;
 
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
@@ -339,7 +339,7 @@ const XFlow: FC<FlowProps> = memo(props => {
             onClose={() => {
               setOpenPanel(false);
               // 如果日志面板关闭
-              if (!activeNode?._status || !openLogPanel) {
+              if (!isTruthy(activeNode?._status) || !openLogPanel) {
                 setActiveNode(null);
               }
               if(isFunction(panelonClose)){
@@ -353,7 +353,7 @@ const XFlow: FC<FlowProps> = memo(props => {
             {NodeEditorWrap}
           </PanelContainer>
         )}
-        {activeNode?._status && openLogPanel && (
+        {isTruthy(activeNode?._status) && openLogPanel && (
           <PanelStatusLogContainer
             id={activeNode?.id}
             nodeType={activeNode?._nodeType}

@@ -9,7 +9,13 @@ import React, { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { capitalize, transformNodeStatus, uuid, uuid4 } from '../../utils';
+import {
+  capitalize,
+  isTruthy,
+  transformNodeStatus,
+  uuid,
+  uuid4,
+} from '../../utils';
 import './index.less';
 import SourceHandle from './sourceHandle';
 
@@ -247,7 +253,7 @@ export default memo((props: any) => {
         ['xflow-node-container-selected']: !!selected,
         ['xflow-node-container-tb']: layout === 'TB',
         ['xflow-node-container-note']: isNote,
-        [`xflow-node-container-status-${status}`]: status,
+        [`xflow-node-container-status-${status}`]: isTruthy(status),
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

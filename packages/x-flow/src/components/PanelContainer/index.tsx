@@ -5,7 +5,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { safeJsonStringify } from '../../utils';
+import { isTruthy, safeJsonStringify } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import TextEllipsis from '../TextEllipsis';
@@ -40,8 +40,14 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     openLogPanel,
   } = props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, globalConfig, antdVersion, readOnly, logPanel }: any =
-    useContext(ConfigContext);
+  const {
+    settingMap,
+    iconFontUrl,
+    globalConfig,
+    antdVersion,
+    readOnly,
+    logPanel,
+  }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
     (state: any) => ({
@@ -56,8 +62,10 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const { nodePanel, iconSvg, onTesting } = nodeSetting;
   const hideDesc =
     nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
-  const isShowStatusPanel = Boolean(node?._status && openLogPanel);
-  const offsetRightStatus = isNumber(logPanel?.width) ? Number(logPanel?.width + 10) : 410;
+  const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
+  const offsetRightStatus = isNumber(logPanel?.width)
+    ? Number(logPanel?.width + 10)
+    : 410;
 
   const handleNodeValueChange = debounce((data: any) => {
     const newNodes = produce(nodes, draft => {
