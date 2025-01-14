@@ -32,9 +32,10 @@ export default memo((props: any) => {
 
   const renderTitle = (item, index) => {
     const defTitle = item?.title || `条件${index}`;
-    const title = switchExtra?.titleKey
-      ? item[switchExtra?.titleKey]
-      : defTitle;
+    // const title = switchExtra?.titleKey
+    //   ? item[switchExtra?.titleKey]
+    //   : defTitle;
+    const title = item[switchExtra?.titleKey] ?? defTitle;
     return (
       <div className="item-header">
         <div className="item-title">{title}</div>
@@ -66,9 +67,9 @@ export default memo((props: any) => {
         {CustomNodeWidget ? (
           <CustomNodeWidget data={item} index={index} />
         ) : (
-          <>
-            {value && <TextEllipsis text={value} rows={5} type="paragraph" />}
-          </>
+            <div>
+              {value && <div className='item-content-in'><TextEllipsis text={value} rows={5} type="paragraph" /></div>}
+          </div>
         )}
       </div>
     );

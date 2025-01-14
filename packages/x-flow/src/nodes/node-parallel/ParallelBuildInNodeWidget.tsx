@@ -8,7 +8,6 @@ import { useStore } from '../../hooks/useStore';
 import { uuid } from '../../utils';
 import './index.less';
 
-
 export default memo((props: any) => {
   const {
     data,
@@ -38,13 +37,21 @@ export default memo((props: any) => {
 
   const renderTitle = (item, index) => {
     const defTitle = item?.title || `事件${index}`;
-    const title = parallelExtra?.titleKey
-      ? item[parallelExtra?.titleKey]
-      : defTitle;
+    // const title = parallelExtra?.titleKey
+    //   ? item[parallelExtra?.titleKey]
+    //   : defTitle;
+    const title = item[parallelExtra?.titleKey] ?? defTitle;
     return (
       <div className="item-header">
         <div className="item-title">
-          {title && <TextEllipsis text={title} rows={1} type="paragraph" />}
+          {title && (
+            <TextEllipsis
+              text={title}
+              // rows={1}
+              // type="paragraph"
+              className="item-content-in"
+            />
+          )}
         </div>
         <SourceHandle
           position={position}
@@ -73,9 +80,13 @@ export default memo((props: any) => {
         {CustomNodeWidget ? (
           <CustomNodeWidget data={item} index={index} />
         ) : (
-          <>
-            {value && <TextEllipsis text={value} rows={5} type="paragraph" />}
-          </>
+          <div>
+            {value && (
+              <div className="item-content-in">
+                <TextEllipsis text={value} rows={5} type="paragraph" />
+              </div>
+            )}
+          </div>
         )}
       </div>
     );
