@@ -1,7 +1,10 @@
 ---
 order: 1
-toc: content
-title: API
+title: 'API'
+mobile: false
+group: 
+  title: 'API'
+  order: 3
 ---
 # API
 

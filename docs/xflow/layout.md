@@ -1,9 +1,9 @@
 ---
-order: 5
+order: 6
 title: '画布布局'
 mobile: false
 group: 
-  title: 最佳展示
+  title: 高级用法
   order: 1
 ---
 # 布局方向
