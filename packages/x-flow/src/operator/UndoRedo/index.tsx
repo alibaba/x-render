@@ -17,7 +17,6 @@ export default memo(({ handleUndo, handleRedo, pastStates, futureStates }: UndoR
   if (readOnly) {
     return;
   }
-
   return (
     <div className='fai-reactflow-undoredo'>
       <Tooltip title='撤销' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>
