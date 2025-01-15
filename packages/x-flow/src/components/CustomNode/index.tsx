@@ -9,15 +9,27 @@ import React, { memo, useCallback, useContext, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { capitalize, transformNodeStatus, uuid, uuid4 } from '../../utils';
+import {
+  capitalize,
+  isTruthy,
+  transformNodeStatus,
+  uuid,
+  uuid4,
+} from '../../utils';
 import './index.less';
 import SourceHandle from './sourceHandle';
 
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick, status } =
     props;
-  const { widgets, settingMap, globalConfig, onMenuItemClick, antdVersion,readOnly } =
-    useContext(ConfigContext);
+  const {
+    widgets,
+    settingMap,
+    globalConfig,
+    onMenuItemClick,
+    antdVersion,
+    readOnly,
+  } = useContext(ConfigContext);
   const deletable = globalConfig?.edge?.deletable ?? true;
   const disabledCopy = settingMap[type]?.disabledCopy ?? false;
   const disabledDelete = settingMap[type]?.disabledDelete ?? false;
@@ -29,21 +41,25 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, copyNode, pasteNode, deleteNode, mousePosition } = useStore(
-    (state: any) => ({
-      nodes: state.nodes,
-      edges: state.edges,
-      mousePosition: state.mousePosition,
-      addNodes: state.addNodes,
-      addEdges: state.addEdges,
-      copyNode: state.copyNode,
-      pasteNode: state.pasteNode,
-      deleteNode: state.deleteNode,
-      onEdgesChange: state.onEdgesChange,
-    }),
-    shallow
-  );
-  const isSwitchNode = type === 'Switch' || type === 'Parallel'; // 判断是否为条件节点/并行节点
+  const { addNodes, addEdges, copyNode, pasteNode, deleteNode, mousePosition } =
+    useStore(
+      (state: any) => ({
+        nodes: state.nodes,
+        edges: state.edges,
+        mousePosition: state.mousePosition,
+        addNodes: state.addNodes,
+        addEdges: state.addEdges,
+        copyNode: state.copyNode,
+        pasteNode: state.pasteNode,
+        deleteNode: state.deleteNode,
+        onEdgesChange: state.onEdgesChange,
+      }),
+      shallow
+    );
+  const isNote = type === 'Note';
+  const isSwitchNode = type === 'Switch' || type === 'Parallel' || isNote; // 判断是否为条件节点/并行节点/注释节点
+  const connectable = readOnly ? false : isConnectable;
+
   // 增加节点并进行联系
   const handleAddNode = (data: any, sourceHandle?: string) => {
     const { screenToFlowPosition } = reactflow;
@@ -231,44 +247,47 @@ export default memo((props: any) => {
       overlay: menu,
     };
   }, [menuItem]);
-
   return (
     <div
       className={classNames('xflow-node-container', {
         ['xflow-node-container-selected']: !!selected,
         ['xflow-node-container-tb']: layout === 'TB',
+        ['xflow-node-container-note']: isNote,
+        [`xflow-node-container-status-${status}`]: isTruthy(status),
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       style={{ '--nodeBorderColor': nodeBorderColor } as React.CSSProperties}
     >
-      {!settingMap?.[type]?.targetHandleHidden && (
+      {!settingMap?.[type]?.targetHandleHidden && !isNote && (
         <Handle
           type="target"
           position={targetPosition}
-          isConnectable={isConnectable}
+          isConnectable={connectable}
           // isConnectableStart={isConnectableStart}
           // isConnectableEnd={isConnectableEnd}
         />
       )}
-      <Dropdown
-        disabled={readOnly}
-        {...dropdownVersionProps}
-        //trigger={['click', 'contextMenu']}
-      >
-        <div className="xflow-node-actions-container">
-          <MoreOutlined
-            style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
-          ></MoreOutlined>
-        </div>
-      </Dropdown>
+      {!readOnly && (
+        <Dropdown
+          disabled={readOnly}
+          {...dropdownVersionProps}
+          //trigger={['click', 'contextMenu']}
+        >
+          <div className="xflow-node-actions-container">
+            <MoreOutlined
+              style={{ transform: 'rotateZ(90deg)', fontSize: '20px' }}
+            ></MoreOutlined>
+          </div>
+        </Dropdown>
+      )}
       <NodeWidget
         id={id}
         type={type}
         data={data}
         onClick={() => onClick(data)}
         position={sourcePosition}
-        isConnectable={isConnectable}
+        isConnectable={connectable}
         selected={selected}
         isHovered={isHovered}
         handleAddNode={handleAddNode}
@@ -277,7 +296,7 @@ export default memo((props: any) => {
         <>
           <SourceHandle
             position={sourcePosition}
-            isConnectable={isConnectable}
+            isConnectable={connectable}
             selected={selected}
             isHovered={isHovered}
             handleAddNode={handleAddNode}
@@ -289,4 +308,3 @@ export default memo((props: any) => {
     </div>
   );
 });
-

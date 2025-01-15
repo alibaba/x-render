@@ -1,34 +1,17 @@
-import { Badge, Divider, Space, Typography } from 'antd';
+import { Badge, Divider, Space } from 'antd';
 import classNames from 'classnames';
 import { isString } from 'lodash';
 import React, { memo, useContext } from 'react';
 import { ConfigContext } from '../../../models/context';
 import { getTransparentColor, transformNodeStatus } from '../../../utils';
+import TextEllipsis from '../../TextEllipsis';
 import '../index.less';
-
-const { Text, Paragraph } = Typography;
 
 const StatusItem = ({ title, content, isBadge, color, colorLabel }) => {
   return (
     <div className="log-status-item">
       <Space style={{ width: '100%' }} direction="vertical" size={2}>
-        <Text
-          className="log-status-item-title"
-          ellipsis={{
-            tooltip: {
-              title: title,
-              color: '#ffff',
-              overlayInnerStyle: {
-                color: '#354052',
-                fontSize: '12px',
-              },
-              getPopupContainer: () =>
-                document.getElementById('xflow-container') as HTMLElement,
-            },
-          }}
-        >
-          {title}
-        </Text>
+        <TextEllipsis text={title} className="log-status-item-title" />
         {isBadge ? (
           <Badge
             color={color}
@@ -36,23 +19,7 @@ const StatusItem = ({ title, content, isBadge, color, colorLabel }) => {
             className="log-status-item-badge"
           />
         ) : (
-          <Text
-            className="log-status-item-content"
-            ellipsis={{
-              tooltip: {
-                title: title,
-                color: '#ffff',
-                overlayInnerStyle: {
-                  color: '#354052',
-                  fontSize: '12px',
-                },
-                getPopupContainer: () =>
-                  document.getElementById('xflow-container') as HTMLElement,
-              },
-            }}
-          >
-            {content}
-          </Text>
+          <TextEllipsis text={content} className="log-status-item-content" />
         )}
       </Space>
     </div>
@@ -73,11 +40,13 @@ export default memo((props: any) => {
   return (
     <div
       className="log-status-panel"
-      style={{
-        '--status-color': statusColor,
-        '--status-bg-color': bgColor,
-        '--status-box-shadow': boxShadowColor,
-      } as React.CSSProperties}
+      style={
+        {
+          '--status-color': statusColor,
+          '--status-bg-color': bgColor,
+          '--status-box-shadow': boxShadowColor,
+        } as React.CSSProperties
+      }
     >
       <div
         className={classNames('log-status-panel-wrap', {
@@ -101,25 +70,12 @@ export default memo((props: any) => {
       {renderData?.extra && (
         <div className="log-status-panel-extra">
           {isString(renderData?.extra) ? (
-            <Paragraph
-              ellipsis={{
-                rows: 3,
-                tooltip: {
-                  title: renderData?.extra,
-                  placement: 'bottomRight',
-                  color: '#ffff',
-                  overlayInnerStyle: {
-                    color: '#354052',
-                    fontSize: '12px',
-                  },
-                  getPopupContainer: () =>
-                    document.getElementById('xflow-container') as HTMLElement,
-                },
-              }}
+            <TextEllipsis
+              text={renderData?.extra}
               className="log-status-panel-extra-text"
-            >
-              {renderData?.extra}
-            </Paragraph>
+              type="paragraph"
+              rows={3}
+            />
           ) : (
             <>{renderData?.extra}</>
           )}

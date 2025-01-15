@@ -1,13 +1,14 @@
 import { Divider, Drawer, Input, Space } from 'antd';
 import produce from 'immer';
-import { debounce } from 'lodash';
+import { debounce, isNumber } from 'lodash';
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { safeJsonStringify } from '../../utils';
+import { isTruthy, safeJsonStringify } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
+import TextEllipsis from '../TextEllipsis';
 import './index.less';
 
 interface IPanelProps {
@@ -20,7 +21,6 @@ interface IPanelProps {
     _nodeType: string;
     _status?: string | undefined;
   };
-  description?: string; // 业务描述---to do ：确认一下取的地方---从data里面取？
   children?: any;
   id: string;
   data: any; // data值
@@ -35,7 +35,6 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     nodeType,
     disabled,
     node,
-    description,
     id,
     data,
     openLogPanel,
@@ -47,6 +46,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     globalConfig,
     antdVersion,
     readOnly,
+    logPanel,
   }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
@@ -56,15 +56,17 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     }),
     shallow
   );
-  const isDisabled = ['Input', 'Output'].includes(nodeType) || disabled;
+  const isDisabled = disabled; // 目前没用
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
   const { nodePanel, iconSvg, onTesting } = nodeSetting;
   const hideDesc =
     nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
-  const isShowStatusPanel = Boolean(node?._status && openLogPanel);
+  const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
+  const offsetRightStatus = isNumber(logPanel?.width)
+    ? Number(logPanel?.width + 10)
+    : 410;
 
-  // const description = getDescription(nodeType, props.description);
   const handleNodeValueChange = debounce((data: any) => {
     const newNodes = produce(nodes, draft => {
       let node = null;
@@ -115,7 +117,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       headerStyle={{ paddingBottom: '12px' }}
       style={{
         position: 'absolute',
-        right: isShowStatusPanel ? 410 : 0,
+        right: isShowStatusPanel ? offsetRightStatus : 0,
       }}
       title={
         <>
@@ -135,7 +137,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 )}
               </span>
               {isDisabled || readOnly ? (
-                <span style={{ marginLeft: '11px' }}>{titleVal}</span>
+                <TextEllipsis text={titleVal} style={{ marginLeft: '11px' }} />
               ) : (
                 <Input
                   style={{ width: '100%' }}
@@ -174,12 +176,19 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
           </div>
           {!hideDesc && (
             <div className="desc-box">
-              {isDisabled ? (
-                description
+              {isDisabled || readOnly ? (
+                descVal && (
+                  <TextEllipsis
+                    text={descVal}
+                    type="paragraph"
+                    rows={2}
+                    className="readOnly-desc"
+                  />
+                )
               ) : (
                 <Input.TextArea
                   placeholder="添加描述..."
-                  autoSize={{ minRows: 1 }}
+                  autoSize={{ minRows: 1, maxRows: 3 }}
                   value={descVal}
                   onChange={e => {
                     setDescVal(e.target.value);

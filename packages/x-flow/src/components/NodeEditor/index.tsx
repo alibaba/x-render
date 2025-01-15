@@ -71,8 +71,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         // 更新节点的 data
         if (
           (node?.data?._nodeType === 'Switch' ||
-            node?.data?._nodeType === 'Parallel') &&
-          data?.list?.length
+            node?.data?._nodeType === 'Parallel')
         ) {
           data['list'] = (data?.list || [])?.map((item, index) => {
             if (item?._id) {
@@ -89,10 +88,10 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
             }
           });
         }
+
         node.data = { ...node.data, ...data };
       }
     });
-
     setNodes(newNodes, false);
   }, 100);
 

@@ -1,13 +1,12 @@
-import { Space, Typography } from 'antd';
+import { Space } from 'antd';
 import classNames from 'classnames';
 import React, { memo } from 'react';
 import { shallow } from 'zustand/shallow';
 import SourceHandle from '../../components/CustomNode/sourceHandle';
+import TextEllipsis from '../../components/TextEllipsis';
 import { useStore } from '../../hooks/useStore';
 import { uuid } from '../../utils';
 import './index.less';
-
-const { Paragraph } = Typography;
 
 export default memo((props: any) => {
   const {
@@ -33,9 +32,10 @@ export default memo((props: any) => {
 
   const renderTitle = (item, index) => {
     const defTitle = item?.title || `条件${index}`;
-    const title = switchExtra?.titleKey
-      ? item[switchExtra?.titleKey]
-      : defTitle;
+    // const title = switchExtra?.titleKey
+    //   ? item[switchExtra?.titleKey]
+    //   : defTitle;
+    const title = item[switchExtra?.titleKey] ?? defTitle;
     return (
       <div className="item-header">
         <div className="item-title">{title}</div>
@@ -67,28 +67,9 @@ export default memo((props: any) => {
         {CustomNodeWidget ? (
           <CustomNodeWidget data={item} index={index} />
         ) : (
-          <>
-            {value && (
-              <Paragraph
-                className="item-content-in"
-                ellipsis={{
-                  rows: 5,
-                  tooltip: {
-                    title: value,
-                    color: '#ffff',
-                    overlayInnerStyle: {
-                      color: '#354052',
-                      fontSize: '12px',
-                    },
-                    getPopupContainer: () =>
-                      document.getElementById('xflow-container'),
-                  },
-                }}
-              >
-                {value}
-              </Paragraph>
-            )}
-          </>
+            <div>
+              {value && <div className='item-content-in'><TextEllipsis text={value} rows={5} type="paragraph" /></div>}
+          </div>
         )}
       </div>
     );

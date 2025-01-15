@@ -1,5 +1,6 @@
 import { Drawer, Popover } from 'antd';
 import classNames from 'classnames';
+import { isNumber } from 'lodash';
 import React, { FC, useContext, useMemo } from 'react';
 import { ConfigContext } from '../../models/context';
 import createIconFont from '../../utils/createIconFont';
@@ -18,14 +19,21 @@ interface IPanelProps {
 const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
   const { onClose, children, nodeType } = props;
   // 1.获取节点配置信息
-  const { settingMap, iconFontUrl, globalConfig, logPanel, widgets, antdVersion }: any =
-    useContext(ConfigContext);
+  const {
+    settingMap,
+    iconFontUrl,
+    globalConfig,
+    logPanel,
+    widgets,
+    antdVersion,
+  }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodePanel, iconSvg } = nodeSetting;
 
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
   const CustomWidget = widgets[logPanel?.logWidget]; // 内置setting组件
   const isCustomWidget = !Boolean(logPanel?.logWidget && CustomWidget);
+  const width =isNumber(logPanel?.width) ? logPanel?.width : 400;
 
   const drawerVersionProps = useMemo(() => {
     if (antdVersion === 'V5') {
@@ -49,7 +57,7 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
     <Drawer
       {...drawerVersionProps}
       getContainer={false}
-      width={400}
+      width={width}
       mask={false}
       onClose={onClose}
       headerStyle={{

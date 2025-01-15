@@ -12,14 +12,10 @@ interface INodeSwitchSettingPorps {
 const schema: Schema = {
   type: 'object',
   displayType:'row',
-  // span: 24,
   properties: {
     list: {
       type: 'array',
       widget: 'simpleList',
-      // display: 'block',
-      // min: 2,
-      default:[{},{}],
       props: {
         hideCopy: true,
         hideMove: true,

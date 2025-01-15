@@ -78,6 +78,7 @@ export interface TLogPanel {
   logList: Array<TLogListItem>; // 日志面板的所有数据===》默认能拿到页面所有节点的日志数据
   loading?: boolean; // 日志面板loading
   logWidget?: string; // 自定义日志面板组件
+  width?: number;// 日志面板宽度
 }
 
 export interface TNodeView {
