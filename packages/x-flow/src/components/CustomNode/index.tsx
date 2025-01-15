@@ -19,7 +19,6 @@ import {
 import './index.less';
 import SourceHandle from './sourceHandle';
 import { useFlow } from '../../hooks/useFlow';
-import { useTemporalStore } from '../../hooks/useTemporalStore';
 
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick, status } =
@@ -43,22 +42,18 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addEdges, copyNode, pasteNode, deleteNode, mousePosition } =
+  const { addEdges, mousePosition } =
     useStore(
       (state: any) => ({
         nodes: state.nodes,
         edges: state.edges,
         mousePosition: state.mousePosition,
         addEdges: state.addEdges,
-        copyNode: state.copyNode,
-        pasteNode: state.pasteNode,
-        deleteNode: state.deleteNode,
         onEdgesChange: state.onEdgesChange,
       }),
       shallow
     );
-  const { addNodes } = useFlow();
-  const { record } = useTemporalStore();
+  const { addNodes, pasteNode, copyNode, deleteNode } = useFlow();
   const isNote = type === 'Note';
   const isEnd = type === 'End';
   const isSwitchNode = type === 'Switch' || type === 'Parallel' || isNote; // 判断是否为条件节点/并行节点/注释节点
@@ -107,9 +102,7 @@ export default memo((props: any) => {
 
   const handlePasteNode = useCallback(
     (data?: { sourceHandle: string }) => {
-      record(() => {
-        pasteNode(id, data);
-      })
+      pasteNode(id, data);
     },
     [pasteNode, id]
   );
