@@ -37,10 +37,9 @@ export default memo((props: any) => {
 
   const renderTitle = (item, index) => {
     const defTitle = item?.title || `事件${index}`;
-    // const title = parallelExtra?.titleKey
-    //   ? item[parallelExtra?.titleKey]
-    //   : defTitle;
-    const title = item[parallelExtra?.titleKey] ?? defTitle;
+    const title = parallelExtra?.titleKey
+      ? item[parallelExtra?.titleKey]
+      : defTitle;
     return (
       <div className="item-header">
         <div className="item-title">

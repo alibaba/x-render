@@ -4,15 +4,15 @@ import React, { memo } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import CustomNode from '../CustomNode';
+import { useFlow } from '../../hooks/useFlow';
 
 const CandidateNode = () => {
   const { zoom } = useViewport();
   const reactflow = useReactFlow();
-  const { candidateNode, mousePosition, setIsAddingNode, setCandidateNode, addNodes } = useStore(
+  const { candidateNode, mousePosition, setIsAddingNode, setCandidateNode } = useStore(
     (s: any) => ({
       nodes: s.nodes,
       edges: s.edges,
-      addNodes: s.addNodes,
       candidateNode: s.candidateNode,
       setIsAddingNode: s.setIsAddingNode,
       mousePosition: s.mousePosition,
@@ -22,6 +22,7 @@ const CandidateNode = () => {
     }),
     shallow
   );
+  const { addNodes } = useFlow();
 
   useEventListener('click', ev => {
     if (!candidateNode) {
@@ -42,7 +43,7 @@ const CandidateNode = () => {
       },
       position: { x, y },
     };
-    addNodes(newNodes, false);
+    addNodes(newNodes);
     setIsAddingNode(false)
     setCandidateNode(null);
   });

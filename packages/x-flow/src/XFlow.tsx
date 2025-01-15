@@ -298,17 +298,25 @@ const XFlow: FC<FlowProps> = memo(props => {
         onConnect={onConnect}
         onNodesChange={changes => {
           changes.forEach(change => {
-            if (change.type === 'remove' || change.type === 'add') {
+            if (change.type === 'remove') {
               record(() => {
-                onNodesChange(changes);
+                onNodesChange([change]);
               });
             } else {
-              onNodesChange(changes);
+              onNodesChange([change]);
             }
           });
         }}
         onEdgesChange={changes => {
-          onEdgesChange(changes);
+          changes.forEach(change => {
+            if (change.type === 'remove') {
+              record(() => {
+                onEdgesChange([change]);
+              });
+            } else {
+              onEdgesChange([change]);
+            }
+          });
         }}
         onEdgeMouseEnter={(_, edge: any) => {
           getUpdateEdgeConfig(edge, '#2970ff');
