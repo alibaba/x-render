@@ -3,7 +3,7 @@ import {
   BackgroundVariant,
   MarkerType,
   ReactFlow,
-  useReactFlow,
+  useReactFlow
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useEventListener, useMemoizedFn } from 'ahooks';
@@ -35,7 +35,6 @@ import autoLayoutNodes from './utils/autoLayoutNodes';
 import { shallow } from 'zustand/shallow';
 import NodeEditor from './components/NodeEditor';
 import NodeLogPanel from './components/NodeLogPanel';
-import { useTemporalStore } from './hooks/useTemporalStore';
 import './index.less';
 import { ConfigContext } from './models/context';
 
@@ -81,7 +80,6 @@ const XFlow: FC<FlowProps> = memo(props => {
     }),
     shallow
   );
-  const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
   const { settingMap, globalConfig,readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
@@ -157,28 +155,6 @@ const XFlow: FC<FlowProps> = memo(props => {
     };
     setCandidateNode(newNode);
   };
-
-  // 插入节点
-  // const handleInsertNode = () => {
-  //   const newNode = {
-  //     id: uuid(),
-  //     data: { label: 'new node' },
-  //     position: {
-  //       x: 0,
-  //       y: 0,
-  //     },
-  //   };
-  //   addNodes(newNode);
-  //   addEdges({
-  //     id: uuid(),
-  //     source: '2',
-  //     target: newNode.id,
-  //   });
-  //   const targetEdge = edges.find(edge => edge.source === '2');
-  //   updateEdge(targetEdge?.id as string, {
-  //     source: newNode.id,
-  //   });
-  // };
 
   // edge 移入/移出效果
   const getUpdateEdgeConfig = useMemoizedFn((edge: any, color: string) => {
@@ -297,15 +273,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         }}
         onConnect={onConnect}
         onNodesChange={changes => {
-          changes.forEach(change => {
-            if (change.type === 'remove' || change.type === 'add') {
-              record(() => {
-                onNodesChange(changes);
-              });
-            } else {
-              onNodesChange(changes);
-            }
-          });
+          onNodesChange(changes);
         }}
         onEdgesChange={changes => {
           onEdgesChange(changes);

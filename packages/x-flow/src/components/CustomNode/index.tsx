@@ -18,6 +18,8 @@ import {
 } from '../../utils';
 import './index.less';
 import SourceHandle from './sourceHandle';
+import { useFlow } from '../../hooks/useFlow';
+import { useTemporalStore } from '../../hooks/useTemporalStore';
 
 export default memo((props: any) => {
   const { id, type, data, layout, isConnectable, selected, onClick, status } =
@@ -41,13 +43,12 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addNodes, addEdges, copyNode, pasteNode, deleteNode, mousePosition } =
+  const { addEdges, copyNode, pasteNode, deleteNode, mousePosition } =
     useStore(
       (state: any) => ({
         nodes: state.nodes,
         edges: state.edges,
         mousePosition: state.mousePosition,
-        addNodes: state.addNodes,
         addEdges: state.addEdges,
         copyNode: state.copyNode,
         pasteNode: state.pasteNode,
@@ -56,7 +57,10 @@ export default memo((props: any) => {
       }),
       shallow
     );
+  const { addNodes } = useFlow();
+  const { record } = useTemporalStore();
   const isNote = type === 'Note';
+  const isEnd = type === 'End';
   const isSwitchNode = type === 'Switch' || type === 'Parallel' || isNote; // 判断是否为条件节点/并行节点/注释节点
   const connectable = readOnly ? false : isConnectable;
 
@@ -69,7 +73,6 @@ export default memo((props: any) => {
     });
     const targetId = uuid();
     const title = settingMap[data?._nodeType]?.title || data?._nodeType;
-
     const newNodes = {
       id: targetId,
       type: 'custom',
@@ -86,7 +89,7 @@ export default memo((props: any) => {
       deletable,
       ...(sourceHandle && { sourceHandle }),
     };
-    addNodes(newNodes, false);
+    addNodes(newNodes as any);
     addEdges(newEdges);
   };
 
@@ -100,18 +103,20 @@ export default memo((props: any) => {
   const handleCopyNode = useCallback(() => {
     copyNode(id);
     message.success('复制成功');
-  }, [copyNode]);
+  }, [copyNode, id]);
 
   const handlePasteNode = useCallback(
     (data?: { sourceHandle: string }) => {
-      pasteNode(id, data);
+      record(() => {
+        pasteNode(id, data);
+      })
     },
-    [pasteNode]
+    [pasteNode, id]
   );
 
   const handleDeleteNode = useCallback(() => {
     deleteNode(id);
-  }, [pasteNode]);
+  }, [deleteNode, id]);
 
   const defaultAction = (e, sourceHandle) => {
     if (e.key === 'copy') {
@@ -196,7 +201,7 @@ export default memo((props: any) => {
         key: 'paste',
       },
     ];
-  }, [type, data]);
+  }, [type, data, isEnd]);
 
   // 节点状态处理
   const statusObj = transformNodeStatus(globalConfig?.nodeView?.status || []);
@@ -207,13 +212,13 @@ export default memo((props: any) => {
       <Menu.Item key={'copy'} disabled={disabledCopy}>
         复制
       </Menu.Item>
-      {menuItem.map((r: any) => {
+      {!isEnd ? menuItem.map((r: any) => {
         return (
           <Menu.Item {...r} key={r.key}>
             {r.label}
           </Menu.Item>
         );
-      })}
+      }) : null}
       <Menu.Item key={'delete'} danger={true} disabled={disabledDelete}>
         删除
       </Menu.Item>
@@ -230,7 +235,7 @@ export default memo((props: any) => {
               key: 'copy',
               disabled: disabledCopy,
             },
-            ...menuItem,
+            ...(isEnd ? [] : menuItem),
             {
               label: '删除',
               key: 'delete',
@@ -246,7 +251,7 @@ export default memo((props: any) => {
     return {
       overlay: menu,
     };
-  }, [menuItem]);
+  }, [menuItem, isEnd]);
   return (
     <div
       className={classNames('xflow-node-container', {

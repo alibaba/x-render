@@ -3,6 +3,7 @@ import { useMemoizedFn } from 'ahooks';
 import { useMemo } from 'react';
 import { FlowNode } from '../models/store';
 import { useStoreApi } from './useStore';
+import { useTemporalStore } from './useTemporalStore';
 import autoLayoutNodes from '../utils/autoLayoutNodes';
 
 // useFlow 维护原则
@@ -27,11 +28,15 @@ export const useFlow = () => {
     screenToFlowPosition,
     flowToScreenPosition
   } = useReactFlow();
+  const { record } = useTemporalStore();
+
   const setNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
     storeApi.getState().setNodes(nodes, isTransform);
   });
   const addNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
-    storeApi.getState().addNodes(nodes, isTransform);
+    record(() => {
+      storeApi.getState().addNodes(nodes, isTransform);
+    })
   });
   const setEdges = useMemoizedFn((edges: Edge[]) => {
     storeApi.getState().setEdges(edges);

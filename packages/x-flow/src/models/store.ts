@@ -130,7 +130,7 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             copyNodes,
           });
         },
-        pasteNode: (nodeId,data = {}) => {
+        pasteNode: (nodeId, data = {}) => {
           if (get().copyNodes.length > 0) {
             const newEdges = {
               id: uuid(),
