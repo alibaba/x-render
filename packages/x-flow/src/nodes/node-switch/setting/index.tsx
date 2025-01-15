@@ -57,7 +57,7 @@ export default memo((props: INodeSwitchSettingPorps) => {
       watch={watch}
       size={'small'}
       className="custom-node-switch-setting"
-      readOnly={props.readOnly}
+      disabled={props.readOnly}
     />
   );
 });

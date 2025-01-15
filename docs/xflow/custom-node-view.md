@@ -1,9 +1,9 @@
 ---
 order: 2
-toc: content
+title: '节点内容展示'
 mobile: false
 group: 
-  title: 最佳展示
+  title: 高级用法
   order: 1
 ---
 
