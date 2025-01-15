@@ -1,9 +1,9 @@
 ---
-order: 5
-title: '节点日志和状态'
+order: 7
+title: '节点日志和节点状态'
 mobile: false
 group: 
-  title: 最佳展示
+  title: 高级用法
   order: 1
 ---
 # 节点日志和节点状态

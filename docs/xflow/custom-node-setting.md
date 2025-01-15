@@ -1,9 +1,9 @@
 ---
-order: 2
-toc: content
+order: 3
+title: '节点配置面板'
 mobile: false
 group: 
-  title: 最佳展示
+  title: 高级用法
   order: 1
 ---
 
