@@ -70,8 +70,8 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
       if (node) {
         // 更新节点的 data
         if (
-          (node?.data?._nodeType === 'Switch' ||
-            node?.data?._nodeType === 'Parallel')
+          node?.data?._nodeType === 'Switch' ||
+          node?.data?._nodeType === 'Parallel'
         ) {
           data['list'] = (data?.list || [])?.map((item, index) => {
             if (item?._id) {
@@ -88,8 +88,8 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
             }
           });
         }
-
-        node.data = { ...node.data, ...data };
+        const { _nodeType, _status } = node?.data;
+        node.data = { _nodeType, _status, ...data }; // form-render的list如果为空，不会返回list相应的字段，只能全部替换data
       }
     });
     setNodes(newNodes, false);
