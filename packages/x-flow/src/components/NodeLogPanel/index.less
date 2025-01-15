@@ -1,10 +1,13 @@
 .node-log-container {
   .log-header-tab {
-
     .ant-tabs-nav,
     .ant-tabs-content-holder {
       padding-left: 16px;
       padding-right: 16px;
+    }
+
+    .log-detail-panel-code-full {
+      height: 0;
     }
   }
 
@@ -80,21 +83,32 @@
       .log-code-copy {
         cursor: pointer;
         font-size: 12px;
+        margin-left: 8px;
       }
     }
 
     .log-code-editor {
-      height: 172px;
+      min-height: 172px;
       border-radius: 6px;
-      .cm-focused{
+
+      .cm-focused {
         outline: none;
       }
 
+      .cm-content {
+        font-size: 12px;
+      }
     }
   }
 
-  .log-track-panel {
+  .log-code-panel-full {
+    position: absolute;
+    z-index: 1000;
+    top: 38px;
+    margin-right: 16px;
+  }
 
+  .log-track-panel {
     .log-track-node {
       margin-bottom: 10px;
 
@@ -103,20 +117,27 @@
         border-radius: 8px;
 
         .log-track-collapse-panel {
+          border-radius: 8px;
+
           .ant-collapse-header {
             padding: 6px;
 
             .ant-collapse-expand-icon {
               height: 20px;
-              padding-inline-end: 6px
+              padding-inline-end: 6px;
+            }
+
+            .ant-collapse-arrow {
+              margin-right: 4px;
+              vertical-align: -4px;
             }
           }
 
           .track-collapse-header {
-            // border: 1px solid red;
             display: flex;
             justify-content: flex-start;
             align-items: center;
+            width: 70%;
 
             .track-icon-box {
               width: 24px;

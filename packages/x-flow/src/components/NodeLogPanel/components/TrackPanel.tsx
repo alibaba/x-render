@@ -2,6 +2,7 @@ import { Empty } from 'antd';
 import React, { memo } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../../hooks/useStore';
+import { isTruthy } from '../../../utils';
 import TrackNodeItem from './TrackNodeItem';
 
 // 追踪面板，默认值展示有状态的节点
@@ -15,7 +16,9 @@ export default memo((props: any) => {
     shallow
   );
 
-  const statusNode = (nodes || [])?.filter(item => item?.data?._status);
+  const statusNode = (nodes || [])?.filter(item =>
+    isTruthy(item?.data?._status)
+  );
   const trackList = (statusNode || [])?.map(node => {
     const logTrackList = logList?.find(item => item?.nodeId == node?.id);
     return { ...node, logTrackList: logTrackList?.codePanel || [] };

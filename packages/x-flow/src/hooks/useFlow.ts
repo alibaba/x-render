@@ -27,10 +27,10 @@ export const useFlow = () => {
     screenToFlowPosition,
     flowToScreenPosition
   } = useReactFlow();
-  const setNodes = useMemoizedFn((nodes: FlowNode[], isTransform = true) => {
+  const setNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
     storeApi.getState().setNodes(nodes, isTransform);
   });
-  const addNodes = useMemoizedFn((nodes: FlowNode[], isTransform = true) => {
+  const addNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
     storeApi.getState().addNodes(nodes, isTransform);
   });
   const setEdges = useMemoizedFn((edges: Edge[]) => {

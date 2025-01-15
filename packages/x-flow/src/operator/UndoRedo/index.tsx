@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useContext } from 'react';
 import { Button, Tooltip } from 'antd';
 import IconView from '../../components/IconView';
 import './index.less';
+import { ConfigContext } from '../../models/context';
 
 export type UndoRedoProps = {
   handleUndo: () => void;
@@ -11,6 +12,12 @@ export type UndoRedoProps = {
 };
 
 export default memo(({ handleUndo, handleRedo, pastStates, futureStates }: UndoRedoProps) => {
+  const { readOnly } = useContext(ConfigContext);
+
+  if (readOnly) {
+    return;
+  }
+
   return (
     <div className='fai-reactflow-undoredo'>
       <Tooltip title='撤销' getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}>

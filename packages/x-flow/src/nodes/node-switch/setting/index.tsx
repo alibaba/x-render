@@ -18,8 +18,6 @@ const schema: Schema = {
       type: 'array',
       widget: 'simpleList',
       display: 'block',
-      min: 1,
-      default:[{}],
       props: {
         hideCopy: true,
         hideMove: true,
