@@ -47,6 +47,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     antdVersion,
     readOnly,
     logPanel,
+    onTesting,
   }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
@@ -59,7 +60,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const isDisabled = disabled; // 目前没用
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
-  const { nodePanel, iconSvg, onTesting } = nodeSetting;
+  const { nodePanel, iconSvg, showTestingBtn } = nodeSetting;
   const hideDesc =
     nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
@@ -151,14 +152,14 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
             </div>
             <div className="title-actions">
               <Space size={[4, 4]}>
-                {!isDisabled && onTesting && (
+                {!isDisabled && showTestingBtn && (
                   <>
                     <IconView
                       type="icon-yunhang"
                       onClick={() => {
                         const n =
                           nodes?.find(item => item?.id === node?.id) || {};
-                        onTesting(n, nodes);
+                        onTesting && onTesting(n, nodes);
                       }}
                       style={{ fontSize: 16 }}
                     />
