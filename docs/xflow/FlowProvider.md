@@ -36,6 +36,9 @@ group:
 - screenToFlowPosition：将屏幕坐标转换为画布坐标
 - flowToScreenPosition：将画布坐标转换为屏幕坐标
 - runAutoLayout：自动布局节点
+- copyNode：复制单个节点
+- pasteNode：粘贴单个节点
+- deleteNode：删除单个节点
 
 ## useNodes
 

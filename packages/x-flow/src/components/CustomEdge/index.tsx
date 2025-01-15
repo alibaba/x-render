@@ -5,9 +5,9 @@ import {
   getBezierPath,
   useReactFlow,
 } from '@xyflow/react';
-import produce from 'immer';
 import React, { memo, useContext, useState } from 'react';
 import { shallow } from 'zustand/shallow';
+import { useFlow } from '../../hooks/useFlow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
 import { uuid, uuid4 } from '../../utils';
@@ -41,26 +41,19 @@ export default memo((edge: any) => {
   const hideEdgeDelBtn = globalConfig?.edge?.hideEdgeDelBtn ?? false;
   const deletable = globalConfig?.edge?.deletable ?? true;
 
-  const {
-    nodes,
-    edges,
-    addNodes,
-    addEdges,
-    mousePosition,
-    onEdgesChange,
-    layout,
-  } = useStore(
-    (state: any) => ({
-      layout: state.layout,
-      nodes: state.nodes,
-      edges: state.edges,
-      mousePosition: state.mousePosition,
-      addNodes: state.addNodes,
-      addEdges: state.addEdges,
-      onEdgesChange: state.onEdgesChange,
-    }),
-    shallow
-  );
+  const { nodes, edges, addEdges, mousePosition, onEdgesChange, layout } =
+    useStore(
+      (state: any) => ({
+        layout: state.layout,
+        nodes: state.nodes,
+        edges: state.edges,
+        mousePosition: state.mousePosition,
+        addEdges: state.addEdges,
+        onEdgesChange: state.onEdgesChange,
+      }),
+      shallow
+    );
+  const { addNodes } = useFlow();
 
   const handleAddNode = (data: any) => {
     const { screenToFlowPosition } = reactflow;
@@ -72,39 +65,33 @@ export default memo((edge: any) => {
     const targetId = uuid();
     const title = settingMap[data?._nodeType]?.title || data?._nodeType;
 
-    const newNodes = produce(nodes, (draft: any) => {
-      draft.push({
-        id: targetId,
-        type: 'custom',
-        data: {
-          title: `${title}_${uuid4()}`,
-          ...data,
-        },
-        position: { x, y },
-      });
-    });
+    const newNodes = {
+      id: targetId,
+      type: 'custom',
+      data: {
+        title: `${title}_${uuid4()}`,
+        ...data,
+      },
+      position: { x, y },
+    };
 
-    const newEdges = produce(edges, (draft: any) => {
-      draft.push(
-        ...[
-          {
-            id: uuid(),
-            source,
-            target: targetId,
-            deletable: deletable,
-            ...(sourceHandleId && { sourceHandle: sourceHandleId }),
-          },
-          {
-            id: uuid(),
-            source: targetId,
-            deletable: deletable,
-            target,
-          },
-        ]
-      );
-    });
+    const newEdges = [
+      {
+        id: uuid(),
+        source,
+        target: targetId,
+        deletable: deletable,
+        ...(sourceHandleId && { sourceHandle: sourceHandleId }),
+      },
+      {
+        id: uuid(),
+        source: targetId,
+        deletable: deletable,
+        target,
+      },
+    ];
 
-    addNodes(newNodes, false);
+    addNodes(newNodes as any);
     addEdges(newEdges);
     onEdgesChange([{ id, type: 'remove' }]);
   };
