@@ -32,10 +32,9 @@ export default memo((props: any) => {
 
   const renderTitle = (item, index) => {
     const defTitle = item?.title || `条件${index}`;
-    // const title = switchExtra?.titleKey
-    //   ? item[switchExtra?.titleKey]
-    //   : defTitle;
-    const title = item[switchExtra?.titleKey] ?? defTitle;
+    const title = switchExtra?.titleKey
+      ? item[switchExtra?.titleKey]
+      : defTitle;
     return (
       <div className="item-header">
         <div className="item-title">{title}</div>
