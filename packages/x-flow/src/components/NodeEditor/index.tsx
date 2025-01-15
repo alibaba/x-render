@@ -135,7 +135,7 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
         widgets={widgets}
         watch={watch}
         size={'small'}
-        readOnly={readOnly}
+        disabled={readOnly}
       />
     );
   } else if (CustomSettingWidget) {
