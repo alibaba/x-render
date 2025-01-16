@@ -86,7 +86,16 @@ const createStore = (initProps?: Partial<FlowProps>) => {
           set({ nodes: isTransform ? transformNodes(nodes) : nodes });
         },
         getNodes: () => {
-          return get().nodes;
+          const nodes = get().nodes;
+          const result = nodes.map(item => {
+            const { data, ...rest } = item;
+            const { _nodeType, ...restData } = data;
+            return {
+              ...rest,
+              data: restData
+            }
+          });
+          return result;
         },
         setEdges: edges => {
           set({ edges });
