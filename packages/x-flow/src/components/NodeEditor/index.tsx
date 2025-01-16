@@ -27,7 +27,13 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const [asyncSchema, setAsyncSchema] = useState<Schema>({});
 
   async function getSchema() {
-    const shema = await getSettingSchema(id, nodeType,nodeSetting,data,form).catch(() => ({}));
+    const shema = await getSettingSchema(
+      id,
+      nodeType,
+      nodeSetting,
+      data,
+      form
+    ).catch(() => ({}));
     setAsyncSchema(shema);
   }
   useEffect(() => {
@@ -88,8 +94,8 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
             }
           });
         }
-        const { _nodeType, _status } = node?.data;
-        node.data = { _nodeType, _status, ...data }; // form-render的list如果为空，不会返回list相应的字段，只能全部替换data
+        const { _nodeType, _status, _isCandidate, title, desc } = node?.data;
+        node.data = { _nodeType, _status, _isCandidate, title, desc, ...data }; // form-render的list如果为空，不会返回list相应的字段，只能全部替换data
       }
     });
     setNodes(newNodes, false);
