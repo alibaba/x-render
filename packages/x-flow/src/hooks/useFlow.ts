@@ -25,27 +25,45 @@ export const useFlow = () => {
     setCenter,
     fitBounds,
     toObject,
-    getNodes,
+    getNodes: _getNodes,
     getEdges,
     screenToFlowPosition,
     flowToScreenPosition
   } = useReactFlow();
+  
   const { record } = useTemporalStore();
+
+  const getNodes = useMemoizedFn(() => {
+    const nodes = _getNodes();
+    const result = nodes.map(item => {
+      const { data, ...rest } = item;
+      const { _nodeType, ...restData } = data;
+      return {
+        ...rest,
+        data: restData
+      }
+    });
+    return result;
+  });
 
   const setNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
     storeApi.getState().setNodes(nodes, isTransform);
   });
+
   const addNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
     record(() => {
       storeApi.getState().addNodes(nodes, isTransform);
     })
   });
+
   const setEdges = useMemoizedFn((edges: Edge[]) => {
     storeApi.getState().setEdges(edges);
   });
+
   const addEdges = useMemoizedFn((edges: Edge[]) => {
     storeApi.getState().addEdges(edges);
   });
+
   const copyNode = useMemoizedFn((nodeId) => {
     const copyNodes = generateCopyNodes(
       storeApi.getState().nodes.find((node) => node.id === nodeId),
@@ -54,6 +72,7 @@ export const useFlow = () => {
       copyNodes,
     });
   });
+
   const pasteNode = useMemoizedFn((nodeId: string, data: any) => {
     if (storeApi.getState().copyNodes.length > 0) {
       const newEdges = {
@@ -73,6 +92,7 @@ export const useFlow = () => {
       message.warning('请先复制节点！')
     }
   });
+
   const deleteNode = useMemoizedFn((nodeId) => {
     record(() => {
       storeApi.setState({

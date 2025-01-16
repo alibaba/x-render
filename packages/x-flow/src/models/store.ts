@@ -101,7 +101,7 @@ const createStore = (initProps?: Partial<FlowProps>) => {
           set({ edges });
         },
         getEdges: () => {
-          return get().nodes;
+          return get().edges;
         },
         addNodes: (payload, isTransform = true) => {
           const newNodes = get().nodes.concat(isTransform ? transformNodes(Array.isArray(payload) ? payload : [payload]) : payload);
