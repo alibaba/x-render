@@ -24,7 +24,7 @@ export const useFlow = () => {
     fitView,
     setCenter,
     fitBounds,
-    toObject,
+    toObject: _toObject,
     getNodes: _getNodes,
     getEdges,
     screenToFlowPosition,
@@ -33,18 +33,27 @@ export const useFlow = () => {
   
   const { record } = useTemporalStore();
 
-  const getNodes = useMemoizedFn(() => {
-    const nodes = _getNodes();
-    const result = nodes.map(item => {
+  const getNodes = useMemoizedFn((_nodes: any) => {
+    const nodes = _nodes || _getNodes();
+    const result = nodes.map((item: any) => {
       const { data, ...rest } = item;
       const { _nodeType, ...restData } = data;
       return {
         ...rest,
-        data: restData
+        data: restData,
+        type: _nodeType
       }
     });
     return result;
   });
+
+  const toObject = () => {
+    const { nodes, ...rest } = _toObject();
+    return {
+      ...rest,
+      nodes: getNodes(nodes)
+    };
+  };
 
   const setNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
     storeApi.getState().setNodes(nodes, isTransform);
