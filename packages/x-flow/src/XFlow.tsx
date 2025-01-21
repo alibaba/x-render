@@ -32,6 +32,7 @@ import FlowProps from './types';
 import { isTruthy, uuid, uuid4 } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 
+import { message } from 'antd';
 import { shallow } from 'zustand/shallow';
 import NodeEditor from './components/NodeEditor';
 import NodeLogPanel from './components/NodeLogPanel';
@@ -87,6 +88,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const { onNodeClick } = props;
+  const nodeEditorRef = useRef(null);
 
   useEffect(() => {
     zoomTo(0.8);
@@ -226,7 +228,14 @@ const XFlow: FC<FlowProps> = memo(props => {
             type={_nodeType}
             layout={layout}
             status={_status}
-            onClick={e => {
+            onClick={async e => {
+              if (nodeEditorRef?.current?.validateForm) {
+                const result = await nodeEditorRef?.current?.validateForm();
+                if (!result) {
+                  message.error('请检查必填项！');
+                  return;
+                }
+              }
               setActiveNode({
                 id,
                 _nodeType,
@@ -249,6 +258,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
+        ref={nodeEditorRef}
       />
     );
   }, [activeNode?.id]);
@@ -286,7 +296,6 @@ const XFlow: FC<FlowProps> = memo(props => {
     });
     return result;
   };
-  console.log('121212', nodes, getNodesJ(nodes),edges);
 
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
@@ -362,8 +371,14 @@ const XFlow: FC<FlowProps> = memo(props => {
           <PanelContainer
             id={activeNode?.id}
             nodeType={activeNode?._nodeType}
-            onClose={() => {
+            onClose={async () => {
+              // 面板关闭校验表单
+              const result = await nodeEditorRef?.current?.validateForm();
+              if (!result) {
+                return;
+              }
               setOpenPanel(false);
+
               // 如果日志面板关闭
               if (!isTruthy(activeNode?._status) || !openLogPanel) {
                 setActiveNode(null);
