@@ -83,7 +83,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   );
   const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
-  const { settingMap, globalConfig,readOnly } = useContext(ConfigContext);
+  const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const { onNodeClick } = props;
@@ -131,7 +131,11 @@ const XFlow: FC<FlowProps> = memo(props => {
   eventEmitter?.useSubscription((v: any) => {
     // 整理画布
     if (v.type === 'auto-layout-nodes') {
-      const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, edges, layout);
+      const newNodes: any = autoLayoutNodes(
+        storeApi.getState().nodes,
+        edges,
+        layout
+      );
       setNodes(newNodes, false);
     }
 
@@ -270,6 +274,20 @@ const XFlow: FC<FlowProps> = memo(props => {
   const deletable = globalConfig?.edge?.deletable ?? true;
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
+  const getNodesJ = nodes => {
+    const result = nodes.map(item => {
+      const { data, ...rest } = item;
+      const { _nodeType, ...restData } = data;
+      return {
+        ...rest,
+        data: restData,
+        type: _nodeType,
+      };
+    });
+    return result;
+  };
+  console.log('121212', nodes, getNodesJ(nodes),edges);
+
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
       <ReactFlow
@@ -289,11 +307,11 @@ const XFlow: FC<FlowProps> = memo(props => {
           },
           deletable: deletable, //默认连线属性受此项控制
         }}
-        onBeforeDelete={async()=>{
-          if(readOnly){
-            return false
+        onBeforeDelete={async () => {
+          if (readOnly) {
+            return false;
           }
-          return true
+          return true;
         }}
         onConnect={onConnect}
         onNodesChange={changes => {
@@ -350,8 +368,8 @@ const XFlow: FC<FlowProps> = memo(props => {
               if (!isTruthy(activeNode?._status) || !openLogPanel) {
                 setActiveNode(null);
               }
-              if(isFunction(panelonClose)){
-                panelonClose(activeNode?.id)
+              if (isFunction(panelonClose)) {
+                panelonClose(activeNode?.id);
               }
             }}
             node={activeNode}
