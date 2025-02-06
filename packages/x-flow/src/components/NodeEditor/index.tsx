@@ -1,7 +1,14 @@
 import FormRender, { Schema, useForm } from 'form-render';
 import produce from 'immer';
 import { debounce, isFunction } from 'lodash';
-import React, { FC, useContext, useEffect, useState } from 'react';
+import React, {
+  FC,
+  forwardRef,
+  useContext,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
@@ -14,7 +21,7 @@ interface INodeEditorProps {
   id: string;
 }
 
-const NodeEditor: FC<INodeEditorProps> = (props: any) => {
+const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref) => {
   const { data, onChange, nodeType, id } = props;
   const form = useForm();
   // // 1.获取节点配置信息
@@ -25,6 +32,26 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   const NodeWidget = widgets[nodeSetting?.settingWidget]; // 自定义面板配置组件
   const getSettingSchema = nodeSetting['getSettingSchema'];
   const [asyncSchema, setAsyncSchema] = useState<Schema>({});
+
+  useImperativeHandle(ref, () => ({
+    validateForm: async () => {
+      let result = true;
+      if (
+        nodeSetting?.settingSchema ||
+        (isFunction(getSettingSchema) && Object.keys(asyncSchema).length > 0)
+      ) {
+        result = await form
+          .validateFields()
+          .then(() => {
+            return true;
+          })
+          .catch(err => {
+            return false;
+          });
+      }
+      return result;
+    },
+  }));
 
   async function getSchema() {
     const shema = await getSettingSchema(
@@ -158,6 +185,6 @@ const NodeEditor: FC<INodeEditorProps> = (props: any) => {
   } else {
     return null;
   }
-};
+});
 
 export default NodeEditor;

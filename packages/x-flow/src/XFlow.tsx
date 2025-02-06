@@ -32,6 +32,7 @@ import FlowProps from './types';
 import { isTruthy, uuid, uuid4 } from './utils';
 import autoLayoutNodes from './utils/autoLayoutNodes';
 
+import { message } from 'antd';
 import { shallow } from 'zustand/shallow';
 import NodeEditor from './components/NodeEditor';
 import NodeLogPanel from './components/NodeLogPanel';
@@ -83,10 +84,11 @@ const XFlow: FC<FlowProps> = memo(props => {
   );
   const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
-  const { settingMap, globalConfig,readOnly } = useContext(ConfigContext);
+  const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const { onNodeClick } = props;
+  const nodeEditorRef = useRef(null);
 
   useEffect(() => {
     zoomTo(0.8);
@@ -131,7 +133,11 @@ const XFlow: FC<FlowProps> = memo(props => {
   eventEmitter?.useSubscription((v: any) => {
     // 整理画布
     if (v.type === 'auto-layout-nodes') {
-      const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, edges, layout);
+      const newNodes: any = autoLayoutNodes(
+        storeApi.getState().nodes,
+        edges,
+        layout
+      );
       setNodes(newNodes, false);
     }
 
@@ -222,7 +228,14 @@ const XFlow: FC<FlowProps> = memo(props => {
             type={_nodeType}
             layout={layout}
             status={_status}
-            onClick={e => {
+            onClick={async e => {
+              if (nodeEditorRef?.current?.validateForm) {
+                const result = await nodeEditorRef?.current?.validateForm();
+                if (!result) {
+                  message.error('请检查必填项！');
+                  return;
+                }
+              }
               setActiveNode({
                 id,
                 _nodeType,
@@ -245,6 +258,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
+        ref={nodeEditorRef}
       />
     );
   }, [activeNode?.id]);
@@ -270,6 +284,19 @@ const XFlow: FC<FlowProps> = memo(props => {
   const deletable = globalConfig?.edge?.deletable ?? true;
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
+  const getNodesJ = nodes => {
+    const result = nodes.map(item => {
+      const { data, ...rest } = item;
+      const { _nodeType, ...restData } = data;
+      return {
+        ...rest,
+        data: restData,
+        type: _nodeType,
+      };
+    });
+    return result;
+  };
+
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
       <ReactFlow
@@ -289,11 +316,11 @@ const XFlow: FC<FlowProps> = memo(props => {
           },
           deletable: deletable, //默认连线属性受此项控制
         }}
-        onBeforeDelete={async()=>{
-          if(readOnly){
-            return false
+        onBeforeDelete={async () => {
+          if (readOnly) {
+            return false;
           }
-          return true
+          return true;
         }}
         onConnect={onConnect}
         onNodesChange={changes => {
@@ -344,14 +371,20 @@ const XFlow: FC<FlowProps> = memo(props => {
           <PanelContainer
             id={activeNode?.id}
             nodeType={activeNode?._nodeType}
-            onClose={() => {
+            onClose={async () => {
+              // 面板关闭校验表单
+              const result = await nodeEditorRef?.current?.validateForm();
+              if (!result) {
+                return;
+              }
               setOpenPanel(false);
+
               // 如果日志面板关闭
               if (!isTruthy(activeNode?._status) || !openLogPanel) {
                 setActiveNode(null);
               }
-              if(isFunction(panelonClose)){
-                panelonClose(activeNode?.id)
+              if (isFunction(panelonClose)) {
+                panelonClose(activeNode?.id);
               }
             }}
             node={activeNode}
