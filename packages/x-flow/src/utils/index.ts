@@ -172,6 +172,9 @@ export const capitalize = (string: string) => {
 export const transformNodes = (nodes: any[]) => {
   return nodes?.map(item => {
     const { type, data, ...rest } = item;
+    if (type === 'custom') {
+      return item;
+    }
 
     if (type === 'Switch' || type === 'Parallel') {
       return {

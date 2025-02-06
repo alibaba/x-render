@@ -254,11 +254,12 @@ const XFlow: FC<FlowProps> = memo(props => {
   const NodeEditorWrap = useMemo(() => {
     return (
       <NodeEditor
+        ref={nodeEditorRef}
         data={activeNode?.values}
         onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
-        ref={nodeEditorRef}
+       
       />
     );
   }, [activeNode?.id]);

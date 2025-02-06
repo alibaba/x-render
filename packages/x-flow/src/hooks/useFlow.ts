@@ -138,7 +138,7 @@ export const useFlow = () => {
 
   const runAutoLayout = useMemoizedFn(() => {
     const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, storeApi.getState().edges, storeApi.getState().layout);
-    setNodes(newNodes, false);
+    setNodes(newNodes);
   });
 
   return useMemo(

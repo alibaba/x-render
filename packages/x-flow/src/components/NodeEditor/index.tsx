@@ -19,9 +19,10 @@ interface INodeEditorProps {
   onChange: (data: any) => void;
   nodeType: string;
   id: string;
+  ref?: React.Ref<any>; // 添加 ref 属性
 }
 
-const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref) => {
+const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
   const { data, onChange, nodeType, id } = props;
   const form = useForm();
   // // 1.获取节点配置信息
