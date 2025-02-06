@@ -76,13 +76,13 @@ export const useFlow = () => {
     return result;
   });
 
-  const setNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
-    storeApi.getState().setNodes(nodes, isTransform);
+  const setNodes = useMemoizedFn((nodes: FlowNode[]) => {
+    storeApi.getState().setNodes(nodes);
   });
 
-  const addNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
+  const addNodes = useMemoizedFn((nodes: FlowNode[]) => {
     record(() => {
-      storeApi.getState().addNodes(nodes, isTransform);
+      storeApi.getState().addNodes(nodes);
     })
   });
 
