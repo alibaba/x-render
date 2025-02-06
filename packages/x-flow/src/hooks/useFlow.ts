@@ -1,6 +1,7 @@
-import { Edge, useReactFlow } from '@xyflow/react';
-import { useMemoizedFn } from 'ahooks';
 import { useMemo } from 'react';
+import { useMemoizedFn } from 'ahooks';
+import { Edge, useReactFlow } from '@xyflow/react';
+
 import { FlowNode } from '../models/store';
 import { useStoreApi } from './useStore';
 import { useTemporalStore } from './useTemporalStore';
@@ -11,9 +12,11 @@ import { message } from 'antd';
 // useFlow 维护原则
 // 1. 尽量复用 reactflow 已有的方法，不要重复造轮子
 // 2. 非必要不暴露新的方法和状态
+
 export const useFlow = () => {
   const storeApi = useStoreApi();
   const instance = storeApi.getState();
+
   const {
     zoomIn,
     zoomOut,
@@ -33,6 +36,32 @@ export const useFlow = () => {
   
   const { record } = useTemporalStore();
 
+  const toObject = useMemoizedFn(() => {
+    const { nodes, ...rest } = _toObject();
+    return {
+      ...rest,
+      nodes: getNodes(nodes)
+    };
+  });
+
+  const getFlowData = () => {
+    const { nodes, edges } = _toObject();
+    return {
+      edges,
+      nodes: getNodes(nodes)
+    };
+  };
+
+  const setFlowData = ({ nodes, edges }) => {
+    if (!!nodes) {
+      setNodes(nodes);
+    }
+
+    if (!!edges) {
+      setEdges(edges);
+    }
+  };
+
   const getNodes = useMemoizedFn((_nodes: any) => {
     const nodes = _nodes || _getNodes();
     const result = nodes.map((item: any) => {
@@ -46,14 +75,6 @@ export const useFlow = () => {
     });
     return result;
   });
-
-  const toObject = () => {
-    const { nodes, ...rest } = _toObject();
-    return {
-      ...rest,
-      nodes: getNodes(nodes)
-    };
-  };
 
   const setNodes = useMemoizedFn((nodes: FlowNode[], isTransform = false) => {
     storeApi.getState().setNodes(nodes, isTransform);
@@ -113,7 +134,7 @@ export const useFlow = () => {
         nodes: storeApi.getState().nodes.filter((node) => node.id !== nodeId),
       });
     })
-  })
+  });
 
   const runAutoLayout = useMemoizedFn(() => {
     const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, storeApi.getState().edges, storeApi.getState().layout);
@@ -126,6 +147,8 @@ export const useFlow = () => {
       addNodes,
       setEdges,
       addEdges,
+      getFlowData,
+      setFlowData,
       getNodes,
       getEdges,
       toObject,
@@ -147,4 +170,4 @@ export const useFlow = () => {
     }),
     [instance]
   );
-};
+}

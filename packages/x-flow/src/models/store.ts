@@ -1,4 +1,3 @@
-import { message } from 'antd';
 import { generateCopyNodes, transformNodes, uuid } from '../utils';
 import {
   addEdge,
