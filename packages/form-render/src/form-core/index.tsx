@@ -60,6 +60,7 @@ const FormCore:FC<FRProps> = (props) => {
     className,
     validateTrigger,
     antdVersion,
+    onlyFormItem
   } = transformProps({ ...props, ...schemProps });
 
   useEffect(() => {
@@ -211,8 +212,19 @@ const FormCore:FC<FRProps> = (props) => {
       </Button>
     );
   }
+
+  const renderFormItem = () => {
+    return (
+      <Row gutter={displayType === "row" ? 16 : 24}>
+        <RenderCore schema={schema} />
+        {operateExtra}
+      </Row>
+    );
+  };
   
-  return (
+  return onlyFormItem
+  ? renderFormItem()
+  : (
     <Form
       className={classNames('fr-form', { [className]: !!className } )}
       labelWrap={true}
@@ -223,10 +235,7 @@ const FormCore:FC<FRProps> = (props) => {
       onFinishFailed={handleFinishFailed}
       onValuesChange={handleValuesChange}
     >
-      <Row gutter={displayType === 'row' ? 16 : 24}>
-        <RenderCore schema={schema} />
-        {operateExtra}
-      </Row>
+      {renderFormItem()}
       {schema && !!footer && (
         <Row gutter={displayType === 'row' ? 16 : 24}>
           <Col span={24 / column}>
