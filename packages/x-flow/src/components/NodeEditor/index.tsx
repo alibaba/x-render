@@ -156,7 +156,6 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref) => {
         size={'small'}
         readOnly={readOnly}
         onMount={() => {
-          // 传递默认值
           const initialValues = form.getValues();
           handleNodeValueChange(initialValues);
         }}
