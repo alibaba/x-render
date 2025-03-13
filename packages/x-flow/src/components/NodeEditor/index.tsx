@@ -155,6 +155,11 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref) => {
         watch={watch}
         size={'small'}
         readOnly={readOnly}
+        onMount={() => {
+          // 传递默认值
+          const initialValues = form.getValues();
+          handleNodeValueChange(initialValues);
+        }}
       />
     );
   } else if (
