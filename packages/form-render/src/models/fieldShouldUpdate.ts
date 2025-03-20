@@ -6,7 +6,8 @@ const extractFormDataStrings = (list: string[]) => {
   list.forEach(str => {
     // TODO: 为啥要拆开来获取？
     // const regex = /formData.\w+(.\w+)*(\(.*\))?/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
-    const regex = /formData(\.\w+|\[\w+\])(\.\w+|\[\w+\])*/g; // 1.同时匹配两种格式
+    // const regex = /formData(\.\w+|\[\w+\])(\.\w+|\[\w+\])*/g; // 1.同时匹配两种格式
+    const regex = /formData(\.\w+|\[(['"])?\w+\2?\])*(\.\w+)?/g;// 1.支持formData.xx 格式 以及formData[]格式 []中变量名只能包含字母、数字、下划线(_)
     const matches = str.match(regex);
     if (matches) {
       result = result.concat(
@@ -23,7 +24,8 @@ const extractRootValueStrings = (list: string[]) => {
   let result = [];
   list.forEach(str => {
     // const regex = /rootValue.\w+(.\w+)*(\(.*\))?/g; // 匹配formData.后面跟着字母、数字、下划线间隔的组合
-    const regex = /rootValue(\.\w+|\[\w+\])(\.\w+|\[\w+\])*/g; // 1.同时匹配两种格式
+    // const regex = /rootValue(\.\w+|\[\w+\])(\.\w+|\[\w+\])*/g; // 1.同时匹配两种格式
+    const regex = /rootValue(\.\w+|\[(['"])?\w+\2?\])*(\.\w+)?/g;// 1.支持rootValue.xx 格式 以及rootValue[]格式 []中变量名只能包含字母、数字、下划线(_)
     const matches = str.match(regex);
     if (matches) {
       result = result.concat(
