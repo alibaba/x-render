@@ -156,6 +156,10 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         watch={watch}
         size={'small'}
         readOnly={readOnly}
+        onMount={() => {
+          const initialValues = form.getValues();
+          handleNodeValueChange(initialValues);
+        }}
       />
     );
   } else if (
