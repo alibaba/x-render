@@ -231,7 +231,7 @@ export const getColSpan = (formCtx: any, parentCtx: any, schema: any) => {
   if (schema.span) {
     span = schema.span;
   }
-  return span;
+  return span > 24 ? 24 : span;
 };
 
 export const getParamValue = (formCtx: any, upperCtx: any, schema: any) => (valueKey: string, isTop = true) => {

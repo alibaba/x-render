@@ -1,6 +1,6 @@
 export default {
   type: 'object',
-  column: 3,
+  column: 1,
   displayType: 'row',
   properties: {
     input1: {
