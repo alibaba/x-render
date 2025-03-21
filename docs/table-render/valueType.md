@@ -27,7 +27,7 @@ import { schema } from './static/search';
 import { toolbarRender } from './static/table';
 
 const Demo = () => {
-  const tableRef = useRef<TableContext>(null);
+  const tableRef = useRef(null);
 
   const columns = [
     {
