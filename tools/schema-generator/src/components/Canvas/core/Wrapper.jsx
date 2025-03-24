@@ -5,6 +5,7 @@ import {
   copyItem,
   dropItem,
   getKeyFromUniqueId,
+  idToSchema,
   isObject,
 } from '../../../utils';
 import { useGlobal, useStore } from '../../../utils/hooks';
@@ -19,6 +20,7 @@ function Wrapper({ $id, item, inside = false, children, style }) {
     userProps,
     errorFields,
     fieldWrapperRender,
+    onSelectItemCopy,
   } = useStore();
   const {
     controlButtons,
@@ -142,9 +144,12 @@ function Wrapper({ $id, item, inside = false, children, style }) {
   const handleItemCopy = e => {
     e.stopPropagation();
     if (errorFields?.length) return;
+    const preSchema = idToSchema(flatten);
     const [newFlatten, newId] = copyItem(flatten, $id, getId);
     onFlattenChange(newFlatten);
     setGlobal({ selected: newId });
+    const curSchema = idToSchema(newFlatten);
+    onSelectItemCopy && onSelectItemCopy(preSchema, curSchema, $id, newId);
   };
 
   // 一些computed

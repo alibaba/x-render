@@ -62,6 +62,7 @@ function Provider(props, ref) {
     fieldWrapperRender,
     elementRender,
     prefixCls,
+    onSelectItemCopy,
   } = props;
 
   const transformer = {
@@ -215,6 +216,7 @@ function Provider(props, ref) {
     onChange,
     errorFields,
     onItemErrorChange: setErrorFields,
+    onSelectItemCopy,
     userProps,
     frProps,
     displaySchema,

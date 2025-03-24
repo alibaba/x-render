@@ -91,6 +91,8 @@ export default Demo;
 | onChange       | 表单 data 变化回调   | 表单的 data     |
 | onSchemaChange | 表单 schema 变化回调 | 导出的 schema   |
 | onCanvasSelect | 画布组件选择回调     | 选中项的 schema |
+| onSelectItemCopy | 画布组件选择复制事件回调     | 复制前的schema，复制后的schema，复制前的ID，复制后的ID |
+
 
 ### Methods
 

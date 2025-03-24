@@ -107,6 +107,8 @@ export interface FRGeneratorProps {
   onSchemaChange?: (schema: any) => void;
   /** 画布组件选择回调 */
   onCanvasSelect?: (schema: any) => void;
+  /** 画布组件选择后复制按钮回调 */
+  onSelectItemCopy: (preSchema: any, curSchema: any, preId: any, curId:any) => void;
 }
 
 export interface SettingsProps {
@@ -116,6 +118,8 @@ export interface SettingsProps {
 export interface CanvasProps {
   /** 画布组件选择回调 */
   onCanvasSelect?: (schema: any) => void;
+  /** 画布组件选择后复制按钮回调 */
+  onSelectItemCopy: (preSchema: any, curSchema: any, preId: any, curId: any) => void;
 }
 
 export interface SidebarProps {
