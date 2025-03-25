@@ -24,7 +24,7 @@ import { columns, toolbarRender } from './static/table';
 import { searchApi, searchApi2 } from './static/request';
 
 const Demo = () => {
-  const tableRef = useRef<TableContext>(null);
+  const tableRef = useRef(null);
 
   return (
     <TableRender
