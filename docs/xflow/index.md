@@ -43,24 +43,24 @@ group:
 <div class="preview-container">
   <div class="preview-card">
     <div class="preview-image" >
-      <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="预览图1" />
+      <img src="https://img.alicdn.com/imgextra/i3/O1CN011ykg541qvcNWNDpni_!!6000000005558-0-tps-2094-1172.jpg" alt="预览图1" />
     </div>
     <div class="preview-title">基础流程图</div>
-    <div class="preview-desc">支持基础的节点和连线操作</div>
+    <!-- <div class="preview-desc">支持基础的节点和连线操作</div> -->
   </div>
   <div class="preview-card">
     <div class="preview-image">
-      <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="预览图2" />
+      <img src="https://img.alicdn.com/imgextra/i1/O1CN015jBSE71Lbh3o3zk78_!!6000000001318-0-tps-2100-1170.jpg" alt="预览图2" />
     </div>
     <div class="preview-title">自定义节点</div>
-    <div class="preview-desc">支持自定义节点样式和交互</div>
+    <!-- <div class="preview-desc">支持自定义节点样式和交互</div> -->
   </div>
   <div class="preview-card">
     <div class="preview-image" >
-      <img src="https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png" alt="预览图3" />
+      <img src="https://img.alicdn.com/imgextra/i2/O1CN01Y47YvN1s8GwCKZBtS_!!6000000005721-0-tps-2122-1198.jpg" alt="预览图3" />
     </div>
-    <div class="preview-title">节点配置</div>
-    <div class="preview-desc">支持节点配置面板和日志展示</div>
+    <div class="preview-title">最佳实践</div>
+    <!-- <div class="preview-desc">支持节点配置面板和日志展示</div> -->
   </div>
 </div>
 
@@ -101,7 +101,7 @@ group:
 }
 
 .preview-image:hover img {
-  transform: scale(1.05);
+  transform: scale(1.5);
 }
 
 .preview-title {
@@ -227,6 +227,18 @@ group:
     </div>
   </div>
 
+   <div class="feature-row">
+    <div class="feature-name">节点状态和节点日志</div>
+    <div class="feature-content">
+      <div class="feature-desc">
+        支持展示节点的状态，自定义节点状态，以及显示节点的运行日志
+      </div>
+        <div class="feature-image" >
+        <img src="https://img.alicdn.com/imgextra/i1/O1CN01m3yNGv1rpx5x3GKAQ_!!6000000005681-0-tps-2112-1192.jpg" alt="内置节点" />
+      </div>
+    </div>
+  </div>
+
   <div class="feature-row">
     <div class="feature-name">画布操作</div>
     <div class="feature-content">
@@ -234,7 +246,7 @@ group:
         支持画布缩放、撤销/重置、节点添加、鼠标模式切换、节点整理、全屏展示等功能。提供丰富的画布操作工具，提升用户体验。
       </div>
        <div class="feature-image node-show-img">
-        <img src="https://img.alicdn.com/imgextra/i3/O1CN0103kqyK1fsRrbdnWYY_!!6000000004062-1-tps-3162-1274.gif" alt="画布操作" />
+        <img src="https://img.alicdn.com/imgextra/i3/O1CN01Pcb1wd1RKe0hVF7nG_!!6000000002093-0-tps-3172-1234.jpg" alt="画布操作" />
       </div>
     </div>
   </div>
