@@ -271,7 +271,7 @@ const settings = [
         type: 'transform',
         description: '数据格式转换',
         icon: {
-          type: 'icon-transform',
+          type: 'icon-prompt',
           bgColor: '#F79009',
         },
         settingSchema: {
