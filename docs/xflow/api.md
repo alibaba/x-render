@@ -3,7 +3,7 @@ order: 1
 title: 'API'
 mobile: false
 group: 
-  title: 'API'
+  title: 'API文档'
   order: 3
 ---
 # API
