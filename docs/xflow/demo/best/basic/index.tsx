@@ -10,7 +10,7 @@ import { Tools } from './tools';
 export default () => {
   return (
     <div style={{ height: '600px',position:'relative' }}>
-      <Header data={ {}} />
+      {/* <Header data={ {}} /> */}
       <XFlow
         initialValues={{ nodes, edges }}
         settings={settings}
