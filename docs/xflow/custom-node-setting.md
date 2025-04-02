@@ -16,7 +16,12 @@ group:
 ## Schema 方式
 通过配置节点的 settingSchema 属性，实现节点数据配置项的自定义渲染。Schema方式适合快速实现简单的配置面板。
 
+:::info
+注意：使用 FormRender 的 schema方式配置，只能用`{{ }}` 函数表达式和`dependencies`方式实现简单联动，不能使用`watch`监听的形式实现复杂联动，如果需要使用`watch`监听的形式请使用[`settingWidget`自定义组件](#widget-方式)  
+:::
+ 
 ### 基础示例
+如果schema中设置了`required:true`必填项，则无法关闭和切换节点配置面板。如下方：开始节点中的必填项，试下点击开始节点后直接关闭配置面板的效果。
 
 ```jsx
 import { Input } from 'antd';
@@ -132,3 +137,35 @@ const customWidget = ({ value, onChange,...rest }) => {
 
 ### 基础示例
 <code src="./demo/custom-flow/index.tsx"></code>
+
+### 复杂联动示例
+以下示例了如何在`settingWidget`中使用复杂联动，以及如何在弹窗关闭时增加必填校验。
+
+需要暴露`validateForm`方法，以便关闭弹窗时进行必填校验。
+```js
+export const AdvancedSettingWidget = forwardRef<
+  AdvancedSettingWidgetRef,
+  AdvancedSettingWidgetProps
+>(({ value, onChange, readOnly }, ref) => {
+  // ...组件实现
+  useImperativeHandle(ref, () => ({
+  validateForm: async () => {
+    return await form
+      .validateFields()
+      .then(() => true)
+      .catch(() => false);
+  },
+}));
+});
+```
+
+<code src="./demo/custom-flow/advancedLinkageCase"></code>
+
+这个示例适用于以下场景：
+
+- 需要根据不同配置类型显示不同表单项的场景
+- 表单项之间存在复杂联动关系的场景
+- 需要动态添加表单项的场景
+- 需要实现严格表单验证的场景
+
+通过这个示例，你可以了解如何使用 settingWidget 方式实现复杂的表单交互，以及如何处理表单验证、数据联动等高级需求。这种方式比简单的 Schema 方式更灵活，能够满足更复杂的业务需求。

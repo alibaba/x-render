@@ -11,6 +11,28 @@ group:
 
 `<FlowProvider/>` 组件是一个 Context Provider，它使在 `<XFlow/>` 组件之外访问流的内部状态成为可能。我们提供的 `useFlow()`、`useNodes()` 和 `useEdges()` 钩子依赖于这个组件才能工作。
 
+
+## 基础用法
+
+```js
+import { FlowProvider } from '@xrenders/xflow';
+
+export default () => {
+  return (
+    <FlowProvider>
+         <XFlow
+          initialValues={{ nodes: initialNodes, edges: initialEdges }}
+          settings={settings as any[]}
+          nodeSelector={{
+            showSearch: true,
+          }}
+        />
+    </FlowProvider>
+  );
+};
+```
+
+## 完整示例
 <code src="./demo/flow-provider/index.tsx"></code>
 
 ## useFlow
@@ -58,13 +80,13 @@ group:
 ## useNodes
 
 `useNodes()` 钩子用于实时监听节点状态变化。与 `useFlow` 的 `getNodes` 不同，`getNodes` 是瞬时值，`useNodes` 返回实时的nodes状态。
-
-
+ 
 ## useEdges
 
-`useFlow` 的 `getEdges` 是瞬时值。想要监听节点状态，请使用 `useEdges` 钩子来返回实时 edges 状态。
+ `useFlow` 的 `getEdges` 是瞬时值。想要监听节点状态，请使用 `useEdges` 钩子来返回实时 edges 状态。
 
-## 注意
+
+## 注意事项
 
 - 如果你正在使用路由器并且希望流程的状态在不同路由之间保持持久，那么将 `<FlowProvider/>` 组件放置在路由器外部是至关重要的。
 - 如果在同一页面上有多个 `<XFlow/>`，则需要为每个 `<XFlow/>` 使用单独的 `<FlowProvider/>`

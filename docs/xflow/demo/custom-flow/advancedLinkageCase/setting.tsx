@@ -8,18 +8,10 @@ export default [
       type: 'icon-start',
       bgColor: '#17B26A',
     },
-    settingSchema: {
-      type: 'object',
-      properties: {
-        input: {
-          title: '变量一',
-          type: 'string',
-          widget: 'customWidget',
-          required:true, // 必填效果，无法关闭和切换节点配置面板
-        },
-
-      }
-    },
+    settingWidget: "customWidget",
+    settingWidgetProps: {
+      params: "test"
+    }
   },
   {
     title: '结束',
@@ -33,57 +25,34 @@ export default [
     settingSchema: {
       type: "object",
       properties: {
-        switch1: {
-          title: '禁用输入框',
-          description:"联动举例",
-          type: 'boolean',
-          widget: 'switch'
-        },
-        input1: {
-          title: '输入框',
+        input: {
+          title: '变量一',
           type: 'string',
-          disabled: '{{ formData.switch1 === true }}'
+          widget: 'input',
         },
-        list: {
-          title: 'List 场景',
-          type: 'array',
-          widget: 'CardList',
-          defaultValue: [{}],
-          items: {
-            type: 'object',
-            widget: 'card',
-            title: 'List.Item',
-            properties: {
-              switch1: {
-                title: '隐藏输入框 2 ',
-                type: 'boolean',
-                widget: 'switch'
-              },
-              input1: {
-                title: '输入框 1',
-                type: 'string',
-                description: '给输入框 赋值'
-              },
-              input2: {
-                title: '输入框 2',
-                type: 'string',
-                defaultValue: '{{ rootValue.input1 }}',
-                hidden: '{{ rootValue.switch1 }}'
-              }
-            }
-          }
-        }
+        select: {
+          title: '变量二',
+          type: 'string',
+          widget: 'select',
+          props: {
+            options: [
+              { label: 'a', value: 'a' },
+              { label: 'b', value: 'b' },
+              { label: 'c', value: 'c' },
+            ],
+          },
+        },
       }
     }
   },
   {
-    title: 'LLM',
+    title: '自定义组件节点',
     type: 'LLM',
-    description: '调用大语言模型回答问题或者对自然语言进行处理',
     icon: {
       type: 'icon-model',
       bgColor: '#6172F3',
     },
+    settingWidget: 'AdvancedSettingWidget',
   },
   {
     title: 'Prompt',
