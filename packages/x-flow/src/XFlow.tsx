@@ -7,7 +7,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useEventListener, useMemoizedFn } from 'ahooks';
-import produce, { setAutoFreeze } from 'immer';
+import { produce, setAutoFreeze } from 'immer';
 import { debounce, isFunction } from 'lodash';
 import type { FC } from 'react';
 import React, {
@@ -259,7 +259,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
-       
+
       />
     );
   }, [activeNode?.id]);

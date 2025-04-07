@@ -1,5 +1,5 @@
 import FormRender, { Schema, useForm } from 'form-render';
-import produce from 'immer';
+import { produce } from 'immer';
 import { debounce, isFunction } from 'lodash';
 import React, {
   FC,

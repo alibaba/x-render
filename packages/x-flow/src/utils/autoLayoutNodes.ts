@@ -1,4 +1,4 @@
-import produce from 'immer';
+import { produce } from 'immer';
 import dagre from '@dagrejs/dagre';
 import { cloneDeep } from 'lodash-es'
 
