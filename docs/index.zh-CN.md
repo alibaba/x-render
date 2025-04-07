@@ -3,7 +3,7 @@ title: 首页
 hero:
   title: XRender 2.0
   description: |
-    中后台「表单/表格/图表」开箱即用解决方案
+    中后台「表单/表格/图表/流程编排」开箱即用解决方案
     <br />
   actions:
     - text: 立即使用
@@ -20,6 +20,9 @@ features:
   - emoji: 💎
     title: FormGenerator
     description: 中后台表单可视化搭建生成利器
+  - emoji: 🚁
+    title: XFlow
+    description: 画布流程编排解决方案
 footer: false
 ---
 <!-- <TypeSchema></TypeSchema> -->
@@ -30,3 +33,23 @@ footer: false
 <a href="https://github.com/alibaba/x-render/graphs/contributors">
   <img style="height: 500px; margin-bottom: 50px" src="https://contrib.rocks/image?repo=alibaba/form-render" />
 </a>
+
+<style>
+.dumi-default-features {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+  max-width: 1200px !important;
+  margin: 0 auto;
+}
+
+.dumi-default-features-item {
+  flex: 0 1 auto;
+  width: 25%;
+  text-align: center;
+}
+
+.dumi-default-features[data-cols='2'] > .dumi-default-features-item:nth-child(odd) {
+    margin-inline-end: 0;
+}
+</style>

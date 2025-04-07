@@ -32,8 +32,6 @@ group:
 
 ```bash
 npm install @xrenders/xflow
-# 或者
-yarn add @xrenders/xflow
 ```
 
 ## 基础使用
