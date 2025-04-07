@@ -1,5 +1,5 @@
 import { Divider, Drawer, Input, Space } from 'antd';
-import produce from 'immer';
+import { produce } from 'immer';
 import { debounce, isNumber } from 'lodash';
 import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';

@@ -1,4 +1,4 @@
-import { CodeOutlined, DownOutlined } from '@ant-design/icons';
+import { CodeOutlined, DownOutlined, NodeIndexOutlined } from '@ant-design/icons';
 import { Menu } from 'antd';
 import { Link } from 'dumi';
 import React from 'react';
@@ -12,6 +12,10 @@ const Navigation: React.FC = () => {
     {
       label: <Link to="/table-render">TableRender</Link>,
       key: 'table-render',
+    },
+    {
+      label: <Link to="/xflow">XFlow</Link>,
+      key: 'xflow',
     },
     // {
     //   label: <Link to="/xflow">XFlow</Link>,
@@ -29,10 +33,10 @@ const Navigation: React.FC = () => {
       label: <Link to="/playground">Playground</Link>,
       key: 'playground',
     },
-    {
-      label: <Link to="/schema-builder">SchemaBuilder</Link>,
-      key: 'schema-builder',
-    },
+    // {
+    //   label: <Link to="/schema-builder">SchemaBuilder</Link>,
+    //   key: 'schema-builder',
+    // },
     {
       label: (
         <div>
@@ -43,6 +47,11 @@ const Navigation: React.FC = () => {
         </div>
       ),
       children: [
+        {
+          label: <Link to="/schema-builder">SchemaBuilder</Link>,
+          key: 'schema-builder',
+          icon: <NodeIndexOutlined />,
+        },
         {
           label: (
             <a href="https://1.xrender.fun/chart-render" target="_black">

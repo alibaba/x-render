@@ -1,5 +1,5 @@
 import FormRender, { Schema, useForm } from 'form-render';
-import produce from 'immer';
+import { produce } from 'immer';
 import { debounce, isFunction } from 'lodash';
 import React, {
   FC,
@@ -7,6 +7,7 @@ import React, {
   useContext,
   useEffect,
   useImperativeHandle,
+  useRef,
   useState,
 } from 'react';
 import { shallow } from 'zustand/shallow';
@@ -33,6 +34,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
   const NodeWidget = widgets[nodeSetting?.settingWidget]; // 自定义面板配置组件
   const getSettingSchema = nodeSetting['getSettingSchema'];
   const [asyncSchema, setAsyncSchema] = useState<Schema>({});
+  const nodeWidgetRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
     validateForm: async () => {
@@ -49,6 +51,8 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
           .catch(err => {
             return false;
           });
+      } else if (nodeSetting?.settingWidget && nodeWidgetRef.current?.validateForm) {
+        result = await nodeWidgetRef.current.validateForm();
       }
       return result;
     },
@@ -145,6 +149,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
           handleNodeValueChange({ ...values });
         }}
         readOnly={readOnly}
+        ref={nodeWidgetRef}
       />
     );
   } else if (nodeSetting?.settingSchema) {
