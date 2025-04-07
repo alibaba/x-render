@@ -9,9 +9,7 @@ const settings = [
       {
         title: '开始',
         type: 'Start',
-        targetHandleHidden: true,
-        hidden: true,
-        description: '流程开始节点',
+        description: '流程开始节点，用于标记流程的起点',
         icon: {
           type: 'icon-start',
           bgColor: '#17B26A',
@@ -60,9 +58,7 @@ const settings = [
       {
         title: '结束',
         type: 'End',
-        description: '流程结束节点',
-        hidden: true,
-        sourceHandleHidden: true,
+        description: '流程结束节点，用于标记流程的终点',
         icon: {
           type: 'icon-end',
           bgColor: '#F79009',
@@ -72,17 +68,6 @@ const settings = [
           properties: {
             output: {
               title: '输出结果',
-              type: 'string',
-              widget: 'textarea',
-            },
-            status: {
-              title: '结束状态',
-              type: 'string',
-              enum: ['success', 'error', 'warning'],
-              default: 'success',
-            },
-            message: {
-              title: '状态信息',
               type: 'string',
               widget: 'textarea',
             },
@@ -98,7 +83,7 @@ const settings = [
       {
         title: 'LLM',
         type: 'LLM',
-        description: '调用大语言模型',
+        description: '调用大语言模型回答问题或者对自然语言进行处理',
         icon: {
           type: 'icon-model',
           bgColor: '#6172F3',
@@ -147,7 +132,7 @@ const settings = [
       {
         title: 'Prompt',
         type: 'Prompt',
-        description: '提示词模板',
+        description: '通过精心设计提示词，提升大语言模型回答效果',
         icon: {
           type: 'icon-prompt',
           bgColor: '#17B26A',
@@ -210,7 +195,7 @@ const settings = [
       {
         title: '知识库',
         type: 'knowledge',
-        description: '知识库检索',
+        description: '允许你从知识库中查询与用户问题相关的文本内容',
         icon: {
           type: 'icon-knowledge',
           bgColor: '#6172F3',
@@ -269,9 +254,9 @@ const settings = [
       {
         title: '数据转换',
         type: 'transform',
-        description: '数据格式转换',
+        description: '对数据进行格式转换和处理',
         icon: {
-          type: 'icon-prompt',
+          type: 'icon-transform',
           bgColor: '#F79009',
         },
         settingSchema: {
@@ -326,8 +311,8 @@ const initialValues = {
       id: 'start',
       type: 'Start',
       data: {
-        name: '智能客服流程',
-        description: '基于LLM的智能客服系统',
+        name: 'AI 助手流程',
+        description: '一个基于 LLM 的智能助手流程',
         variables: [
           {
             name: 'userInput',
@@ -342,86 +327,29 @@ const initialValues = {
       },
     },
     {
-      id: 'llm1',
+      id: 'llm',
       type: 'LLM',
       data: {
         model: 'gpt-3.5',
         temperature: 0.7,
         maxTokens: 2000,
-        systemPrompt: '你是一个专业的客服代表，请用简洁专业的语言回答问题。',
+        systemPrompt: '你是一个专业的AI助手，请用简洁专业的语言回答问题。',
       },
       position: {
         x: 400,
-        y: 100,
+        y: 200,
       },
     },
     {
-      id: 'prompt1',
-      type: 'Prompt',
-      data: {
-        prompt: '请分析用户问题类型：',
-        variables: [
-          {
-            name: 'userInput',
-            value: '${userInput}',
-          },
-        ],
-      },
-      position: {
-        x: 400,
-        y: 300,
-      },
-    },
-    {
-      id: 'knowledge1',
+      id: 'knowledge',
       type: 'knowledge',
       data: {
         knowledgeBase: '产品文档',
         searchLimit: 5,
         similarity: 0.7,
-        filters: [
-          {
-            field: 'category',
-            operator: 'equals',
-            value: 'FAQ',
-          },
-        ],
       },
       position: {
         x: 700,
-        y: 100,
-      },
-    },
-    {
-      id: 'transform1',
-      type: 'transform',
-      data: {
-        inputType: 'json',
-        outputType: 'text',
-        mapping: [
-          {
-            source: 'answer',
-            target: 'response',
-            transform: '${answer}',
-          },
-        ],
-      },
-      position: {
-        x: 700,
-        y: 300,
-      },
-    },
-    {
-      id: 'llm2',
-      type: 'LLM',
-      data: {
-        model: 'gpt-3.5',
-        temperature: 0.7,
-        maxTokens: 2000,
-        systemPrompt: '你是一个专业的客服代表，请根据知识库内容回答问题。',
-      },
-      position: {
-        x: 1000,
         y: 200,
       },
     },
@@ -430,49 +358,27 @@ const initialValues = {
       type: 'End',
       data: {
         output: '处理完成',
-        status: 'success',
-        message: '客服问题已解决',
       },
       position: {
-        x: 1300,
+        x: 1000,
         y: 200,
       },
     },
   ],
   edges: [
     {
-      id: 'start-llm1',
+      id: 'start-llm',
       source: 'start',
-      target: 'llm1',
+      target: 'llm',
     },
     {
-      id: 'start-prompt1',
-      source: 'start',
-      target: 'prompt1',
+      id: 'llm-knowledge',
+      source: 'llm',
+      target: 'knowledge',
     },
     {
-      id: 'llm1-knowledge1',
-      source: 'llm1',
-      target: 'knowledge1',
-    },
-    {
-      id: 'prompt1-transform1',
-      source: 'prompt1',
-      target: 'transform1',
-    },
-    {
-      id: 'knowledge1-llm2',
-      source: 'knowledge1',
-      target: 'llm2',
-    },
-    {
-      id: 'transform1-llm2',
-      source: 'transform1',
-      target: 'llm2',
-    },
-    {
-      id: 'llm2-end',
-      source: 'llm2',
+      id: 'knowledge-end',
+      source: 'knowledge',
       target: 'end',
     },
   ],
@@ -484,7 +390,6 @@ const Demo = () => {
       <XFlow
         settings={settings}
         initialValues={initialValues}
-        layout="LR"
       />
     </div>
   );
