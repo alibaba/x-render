@@ -35,6 +35,7 @@ export default memo((props: any) => {
   const disabledCopy = settingMap[type]?.disabledCopy ?? false;
   const disabledDelete = settingMap[type]?.disabledDelete ?? false;
   const switchExtra = settingMap[type]?.switchExtra || {};
+  const handleProps = globalConfig?.handle || {}
   // const isConnectableStart = globalConfig?.handle?.isConnectableStart ?? true;
   // const isConnectableEnd = globalConfig?.handle?.isConnectableEnd ?? true;
 
@@ -259,6 +260,7 @@ export default memo((props: any) => {
     >
       {!settingMap?.[type]?.targetHandleHidden && !isNote && (
         <Handle
+          {...handleProps}
           type="target"
           position={targetPosition}
           isConnectable={connectable}
