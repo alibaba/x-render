@@ -57,7 +57,8 @@ group:
 | 属性           | 描述                                       | 类型      | 默认值 |
 | -------------- | ------------------------------------------ | --------- | ------ |
 | hideEdgeAddBtn | 是否隐藏两个节点之间，连线上的增加节点按钮 | `boolean` | false  |
-| deletable | 配置边是否可删除 | `boolean` | false  |
+| hideEdgeDelBtn | 是否隐藏两个节点之间，连线上的删除按钮, 需要配合deletable一起使用 | `boolean` | false  |
+| deletable | 配置边是否可用快捷键删除，如果需要同时隐藏删除按钮，则需要设置deletable为true | `boolean` | true  |
 
 ## TControl
 
