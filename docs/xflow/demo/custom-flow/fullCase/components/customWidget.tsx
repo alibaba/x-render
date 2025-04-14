@@ -103,6 +103,9 @@ const CustomWidget = forwardRef<
         // size="small"
         removeHiddenData={false}
         widgets={{ ReadOnlyPanel }}
+        configProvider={{
+          getPopupContainer: triggerNode => triggerNode.parentElement
+        }}
       />
     </div>
   );

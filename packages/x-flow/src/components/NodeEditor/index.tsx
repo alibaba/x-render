@@ -164,6 +164,9 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
           const initialValues = form.getValues();
           handleNodeValueChange(initialValues);
         }}
+        configProvider={{
+          getPopupContainer: triggerNode => triggerNode.parentElement
+        }}
       />
     );
   } else if (
@@ -178,6 +181,9 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         watch={watch}
         size={'small'}
         readOnly={readOnly}
+        configProvider={{
+          getPopupContainer: triggerNode => triggerNode.parentElement
+        }}
       />
     );
   } else if (CustomSettingWidget) {

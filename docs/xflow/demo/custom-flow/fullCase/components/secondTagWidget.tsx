@@ -121,6 +121,9 @@ const secondTagWidget = forwardRef<
         }}
         // size="small"
         widgets={{ ReadOnlyPanel }}
+        configProvider={{  // 全屏时挂载到父节点
+          getPopupContainer: triggerNode => triggerNode.parentElement
+        }}
       />
     </div>
   );
