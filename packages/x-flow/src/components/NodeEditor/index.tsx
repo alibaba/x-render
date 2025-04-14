@@ -159,7 +159,6 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         form={form}
         widgets={widgets}
         watch={watch}
-        size={'small'}
         readOnly={readOnly}
         onMount={() => {
           const initialValues = form.getValues();

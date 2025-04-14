@@ -119,7 +119,7 @@ const secondTagWidget = forwardRef<
               ) || [],
           });
         }}
-        size="small"
+        // size="small"
         widgets={{ ReadOnlyPanel }}
       />
     </div>

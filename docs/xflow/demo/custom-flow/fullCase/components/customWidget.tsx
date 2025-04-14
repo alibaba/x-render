@@ -100,7 +100,7 @@ const CustomWidget = forwardRef<
               (res?.data || [])?.map((item) => `${item.displayName}(${item.measureName})`) || [],
           });
         }}
-        size="small"
+        // size="small"
         removeHiddenData={false}
         widgets={{ ReadOnlyPanel }}
       />
