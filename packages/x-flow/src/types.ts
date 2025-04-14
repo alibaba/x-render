@@ -100,7 +100,8 @@ export interface TEdge {
 
 export interface TControl{
   hideAddNode?:boolean
-  hideAnnotate?:boolean
+  hideAnnotate?: boolean
+  hideUndoRedoBtns?:boolean
 }
 
 export interface THandle{

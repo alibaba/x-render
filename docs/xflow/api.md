@@ -68,6 +68,8 @@ group:
 | -------------- | ------------------------------------------ | --------- | ------ |
 | hideAddNode | 是否隐藏增加节点功能 | `boolean` | false  |
 | hideAnnotate | 是否隐藏注释节点功能 | `boolean` | false  |
+| hideUndoRedoBtns | 是否隐藏撤销和重做按钮 | `boolean` | false  |
+
 
 ## THandle
 
