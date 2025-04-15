@@ -22,6 +22,7 @@ export interface TNodeItem {
     width?: string | number; // 配置面板宽度
     hideDesc?: boolean; // 配置面板描述
   };
+  nodeWidget?:string// 自定义节点组件
   getSettingSchema?: (nodeId: string, nodeType: string, nodeItem:TNodeItem,nodeData:any,form: ReturnType<typeof useForm>) => Promise<Schema>;
   switchExtra: {   // 条件节点额外属性配置
     hideElse: boolean;
@@ -34,7 +35,8 @@ export interface TNodeItem {
   };
   disabledCopy?: boolean;
   disabledDelete?: boolean;
-  onTesting: (node,nodes) => void;// 单点调试方法
+  onTesting: (node, nodes) => void;// 单点调试方法
+  showTestingBtn?: boolean; // 是否显示单点调试按钮
 }
 
 export interface TNodeGroup {
@@ -98,7 +100,8 @@ export interface TEdge {
 
 export interface TControl{
   hideAddNode?:boolean
-  hideAnnotate?:boolean
+  hideAnnotate?: boolean
+  hideUndoRedoBtns?:boolean
 }
 
 export interface THandle{
@@ -108,8 +111,20 @@ export interface THandle{
 }
 export interface FlowProps {
   initialValues?: {
-    nodes: any[];
-    edges: any;
+    nodes: Array<{
+      id: string;
+      type: string;
+      data: Record<string, any>;
+      position: {
+        x: number;
+        y: number;
+      };
+    }>;
+    edges: Array<{
+      id: string;
+      source: string;
+      target: string;
+    }>;
   };
   layout?: 'LR' | 'TB';
   /**

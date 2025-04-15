@@ -161,6 +161,10 @@ export const AdvancedSettingWidget = forwardRef<
 
 <code src="./demo/custom-flow/advancedLinkageCase"></code>
 
+###  完整案例
+
+<code src="./demo/custom-flow/fullCase/index.tsx"></code>
+
 这个示例适用于以下场景：
 
 - 需要根据不同配置类型显示不同表单项的场景
