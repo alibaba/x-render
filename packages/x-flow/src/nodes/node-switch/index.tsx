@@ -28,6 +28,8 @@ export default memo((props: any) => {
     false;
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
   const isSwitchBottom = position === Position.Bottom;
+  const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
+
 
   return (
     <NodeContainer
@@ -58,7 +60,7 @@ export default memo((props: any) => {
         />
       }
       description={nodeDescription} // 不允许用户更改的节点描述
-      iconSvg={nodeSetting?.iconSvg}
+      iconSvg={SVGWidget ? <SVGWidget /> : false}
       hideTitleTips={hideTitleTips}
       isSwitchBottom={isSwitchBottom}
       nodeSettingTitle={nodeSetting?.title || 'Switch'}

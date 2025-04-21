@@ -10,6 +10,7 @@ export default memo((props: any) => {
   const nodeDescription = nodeSetting?.description || '';
   const hideDesc = nodeSetting?.nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
+  const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
 
 
   return (
@@ -27,7 +28,7 @@ export default memo((props: any) => {
       NodeWidget={NodeWidget ? <NodeWidget data={data} /> : undefined}
       iconFontUrl={iconFontUrl}
       description={nodeDescription} // 不允许用户更改的节点描述
-      iconSvg={nodeSetting?.iconSvg}
+      iconSvg={SVGWidget ? <SVGWidget /> : false}
       hideTitleTips={hideTitleTips}
       nodeSettingTitle={nodeSetting.title||'结束'}
     />

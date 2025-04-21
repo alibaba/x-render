@@ -36,13 +36,13 @@ const searchNodeList = (query: string, list: any[]) => {
 };
 
 // 悬浮菜单项详细描述
-export const MenuTooltip = ({ icon, title, description, iconFontUrl, iconSvg }: any) => {
+export const MenuTooltip = ({ icon, title, description, iconFontUrl, iconSvg, SVGWidget }: any) => {
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
   return (
     <div className='xflow-node-menu-tooltip'>
       <div className='icon-box-max' style={{ background: icon?.bgColor || '#F79009', marginRight: '8px' }}>
-        {iconSvg ? iconSvg :<IconBox type={icon?.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />}
+        {iconSvg ? <SVGWidget /> :<IconBox type={icon?.type} style={{ color: '#fff', fontSize: 13, ...icon?.style }} />}
       </div>
       <div className='title'>
         {title}
@@ -59,11 +59,14 @@ const MenuItem = (props: any) => {
 
   const { title, type, icon, onClick, iconFontUrl, iconSvg } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
+  const { widgets, settingMap } = useContext(ConfigContext);
+  const nodeSetting = settingMap[type] || {};
+  const SVGWidget = widgets[nodeSetting?.iconSvg]
 
   return (
     <Popover
       key={type}
-      content={<MenuTooltip {...props} />}
+      content={<MenuTooltip {...props} SVGWidget={SVGWidget} />}
       placement='right'
       arrow={false}
       getPopupContainer={() => document.getElementById('xflow-container') as HTMLElement}
@@ -73,7 +76,7 @@ const MenuItem = (props: any) => {
         onClick={onClick(type)}
       >
         <span className='icon-box' style={{ background: icon?.bgColor || '#F79009', marginRight: '8px' }}>
-          {iconSvg ? iconSvg :
+          {iconSvg ? <SVGWidget /> :
             <IconBox
             type={icon?.type}
             style={{ color: '#fff', fontSize: 13 }}
