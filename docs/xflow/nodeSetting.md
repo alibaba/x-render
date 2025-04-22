@@ -103,7 +103,7 @@ interface NodeConfig {
 #### 3.2 图标的 SVG 形式的用法
   首先在创建SVG组件，然后在全局widgets中引入SVG组件，最后在节点配置`settings`中配置`iconSvg`属性。首先创建SVG组件如下：
   ```js
-  const CustomSvg = () => (
+const CustomSvg = () => (
   <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor">
     <title>Panda icon</title>
     <path
@@ -148,11 +148,11 @@ export default CustomSvg;
   然后在全局widgets中引入SVG组件
 
   ```js
-        <XFlow
+  <XFlow
         settings={settings}
         initialValues={initialValues}
         widgets={{CustomSvg}} // 引入SVG组件
-      /> 
+   /> 
   ```
 
   最后在节点配置`settings`中配置`iconSvg`属性
