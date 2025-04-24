@@ -6,7 +6,7 @@ export const settings= [
       {
         title: '开始',
         type: 'Start',
-        description: '流程开始节点，用于标记流程的起点',
+        description: '自定义SVG形式的图标',
         icon: {
           bgColor: '#17B26A', // icon背景颜色
         },
@@ -55,11 +55,12 @@ export const settings= [
       {
         title: '结束',
         type: 'End',
-        description: '流程结束节点，用于标记流程的终点',
+        description: '自定义图片形式的图标',
         icon: {
-          type: 'icon-end',
-          bgColor: '#F79009',
+          bgColor: '#DACFF3',
         },
+        iconSvg: 'CustomImg',  // 图标图片组件
+        imgSrc: 'https://img.alicdn.com/tfs/TB17UtINiLaK1RjSZFxXXamPFXa-606-643.png', // 图片地址
         settingSchema: {
           type: 'object',
           properties: {
@@ -82,9 +83,10 @@ export const settings= [
         type: 'LLM',
         description: '调用大语言模型回答问题或者对自然语言进行处理',
         icon: {
-          type: 'icon-model',
-          bgColor: '#6172F3',
+          bgColor:'#FFACF8',
         },
+        iconSvg: 'CustomImg',  // 图标图片组件
+        imgSrc: 'https://img.alicdn.com/imgextra/i2/O1CN01Lu3elm1XLSPBGqvPi_!!6000000002907-2-tps-200-200.png', // 图片
         settingSchema: {
           type: 'object',
           properties: {

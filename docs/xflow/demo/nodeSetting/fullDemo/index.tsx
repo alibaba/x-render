@@ -2,6 +2,7 @@ import React from 'react';
 import XFlow from '@xrenders/xflow';
 import { settings } from './settings';
 import CustomSvg from './CustomSvg';
+import CustomImg from './CustomImg';
 
 
 const initialValues = {
@@ -91,7 +92,7 @@ const Demo = () => {
       <XFlow
         settings={settings}
         initialValues={initialValues}
-        widgets={{CustomSvg}}
+        widgets={{CustomSvg,CustomImg}}
       />
     </div>
   );

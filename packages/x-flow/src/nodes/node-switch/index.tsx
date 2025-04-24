@@ -60,7 +60,7 @@ export default memo((props: any) => {
         />
       }
       description={nodeDescription} // 不允许用户更改的节点描述
-      iconSvg={SVGWidget ? <SVGWidget /> : false}
+      iconSvg={SVGWidget ? <SVGWidget setting={nodeSetting} /> : false}
       hideTitleTips={hideTitleTips}
       isSwitchBottom={isSwitchBottom}
       nodeSettingTitle={nodeSetting?.title || 'Switch'}

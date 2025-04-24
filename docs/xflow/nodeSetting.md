@@ -15,7 +15,6 @@ group:
 
 ### 1. 分组配置
 
-
 节点菜单支持分组展示，每个分组包含以下配置：
 
 ```typescript
@@ -25,6 +24,7 @@ interface GroupConfig {
   items: NodeConfig[]; // 分组下的节点配置列表
 }
 ```
+
 <div class="feature-image">
   <img src="https://img.alicdn.com/imgextra/i1/O1CN017qDeW21vUf9BGe0JI_!!6000000006176-2-tps-734-656.png" alt="节点菜单分组展示" />
 </div>
@@ -53,15 +53,18 @@ interface NodeConfig {
   };
 }
 ```
+
 ### 3. 节点图标配置
 
 节点的图标配置目前支持两种形式：
+
 1. [iconfont](https://www.iconfont.cn/) 的图标
-2. 图标的 SVG 形式
+2. 自定义图标组件展示。通过这种方式可支持图标的 SVG 形式、图片形式、其他自定义样式。
 
 #### 3.1 iconfont 图标的用法
 
 1. 首先在 [iconfont](https://www.iconfont.cn/) 官网中选择图标后添加到项目中，在项目中找到图标，复制图标的代码，以及生成图标库的 Symbol 链接。
+
  <div class="feature-image">
   <img src="https://img.alicdn.com/imgextra/i3/O1CN013d3z1F1emfFXWFSiy_!!6000000003914-0-tps-2154-986.jpg" alt="iconfont图标配置" />
 </div>
@@ -75,8 +78,8 @@ interface NodeConfig {
   iconFontUrl="//at.alicdn.com/t/a/font_4069358_caoh6qs1z9a.js"
 />
 ```
-3. 然后在节点配置中配置 icon 属性，type 为 复制的图标的代码，bgColor 为图标的背景色：
 
+3. 然后在节点配置中配置 icon 属性，type 为 复制的图标的代码，bgColor 为图标的背景色：
 
 ```js
 {
@@ -100,13 +103,17 @@ interface NodeConfig {
 }
 ```
 
-#### 3.2 图标的 SVG 形式的用法
-  首先在创建SVG组件，然后在全局widgets中引入SVG组件，最后在节点配置`settings`中配置`iconSvg`属性。首先创建SVG组件如下：
+#### 3.2 自定义图标组件
+
+   比如实现图标的 SVG 形式。首先创建SVG组件如下：
+
   ```js
-const CustomSvg = () => (
-  <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor">
-    <title>Panda icon</title>
-    <path
+const CustomSvg = ({ setting }) => {
+  console.log('接收参数node setting', setting);
+  return (
+    <svg viewBox="0 0 1024 1024" width="1em" height="1em" fill="currentColor">
+      <title>Panda icon</title>
+      <path
       d="M99.096 315.634s-82.58-64.032-82.58-132.13c0-66.064 33.032-165.162 148.646-148.646 83.37 11.91 99.096 165.162 99.096 165.162l-165.162 115.614zM924.906 315.634s82.58-64.032 82.58-132.13c0-66.064-33.032-165.162-148.646-148.646-83.37 11.91-99.096 165.162-99.096 165.162l165.162 115.614z"
       fill="#6B676E"
     />
@@ -138,8 +145,8 @@ const CustomSvg = () => (
       d="M693.678 495.484m-33.032 0a33.032 33.032 0 1 0 66.064 0 33.032 33.032 0 1 0-66.064 0Z"
       fill="#464655"
     />
-  </svg>
-);
+  </svg>    
+)};
 
 export default CustomSvg;
 
@@ -178,8 +185,6 @@ export default CustomSvg;
 ## 完整示例
 
  <code src="./demo/nodeSetting/fullDemo/index.tsx"></code>
-
-
 
 ## 注意事项
 

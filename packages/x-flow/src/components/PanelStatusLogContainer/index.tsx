@@ -79,7 +79,7 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
                   <TitleMenuTooltip
                     {...nodeSetting}
                     iconFontUrl={iconFontUrl}
-                    iconSvg={iconSvg  ? <SVGWidget />:false}
+                    iconSvg={iconSvg ? <SVGWidget setting={nodeSetting} />:false}
                     nodeSettingTitle={nodeSetting?.title}
                   />
                 }
@@ -97,7 +97,7 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
                   }}
                 >
                   {iconSvg ? (
-                    <SVGWidget />
+                    <SVGWidget setting={nodeSetting} />
                   ) : (
                     <Icon
                       style={{ fontSize: 14, color: '#fff' }}

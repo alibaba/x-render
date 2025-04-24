@@ -59,7 +59,7 @@ export default memo((props: ITrackNodeItemProps) => {
                 }}
               >
                 {iconSvg ? (
-                  <SVGWidget />
+                  <SVGWidget setting={nodeSetting} />
                 ) : (
                   <Icon
                     style={{ fontSize: 14, color: '#fff' }}

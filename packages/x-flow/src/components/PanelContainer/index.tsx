@@ -131,7 +131,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 style={{ background: nodeSetting?.icon?.bgColor || '#F79009' }}
               >
                 {iconSvg ? (
-                  <SVGWidget />
+                  <SVGWidget setting={nodeSetting} />
                 ) : (
                   <Icon
                     style={{ fontSize: 14, color: '#fff' }}
