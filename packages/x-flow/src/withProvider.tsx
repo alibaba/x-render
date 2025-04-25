@@ -30,7 +30,7 @@ export default function withProvider<T>(
       globalConfig,
       logPanel,
       onMenuItemClick,
-      antdVersion ='V4',
+      antdVersion ='V5',
       readOnly,
       clickAddNode,
       onTesting,
