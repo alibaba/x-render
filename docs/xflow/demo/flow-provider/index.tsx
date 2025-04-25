@@ -26,15 +26,14 @@ function Sidebar() {
   // This hook will only work if the component it's used in is a child of a
   // <FlowProvider />.
   const nodes = useNodes();
+  console.log("nodes", nodes);
 
   return (
     <aside>
-      {nodes?.map(node => (
-        <div key={node?.id}>
-          Node {node?.id} - x: {node?.position?.x?.toFixed(2)}, y:{' '}
-          {node?.position?.y?.toFixed(2)}
-        </div>
-      ))}
+      nodes数据格式：
+      <pre style={{ fontSize: '12px', margin: '4px 0' }}>
+        {JSON.stringify(nodes, null, 2)}
+      </pre>
     </aside>
   );
 }

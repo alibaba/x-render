@@ -33,7 +33,10 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
   const CustomWidget = widgets[logPanel?.logWidget]; // 内置setting组件
   const isCustomWidget = !Boolean(logPanel?.logWidget && CustomWidget);
-  const width =isNumber(logPanel?.width) ? logPanel?.width : 400;
+  const width = isNumber(logPanel?.width) ? logPanel?.width : 400;
+  const SVGWidget = widgets[nodeSetting?.iconSvg]
+
+
 
   const drawerVersionProps = useMemo(() => {
     if (antdVersion === 'V5') {
@@ -76,6 +79,8 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
                   <TitleMenuTooltip
                     {...nodeSetting}
                     iconFontUrl={iconFontUrl}
+                    iconSvg={iconSvg ? <SVGWidget setting={nodeSetting} />:false}
+                    nodeSettingTitle={nodeSetting?.title}
                   />
                 }
                 placement="bottom"
@@ -92,7 +97,7 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
                   }}
                 >
                   {iconSvg ? (
-                    iconSvg
+                    <SVGWidget setting={nodeSetting} />
                   ) : (
                     <Icon
                       style={{ fontSize: 14, color: '#fff' }}

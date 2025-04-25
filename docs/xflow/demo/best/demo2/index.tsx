@@ -4,6 +4,7 @@ import { Button, Space, message } from 'antd';
 import { PlayCircleOutlined, SaveOutlined } from '@ant-design/icons';
 import { settings } from './setting';
 import './index.less';
+import CustomSvg from './CustomSvg';
 
 export default () => {
   const [loading, setLoading] = useState(false);
@@ -186,6 +187,7 @@ export default () => {
                 ],
               },
             }}
+          widgets={{ CustomSvg }}
           />
         </div>
         <Space className="tools">
