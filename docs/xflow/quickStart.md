@@ -89,7 +89,7 @@ import XFlow from '@xrenders/xflow';
     {
       title: 'LLM',
       type: 'LLM',
-      desc: '调用大语言模型回答问题或者对自然语言进行处理',
+      description: '调用大语言模型回答问题或者对自然语言进行处理',
       icon: {
         type: 'icon-model',
         bgColor: '#6172F3',

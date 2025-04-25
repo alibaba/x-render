@@ -48,6 +48,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     readOnly,
     logPanel,
     onTesting,
+    widgets
   }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
@@ -61,6 +62,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
   const { nodePanel, iconSvg, showTestingBtn } = nodeSetting;
+  const SVGWidget = widgets[nodeSetting?.iconSvg]
   const hideDesc =
     nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
@@ -129,7 +131,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 style={{ background: nodeSetting?.icon?.bgColor || '#F79009' }}
               >
                 {iconSvg ? (
-                  iconSvg
+                  <SVGWidget setting={nodeSetting} />
                 ) : (
                   <Icon
                     style={{ fontSize: 14, color: '#fff' }}

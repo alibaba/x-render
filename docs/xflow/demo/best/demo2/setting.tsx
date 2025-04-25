@@ -132,6 +132,7 @@ export const settings = [
   {
     title: '条件判断',
     type: 'Switch',
+    description:'条件判断',
     showTestingBtn: true,
     icon: {
       type: 'icon-switch',
@@ -157,10 +158,12 @@ export const settings = [
     title: 'LLM',
     type: 'LLM',
     showTestingBtn: true,
+    description:'LLM',
     icon: {
-      type: 'icon-model',
+      // type: 'icon-model',
       bgColor: '#1890FF',
     },
+    iconSvg:'CustomSvg',
     settingSchema: {
       type: 'object',
       properties: {

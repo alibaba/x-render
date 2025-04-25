@@ -30,6 +30,8 @@ export default memo((props: ITrackNodeItemProps) => {
   } = globalConfig;
   const statusObj = transformNodeStatus(status || []);
   const statusData = statusObj[nodeStatus];
+  const SVGWidget = widgets[nodeSetting?.iconSvg]
+
 
   return (
     <div className="log-track-node">
@@ -57,7 +59,7 @@ export default memo((props: ITrackNodeItemProps) => {
                 }}
               >
                 {iconSvg ? (
-                  iconSvg
+                  <SVGWidget setting={nodeSetting} />
                 ) : (
                   <Icon
                     style={{ fontSize: 14, color: '#fff' }}

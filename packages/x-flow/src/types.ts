@@ -9,6 +9,7 @@ export interface TNodeItem {
   type: string; // 节点类型 _group 比较te
   description?: string; // 节点描述
   hidden?: boolean; // 是否可见
+  iconSvg?: string;// svg图标
   icon: {
     type: string;
     bgColor: string;

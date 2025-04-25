@@ -46,7 +46,7 @@ export default () => {
     {
       title: 'LLM',
       type: 'LLM',
-      desc: '调用大语言模型回答问题或者对自然语言进行处理',
+      description: '调用大语言模型回答问题或者对自然语言进行处理',
       icon: {
         type: 'icon-model',
         bgColor: '#6172F3',
@@ -162,6 +162,7 @@ export default () => {
       <XFlow
         settings={nodeSettings}
         initialValues={initialValues}
+        iconFontUrl="//at.alicdn.com/t/a/font_4069358_caoh6qs1z9a.js"
       />
      </div>
   );
