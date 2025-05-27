@@ -41,7 +41,7 @@ const CardList = (props: any) => {
     renderCore,
     hasBackground,
     operateBtnType,
-    
+
     addBtnProps,
     delConfirmProps,
     copyBtnProps,
@@ -122,8 +122,8 @@ const CardList = (props: any) => {
             </div>
           );
         })}
-        {!hideAdd && (
-          <div className='fr-list-add-btn'>
+        {(!schema.max || fields.length < schema.max) && !hideAdd && (
+          <div className="fr-list-add-btn">
             <Button
               {...addBtnProps}
               onClick={() => addItem()}
