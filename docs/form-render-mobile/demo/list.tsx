@@ -10,6 +10,8 @@ const schema = {
       title: '对象数组',
       type: 'array',
       widget: 'cardList',
+      min: 2,
+      max:3,
       items: {
         type: 'object',
         widget: 'card',
