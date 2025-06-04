@@ -30,8 +30,7 @@ export default memo((props: ITrackNodeItemProps) => {
   } = globalConfig;
   const statusObj = transformNodeStatus(status || []);
   const statusData = statusObj[nodeStatus];
-  const SVGWidget = widgets[nodeSetting?.iconSvg]
-
+  const SVGWidget = widgets[nodeSetting?.iconSvg];
 
   return (
     <div className="log-track-node">
@@ -88,9 +87,36 @@ export default memo((props: ITrackNodeItemProps) => {
             )
           }
         >
-          {logTrackList?.length ? (
+          {Boolean(logTrackList?.length) ? (
             (logTrackList || [])?.map((item, index) => (
-              <CodePanel codeData={item} key={index} isShowFullScreen={false} />
+              <div key={index}>
+                {Boolean(item?.groupTitle) && (
+                  <div
+                    className="log-detail-panel-title"
+                    style={{ marginTop: 10 }}
+                  >
+                    <span className="log-detail-panel-title-text">
+                      {item?.groupTitle}
+                    </span>
+                    <div className="log-detail-panel-title-line" />
+                  </div>
+                )}
+                {Boolean((item?.codePanel || [])?.length) ? (
+                  (item?.codePanel || [])?.map((codeItem, codeIndex) => (
+                    <CodePanel
+                      codeData={codeItem}
+                      key={codeIndex}
+                      isShowFullScreen={false}
+                    />
+                  ))
+                ) : (
+                  <Empty
+                    image={Empty.PRESENTED_IMAGE_SIMPLE}
+                    description="暂无日志信息"
+                    style={{ fontSize: '12px' }}
+                  />
+                )}
+              </div>
             ))
           ) : (
             <Empty

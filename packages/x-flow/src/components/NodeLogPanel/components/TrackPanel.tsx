@@ -20,8 +20,8 @@ export default memo((props: any) => {
     isTruthy(item?.data?._status)
   );
   const trackList = (statusNode || [])?.map(node => {
-    const logTrackList = logList?.find(item => item?.nodeId == node?.id);
-    return { ...node, logTrackList: logTrackList?.codePanel || [] };
+    const logTrackList = logList?.filter(item => item?.nodeId == node?.id)||[];
+    return { ...node, logTrackList };
   });
 
   return (
