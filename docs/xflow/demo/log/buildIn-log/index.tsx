@@ -1,11 +1,15 @@
 import XFlow from '@xrenders/xflow';
 import React,{ useState } from 'react';
 import settings from './setting';
+import { Button } from 'antd';
+import CustomGroupTitle from './CustomGroupTittle';
+import DetailLogWidget from './DetailLogWidget';
 
 export default () => {
   const [logList, setLogList] = useState<any>([
     {
-      nodeId:'mcelcsg6pinydoy7',
+      nodeId: 'mcelcsg6pinydoy7',
+      groupTitle:"日志分组1",
       statusPanel: {
         status: [
           {
@@ -36,8 +40,120 @@ export default () => {
         },
       ],
     },
+    {
+      nodeId: 'mcelcsg6pinydoy7',
+      groupTitle: "customGroupTitle",// 自定义分组标题组件
+      statusPanel: {
+        status: [
+          {
+            label: '状态',
+            isBadge: true,
+            // value:"失败"
+          },
+          {
+            label: '执行时间',
+            value: '0.01s',
+          },
+          {
+            label: '总token数',
+            value: '0tokens',
+          },
+        ],
+        // extra: <span>哈哈哈哈哈哈哈哈</span>,
+        extra: '测试测试',
+      },
+      codePanel: [
+        {
+          title: '输出数据',
+          code: "{'target_language':'english','query':'string'}",
+        },
+        {
+          title: '报错信息',
+          code: "{'target_language':'english','query':'string'}",
+        },
+      ],
+    },
+    {
+      nodeId: 'w4be9edh4bhdlokm',
+      statusPanel: {
+        status: [
+          {
+            label: '状态',
+            isBadge: true,
+            // value:"失败"
+          },
+          {
+            label: '执行时间',
+            value: '0.01s',
+          },
+          {
+            label: '总token数',
+            value: '0tokens',
+          },
+        ],
+        // extra: <span>哈哈
+        // 哈哈哈哈哈哈</span>,
+        extra: '测试测试',
+      },
+      codePanel: [
+        {
+          title: '输出数据',
+          code: "{'target_language':'english','query':'string'}",
+        },
+        {
+          title: '报错信息',
+          code: "{'target_language':'english','query':'string'}",
+        },
+      ],
+      showDetailLogWidget:false,// 是否展示自定义详情tab组件
+    },
+     {
+       nodeId: '4m9tee00n819nyyy',
+      statusPanel: {
+        status: [
+          {
+            label: '状态',
+            isBadge: true,
+            // value:"失败"
+          },
+          {
+            label: '执行时间',
+            value: '0.01s',
+          },
+          {
+            label: '总token数',
+            value: '0tokens',
+          },
+        ],
+        extra: '测试测试',
+      },
+      showDetailLogWidget: false,// 是否展示自定义详情tab组件
+    },
+    {
+      nodeId: '3qloq2p1x3wcwbzg',
+      statusPanel: {
+        status: [
+          {
+            label: '状态',
+            isBadge: true,
+            // value:"失败"
+          },
+          {
+            label: '执行时间',
+            value: '0.01s',
+          },
+          {
+            label: '总token数',
+            value: '0tokens',
+          },
+        ],
+        extra: '测试测试',
+      },
+      showDetailLogWidget: false,// 是否展示自定义详情tab组件
+    }
   ]);
   const [loading, setLoading] = useState<boolean>(false);
+  const [activeKey, setActiveKey] = useState<string>('detail');
   const nodes = [
     {
       id: 'mcelcsg6pinydoy7',
@@ -156,10 +272,21 @@ export default () => {
         nodeSelector={{
           showSearch: true,
         }}
+        widgets={{
+          customGroupTitle: CustomGroupTitle,
+          DetailLogWidget
+        }}
         logPanel={{
           // 日志面板
           logList, // 日志面板接受的数据
           loading, // 日志面板loading
+          tabsProps: {
+            tabBarExtraContent:activeKey === 'detail' ? <Button type='primary' size='small'>自定义按钮</Button> : null,
+            onChange: (activeKey)=>{
+              setActiveKey(activeKey);
+            },
+          },
+          detailLogWidget: 'DetailLogWidget',//自定义详情tab组件
         }}
         globalConfig={{
           nodeView: {

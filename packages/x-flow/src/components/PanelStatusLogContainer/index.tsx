@@ -69,6 +69,7 @@ const PanelStatusLogContainer: FC<IPanelProps> = (props: IPanelProps) => {
       style={{
         position: 'absolute',
       }}
+      destroyOnClose={true}
       title={
         <>
           <div className="title-box">

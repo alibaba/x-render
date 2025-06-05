@@ -166,3 +166,39 @@
     }
   }
 }
+
+.log-detail-panel-title {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 0 4px;
+
+  .log-detail-panel-title-text {
+    font-size: 12px;
+    color: #676f83;
+    white-space: nowrap;
+    margin-right: 8px;
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+    transition: all 0.3s;
+
+    &:hover {
+      color: #333;
+    }
+  }
+
+  .log-detail-panel-title-line {
+    flex: 1;
+    height: 1px;
+    background: #e8e8e8;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
