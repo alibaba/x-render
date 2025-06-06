@@ -12,7 +12,6 @@ export default memo((props: any) => {
   const hideDesc = nodeSetting?.nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
   const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
-  console.log("nodeSetting",nodeSetting)
 
   return (
     <NodeContainer
