@@ -9,7 +9,8 @@ export default () => {
   const [logList, setLogList] = useState<any>([
     {
       nodeId: 'mcelcsg6pinydoy7',
-      groupTitle:"日志分组1",
+      groupTitle: "日志分组1",
+      // _status: 'custom-succsess',
       statusPanel: {
         status: [
           {
@@ -43,6 +44,7 @@ export default () => {
     {
       nodeId: 'mcelcsg6pinydoy7',
       groupTitle: "customGroupTitle",// 自定义分组标题组件
+      // _status: 'custom-error',
       statusPanel: {
         status: [
           {
