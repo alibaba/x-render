@@ -50,7 +50,7 @@ const NodeLogPanel: FC<INodeEditorProps> = (props: any) => {
                     return (
                       <DetailPanel
                         key={index}
-                        currentStatus={node?._status}
+                        currentStatus={item?._status || node?._status}
                         detailData={item}
                       />
                     );

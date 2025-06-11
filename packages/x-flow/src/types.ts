@@ -1,4 +1,5 @@
 import { NodeMouseHandler,Handle } from '@xyflow/react';
+import { TabPaneProps } from 'antd';
 import { Schema,useForm } from 'form-render';
 import React, { ReactNode ,ComponentProps} from 'react';
 
@@ -73,6 +74,9 @@ export interface TLogListItem {
   };
   codePanel?: Array<{ title: string; code: string }>;
   nodeId: string;// 节点ID
+  groupTitle?: string;// 节点组标题
+  showDetailLogWidget?: boolean;// 是否展示详情日志面板
+  _status?: string | number;// 当前log的状态，如果没有，则以data._status为准
 }
 
 export interface TLogPanel {
@@ -82,6 +86,8 @@ export interface TLogPanel {
   loading?: boolean; // 日志面板loading
   logWidget?: string; // 自定义日志面板组件
   width?: number;// 日志面板宽度
+  tabsProps?: TabPaneProps;// 内置日志面板,详情和追踪选项卡切换组件,antd的tabs配置透传
+  detailLogWidget?: string;// 自定义详情日志面板组件
 }
 
 export interface TNodeView {

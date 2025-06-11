@@ -34,7 +34,7 @@ group:
     {value: 'warning',color: '#faad14',name: '告警'}
   ]
   ```
- - **自定义状态**:可通过`globalConfig.nodeView.status`自定义节点状态，同名可覆盖内置状态颜色。注意:`value`只能为`string`类型！
+ - **自定义状态**:可通过`globalConfig.nodeView.status`自定义节点状态，同名可覆盖内置状态颜色。
     ```js
       globalConfig={{
           nodeView: {
@@ -85,6 +85,7 @@ group:
   nodeId: string;// 节点ID
   groupTitle:string;// 当有多个相同的nodeId，每个板块的分组名称
   showDetailLogWidget:boolean;// 是否展示detailLogWidget组件
+  _status:string|number;  // 当前log的状态，如果没有，则以data._status为准
 }>; 
    
 ```

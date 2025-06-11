@@ -84,15 +84,16 @@ const initialValues = {
   ],
 };
 
-
-
 const Demo = () => {
   return (
     <div style={{ width: '100%', height: '600px' }}>
       <XFlow
         settings={settings}
         initialValues={initialValues}
-        widgets={{CustomSvg,CustomImg}}
+        widgets={{ CustomSvg, CustomImg }}
+        nodeSelector={{
+          showSearch: true,
+        }}
       />
     </div>
   );
