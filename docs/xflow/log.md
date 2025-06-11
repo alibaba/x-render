@@ -69,6 +69,7 @@ group:
           logList, // 日志面板数据
           loading, // 日志面板loading
           logWidget:'CustomLogPanel'// 自定义日志面板
+          tabsProps,// 日志面板，详情和追踪选项卡切换组件,antd的tabs配置透传
         }}
 ```
 ### 内置节点日志面板
@@ -82,6 +83,8 @@ group:
   };
   codePanel?: Array<{ title: string; code: string }>;
   nodeId: string;// 节点ID
+  groupTitle:string;// 当有多个相同的nodeId，每个板块的分组名称
+  showDetailLogWidget:boolean;// 是否展示detailLogWidget组件
 }>; 
    
 ```
