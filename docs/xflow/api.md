@@ -126,6 +126,7 @@ Handle 配置继承自 React Flow 的 Handle 配置，用于控制节点连接�
 | nodeId         | 节点ID，必填。如果`logList`中有多个相同的nodeId,会自动合并相同nodeId的statusPanel、codePanel数据，并以数组的形式渲染     | `string`                                                                                            |        |
 | groupTitle           |当有多个相同的nodeId，每个板块的分组名称，不传不渲染。可以传入字符串，或者传入`widgets`自定义组件名称，自定义渲染组件   | `string`                                                                                            |        |
 | showDetailLogWidget           |是否展示`detailLogWidget`组件   | `boolean`                                                                                            |   true      |  
+| _status           |当前log的状态，如果没有，则以`data._status`为准 | `string\|number`                                                                                            |         |  
 
 
 
