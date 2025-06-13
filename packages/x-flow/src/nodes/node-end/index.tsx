@@ -3,7 +3,7 @@ import NodeContainer from '../../components/NodeContainer';
 import { ConfigContext } from '../../models/context';
 
 export default memo((props: any) => {
-  const { onClick, type, data } = props;
+  const { onClick, type, data,id } = props;
   const { settingMap, widgets, iconFontUrl, globalConfig } = useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
@@ -25,7 +25,7 @@ export default memo((props: any) => {
       onClick={onClick}
       hideDesc={hideDesc}
       desc={data?.desc}
-      NodeWidget={NodeWidget ? <NodeWidget data={data} /> : undefined}
+      NodeWidget={NodeWidget ? <NodeWidget data={data}  id={id} nodeType={type} /> : undefined}
       iconFontUrl={iconFontUrl}
       description={nodeDescription} // 不允许用户更改的节点描述
       iconSvg={SVGWidget ? <SVGWidget setting={nodeSetting} /> : false}
