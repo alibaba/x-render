@@ -2,9 +2,11 @@ import { NodeMouseHandler,Handle } from '@xyflow/react';
 import { TabPaneProps } from 'antd';
 import { Schema,useForm } from 'form-render';
 import React, { ReactNode ,ComponentProps} from 'react';
+import SourceHandle, {
+  HandleProps,
+} from './components/CustomNode/sourceHandle';
 
-type HandleProps = ComponentProps<typeof Handle>
-
+type SourceHandleType = typeof SourceHandle;
 export interface TNodeItem {
   title: string; // 节点 title
   type: string; // 节点类型 _group 比较te
@@ -24,7 +26,19 @@ export interface TNodeItem {
     width?: string | number; // 配置面板宽度
     hideDesc?: boolean; // 配置面板描述
   };
-  nodeWidget?:string// 自定义节点组件
+  nodeWidget?: string; // 自定义节点组件
+  renderHandle?: (
+    sourceHandle: SourceHandleType,
+    sourceHandleProps: ComponentProps<SourceHandleType>,
+    nodeProps: {
+      id: string;
+      type: string;
+      data: any;
+      layout: 'LR' | 'TB';
+      isConnectable: boolean;
+      readOnly: boolean;
+    }
+  ) => React.JSX.Element;
   getSettingSchema?: (nodeId: string, nodeType: string, nodeItem:TNodeItem,nodeData:any,form: ReturnType<typeof useForm>) => Promise<Schema>;
   switchExtra: {   // 条件节点额外属性配置
     hideElse: boolean;

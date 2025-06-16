@@ -1,5 +1,6 @@
-import React from 'react';
 import XFlow from '@xrenders/xflow';
+import { Space } from 'antd';
+import React from 'react';
 
 export default () => {
   const nodeSettings = [
@@ -77,6 +78,41 @@ export default () => {
       icon: {
         type: 'icon-prompt',
         bgColor: '#17B26A',
+      },
+      renderHandle: (SourceHandle, SourceHandleProps, nodeProps) => {
+        return (
+          <Space
+            style={{background:'#fff'}}
+            direction={'vertical'}
+            className={'node-switch-widget'}
+            size={5}
+          >
+            <div className="node-switch-widget-item">
+              <div className="item-header">
+                <div className="item-title">1</div>
+                <SourceHandle
+                  {...SourceHandleProps}
+                  handleAddNode={(data)=>{
+                    SourceHandleProps.handleAddNode && SourceHandleProps.handleAddNode(data,'id_if')
+                  }}
+                  id={'id_if'}
+                />
+              </div>
+            </div>
+            <div className="node-switch-widget-item">
+              <div className="item-header">
+                <div className="item-title">2</div>
+                <SourceHandle
+                  {...SourceHandleProps}
+                  handleAddNode={(data)=>{
+                    SourceHandleProps.handleAddNode && SourceHandleProps.handleAddNode(data,'id_else')
+                  }}
+                  id={'id_else'}
+                />
+              </div>
+            </div>
+          </Space>
+        );
       },
     },
     {
