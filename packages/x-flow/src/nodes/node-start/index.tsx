@@ -15,10 +15,11 @@ export default memo((props: any) => {
     false;
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
   const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
+  const nodeClassName = nodeSetting?.className || '';
 
   return (
     <NodeContainer
-      className="custom-node-code"
+      className={`custom-node-code ${nodeClassName}`}
       title={data?.title || nodeSetting?.title || '开始'}
       icon={{
         type: nodeSetting?.icon?.type || 'icon-start',

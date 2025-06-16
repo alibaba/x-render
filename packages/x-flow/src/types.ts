@@ -39,6 +39,7 @@ export interface TNodeItem {
   disabledDelete?: boolean;
   onTesting: (node, nodes) => void;// 单点调试方法
   showTestingBtn?: boolean; // 是否显示单点调试按钮
+  className?: string;// 自定义节点class
 }
 
 export interface TNodeGroup {

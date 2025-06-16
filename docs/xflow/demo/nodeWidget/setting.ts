@@ -26,6 +26,7 @@ const settings = [
       bgColor: '#6172F3',
     },
     nodeWidget: 'LLMNodeWidget',
+    className: 'node-llm-style',
     settingSchema: {
       type: 'object',
       properties: {
