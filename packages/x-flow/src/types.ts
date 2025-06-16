@@ -157,7 +157,8 @@ export interface FlowProps {
   readOnly?:boolean//只读模式
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
-  clickAddNode?:(type:string,nodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
+  clickAddNode?: (type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string, any>) => void) => void;
+  zoomOnScroll?: boolean;
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;

@@ -26,6 +26,7 @@ group:
 | onTesting      | 单点调试方法                             | `(node,nodes)=>void`                                                                                   |  |
 | onMenuItemClick | 点击节点右上角复制粘贴删除功能， 支持自定义和默认行为 | (itemInfo: [ItemInfo](#iteminfo), defaultAction: () => void) => void | - |
 | clickAddNode | 自定义添加节点逻辑 | `(type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string,any>) => void) => void` | - |
+| zoomOnScroll      | 是否通过滚动鼠标滚轮来缩放画布                           | `boolean`                                                                                   | `true` |
 
 
 ## TNodePanel
