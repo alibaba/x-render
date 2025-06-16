@@ -314,6 +314,8 @@ const XFlow: FC<FlowProps> = memo(props => {
           },
           markerEnd: {
             type: MarkerType.ArrowClosed, // 箭头
+            width: 18,
+            height:18
           },
           deletable: deletable, //默认连线属性受此项控制
         }}
