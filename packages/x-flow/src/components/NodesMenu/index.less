@@ -32,6 +32,17 @@
     align-items: center;
     justify-content: center;
   }
+
+    .xflow-node-menu-list{
+      max-height: 380px;
+      overflow-y: auto;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+      &::-webkit-scrollbar { /* Chrome/Safari/Webkit */
+        display: none;
+      }
+    }
+
 }
 
 .xflow-node-menu-tooltip {

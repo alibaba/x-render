@@ -128,15 +128,7 @@ const NodesMenu = (props: TNodeMenu, ref: Ref<HTMLDivElement>) => {
           />
         </div>
       )}
-      <div style={{
-        maxHeight: '380px',
-        overflowY: 'auto',
-        scrollbarWidth: 'none', // Firefox
-        msOverflowStyle: 'none', // IE/Edge
-        '&::-webkit-scrollbar': { // Chrome/Safari/Webkit
-          display: 'none'
-        }
-      }}>
+      <div className="xflow-node-menu-list">
         {filterHiddenMenu(menuList).map((item: any, index: number) => item.type === '_group' ? (
           <div key={`${item.type}-${index}`}>
             <div className='menu-group-title'>{item.title}</div>
