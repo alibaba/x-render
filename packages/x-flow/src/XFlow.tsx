@@ -87,7 +87,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick } = props;
+  const { onNodeClick, zoomOnScroll=true } = props;
   const nodeEditorRef = useRef(null);
 
   useEffect(() => {
@@ -307,6 +307,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         nodes={nodes}
         edges={edges}
         minZoom={0.3}
+        zoomOnScroll={zoomOnScroll}
         defaultEdgeOptions={{
           type: 'buttonedge',
           style: {
@@ -314,6 +315,8 @@ const XFlow: FC<FlowProps> = memo(props => {
           },
           markerEnd: {
             type: MarkerType.ArrowClosed, // 箭头
+            width: 18,
+            height:18
           },
           deletable: deletable, //默认连线属性受此项控制
         }}
