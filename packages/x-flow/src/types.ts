@@ -39,6 +39,7 @@ export interface TNodeItem {
   disabledDelete?: boolean;
   onTesting: (node, nodes) => void;// 单点调试方法
   showTestingBtn?: boolean; // 是否显示单点调试按钮
+  className?: string;// 自定义节点class
 }
 
 export interface TNodeGroup {
@@ -156,7 +157,8 @@ export interface FlowProps {
   readOnly?:boolean//只读模式
   onNodeClick?: NodeMouseHandler;
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
-  clickAddNode?:(type:string,nodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
+  clickAddNode?: (type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string, any>) => void) => void;
+  zoomOnScroll?: boolean;
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;

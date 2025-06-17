@@ -2,6 +2,7 @@ import React from 'react';
 import XFlow from '@xrenders/xflow';
 import { Space, Tag, Typography, Card } from 'antd';
 import settings from './setting';
+import './index.less';
 
 // LLM 节点
 const LLMNodeWidget = ({ data }) => {

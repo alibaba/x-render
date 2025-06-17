@@ -98,7 +98,7 @@ export default memo((edge: any) => {
 
   let edgeExtra: any = {
     sourceX: edge.sourceX - 15,
-    targetX: edge.targetX + 15,
+    targetX: edge.targetX + 10,
   };
   if (layout === 'TB') {
     edgeExtra = {

@@ -3,7 +3,7 @@ import NodeContainer from '../../components/NodeContainer';
 import { ConfigContext } from '../../models/context';
 
 export default memo((props: any) => {
-  const { type, onClick, data } = props;
+  const { type, onClick, data ,id} = props;
   const { settingMap, widgets, iconFontUrl,globalConfig } = useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
@@ -12,10 +12,11 @@ export default memo((props: any) => {
   const hideDesc = nodeSetting?.nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
   const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
+  const nodeClassName = nodeSetting?.className || '';
 
   return (
     <NodeContainer
-      className='custom-node-code'
+      className={`custom-node-code ${nodeClassName}`}
       title={data?.title || nodeSetting.title}
       icon={{
         type: nodeSetting?.icon?.type,
@@ -25,7 +26,7 @@ export default memo((props: any) => {
       onClick={onClick}
       hideDesc={hideDesc}
       desc={data?.desc}
-      NodeWidget={NodeWidget ? <NodeWidget data={data} /> : undefined}
+      NodeWidget={NodeWidget ? <NodeWidget data={data} id={id} nodeType={type}/> : undefined}
       iconFontUrl={iconFontUrl}
       description={nodeDescription} // 不允许用户更改的节点描述
       iconSvg={SVGWidget ? <SVGWidget setting={nodeSetting} /> : false}
