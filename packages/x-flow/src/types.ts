@@ -1,12 +1,14 @@
-import { NodeMouseHandler,Handle } from '@xyflow/react';
+import { NodeMouseHandler,Handle, Edge } from '@xyflow/react';
 import { TabPaneProps } from 'antd';
 import { Schema,useForm } from 'form-render';
+import { ReactFlow } from '@xyflow/react';
 import React, { ReactNode ,ComponentProps} from 'react';
 import SourceHandle, {
   HandleProps,
 } from './components/CustomNode/sourceHandle';
 
 type SourceHandleType = typeof SourceHandle;
+type ReactFlowProps = ComponentProps<typeof ReactFlow>
 export interface TNodeItem {
   title: string; // 节点 title
   type: string; // 节点类型 _group 比较te
@@ -168,7 +170,8 @@ export interface FlowProps {
   };
   logPanel?: TLogPanel; // 日志面板配置
   readOnly?:boolean//只读模式
-  onNodeClick?: NodeMouseHandler;
+  onNodeClick?: ReactFlowProps['onNodeClick']
+  onEdgeClick?:ReactFlowProps['onEdgeClick']
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode?:(type:string,nodeItem:TNodeItem,addNode:(initData?:Record<string,any>)=>void)=>void
 }
