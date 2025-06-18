@@ -87,7 +87,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick, zoomOnScroll=true } = props;
+  const { onNodeClick, onEdgeClick, zoomOnScroll=true } = props;
   const nodeEditorRef = useRef(null);
 
   useEffect(() => {
@@ -350,10 +350,14 @@ const XFlow: FC<FlowProps> = memo(props => {
           });
         }}
         onEdgeMouseEnter={(_, edge: any) => {
-          getUpdateEdgeConfig(edge, '#2970ff');
+          if(!edge.style.stroke || edge.style.stroke === '#c9c9c9'){
+            getUpdateEdgeConfig(edge, '#2970ff');
+          }
         }}
         onEdgeMouseLeave={(_, edge) => {
-          getUpdateEdgeConfig(edge, '#c9c9c9');
+          if(['#2970ff',"#c9c9c9"].includes(edge.style.stroke)){
+            getUpdateEdgeConfig(edge, '#c9c9c9');
+          }
         }}
         onNodesDelete={() => {
           // setActiveNode(null);
@@ -362,6 +366,9 @@ const XFlow: FC<FlowProps> = memo(props => {
           onNodeClick && onNodeClick(event, node);
         }}
         deleteKeyCode={globalConfig?.deleteKeyCode}
+        onEdgeClick={(event,edge)=>{
+          onEdgeClick && onEdgeClick(event,edge)
+        }}
       >
         <CandidateNode />
         <Operator addNode={handleAddNode} xflowRef={workflowContainerRef} />
