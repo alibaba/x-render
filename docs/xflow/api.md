@@ -27,6 +27,10 @@ group:
 | onMenuItemClick | 点击节点右上角复制粘贴删除功能， 支持自定义和默认行为 | (itemInfo: [ItemInfo](#iteminfo), defaultAction: () => void) => void | - |
 | clickAddNode | 自定义添加节点逻辑 | `(type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string,any>) => void) => void` | - |
 | zoomOnScroll      | 是否通过滚动鼠标滚轮来缩放画布                           | `boolean`                                                                                   | `true` |
+| panOnScroll      | 是否通过滚动鼠标滚轮来平移画布                           | `boolean`                                                                                   | `false` |
+| preventScrolling      |   是否阻止浏览器在画布上滚动时的默认行为                         | `boolean`                                                                                   | `true` |
+
+
 
 
 ## TNodePanel
