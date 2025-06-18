@@ -3,7 +3,11 @@ import { TabPaneProps } from 'antd';
 import { Schema,useForm } from 'form-render';
 import React, { ReactNode ,ComponentProps} from 'react';
 
-type HandleProps = ComponentProps<typeof Handle>
+import SourceHandle, {
+  HandleProps,
+} from './components/CustomNode/sourceHandle';
+
+type SourceHandleType = typeof SourceHandle;
 
 export interface TNodeItem {
   title: string; // 节点 title
@@ -25,6 +29,18 @@ export interface TNodeItem {
     hideDesc?: boolean; // 配置面板描述
   };
   nodeWidget?:string// 自定义节点组件
+  renderHandle?: (
+    sourceHandle: SourceHandleType,
+    sourceHandleProps: ComponentProps<SourceHandleType>,
+    nodeProps: {
+      id: string;
+      type: string;
+      data: any;
+      layout: 'LR' | 'TB';
+      isConnectable: boolean;
+      readOnly: boolean;
+    }
+  ) => React.JSX.Element;
   getSettingSchema?: (nodeId: string, nodeType: string, nodeItem:TNodeItem,nodeData:any,form: ReturnType<typeof useForm>) => Promise<Schema>;
   switchExtra: {   // 条件节点额外属性配置
     hideElse: boolean;
