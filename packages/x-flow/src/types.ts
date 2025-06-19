@@ -1,10 +1,15 @@
-import { NodeMouseHandler,Handle } from '@xyflow/react';
+import { NodeMouseHandler,Handle, Edge } from '@xyflow/react';
 import { TabPaneProps } from 'antd';
 import { Schema,useForm } from 'form-render';
+import { ReactFlow } from '@xyflow/react';
 import React, { ReactNode ,ComponentProps} from 'react';
 
-type HandleProps = ComponentProps<typeof Handle>
+import SourceHandle, {
+  HandleProps,
+} from './components/CustomNode/sourceHandle';
 
+type SourceHandleType = typeof SourceHandle;
+type ReactFlowProps = ComponentProps<typeof ReactFlow>
 export interface TNodeItem {
   title: string; // 节点 title
   type: string; // 节点类型 _group 比较te
@@ -25,6 +30,18 @@ export interface TNodeItem {
     hideDesc?: boolean; // 配置面板描述
   };
   nodeWidget?:string// 自定义节点组件
+  renderHandle?: (
+    sourceHandle: SourceHandleType,
+    sourceHandleProps: ComponentProps<SourceHandleType>,
+    nodeProps: {
+      id: string;
+      type: string;
+      data: any;
+      layout: 'LR' | 'TB';
+      isConnectable: boolean;
+      readOnly: boolean;
+    }
+  ) => React.JSX.Element;
   getSettingSchema?: (nodeId: string, nodeType: string, nodeItem:TNodeItem,nodeData:any,form: ReturnType<typeof useForm>) => Promise<Schema>;
   switchExtra: {   // 条件节点额外属性配置
     hideElse: boolean;
@@ -155,7 +172,8 @@ export interface FlowProps {
   };
   logPanel?: TLogPanel; // 日志面板配置
   readOnly?:boolean//只读模式
-  onNodeClick?: NodeMouseHandler;
+  onNodeClick?: ReactFlowProps['onNodeClick']
+  onEdgeClick?:ReactFlowProps['onEdgeClick']
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode?: (type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string, any>) => void) => void;
   zoomOnScroll?: boolean;
