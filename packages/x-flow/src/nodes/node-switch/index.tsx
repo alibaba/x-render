@@ -29,14 +29,11 @@ export default memo((props: any) => {
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
   const isSwitchBottom = position === Position.Bottom;
   const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
-  const nodeClassName = nodeSetting?.className || '';
-
 
   return (
     <NodeContainer
       className={classNames('custom-node-code', {
-        'switch-node-code-bottom': isSwitchBottom,
-        [nodeClassName]: !!nodeClassName,
+        'switch-node-code-bottom': isSwitchBottom
       })}
       title={data?.title || nodeSetting?.title || 'Switch'}
       icon={{

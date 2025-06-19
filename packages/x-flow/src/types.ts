@@ -159,6 +159,8 @@ export interface FlowProps {
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode?: (type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string, any>) => void) => void;
   zoomOnScroll?: boolean;
+  panOnScroll?: boolean;
+  preventScrolling?: boolean;
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;
