@@ -87,7 +87,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick, zoomOnScroll=true } = props;
+  const { onNodeClick, zoomOnScroll = true, panOnScroll = false, preventScrolling = true } = props;
   const nodeEditorRef = useRef(null);
 
   useEffect(() => {
@@ -308,6 +308,9 @@ const XFlow: FC<FlowProps> = memo(props => {
         edges={edges}
         minZoom={0.3}
         zoomOnScroll={zoomOnScroll}
+        panOnScroll={panOnScroll}   // 禁用滚动平移
+        preventScrolling={preventScrolling}    // 允许页面滚动
+
         defaultEdgeOptions={{
           type: 'buttonedge',
           style: {
