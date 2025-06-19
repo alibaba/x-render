@@ -12,11 +12,10 @@ export default memo((props: any) => {
   const hideDesc = nodeSetting?.nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
   const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
-  const nodeClassName = nodeSetting?.className || '';
 
   return (
     <NodeContainer
-      className={`custom-node-code ${nodeClassName}`}
+      className={`custom-node-code`}
       title={data?.title || nodeSetting.title}
       icon={{
         type: nodeSetting?.icon?.type,

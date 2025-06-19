@@ -60,6 +60,8 @@ export default memo((props: any) => {
   const isEnd = type === 'End';
   const isSwitchNode = type === 'Switch' || type === 'Parallel' || isNote; // 判断是否为条件节点/并行节点/注释节点
   const connectable = readOnly ? false : isConnectable;
+  const nodeSetting = settingMap[type] || {};
+  const nodeClassName = nodeSetting?.className || '';
 
   // 增加节点并进行联系
   const handleAddNode = (data: any, sourceHandle?: string) => {
@@ -254,6 +256,7 @@ export default memo((props: any) => {
         ['xflow-node-container-tb']: layout === 'TB',
         ['xflow-node-container-note']: isNote,
         [`xflow-node-container-status-${status}`]: isTruthy(status),
+        [nodeClassName]: !!nodeClassName
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
