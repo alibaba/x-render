@@ -297,7 +297,9 @@ export default memo((props: any) => {
         handleAddNode={handleAddNode}
       />
       {typeof renderHandle === 'function' ?
-        <Fragment>
+        <div onClick={()=>{
+          onClick(data)
+        }}>
           {renderHandle(
             SourceHandle,
             {
@@ -316,7 +318,7 @@ export default memo((props: any) => {
               readOnly
             }
           )}
-        </Fragment>
+        </div>
         :
         <Fragment>
           {!settingMap?.[type]?.sourceHandleHidden && !isSwitchNode && (
