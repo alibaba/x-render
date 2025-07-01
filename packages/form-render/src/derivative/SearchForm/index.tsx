@@ -135,6 +135,27 @@ const SearchForm: <RecordType extends object = any>(props: SearchProps<RecordTyp
     }
   }, [column]);
 
+  useUpdateEffect(() => {
+    if (collapsed) {
+      if ((!isColumn && fieldNum > (column * 2 - 1)) || (isColumn && fieldNum > (column -1))) {
+        setState({
+          hasCollapse: true,
+          isExpand: !defaultCollapsed
+        });
+      } else {
+        setState({
+          hasCollapse: false,
+          isExpand: true
+        });
+      }
+    } else {
+      setState({
+        hasCollapse: false,
+        isExpand: true,
+      });
+    }
+  }, [collapsed]);
+
   const initMount = async () => {
     if (!searchOnMount) {
       return;
