@@ -21,6 +21,7 @@ group:
 | globalConfig  | 全局的面板和节点配置                 | {nodePanel:[TNodePanel](#tnodepanel),nodeView:[TNodeView](#tnodeview),edge:[TEdge](#tedge),controls:[TControl](#tcontrol),handle:[THandle](#thandle),deleteKeyCode:[TdeleteKeyCode](#tdeletekeycode)  } |         |
 | logPanel      | 日志面板配置                         | [TLogPanel](#tlogpanel)                                                                     |         |
 | onNodeClick   | 节点点击事件                         | `NodeMouseHandler`                                                                          |         |
+| onEdgeClick   | 边点击事件                         | `EdgeMouseHandler`                                                                          |         |
 | antdVersion   | antd 的版本                          | `V4 \| V5`                                                                                  | `V5`    |
 | readOnly      | 只读模式                             | `boolean`                                                                                   | `false` |
 | onTesting      | 单点调试方法                             | `(node,nodes)=>void`                                                                                   |  |
@@ -161,6 +162,7 @@ Handle 配置继承自 React Flow 的 Handle 配置，用于控制节点连接�
 | parallelExtra        | 并行节点属性配置                                                                                                                               | [TParallelExtra](#tparallelextra)                                                                                                                                   |        |
 | showTestingBtn      |  是否展示节点的单点调试按钮                      | `boolean`                                                                                   | `false` |
 | getSettingSchema | 动态获取节点的业务配置信息，返回值同settingSchema。同时设置`settingSchema`和`getSettingSchema`只生效`getSettingSchema` | `(nodeId: string, nodeType: string, nodeItem: TNodeItem, nodeData: any, form: ReturnType<typeof useForm>) => Promise<Schema>` |        |
+| renderHandle | 自定义渲染节点的handle，以实现某个节点自定义的出口数量.`sourceHandle`是原handle组件 |  `(sourceHandle: SourceHandleType,sourceHandleProps:ComponentProps<SourceHandleType>,nodeProps: {id: string;type: string;data: any;layout: 'LR';isConnectable: boolean;readOnly: boolean;}) => React.JSX.Element`|   |
 
 
 
