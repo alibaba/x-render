@@ -74,6 +74,12 @@ group:
 | hideAddNode | 是否隐藏增加节点功能 | `boolean` | false  |
 | hideAnnotate | 是否隐藏注释节点功能 | `boolean` | false  |
 | hideUndoRedoBtns | 是否隐藏撤销和重做按钮 | `boolean` | false  |
+| hideZoomInOutBtns | 是否隐藏缩放按钮 | `boolean` | false  |
+| hideControlBtns | 是否隐藏所有控制按钮 | `boolean` | false  |
+| hideAutoLayout | 是否隐藏整理画布功能 | `boolean` | false  |
+| hideFullscreen | 是否隐藏全屏功能 | `boolean` | false  |
+| hideInteractionMode | 是否隐藏指针和手形工具切换功能 | `boolean` | false  |
+
 
 
 ## THandle

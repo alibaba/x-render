@@ -109,7 +109,12 @@ export interface TEdge {
 export interface TControl{
   hideAddNode?:boolean
   hideAnnotate?: boolean
-  hideUndoRedoBtns?:boolean
+  hideUndoRedoBtns?: boolean
+  hideZoomInOutBtns?: boolean
+  hideControlBtns?: boolean
+  hideAutoLayout?: boolean
+  hideFullscreen?: boolean
+  hideInteractionMode?: boolean
 }
 
 export interface THandle{
