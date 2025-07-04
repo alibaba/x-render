@@ -202,17 +202,27 @@ const XFlow: FC<FlowProps> = memo(props => {
     setEdges(newEdges);
   });
 
-  const handleNodeValueChange = debounce((data: any) => {
-    for (let node of nodes) {
-      if (node.id === data.id) {
-        node.data = {
-          ...node?.data,
-          ...data?.values,
-        };
-        break;
-      }
+  const handleNodeValueChange = debounce((data: any, id: string) => {
+    // for (let node of nodes) {
+    //   if (node.id === data.id) {
+    //     node.data = {
+    //       ...node?.data,
+    //       ...data?.values,
+    //     };
+    //     break;
+    //   }
+    // }
+    // setNodes([...nodes], false);
+    // 同时更新 activeNode 状态，确保面板数据同步
+    if (activeNode && activeNode.id === id) {
+      setActiveNode({
+        ...activeNode,
+        values: {
+          ...activeNode.values,
+          ...data,
+        },
+      });
     }
-    setNodes([...nodes], false);
   }, 200);
 
   const nodeTypes = useMemo(() => {
@@ -252,6 +262,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   }, [layout]);
 
   const NodeEditorWrap = useMemo(() => {
+
     return (
       <NodeEditor
         ref={nodeEditorRef}
@@ -262,13 +273,14 @@ const XFlow: FC<FlowProps> = memo(props => {
 
       />
     );
+    // JSON.stringify(activeNode)
   }, [activeNode?.id]);
 
   const NodeLogWrap = useMemo(() => {
     return (
       <NodeLogPanel
         data={activeNode?.values}
-        onChange={handleNodeValueChange}
+        // onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
         node={activeNode}
@@ -285,18 +297,6 @@ const XFlow: FC<FlowProps> = memo(props => {
   const deletable = globalConfig?.edge?.deletable ?? true;
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
-  const getNodesJ = nodes => {
-    const result = nodes.map(item => {
-      const { data, ...rest } = item;
-      const { _nodeType, ...restData } = data;
-      return {
-        ...rest,
-        data: restData,
-        type: _nodeType,
-      };
-    });
-    return result;
-  };
 
   return (
     <div id="xflow-container" ref={workflowContainerRef}>

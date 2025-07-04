@@ -8,7 +8,7 @@ import './index.less';
 
 interface INodeEditorProps {
   data: any;
-  onChange: (data: any) => void;
+  onChange?: (data: any) => void;
   nodeType: string;
   id: string;
   node: any;
