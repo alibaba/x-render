@@ -51,6 +51,10 @@ export default memo((props: any) => {
           }}
           id={item?._id}
           className="item-handle"
+          isConnected={
+            (edges || [])?.filter(flow => flow?.sourceHandle === item?._id)
+              ?.length > 0
+          }
         />
       </div>
     );
@@ -123,6 +127,10 @@ export default memo((props: any) => {
               }}
               className="item-handle"
               id={'id_else'}
+              isConnected={
+                (edges || [])?.filter(flow => flow?.sourceHandle === 'id_else')
+                  ?.length > 0
+              }
             />
           </div>
         </div>
