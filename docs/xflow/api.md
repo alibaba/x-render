@@ -39,6 +39,7 @@ group:
 
 | 属性     | 描述                               | 类型               | 默认值 |
 | -------- | ---------------------------------- | ------------------ | ------ |
+| showPanel   |   是否展示配置面板                         | `boolean`                                                                                   | `true` |
 | width    | 设置配置面板宽度                   | `string \| number` | 400    |
 | hideDesc | 是否在配置面板中显示节点的描述信息 | `boolean`          | false  |
 | onClose | 配置面板关闭事件 | `(nodeID:string)=>void`          |   |

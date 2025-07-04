@@ -87,7 +87,12 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick, zoomOnScroll = true, panOnScroll = false, preventScrolling = true } = props;
+  const {
+    onNodeClick,
+    zoomOnScroll = true,
+    panOnScroll = false,
+    preventScrolling = true,
+  } = props;
   const nodeEditorRef = useRef(null);
 
   useEffect(() => {
@@ -230,6 +235,9 @@ const XFlow: FC<FlowProps> = memo(props => {
       custom: (props: any) => {
         const { data, id, ...rest } = props;
         const { _nodeType, _status, ...restData } = data || {};
+        const nodeSetting = settingMap[_nodeType] || {};
+        const showPanel = nodeSetting?.nodePanel?.showPanel ?? true;
+
         return (
           <CustomNode
             {...rest}
@@ -252,7 +260,11 @@ const XFlow: FC<FlowProps> = memo(props => {
                 values: { ...restData },
                 _status,
               });
-              setOpenPanel(true);
+              if (!showPanel) {
+                setOpenPanel(false);
+              } else {
+                setOpenPanel(true);
+              }
               setOpenLogPanel(true);
             }}
           />
@@ -262,7 +274,6 @@ const XFlow: FC<FlowProps> = memo(props => {
   }, [layout]);
 
   const NodeEditorWrap = useMemo(() => {
-
     return (
       <NodeEditor
         ref={nodeEditorRef}
@@ -270,7 +281,6 @@ const XFlow: FC<FlowProps> = memo(props => {
         onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
-
       />
     );
     // JSON.stringify(activeNode)
@@ -297,7 +307,6 @@ const XFlow: FC<FlowProps> = memo(props => {
   const deletable = globalConfig?.edge?.deletable ?? true;
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
-
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
       <ReactFlow
@@ -308,9 +317,8 @@ const XFlow: FC<FlowProps> = memo(props => {
         edges={edges}
         minZoom={0.3}
         zoomOnScroll={zoomOnScroll}
-        panOnScroll={panOnScroll}   // 禁用滚动平移
-        preventScrolling={preventScrolling}    // 允许页面滚动
-
+        panOnScroll={panOnScroll} // 禁用滚动平移
+        preventScrolling={preventScrolling} // 允许页面滚动
         defaultEdgeOptions={{
           type: 'buttonedge',
           style: {
@@ -319,7 +327,7 @@ const XFlow: FC<FlowProps> = memo(props => {
           markerEnd: {
             type: MarkerType.ArrowClosed, // 箭头
             width: 18,
-            height:18
+            height: 18,
           },
           deletable: deletable, //默认连线属性受此项控制
         }}
