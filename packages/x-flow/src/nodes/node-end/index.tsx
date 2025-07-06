@@ -32,7 +32,7 @@ export default memo((props: any) => {
       hideTitleTips={hideTitleTips}
       nodeSettingTitle={nodeSetting.title||'结束'}
       style={{
-        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.5)}, #fff)`,
+        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.3)}, #fff)`,
       }}
     />
   );

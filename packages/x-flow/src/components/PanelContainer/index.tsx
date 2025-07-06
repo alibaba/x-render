@@ -5,10 +5,11 @@ import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { isTruthy, safeJsonStringify } from '../../utils';
+import { isTruthy, safeJsonStringify, hexToRgba } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import TextEllipsis from '../TextEllipsis';
+
 import './index.less';
 
 interface IPanelProps {
@@ -117,10 +118,16 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       width={nodePanel?.width || globalConfig?.nodePanel?.width || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
       mask={false}
       onClose={onClose}
-      headerStyle={{ paddingBottom: '12px' }}
+      headerStyle={{ paddingBottom: '12px', background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.3)}, #fff)` }}
       style={{
         position: 'absolute',
         right: isShowStatusPanel ? offsetRightStatus : 0,
+      }}
+      styles={{
+        header: {
+          paddingBottom: '12px',
+          background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.3)}, #fff)`,
+        },
       }}
       title={
         <>

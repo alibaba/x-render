@@ -65,7 +65,7 @@ export default memo((props: any) => {
       isSwitchBottom={isSwitchBottom}
       nodeSettingTitle={nodeSetting?.title || 'parallel'}
       style={{
-        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.5)}, #fff)`,
+        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.3)}, #fff)`,
       }}
     />
   );
