@@ -1,6 +1,7 @@
 import React, { memo, useContext } from 'react';
 import NodeContainer from '../../components/NodeContainer';
 import { ConfigContext } from '../../models/context';
+import { hexToRgba } from '../../utils';
 
 export default memo((props: any) => {
   const { type, onClick, data ,id} = props;
@@ -15,7 +16,7 @@ export default memo((props: any) => {
 
   return (
     <NodeContainer
-      className={`custom-node-code`}
+      className='custom-node-code'
       title={data?.title || nodeSetting.title}
       icon={{
         type: nodeSetting?.icon?.type,
@@ -31,6 +32,9 @@ export default memo((props: any) => {
       iconSvg={SVGWidget ? <SVGWidget setting={nodeSetting} /> : false}
       hideTitleTips={hideTitleTips}
       nodeSettingTitle={nodeSetting.title}
+      style={{
+        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.5)}, #fff)`,
+      }}
     />
   );
 });

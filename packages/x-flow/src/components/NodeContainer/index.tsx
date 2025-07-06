@@ -21,6 +21,7 @@ export default memo((props: any) => {
     hideTitleTips,
     isSwitchBottom,
     nodeSettingTitle,
+    style,
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
@@ -57,6 +58,7 @@ export default memo((props: any) => {
         [className]: !!className,
       })}
       onClick={onClick}
+      style={style}
     >
       <div className="node-title">
         {!hideTitleTips ? (

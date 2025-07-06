@@ -339,3 +339,19 @@ export function isTruthy(value: any) {
   }
   return Boolean(value);
 }
+
+
+export function hexToRgba(hex, alpha = 1) {
+  // 确保输入是合法的六位十六进制颜色
+  if (!/^#([0-9A-Fa-f]{6})$/.test(hex)) {
+      throw new Error("Invalid hex color format. Must be #RRGGBB.");
+  }
+
+  // 提取 R、G 和 B 值
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+
+  // 返回 `rgba` 格式字符串
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}

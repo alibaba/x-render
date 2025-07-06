@@ -4,6 +4,8 @@ import React, { memo, useContext } from 'react';
 import NodeContainer from '../../components/NodeContainer';
 import { ConfigContext } from '../../models/context';
 import ParallelBuildInNodeWidget from './ParallelBuildInNodeWidget';
+import { hexToRgba } from '../../utils';
+
 
 export default memo((props: any) => {
   const {
@@ -62,6 +64,9 @@ export default memo((props: any) => {
       hideTitleTips={hideTitleTips}
       isSwitchBottom={isSwitchBottom}
       nodeSettingTitle={nodeSetting?.title || 'parallel'}
+      style={{
+        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.5)}, #fff)`,
+      }}
     />
   );
 });

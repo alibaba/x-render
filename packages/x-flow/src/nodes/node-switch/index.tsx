@@ -4,6 +4,8 @@ import React, { memo, useContext } from 'react';
 import NodeContainer from '../../components/NodeContainer';
 import { ConfigContext } from '../../models/context';
 import SwitchBuildInNodeWidget from './SwitchBuildInNodeWidget';
+import { hexToRgba } from '../../utils';
+
 import './index.less';
 
 export default memo((props: any) => {
@@ -63,6 +65,9 @@ export default memo((props: any) => {
       hideTitleTips={hideTitleTips}
       isSwitchBottom={isSwitchBottom}
       nodeSettingTitle={nodeSetting?.title || 'Switch'}
+      style={{
+        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.5)}, #fff)`,
+      }}
     />
   );
 });
