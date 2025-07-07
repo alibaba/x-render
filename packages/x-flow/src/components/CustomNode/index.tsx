@@ -1,7 +1,6 @@
 import { MoreOutlined } from '@ant-design/icons';
 import { Handle, Position, useReactFlow } from '@xyflow/react';
 import { Dropdown, Menu, message } from 'antd';
-
 import { ItemType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
 import { isFunction } from 'lodash';
@@ -44,7 +43,7 @@ export default memo((props: any) => {
     widgets[`${capitalize(type)}Node`] || widgets['CommonNode'];
   const [isHovered, setIsHovered] = useState(false);
   const reactflow = useReactFlow();
-  const { addEdges, mousePosition } =
+  const { edges,nodes,addEdges, mousePosition } =
     useStore(
       (state: any) => ({
         nodes: state.nodes,
@@ -62,6 +61,30 @@ export default memo((props: any) => {
   const connectable = readOnly ? false : isConnectable;
   const nodeSetting = settingMap[type] || {};
   const nodeClassName = nodeSetting?.className || '';
+  // 判断左侧Handle是否已连接
+  const isTargetHandleConnected = useMemo(() => {
+    return (edges || [])?.some(edge => edge.target === id);
+  }, [edges, id]);
+
+  const isSourceHandleConnected = useMemo(() => {
+    if (isSwitchNode) {
+      // 对于Switch节点，需要检查每个sourceHandle是否已连接
+      if (type === 'Switch' && Array.isArray(data.list)) {
+        return data.list.some(item =>
+          edges.some(edge => edge.source === id && edge.sourceHandle === item._id)
+        );
+      }
+      // 对于Parallel节点，需要检查每个sourceHandle是否已连接
+      if (type === 'Parallel' && Array.isArray(data.list)) {
+        return data.list.some(item =>
+          edges.some(edge => edge.source === id && edge.sourceHandle === item._id)
+        );
+      }
+      return false;
+    }
+    // 对于普通节点，检查是否有从该节点出发的边
+    return edges.some(edge => edge.source === id);
+  }, [edges, id, type, data.list, isSwitchNode]);
 
   // 增加节点并进行联系
   const handleAddNode = (data: any, sourceHandle?: string) => {
@@ -249,6 +272,7 @@ export default memo((props: any) => {
       overlay: menu,
     };
   }, [menuItem, isEnd]);
+
   return (
     <div
       className={classNames('xflow-node-container', {
@@ -268,6 +292,11 @@ export default memo((props: any) => {
           type="target"
           position={targetPosition}
           isConnectable={connectable}
+          className={classNames({
+            'handle-connected': isTargetHandleConnected,
+            'handle-disconnected': !isTargetHandleConnected,
+            "handle-connected-target":true
+          })}
           // isConnectableStart={isConnectableStart}
           // isConnectableEnd={isConnectableEnd}
         />
@@ -329,6 +358,7 @@ export default memo((props: any) => {
                 selected={selected}
                 isHovered={isHovered}
                 handleAddNode={handleAddNode}
+                isConnected={isSourceHandleConnected}
                 // isConnectableStart={isConnectableStart}
                 // isConnectableEnd={isConnectableEnd}
               />
@@ -336,7 +366,6 @@ export default memo((props: any) => {
           )}
         </Fragment>
       }
-
     </div>
   );
 });

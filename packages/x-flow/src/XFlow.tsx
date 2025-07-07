@@ -87,9 +87,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-
   const { onNodeClick, onEdgeClick, zoomOnScroll = true, panOnScroll = false, preventScrolling = true } = props;
-
   const nodeEditorRef = useRef(null);
 
   useEffect(() => {
@@ -204,17 +202,27 @@ const XFlow: FC<FlowProps> = memo(props => {
     setEdges(newEdges);
   });
 
-  const handleNodeValueChange = debounce((data: any) => {
-    for (let node of nodes) {
-      if (node.id === data.id) {
-        node.data = {
-          ...node?.data,
-          ...data?.values,
-        };
-        break;
-      }
+  const handleNodeValueChange = debounce((data: any, id: string) => {
+    // for (let node of nodes) {
+    //   if (node.id === data.id) {
+    //     node.data = {
+    //       ...node?.data,
+    //       ...data?.values,
+    //     };
+    //     break;
+    //   }
+    // }
+    // setNodes([...nodes], false);
+    // 同时更新 activeNode 状态，确保面板数据同步
+    if (activeNode && activeNode.id === id) {
+      setActiveNode({
+        ...activeNode,
+        values: {
+          ...activeNode.values,
+          ...data,
+        },
+      });
     }
-    setNodes([...nodes], false);
   }, 200);
 
   const nodeTypes = useMemo(() => {
@@ -222,6 +230,9 @@ const XFlow: FC<FlowProps> = memo(props => {
       custom: (props: any) => {
         const { data, id, ...rest } = props;
         const { _nodeType, _status, ...restData } = data || {};
+        const nodeSetting = settingMap[_nodeType] || {};
+        const showPanel = nodeSetting?.nodePanel?.showPanel ?? true;
+
         return (
           <CustomNode
             {...rest}
@@ -244,7 +255,11 @@ const XFlow: FC<FlowProps> = memo(props => {
                 values: { ...restData },
                 _status,
               });
-              setOpenPanel(true);
+              if (!showPanel) {
+                setOpenPanel(false);
+              } else {
+                setOpenPanel(true);
+              }
               setOpenLogPanel(true);
             }}
           />
@@ -261,16 +276,16 @@ const XFlow: FC<FlowProps> = memo(props => {
         onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
-
       />
     );
+    // JSON.stringify(activeNode)
   }, [activeNode?.id]);
 
   const NodeLogWrap = useMemo(() => {
     return (
       <NodeLogPanel
         data={activeNode?.values}
-        onChange={handleNodeValueChange}
+        // onChange={handleNodeValueChange}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
         node={activeNode}
@@ -287,19 +302,6 @@ const XFlow: FC<FlowProps> = memo(props => {
   const deletable = globalConfig?.edge?.deletable ?? true;
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
-  const getNodesJ = nodes => {
-    const result = nodes.map(item => {
-      const { data, ...rest } = item;
-      const { _nodeType, ...restData } = data;
-      return {
-        ...rest,
-        data: restData,
-        type: _nodeType,
-      };
-    });
-    return result;
-  };
-
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
       <ReactFlow
@@ -310,9 +312,8 @@ const XFlow: FC<FlowProps> = memo(props => {
         edges={edges}
         minZoom={0.3}
         zoomOnScroll={zoomOnScroll}
-        panOnScroll={panOnScroll}   // 禁用滚动平移
-        preventScrolling={preventScrolling}    // 允许页面滚动
-
+        panOnScroll={panOnScroll} // 禁用滚动平移
+        preventScrolling={preventScrolling} // 允许页面滚动
         defaultEdgeOptions={{
           type: 'buttonedge',
           style: {
@@ -321,7 +322,7 @@ const XFlow: FC<FlowProps> = memo(props => {
           markerEnd: {
             type: MarkerType.ArrowClosed, // 箭头
             width: 18,
-            height:18
+            height: 18,
           },
           deletable: deletable, //默认连线属性受此项控制
         }}

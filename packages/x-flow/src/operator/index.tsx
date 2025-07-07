@@ -17,11 +17,13 @@ const Operator = ({ addNode, xflowRef }: OperatorProps) => {
   const { undo, redo, pastStates, futureStates } = useTemporalStore();
   const { globalConfig } = useContext(ConfigContext);
   const hideUndoRedoBtns = globalConfig?.controls?.hideUndoRedoBtns ?? false;
+  const hideZoomInOutBtns = globalConfig?.controls?.hideZoomInOutBtns ?? false;
+  const hideControlBtns = globalConfig?.controls?.hideControlBtns ?? false;
 
   return (
     <div className="fai-reactflow-operator">
       <div className="operator-section">
-        <ZoomInOut />
+        {!Boolean(hideZoomInOutBtns) && <ZoomInOut />}
         {!Boolean(hideUndoRedoBtns) && (
           <UndoRedo
             handleUndo={() => undo()}
@@ -30,7 +32,7 @@ const Operator = ({ addNode, xflowRef }: OperatorProps) => {
             futureStates={futureStates}
           />
         )}
-        <Control addNode={addNode} xflowRef={xflowRef} />
+        {!Boolean(hideControlBtns) && <Control addNode={addNode} xflowRef={xflowRef} />}
       </div>
     </div>
   );
