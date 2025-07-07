@@ -118,7 +118,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       width={nodePanel?.width || globalConfig?.nodePanel?.width || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
       mask={false}
       onClose={onClose}
-      headerStyle={{ paddingBottom: '12px', background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.3)}, #fff)` }}
+      headerStyle={{ paddingBottom: '12px', background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009')}, #fff)` }}
       style={{
         position: 'absolute',
         right: isShowStatusPanel ? offsetRightStatus : 0,
@@ -126,7 +126,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       styles={{
         header: {
           paddingBottom: '12px',
-          background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009', 0.3)}, #fff)`,
+          background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009')}, #fff)`,
         },
       }}
       title={
