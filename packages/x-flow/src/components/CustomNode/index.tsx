@@ -4,7 +4,7 @@ import { Dropdown, Menu, message } from 'antd';
 import { ItemType } from 'antd/es/menu/interface';
 import classNames from 'classnames';
 import { isFunction } from 'lodash';
-import React, { memo, useCallback, useContext, useMemo, useState } from 'react';
+import React, { Fragment, memo, useCallback, useContext, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
@@ -35,6 +35,7 @@ export default memo((props: any) => {
   const disabledDelete = settingMap[type]?.disabledDelete ?? false;
   const switchExtra = settingMap[type]?.switchExtra || {};
   const handleProps = globalConfig?.handle || {}
+  const renderHandle = settingMap[type]?.renderHandle || void(0)
   // const isConnectableStart = globalConfig?.handle?.isConnectableStart ?? true;
   // const isConnectableEnd = globalConfig?.handle?.isConnectableEnd ?? true;
 
@@ -324,20 +325,47 @@ export default memo((props: any) => {
         isHovered={isHovered}
         handleAddNode={handleAddNode}
       />
-      {!settingMap?.[type]?.sourceHandleHidden && !isSwitchNode && (
-        <>
-          <SourceHandle
-            position={sourcePosition}
-            isConnectable={connectable}
-            selected={selected}
-            isHovered={isHovered}
-            handleAddNode={handleAddNode}
-            isConnected={isSourceHandleConnected}
-          // isConnectableStart={isConnectableStart}
-          // isConnectableEnd={isConnectableEnd}
-          />
-        </>
-      )}
+      {typeof renderHandle === 'function' ?
+        <div onClick={()=>{
+          onClick(data)
+        }}>
+          {renderHandle(
+            SourceHandle,
+            {
+              position:sourcePosition,
+              isConnectable:connectable,
+              selected:selected,
+              isHovered:isHovered,
+              handleAddNode:handleAddNode
+            },
+            {
+              id,
+              type,
+              data,
+              layout,
+              isConnectable,
+              readOnly
+            }
+          )}
+        </div>
+        :
+        <Fragment>
+          {!settingMap?.[type]?.sourceHandleHidden && !isSwitchNode && (
+            <>
+              <SourceHandle
+                position={sourcePosition}
+                isConnectable={connectable}
+                selected={selected}
+                isHovered={isHovered}
+                handleAddNode={handleAddNode}
+                isConnected={isSourceHandleConnected}
+                // isConnectableStart={isConnectableStart}
+                // isConnectableEnd={isConnectableEnd}
+              />
+            </>
+          )}
+        </Fragment>
+      }
     </div>
   );
 });

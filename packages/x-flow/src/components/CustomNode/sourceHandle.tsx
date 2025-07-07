@@ -2,12 +2,14 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Handle } from '@xyflow/react';
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
-import React, { memo, useContext, useMemo, useRef, useState } from 'react';
-import { ConfigContext } from '../../models/context';
+import React, { ComponentProps, memo, useContext, useMemo, useRef, useState } from 'react';
 import NodeSelectPopover from '../NodesPopover';
+import { ConfigContext } from '../../models/context';
 import './index.less';
 
-export default memo((props: any) => {
+export type HandleProps = ComponentProps<typeof Handle>
+
+export default memo((props:Partial<HandleProps> &  Record<string,any> ) => {
   const {
     position,
     isConnectable,
