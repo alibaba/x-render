@@ -156,6 +156,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                     setTitleVal(e.target.value);
                     handleNodeValueChange({ title: e.target.value });
                   }}
+                  size="small"
                 />
               )}
             </div>

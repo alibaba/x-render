@@ -41,7 +41,17 @@
     width: 2px;
     height: 10px;
     display: block;
-    margin: 11px 0 8px 15px;
+    margin: 11px 0 8px 17px;
+  }
+
+  .handle-connected-target::after{
+      margin: 11px 0 8px 11px;
+  }
+
+  .handle-disconnected {
+    &::after {
+      background-color: transparent !important; // 未连接时透明
+    }
   }
 
   .react-flow__handle:hover {

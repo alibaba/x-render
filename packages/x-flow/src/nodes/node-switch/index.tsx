@@ -18,6 +18,7 @@ export default memo((props: any) => {
     selected,
     isHovered,
     handleAddNode,
+    id,
   } = props;
   const { settingMap, widgets, iconFontUrl, globalConfig } =
     useContext(ConfigContext);
@@ -35,7 +36,7 @@ export default memo((props: any) => {
   return (
     <NodeContainer
       className={classNames('custom-node-code', {
-        'switch-node-code-bottom': isSwitchBottom
+        'switch-node-code-bottom': isSwitchBottom,
       })}
       title={data?.title || nodeSetting?.title || 'Switch'}
       icon={{
@@ -58,6 +59,7 @@ export default memo((props: any) => {
           CustomNodeWidget={NodeWidget}
           isSwitchBottom={isSwitchBottom}
           nodeSetting={nodeSetting}
+          id={id}
         />
       }
       description={nodeDescription} // 不允许用户更改的节点描述

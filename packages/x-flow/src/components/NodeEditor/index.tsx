@@ -17,10 +17,11 @@ import { safeJsonStringify, uuid } from '../../utils';
 
 interface INodeEditorProps {
   data: any;
-  onChange: (data: any) => void;
+  onChange: (data: any, id?: string) => void;
   nodeType: string;
   id: string;
   ref?: React.Ref<any>; // 添加 ref 属性
+  // activeNode?: any;
 }
 
 const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
@@ -35,6 +36,14 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
   const getSettingSchema = nodeSetting['getSettingSchema'];
   const [asyncSchema, setAsyncSchema] = useState<Schema>({});
   const nodeWidgetRef = useRef(null);
+  const { nodes, setNodes } = useStore(
+    (state: any) => ({
+      nodes: state.nodes,
+      setNodes: state.setNodes,
+    }),
+    shallow
+  );
+
 
   useImperativeHandle(ref, () => ({
     validateForm: async () => {
@@ -51,7 +60,10 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
           .catch(err => {
             return false;
           });
-      } else if (nodeSetting?.settingWidget && nodeWidgetRef.current?.validateForm) {
+      } else if (
+        nodeSetting?.settingWidget &&
+        nodeWidgetRef.current?.validateForm
+      ) {
         result = await nodeWidgetRef.current.validateForm();
       }
       return result;
@@ -68,19 +80,12 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
     ).catch(() => ({}));
     setAsyncSchema(shema);
   }
+
   useEffect(() => {
     if (isFunction(getSettingSchema)) {
       getSchema();
     }
   }, []);
-
-  const { nodes, setNodes } = useStore(
-    (state: any) => ({
-      nodes: state.nodes,
-      setNodes: state.setNodes,
-    }),
-    shallow
-  );
 
   useEffect(() => {
     if (nodeSetting?.settingSchema) {
@@ -115,14 +120,14 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
             if (item?._id) {
               return item;
             } else {
-              if (node?.data?.list?.length && node?.data?.list[index]?._id) {
-                return {
-                  ...item,
-                  _id: node?.data?.list[index]?._id,
-                };
-              } else {
-                return { ...item, _id: `id_${uuid()}` };
-              }
+              // if (node?.data?.list?.length && node?.data?.list[index]?._id) {
+              //   return {
+              //     ...item,
+              //     _id: node?.data?.list[index]?._id,
+              //   };
+              // } else {
+              return { ...item, _id: `id_${uuid()}` };
+              // }
             }
           });
         }
@@ -131,7 +136,11 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
       }
     });
     setNodes(newNodes, false);
-  }, 100);
+
+    if (onChange) {
+      onChange(data, id);
+    }
+  }, 300);
 
   const watch = {
     '#': (allValues: any) => {
@@ -165,7 +174,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
           handleNodeValueChange(initialValues);
         }}
         configProvider={{
-          getPopupContainer: triggerNode => triggerNode.parentElement
+          getPopupContainer: triggerNode => triggerNode.parentElement,
         }}
       />
     );
@@ -182,7 +191,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         size={'small'}
         readOnly={readOnly}
         configProvider={{
-          getPopupContainer: triggerNode => triggerNode.parentElement
+          getPopupContainer: triggerNode => triggerNode.parentElement,
         }}
       />
     );

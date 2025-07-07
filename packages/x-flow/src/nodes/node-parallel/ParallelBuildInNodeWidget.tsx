@@ -65,6 +65,10 @@ export default memo((props: any) => {
           }}
           id={item?._id}
           className="item-handle"
+          isConnected={
+            (edges || [])?.filter(flow => flow?.sourceHandle === item?._id)
+              ?.length > 0
+          }
         />
       </div>
     );

@@ -76,7 +76,8 @@ export interface TNodePanel {
   // 配置面板属性设置
   width?: string | number; // 配置面板宽度
   hideDesc?: boolean; // 配置面板描述
-  onClose?:(activeNodeId:string)=>void
+  onClose?: (activeNodeId: string) => void;
+  showPanel?: boolean;
 }
 
 export interface TNodeSelector {
@@ -126,7 +127,12 @@ export interface TEdge {
 export interface TControl{
   hideAddNode?:boolean
   hideAnnotate?: boolean
-  hideUndoRedoBtns?:boolean
+  hideUndoRedoBtns?: boolean
+  hideZoomInOutBtns?: boolean
+  hideControlBtns?: boolean
+  hideAutoLayout?: boolean
+  hideFullscreen?: boolean
+  hideInteractionMode?: boolean
 }
 
 export interface THandle{
