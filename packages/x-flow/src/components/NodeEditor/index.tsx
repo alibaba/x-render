@@ -43,13 +43,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
     }),
     shallow
   );
-  const [internalData, setInternalData] = useState();
 
-  useEffect(() => {
-    const activeNode = nodes.find(node => node.id === id);
-    const { _nodeType, _status, ...restData } = activeNode?.data || {};
-    setInternalData(restData);
-  }, []);
 
   useImperativeHandle(ref, () => ({
     validateForm: async () => {
@@ -143,11 +137,10 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
     });
     setNodes(newNodes, false);
 
-    // if (onChange) {
-    //   onChange(data, id);
-    // }
-      setInternalData(data);
-  }, 100);
+    if (onChange) {
+      onChange(data, id);
+    }
+  }, 300);
 
   const watch = {
     '#': (allValues: any) => {
@@ -181,7 +174,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
           handleNodeValueChange(initialValues);
         }}
         configProvider={{
-          getPopupContainer: triggerNode => triggerNode.parentElement
+          getPopupContainer: triggerNode => triggerNode.parentElement,
         }}
       />
     );
@@ -198,7 +191,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         size={'small'}
         readOnly={readOnly}
         configProvider={{
-          getPopupContainer: triggerNode => triggerNode.parentElement
+          getPopupContainer: triggerNode => triggerNode.parentElement,
         }}
       />
     );
@@ -209,8 +202,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         onChange={val => {
           handleNodeValueChange({ ...val });
         }}
-        value={internalData} // data
-        // value={data}
+        value={data}
         readOnly={readOnly}
       />
     );
