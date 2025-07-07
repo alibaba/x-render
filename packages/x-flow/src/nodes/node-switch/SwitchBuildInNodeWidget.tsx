@@ -19,6 +19,7 @@ export default memo((props: any) => {
     CustomNodeWidget,
     isSwitchBottom,
     nodeSetting,
+    id,
   } = props;
   const { switchExtra } = nodeSetting;
 
@@ -70,8 +71,12 @@ export default memo((props: any) => {
         {CustomNodeWidget ? (
           <CustomNodeWidget data={item} index={index} />
         ) : (
-            <div>
-              {value && <div className='item-content-in'><TextEllipsis text={value} rows={5} type="paragraph" /></div>}
+          <div>
+            {value && (
+              <div className="item-content-in">
+                <TextEllipsis text={value} rows={5} type="paragraph" />
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -117,8 +122,10 @@ export default memo((props: any) => {
             <SourceHandle
               position={position}
               isConnectable={
-                (edges || [])?.filter(flow => flow?.sourceHandle === 'id_else')
-                  ?.length === 0
+                (edges || [])?.filter(
+                  flow =>
+                    flow?.sourceHandle === 'id_else' && flow?.source === id
+                )?.length === 0
               }
               selected={selected}
               isHovered={isHovered}
@@ -128,8 +135,10 @@ export default memo((props: any) => {
               className="item-handle"
               id={'id_else'}
               isConnected={
-                (edges || [])?.filter(flow => flow?.sourceHandle === 'id_else')
-                  ?.length > 0
+                (edges || [])?.filter(
+                  flow =>
+                    flow?.sourceHandle === 'id_else' && flow?.source === id
+                )?.length > 0
               }
             />
           </div>
