@@ -341,7 +341,7 @@ export function isTruthy(value: any) {
 }
 
 
-export function hexToRgba(hex, alpha = 0.25) {
+export function hexToRgba(hex: string, alpha = 0.25) {
   // 确保输入是合法的六位十六进制颜色
   if (!/^#([0-9A-Fa-f]{6})$/.test(hex)) {
       throw new Error("Invalid hex color format. Must be #RRGGBB.");
@@ -354,4 +354,15 @@ export function hexToRgba(hex, alpha = 0.25) {
 
   // 返回 `rgba` 格式字符串
   return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+
+export function getColorfulModeBackground(color: string, openColorfulMode: boolean) {
+
+  if(!openColorfulMode) {
+    return {};  
+  }
+  return {
+    background: `linear-gradient(to bottom, ${hexToRgba(color || '#F79009')}, #fff)`,
+  }
 }

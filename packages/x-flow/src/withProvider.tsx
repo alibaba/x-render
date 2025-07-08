@@ -34,6 +34,7 @@ export default function withProvider<T>(
       readOnly,
       clickAddNode,
       onTesting,
+      openColorfulMode,
       ...restProps
     } = props;
     const settingMap = useMemo(() => {
@@ -63,6 +64,7 @@ export default function withProvider<T>(
       readOnly,
       clickAddNode,
       onTesting,
+      openColorfulMode,
       widgets: {
         ...defaultWidgets,
         ...widgets,

@@ -4,7 +4,7 @@ import React, { memo, useContext } from 'react';
 import NodeContainer from '../../components/NodeContainer';
 import { ConfigContext } from '../../models/context';
 import SwitchBuildInNodeWidget from './SwitchBuildInNodeWidget';
-import { hexToRgba } from '../../utils';
+import { getColorfulModeBackground } from '../../utils';
 
 import './index.less';
 
@@ -20,7 +20,7 @@ export default memo((props: any) => {
     handleAddNode,
     id,
   } = props;
-  const { settingMap, widgets, iconFontUrl, globalConfig } =
+  const { settingMap, widgets, iconFontUrl, globalConfig, openColorfulMode } =
     useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
@@ -32,6 +32,8 @@ export default memo((props: any) => {
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
   const isSwitchBottom = position === Position.Bottom;
   const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
+
+
 
   return (
     <NodeContainer
@@ -67,9 +69,7 @@ export default memo((props: any) => {
       hideTitleTips={hideTitleTips}
       isSwitchBottom={isSwitchBottom}
       nodeSettingTitle={nodeSetting?.title || 'Switch'}
-      style={{
-        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009')}, #fff)`,
-      }}
+      style={{...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode)}}
     />
   );
 });

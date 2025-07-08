@@ -5,7 +5,7 @@ import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { isTruthy, safeJsonStringify, hexToRgba } from '../../utils';
+import { isTruthy, safeJsonStringify, getColorfulModeBackground } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import TextEllipsis from '../TextEllipsis';
@@ -49,7 +49,8 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     readOnly,
     logPanel,
     onTesting,
-    widgets
+    widgets,
+    openColorfulMode
   }: any = useContext(ConfigContext);
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
@@ -118,7 +119,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       width={nodePanel?.width || globalConfig?.nodePanel?.width || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
       mask={false}
       onClose={onClose}
-      headerStyle={{ paddingBottom: '12px', background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009')}, #fff)` }}
+      headerStyle={{ paddingBottom: '12px', ...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode) }}
       style={{
         position: 'absolute',
         right: isShowStatusPanel ? offsetRightStatus : 0,
@@ -126,7 +127,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       styles={{
         header: {
           paddingBottom: '12px',
-          background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009')}, #fff)`,
+          ...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode)
         },
       }}
       title={

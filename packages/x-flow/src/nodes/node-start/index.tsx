@@ -1,11 +1,11 @@
 import React, { memo, useContext } from 'react';
 import NodeContainer from '../../components/NodeContainer';
 import { ConfigContext } from '../../models/context';
-import { hexToRgba } from '../../utils';
+import { getColorfulModeBackground } from '../../utils';
 
 export default memo((props: any) => {
   const { onClick, type, data,id } = props;
-  const { settingMap, widgets, iconFontUrl, globalConfig } =
+  const { settingMap, widgets, iconFontUrl, globalConfig, openColorfulMode } =
     useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
@@ -35,9 +35,7 @@ export default memo((props: any) => {
       iconSvg={SVGWidget ? <SVGWidget setting={nodeSetting} /> : false}
       hideTitleTips={hideTitleTips}
       nodeSettingTitle={nodeSetting?.title || '开始'}
-      style={{
-        background: `linear-gradient(to bottom, ${hexToRgba(nodeSetting?.icon?.bgColor || '#F79009')}, #fff)`,
-      }}
+      style={{...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode)}}
     />
   );
 });

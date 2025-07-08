@@ -185,6 +185,7 @@ export interface FlowProps {
   zoomOnScroll?: boolean;
   panOnScroll?: boolean;
   preventScrolling?: boolean;
+  openColorfulMode?: boolean; // 是否开启多彩模式
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;
