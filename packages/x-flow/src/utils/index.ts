@@ -340,11 +340,23 @@ export function isTruthy(value: any) {
   return Boolean(value);
 }
 
-
 export function hexToRgba(hex: string, alpha = 0.25) {
-  // 确保输入是合法的六位十六进制颜色
+  // 处理缺少 # 前缀的情况
+  if (hex.charAt(0) !== '#') {
+    hex = '#' + hex;
+  }
+
+  // 处理3位十六进制颜色值 (#RGB)
+  if (/^#([0-9A-Fa-f]{3})$/.test(hex)) {
+    const r = hex.charAt(1);
+    const g = hex.charAt(2);
+    const b = hex.charAt(3);
+    hex = `#${r}${r}${g}${g}${b}${b}`;
+  }
+
+  // 如果不是合法的六位十六进制颜色，返回默认颜色
   if (!/^#([0-9A-Fa-f]{6})$/.test(hex)) {
-      throw new Error("Invalid hex color format. Must be #RRGGBB.");
+    hex = '#F79009'; // 使用默认颜色
   }
 
   // 提取 R、G 和 B 值
@@ -360,7 +372,7 @@ export function hexToRgba(hex: string, alpha = 0.25) {
 export function getColorfulModeBackground(color: string, openColorfulMode: boolean) {
 
   if(!openColorfulMode) {
-    return {};  
+    return {};
   }
   return {
     background: `linear-gradient(to bottom, ${hexToRgba(color || '#F79009')}, #fff)`,
