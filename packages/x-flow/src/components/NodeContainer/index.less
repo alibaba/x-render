@@ -3,6 +3,20 @@
   padding: 13px 12px 5px 12px;
   background: #fff;
   border-radius: 12px;
+  background: '#fff';
+  overflow: hidden;
+  position: 'relative';
+
+  .node-gradient-header{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: var(--gradient-height);
+      border-radius: 12px;
+      pointer-events: none;
+      z-index: 0;
+  }
 
   .node-title {
     display: flex;
@@ -14,6 +28,15 @@
     span {
       font-weight: bold;
     }
+  }
+
+  .node-body{
+    position: relative;
+    z-index: 1;
+  }
+  .node-body-desc{
+    position: relative;
+    z-index: 1;
   }
 
   .node-desc {

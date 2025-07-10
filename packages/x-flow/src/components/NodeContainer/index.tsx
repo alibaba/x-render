@@ -24,11 +24,17 @@ export default memo((props: any) => {
     style,
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
+  const containerRef = React.useRef<HTMLDivElement>(null);
 
   const renderDesc = () => (
     <>
       {!hideDesc && !!desc && (
-        <TextEllipsis text={desc} rows={2} type="paragraph" className='node-desc' />
+        <TextEllipsis
+          text={desc}
+          rows={2}
+          type="paragraph"
+          className="node-desc"
+        />
       )}
     </>
   );
@@ -52,15 +58,27 @@ export default memo((props: any) => {
     }
   };
 
+  const hasBody = !!children;
+  const hasDesc = !!desc && !hideDesc;
+  const gradientHeight = hasBody || hasDesc || NodeWidget ? '20%' : '100%';
+
   return (
     <div
+      ref={containerRef}
       className={classNames('custom-node-container', {
         [className]: !!className,
       })}
       onClick={onClick}
-      style={style}
     >
-      <div className="node-title">
+      {/* 渐变头部，动态高度 */}
+      <div
+        className="node-gradient-header"
+        style={{
+          '--gradient-height': gradientHeight,
+          ...style,
+        }}
+      />
+      <div className="node-title" style={{ position: 'relative', zIndex: 1 }}>
         {!hideTitleTips ? (
           <Popover
             overlayClassName="nodes-popover"
@@ -83,9 +101,8 @@ export default memo((props: any) => {
         )}
         <TextEllipsis text={title} style={{ width: 188, marginLeft: '8px' }} />
       </div>
-
       <div className="node-body">{children}</div>
-      {renderDescAndNodeWidget()}
+      <div className="node-body-desc">{renderDescAndNodeWidget()}</div>
     </div>
   );
 });
