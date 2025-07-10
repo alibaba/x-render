@@ -341,7 +341,7 @@ export function isTruthy(value: any) {
 }
 
 
-export function hexToRgba(hex: string, alpha = 0.25) {
+export function hexToRgba(hex: string, alpha = 0.15) {
   // 确保输入是合法的六位十六进制颜色
   if (!/^#([0-9A-Fa-f]{6})$/.test(hex)) {
       throw new Error("Invalid hex color format. Must be #RRGGBB.");
