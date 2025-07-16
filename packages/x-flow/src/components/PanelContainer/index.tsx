@@ -124,12 +124,6 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
         position: 'absolute',
         right: isShowStatusPanel ? offsetRightStatus : 0,
       }}
-      styles={{
-        header: {
-          paddingBottom: '12px',
-          ...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode)
-        },
-      }}
       title={
         <>
           <div className="title-box">
@@ -157,7 +151,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                     setTitleVal(e.target.value);
                     handleNodeValueChange({ title: e.target.value });
                   }}
-                  size="small"
+                    size="small"
                 />
               )}
             </div>

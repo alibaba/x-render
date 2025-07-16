@@ -203,26 +203,26 @@ const XFlow: FC<FlowProps> = memo(props => {
   });
 
   const handleNodeValueChange = debounce((data: any, id: string) => {
-    // for (let node of nodes) {
-    //   if (node.id === data.id) {
-    //     node.data = {
-    //       ...node?.data,
-    //       ...data?.values,
-    //     };
-    //     break;
-    //   }
-    // }
-    // setNodes([...nodes], false);
-    // 同时更新 activeNode 状态，确保面板数据同步
-    if (activeNode && activeNode.id === id) {
-      setActiveNode({
-        ...activeNode,
-        values: {
-          ...activeNode.values,
-          ...data,
-        },
-      });
+    for (let node of nodes) {
+      if (node.id === data.id) {
+        node.data = {
+          ...node?.data,
+          ...data?.values,
+        };
+        break;
+      }
     }
+    setNodes([...nodes], false);
+    // 同时更新 activeNode 状态，确保面板数据同步
+    // if (activeNode && activeNode.id === id) {
+    //   setActiveNode({
+    //     ...activeNode,
+    //     values: {
+    //       ...activeNode.values,
+    //       ...data,
+    //     },
+    //   });
+    // }
   }, 200);
 
   const nodeTypes = useMemo(() => {

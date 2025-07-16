@@ -30,8 +30,7 @@ group:
 | zoomOnScroll      | 是否通过滚动鼠标滚轮来缩放画布                           | `boolean`                                                                                   | `true` |
 | panOnScroll      | 是否通过滚动鼠标滚轮来平移画布                           | `boolean`                                                                                   | `false` |
 | preventScrolling      |   是否阻止浏览器在画布上滚动时的默认行为                         | `boolean`                                                                                   | `true` |
-
-
+| openColorfulMode      |   是否开启多彩模式                         | `boolean`                                                                                   | `false` |
 
 
 ## TNodePanel

@@ -17,7 +17,7 @@ import { safeJsonStringify, uuid } from '../../utils';
 
 interface INodeEditorProps {
   data: any;
-  onChange: (data: any, id?: string) => void;
+  onChange: (data: any) => void;
   nodeType: string;
   id: string;
   ref?: React.Ref<any>; // 添加 ref 属性
@@ -137,9 +137,9 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
     });
     setNodes(newNodes, false);
 
-    if (onChange) {
-      onChange(data, id);
-    }
+    // if (onChange) {
+    //   onChange(data, id);
+    // }
   }, 300);
 
   const watch = {

@@ -154,6 +154,7 @@ export default () => {
         nodeSelector={{
           showSearch: true,
         }}
+        openColorfulMode={true}
       />
     </div>
   );
