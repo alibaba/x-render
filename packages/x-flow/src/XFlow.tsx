@@ -262,6 +262,9 @@ const XFlow: FC<FlowProps> = memo(props => {
               }
               setOpenLogPanel(true);
             }}
+            onDelete={(delId)=>{
+              setActiveNode(null);// 删除节点并关闭弹窗
+            }}
           />
         );
       },
@@ -366,7 +369,7 @@ const XFlow: FC<FlowProps> = memo(props => {
           }
         }}
         onNodesDelete={() => {
-          // setActiveNode(null);
+           setActiveNode(null);
         }}
         onNodeClick={(event, node) => {
           onNodeClick && onNodeClick(event, node);
