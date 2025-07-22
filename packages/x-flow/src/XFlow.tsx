@@ -26,6 +26,7 @@ import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
 import { useStore, useStoreApi } from './hooks/useStore';
+import { useFlow } from './hooks/useFlow';
 
 import Operator from './operator';
 import FlowProps from './types';
@@ -89,6 +90,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const { onNodeClick, onEdgeClick, zoomOnScroll = true, panOnScroll = false, preventScrolling = true } = props;
   const nodeEditorRef = useRef(null);
+  const { copyNode, pasteNodeSimple } = useFlow();
 
   useEffect(() => {
     zoomTo(0.8);
@@ -107,6 +109,17 @@ const XFlow: FC<FlowProps> = memo(props => {
       e.preventDefault();
     if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
+    if ((e.key === 'c' || e.key === 'C') && (e.ctrlKey || e.metaKey)) {
+      const selectedNode = nodes?.find(node => node.selected);
+      if (selectedNode) {
+        copyNode(selectedNode.id);
+        e.preventDefault();
+      }
+    }
+    else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
+      pasteNodeSimple();
+      e.preventDefault();
+    }
   });
 
   useEventListener(
@@ -125,7 +138,8 @@ const XFlow: FC<FlowProps> = memo(props => {
     },
     {
       target: workflowContainerRef.current,
-      enable: isAddingNode,
+      // enable: isAddingNode,
+      enable: true, // 复制粘贴的时候需要监听鼠标位置
     }
   );
 
