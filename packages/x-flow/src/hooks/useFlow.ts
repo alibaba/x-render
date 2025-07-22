@@ -139,9 +139,10 @@ export const useFlow = () => {
       }));
       record(() => {
         storeApi.getState().addNodes(copyNodes, false);
-      });
-      storeApi.setState({
-        copyNodes: [],
+        // 将清空剪贴板的操作也加入记录，使其可撤销
+        storeApi.setState({
+          copyNodes: [],
+        });
       });
     } else {
       // message.warning('请先复制节点！');
