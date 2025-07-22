@@ -91,6 +91,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { onNodeClick, onEdgeClick, zoomOnScroll = true, panOnScroll = false, preventScrolling = true } = props;
   const nodeEditorRef = useRef(null);
   const { copyNode, pasteNodeSimple } = useFlow();
+  const { undo, redo } = useTemporalStore();
 
   useEffect(() => {
     zoomTo(0.8);
@@ -103,10 +104,14 @@ const XFlow: FC<FlowProps> = memo(props => {
   useEventListener('keydown', e => {
     if ((e.key === 'd' || e.key === 'D') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
-    if ((e.key === 'z' || e.key === 'Z') && (e.ctrlKey || e.metaKey))
+    if ((e.key === 'z' || e.key === 'Z') && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
-    if ((e.key === 'y' || e.key === 'Y') && (e.ctrlKey || e.metaKey))
+      undo();
+    }
+    if ((e.key === 'y' || e.key === 'Y') && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
+      redo();
+    }
     if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
     if ((e.key === 'c' || e.key === 'C') && (e.ctrlKey || e.metaKey)) {
