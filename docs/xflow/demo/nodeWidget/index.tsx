@@ -74,7 +74,7 @@ const HTTPNodeWidget = ({ data }) => {
 
 // 问题分类器节点
 const ClassifierNodeWidget = ({ data }) => {
-  const { categories, rules, defaultCategory } = data;
+  const { categories = [], rules, defaultCategory } = data;
   return (
     <Card
       size="small"
@@ -85,7 +85,7 @@ const ClassifierNodeWidget = ({ data }) => {
           <Typography.Text type="secondary" style={{ fontSize: 12 }}>分类</Typography.Text>
           <div style={{ marginTop: 4 }}>
             <Space wrap>
-              {categories.map(cat => (
+              {(categories || [])?.map(cat => (
                 <Tag
                   key={cat}
                   color={cat === defaultCategory ? 'purple' : 'default'}

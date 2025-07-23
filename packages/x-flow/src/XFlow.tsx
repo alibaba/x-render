@@ -26,6 +26,7 @@ import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
 import { useStore, useStoreApi } from './hooks/useStore';
+import { useFlow } from './hooks/useFlow';
 
 import Operator from './operator';
 import FlowProps from './types';
@@ -89,6 +90,8 @@ const XFlow: FC<FlowProps> = memo(props => {
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const { onNodeClick, onEdgeClick, zoomOnScroll = true, panOnScroll = false, preventScrolling = true } = props;
   const nodeEditorRef = useRef(null);
+  const { copyNode, pasteNodeSimple } = useFlow();
+  const { undo, redo } = useTemporalStore();
 
   useEffect(() => {
     zoomTo(0.8);
@@ -101,12 +104,27 @@ const XFlow: FC<FlowProps> = memo(props => {
   useEventListener('keydown', e => {
     if ((e.key === 'd' || e.key === 'D') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
-    if ((e.key === 'z' || e.key === 'Z') && (e.ctrlKey || e.metaKey))
+    if ((e.key === 'z' || e.key === 'Z') && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
-    if ((e.key === 'y' || e.key === 'Y') && (e.ctrlKey || e.metaKey))
+      undo();
+    }
+    if ((e.key === 'y' || e.key === 'Y') && (e.ctrlKey || e.metaKey)) {
       e.preventDefault();
+      redo();
+    }
     if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
+    if ((e.key === 'c' || e.key === 'C') && (e.ctrlKey || e.metaKey)) {
+      const selectedNode = nodes?.find(node => node.selected);
+      if (selectedNode) {
+        copyNode(selectedNode.id);
+        e.preventDefault();
+      }
+    }
+    else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
+      pasteNodeSimple();
+      e.preventDefault();
+    }
   });
 
   useEventListener(
@@ -125,7 +143,8 @@ const XFlow: FC<FlowProps> = memo(props => {
     },
     {
       target: workflowContainerRef.current,
-      enable: isAddingNode,
+      // enable: isAddingNode,
+      enable: true, // 复制粘贴的时候需要监听鼠标位置
     }
   );
 
@@ -262,6 +281,9 @@ const XFlow: FC<FlowProps> = memo(props => {
               }
               setOpenLogPanel(true);
             }}
+            onDelete={(delId)=>{
+              setActiveNode(null);// 删除节点并关闭弹窗
+            }}
           />
         );
       },
@@ -366,7 +388,7 @@ const XFlow: FC<FlowProps> = memo(props => {
           }
         }}
         onNodesDelete={() => {
-          // setActiveNode(null);
+           setActiveNode(null);
         }}
         onNodeClick={(event, node) => {
           onNodeClick && onNodeClick(event, node);

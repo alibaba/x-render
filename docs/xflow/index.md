@@ -243,7 +243,7 @@ group:
     <div class="feature-name">画布操作</div>
     <div class="feature-content">
       <div class="feature-desc">
-        支持画布缩放、撤销/重置、节点添加、鼠标模式切换、节点整理、全屏展示等功能。提供丰富的画布操作工具，提升用户体验。
+        支持画布缩放、撤销/重置、节点添加、鼠标模式切换、节点整理、全屏展示、画布快捷键等功能。提供丰富的画布操作工具，提升用户体验。
       </div>
        <div class="feature-image node-show-img">
         <img src="https://img.alicdn.com/imgextra/i3/O1CN01Pcb1wd1RKe0hVF7nG_!!6000000002093-0-tps-3172-1234.jpg" alt="画布操作" />

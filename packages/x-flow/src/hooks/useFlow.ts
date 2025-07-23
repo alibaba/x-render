@@ -33,7 +33,7 @@ export const useFlow = () => {
     screenToFlowPosition,
     flowToScreenPosition
   } = useReactFlow();
-  
+
   const { record } = useTemporalStore();
 
   const toObject = useMemoizedFn(() => {
@@ -123,21 +123,55 @@ export const useFlow = () => {
     }
   });
 
-  const deleteNode = useMemoizedFn((nodeId) => {
+  const pasteNodeSimple = useMemoizedFn(() => {
+    const mousePosition = storeApi.getState().mousePosition;
+    if (storeApi.getState().copyNodes.length > 0) {
+      const flowPos = screenToFlowPosition({
+        x: mousePosition.elementX,
+        y: mousePosition.elementY,
+      });
+      const copyNodes = storeApi.getState().copyNodes.map(node => ({
+        ...node,
+        position: {
+          x: flowPos.x,
+          y: flowPos.y,
+        },
+      }));
+      record(() => {
+        storeApi.getState().addNodes(copyNodes, false);
+        // 将清空剪贴板的操作也加入记录，使其可撤销
+        storeApi.setState({
+          copyNodes: [],
+        });
+      });
+    } else {
+      // message.warning('请先复制节点！');
+    }
+  });
+
+  const deleteNode = useMemoizedFn(nodeId => {
     record(() => {
       storeApi.setState({
-        edges: storeApi.getState().edges.filter((edge) => edge.source !== nodeId && edge.target !== nodeId),
+        edges: storeApi
+          .getState()
+          .edges.filter(
+            edge => edge.source !== nodeId && edge.target !== nodeId
+          ),
       });
-    })
+    });
     record(() => {
       storeApi.setState({
-        nodes: storeApi.getState().nodes.filter((node) => node.id !== nodeId),
+        nodes: storeApi.getState().nodes.filter(node => node.id !== nodeId),
       });
-    })
+    });
   });
 
   const runAutoLayout = useMemoizedFn(() => {
-    const newNodes: any = autoLayoutNodes(storeApi.getState().nodes, storeApi.getState().edges, storeApi.getState().layout);
+    const newNodes: any = autoLayoutNodes(
+      storeApi.getState().nodes,
+      storeApi.getState().edges,
+      storeApi.getState().layout
+    );
     setNodes(newNodes);
   });
 
@@ -166,7 +200,8 @@ export const useFlow = () => {
       runAutoLayout,
       copyNode,
       pasteNode,
-      deleteNode
+      pasteNodeSimple,
+      deleteNode,
     }),
     [instance]
   );

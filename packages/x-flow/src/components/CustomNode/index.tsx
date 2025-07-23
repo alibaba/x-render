@@ -20,7 +20,7 @@ import SourceHandle from './sourceHandle';
 import { useFlow } from '../../hooks/useFlow';
 
 export default memo((props: any) => {
-  const { id, type, data, layout, isConnectable, selected, onClick, status } =
+  const { id, type, data, layout, isConnectable, selected, onClick, status, onDelete } =
     props;
   const {
     widgets,
@@ -136,6 +136,7 @@ export default memo((props: any) => {
 
   const handleDeleteNode = useCallback(() => {
     deleteNode(id);
+    onDelete(id)
   }, [deleteNode, id]);
 
   const defaultAction = (e, sourceHandle) => {
@@ -160,6 +161,7 @@ export default memo((props: any) => {
     if (!e.key) {
       return;
     }
+
     const sourceHandle = e.item.props?.sourcehandle;
     if (isFunction(onMenuItemClick)) {
       const data: Record<string, string> = {
