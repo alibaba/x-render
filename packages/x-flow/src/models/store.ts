@@ -125,7 +125,7 @@ const createStore = (initProps?: Partial<FlowProps>) => {
           };
         },
         onSave(pastState, currentState) {
-          console.log('onSave', pastState, currentState);
+          // console.log('onSave', pastState, currentState);
         },
       }
     ),

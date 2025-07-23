@@ -129,7 +129,8 @@ export default memo((edge: any) => {
                   {!hideEdgeDelBtn && !readOnly && (
                     <div
                       className="line-icon-box"
-                      onClick={() => {
+                      onClick={(ev: any) => {
+                        ev.stopPropagation();
                         if (readOnly) {
                           return;
                         }
