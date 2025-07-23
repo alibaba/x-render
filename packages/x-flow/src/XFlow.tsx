@@ -202,7 +202,7 @@ const XFlow: FC<FlowProps> = memo(props => {
     setEdges(newEdges);
   });
 
-  const handleNodeValueChange = debounce((data: any, id: string) => {
+  const handleNodeValueChange = debounce((data: any) => {
     for (let node of nodes) {
       if (node.id === data.id) {
         node.data = {

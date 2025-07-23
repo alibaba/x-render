@@ -17,7 +17,7 @@ import { safeJsonStringify, uuid } from '../../utils';
 
 interface INodeEditorProps {
   data: any;
-  onChange: (data: any) => void;
+  onChange: (data?: any) => void;
   nodeType: string;
   id: string;
   ref?: React.Ref<any>; // 添加 ref 属性
