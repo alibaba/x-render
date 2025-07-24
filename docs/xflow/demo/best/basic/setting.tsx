@@ -133,6 +133,7 @@ export const settings = [
           type: 'icon-start',
           bgColor: '#17B26A',
         },
+        disabledShortcutDelete: true,
         targetHandleHidden: true,
         settingSchema: {
           type: 'object',
@@ -215,6 +216,7 @@ export const settings = [
           type: 'icon-end',
           bgColor: '#F79009',
         },
+        disabledShortcutDelete: true,
         sourceHandleHidden: true,
         settingSchema: {
           type: 'object',
