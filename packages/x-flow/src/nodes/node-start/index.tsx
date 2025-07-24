@@ -9,6 +9,7 @@ export default memo((props: any) => {
     useContext(ConfigContext);
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
+  const gradientHeight = nodeSetting?.gradientHeight;
   const nodeDescription = nodeSetting?.description || '';
   const hideDesc =
     nodeSetting?.nodePanel?.hideDesc ??
@@ -35,6 +36,7 @@ export default memo((props: any) => {
       iconSvg={SVGWidget ? <SVGWidget setting={nodeSetting} /> : false}
       hideTitleTips={hideTitleTips}
       nodeSettingTitle={nodeSetting?.title || '开始'}
+      gradientHeight={gradientHeight}
       style={{...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode)}}
     />
   );

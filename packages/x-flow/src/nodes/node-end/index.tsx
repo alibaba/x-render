@@ -10,6 +10,7 @@ export default memo((props: any) => {
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
   const nodeDescription = nodeSetting?.description || '';
   const hideDesc = nodeSetting?.nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
+  const gradientHeight = nodeSetting?.gradientHeight;
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
   const SVGWidget = widgets[nodeSetting?.iconSvg]; // 自定义面板配置组件
 
@@ -31,6 +32,7 @@ export default memo((props: any) => {
       iconSvg={SVGWidget ? <SVGWidget setting={nodeSetting} /> : false}
       hideTitleTips={hideTitleTips}
       nodeSettingTitle={nodeSetting.title||'结束'}
+      gradientHeight={gradientHeight}
       style={{...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode)}}
     />
   );

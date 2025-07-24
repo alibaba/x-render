@@ -9,6 +9,7 @@ export default memo((props: any) => {
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
   const nodeDescription = nodeSetting?.description || '';
+  const gradientHeight = nodeSetting?.gradientHeight;
 
   const hideDesc = nodeSetting?.nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const hideTitleTips = globalConfig?.nodeView?.hideTitleTips ?? false;
@@ -32,6 +33,7 @@ export default memo((props: any) => {
       iconSvg={SVGWidget ? <SVGWidget setting={nodeSetting} /> : false}
       hideTitleTips={hideTitleTips}
       nodeSettingTitle={nodeSetting.title}
+      gradientHeight={gradientHeight}
       style={{...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode)}}
     />
   );

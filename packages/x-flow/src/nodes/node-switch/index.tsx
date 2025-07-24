@@ -25,6 +25,7 @@ export default memo((props: any) => {
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
   const nodeDescription = nodeSetting?.description || '';
+  const gradientHeight = nodeSetting?.gradientHeight;
   const hideDesc =
     nodeSetting?.nodePanel?.hideDesc ??
     globalConfig?.nodePanel?.hideDesc ??
@@ -69,6 +70,7 @@ export default memo((props: any) => {
       hideTitleTips={hideTitleTips}
       isSwitchBottom={isSwitchBottom}
       nodeSettingTitle={nodeSetting?.title || 'Switch'}
+      gradientHeight={gradientHeight}
       style={{...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode)}}
     />
   );

@@ -22,6 +22,7 @@ export default memo((props: any) => {
     isSwitchBottom,
     nodeSettingTitle,
     style,
+    gradientHeight: _gradientHeight,
   } = props;
   const IconBox = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
   const containerRef = React.useRef<HTMLDivElement>(null);
@@ -60,7 +61,8 @@ export default memo((props: any) => {
 
   const hasBody = !!children;
   const hasDesc = !!desc && !hideDesc;
-  const gradientHeight = hasBody || hasDesc || NodeWidget ? '20%' : '100%';
+  const gradientHeight = _gradientHeight || (hasBody || hasDesc || NodeWidget ? '20%' : '100%');
+  debugger;
 
   return (
     <div

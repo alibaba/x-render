@@ -22,6 +22,7 @@ export default memo((props: any) => {
   const nodeSetting = settingMap[type] || {};
   const NodeWidget = widgets[nodeSetting?.nodeWidget] || undefined;
   const nodeDescription = nodeSetting?.description || '';
+  const gradientHeight = nodeSetting?.gradientHeight;
   const hideDesc =
     nodeSetting?.nodePanel?.hideDesc ??
     globalConfig?.nodePanel?.hideDesc ??
@@ -45,6 +46,7 @@ export default memo((props: any) => {
       hideDesc={hideDesc}
       desc={data?.desc}
       iconFontUrl={iconFontUrl}
+      gradientHeight={gradientHeight}
       NodeWidget={
         <ParallelBuildInNodeWidget
           data={data}

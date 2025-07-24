@@ -26,6 +26,7 @@ export default () => {
         type: 'icon-model',
         bgColor: '#6172F3',
       },
+      gradientHeight: '100%',
       settingSchema: {
         type: 'object',
         properties: {
