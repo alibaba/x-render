@@ -348,11 +348,22 @@ const XFlow: FC<FlowProps> = memo(props => {
           },
           deletable: deletable, //默认连线属性受此项控制
         }}
-        onBeforeDelete={async () => {
+        onBeforeDelete={async (elements) => {
           if (readOnly) {
             return false;
           }
-          return true;
+          const nodesToDelete = elements?.nodes || [];
+          const blockedNodes = nodesToDelete?.filter(node => {
+            const nodeConfig = settingMap[node?.data?._nodeType as string];
+            return nodeConfig?.hasOwnProperty('disabledShortcutDelete')
+              ? Boolean(nodeConfig?.disabledShortcutDelete)
+              : false;
+          });
+          if (blockedNodes?.length > 0) {
+            message.warning(`${blockedNodes.map(n => n.data?.title || n.id).join(', ')}节点不允许删除！`);
+            return false;
+          }
+          return true
         }}
         onConnect={onConnect}
         onNodesChange={changes => {

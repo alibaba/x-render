@@ -7,6 +7,7 @@ export default () => {
       title: '开始',
       type: 'Start',
       hidden: true,
+      disabledShortcutDelete: true,
       targetHandleHidden: true,
       icon: {
         type: 'icon-start',
@@ -27,6 +28,7 @@ export default () => {
       title: '结束',
       type: 'End',
       hidden: true,
+      disabledShortcutDelete: true,
       sourceHandleHidden: true,
       icon: {
         type: 'icon-end',
