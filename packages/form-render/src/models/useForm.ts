@@ -50,14 +50,14 @@ const getFieldName = (_path: any): any => {
         return ite;
       });
     });
+  } else {
+    result = _path.split('.').map((item: any) => {
+      if (!isNaN(Number(item))) {
+        return item * 1;
+      }
+      return item;
+    });
   }
-
-  result = _path.split('.').map((item: any) => {
-    if (!isNaN(Number(item))) {
-      return item * 1;
-    }
-    return item;
-  });
 
   result = result.map(item => {
     if (typeof item === 'string' && item?.indexOf('[') === 0  && item?.indexOf(']') === item?.length -1) {
