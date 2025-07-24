@@ -61,6 +61,8 @@ export default memo((props: any) => {
   const connectable = readOnly ? false : isConnectable;
   const nodeSetting = settingMap[type] || {};
   const nodeClassName = nodeSetting?.className || '';
+  const disabledShortcutDelete = nodeSetting?.disabledShortcutDelete || false;
+
   // 判断左侧Handle是否已连接
   const isTargetHandleConnected = useMemo(() => {
     return (edges || [])?.some(edge => edge.target === id);
@@ -303,7 +305,7 @@ export default memo((props: any) => {
           // isConnectableEnd={isConnectableEnd}
         />
       )}
-      {!readOnly && (
+      {!readOnly && !disabledShortcutDelete && (
         <Dropdown
           disabled={readOnly}
           {...dropdownVersionProps}
