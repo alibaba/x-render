@@ -62,7 +62,6 @@ export default memo((props: any) => {
   const hasBody = !!children;
   const hasDesc = !!desc && !hideDesc;
   const gradientHeight = _gradientHeight || (hasBody || hasDesc || NodeWidget ? '20%' : '100%');
-  debugger;
 
   return (
     <div
