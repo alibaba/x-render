@@ -98,13 +98,37 @@ export const useFlow = () => {
     const copyNodes = generateCopyNodes(
       storeApi.getState().nodes.find((node) => node.id === nodeId),
     );
+
+    // 清除之前的超时定时器
+    if (storeApi.getState().copyTimeoutId) {
+      clearTimeout(storeApi.getState().copyTimeoutId);
+    }
+
+    // 设置isAddingNode为true，开启mousemove监听
+    storeApi.getState().setIsAddingNode(true);
+
+    // 设置30秒超时，自动关闭mousemove监听
+    const timeoutId = setTimeout(() => {
+      storeApi.getState().setIsAddingNode(false);
+      storeApi.setState({ copyTimeoutId: null });
+    }, 30000);
+
     storeApi.setState({
       copyNodes,
+      copyTimeoutId: timeoutId,
     });
   });
 
   const pasteNode = useMemoizedFn((nodeId: string, data: any) => {
     if (storeApi.getState().copyNodes.length > 0) {
+      // 清除超时定时器
+      if (storeApi.getState().copyTimeoutId) {
+        clearTimeout(storeApi.getState().copyTimeoutId);
+      }
+
+      // 关闭mousemove监听
+      storeApi.getState().setIsAddingNode(false);
+
       const newEdges = {
         id: uuid(),
         source: nodeId,
@@ -117,6 +141,7 @@ export const useFlow = () => {
       storeApi.getState().addEdges(newEdges);
       storeApi.setState({
         copyNodes: [],
+        copyTimeoutId: null,
       });
     }else{
       message.warning('请先复制节点！')
@@ -126,6 +151,14 @@ export const useFlow = () => {
   const pasteNodeSimple = useMemoizedFn(() => {
     const mousePosition = storeApi.getState().mousePosition;
     if (storeApi.getState().copyNodes.length > 0) {
+      // 清除超时定时器
+      if (storeApi.getState().copyTimeoutId) {
+        clearTimeout(storeApi.getState().copyTimeoutId);
+      }
+
+      // 关闭mousemove监听
+      storeApi.getState().setIsAddingNode(false);
+
       const flowPos = screenToFlowPosition({
         x: mousePosition.elementX,
         y: mousePosition.elementY,
@@ -142,6 +175,7 @@ export const useFlow = () => {
         // 将清空剪贴板的操作也加入记录，使其可撤销
         storeApi.setState({
           copyNodes: [],
+          copyTimeoutId: null,
         });
       });
     } else {

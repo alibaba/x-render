@@ -54,6 +54,7 @@ const CandidateNode = () => {
 
   return (
     <div
+      className="candidate-node"
       style={{
         left: mousePosition?.elementX,
         top: mousePosition?.elementY,

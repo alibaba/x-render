@@ -34,6 +34,7 @@ export type FlowState = {
   isAddingNode?: boolean;
   candidateNode: any;
   mousePosition: any;
+  copyTimeoutId: NodeJS.Timeout | null; // 添加超时定时器ID
   onNodesChange: OnNodesChange<FlowNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
@@ -45,6 +46,7 @@ export type FlowState = {
   setIsAddingNode: (payload: boolean) => void;
   setCandidateNode: (candidateNode: any) => void;
   setMousePosition: (mousePosition: any) => void;
+  setCopyTimeoutId: (timeoutId: NodeJS.Timeout | null) => void; // 添加设置超时定时器的方法
 };
 
 const createStore = (initProps?: Partial<FlowProps>) => {
@@ -64,6 +66,7 @@ const createStore = (initProps?: Partial<FlowProps>) => {
         copyEdges: [],
         isAddingNode: false,
         candidateNode: null,
+        copyTimeoutId: null, // 添加超时定时器ID初始值
         // nodeMenus: [],
         mousePosition: { pageX: 0, pageY: 0, elementX: 0, elementY: 0 },
         onNodesChange: changes => {
@@ -105,6 +108,9 @@ const createStore = (initProps?: Partial<FlowProps>) => {
         },
         setMousePosition: (mousePosition: any) => {
           set({ mousePosition });
+        },
+        setCopyTimeoutId: (timeoutId: NodeJS.Timeout | null) => {
+          set({ copyTimeoutId: timeoutId });
         },
         setLayout: (layout: 'LR' | 'TB') => {
           if (!layout) {
