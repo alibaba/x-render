@@ -66,6 +66,7 @@ const XFlow: FC<FlowProps> = memo(props => {
     setCandidateNode,
     isAddingNode,
     setMousePosition,
+    copyNodes,
   } = useStore(
     s => ({
       nodes: s.nodes,
@@ -80,6 +81,7 @@ const XFlow: FC<FlowProps> = memo(props => {
       onNodesChange: s.onNodesChange,
       onEdgesChange: s.onEdgesChange,
       onConnect: s.onConnect,
+      copyNodes: s.copyNodes,
     }),
     shallow
   );
@@ -98,6 +100,10 @@ const XFlow: FC<FlowProps> = memo(props => {
     setAutoFreeze(false);
     return () => {
       setAutoFreeze(true);
+      const { copyTimeoutId } = storeApi.getState();
+      if (copyTimeoutId) {
+        clearTimeout(copyTimeoutId);
+      }
     };
   }, []);
 
@@ -125,6 +131,17 @@ const XFlow: FC<FlowProps> = memo(props => {
       pasteNodeSimple();
       e.preventDefault();
     }
+    else if (copyNodes.length > 0) {
+      // 只在有复制节点时才检查其他操作
+      const { copyTimeoutId } = storeApi.getState();
+      if (copyTimeoutId) {
+        clearTimeout(copyTimeoutId);
+        storeApi.setState({
+          copyTimeoutId: null,
+          isAddingNode: false,
+        });
+      }
+    }
   });
 
   useEventListener(
@@ -143,8 +160,33 @@ const XFlow: FC<FlowProps> = memo(props => {
     },
     {
       target: workflowContainerRef.current,
-      // enable: isAddingNode,
-      enable: true, // 复制粘贴的时候需要监听鼠标位置
+      enable: isAddingNode,
+      // enable: true, // 复制粘贴的时候需要监听鼠标位置
+    }
+  );
+
+  // 监听点击事件，当用户点击其他地方时清除复制状态
+  useEventListener(
+    'click',
+    e => {
+      // 如果点击的不是节点或候选节点，清除复制状态
+      const target = e.target as HTMLElement;
+      const isClickingNode = target.closest('.xflow-node-container') || target.closest('.candidate-node');
+
+      if (!isClickingNode) {
+        const { copyTimeoutId, copyNodes } = storeApi.getState();
+        if (copyTimeoutId && copyNodes?.length > 0) {
+          clearTimeout(copyTimeoutId);
+          storeApi.setState({
+            copyTimeoutId: null,
+            isAddingNode: false,
+          });
+        }
+      }
+    },
+    {
+      target: workflowContainerRef.current,
+      enable: copyNodes?.length > 0,
     }
   );
 
