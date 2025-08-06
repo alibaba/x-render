@@ -326,14 +326,19 @@ const useForm = () => {
   }
 
   // 触发表单验证
-  xform.validateFields = (pathList?: string[], config?: object) => {
+  xform.validateFields = async (pathList?: string[], config?: object) => {
     const nameList = (pathList || []).map(path => getFieldName(path));
-    if (nameList.length > 0) {
-      return validateFields(nameList, config);
+    let values = await (
+      nameList.length > 0 ? validateFields(nameList, config) : validateFields()
+    );
+    // 参考 getValues的步骤
+    const { removeHiddenData } = storeRef.current?.getState() || {};
+    if (removeHiddenData) {
+      values = filterValuesHidden(values, flattenSchemaRef.current);
     }
-    return validateFields();
-  };
-
+    values = filterValuesUndefined(values);
+    return parseValuesToBind(values, flattenSchemaRef.current);
+  }
 
   xform.getFlattenSchema = (path?: string) => {
     if (!path) {
