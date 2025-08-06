@@ -52,6 +52,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     widgets,
     openColorfulMode
   }: any = useContext(ConfigContext);
+
   const nodeSetting = settingMap[nodeType] || {};
   const { nodes, setNodes } = useStore(
     (state: any) => ({
@@ -60,6 +61,14 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     }),
     shallow
   );
+  const activeNode = useMemo(()=>{
+    const node = nodes.find((r)=>r.id === id)
+    if(node){
+      return node
+    }else{
+      return {}
+    }
+  },[nodes])
   const isDisabled = disabled; // 目前没用
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
@@ -91,9 +100,9 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   }, 100);
 
   useEffect(() => {
-    setDescVal(data?.desc);
-    setTitleVal(data?.title || nodeSetting?.title);
-  }, [safeJsonStringify(data), id]);
+    setDescVal(activeNode.data?.desc);
+    setTitleVal(activeNode.data?.title || nodeSetting?.title);
+  }, [id,activeNode.data?.desc,activeNode.data?.title]);
 
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
 
