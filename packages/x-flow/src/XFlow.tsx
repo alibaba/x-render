@@ -8,7 +8,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { useEventListener, useMemoizedFn } from 'ahooks';
 import { produce, setAutoFreeze } from 'immer';
-import { debounce, isFunction } from 'lodash';
+import { debounce, get, isFunction } from 'lodash';
 import type { FC } from 'react';
 import React, {
   memo,
@@ -121,15 +121,28 @@ const XFlow: FC<FlowProps> = memo(props => {
     if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
     if ((e.key === 'c' || e.key === 'C') && (e.ctrlKey || e.metaKey)) {
-      const selectedNode = nodes?.find(node => node.selected);
-      if (selectedNode) {
-        copyNode(selectedNode.id);
-        e.preventDefault();
+      if(openPanel){
+      }else{
+        const selectedNode = nodes?.find(node => node.selected);
+        if (selectedNode) {
+          const nodeType:string = get(selectedNode,'data._nodeType','') as any
+          const disabledCopy = get(settingMap,[nodeType,'disabledCopy'],false)
+          if(!disabledCopy){
+            copyNode(selectedNode.id);
+            e.preventDefault();
+          }else{
+            message.warning('该节点在配置中已禁止被复制！')
+          }
+        }
       }
+
     }
     else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
-      pasteNodeSimple();
-      e.preventDefault();
+      if(openPanel){
+      }else{
+        pasteNodeSimple();
+        e.preventDefault();
+      }
     }
     else if (copyNodes.length > 0) {
       // 只在有复制节点时才检查其他操作
