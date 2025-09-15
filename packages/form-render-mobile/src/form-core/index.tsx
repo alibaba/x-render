@@ -51,6 +51,7 @@ const FormCore = (props: any) => {
     logOnSubmit,
     className,
     id,
+    validateMessages,
   } = transformProps({ ...props, ...schemaProps });
 
   useEffect(() => {
@@ -117,7 +118,7 @@ const FormCore = (props: any) => {
     if (!isFunction(logOnSubmit)) {
       return;
     }
-   
+
     const start = getSessionItem('FORM_START');
     const mount = getSessionItem('FORM_MOUNT_TIME');
 
@@ -190,6 +191,7 @@ const FormCore = (props: any) => {
       onFinish={handleFinish}
       onFinishFailed={handleFinishFailed}
       onValuesChange={handleValuesChange}
+      validateMessages={validateMessages}
     >
       <Grid columns={1}>
         <RenderCore schema={schema} />

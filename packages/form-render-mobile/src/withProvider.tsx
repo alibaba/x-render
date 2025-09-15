@@ -71,16 +71,17 @@ export default function withProvider<T>(Element: React.ComponentType<T>): React.
       <ConfigProvider
         {...configProvider}
         locale={langPack}
-        form={{
-          validateMessages: {
-            ...formValidateMessages,
-            ...validateMessages
-          }
-        }}
       >
         <ConfigContext.Provider value={configContext}>
           <FRContext.Provider value={store}>
-            <Element form={form} {...otherProps} />
+            <Element
+              form={form}
+              validateMessages={{
+                ...formValidateMessages,
+                ...validateMessages
+              }}
+              {...otherProps}
+            />
           </FRContext.Provider>
         </ConfigContext.Provider>
       </ConfigProvider>
