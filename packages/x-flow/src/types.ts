@@ -187,6 +187,7 @@ export interface FlowProps {
   panOnScroll?: boolean;
   preventScrolling?: boolean;
   openColorfulMode?: boolean; // 是否开启多彩模式
+  connectionLineComponent?: ReactFlowProps['connectionLineComponent']; // 透传给 ReactFlow，用于自定义连线渲染
 }
 interface ItemInfo {
   key: 'copy' | 'paste' | 'delete' | string;
