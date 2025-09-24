@@ -1,7 +1,7 @@
 import { Divider, Drawer, Input, Space } from 'antd';
 import { produce } from 'immer';
 import { debounce, isNumber } from 'lodash';
-import React, { FC, useContext, useEffect, useMemo, useState } from 'react';
+import React, { FC, useContext, useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
@@ -72,6 +72,11 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const isDisabled = disabled; // 目前没用
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
+
+  const [isComposing, setIsComposing] = useState(false);
+  const titleRef = useRef(titleVal);
+  const descRef = useRef(descVal);
+
   const { nodePanel, iconSvg, showTestingBtn } = nodeSetting;
   const SVGWidget = widgets[nodeSetting?.iconSvg]
   const hideDesc =
@@ -97,11 +102,68 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       }
     });
     setNodes(newNodes, false);
-  }, 100);
+  }, 500);
+
+  const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = e.target.value;
+    setTitleVal(newValue);
+    titleRef.current = newValue;
+
+    if (!isComposing) {
+      handleNodeValueChange({ title: newValue });
+    }
+  }, [handleNodeValueChange, isComposing]);
+
+  const handleDescChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const newValue = e.target.value;
+    setDescVal(newValue);
+    descRef.current = newValue;
+
+    if (!isComposing) {
+      handleNodeValueChange({ desc: newValue });
+    }
+  }, [handleNodeValueChange, isComposing]);
+
+  const handleCompositionStart = useCallback(() => {
+    setIsComposing(true);
+  }, []);
+
+  const handleCompositionEnd = useCallback((e: React.CompositionEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setIsComposing(false);
+    const newValue = e.currentTarget.value;
+
+    if (e.currentTarget.tagName === 'INPUT') {
+      setTitleVal(newValue);
+      titleRef.current = newValue;
+      handleNodeValueChange({ title: newValue });
+    } else if (e.currentTarget.tagName === 'TEXTAREA') {
+      setDescVal(newValue);
+      descRef.current = newValue;
+      handleNodeValueChange({ desc: newValue });
+    }
+  }, [handleNodeValueChange]);
+
+  const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (isComposing) {
+      setIsComposing(false);
+    }
+
+    if (e.currentTarget.tagName === 'INPUT') {
+      if (titleRef.current !== titleVal) {
+        handleNodeValueChange({ title: titleRef.current });
+      }
+    } else if (e.currentTarget.tagName === 'TEXTAREA') {
+      if (descRef.current !== descVal) {
+        handleNodeValueChange({ desc: descRef.current });
+      }
+    }
+  }, [titleVal, descVal, handleNodeValueChange, isComposing]);
 
   useEffect(() => {
-    setDescVal(activeNode.data?.desc);
-    setTitleVal(activeNode.data?.title || nodeSetting?.title);
+    setDescVal(data?.desc);
+    setTitleVal(data?.title || nodeSetting?.title);
+    titleRef.current = data?.title || nodeSetting?.title;
+    descRef.current = data?.desc;
   }, [id,activeNode.data?.desc,activeNode.data?.title]);
 
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
@@ -118,7 +180,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       className: 'custom-node-panel',
       visible: true,
     };
-  }, []);
+  }, [antdVersion]);
 
   return (
     <Drawer
@@ -156,11 +218,11 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 <Input
                   style={{ width: '100%' }}
                   value={titleVal}
-                  onChange={e => {
-                    setTitleVal(e.target.value);
-                    handleNodeValueChange({ title: e.target.value });
-                  }}
-                    size="small"
+                  onChange={handleTitleChange}
+                  onCompositionStart={handleCompositionStart}
+                  onCompositionEnd={handleCompositionEnd}
+                  onBlur={handleBlur}
+                  size="small"
                 />
               )}
             </div>
@@ -205,10 +267,10 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                   placeholder="添加描述..."
                   autoSize={{ minRows: 1, maxRows: 3 }}
                   value={descVal}
-                  onChange={e => {
-                    setDescVal(e.target.value);
-                    handleNodeValueChange({ desc: e.target.value });
-                  }}
+                  onChange={handleDescChange}
+                  onCompositionStart={handleCompositionStart}
+                  onCompositionEnd={handleCompositionEnd}
+                  onBlur={handleBlur}
                   disabled={readOnly}
                 />
               )}
