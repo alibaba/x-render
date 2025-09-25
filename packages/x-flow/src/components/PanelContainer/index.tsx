@@ -1,11 +1,11 @@
 import { Divider, Drawer, Input, Space } from 'antd';
 import { produce } from 'immer';
 import { isNumber } from 'lodash';
-import React, { FC, useContext, useEffect, useMemo, useState, useCallback, useRef } from 'react';
+import React, { FC, useContext, useMemo, useRef } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { isTruthy, getColorfulModeBackground } from '../../utils';
+import { getColorfulModeBackground, isTruthy } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import TextEllipsis from '../TextEllipsis';
@@ -48,7 +48,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     logPanel,
     onTesting,
     widgets,
-    openColorfulMode
+    openColorfulMode,
   }: any = useContext(ConfigContext);
 
   const nodeSetting = settingMap[nodeType] || {};
@@ -60,34 +60,25 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     shallow
   );
 
-  const activeNode = useMemo(()=>{
-    const node = nodes.find((r)=>r.id === id);
+  const activeNode = useMemo(() => {
+    const node = nodes.find(r => r.id === id);
     return node || {};
-  },[nodes]);
+  }, [nodes]);
 
   const titleRef = useRef(null);
   const descRef = useRef(null);
   const titleText = activeNode.data?.title || nodeSetting?.title;
   const descText = activeNode.data?.desc;
-  
+
   const { nodePanel, iconSvg, showTestingBtn } = nodeSetting;
-  const SVGWidget = widgets[nodeSetting?.iconSvg]
-  const hideDesc = nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
+  const SVGWidget = widgets[nodeSetting?.iconSvg];
+  const hideDesc =
+    nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
-  const offsetRightStatus = isNumber(logPanel?.width) ? Number(logPanel?.width + 10) : 410;
+  const offsetRightStatus = isNumber(logPanel?.width)
+    ? Number(logPanel?.width + 10)
+    : 410;
 
-  useEffect(() => {
-    if (titleRef?.current?.input && titleRef?.current?.input?.value !== activeNode.data?.title) { 
-      titleRef.current.input.value = activeNode.data?.title;
-    }
-  }, [activeNode.data?.title]);
-
-  useEffect(() => {
-    if (descRef?.current?.input && descRef?.current?.input?.value !== activeNode.data?.desc) { 
-      descRef.current.input.value = activeNode.data?.desc;
-    }
-  }, [activeNode.data?.desc]);
-  
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleNodeValueChange({ title: e.target.value });
   };
@@ -137,7 +128,13 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       width={nodePanel?.width || globalConfig?.nodePanel?.width || 400} // 改为配置的width 节点的width > 全局的width>  默认 400
       mask={false}
       onClose={onClose}
-      headerStyle={{ paddingBottom: '12px', ...getColorfulModeBackground(nodeSetting?.icon?.bgColor, openColorfulMode) }}
+      headerStyle={{
+        paddingBottom: '12px',
+        ...getColorfulModeBackground(
+          nodeSetting?.icon?.bgColor,
+          openColorfulMode
+        ),
+      }}
       style={{
         position: 'absolute',
         right: isShowStatusPanel ? offsetRightStatus : 0,
@@ -166,7 +163,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                   ref={titleRef}
                   size="small"
                   style={{ width: '100%' }}
-                  defaultValue={titleText}
+                  value={titleText}
                   onChange={handleTitleChange}
                 />
               )}
@@ -212,7 +209,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                   ref={descRef}
                   placeholder="添加描述..."
                   autoSize={{ minRows: 1, maxRows: 3 }}
-                  defaultValue={descText}
+                  value={descText}
                   onChange={handleDescChange}
                   disabled={readOnly}
                 />
