@@ -62,14 +62,10 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     shallow
   );
   const activeNode = useMemo(()=>{
-    const node = nodes.find((r)=>r.id === id)
-    debugger;
-    if(node){
-      return node
-    }else{
-      return {}
-    }
-  },[nodes])
+    const node = nodes.find((r)=>r.id === id);
+    return node || {};
+  },[nodes]);
+  
   const isDisabled = disabled; // 目前没用
   const [descVal, setDescVal] = useState(data?.desc);
   const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
