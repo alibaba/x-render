@@ -1,15 +1,14 @@
 import { Divider, Drawer, Input, Space } from 'antd';
 import { produce } from 'immer';
-import { debounce, isNumber } from 'lodash';
+import { isNumber } from 'lodash';
 import React, { FC, useContext, useEffect, useMemo, useState, useCallback, useRef } from 'react';
 import { shallow } from 'zustand/shallow';
 import { useStore } from '../../hooks/useStore';
 import { ConfigContext } from '../../models/context';
-import { isTruthy, safeJsonStringify, getColorfulModeBackground } from '../../utils';
+import { isTruthy, getColorfulModeBackground } from '../../utils';
 import createIconFont from '../../utils/createIconFont';
 import IconView from '../IconView';
 import TextEllipsis from '../TextEllipsis';
-
 import './index.less';
 
 interface IPanelProps {
@@ -29,7 +28,6 @@ interface IPanelProps {
 }
 
 const Panel: FC<IPanelProps> = (props: IPanelProps) => {
-  // disabled属性取的地方可能不对------to do
   const {
     onClose,
     children,
@@ -61,29 +59,44 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     }),
     shallow
   );
+
   const activeNode = useMemo(()=>{
     const node = nodes.find((r)=>r.id === id);
     return node || {};
   },[nodes]);
+
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+  const titleText = activeNode.data?.title || nodeSetting?.title;
+  const descText = activeNode.data?.desc;
   
-  const isDisabled = disabled; // 目前没用
-  const [descVal, setDescVal] = useState(data?.desc);
-  const [titleVal, setTitleVal] = useState(data?.title || nodeSetting?.title);
-
-  const [isComposing, setIsComposing] = useState(false);
-  const titleRef = useRef(titleVal);
-  const descRef = useRef(descVal);
-
   const { nodePanel, iconSvg, showTestingBtn } = nodeSetting;
   const SVGWidget = widgets[nodeSetting?.iconSvg]
-  const hideDesc =
-    nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
+  const hideDesc = nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
-  const offsetRightStatus = isNumber(logPanel?.width)
-    ? Number(logPanel?.width + 10)
-    : 410;
+  const offsetRightStatus = isNumber(logPanel?.width) ? Number(logPanel?.width + 10) : 410;
 
-  const handleNodeValueChange = debounce((data: any) => {
+  useEffect(() => {
+    if (titleRef?.current?.input && titleRef?.current?.input?.value !== activeNode.data?.title) { 
+      titleRef.current.input.value = activeNode.data?.title;
+    }
+  }, [activeNode.data?.title]);
+
+  useEffect(() => {
+    if (descRef?.current?.input && descRef?.current?.input?.value !== activeNode.data?.desc) { 
+      descRef.current.input.value = activeNode.data?.desc;
+    }
+  }, [activeNode.data?.desc]);
+  
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleNodeValueChange({ title: e.target.value });
+  };
+
+  const handleDescChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    handleNodeValueChange({ desc: e.target.value });
+  };
+
+  const handleNodeValueChange = (data: any) => {
     const newNodes = produce(nodes, draft => {
       let node = null;
       // 反向查询ID，因为有多个ID相同的元素
@@ -99,69 +112,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       }
     });
     setNodes(newNodes, false);
-  }, 100);
-
-  const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setTitleVal(newValue);
-    titleRef.current = newValue;
-
-    if (!isComposing) {
-      handleNodeValueChange({ title: newValue });
-    }
-  }, [handleNodeValueChange, isComposing]);
-
-  const handleDescChange = useCallback((e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value;
-    setDescVal(newValue);
-    descRef.current = newValue;
-
-    if (!isComposing) {
-      handleNodeValueChange({ desc: newValue });
-    }
-  }, [handleNodeValueChange, isComposing]);
-
-  const handleCompositionStart = useCallback(() => {
-    setIsComposing(true);
-  }, []);
-
-  const handleCompositionEnd = useCallback((e: React.CompositionEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setIsComposing(false);
-    const newValue = e.currentTarget.value;
-
-    if (e.currentTarget.tagName === 'INPUT') {
-      setTitleVal(newValue);
-      titleRef.current = newValue;
-      handleNodeValueChange({ title: newValue });
-    } else if (e.currentTarget.tagName === 'TEXTAREA') {
-      setDescVal(newValue);
-      descRef.current = newValue;
-      handleNodeValueChange({ desc: newValue });
-    }
-  }, [handleNodeValueChange]);
-
-  const handleBlur = useCallback((e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    if (isComposing) {
-      setIsComposing(false);
-    }
-
-    if (e.currentTarget.tagName === 'INPUT') {
-      if (titleRef.current !== titleVal) {
-        handleNodeValueChange({ title: titleRef.current });
-      }
-    } else if (e.currentTarget.tagName === 'TEXTAREA') {
-      if (descRef.current !== descVal) {
-        handleNodeValueChange({ desc: descRef.current });
-      }
-    }
-  }, [titleVal, descVal, handleNodeValueChange, isComposing]);
-
-  useEffect(() => {
-    setDescVal(data?.desc);
-    setTitleVal(data?.title || nodeSetting?.title);
-    titleRef.current = data?.title || nodeSetting?.title;
-    descRef.current = data?.desc;
-  }, [id, activeNode?.data?.desc, activeNode?.data?.title]);
+  };
 
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
   const drawerVersionProps = useMemo(() => {
@@ -208,23 +159,21 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                   />
                 )}
               </span>
-              {isDisabled || readOnly ? (
-                <TextEllipsis text={titleVal} style={{ marginLeft: '11px' }} />
+              {disabled || readOnly ? (
+                <TextEllipsis text={titleText} style={{ marginLeft: '11px' }} />
               ) : (
                 <Input
-                  style={{ width: '100%' }}
-                  value={titleVal}
-                  onChange={handleTitleChange}
-                  onCompositionStart={handleCompositionStart}
-                  onCompositionEnd={handleCompositionEnd}
-                  onBlur={handleBlur}
+                  ref={titleRef}
                   size="small"
+                  style={{ width: '100%' }}
+                  defaultValue={titleText}
+                  onChange={handleTitleChange}
                 />
               )}
             </div>
             <div className="title-actions">
               <Space size={[4, 4]}>
-                {!isDisabled && showTestingBtn && (
+                {!disabled && showTestingBtn && (
                   <>
                     <IconView
                       type="icon-yunhang"
@@ -249,10 +198,10 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
           </div>
           {!hideDesc && (
             <div className="desc-box">
-              {isDisabled || readOnly ? (
-                descVal && (
+              {disabled || readOnly ? (
+                descText && (
                   <TextEllipsis
-                    text={descVal}
+                    text={descText}
                     type="paragraph"
                     rows={2}
                     className="readOnly-desc"
@@ -260,13 +209,11 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 )
               ) : (
                 <Input.TextArea
+                  ref={descRef}
                   placeholder="添加描述..."
                   autoSize={{ minRows: 1, maxRows: 3 }}
-                  value={descVal}
+                  defaultValue={descText}
                   onChange={handleDescChange}
-                  onCompositionStart={handleCompositionStart}
-                  onCompositionEnd={handleCompositionEnd}
-                  onBlur={handleBlur}
                   disabled={readOnly}
                 />
               )}
