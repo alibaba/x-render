@@ -21,11 +21,12 @@ interface INodeEditorProps {
   nodeType: string;
   id: string;
   ref?: React.Ref<any>; // 添加 ref 属性
+  activeNode?: any;
   // activeNode?: any;
 }
 
 const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
-  const { data, onChange, nodeType, id } = props;
+  const { data, onChange, activeNode,nodeType, id } = props;
   const form = useForm();
   // // 1.获取节点配置信息
   const { settingMap, widgets, readOnly } = useContext(ConfigContext);
@@ -43,7 +44,6 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
     }),
     shallow
   );
-
 
   useImperativeHandle(ref, () => ({
     validateForm: async () => {
@@ -133,13 +133,14 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         }
         const { _nodeType, _status, _isCandidate, title, desc } = node?.data;
         node.data = { _nodeType, _status, _isCandidate, title, desc, ...data }; // form-render的list如果为空，不会返回list相应的字段，只能全部替换data
+        const updatedActiveNode = {
+          ...activeNode,
+          values: { ...activeNode.values, ...data }
+        };
+        onChange(updatedActiveNode);
       }
     });
     setNodes(newNodes, false);
-
-    // if (onChange) {
-    //   onChange(data, id);
-    // }
   }, 300);
 
   const watch = {
