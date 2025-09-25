@@ -77,17 +77,17 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
   const offsetRightStatus = isNumber(logPanel?.width) ? Number(logPanel?.width + 10) : 410;
 
-  useEffect(() => {
-    if (titleRef?.current?.input && titleRef?.current?.input?.value !== activeNode.data?.title) { 
-      titleRef.current.input.value = activeNode.data?.title;
-    }
-  }, [activeNode.data?.title]);
+  // useEffect(() => {
+  //   if (titleRef?.current?.input && titleRef?.current?.input?.value !== activeNode.data?.title) { 
+  //     titleRef.current.input.value = activeNode.data?.title;
+  //   }
+  // }, [activeNode.data?.title]);
 
-  useEffect(() => {
-    if (descRef?.current?.input && descRef?.current?.input?.value !== activeNode.data?.desc) { 
-      descRef.current.input.value = activeNode.data?.desc;
-    }
-  }, [activeNode.data?.desc]);
+  // useEffect(() => {
+  //   if (descRef?.current?.input && descRef?.current?.input?.value !== activeNode.data?.desc) { 
+  //     descRef.current.input.value = activeNode.data?.desc;
+  //   }
+  // }, [activeNode.data?.desc]);
   
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleNodeValueChange({ title: e.target.value });
@@ -167,7 +167,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                   ref={titleRef}
                   size="small"
                   style={{ width: '100%' }}
-                  defaultValue={titleText}
+                  value={titleText}
                   onChange={handleTitleChange}
                 />
               )}
@@ -213,7 +213,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                   ref={descRef}
                   placeholder="添加描述..."
                   autoSize={{ minRows: 1, maxRows: 3 }}
-                  defaultValue={descText}
+                  value={descText}
                   onChange={handleDescChange}
                   disabled={readOnly}
                 />
