@@ -63,6 +63,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   );
   const activeNode = useMemo(()=>{
     const node = nodes.find((r)=>r.id === id)
+    debugger;
     if(node){
       return node
     }else{
@@ -164,7 +165,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     setTitleVal(data?.title || nodeSetting?.title);
     titleRef.current = data?.title || nodeSetting?.title;
     descRef.current = data?.desc;
-  }, [id, activeNode.data?.desc, activeNode.data?.title]);
+  }, [id, activeNode?.data?.desc, activeNode?.data?.title]);
 
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
   const drawerVersionProps = useMemo(() => {
