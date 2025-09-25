@@ -356,8 +356,6 @@ const XFlow: FC<FlowProps> = memo(props => {
   const deletable = globalConfig?.edge?.deletable ?? true;
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
-  const { fitView } = useReactFlow();
-
   return (
     <div id="xflow-container" ref={workflowContainerRef}>
       <ReactFlow
@@ -367,8 +365,6 @@ const XFlow: FC<FlowProps> = memo(props => {
         nodes={nodes}
         edges={edges}
         minZoom={0.3}
-        fitView
-        fitViewOptions={{ padding: 0.4 }}
         zoomOnScroll={zoomOnScroll}
         panOnScroll={panOnScroll} // 禁用滚动平移
         preventScrolling={preventScrolling} // 允许页面滚动
