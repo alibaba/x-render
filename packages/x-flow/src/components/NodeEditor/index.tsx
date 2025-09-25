@@ -17,7 +17,6 @@ import { safeJsonStringify, uuid } from '../../utils';
 
 interface INodeEditorProps {
   data: any;
-  onChange: (data?: any) => void;
   nodeType: string;
   id: string;
   ref?: React.Ref<any>; // 添加 ref 属性
@@ -25,7 +24,7 @@ interface INodeEditorProps {
 }
 
 const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
-  const { data, onChange, nodeType, id } = props;
+  const { data, nodeType, id } = props;
   const form = useForm();
   // // 1.获取节点配置信息
   const { settingMap, widgets, readOnly } = useContext(ConfigContext);
@@ -136,10 +135,6 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
       }
     });
     setNodes(newNodes, false);
-    onChange(data);
-    // if (onChange) {
-    //   onChange(data, id);
-    // }
   }, 300);
 
   const watch = {

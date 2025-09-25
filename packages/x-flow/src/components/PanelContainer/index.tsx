@@ -102,7 +102,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
       }
     });
     setNodes(newNodes, false);
-  }, 500);
+  }, 100);
 
   const handleTitleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
@@ -164,10 +164,9 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
     setTitleVal(data?.title || nodeSetting?.title);
     titleRef.current = data?.title || nodeSetting?.title;
     descRef.current = data?.desc;
-  }, [id,activeNode.data?.desc,activeNode.data?.title]);
+  }, [id, activeNode.data?.desc, activeNode.data?.title]);
 
   const Icon = useMemo(() => createIconFont(iconFontUrl), [iconFontUrl]);
-
   const drawerVersionProps = useMemo(() => {
     if (antdVersion === 'V5') {
       return {

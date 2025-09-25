@@ -276,29 +276,6 @@ const XFlow: FC<FlowProps> = memo(props => {
     setEdges(newEdges);
   });
 
-  const handleNodeValueChange = debounce((data: any) => {
-    for (let node of nodes) {
-      if (node.id === data.id) {
-        node.data = {
-          ...node?.data,
-          ...data?.values,
-        };
-        break;
-      }
-    }
-    setNodes([...nodes], false);
-    // 同时更新 activeNode 状态，确保面板数据同步
-    // if (activeNode && activeNode.id === id) {
-    //   setActiveNode({
-    //     ...activeNode,
-    //     values: {
-    //       ...activeNode.values,
-    //       ...data,
-    //     },
-    //   });
-    // }
-  }, 200);
-
   const nodeTypes = useMemo(() => {
     return {
       custom: (props: any) => {
@@ -336,8 +313,9 @@ const XFlow: FC<FlowProps> = memo(props => {
               }
               setOpenLogPanel(true);
             }}
-            onDelete={(delId)=>{
-              setActiveNode(null);// 删除节点并关闭弹窗
+            onDelete={()=>{
+              // 删除节点并关闭弹窗
+              setActiveNode(null);
             }}
           />
         );
@@ -350,7 +328,6 @@ const XFlow: FC<FlowProps> = memo(props => {
       <NodeEditor
         ref={nodeEditorRef}
         data={activeNode?.values}
-        onChange={data => setActiveNode({...activeNode, values: { ...activeNode.values, ...data }})}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
       />
