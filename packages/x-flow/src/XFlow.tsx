@@ -350,7 +350,7 @@ const XFlow: FC<FlowProps> = memo(props => {
       <NodeEditor
         ref={nodeEditorRef}
         data={activeNode?.values}
-        onChange={handleNodeValueChange}
+        onChange={data => setActiveNode({...activeNode, values: { ...activeNode.values, ...data }})}
         nodeType={activeNode?._nodeType}
         id={activeNode?.id}
       />

@@ -136,7 +136,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
       }
     });
     setNodes(newNodes, false);
-
+    onChange(data);
     // if (onChange) {
     //   onChange(data, id);
     // }
