@@ -67,6 +67,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
 
   const titleRef = useRef(null);
   const descRef = useRef(null);
+
   const titleText = activeNode.data?.title || nodeSetting?.title;
   const descText = activeNode.data?.desc;
   
