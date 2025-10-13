@@ -8,7 +8,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { useEventListener, useMemoizedFn } from 'ahooks';
 import { produce, setAutoFreeze } from 'immer';
-import { debounce, get, isFunction } from 'lodash';
+import { debounce, isFunction } from 'lodash';
 import type { FC } from 'react';
 import React, {
   memo,
@@ -25,8 +25,8 @@ import PanelStatusLogContainer from './components/PanelStatusLogContainer';
 import { useEventEmitterContextContext } from './models/event-emitter';
 
 import CustomNodeComponent from './components/CustomNode';
-import { useStore, useStoreApi } from './hooks/useStore';
 import { useFlow } from './hooks/useFlow';
+import { useStore, useStoreApi } from './hooks/useStore';
 
 import Operator from './operator';
 import FlowProps from './types';
@@ -90,10 +90,19 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
-  const { onNodeClick, onEdgeClick, zoomOnScroll = true, panOnScroll = false, preventScrolling = true, connectionLineComponent } = props;
+  const {
+    onNodeClick,
+    onEdgeClick,
+    zoomOnScroll = true,
+    panOnScroll = false,
+    preventScrolling = true,
+    connectionLineComponent,
+  } = props;
   const nodeEditorRef = useRef(null);
   const { copyNode, pasteNodeSimple } = useFlow();
   const { undo, redo } = useTemporalStore();
+  const isNodeCopyingRef = useRef(false); // 是否正在进行节点复制
+  const lastClickedNodeRef = useRef(false); // 最后一次点击是否是节点
 
   useEffect(() => {
     zoomTo(0.8);
@@ -121,30 +130,43 @@ const XFlow: FC<FlowProps> = memo(props => {
     if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
     if ((e.key === 'c' || e.key === 'C') && (e.ctrlKey || e.metaKey)) {
-      if(openPanel){
-      }else{
-        const selectedNode = nodes?.find(node => node.selected);
-        if (selectedNode) {
-          const nodeType:string = get(selectedNode,'data._nodeType','') as any
-          const disabledCopy = get(settingMap,[nodeType,'disabledCopy'],false)
-          if(!disabledCopy){
-            copyNode(selectedNode.id);
-            e.preventDefault();
-          }else{
-            message.warning('该节点在配置中已禁止被复制！')
+      const selectedNode = nodes?.find(node => node.selected);
+      // 获取当前选中的文本（非节点的内容）
+      const selectedText = window.getSelection()?.toString();
+      // 如果最后点击的是节点 且 有节点被选中 则 复制节点
+      if (selectedNode && lastClickedNodeRef.current) {
+        // 复制节点
+        isNodeCopyingRef.current = true; // 标记为节点复制
+        copyNode(selectedNode.id);
+        e.preventDefault();
+
+        // 清空系统剪贴板，确保粘贴时使用节点而非之前的文本
+        try {
+          navigator.clipboard.writeText('').catch(() => {});
+        } catch (err) {}
+      } else if (selectedText) {
+        // 复制文本
+        // 清除之前的节点复制状态
+        const { copyNodes, copyTimeoutId } = storeApi.getState();
+        if (copyNodes?.length > 0) {
+          if (copyTimeoutId) {
+            clearTimeout(copyTimeoutId);
           }
+          storeApi.setState({
+            copyNodes: [],
+            copyTimeoutId: null,
+            isAddingNode: false,
+          });
         }
       }
-
-    }
-    else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
-      if(openPanel){
-      }else{
+    } else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
+      const { copyNodes } = storeApi.getState();
+      // 只有在有节点复制状态时才拦截粘贴操作
+      if (copyNodes?.length > 0) {
         pasteNodeSimple();
         e.preventDefault();
       }
-    }
-    else if (copyNodes.length > 0) {
+    } else if (copyNodes.length > 0) {
       // 只在有复制节点时才检查其他操作
       const { copyTimeoutId } = storeApi.getState();
       if (copyTimeoutId) {
@@ -155,6 +177,25 @@ const XFlow: FC<FlowProps> = memo(props => {
         });
       }
     }
+  });
+
+  // 添加 copy 事件监听，获取实际复制的内容
+  useEventListener('copy', (e: ClipboardEvent) => {
+    if (!isNodeCopyingRef.current) {
+      // 清除节点复制状态，因为用户复制了其他内容
+      const { copyNodes, copyTimeoutId } = storeApi.getState();
+      if (copyNodes?.length > 0) {
+        if (copyTimeoutId) {
+          clearTimeout(copyTimeoutId);
+        }
+        storeApi.setState({
+          copyNodes: [],
+          copyTimeoutId: null,
+          isAddingNode: false,
+        });
+      }
+    }
+    isNodeCopyingRef.current = false;
   });
 
   useEventListener(
@@ -178,30 +219,27 @@ const XFlow: FC<FlowProps> = memo(props => {
     }
   );
 
-  // 监听点击事件，当用户点击其他地方时清除复制状态
-  useEventListener(
-    'click',
-    e => {
-      // 如果点击的不是节点或候选节点，清除复制状态
-      const target = e.target as HTMLElement;
-      const isClickingNode = target.closest('.xflow-node-container') || target.closest('.candidate-node');
+  // 当点击非节点区域时重置标记
+  useEventListener('mousedown', (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    const isClickingNode =
+      target.closest('.xflow-node-container') ||
+      target.closest('.candidate-node');
+    // 如果点击的不是节点，重置标记
+    if (!isClickingNode) {
+      lastClickedNodeRef.current = false;
 
-      if (!isClickingNode) {
-        const { copyTimeoutId, copyNodes } = storeApi.getState();
-        if (copyTimeoutId && copyNodes?.length > 0) {
-          clearTimeout(copyTimeoutId);
-          storeApi.setState({
-            copyTimeoutId: null,
-            isAddingNode: false,
-          });
-        }
+      // 清除复制状态
+      const { copyTimeoutId, copyNodes } = storeApi.getState();
+      if (copyTimeoutId && copyNodes?.length > 0) {
+        clearTimeout(copyTimeoutId);
+        storeApi.setState({
+          copyTimeoutId: null,
+          isAddingNode: false,
+        });
       }
-    },
-    {
-      target: workflowContainerRef.current,
-      enable: copyNodes?.length > 0,
     }
-  );
+  });
 
   const { eventEmitter } = useEventEmitterContextContext();
   eventEmitter?.useSubscription((v: any) => {
@@ -293,6 +331,9 @@ const XFlow: FC<FlowProps> = memo(props => {
             layout={layout}
             status={_status}
             onClick={async e => {
+              // 记录用户点击了节点
+              lastClickedNodeRef.current = true;
+
               if (nodeEditorRef?.current?.validateForm) {
                 const result = await nodeEditorRef?.current?.validateForm();
                 if (!result) {
