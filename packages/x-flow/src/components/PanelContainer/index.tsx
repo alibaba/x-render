@@ -63,12 +63,9 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const activeNode = useMemo(()=>{
     const node = nodes.find((r)=>r.id === id);
     return node || {};
-  },[nodes]);
+  },[JSON.stringify(nodes), id]);
 
-  const titleRef = useRef(null);
-  const descRef = useRef(null);
-
-  const titleText = activeNode.data?.title || nodeSetting?.title;
+  const titleText = activeNode.data?.title;
   const descText = activeNode.data?.desc;
   
   const { nodePanel, iconSvg, showTestingBtn } = nodeSetting;
@@ -76,18 +73,6 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
   const hideDesc = nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
   const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
   const offsetRightStatus = isNumber(logPanel?.width) ? Number(logPanel?.width + 10) : 410;
-
-  // useEffect(() => {
-  //   if (titleRef?.current?.input && titleRef?.current?.input?.value !== activeNode.data?.title) { 
-  //     titleRef.current.input.value = activeNode.data?.title;
-  //   }
-  // }, [activeNode.data?.title]);
-
-  // useEffect(() => {
-  //   if (descRef?.current?.input && descRef?.current?.input?.value !== activeNode.data?.desc) { 
-  //     descRef.current.input.value = activeNode.data?.desc;
-  //   }
-  // }, [activeNode.data?.desc]);
   
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleNodeValueChange({ title: e.target.value });
@@ -161,14 +146,14 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 )}
               </span>
               {disabled || readOnly ? (
-                <TextEllipsis text={titleText} style={{ marginLeft: '11px' }} />
+                <TextEllipsis text={titleText || nodeSetting?.title} style={{ marginLeft: '11px' }} />
               ) : (
                 <Input
-                  ref={titleRef}
                   size="small"
                   style={{ width: '100%' }}
                   value={titleText}
                   onChange={handleTitleChange}
+                  placeholder={nodeSetting?.title}
                 />
               )}
             </div>
@@ -180,7 +165,7 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                       type="icon-yunhang"
                       onClick={() => {
                         const n =
-                          nodes?.find(item => item?.id === node?.id) || {};
+                          nodes?.find((item: any) => item?.id === node?.id) || {};
                         onTesting && onTesting(n, nodes);
                       }}
                       style={{ fontSize: 16 }}
@@ -210,7 +195,6 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
                 )
               ) : (
                 <Input.TextArea
-                  ref={descRef}
                   placeholder="添加描述..."
                   autoSize={{ minRows: 1, maxRows: 3 }}
                   value={descText}
