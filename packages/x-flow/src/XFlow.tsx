@@ -103,6 +103,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   const { undo, redo } = useTemporalStore();
   const isNodeCopyingRef = useRef(false); // 是否正在进行节点复制
   const lastClickedNodeRef = useRef(false); // 最后一次点击是否是节点
+  const isPanelRenderingRef = useRef(false); // 面板是否正在渲染中
 
   useEffect(() => {
     zoomTo(0.8);
@@ -333,11 +334,14 @@ const XFlow: FC<FlowProps> = memo(props => {
             onClick={async e => {
               // 记录用户点击了节点
               lastClickedNodeRef.current = true;
+              // 标记面板开始渲染
+              isPanelRenderingRef.current = true;
 
               if (nodeEditorRef?.current?.validateForm) {
                 const result = await nodeEditorRef?.current?.validateForm();
                 if (!result) {
                   message.error('请检查必填项！');
+                  isPanelRenderingRef.current = false;
                   return;
                 }
               }
@@ -353,6 +357,10 @@ const XFlow: FC<FlowProps> = memo(props => {
                 setOpenPanel(true);
               }
               setOpenLogPanel(true);
+
+              setTimeout(() => {
+                isPanelRenderingRef.current = false;
+              }, 1000); // 给面板一点时间完成渲染
             }}
             onDelete={()=>{
               // 删除节点并关闭弹窗
@@ -437,31 +445,38 @@ const XFlow: FC<FlowProps> = memo(props => {
             message.warning(`${blockedNodes.map(n => n.data?.title || n.id).join(', ')}节点不允许删除！`);
             return false;
           }
-          if (nodesToDelete?.length) {
+
+          // 检查是否删除的是当前激活的节点
+          const hasActiveNode = nodesToDelete.some(node => node.id === activeNode?.id);
+          if (hasActiveNode) {
+            // 立即关闭面板和清除激活状态
             setOpenPanel(false);
+            setActiveNode(null);
           }
-          return true;
+
+          const executeDelete = () => {
+            nodesToDelete.forEach(node => {
+              deleteNode(node.id);
+            });
+          };
+
+          // 如果面板正在渲染中，延迟执行删除避免状态冲突
+          if (isPanelRenderingRef.current) {
+            setTimeout(() => {
+              executeDelete();
+            }, 150);
+          } else {
+            // 面板未在渲染，立即执行删除
+            executeDelete();
+          }
+
+          return false;
         }}
         onConnect={onConnect}
         onNodesChange={changes => {
-          const removeChanges = changes.filter(c => c.type === 'remove');
-          const otherChanges = changes.filter(c => c.type !== 'remove');
-          // 处理删除操作：使用与右键菜单相同的 deleteNode 方法
-          if (removeChanges.length > 0) {
-            removeChanges.forEach(change => {
-              if ('id' in change) {
-                deleteNode(change.id);
-                // 如果删除的是当前激活的节点，关闭面板
-                if (change.id === activeNode?.id) {
-                  setActiveNode(null);
-                }
-              }
-            });
-          }
-
-          // 其他操作使用 ReactFlow 的默认处理
-          if (otherChanges.length > 0) {
-            onNodesChange(otherChanges);
+          const nonRemoveChanges = changes.filter(c => c.type !== 'remove');
+          if (nonRemoveChanges.length > 0) {
+            onNodesChange(nonRemoveChanges);
           }
         }}
         onEdgesChange={changes => {
