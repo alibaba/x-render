@@ -99,7 +99,7 @@ const XFlow: FC<FlowProps> = memo(props => {
     connectionLineComponent,
   } = props;
   const nodeEditorRef = useRef(null);
-  const { copyNode, pasteNodeSimple } = useFlow();
+  const { copyNode, pasteNodeSimple, deleteNode } = useFlow();
   const { undo, redo } = useTemporalStore();
   const isNodeCopyingRef = useRef(false); // 是否正在进行节点复制
   const lastClickedNodeRef = useRef(false); // 最后一次点击是否是节点
@@ -437,30 +437,35 @@ const XFlow: FC<FlowProps> = memo(props => {
             message.warning(`${blockedNodes.map(n => n.data?.title || n.id).join(', ')}节点不允许删除！`);
             return false;
           }
-          return true
+          if (nodesToDelete?.length) {
+            setOpenPanel(false);
+          }
+          return true;
         }}
         onConnect={onConnect}
         onNodesChange={changes => {
-          changes.forEach(change => {
-            if (change.type === 'remove') {
-              record(() => {
-                onNodesChange([change]);
-              });
-            } else {
-              onNodesChange([change]);
-            }
-          });
+          const removeChanges = changes.filter(c => c.type === 'remove');
+          const otherChanges = changes.filter(c => c.type !== 'remove');
+          // 处理删除操作：使用与右键菜单相同的 deleteNode 方法
+          if (removeChanges.length > 0) {
+            removeChanges.forEach(change => {
+              if ('id' in change) {
+                deleteNode(change.id);
+                // 如果删除的是当前激活的节点，关闭面板
+                if (change.id === activeNode?.id) {
+                  setActiveNode(null);
+                }
+              }
+            });
+          }
+
+          // 其他操作使用 ReactFlow 的默认处理
+          if (otherChanges.length > 0) {
+            onNodesChange(otherChanges);
+          }
         }}
         onEdgesChange={changes => {
-          changes.forEach(change => {
-            if (change.type === 'remove') {
-              record(() => {
-                onEdgesChange([change]);
-              });
-            } else {
-              onEdgesChange([change]);
-            }
-          });
+          onEdgesChange(changes);
         }}
         onEdgeMouseEnter={(_, edge: any) => {
           if(!edge.style.stroke || edge.style.stroke === '#c9c9c9'){
@@ -472,8 +477,8 @@ const XFlow: FC<FlowProps> = memo(props => {
             getUpdateEdgeConfig(edge, '#c9c9c9');
           }
         }}
-        onNodesDelete={() => {
-           setActiveNode(null);
+        onNodesDelete={(nodes) => {
+          //  setActiveNode(null);
         }}
         onNodeClick={(event, node) => {
           onNodeClick && onNodeClick(event, node);
