@@ -277,6 +277,30 @@ export default memo((props: any) => {
     };
   }, [menuItem, isEnd]);
 
+  const renderHandleMemo = useCallback(()=>{
+    if(renderHandle){
+      return renderHandle(
+        SourceHandle,
+        {
+          position:sourcePosition,
+          isConnectable:connectable,
+          selected:selected,
+          isHovered:isHovered,
+          handleAddNode:handleAddNode
+        },
+        {
+          id,
+          type,
+          data,
+          layout,
+          isConnectable,
+          readOnly
+        }
+      )
+    }
+    return null
+  },[renderHandle,SourceHandle,sourcePosition,connectable,selected,isHovered,handleAddNode,id,type,data,layout,isConnectable,readOnly])
+
   return (
     <div
       className={classNames('xflow-node-container', {
@@ -292,7 +316,12 @@ export default memo((props: any) => {
     >
       {!settingMap?.[type]?.targetHandleHidden && !isNote && (
         <Handle
-          {...handleProps}
+          isValidConnection={(edge)=>{
+            if(handleProps.isValidConnection){
+              return handleProps.isValidConnection(edge,'target',type)
+            }
+            return true
+          }}
           type="target"
           position={targetPosition}
           isConnectable={connectable}
@@ -333,24 +362,7 @@ export default memo((props: any) => {
         <div onClick={()=>{
           onClick(data)
         }}>
-          {renderHandle(
-            SourceHandle,
-            {
-              position:sourcePosition,
-              isConnectable:connectable,
-              selected:selected,
-              isHovered:isHovered,
-              handleAddNode:handleAddNode
-            },
-            {
-              id,
-              type,
-              data,
-              layout,
-              isConnectable,
-              readOnly
-            }
-          )}
+          {renderHandleMemo()}
         </div>
         :
         <Fragment>
@@ -363,6 +375,7 @@ export default memo((props: any) => {
                 isHovered={isHovered}
                 handleAddNode={handleAddNode}
                 isConnected={isSourceHandleConnected}
+                nodeType={type}
                 // isConnectableStart={isConnectableStart}
                 // isConnectableEnd={isConnectableEnd}
               />

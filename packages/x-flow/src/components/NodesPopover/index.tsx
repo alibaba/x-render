@@ -17,7 +17,7 @@ import NodesMenu from '../NodesMenu';
 import './index.less';
 
 export default forwardRef((props: any, popoverRef) => {
-  const { addNode, children, onNodeSelectPopoverChange } = props;
+  const { addNode, children, onNodeSelectPopoverChange,nodeType } = props;
   const { setIsAddingNode } = useStore(s => ({
     setIsAddingNode: s.setIsAddingNode,
   }));
@@ -25,7 +25,13 @@ export default forwardRef((props: any, popoverRef) => {
   const closeRef: any = useRef<HTMLButtonElement>(null);
   const [open, setOpen] = useState(false);
 
-  const { settings, nodeSelector, antdVersion ,readOnly ,clickAddNode,settingMap }: any = useContext(ConfigContext);
+  const { settings, nodeSelector, antdVersion ,readOnly ,clickAddNode,settingMap,filterSettings }: any = useContext(ConfigContext);
+  const items = useMemo(()=>{
+    if(typeof filterSettings === 'function'){
+      return filterSettings(settings,nodeType)
+    }
+    return settings
+  },[settings,nodeType])
   const { showSearch, popoverProps = { placement: 'top' } } =
     nodeSelector || {};
 
@@ -97,7 +103,7 @@ export default forwardRef((props: any, popoverRef) => {
       content={
         <NodesMenu
           ref={ref}
-          items={settings}
+          items={items}
           showSearch={showSearch}
           onClick={handCreateNode}
         />

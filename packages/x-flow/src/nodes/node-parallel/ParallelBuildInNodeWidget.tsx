@@ -69,6 +69,7 @@ export default memo((props: any) => {
             (edges || [])?.filter(flow => flow?.sourceHandle === item?._id)
               ?.length > 0
           }
+          nodeType={'Parallel'}
         />
       </div>
     );

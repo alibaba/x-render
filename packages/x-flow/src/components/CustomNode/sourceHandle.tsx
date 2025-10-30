@@ -2,7 +2,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { Handle } from '@xyflow/react';
 import { Tooltip } from 'antd';
 import classNames from 'classnames';
-import React, { ComponentProps, memo, useContext, useMemo, useRef, useState } from 'react';
+import React, { ComponentProps, memo, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import NodeSelectPopover from '../NodesPopover';
 import { ConfigContext } from '../../models/context';
 import './index.less';
@@ -18,6 +18,7 @@ export default memo((props:Partial<HandleProps> &  Record<string,any> ) => {
     handleAddNode,
     switchTitle,
     isConnected, // 是否有连接的节点
+    nodeType,
     ...rest
   } = props;
   const [isShowTooltip, setIsShowTooltip] = useState(false);
@@ -40,7 +41,12 @@ export default memo((props:Partial<HandleProps> &  Record<string,any> ) => {
 
   return (
     <Handle
-      {...handleProps}
+      isValidConnection={(edge)=>{
+        if(handleProps.isValidConnection){
+          return handleProps.isValidConnection(edge,'source',nodeType)
+        }
+        return true
+      }}
       type="source"
       position={position}
       isConnectable={isConnectable}
@@ -72,6 +78,7 @@ export default memo((props:Partial<HandleProps> &  Record<string,any> ) => {
                 addNode={handleAddNode}
                 ref={popoverRef}
                 onNodeSelectPopoverChange={val => setOpenNodeSelectPopover(val)}
+                nodeType={nodeType}
               >
                 <Tooltip
                   title="点击添加节点"

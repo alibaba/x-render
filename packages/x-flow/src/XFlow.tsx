@@ -176,6 +176,8 @@ const XFlow: FC<FlowProps> = memo(props => {
           isAddingNode: false,
         });
       }
+    } else if (e.key === 'Escape'){
+      setOpenPanel(false)
     }
   });
 

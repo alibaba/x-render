@@ -139,7 +139,7 @@ export interface TControl{
 export interface THandle{
   // isConnectableStart?:boolean
   // isConnectableEnd?:boolean
-  isValidConnection?:HandleProps['isValidConnection']
+  isValidConnection?:(edges:Parameters<HandleProps['isValidConnection']>[0],edgeType:'source'|'target',nodeType:string)=>boolean
 }
 export interface FlowProps {
   initialValues?: {
@@ -167,6 +167,7 @@ export interface FlowProps {
    * 节点配置
    */
   settings?: (TNodeGroup | TNodeItem)[];
+  filterSettings?:(settings:(TNodeGroup | TNodeItem)[],nodeType:string)=>(TNodeGroup | TNodeItem)[]
   nodeSelector?: TNodeSelector;
   iconFontUrl?: string;
   globalConfig?: {
