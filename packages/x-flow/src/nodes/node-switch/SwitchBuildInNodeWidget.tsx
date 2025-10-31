@@ -56,6 +56,7 @@ export default memo((props: any) => {
             (edges || [])?.filter(flow => flow?.sourceHandle === item?._id)
               ?.length > 0
           }
+          nodeType={'switch'}
         />
       </div>
     );
@@ -140,6 +141,7 @@ export default memo((props: any) => {
                     flow?.sourceHandle === 'id_else' && flow?.source === id
                 )?.length > 0
               }
+              nodeType={'Switch'}
             />
           </div>
         </div>
