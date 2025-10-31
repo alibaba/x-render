@@ -129,14 +129,20 @@ export const useFlow = () => {
       // 关闭mousemove监听
       storeApi.getState().setIsAddingNode(false);
 
+      // 清除 selected 状态，避免粘贴的节点被意外选中
+      const copyNodesWithoutSelection = storeApi.getState().copyNodes.map(node => ({
+        ...node,
+        selected: false,
+      }));
+
       const newEdges = {
         id: uuid(),
         source: nodeId,
-        target: storeApi.getState().copyNodes[0].id,
+        target: copyNodesWithoutSelection[0].id,
         ...data
       };
       record(() => {
-        storeApi.getState().addNodes(storeApi.getState().copyNodes, false);
+        storeApi.getState().addNodes(copyNodesWithoutSelection, false);
       })
       storeApi.getState().addEdges(newEdges);
       storeApi.setState({
@@ -163,8 +169,10 @@ export const useFlow = () => {
         x: mousePosition.elementX,
         y: mousePosition.elementY,
       });
+      // 清除 selected 状态，避免粘贴的节点被意外选中
       const copyNodes = storeApi.getState().copyNodes.map(node => ({
         ...node,
+        selected: false,
         position: {
           x: flowPos.x,
           y: flowPos.y,
@@ -191,10 +199,6 @@ export const useFlow = () => {
           .edges.filter(
             edge => edge.source !== nodeId && edge.target !== nodeId
           ),
-      });
-    });
-    record(() => {
-      storeApi.setState({
         nodes: storeApi.getState().nodes.filter(node => node.id !== nodeId),
       });
     });

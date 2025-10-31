@@ -99,10 +99,11 @@ const XFlow: FC<FlowProps> = memo(props => {
     connectionLineComponent,
   } = props;
   const nodeEditorRef = useRef(null);
-  const { copyNode, pasteNodeSimple } = useFlow();
+  const { copyNode, pasteNodeSimple, deleteNode } = useFlow();
   const { undo, redo } = useTemporalStore();
   const isNodeCopyingRef = useRef(false); // 是否正在进行节点复制
   const lastClickedNodeRef = useRef(false); // 最后一次点击是否是节点
+  const isPanelRenderingRef = useRef(false); // 面板是否正在渲染中
 
   useEffect(() => {
     zoomTo(0.8);
@@ -335,11 +336,14 @@ const XFlow: FC<FlowProps> = memo(props => {
             onClick={async e => {
               // 记录用户点击了节点
               lastClickedNodeRef.current = true;
+              // 标记面板开始渲染
+              isPanelRenderingRef.current = true;
 
               if (nodeEditorRef?.current?.validateForm) {
                 const result = await nodeEditorRef?.current?.validateForm();
                 if (!result) {
                   message.error('请检查必填项！');
+                  isPanelRenderingRef.current = false;
                   return;
                 }
               }
@@ -355,6 +359,10 @@ const XFlow: FC<FlowProps> = memo(props => {
                 setOpenPanel(true);
               }
               setOpenLogPanel(true);
+
+              setTimeout(() => {
+                isPanelRenderingRef.current = false;
+              }, 1000); // 给面板一点时间完成渲染
             }}
             onDelete={()=>{
               // 删除节点并关闭弹窗
@@ -439,30 +447,42 @@ const XFlow: FC<FlowProps> = memo(props => {
             message.warning(`${blockedNodes.map(n => n.data?.title || n.id).join(', ')}节点不允许删除！`);
             return false;
           }
-          return true
+
+          // 检查是否删除的是当前激活的节点
+          const hasActiveNode = nodesToDelete.some(node => node.id === activeNode?.id);
+          if (hasActiveNode) {
+            // 立即关闭面板和清除激活状态
+            setOpenPanel(false);
+            setActiveNode(null);
+          }
+
+          const executeDelete = () => {
+            nodesToDelete.forEach(node => {
+              deleteNode(node.id);
+            });
+          };
+
+          // 如果面板正在渲染中，延迟执行删除避免状态冲突
+          if (isPanelRenderingRef.current) {
+            setTimeout(() => {
+              executeDelete();
+            }, 150);
+          } else {
+            // 面板未在渲染，立即执行删除
+            executeDelete();
+          }
+
+          return false;
         }}
         onConnect={onConnect}
         onNodesChange={changes => {
-          changes.forEach(change => {
-            if (change.type === 'remove') {
-              record(() => {
-                onNodesChange([change]);
-              });
-            } else {
-              onNodesChange([change]);
-            }
-          });
+          const nonRemoveChanges = changes.filter(c => c.type !== 'remove');
+          if (nonRemoveChanges.length > 0) {
+            onNodesChange(nonRemoveChanges);
+          }
         }}
         onEdgesChange={changes => {
-          changes.forEach(change => {
-            if (change.type === 'remove') {
-              record(() => {
-                onEdgesChange([change]);
-              });
-            } else {
-              onEdgesChange([change]);
-            }
-          });
+          onEdgesChange(changes);
         }}
         onEdgeMouseEnter={(_, edge: any) => {
           if(!edge.style.stroke || edge.style.stroke === '#c9c9c9'){
@@ -474,8 +494,8 @@ const XFlow: FC<FlowProps> = memo(props => {
             getUpdateEdgeConfig(edge, '#c9c9c9');
           }
         }}
-        onNodesDelete={() => {
-           setActiveNode(null);
+        onNodesDelete={(nodes) => {
+          //  setActiveNode(null);
         }}
         onNodeClick={(event, node) => {
           onNodeClick && onNodeClick(event, node);
