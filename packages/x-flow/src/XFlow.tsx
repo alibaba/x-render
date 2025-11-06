@@ -87,7 +87,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   );
   const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
-  const { settingMap, globalConfig, readOnly } = useContext(ConfigContext);
+  const { settingMap, globalConfig, readOnly, logPanel } = useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const {
@@ -520,7 +520,7 @@ const XFlow: FC<FlowProps> = memo(props => {
             {NodeEditorWrap}
           </PanelContainer>
         )}
-        {isTruthy(activeNode?._status) && openLogPanel && (
+        {isTruthy(activeNode?._status) && openLogPanel && Boolean(logPanel?.enable ?? true) && (
           <PanelStatusLogContainer
             id={activeNode?.id}
             nodeType={activeNode?._nodeType}
