@@ -8,7 +8,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { useEventListener, useMemoizedFn } from 'ahooks';
 import { produce, setAutoFreeze } from 'immer';
-import { debounce, isFunction } from 'lodash';
+import { isFunction, isString } from 'lodash';
 import type { FC } from 'react';
 import React, {
   memo,
@@ -87,7 +87,8 @@ const XFlow: FC<FlowProps> = memo(props => {
   );
   const { record } = useTemporalStore();
   const [activeNode, setActiveNode] = useState<any>(null);
-  const { settingMap, globalConfig, readOnly, logPanel } = useContext(ConfigContext);
+  const { settingMap, globalConfig, readOnly, logPanel } =
+    useContext(ConfigContext);
   const [openPanel, setOpenPanel] = useState<boolean>(true);
   const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const {
@@ -101,8 +102,6 @@ const XFlow: FC<FlowProps> = memo(props => {
   const nodeEditorRef = useRef(null);
   const { copyNode, pasteNodeSimple } = useFlow();
   const { undo, redo } = useTemporalStore();
-  const isNodeCopyingRef = useRef(false); // 是否正在进行节点复制
-  const lastClickedNodeRef = useRef(false); // 最后一次点击是否是节点
 
   useEffect(() => {
     zoomTo(0.8);
@@ -116,7 +115,7 @@ const XFlow: FC<FlowProps> = memo(props => {
     };
   }, []);
 
-  useEventListener('keydown', e => {
+  const handleKeyDown = useMemoizedFn((e: KeyboardEvent) => {
     if ((e.key === 'd' || e.key === 'D') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
     if ((e.key === 'z' || e.key === 'Z') && (e.ctrlKey || e.metaKey)) {
@@ -130,74 +129,49 @@ const XFlow: FC<FlowProps> = memo(props => {
     if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
     if ((e.key === 'c' || e.key === 'C') && (e.ctrlKey || e.metaKey)) {
-      const selectedNode = nodes?.find(node => node.selected);
-      // 获取当前选中的文本（非节点的内容）
-      const selectedText = window.getSelection()?.toString();
-      // 如果最后点击的是节点 且 有节点被选中 则 复制节点
-      if (selectedNode && lastClickedNodeRef.current) {
-        // 复制节点
-        isNodeCopyingRef.current = true; // 标记为节点复制
-        copyNode(selectedNode.id);
-        e.preventDefault();
-
-        // 清空系统剪贴板，确保粘贴时使用节点而非之前的文本
-        try {
-          navigator.clipboard.writeText('').catch(() => {});
-        } catch (err) {}
-      } else if (selectedText) {
-        // 复制文本
-        // 清除之前的节点复制状态
-        const { copyNodes, copyTimeoutId } = storeApi.getState();
-        if (copyNodes?.length > 0) {
-          if (copyTimeoutId) {
-            clearTimeout(copyTimeoutId);
-          }
-          storeApi.setState({
-            copyNodes: [],
-            copyTimeoutId: null,
-            isAddingNode: false,
-          });
+      const latestNodes = storeApi.getState().nodes;
+      let isNodeCopyEvent = false;
+      if (e.target instanceof HTMLElement) {
+        const target = e.target as HTMLElement;
+        if (
+          (isString(target.tagName) &&
+            target.tagName.toLowerCase() === 'body') ||
+          (target.tagName.toLowerCase() === 'div' &&
+            target.classList &&
+            isFunction(target.classList.contains) &&
+            (target.classList.contains('ant-drawer') ||
+              target.classList.contains('react-flow__node') ||
+              target.id === 'xflow-container'))
+        ) {
+          isNodeCopyEvent = true;
         }
       }
+      const selectedNode = latestNodes?.find(node => node.selected);
+      const targetElement =
+        e.target instanceof HTMLElement ? e.target : undefined;
+      const targetTagName = targetElement?.tagName;
+      const targetClassList = targetElement?.classList;
+
+      if (isNodeCopyEvent && selectedNode?.id) {
+        // 复制节点
+        e.preventDefault();
+        copyNode(selectedNode.id);
+      }
+
+
     } else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
       const { copyNodes } = storeApi.getState();
-      // 只有在有节点复制状态时才拦截粘贴操作
       if (copyNodes?.length > 0) {
-        pasteNodeSimple();
         e.preventDefault();
+        pasteNodeSimple();
       }
-    } else if (copyNodes.length > 0) {
-      // 只在有复制节点时才检查其他操作
-      const { copyTimeoutId } = storeApi.getState();
-      if (copyTimeoutId) {
-        clearTimeout(copyTimeoutId);
-        storeApi.setState({
-          copyTimeoutId: null,
-          isAddingNode: false,
-        });
-      }
-    } else if (e.key === 'Escape'){
-      setOpenPanel(false)
+    } else if (e.key === 'Escape') {
+      setOpenPanel(false);
+      workflowContainerRef.current?.focus();
     }
   });
-
-  // 添加 copy 事件监听，获取实际复制的内容
-  useEventListener('copy', (e: ClipboardEvent) => {
-    if (!isNodeCopyingRef.current) {
-      // 清除节点复制状态，因为用户复制了其他内容
-      const { copyNodes, copyTimeoutId } = storeApi.getState();
-      if (copyNodes?.length > 0) {
-        if (copyTimeoutId) {
-          clearTimeout(copyTimeoutId);
-        }
-        storeApi.setState({
-          copyNodes: [],
-          copyTimeoutId: null,
-          isAddingNode: false,
-        });
-      }
-    }
-    isNodeCopyingRef.current = false;
+  useEventListener('keydown', handleKeyDown, {
+    target: workflowContainerRef,
   });
 
   useEventListener(
@@ -220,28 +194,6 @@ const XFlow: FC<FlowProps> = memo(props => {
       // enable: true, // 复制粘贴的时候需要监听鼠标位置
     }
   );
-
-  // 当点击非节点区域时重置标记
-  useEventListener('mousedown', (e: MouseEvent) => {
-    const target = e.target as HTMLElement;
-    const isClickingNode =
-      target.closest('.xflow-node-container') ||
-      target.closest('.candidate-node');
-    // 如果点击的不是节点，重置标记
-    if (!isClickingNode) {
-      lastClickedNodeRef.current = false;
-
-      // 清除复制状态
-      const { copyTimeoutId, copyNodes } = storeApi.getState();
-      if (copyTimeoutId && copyNodes?.length > 0) {
-        clearTimeout(copyTimeoutId);
-        storeApi.setState({
-          copyTimeoutId: null,
-          isAddingNode: false,
-        });
-      }
-    }
-  });
 
   const { eventEmitter } = useEventEmitterContextContext();
   eventEmitter?.useSubscription((v: any) => {
@@ -278,28 +230,6 @@ const XFlow: FC<FlowProps> = memo(props => {
     setCandidateNode(newNode);
   };
 
-  // 插入节点
-  // const handleInsertNode = () => {
-  //   const newNode = {
-  //     id: uuid(),
-  //     data: { label: 'new node' },
-  //     position: {
-  //       x: 0,
-  //       y: 0,
-  //     },
-  //   };
-  //   addNodes(newNode);
-  //   addEdges({
-  //     id: uuid(),
-  //     source: '2',
-  //     target: newNode.id,
-  //   });
-  //   const targetEdge = edges.find(edge => edge.source === '2');
-  //   updateEdge(targetEdge?.id as string, {
-  //     source: newNode.id,
-  //   });
-  // };
-
   // edge 移入/移出效果
   const getUpdateEdgeConfig = useMemoizedFn((edge: any, color: string) => {
     const newEdges = produce(edges, draft => {
@@ -323,7 +253,6 @@ const XFlow: FC<FlowProps> = memo(props => {
         const { _nodeType, _status, ...restData } = data || {};
         const nodeSetting = settingMap[_nodeType] || {};
         const showPanel = nodeSetting?.nodePanel?.showPanel ?? true;
-
         return (
           <CustomNode
             {...rest}
@@ -333,9 +262,6 @@ const XFlow: FC<FlowProps> = memo(props => {
             layout={layout}
             status={_status}
             onClick={async e => {
-              // 记录用户点击了节点
-              lastClickedNodeRef.current = true;
-
               if (nodeEditorRef?.current?.validateForm) {
                 const result = await nodeEditorRef?.current?.validateForm();
                 if (!result) {
@@ -400,7 +326,14 @@ const XFlow: FC<FlowProps> = memo(props => {
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
   return (
-    <div id="xflow-container" ref={workflowContainerRef}>
+    <div
+      id="xflow-container"
+      ref={workflowContainerRef}
+      tabIndex={0}
+      onMouseDown={() => {
+        workflowContainerRef.current?.focus();
+      }}
+    >
       <ReactFlow
         panOnDrag={panOnDrag}
         nodeTypes={nodeTypes}
@@ -504,6 +437,7 @@ const XFlow: FC<FlowProps> = memo(props => {
                 return;
               }
               setOpenPanel(false);
+              workflowContainerRef.current?.focus();
 
               // 如果日志面板关闭
               if (!isTruthy(activeNode?._status) || !openLogPanel) {
@@ -520,19 +454,22 @@ const XFlow: FC<FlowProps> = memo(props => {
             {NodeEditorWrap}
           </PanelContainer>
         )}
-        {isTruthy(activeNode?._status) && openLogPanel && Boolean(logPanel?.enable ?? true) && (
-          <PanelStatusLogContainer
-            id={activeNode?.id}
-            nodeType={activeNode?._nodeType}
-            onClose={() => {
-              setOpenLogPanel(false);
-              !openPanel && setActiveNode(null);
-            }}
-            data={activeNode?.values}
-          >
-            {NodeLogWrap}
-          </PanelStatusLogContainer>
-        )}
+        {isTruthy(activeNode?._status) &&
+          openLogPanel &&
+          Boolean(logPanel?.enable ?? true) && (
+            <PanelStatusLogContainer
+              id={activeNode?.id}
+              nodeType={activeNode?._nodeType}
+              onClose={() => {
+                setOpenLogPanel(false);
+                !openPanel && setActiveNode(null);
+                workflowContainerRef.current?.focus();
+              }}
+              data={activeNode?.values}
+            >
+              {NodeLogWrap}
+            </PanelStatusLogContainer>
+          )}
       </ReactFlow>
     </div>
   );
