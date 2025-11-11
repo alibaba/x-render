@@ -153,12 +153,20 @@ const XFlow: FC<FlowProps> = memo(props => {
       const targetClassList = targetElement?.classList;
 
       if (isNodeCopyEvent && selectedNode?.id) {
+        const nodeType = selectedNode?.data?._nodeType;
+        if (isString(nodeType) && nodeType) {
+          const nodeConfig = settingMap[nodeType];
+          if (nodeConfig?.disabledShortcutCopy) {
+            message.warning(
+              `${selectedNode.data?.title || selectedNode.id}节点不允许复制`
+            );
+            return;
+          }
+        }
         // 复制节点
         e.preventDefault();
         copyNode(selectedNode.id);
       }
-
-
     } else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
       const { copyNodes } = storeApi.getState();
       if (copyNodes?.length > 0) {
@@ -282,7 +290,7 @@ const XFlow: FC<FlowProps> = memo(props => {
               }
               setOpenLogPanel(true);
             }}
-            onDelete={()=>{
+            onDelete={() => {
               // 删除节点并关闭弹窗
               setActiveNode(null);
             }}
@@ -357,7 +365,7 @@ const XFlow: FC<FlowProps> = memo(props => {
           },
           deletable: deletable, //默认连线属性受此项控制
         }}
-        onBeforeDelete={async (elements) => {
+        onBeforeDelete={async elements => {
           if (readOnly) {
             return false;
           }
@@ -369,10 +377,14 @@ const XFlow: FC<FlowProps> = memo(props => {
               : false;
           });
           if (blockedNodes?.length > 0) {
-            message.warning(`${blockedNodes.map(n => n.data?.title || n.id).join(', ')}节点不允许删除！`);
+            message.warning(
+              `${blockedNodes
+                .map(n => n.data?.title || n.id)
+                .join(', ')}节点不允许删除！`
+            );
             return false;
           }
-          return true
+          return true;
         }}
         onConnect={onConnect}
         onNodesChange={changes => {
@@ -398,24 +410,24 @@ const XFlow: FC<FlowProps> = memo(props => {
           });
         }}
         onEdgeMouseEnter={(_, edge: any) => {
-          if(!edge.style.stroke || edge.style.stroke === '#c9c9c9'){
+          if (!edge.style.stroke || edge.style.stroke === '#c9c9c9') {
             getUpdateEdgeConfig(edge, '#2970ff');
           }
         }}
         onEdgeMouseLeave={(_, edge) => {
-          if(['#2970ff',"#c9c9c9"].includes(edge.style.stroke)){
+          if (['#2970ff', '#c9c9c9'].includes(edge.style.stroke)) {
             getUpdateEdgeConfig(edge, '#c9c9c9');
           }
         }}
         onNodesDelete={() => {
-           setActiveNode(null);
+          setActiveNode(null);
         }}
         onNodeClick={(event, node) => {
           onNodeClick && onNodeClick(event, node);
         }}
         deleteKeyCode={globalConfig?.deleteKeyCode}
-        onEdgeClick={(event,edge)=>{
-          onEdgeClick && onEdgeClick(event,edge)
+        onEdgeClick={(event, edge) => {
+          onEdgeClick && onEdgeClick(event, edge);
         }}
       >
         <CandidateNode />
