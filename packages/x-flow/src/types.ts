@@ -108,6 +108,7 @@ export interface TLogPanel {
   width?: number;// 日志面板宽度
   tabsProps?: TabPaneProps;// 内置日志面板,详情和追踪选项卡切换组件,antd的tabs配置透传
   detailLogWidget?: string;// 自定义详情日志面板组件
+  enable?: boolean;// 是否启用日志面板，默认为true
 }
 
 export interface TNodeView {

@@ -67,13 +67,14 @@ const Panel: FC<IPanelProps> = (props: IPanelProps) => {
 
   const titleText = activeNode.data?.title;
   const descText = activeNode.data?.desc;
-  
+
   const { nodePanel, iconSvg, showTestingBtn } = nodeSetting;
   const SVGWidget = widgets[nodeSetting?.iconSvg]
   const hideDesc = nodePanel?.hideDesc ?? globalConfig?.nodePanel?.hideDesc ?? false;
-  const isShowStatusPanel = Boolean(isTruthy(node?._status) && openLogPanel);
+  const isEnableLogPanel = Boolean(logPanel?.enable ?? true);
+  const isShowStatusPanel = isEnableLogPanel && Boolean(isTruthy(node?._status) && openLogPanel);
   const offsetRightStatus = isNumber(logPanel?.width) ? Number(logPanel?.width + 10) : 410;
-  
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleNodeValueChange({ title: e.target.value });
   };
