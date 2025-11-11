@@ -147,10 +147,6 @@ const XFlow: FC<FlowProps> = memo(props => {
         }
       }
       const selectedNode = latestNodes?.find(node => node.selected);
-      const targetElement =
-        e.target instanceof HTMLElement ? e.target : undefined;
-      const targetTagName = targetElement?.tagName;
-      const targetClassList = targetElement?.classList;
 
       if (isNodeCopyEvent && selectedNode?.id) {
         const nodeType = selectedNode?.data?._nodeType;
