@@ -8,6 +8,7 @@ export default () => {
       type: 'Start',
       hidden: true,
       disabledShortcutDelete: true,
+      disabledShortcutCopy: true,
       targetHandleHidden: true,
       icon: {
         type: 'icon-start',

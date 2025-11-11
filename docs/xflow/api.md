@@ -171,6 +171,7 @@ Handle 配置继承自 React Flow 的 Handle 配置，用于控制节点连接�
 | getSettingSchema | 动态获取节点的业务配置信息，返回值同settingSchema。同时设置`settingSchema`和`getSettingSchema`只生效`getSettingSchema` | `(nodeId: string, nodeType: string, nodeItem: TNodeItem, nodeData: any, form: ReturnType<typeof useForm>) => Promise<Schema>` |        |
 | renderHandle | 自定义渲染节点的handle，以实现某个节点自定义的出口数量.`sourceHandle`是原handle组件 |  `(sourceHandle: SourceHandleType,sourceHandleProps:ComponentProps<SourceHandleType>,nodeProps: {id: string;type: string;data: any;layout: 'LR';isConnectable: boolean;readOnly: boolean;}) => React.JSX.Element`|   |
 | disabledShortcutDelete | 是否禁用该节点的快捷键删除功能 | `boolean` | false |
+| disabledShortcutCopy | 是否禁用该节点的快捷键复制功能 | `boolean` | false |
 
 
 ## TNodeSelector
