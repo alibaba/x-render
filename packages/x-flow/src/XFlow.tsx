@@ -164,11 +164,8 @@ const XFlow: FC<FlowProps> = memo(props => {
         copyNode(selectedNode.id);
       }
     } else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
-      const { copyNodes } = storeApi.getState();
-      if (copyNodes?.length > 0) {
-        e.preventDefault();
-        pasteNodeSimple();
-      }
+      e.preventDefault();
+      pasteNodeSimple();
     } else if (e.key === 'Escape') {
       setOpenPanel(false);
       workflowContainerRef.current?.focus();
