@@ -324,6 +324,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   }, [activeNode?.id]);
 
   const deletable = globalConfig?.edge?.deletable ?? true;
+  const strokeWidth = globalConfig?.edge?.strokeWidth ?? 1.5
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
   return (
@@ -349,7 +350,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         defaultEdgeOptions={{
           type: 'buttonedge',
           style: {
-            strokeWidth: 1.5, // 线粗细
+            strokeWidth, // 线粗细
           },
           markerEnd: {
             type: MarkerType.ArrowClosed, // 箭头
