@@ -281,6 +281,21 @@ export function safeJsonStringify(obj: Object) {
   }
 }
 
+export function safeJSONParse<T = any>(
+  jsonString: string | null,
+  defaultVal: T = {} as any,
+): T {
+  if (typeof jsonString === 'string') {
+    try {
+      return JSON.parse(jsonString);
+    } catch (e) {
+      return defaultVal; // 或返回默认值 {}
+    }
+  } else {
+    return defaultVal;
+  }
+}
+
 export * from './flow';
 
 // 内置节点状态

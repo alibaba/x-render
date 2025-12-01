@@ -125,6 +125,8 @@ export interface TEdge {
   hideEdgeAddBtn?: boolean; // 是否隐藏两个节点之间，连线上的增加节点按钮
   hideEdgeDelBtn?: boolean; // 是否隐藏两个节点之间，连线上的删除节点按钮
   deletable?: boolean; // 是否允许删除线条 初始化的edges不受此项影响
+
+  strokeWidth?:number
 }
 
 export interface TControl{

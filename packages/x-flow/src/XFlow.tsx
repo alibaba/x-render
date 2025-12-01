@@ -164,11 +164,8 @@ const XFlow: FC<FlowProps> = memo(props => {
         copyNode(selectedNode.id);
       }
     } else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
-      const { copyNodes } = storeApi.getState();
-      if (copyNodes?.length > 0) {
-        e.preventDefault();
-        pasteNodeSimple();
-      }
+      e.preventDefault();
+      pasteNodeSimple();
     } else if (e.key === 'Escape') {
       setOpenPanel(false);
       workflowContainerRef.current?.focus();
@@ -327,6 +324,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   }, [activeNode?.id]);
 
   const deletable = globalConfig?.edge?.deletable ?? true;
+  const strokeWidth = globalConfig?.edge?.strokeWidth ?? 1.5
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
   return (
@@ -352,7 +350,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         defaultEdgeOptions={{
           type: 'buttonedge',
           style: {
-            strokeWidth: 1.5, // 线粗细
+            strokeWidth, // 线粗细
           },
           markerEnd: {
             type: MarkerType.ArrowClosed, // 箭头

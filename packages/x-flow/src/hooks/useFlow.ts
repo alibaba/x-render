@@ -6,7 +6,7 @@ import { FlowNode } from '../models/store';
 import { useStoreApi } from './useStore';
 import { useTemporalStore } from './useTemporalStore';
 import autoLayoutNodes from '../utils/autoLayoutNodes';
-import { generateCopyNodes, uuid } from '../utils';
+import { generateCopyNodes, safeJSONParse, safeJsonStringify, uuid } from '../utils';
 import { message } from 'antd';
 
 // useFlow 维护原则
@@ -113,6 +113,11 @@ export const useFlow = () => {
       storeApi.setState({ copyTimeoutId: null });
     }, 30000);
 
+    navigator.clipboard
+      .writeText(safeJsonStringify(copyNodes))
+      .catch((err) => {
+        message.error('复制失败～');
+      })
     storeApi.setState({
       copyNodes,
       copyTimeoutId: timeoutId,
@@ -148,8 +153,9 @@ export const useFlow = () => {
     }
   });
 
-  const pasteNodeSimple = useMemoizedFn(() => {
+  const pasteNodeSimple = useMemoizedFn(async() => {
     const mousePosition = storeApi.getState().mousePosition;
+    const text = await  navigator.clipboard.readText().catch(()=>null)
     if (storeApi.getState().copyNodes.length > 0) {
       // 清除超时定时器
       if (storeApi.getState().copyTimeoutId) {
@@ -178,7 +184,24 @@ export const useFlow = () => {
           copyTimeoutId: null,
         });
       });
-    } else {
+    } else if(text){
+      const copyNodeData = safeJSONParse(text,[])
+      const flowPos = screenToFlowPosition({
+        x: mousePosition.elementX,
+        y: mousePosition.elementY,
+      });
+      const copyNodes = copyNodeData.map(node => ({
+        ...node,
+        id:uuid(),
+        position: {
+          x: flowPos.x,
+          y: flowPos.y,
+        },
+      }));
+      record(() => {
+        storeApi.getState().addNodes(copyNodes, false);
+      });
+    }else{
       // message.warning('请先复制节点！');
     }
   });
