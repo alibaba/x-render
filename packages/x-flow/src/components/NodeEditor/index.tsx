@@ -152,6 +152,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
           setCustomVal(values);
           handleNodeValueChange({ ...values });
         }}
+        nodeId={id}
         readOnly={readOnly}
         ref={nodeWidgetRef}
       />
@@ -163,6 +164,9 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         form={form}
         widgets={widgets}
         watch={watch}
+        globalProps={{
+          nodeId:id
+        }}
         readOnly={readOnly}
         onMount={() => {
           const initialValues = form.getValues();
@@ -184,6 +188,9 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
         widgets={widgets}
         watch={watch}
         size={'small'}
+        globalProps={{
+          nodeId:id
+        }}
         readOnly={readOnly}
         configProvider={{
           getPopupContainer: triggerNode => triggerNode.parentElement,
@@ -198,6 +205,7 @@ const NodeEditor: FC<INodeEditorProps> = forwardRef((props, ref: any) => {
           handleNodeValueChange({ ...val });
         }}
         value={data}
+        nodeId={id}
         readOnly={readOnly}
       />
     );
