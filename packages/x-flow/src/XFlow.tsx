@@ -129,6 +129,7 @@ const XFlow: FC<FlowProps> = memo(props => {
     if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
     if ((e.key === 'c' || e.key === 'C') && (e.ctrlKey || e.metaKey)) {
+
       const latestNodes = storeApi.getState().nodes;
       let isNodeCopyEvent = false;
       if (e.target instanceof HTMLElement) {
@@ -147,7 +148,6 @@ const XFlow: FC<FlowProps> = memo(props => {
         }
       }
       const selectedNode = latestNodes?.find(node => node.selected);
-
       if (isNodeCopyEvent && selectedNode?.id) {
         const nodeType = selectedNode?.data?._nodeType;
         if (isString(nodeType) && nodeType) {
@@ -332,9 +332,6 @@ const XFlow: FC<FlowProps> = memo(props => {
       id="xflow-container"
       ref={workflowContainerRef}
       tabIndex={0}
-      onMouseDown={() => {
-        workflowContainerRef.current?.focus();
-      }}
     >
       <ReactFlow
         panOnDrag={panOnDrag}
