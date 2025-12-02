@@ -134,8 +134,10 @@ export const useFlow = () => {
     });
 
     navigator.clipboard.writeText(safeJsonStringify(copyNodes)).catch(err => {
-      message.error('复制失败～');
-    });
+      message.error('节点复制失败');
+    }).then(()=>{
+      message.success('节点复制成功');
+    })
   });
 
   const pasteNode = useMemoizedFn((nodeId: string, data: any) => {
