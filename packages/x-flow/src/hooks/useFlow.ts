@@ -113,14 +113,28 @@ export const useFlow = () => {
       storeApi.setState({ copyTimeoutId: null });
     }, 30000);
 
-    navigator.clipboard
-      .writeText(safeJsonStringify(copyNodes))
-      .catch((err) => {
-        message.error('复制失败～');
-      })
     storeApi.setState({
       copyNodes,
       copyTimeoutId: timeoutId,
+    });
+  });
+
+  const copyFLowNodes = useMemoizedFn((nodes: any[]) => {
+    const copyNodes = nodes.map(node => {
+      return {
+        id: uuid(),
+        type: node.type,
+        data: {
+          ...node.data,
+        },
+        position: { x: 0, y: 0 },
+        sourceId: node.id,
+        ...node
+      };
+    });
+
+    navigator.clipboard.writeText(safeJsonStringify(copyNodes)).catch(err => {
+      message.error('复制失败～');
     });
   });
 
@@ -153,9 +167,32 @@ export const useFlow = () => {
     }
   });
 
-  const pasteNodeSimple = useMemoizedFn(async() => {
+  const pasteFLowNodes = useMemoizedFn(async (onPasteCompleted:(nodes:any[])=>void) => {
+    const text = await navigator.clipboard.readText().catch(() => null);
     const mousePosition = storeApi.getState().mousePosition;
-    const text = await  navigator.clipboard.readText().catch(()=>null)
+    if (text) {
+      const copyNodeData = safeJSONParse(text, []);
+      const flowPos = screenToFlowPosition({
+        x: mousePosition.elementX,
+        y: mousePosition.elementY,
+      });
+      const copyNodes = copyNodeData.map((node, index) => ({
+        ...node,
+        id: uuid(),
+        position: {
+          x: flowPos.x + index * 200,
+          y: flowPos.y + index * 200,
+        },
+      }));
+      record(() => {
+        storeApi.getState().addNodes(copyNodes, false);
+      });
+      onPasteCompleted && onPasteCompleted(copyNodes)
+    }
+  });
+
+  const pasteNodeSimple = useMemoizedFn(() => {
+    const mousePosition = storeApi.getState().mousePosition;
     if (storeApi.getState().copyNodes.length > 0) {
       // 清除超时定时器
       if (storeApi.getState().copyTimeoutId) {
@@ -184,24 +221,7 @@ export const useFlow = () => {
           copyTimeoutId: null,
         });
       });
-    } else if(text){
-      const copyNodeData = safeJSONParse(text,[])
-      const flowPos = screenToFlowPosition({
-        x: mousePosition.elementX,
-        y: mousePosition.elementY,
-      });
-      const copyNodes = copyNodeData.map(node => ({
-        ...node,
-        id:uuid(),
-        position: {
-          x: flowPos.x,
-          y: flowPos.y,
-        },
-      }));
-      record(() => {
-        storeApi.getState().addNodes(copyNodes, false);
-      });
-    }else{
+    } else {
       // message.warning('请先复制节点！');
     }
   });
@@ -259,6 +279,8 @@ export const useFlow = () => {
       pasteNode,
       pasteNodeSimple,
       deleteNode,
+      copyFLowNodes,
+      pasteFLowNodes,
     }),
     [instance]
   );

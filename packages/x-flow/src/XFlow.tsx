@@ -94,13 +94,14 @@ const XFlow: FC<FlowProps> = memo(props => {
   const {
     onNodeClick,
     onEdgeClick,
+    onPasteCompleted,
     zoomOnScroll = true,
     panOnScroll = false,
     preventScrolling = true,
     connectionLineComponent,
   } = props;
   const nodeEditorRef = useRef(null);
-  const { copyNode, pasteNodeSimple } = useFlow();
+  const { copyNode, pasteNodeSimple, copyFLowNodes, pasteFLowNodes } = useFlow();
   const { undo, redo } = useTemporalStore();
 
   useEffect(() => {
@@ -129,43 +130,54 @@ const XFlow: FC<FlowProps> = memo(props => {
     if ((e.key === 's' || e.key === 'S') && (e.ctrlKey || e.metaKey))
       e.preventDefault();
     if ((e.key === 'c' || e.key === 'C') && (e.ctrlKey || e.metaKey)) {
-
       const latestNodes = storeApi.getState().nodes;
-      let isNodeCopyEvent = false;
-      if (e.target instanceof HTMLElement) {
-        const target = e.target as HTMLElement;
-        if (
-          (isString(target.tagName) &&
-            target.tagName.toLowerCase() === 'body') ||
-          (target.tagName.toLowerCase() === 'div' &&
-            target.classList &&
-            isFunction(target.classList.contains) &&
-            (target.classList.contains('ant-drawer') ||
-              target.classList.contains('react-flow__node') ||
-              target.id === 'xflow-container'))
-        ) {
-          isNodeCopyEvent = true;
-        }
-      }
-      const selectedNode = latestNodes?.find(node => node.selected);
-      if (isNodeCopyEvent && selectedNode?.id) {
-        const nodeType = selectedNode?.data?._nodeType;
-        if (isString(nodeType) && nodeType) {
-          const nodeConfig = settingMap[nodeType];
-          if (nodeConfig?.disabledShortcutCopy) {
-            message.warning(
-              `${selectedNode.data?.title || selectedNode.id}节点不允许复制`
-            );
-            return;
+      // let isNodeCopyEvent = false;
+      // if (e.target instanceof HTMLElement) {
+      //   const target = e.target as HTMLElement;
+
+      //   if (
+      //     (isString(target.tagName) &&
+      //       target.tagName.toLowerCase() === 'body') ||
+      //     (target.tagName.toLowerCase() === 'div' &&
+      //       target.classList &&
+      //       isFunction(target.classList.contains) &&
+      //       (target.classList.contains('ant-drawer') ||
+      //         target.classList.contains('react-flow__node') ||
+      //         target.id === 'xflow-container')) ||
+      //     (target.tagName.toLowerCase() === 'div' && target.className === 'react-flow__nodesselection-rect')
+      //   ) {
+      //     isNodeCopyEvent = true;
+      //   }
+      // }
+      const selectedNodes = latestNodes?.filter(node => node.selected);
+      if ((document.activeElement === workflowContainerRef.current || document.activeElement.className === 'react-flow__nodesselection-rect') && selectedNodes.length > 0) {
+        const flag = selectedNodes.some(selectedNode => {
+          const nodeType = selectedNode?.data?._nodeType;
+          if (isString(nodeType) && nodeType) {
+            const nodeConfig = settingMap[nodeType];
+            if (nodeConfig?.disabledShortcutCopy) {
+              message.warning(
+                `${selectedNode.data?.title || selectedNode.id}节点不允许复制`
+              );
+
+              return true;
+            }
           }
+        });
+        if (flag) {
+          return;
         }
+        //copyNode(selectedNode.id);
         // 复制节点
         e.preventDefault();
-        copyNode(selectedNode.id);
+        copyFLowNodes(selectedNodes);
       }
     } else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
-      e.preventDefault();
-      pasteNodeSimple();
+      if(document.activeElement === workflowContainerRef.current){
+        e.preventDefault();
+        //pasteNodeSimple();
+        pasteFLowNodes(onPasteCompleted)
+      }
     } else if (e.key === 'Escape') {
       setOpenPanel(false);
       workflowContainerRef.current?.focus();
@@ -324,7 +336,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   }, [activeNode?.id]);
 
   const deletable = globalConfig?.edge?.deletable ?? true;
-  const strokeWidth = globalConfig?.edge?.strokeWidth ?? 1.5
+  const strokeWidth = globalConfig?.edge?.strokeWidth ?? 1.5;
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
   return (
