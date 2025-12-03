@@ -145,22 +145,25 @@ export interface THandle{
   // isConnectableEnd?:boolean
   isValidConnection?:(edges:Parameters<HandleProps['isValidConnection']>[0],edgeType:'source'|'target',nodeType:string)=>boolean
 }
+
+type node = {
+  id: string;
+  type: string;
+  data: Record<string, any>;
+  position: {
+    x: number;
+    y: number;
+  };
+}
+type edge = {
+  id: string;
+  source: string;
+  target: string;
+}
 export interface FlowProps {
   initialValues?: {
-    nodes: Array<{
-      id: string;
-      type: string;
-      data: Record<string, any>;
-      position: {
-        x: number;
-        y: number;
-      };
-    }>;
-    edges: Array<{
-      id: string;
-      source: string;
-      target: string;
-    }>;
+    nodes: Array<node>;
+    edges: Array<edge>;
   };
   layout?: 'LR' | 'TB';
   /**
@@ -186,6 +189,8 @@ export interface FlowProps {
   readOnly?:boolean//只读模式
   onNodeClick?: ReactFlowProps['onNodeClick']
   onEdgeClick?:ReactFlowProps['onEdgeClick']
+  onPasteCompleted?:(addNodes:node[])=>void
+  onCopyCompleted?:(addNodes:node[])=>void
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode?: (type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string, any>) => void) => void;
   zoomOnScroll?: boolean;
