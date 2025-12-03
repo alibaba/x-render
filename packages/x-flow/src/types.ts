@@ -155,14 +155,15 @@ type node = {
     y: number;
   };
 }
+type edge = {
+  id: string;
+  source: string;
+  target: string;
+}
 export interface FlowProps {
   initialValues?: {
     nodes: Array<node>;
-    edges: Array<{
-      id: string;
-      source: string;
-      target: string;
-    }>;
+    edges: Array<edge>;
   };
   layout?: 'LR' | 'TB';
   /**
@@ -189,6 +190,7 @@ export interface FlowProps {
   onNodeClick?: ReactFlowProps['onNodeClick']
   onEdgeClick?:ReactFlowProps['onEdgeClick']
   onPasteCompleted?:(addNodes:node[])=>void
+  onCopyCompleted?:(addNodes:node[])=>void
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode?: (type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string, any>) => void) => void;
   zoomOnScroll?: boolean;

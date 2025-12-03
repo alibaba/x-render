@@ -119,7 +119,7 @@ export const useFlow = () => {
     });
   });
 
-  const copyFLowNodes = useMemoizedFn((nodes: any[]) => {
+  const copyFLowNodes = useMemoizedFn((nodes: any[],onCopyCompleted:(nodes:any[])=>void) => {
     const copyNodes = nodes.map(node => {
       return {
         id: uuid(),
@@ -137,6 +137,7 @@ export const useFlow = () => {
       message.error('节点复制失败');
     }).then(()=>{
       message.success('节点复制成功');
+      onCopyCompleted && onCopyCompleted(copyNodes)
     })
   });
 

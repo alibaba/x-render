@@ -95,6 +95,7 @@ const XFlow: FC<FlowProps> = memo(props => {
     onNodeClick,
     onEdgeClick,
     onPasteCompleted,
+    onCopyCompleted,
     zoomOnScroll = true,
     panOnScroll = false,
     preventScrolling = true,
@@ -170,7 +171,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         //copyNode(selectedNode.id);
         // 复制节点
         e.preventDefault();
-        copyFLowNodes(selectedNodes);
+        copyFLowNodes(selectedNodes,onCopyCompleted);
       }
     } else if ((e.key === 'v' || e.key === 'V') && (e.ctrlKey || e.metaKey)) {
       if(document.activeElement === workflowContainerRef.current){
