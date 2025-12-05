@@ -131,7 +131,7 @@ export default (props: any) => {
           exist: true,
         }}
       >
-        {inlineSelf ? content : <Col span={24} className={classnames('fr-obj-col', { [schema.className] : !!schema.className })}>{content}</Col>}
+        {inlineSelf ? content : <Col span={schema?.span || 24} className={classnames('fr-obj-col', { [schema.className] : !!schema.className })}>{content}</Col>}
       </UpperContext.Provider>
     );
   }
