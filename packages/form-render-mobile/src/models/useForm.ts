@@ -285,12 +285,18 @@ const useForm = () => {
   }
 
   // 触发表单验证
-  xform.validateFields = (pathList?: string[]) => {
+  xform.validateFields = async (pathList?: string[]) => {
     const nameList = (pathList || []).map(path => getFieldName(path));
-    if (nameList.length > 0) {
-      return validateFields(nameList);
+    let values = await (
+      nameList.length > 0 ? validateFields(nameList) : validateFields()
+    );
+    // 参考 getValues的步骤
+    const { removeHiddenData } = storeRef.current?.getState() || {};
+    if (removeHiddenData) {
+      values = filterValuesHidden(values, flattenSchemaRef.current);
     }
-    return validateFields();
+    values = filterValuesUndefined(values);
+    return parseValuesToBind(values, flattenSchemaRef.current);
   }
 
   // 获取扁平化 schema
