@@ -346,6 +346,40 @@ const XFlow: FC<FlowProps> = memo(props => {
   const strokeWidth = globalConfig?.edge?.strokeWidth ?? 1.5;
   const panelonClose = globalConfig?.nodePanel?.onClose;
 
+  const handleClosePanel = useMemoizedFn(async () => {
+    // 面板关闭校验表单
+    const result = await nodeEditorRef?.current?.validateForm();
+    if (!result) {
+      return;
+    }
+    setOpenPanel(false);
+    workflowContainerRef.current?.focus();
+
+    // 如果日志面板关闭
+    if (!isTruthy(activeNode?._status) || !openLogPanel) {
+      setActiveNode(null);
+    }
+    if (isFunction(panelonClose)) {
+      panelonClose(activeNode?.id);
+    }
+  });
+
+  const handleCloseLogPanel = useMemoizedFn(() => {
+    setOpenLogPanel(false);
+    !openPanel && setActiveNode(null);
+    workflowContainerRef.current?.focus();
+  });
+
+  // 点击空白处关闭抽屉
+  const handlePaneClick = useMemoizedFn(() => {
+    if (openPanel && activeNode) {
+      handleClosePanel();
+    }
+    if (openLogPanel && activeNode) {
+      handleCloseLogPanel();
+    }
+  });
+
   return (
     <div
       id="xflow-container"
@@ -440,6 +474,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         onEdgeClick={(event, edge) => {
           onEdgeClick && onEdgeClick(event, edge);
         }}
+        onPaneClick={handlePaneClick}
       >
         <CandidateNode />
         <Operator addNode={handleAddNode} xflowRef={workflowContainerRef} />
@@ -453,23 +488,7 @@ const XFlow: FC<FlowProps> = memo(props => {
           <PanelContainer
             id={activeNode?.id}
             nodeType={activeNode?._nodeType}
-            onClose={async () => {
-              // 面板关闭校验表单
-              const result = await nodeEditorRef?.current?.validateForm();
-              if (!result) {
-                return;
-              }
-              setOpenPanel(false);
-              workflowContainerRef.current?.focus();
-
-              // 如果日志面板关闭
-              if (!isTruthy(activeNode?._status) || !openLogPanel) {
-                setActiveNode(null);
-              }
-              if (isFunction(panelonClose)) {
-                panelonClose(activeNode?.id);
-              }
-            }}
+            onClose={handleClosePanel}
             node={activeNode}
             data={activeNode?.values}
             openLogPanel={openLogPanel}
@@ -483,11 +502,7 @@ const XFlow: FC<FlowProps> = memo(props => {
             <PanelStatusLogContainer
               id={activeNode?.id}
               nodeType={activeNode?._nodeType}
-              onClose={() => {
-                setOpenLogPanel(false);
-                !openPanel && setActiveNode(null);
-                workflowContainerRef.current?.focus();
-              }}
+              onClose={handleCloseLogPanel}
               data={activeNode?.values}
             >
               {NodeLogWrap}
