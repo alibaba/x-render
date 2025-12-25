@@ -80,6 +80,7 @@ group:
 | hideAutoLayout | 是否隐藏整理画布功能 | `boolean` | false  |
 | hideFullscreen | 是否隐藏全屏功能 | `boolean` | false  |
 | hideInteractionMode | 是否隐藏指针和手形工具切换功能 | `boolean` | false  |
+| onAutoLayoutCompleted | 整理画布完成后的回调函数，接收整理后的节点数组作为参数，支持异步函数 | `(nodes: node[]) => void \| Promise<void>` | - |
 
 
 

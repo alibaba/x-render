@@ -138,6 +138,7 @@ export interface TControl{
   hideAutoLayout?: boolean
   hideFullscreen?: boolean
   hideInteractionMode?: boolean
+  onAutoLayoutCompleted?: (nodes: node[]) => void | Promise<void>; // 整理画布完成后的回调函数
 }
 
 export interface THandle{

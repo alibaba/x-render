@@ -210,7 +210,7 @@ const XFlow: FC<FlowProps> = memo(props => {
   );
 
   const { eventEmitter } = useEventEmitterContextContext();
-  eventEmitter?.useSubscription((v: any) => {
+  eventEmitter?.useSubscription(async (v: any) => {
     // 整理画布
     if (v.type === 'auto-layout-nodes') {
       const newNodes: any = autoLayoutNodes(
@@ -219,6 +219,12 @@ const XFlow: FC<FlowProps> = memo(props => {
         layout
       );
       setNodes(newNodes, false);
+
+      // 整理画布完成后执行回调
+      const onAutoLayoutCompleted = globalConfig?.controls?.onAutoLayoutCompleted;
+      if (onAutoLayoutCompleted) {
+        await onAutoLayoutCompleted(newNodes);
+      }
     }
 
     if (v.type === 'deleteNode') {
