@@ -357,6 +357,7 @@ const XFlow: FC<FlowProps> = memo(props => {
         panOnScroll={panOnScroll} // 禁用滚动平移
         preventScrolling={preventScrolling} // 允许页面滚动
         connectionLineComponent={connectionLineComponent}
+        connectionRadius={100}
         defaultEdgeOptions={{
           type: 'buttonedge',
           style: {
