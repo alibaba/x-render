@@ -3,6 +3,7 @@ import XFlow from '@xrenders/xflow';
 import { settings } from './settings';
 import CustomSvg from './CustomSvg';
 import CustomImg from './CustomImg';
+import { message } from 'antd';
 
 
 const initialValues = {
@@ -93,6 +94,15 @@ const Demo = () => {
         widgets={{ CustomSvg, CustomImg }}
         nodeSelector={{
           showSearch: true,
+        }}
+        globalConfig={{
+          controls: {
+            onAutoLayoutCompleted: async (nodes) => {
+              console.log('整理画布完成，节点数量:', nodes.length);
+              console.log('整理后的节点数据:', nodes);
+              message.success(`画布已整理完成，共 ${nodes.length} 个节点`);
+            }
+          }
         }}
       />
     </div>

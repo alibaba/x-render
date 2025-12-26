@@ -3,8 +3,25 @@
   width: 100%;
   background: #F0F2F7;
   position: relative;
-
   .react-flow__attribution {
     display: none;
+  }
+
+  // 移除框选时画布边框的蓝色
+  .react-flow__selection {
+    border: none !important;
+    outline: none !important;
+  }
+
+  // 移除框选矩形区域的边框
+  // .react-flow__nodesselection-rect {
+  //   border: none !important;
+  //   outline: none !important;
+  // }
+
+  // 移除焦点时的蓝色边框
+  &:focus {
+    outline: none !important;
+    border: none !important;
   }
 }

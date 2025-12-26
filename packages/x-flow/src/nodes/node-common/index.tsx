@@ -18,7 +18,7 @@ export default memo((props: any) => {
   return (
     <NodeContainer
       className='custom-node-code'
-      title={data?.title || nodeSetting.title}
+      title={data?.title || nodeSetting.title}//  || nodeSetting.title 去除默认值
       icon={{
         type: nodeSetting?.icon?.type,
         style: { fontSize: 14, color: '#fff' },

@@ -56,11 +56,35 @@ export default memo((edge: any) => {
   const { addNodes } = useFlow();
 
   const handleAddNode = (data: any) => {
-    const { screenToFlowPosition } = reactflow;
-    const { x, y } = screenToFlowPosition({
-      x: mousePosition.pageX,
-      y: mousePosition.pageY,
-    });
+    const { getNode, screenToFlowPosition } = reactflow;
+    const sourceNode = getNode(source);
+    const targetNode = getNode(target);
+
+    // 节点默认尺寸
+    const defaultNodeWidth = 204;
+    const defaultNodeHeight = 45;
+
+    let x, y;
+
+    // 如果源节点和目标节点都存在，将新节点放在边的中点位置
+    if (sourceNode && targetNode) {
+      const sourceX = sourceNode.position.x + (sourceNode.width || defaultNodeWidth) / 2;
+      const sourceY = sourceNode.position.y + (sourceNode.height || defaultNodeHeight) / 2;
+      const targetX = targetNode.position.x + (targetNode.width || defaultNodeWidth) / 2;
+      const targetY = targetNode.position.y + (targetNode.height || defaultNodeHeight) / 2;
+
+      // 计算中点位置
+      x = (sourceX + targetX) / 2 - defaultNodeWidth / 2;
+      y = (sourceY + targetY) / 2 - defaultNodeHeight / 2;
+    } else {
+      // 如果节点不存在，使用鼠标位置作为后备方案
+      const fallbackPos = screenToFlowPosition({
+        x: mousePosition.pageX,
+        y: mousePosition.pageY,
+      });
+      x = fallbackPos.x;
+      y = fallbackPos.y;
+    }
 
     const targetId = uuid();
     const title = settingMap[data?._nodeType]?.title || data?._nodeType;
