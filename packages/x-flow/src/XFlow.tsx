@@ -250,18 +250,32 @@ const XFlow: FC<FlowProps> = memo(props => {
     setCandidateNode(newNode);
   };
 
-  // edge 移入/移出效果
-  const getUpdateEdgeConfig = useMemoizedFn((edge: any, color: string) => {
-    const newEdges = produce(edges, draft => {
-      const currEdge: any = draft.find(e => e.id === edge.id);
-      currEdge.style = {
-        ...edge.style,
-        stroke: color,
-      };
-      currEdge.markerEnd = {
-        ...edge?.markerEnd,
-        color,
-      };
+
+  const hoveredEdgeIdRef = useRef<string | null>(null);// edge 移入/移出效果
+
+  const getUpdateEdgeConfig = useMemoizedFn((edgeId: string, color: string, shouldCheckColor = false, allowedColors?: string[]) => {
+    const currentEdges = storeApi.getState().edges;
+    const currEdge = currentEdges.find(e => e.id === edgeId);
+
+    // 如果需要检查颜色，只有在允许的颜色范围内才更新
+    if (shouldCheckColor && allowedColors && currEdge?.style?.stroke) {
+      if (!allowedColors.includes(currEdge.style.stroke)) {
+        return; // 如果是自定义颜色，不更新
+      }
+    }
+
+    const newEdges = produce(currentEdges, draft => {
+      const draftEdge: any = draft.find(e => e.id === edgeId);
+      if (draftEdge) {
+        draftEdge.style = {
+          ...draftEdge.style,
+          stroke: color,
+        };
+        draftEdge.markerEnd = {
+          ...draftEdge.markerEnd,
+          color,
+        };
+      }
     });
     setEdges(newEdges);
   });
@@ -455,14 +469,26 @@ const XFlow: FC<FlowProps> = memo(props => {
           });
         }}
         onEdgeMouseEnter={(_, edge: any) => {
-          if (!edge.style.stroke || edge.style.stroke === '#c9c9c9') {
-            getUpdateEdgeConfig(edge, '#2970ff');
+          // 如果之前有 hover 的 edge，先重置它的颜色（只重置我们设置过的颜色）
+          if (hoveredEdgeIdRef.current && hoveredEdgeIdRef.current !== edge.id) {
+            getUpdateEdgeConfig(hoveredEdgeIdRef.current, '#c9c9c9', true, ['#2970ff', '#c9c9c9']);
+          }
+          hoveredEdgeIdRef.current = edge.id;
+          // 设置当前 edge 为高亮色（只有当没有自定义颜色时才更新）
+          const currentEdges = storeApi.getState().edges;
+          const currentEdge = currentEdges.find(e => e.id === edge.id);
+          const currentStroke = currentEdge?.style?.stroke;
+          // 只有当没有设置颜色或是默认灰色时才设置为高亮色
+          if (!currentStroke || currentStroke === '#c9c9c9') {
+            getUpdateEdgeConfig(edge.id, '#2970ff');
           }
         }}
         onEdgeMouseLeave={(_, edge) => {
-          if (['#2970ff', '#c9c9c9'].includes(edge.style.stroke)) {
-            getUpdateEdgeConfig(edge, '#c9c9c9');
+          if (hoveredEdgeIdRef.current === edge.id) {
+            // 重置当前 edge 的颜色（只重置我们设置过的颜色）
+            hoveredEdgeIdRef.current = null;
           }
+          getUpdateEdgeConfig(edge.id, '#c9c9c9', true, ['#2970ff', '#c9c9c9']);
         }}
         onNodesDelete={() => {
           setActiveNode(null);
