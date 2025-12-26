@@ -90,11 +90,90 @@ export default memo((props: any) => {
 
   // 增加节点并进行联系
   const handleAddNode = (data: any, sourceHandle?: string) => {
-    const { screenToFlowPosition } = reactflow;
-    const { x, y } = screenToFlowPosition({
-      x: mousePosition.pageX + 100,
-      y: mousePosition.pageY + 100,
-    });
+    const { getNode } = reactflow;
+    const currentNode = getNode(id);
+    if (!currentNode) return;
+
+    // 节点默认尺寸
+    const defaultNodeWidth = 204;
+    const defaultNodeHeight = 45;
+    const nodeSpacing = 50; // 节点之间的最小间距
+
+    // 获取当前节点的位置和尺寸
+    const currentNodeX = currentNode.position.x;
+    const currentNodeY = currentNode.position.y;
+    const currentNodeWidth = currentNode.width || defaultNodeWidth;
+    const currentNodeHeight = currentNode.height || defaultNodeHeight;
+
+    // 根据布局方向计算新节点的初始位置
+    // LR布局：新节点在右侧，从上到下堆叠（垂直方向堆叠）
+    // TB布局：新节点在下方，从左到右堆叠（水平方向堆叠）
+    const isTBLayout = layout === 'TB';
+
+    // 新节点的尺寸（假设与当前节点相同，实际可能需要根据节点类型调整）
+    const newNodeWidth = defaultNodeWidth;
+    const newNodeHeight = defaultNodeHeight;
+
+    // 检测是否有其他节点遮挡
+    const checkCollision = (x: number, y: number, width: number, height: number) => {
+      return nodes.some((node: any) => {
+        if (node.id === id) return false; // 排除当前节点
+        const nodeX = node.position?.x || 0;
+        const nodeY = node.position?.y || 0;
+        const nodeWidth = node.width || defaultNodeWidth;
+        const nodeHeight = node.height || defaultNodeHeight;
+
+        // 检查是否重叠
+        return !(
+          x + width < nodeX ||
+          x > nodeX + nodeWidth ||
+          y + height < nodeY ||
+          y > nodeY + nodeHeight
+        );
+      });
+    };
+
+    // 计算新节点的初始位置
+    let newX: number;
+    let newY: number;
+
+    if (isTBLayout) {
+      // TB布局：新节点在下方，从左到右堆叠
+      // 初始位置：x 从当前节点左侧开始，y 在当前节点下方
+      newX = currentNodeX;
+      newY = currentNodeY + currentNodeHeight + nodeSpacing;
+    } else {
+      // LR布局：新节点在右侧，从上到下堆叠
+      // 初始位置：x 在当前节点右侧，y 从当前节点顶部开始
+      newX = currentNodeX + currentNodeWidth + nodeSpacing;
+      newY = currentNodeY;
+    }
+
+    // 如果有遮挡，根据布局方向移动找到空位置
+    const maxAttempts = 50; // 最多尝试50次，确保能找到空位置
+    let attempts = 0;
+    while (checkCollision(newX, newY, newNodeWidth, newNodeHeight) && attempts < maxAttempts) {
+      if (isTBLayout) {
+        // TB布局：往右堆叠（水平方向移动）
+        newX += newNodeWidth + nodeSpacing;
+      } else {
+        // LR布局：往下堆叠（垂直方向移动）
+        newY += newNodeHeight + nodeSpacing;
+      }
+      attempts++;
+    }
+
+    // 如果尝试次数过多，使用原始逻辑（基于鼠标位置）
+    if (attempts >= maxAttempts) {
+      const { screenToFlowPosition } = reactflow;
+      const fallbackPos = screenToFlowPosition({
+        x: mousePosition.pageX + 100,
+        y: mousePosition.pageY + 100,
+      });
+      newX = fallbackPos.x;
+      newY = fallbackPos.y;
+    }
+
     const targetId = uuid();
     const title = settingMap[data?._nodeType]?.title || data?._nodeType;
     const newNodes = {
@@ -104,7 +183,7 @@ export default memo((props: any) => {
         title: `${title}_${uuid4()}`,
         ...data,
       },
-      position: { x, y },
+      position: { x: newX, y: newY },
     };
     const newEdges = {
       id: uuid(),
