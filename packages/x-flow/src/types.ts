@@ -194,6 +194,8 @@ export interface FlowProps {
   onCopyCompleted?:(addNodes:node[])=>void
   onMenuItemClick?: (itemInfo: ItemInfo, defaultAction: () => void) => void;
   clickAddNode?: (type: string, nodeItem: TNodeItem, addNode: (initData?: Record<string, any>) => void) => void;
+  onMoveStart?:ReactFlowProps['onMoveStart']
+  onMoveEnd?:ReactFlowProps['onMoveEnd']
   zoomOnScroll?: boolean;
   panOnScroll?: boolean;
   preventScrolling?: boolean;

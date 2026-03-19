@@ -67,6 +67,12 @@ const XFlow: FC<FlowProps> = memo(props => {
     isAddingNode,
     setMousePosition,
     copyNodes,
+    activeNode,
+    setActiveNode,
+    openPanel,
+    setOpenPanel,
+    openLogPanel,
+    setOpenLogPanel
   } = useStore(
     s => ({
       nodes: s.nodes,
@@ -82,20 +88,25 @@ const XFlow: FC<FlowProps> = memo(props => {
       onEdgesChange: s.onEdgesChange,
       onConnect: s.onConnect,
       copyNodes: s.copyNodes,
+      activeNode:s.activeNode,
+      setActiveNode:s.setActiveNode,
+      openPanel:s.openPanel,
+      openLogPanel:s.openLogPanel,
+      setOpenPanel:s.setOpenPanel,
+      setOpenLogPanel:s.setOpenLogPanel
     }),
     shallow
   );
   const { record } = useTemporalStore();
-  const [activeNode, setActiveNode] = useState<any>(null);
   const { settingMap, globalConfig, readOnly, logPanel } =
     useContext(ConfigContext);
-  const [openPanel, setOpenPanel] = useState<boolean>(true);
-  const [openLogPanel, setOpenLogPanel] = useState<boolean>(true);
   const {
     onNodeClick,
     onEdgeClick,
     onPasteCompleted,
     onCopyCompleted,
+    onMoveStart,
+    onMoveEnd,
     zoomOnScroll = true,
     panOnScroll = false,
     preventScrolling = true,
@@ -308,6 +319,7 @@ const XFlow: FC<FlowProps> = memo(props => {
                 _nodeType,
                 values: { ...restData },
                 _status,
+                _isCandidate:false
               });
               if (!showPanel) {
                 setOpenPanel(false);
@@ -409,6 +421,12 @@ const XFlow: FC<FlowProps> = memo(props => {
         minZoom={0.3}
         zoomOnScroll={zoomOnScroll}
         panOnScroll={panOnScroll} // 禁用滚动平移
+        onMoveStart={(...rest)=>{
+          onMoveStart && onMoveStart(...rest)
+        }}
+        onMoveEnd={(...rest)=>{
+          onMoveEnd && onMoveEnd(...rest)
+        }}
         preventScrolling={preventScrolling} // 允许页面滚动
         connectionLineComponent={connectionLineComponent}
         connectionRadius={100}
