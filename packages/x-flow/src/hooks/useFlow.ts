@@ -16,7 +16,6 @@ import { message } from 'antd';
 export const useFlow = () => {
   const storeApi = useStoreApi();
   const instance = storeApi.getState();
-
   const {
     zoomIn,
     zoomOut,
@@ -31,7 +30,7 @@ export const useFlow = () => {
     getNodes: _getNodes,
     getEdges,
     screenToFlowPosition,
-    flowToScreenPosition
+    flowToScreenPosition,
   } = useReactFlow();
 
   const { record } = useTemporalStore();
@@ -255,6 +254,10 @@ export const useFlow = () => {
     setNodes(newNodes);
   });
 
+  const setActiveNodePanel = (activeNode,openPanel:boolean) => {
+    instance.setActiveNodePanel(activeNode,openPanel)
+  }
+
   return useMemo(
     () => ({
       setNodes,
@@ -284,6 +287,7 @@ export const useFlow = () => {
       deleteNode,
       copyFLowNodes,
       pasteFLowNodes,
+      setActiveNodePanel
     }),
     [instance]
   );

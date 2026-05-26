@@ -13,6 +13,14 @@ import isDeepEqual from 'fast-deep-equal';
 import { temporal } from 'zundo';
 import { createWithEqualityFn } from 'zustand/traditional';
 
+interface activeNode {
+  id: string;
+  _nodeType: string;
+  values: Record<string, any>;
+  _status: string;
+  _isCandidate:boolean
+}
+
 export type FlowProps = {
   nodes?: Node[];
   edges?: Edge[];
@@ -35,18 +43,25 @@ export type FlowState = {
   candidateNode: any;
   mousePosition: any;
   copyTimeoutId: NodeJS.Timeout | null; // 添加超时定时器ID
+  activeNode: activeNode | null;
+  openPanel:boolean
+  openLogPanel:boolean
   onNodesChange: OnNodesChange<FlowNode>;
   onEdgesChange: OnEdgesChange;
   onConnect: OnConnect;
   setNodes: (nodes: FlowNode[], isTransform?: boolean) => void;
   setEdges: (edges: Edge[]) => void;
-  addNodes: (nodes: FlowNode[]| FlowNode, isTransform?: boolean) => void;
+  addNodes: (nodes: FlowNode[] | FlowNode, isTransform?: boolean) => void;
   addEdges: (edges: Edge[] | Edge) => void;
   setLayout: (layout: 'LR' | 'TB') => void;
   setIsAddingNode: (payload: boolean) => void;
   setCandidateNode: (candidateNode: any) => void;
   setMousePosition: (mousePosition: any) => void;
   setCopyTimeoutId: (timeoutId: NodeJS.Timeout | null) => void; // 添加设置超时定时器的方法
+  setActiveNodePanel:(activeNode:activeNode,openPanel:boolean)=>void
+  setActiveNode:(activeNode:activeNode)=>void
+  setOpenPanel:(openPanel:boolean)=>void
+  setOpenLogPanel:(openLogPanel)=>void
 };
 
 const createStore = (initProps?: Partial<FlowProps>) => {
@@ -69,6 +84,9 @@ const createStore = (initProps?: Partial<FlowProps>) => {
         copyTimeoutId: null, // 添加超时定时器ID初始值
         // nodeMenus: [],
         mousePosition: { pageX: 0, pageY: 0, elementX: 0, elementY: 0 },
+        activeNode: null,
+        openPanel:true,
+        openLogPanel:true,
         onNodesChange: changes => {
           set({
             nodes: applyNodeChanges(changes, get().nodes),
@@ -117,6 +135,27 @@ const createStore = (initProps?: Partial<FlowProps>) => {
             return;
           }
           set({ layout });
+        },
+        setActiveNodePanel: (activeNode:activeNode,openPanel:boolean) => {
+          set({
+            activeNode,
+            openPanel
+          })
+        },
+        setActiveNode:(activeNode:activeNode)=>{
+          set({
+            activeNode
+          })
+        },
+        setOpenPanel:(openPanel:boolean)=>{
+          set({
+            openPanel
+          })
+        },
+        setOpenLogPanel:(openLogPanel:boolean)=>{
+          set({
+            openLogPanel
+          })
         }
       }),
       {
