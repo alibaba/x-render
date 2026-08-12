@@ -197,4 +197,4 @@ https://user-images.githubusercontent.com/8736212/123383626-ff187a80-d5c5-11eb-8
 
 ## Star 趋势
 
-[![Star History Chart](https://api.star-history.com/svg?repos=alibaba/x-render&type=Date)](https://star-history.com/#alibaba/x-render&Date)
+[![Star History Chart](https://star-history.dera.page/svg?repos=alibaba/x-render&type=Date)](https://star-history.dera.page/#alibaba/x-render&Date)
