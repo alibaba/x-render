@@ -150,6 +150,12 @@ export const renderDom = (value: any, item: any, extra ?: { record: any, index: 
     return renderTags(val, item);
   }
 
+  // 数据源中直接传入 JSX 时，React 元素本身是对象，
+  // 需在 object 判断前放行，否则会被下方分支吞掉导致单元格空白
+  if (React.isValidElement(val)) {
+    return val;
+  }
+
   if (typeof val === 'object') {
     return;
   }
