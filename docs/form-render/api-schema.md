@@ -262,6 +262,18 @@ list: { // list 是字段名
 - 描述：添加按钮属性，参考 <a href="https://ant.design/components/button-cn#api" target="_blank">Antd Button Props</a>
 - 类型：`ButtonProps`
 
+#### props.deleteBtnProps
+- 描述：当前列表的删除按钮文案，仅支持 `children`，不透传其他 Antd Button 属性。
+- 类型：`{ children?: string }`
+- 默认：未配置或传入空字符串时，使用当前语言的默认删除文案。
+- 适用：`cardList | simpleList | tableList | drawerList | virtualList`。全局 `listOperate.btnType` 为 `icon` 时仍显示图标；`tabList` 保持关闭图标。
+
+```js
+props: {
+  deleteBtnProps: { children: '移除人员' }
+}
+```
+
 #### props.delConfirmProps
 - 描述：删除确认弹窗属性，参考 <a href="https://ant.design/components/popconfirm-cn#api" target="_blank">Antd PopConfirm Props</a>
 - 类型：`PopConfirmProps`

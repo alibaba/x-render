@@ -46,6 +46,7 @@ export default (props: any) => {
   
   let {
     addBtnProps,
+    deleteBtnProps,
     delConfirmProps,
     actionColumnProps,
     hideAdd,
@@ -254,8 +255,8 @@ export default (props: any) => {
                 btnType: operateBtnType
               }}
               deleteBtnProps={{
-                children: t('delete'),
-                btnType: operateBtnType
+                children: deleteBtnProps?.children || t('delete'),
+                btnType: operateBtnType,
               }}
               moveUpBtnProps={{
                 children: t('moveUp'),
