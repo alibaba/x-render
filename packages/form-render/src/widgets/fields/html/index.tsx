@@ -15,7 +15,7 @@ export default function html({ value, checked, options, schema = {} } : any) {
       let idxStr = '-';
       value.forEach(v => {
         const item = options.find(item => item.value === v);
-        const name = item.label;
+        const name = item?.label;
         if (name) {
           idxStr += ',' + name;
         }
